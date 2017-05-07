@@ -9,6 +9,6 @@ target 'Gitter' do
   pod 'Alamofire', '~> 4.4.0'
   pod 'AlamofireImage', '~> 3.2.0'
   pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
-  pod 'SwiftyJSON', '~> 3.1.4'
+  pod '1PasswordExtension', '~> 1.8.4'
 
 end
