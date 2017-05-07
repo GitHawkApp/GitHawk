@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "OnePasswordExtension.h"
 
-FOUNDATION_EXPORT double SwiftyJSONVersionNumber;
-FOUNDATION_EXPORT const unsigned char SwiftyJSONVersionString[];
+FOUNDATION_EXPORT double OnePasswordExtensionVersionNumber;
+FOUNDATION_EXPORT const unsigned char OnePasswordExtensionVersionString[];
 
