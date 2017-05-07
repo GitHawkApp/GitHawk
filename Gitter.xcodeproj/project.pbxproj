@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		29A66DB8A334B6F45E8462EA /* Pods_Gitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A237030C14804830013B29 /* Pods_Gitter.framework */; };
+		29A945621EBEC5FD0021EB80 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A945611EBEC5FD0021EB80 /* Secrets.swift */; };
 		29E74AAA1EB6CF9100BF54BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E74A9E1EB6CF9100BF54BD /* AppDelegate.swift */; };
 		29E74AAB1EB6CF9100BF54BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E74AA01EB6CF9100BF54BD /* ViewController.swift */; };
 		29E74AAC1EB6CF9100BF54BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29E74AA41EB6CF9100BF54BD /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		18E691BF554DC54963CE2789 /* Pods-Gitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gitter/Pods-Gitter.release.xcconfig"; sourceTree = "<group>"; };
+		29A945611EBEC5FD0021EB80 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		29E74A851EB6CCFE00BF54BD /* Gitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E74A9E1EB6CF9100BF54BD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29E74AA01EB6CF9100BF54BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		29A945601EBEC5EF0021EB80 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				29A945611EBEC5FD0021EB80 /* Secrets.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		29E74A7C1EB6CCFE00BF54BD = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				29E74A9B1EB6CF9100BF54BD /* Models */,
+				29A945601EBEC5EF0021EB80 /* Other */,
 				29E74A9C1EB6CF9100BF54BD /* Section Controllers */,
 				29E74A9D1EB6CF9100BF54BD /* Systems */,
 				29E74A9F1EB6CF9100BF54BD /* View Controllers */,
@@ -355,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29E74AAB1EB6CF9100BF54BD /* ViewController.swift in Sources */,
+				29A945621EBEC5FD0021EB80 /* Secrets.swift in Sources */,
 				29E74AAA1EB6CF9100BF54BD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,6 +588,7 @@
 				29E74ABC1EB6D08200BF54BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

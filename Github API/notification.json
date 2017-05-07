@@ -1,0 +1,43 @@
+{
+  "id": "1",
+  "last_read_at": "2014-11-07T22:01:45Z",
+  "reason": "subscribed",
+  "repository": {
+    "description": "This your first repo!",
+    "fork": false,
+    "full_name": "octocat/Hello-World",
+    "html_url": "https://github.com/octocat/Hello-World",
+    "id": 1296269,
+    "name": "Hello-World",
+    "owner": {
+      "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+      "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+      "followers_url": "https://api.github.com/users/octocat/followers",
+      "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+      "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/octocat",
+      "id": 1,
+      "login": "octocat",
+      "organizations_url": "https://api.github.com/users/octocat/orgs",
+      "received_events_url": "https://api.github.com/users/octocat/received_events",
+      "repos_url": "https://api.github.com/users/octocat/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/octocat"
+    },
+    "private": false,
+    "url": "https://api.github.com/repos/octocat/Hello-World"
+  },
+  "subject": {
+    "latest_comment_url": "https://api.github.com/repos/octokit/octokit.rb/issues/comments/123",
+    "title": "Greetings",
+    "type": "Issue",
+    "url": "https://api.github.com/repos/octokit/octokit.rb/issues/123"
+  },
+  "unread": true,
+  "updated_at": "2014-11-07T22:01:45Z",
+  "url": "https://api.github.com/notifications/threads/1"
+}
