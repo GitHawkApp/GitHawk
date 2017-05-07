@@ -1,0 +1,10 @@
+{
+  "author_name": "Ryan Nystrom",
+  "company_name": "Ryan Nystrom",
+  "construct_type": "class",
+  "destination_path": "gen",
+  "is_final_required": true,
+  "is_header_included": false,
+  "model_mapping_library": "SwiftyJSON",
+  "support_nscoding": true
+}
