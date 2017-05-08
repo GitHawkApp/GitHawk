@@ -15,6 +15,14 @@ enum OnePasswordResult {
     case failure(error: Error?)
 }
 
+func onePasswordButtonImage() -> UIImage? {
+    let onePWBundle = Bundle(for: OnePasswordExtension.self)
+    if let path = onePWBundle.path(forResource: "OnePasswordExtensionResources", ofType: "bundle") {
+        return UIImage(named: "onepassword-button", in: Bundle(path: path), compatibleWith: nil)
+    }
+    return nil
+}
+
 func onePasswordAvailable() -> Bool {
     return OnePasswordExtension.shared().isAppExtensionAvailable()
 }

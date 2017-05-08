@@ -13,7 +13,7 @@
         <!--Sign in to GitHub-->
         <scene sceneID="WhQ-cb-wAq">
             <objects>
-                <tableViewController id="4C9-Cb-DoC" customClass="LoginViewController" customModule="Gitter" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="4C9-Cb-DoC" customClass="LoginViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="prA-ET-NrA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +21,7 @@
                         <sections>
                             <tableViewSection headerTitle="Username or email" id="D1L-ea-ldD">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="5UU-8d-R3O" customClass="LoginTextCell" customModule="Gitter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="5UU-8d-R3O">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5UU-8d-R3O" id="nrc-3P-ddS">
@@ -50,7 +50,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Password" id="UO8-dp-PJg">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Dtm-lu-zPa" customClass="LoginTextCell" customModule="Gitter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Dtm-lu-zPa">
                                         <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dtm-lu-zPa" id="unw-FW-dJ9">
@@ -92,7 +92,7 @@
                             </tableViewSection>
                             <tableViewSection id="igQ-2C-cPi">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7le-PJ-Qex" customClass="LoginTextCell" customModule="Gitter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7le-PJ-Qex">
                                         <rect key="frame" x="0.0" y="235.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7le-PJ-Qex" id="GWT-jg-VIX">
@@ -137,7 +137,7 @@
         <!--2fac Authentication-->
         <scene sceneID="Ohj-CX-cvr">
             <objects>
-                <tableViewController id="1eg-Vk-WvU" customClass="TwoFactorViewController" customModule="Gitter" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1eg-Vk-WvU" customClass="TwoFactorViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="4JP-iX-C1w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
