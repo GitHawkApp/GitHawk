@@ -23,6 +23,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        onepasswordButton.setImage(onePasswordButtonImage(), for: .normal)
         onepasswordButton.isHidden = !onePasswordAvailable()
     }
 
