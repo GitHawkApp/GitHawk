@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_GitterVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_GitterVersionString[];
+FOUNDATION_EXPORT double Pods_FreetimeVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_FreetimeVersionString[];
 

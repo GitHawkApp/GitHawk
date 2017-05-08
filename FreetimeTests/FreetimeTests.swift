@@ -1,14 +1,15 @@
 //
-//  GitterTests.swift
-//  GitterTests
+//  FreetimeTests.swift
+//  FreetimeTests
 //
-//  Created by Ryan Nystrom on 4/30/17.
+//  Created by Ryan Nystrom on 5/8/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
 import XCTest
+@testable import Freetime
 
-class GitterTests: XCTestCase {
+class FreetimeTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
