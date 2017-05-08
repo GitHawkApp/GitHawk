@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FtA-zE-Av4">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -33,6 +33,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="4C9-Cb-DoC" id="sje-Uj-ebr"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -54,11 +57,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="R6o-vG-04h">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R6o-vG-04h">
                                                     <rect key="frame" x="16" y="-0.5" width="303" height="44"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="4C9-Cb-DoC" id="SsG-d2-w1T"/>
+                                                    </connections>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RD1-5K-AYO">
                                                     <rect key="frame" x="340" y="8" width="27" height="27"/>
@@ -114,11 +120,14 @@
                             <outlet property="delegate" destination="4C9-Cb-DoC" id="2ws-zT-cml"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sign in to GitHub" id="saR-fL-x4s"/>
+                    <navigationItem key="navigationItem" title="Sign in to GitHub" id="saR-fL-x4s">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="rHr-2G-Zin"/>
+                    </navigationItem>
                     <connections>
-                        <outlet property="passwordLabel" destination="R6o-vG-04h" id="cBu-E4-6PB"/>
-                        <outlet property="usernameLabel" destination="ulH-vQ-S5c" id="mAd-Gd-2Vx"/>
-                        <segue destination="1eg-Vk-WvU" kind="show" id="iVD-ZI-KBL"/>
+                        <outlet property="onepasswordButton" destination="RD1-5K-AYO" id="izh-i0-FRe"/>
+                        <outlet property="passwordTextField" destination="R6o-vG-04h" id="LeG-oC-nTw"/>
+                        <outlet property="usernameTextField" destination="ulH-vQ-S5c" id="46x-Gk-rHY"/>
+                        <segue destination="1eg-Vk-WvU" kind="show" identifier="show2fac" id="iVD-ZI-KBL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlE-fh-Mp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -148,6 +157,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="1eg-Vk-WvU" id="EJU-0o-wQ7"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -213,7 +225,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAC-yi-R2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-780" y="174"/>
+            <point key="canvasLocation" x="-561" y="172"/>
         </scene>
     </scenes>
     <resources>

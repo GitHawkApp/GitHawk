@@ -1,10 +1,13 @@
 {
-  "author_name": "Ryan Nystrom",
-  "company_name": "Ryan Nystrom",
-  "construct_type": "class",
-  "destination_path": "gen",
-  "is_final_required": true,
-  "is_header_included": false,
-  "model_mapping_library": "SwiftyJSON",
-  "support_nscoding": true
+  "destination": "gen",
+  "rename_map": {
+    "assignee": "user",
+    "creator": "user",
+    "owner": "user",
+    "parent": "repository",
+    "repo": "repository",
+    "source": "repository",
+    "base": "branch",
+    "head": "branch"
+  }
 }

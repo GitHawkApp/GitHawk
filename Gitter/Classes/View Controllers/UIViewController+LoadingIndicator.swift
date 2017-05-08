@@ -10,13 +10,13 @@ import UIKit
 
 extension UIViewController {
 
-    func showLoadingIndicator(show: Bool) {
+    func showLoadingIndicator(_ show: Bool) {
         if show {
-            navigationItem.rightBarButtonItem = nil
-        } else {
             let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
             view.startAnimating()
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: view)
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
 
