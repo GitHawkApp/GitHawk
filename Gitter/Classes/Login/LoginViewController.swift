@@ -21,10 +21,6 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         return [usernameTextField, passwordTextField]
     }
 
-    var signinCell: UITableViewCell? {
-        return tableView.cellForRow(at: signinCellIndexPath)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         onepasswordButton.isHidden = !onePasswordAvailable()
@@ -58,7 +54,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         for field in textFields {
             field.isEnabled = enabled
         }
-        signinCell?.isUserInteractionEnabled = enabled
+        tableView.cellForRow(at: signinCellIndexPath)?.isUserInteractionEnabled = enabled
     }
 
     func login() {
