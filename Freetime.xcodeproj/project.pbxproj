@@ -1,0 +1,624 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		297AE84D1EC0D58A00B44A1F /* FreetimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* FreetimeTests.swift */; };
+		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
+		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
+		297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85B1EC0D5C100B44A1F /* LoginViewController.swift */; };
+		297AE8771EC0D5C200B44A1F /* OnePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85C1EC0D5C100B44A1F /* OnePassword.swift */; };
+		297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85D1EC0D5C100B44A1F /* TwoFactorViewController.swift */; };
+		297AE8791EC0D5C200B44A1F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85F1EC0D5C100B44A1F /* App.swift */; };
+		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
+		297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
+		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
+		297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */; };
+		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
+		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
+		297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
+		297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86E1EC0D5C200B44A1F /* Assets.xcassets */; };
+		297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */; };
+		297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8711EC0D5C200B44A1F /* Main.storyboard */; };
+		DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		297AE8491EC0D58A00B44A1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 297AE82C1EC0D58A00B44A1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 297AE8331EC0D58A00B44A1F;
+			remoteInfo = Freetime;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		297AE84C1EC0D58A00B44A1F /* FreetimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreetimeTests.swift; sourceTree = "<group>"; };
+		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GithubLogin.storyboard; sourceTree = "<group>"; };
+		297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		297AE85B1EC0D5C100B44A1F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		297AE85C1EC0D5C100B44A1F /* OnePassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePassword.swift; sourceTree = "<group>"; };
+		297AE85D1EC0D5C100B44A1F /* TwoFactorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFactorViewController.swift; sourceTree = "<group>"; };
+		297AE85F1EC0D5C100B44A1F /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
+		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GitHub.swift"; sourceTree = "<group>"; };
+		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
+		297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingIndicator.swift"; sourceTree = "<group>"; };
+		297AE86E1EC0D5C200B44A1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		297AE8701EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		297AE8721EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		297AE8731EC0D5C200B44A1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
+		CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F79E33118067C850234431F1 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		297AE8311EC0D58A00B44A1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		297AE8451EC0D58A00B44A1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		297AE82B1EC0D58A00B44A1F = {
+			isa = PBXGroup;
+			children = (
+				297AE8571EC0D5C100B44A1F /* Classes */,
+				297AE86D1EC0D5C200B44A1F /* Resources */,
+				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
+				297AE8351EC0D58A00B44A1F /* Products */,
+				408D21D24BB2680C4B296FCE /* Pods */,
+				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		297AE8351EC0D58A00B44A1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8341EC0D58A00B44A1F /* Freetime.app */,
+				297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		297AE84B1EC0D58A00B44A1F /* FreetimeTests */ = {
+			isa = PBXGroup;
+			children = (
+				297AE84C1EC0D58A00B44A1F /* FreetimeTests.swift */,
+				297AE84E1EC0D58A00B44A1F /* Info.plist */,
+			);
+			path = FreetimeTests;
+			sourceTree = "<group>";
+		};
+		297AE8571EC0D5C100B44A1F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8581EC0D5C100B44A1F /* Login */,
+				297AE85E1EC0D5C100B44A1F /* Models */,
+				297AE8611EC0D5C100B44A1F /* Other */,
+				297AE8641EC0D5C100B44A1F /* Section Controllers */,
+				297AE8651EC0D5C100B44A1F /* Systems */,
+				297AE8681EC0D5C200B44A1F /* View Controllers */,
+				297AE86B1EC0D5C200B44A1F /* View Models */,
+				297AE86C1EC0D5C200B44A1F /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		297AE8581EC0D5C100B44A1F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */,
+				297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */,
+				297AE85B1EC0D5C100B44A1F /* LoginViewController.swift */,
+				297AE85C1EC0D5C100B44A1F /* OnePassword.swift */,
+				297AE85D1EC0D5C100B44A1F /* TwoFactorViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		297AE85E1EC0D5C100B44A1F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				297AE85F1EC0D5C100B44A1F /* App.swift */,
+				297AE8601EC0D5C100B44A1F /* Authorization.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		297AE8611EC0D5C100B44A1F /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */,
+				297AE8631EC0D5C100B44A1F /* Secrets.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Section Controllers";
+			sourceTree = "<group>";
+		};
+		297AE8651EC0D5C100B44A1F /* Systems */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */,
+				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
+			);
+			path = Systems;
+			sourceTree = "<group>";
+		};
+		297AE8681EC0D5C200B44A1F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
+				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		297AE86B1EC0D5C200B44A1F /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		297AE86C1EC0D5C200B44A1F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		297AE86D1EC0D5C200B44A1F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
+				297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */,
+				297AE8711EC0D5C200B44A1F /* Main.storyboard */,
+				297AE8731EC0D5C200B44A1F /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		408D21D24BB2680C4B296FCE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F79E33118067C850234431F1 /* Pods-Freetime.debug.xcconfig */,
+				3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		297AE8331EC0D58A00B44A1F /* Freetime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
+			buildPhases = (
+				85B5726193A3C3A9229E0FD9 /* [CP] Check Pods Manifest.lock */,
+				297AE8301EC0D58A00B44A1F /* Sources */,
+				297AE8311EC0D58A00B44A1F /* Frameworks */,
+				297AE8321EC0D58A00B44A1F /* Resources */,
+				FE3202C6698C4BD3C4722F31 /* [CP] Embed Pods Frameworks */,
+				DE198372B82E5C9AC3006E7E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Freetime;
+			productName = Freetime;
+			productReference = 297AE8341EC0D58A00B44A1F /* Freetime.app */;
+			productType = "com.apple.product-type.application";
+		};
+		297AE8471EC0D58A00B44A1F /* FreetimeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 297AE8541EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "FreetimeTests" */;
+			buildPhases = (
+				297AE8441EC0D58A00B44A1F /* Sources */,
+				297AE8451EC0D58A00B44A1F /* Frameworks */,
+				297AE8461EC0D58A00B44A1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				297AE84A1EC0D58A00B44A1F /* PBXTargetDependency */,
+			);
+			name = FreetimeTests;
+			productName = FreetimeTests;
+			productReference = 297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		297AE82C1EC0D58A00B44A1F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Ryan Nystrom";
+				TargetAttributes = {
+					297AE8331EC0D58A00B44A1F = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 523C4DWBTH;
+						ProvisioningStyle = Automatic;
+					};
+					297AE8471EC0D58A00B44A1F = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 523C4DWBTH;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 297AE8331EC0D58A00B44A1F;
+					};
+				};
+			};
+			buildConfigurationList = 297AE82F1EC0D58A00B44A1F /* Build configuration list for PBXProject "Freetime" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 297AE82B1EC0D58A00B44A1F;
+			productRefGroup = 297AE8351EC0D58A00B44A1F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				297AE8331EC0D58A00B44A1F /* Freetime */,
+				297AE8471EC0D58A00B44A1F /* FreetimeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		297AE8321EC0D58A00B44A1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
+				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
+				297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */,
+				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		297AE8461EC0D58A00B44A1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		85B5726193A3C3A9229E0FD9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE198372B82E5C9AC3006E7E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE3202C6698C4BD3C4722F31 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		297AE8301EC0D58A00B44A1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
+				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
+				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
+				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
+				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
+				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
+				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
+				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				297AE8791EC0D5C200B44A1F /* App.swift in Sources */,
+				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
+				297AE8771EC0D5C200B44A1F /* OnePassword.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		297AE8441EC0D58A00B44A1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297AE84D1EC0D58A00B44A1F /* FreetimeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		297AE84A1EC0D58A00B44A1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 297AE8331EC0D58A00B44A1F /* Freetime */;
+			targetProxy = 297AE8491EC0D58A00B44A1F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				297AE8701EC0D5C200B44A1F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		297AE8711EC0D5C200B44A1F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				297AE8721EC0D5C200B44A1F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		297AE84F1EC0D58A00B44A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		297AE8501EC0D58A00B44A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		297AE8521EC0D58A00B44A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F79E33118067C850234431F1 /* Pods-Freetime.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		297AE8531EC0D58A00B44A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		297AE8551EC0D58A00B44A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 523C4DWBTH;
+				INFOPLIST_FILE = FreetimeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Freetime.app/Freetime";
+			};
+			name = Debug;
+		};
+		297AE8561EC0D58A00B44A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 523C4DWBTH;
+				INFOPLIST_FILE = FreetimeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Freetime.app/Freetime";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		297AE82F1EC0D58A00B44A1F /* Build configuration list for PBXProject "Freetime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				297AE84F1EC0D58A00B44A1F /* Debug */,
+				297AE8501EC0D58A00B44A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				297AE8521EC0D58A00B44A1F /* Debug */,
+				297AE8531EC0D58A00B44A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		297AE8541EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "FreetimeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				297AE8551EC0D58A00B44A1F /* Debug */,
+				297AE8561EC0D58A00B44A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 297AE82C1EC0D58A00B44A1F /* Project object */;
+}

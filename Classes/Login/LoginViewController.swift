@@ -1,6 +1,6 @@
 //
 //  LoginViewController.swift
-//  Gitter
+//  Freetime
 //
 //  Created by Ryan Nystrom on 5/6/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

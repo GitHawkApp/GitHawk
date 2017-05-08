@@ -1,6 +1,6 @@
 //
 //  LoginRequest.swift
-//  Gitter
+//  Freetime
 //
 //  Created by Ryan Nystrom on 5/7/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
@@ -22,7 +22,7 @@ func requestGithubLogin(
     ) {
     let parameters: [String: Any] = [
         "scopes": ["repo"],
-        "note": "Gitter project manager for iOS",
+        "note": "Freetime project manager for iOS",
         "client_id": GithubAPI.clientID,
         "client_secret": GithubAPI.clientSecret
     ]
