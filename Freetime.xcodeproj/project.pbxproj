@@ -24,6 +24,7 @@
 		297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86E1EC0D5C200B44A1F /* Assets.xcassets */; };
 		297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */; };
 		297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8711EC0D5C200B44A1F /* Main.storyboard */; };
+		299F2A121EC3BCF0006CE9D7 /* GithubSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */; };
 		DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		297AE8701EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		297AE8721EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		297AE8731EC0D5C200B44A1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSession.swift; sourceTree = "<group>"; };
 		3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79E33118067C850234431F1 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */,
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
+				299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			files = (
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
+				299F2A121EC3BCF0006CE9D7 /* GithubSession.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
