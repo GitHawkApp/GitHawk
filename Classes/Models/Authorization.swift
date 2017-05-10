@@ -1,6 +1,6 @@
 import Foundation
 
-final class Authorization: NSCoding {
+final class Authorization: NSObject, NSCoding {
   struct Keys {
     static let note = "note"
     static let updated_at = "updated_at"
