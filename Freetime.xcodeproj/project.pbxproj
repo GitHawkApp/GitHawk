@@ -25,6 +25,7 @@
 		297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */; };
 		297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8711EC0D5C200B44A1F /* Main.storyboard */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */; };
+		29F3A3351EC3D2440048865D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A3341EC3D2440048865D /* ViewController.swift */; };
 		DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,9 @@
 		297AE8721EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		297AE8731EC0D5C200B44A1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSession.swift; sourceTree = "<group>"; };
+		29F3A3341EC3D2440048865D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
+		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
 		3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79E33118067C850234431F1 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
+				29F63FD11EC530E7007F55E4 /* TextViews.playground */,
+				29F63FD01EC530BD007F55E4 /* Github API.playground */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
 				297AE86D1EC0D5C200B44A1F /* Resources */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
@@ -182,6 +188,7 @@
 			children = (
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
+				29F3A3341EC3D2440048865D /* ViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -389,6 +396,7 @@
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSession.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				29F3A3351EC3D2440048865D /* ViewController.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,

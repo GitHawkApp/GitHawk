@@ -22,10 +22,10 @@ final class Authorization: NSObject, NSCoding {
   let token: String
   let scopes: [String]
   let created_at: String
-  let fingerprint: String
+  let fingerprint: String?
   let hashed_token: String
   let token_last_eight: String
-  let note_url: String
+  let note_url: String?
   let url: String
   convenience init?(json: [String: Any]?) {
     guard let note = json?[Keys.note] as? String else { return nil }
@@ -36,10 +36,10 @@ final class Authorization: NSObject, NSCoding {
     guard let token = json?[Keys.token] as? String else { return nil }
     guard let scopes = json?[Keys.scopes] as? [String] else { return nil }
     guard let created_at = json?[Keys.created_at] as? String else { return nil }
-    guard let fingerprint = json?[Keys.fingerprint] as? String else { return nil }
+    let fingerprint = json?[Keys.fingerprint] as? String
     guard let hashed_token = json?[Keys.hashed_token] as? String else { return nil }
     guard let token_last_eight = json?[Keys.token_last_eight] as? String else { return nil }
-    guard let note_url = json?[Keys.note_url] as? String else { return nil }
+    let note_url = json?[Keys.note_url] as? String
     guard let url = json?[Keys.url] as? String else { return nil }
     self.init(
       note: note,
@@ -64,10 +64,10 @@ final class Authorization: NSObject, NSCoding {
     token: String,
     scopes: [String],
     created_at: String,
-    fingerprint: String,
+    fingerprint: String?,
     hashed_token: String,
     token_last_eight: String,
-    note_url: String,
+    note_url: String?,
     url: String
     ) {
     self.note = note
@@ -91,10 +91,10 @@ final class Authorization: NSObject, NSCoding {
     guard let token = aDecoder.decodeObject(forKey: Keys.token) as? String else { return nil }
     guard let scopes = aDecoder.decodeObject(forKey: Keys.scopes) as? [String] else { return nil }
     guard let created_at = aDecoder.decodeObject(forKey: Keys.created_at) as? String else { return nil }
-    guard let fingerprint = aDecoder.decodeObject(forKey: Keys.fingerprint) as? String else { return nil }
+    let fingerprint = aDecoder.decodeObject(forKey: Keys.fingerprint) as? String
     guard let hashed_token = aDecoder.decodeObject(forKey: Keys.hashed_token) as? String else { return nil }
     guard let token_last_eight = aDecoder.decodeObject(forKey: Keys.token_last_eight) as? String else { return nil }
-    guard let note_url = aDecoder.decodeObject(forKey: Keys.note_url) as? String else { return nil }
+    let note_url = aDecoder.decodeObject(forKey: Keys.note_url) as? String
     guard let url = aDecoder.decodeObject(forKey: Keys.url) as? String else { return nil }
     self.init(
       note: note,

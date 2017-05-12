@@ -1,6 +1,6 @@
 import Foundation
 
-final class App: NSCoding {
+final class App: NSObject, NSCoding {
   struct Keys {
     static let name = "name"
     static let client_id = "client_id"

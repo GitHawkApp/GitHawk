@@ -36,7 +36,7 @@ func requestGithubLogin(
     }
 
     let _ = requestGithub(
-        path: "https://api.github.com/authorizations",
+        path: "authorizations",
         method: .post,
         parameters: parameters,
         headers: headers) { response in

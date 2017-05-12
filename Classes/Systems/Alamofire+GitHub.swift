@@ -16,10 +16,17 @@ func requestGithub(
     completion: @escaping (DataResponse<Any>) -> Void
     ) -> DataRequest {
     print("Requesting: " + path)
+
+    let encoding: ParameterEncoding
+    switch method {
+    case .get: encoding = URLEncoding.queryString
+    default: encoding = JSONEncoding.default
+    }
+
     return Alamofire.request("https://api.github.com/" + path,
                              method: method,
                              parameters: parameters,
-                             encoding: URLEncoding.methodDependent,
+                             encoding: encoding,
                              headers: headers)
         .responseJSON(completionHandler: { response in
             print(response.response ?? "")
