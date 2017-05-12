@@ -25,7 +25,7 @@ final class Repository: NSObject, NSCoding {
     static let issues_url = "issues_url"
     static let full_name = "full_name"
     static let fork = "fork"
-    static let description = "description"
+    static let description_ = "description"
     static let notifications_url = "notifications_url"
     static let ssh_url = "ssh_url"
     static let stargazers_count = "stargazers_count"
@@ -101,7 +101,7 @@ final class Repository: NSObject, NSCoding {
   let issues_url: String?
   let full_name: String
   let fork: Bool
-  let description: String
+  let description_: String
   let notifications_url: String?
   let ssh_url: String?
   let stargazers_count: NSNumber?
@@ -177,7 +177,7 @@ final class Repository: NSObject, NSCoding {
     let issues_url = json?[Keys.issues_url] as? String
     guard let full_name = json?[Keys.full_name] as? String else { return nil }
     guard let fork = json?[Keys.fork] as? Bool else { return nil }
-    guard let description = json?[Keys.description] as? String else { return nil }
+    guard let description_ = json?[Keys.description_] as? String else { return nil }
     let notifications_url = json?[Keys.notifications_url] as? String
     let ssh_url = json?[Keys.ssh_url] as? String
     let stargazers_count = json?[Keys.stargazers_count] as? NSNumber
@@ -258,7 +258,7 @@ final class Repository: NSObject, NSCoding {
       issues_url: issues_url,
       full_name: full_name,
       fork: fork,
-      description: description,
+      description_: description_,
       notifications_url: notifications_url,
       ssh_url: ssh_url,
       stargazers_count: stargazers_count,
@@ -336,7 +336,7 @@ final class Repository: NSObject, NSCoding {
     issues_url: String?,
     full_name: String,
     fork: Bool,
-    description: String,
+    description_: String,
     notifications_url: String?,
     ssh_url: String?,
     stargazers_count: NSNumber?,
@@ -412,7 +412,7 @@ final class Repository: NSObject, NSCoding {
     self.issues_url = issues_url
     self.full_name = full_name
     self.fork = fork
-    self.description = description
+    self.description_ = description_
     self.notifications_url = notifications_url
     self.ssh_url = ssh_url
     self.stargazers_count = stargazers_count
@@ -489,7 +489,7 @@ final class Repository: NSObject, NSCoding {
     let issues_url = aDecoder.decodeObject(forKey: Keys.issues_url) as? String
     guard let full_name = aDecoder.decodeObject(forKey: Keys.full_name) as? String else { return nil }
     let fork = aDecoder.decodeBool(forKey: Keys.fork)
-    guard let description = aDecoder.decodeObject(forKey: Keys.description) as? String else { return nil }
+    guard let description_ = aDecoder.decodeObject(forKey: Keys.description_) as? String else { return nil }
     let notifications_url = aDecoder.decodeObject(forKey: Keys.notifications_url) as? String
     let ssh_url = aDecoder.decodeObject(forKey: Keys.ssh_url) as? String
     let stargazers_count = aDecoder.decodeObject(forKey: Keys.stargazers_count) as? NSNumber
@@ -565,7 +565,7 @@ final class Repository: NSObject, NSCoding {
       issues_url: issues_url,
       full_name: full_name,
       fork: fork,
-      description: description,
+      description_: description_,
       notifications_url: notifications_url,
       ssh_url: ssh_url,
       stargazers_count: stargazers_count,
@@ -643,7 +643,7 @@ final class Repository: NSObject, NSCoding {
     aCoder.encode(issues_url, forKey: Keys.issues_url)
     aCoder.encode(full_name, forKey: Keys.full_name)
     aCoder.encode(fork, forKey: Keys.fork)
-    aCoder.encode(description, forKey: Keys.description)
+    aCoder.encode(description_, forKey: Keys.description_)
     aCoder.encode(notifications_url, forKey: Keys.notifications_url)
     aCoder.encode(ssh_url, forKey: Keys.ssh_url)
     aCoder.encode(stargazers_count, forKey: Keys.stargazers_count)
