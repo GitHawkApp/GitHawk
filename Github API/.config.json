@@ -3,6 +3,7 @@
   "rename_map": {
     "assignee": "user",
     "creator": "user",
+    "actor": "user",
     "owner": "user",
     "parent": "repository",
     "repo": "repository",
