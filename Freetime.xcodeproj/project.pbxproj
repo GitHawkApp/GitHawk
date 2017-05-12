@@ -45,6 +45,9 @@
 		29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC21EC65FEE00EE3A52 /* Status.swift */; };
 		29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC31EC65FEE00EE3A52 /* Subject.swift */; };
 		29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC41EC65FEE00EE3A52 /* User.swift */; };
+		29C9FDDB1EC6627200EE3A52 /* NotificationDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */; };
+		29C9FDDD1EC6628200EE3A52 /* NotificationDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */; };
+		29C9FDDF1EC662E200EE3A52 /* NotificationReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDE1EC662E200EE3A52 /* NotificationReason.swift */; };
 		29F3A3351EC3D2440048865D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A3341EC3D2440048865D /* ViewController.swift */; };
 		DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
@@ -102,6 +105,9 @@
 		29C9FDC21EC65FEE00EE3A52 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		29C9FDC31EC65FEE00EE3A52 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		29C9FDC41EC65FEE00EE3A52 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailsCell.swift; sourceTree = "<group>"; };
+		29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailsViewModel.swift; sourceTree = "<group>"; };
+		29C9FDDE1EC662E200EE3A52 /* NotificationReason.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationReason.swift; sourceTree = "<group>"; };
 		29F3A3341EC3D2440048865D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
@@ -282,6 +288,9 @@
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */,
+				29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */,
+				29C9FDDE1EC662E200EE3A52 /* NotificationReason.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -462,7 +471,9 @@
 			files = (
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
+				29C9FDDD1EC6628200EE3A52 /* NotificationDetailsViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
+				29C9FDDB1EC6627200EE3A52 /* NotificationDetailsCell.swift in Sources */,
 				29C9FDD21EC65FEE00EE3A52 /* Reaction.swift in Sources */,
 				29C9FDC91EC65FEE00EE3A52 /* Html.swift in Sources */,
 				29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */,
@@ -480,6 +491,7 @@
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				29C9FDC81EC65FEE00EE3A52 /* Event.swift in Sources */,
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
+				29C9FDDF1EC662E200EE3A52 /* NotificationReason.swift in Sources */,
 				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
 				29C9FDCC1EC65FEE00EE3A52 /* Link.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
