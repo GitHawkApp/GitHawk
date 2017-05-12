@@ -7,7 +7,7 @@ target 'Freetime' do
 
   # Pods for Freetime
   pod 'Alamofire', '~> 4.4.0'
-  pod 'AlamofireImage', '~> 3.2.0'
+  pod 'SDWebImage', '~> 4.0.0'
   pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
   pod '1PasswordExtension', '~> 1.8.4'
 

@@ -1,19 +1,20 @@
 PODS:
   - 1PasswordExtension (1.8.4)
   - Alamofire (4.4.0)
-  - AlamofireImage (3.2.0):
-    - Alamofire (~> 4.1)
   - IGListKit (2.1.0):
     - IGListKit/Default (= 2.1.0)
   - IGListKit/Default (2.1.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (2.1.0)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
 
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.4)
   - Alamofire (~> 4.4.0)
-  - AlamofireImage (~> 3.2.0)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
+  - SDWebImage (~> 4.0.0)
 
 EXTERNAL SOURCES:
   IGListKit:
@@ -28,9 +29,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
-PODFILE CHECKSUM: 456dae9d5a37ca50b70b098e5b2948e8b9fd029a
+PODFILE CHECKSUM: 1c9f99d229a4ebba30490862f081749fbf54bc9a
 
 COCOAPODS: 1.2.0
