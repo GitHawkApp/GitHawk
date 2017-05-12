@@ -6,7 +6,7 @@ final class Milestone: NSObject, NSCoding {
     static let open_issues = "open_issues"
     static let html_url = "html_url"
     static let closed_at = "closed_at"
-    static let description = "description"
+    static let description_ = "description"
     static let number = "number"
     static let creator = "creator"
     static let labels_url = "labels_url"
@@ -22,7 +22,7 @@ final class Milestone: NSObject, NSCoding {
   let open_issues: NSNumber
   let html_url: String
   let closed_at: String
-  let description: String
+  let description_: String
   let number: NSNumber
   let creator: User
   let labels_url: String
@@ -38,7 +38,7 @@ final class Milestone: NSObject, NSCoding {
     guard let open_issues = json?[Keys.open_issues] as? NSNumber else { return nil }
     guard let html_url = json?[Keys.html_url] as? String else { return nil }
     guard let closed_at = json?[Keys.closed_at] as? String else { return nil }
-    guard let description = json?[Keys.description] as? String else { return nil }
+    guard let description_ = json?[Keys.description_] as? String else { return nil }
     guard let number = json?[Keys.number] as? NSNumber else { return nil }
     guard let creatorJSON = json?[Keys.creator] as? [String: Any] else { return nil }
     guard let creator = User(json: creatorJSON) else { return nil }
@@ -55,7 +55,7 @@ final class Milestone: NSObject, NSCoding {
       open_issues: open_issues,
       html_url: html_url,
       closed_at: closed_at,
-      description: description,
+      description_: description_,
       number: number,
       creator: creator,
       labels_url: labels_url,
@@ -73,7 +73,7 @@ final class Milestone: NSObject, NSCoding {
     open_issues: NSNumber,
     html_url: String,
     closed_at: String,
-    description: String,
+    description_: String,
     number: NSNumber,
     creator: User,
     labels_url: String,
@@ -89,7 +89,7 @@ final class Milestone: NSObject, NSCoding {
     self.open_issues = open_issues
     self.html_url = html_url
     self.closed_at = closed_at
-    self.description = description
+    self.description_ = description_
     self.number = number
     self.creator = creator
     self.labels_url = labels_url
@@ -106,7 +106,7 @@ final class Milestone: NSObject, NSCoding {
     guard let open_issues = aDecoder.decodeObject(forKey: Keys.open_issues) as? NSNumber else { return nil }
     guard let html_url = aDecoder.decodeObject(forKey: Keys.html_url) as? String else { return nil }
     guard let closed_at = aDecoder.decodeObject(forKey: Keys.closed_at) as? String else { return nil }
-    guard let description = aDecoder.decodeObject(forKey: Keys.description) as? String else { return nil }
+    guard let description_ = aDecoder.decodeObject(forKey: Keys.description_) as? String else { return nil }
     guard let number = aDecoder.decodeObject(forKey: Keys.number) as? NSNumber else { return nil }
     guard let creator = aDecoder.decodeObject(forKey: Keys.creator) as? User else { return nil }
     guard let labels_url = aDecoder.decodeObject(forKey: Keys.labels_url) as? String else { return nil }
@@ -122,7 +122,7 @@ final class Milestone: NSObject, NSCoding {
       open_issues: open_issues,
       html_url: html_url,
       closed_at: closed_at,
-      description: description,
+      description_: description_,
       number: number,
       creator: creator,
       labels_url: labels_url,
@@ -140,7 +140,7 @@ final class Milestone: NSObject, NSCoding {
     aCoder.encode(open_issues, forKey: Keys.open_issues)
     aCoder.encode(html_url, forKey: Keys.html_url)
     aCoder.encode(closed_at, forKey: Keys.closed_at)
-    aCoder.encode(description, forKey: Keys.description)
+    aCoder.encode(description_, forKey: Keys.description_)
     aCoder.encode(number, forKey: Keys.number)
     aCoder.encode(creator, forKey: Keys.creator)
     aCoder.encode(labels_url, forKey: Keys.labels_url)
