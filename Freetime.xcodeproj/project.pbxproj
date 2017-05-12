@@ -166,6 +166,7 @@
 			children = (
 				297AE8581EC0D5C100B44A1F /* Login */,
 				297AE85E1EC0D5C100B44A1F /* Models */,
+				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				297AE8611EC0D5C100B44A1F /* Other */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
@@ -276,6 +277,13 @@
 				297AE8731EC0D5C200B44A1F /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		408D21D24BB2680C4B296FCE /* Pods */ = {
