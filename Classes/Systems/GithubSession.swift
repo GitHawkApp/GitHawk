@@ -27,38 +27,38 @@ final class GithubSession: NSObject {
         listeners.remove(listener)
     }
 
-    private var authorizations: NSMutableOrderedSet
+    private(set) var authorization: Authorization?
 
     override init() {
-        if let data = defaults.object(forKey: key) as? Data,
-            let auths = NSKeyedUnarchiver.unarchiveObject(with: data) as? NSMutableOrderedSet {
-            authorizations = auths
-        } else {
-            authorizations = NSMutableOrderedSet()
+        if let data = defaults.object(forKey: key) as? Data {
+            authorization = NSKeyedUnarchiver.unarchiveObject(with: data) as? Authorization
         }
         super.init()
     }
 
-    var currentAuthorization: Authorization? {
-        return authorizations.firstObject as? Authorization
-    }
-
     func add(authorization: Authorization) {
-        authorizations.add(authorization)
+        self.authorization = authorization
+        save()
         for listener in listeners.allObjects {
             listener.didAdd(session: self, authorization: authorization)
         }
     }
 
-    func remove(authorization: Authorization) {
-        authorizations.remove(authorization)
+    func remove() {
+        guard let authorization = authorization else { return }
+        self.authorization = nil
+        save()
         for listener in listeners.allObjects {
             listener.didRemove(session: self, authorization: authorization)
         }
     }
 
     func save() {
-        defaults.set(NSKeyedArchiver.archivedData(withRootObject: authorizations), forKey: key)
+        if let auth = authorization {
+            defaults.set(NSKeyedArchiver.archivedData(withRootObject: auth), forKey: key)
+        } else {
+            defaults.removeObject(forKey: key)
+        }
     }
 
 }
