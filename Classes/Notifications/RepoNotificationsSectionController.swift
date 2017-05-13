@@ -20,11 +20,19 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
 
     // MARK: IGListBindingSectionControllerDataSource
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
-        return self.object?.notifications ?? []
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        viewModelsFor object: Any
+        ) -> [IGListDiffable] {
+        guard let object = self.object else { return [] }
+        return [object.repoName as IGListDiffable] + object.notifications
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        cellForViewModel viewModel: Any,
+        at index: Int
+        ) -> UICollectionViewCell {
         guard let context = collectionContext else { return UICollectionViewCell() }
         if viewModel is String {
             return context.dequeueReusableCell(of: NotificationRepoCell.self, for: self, at: index)
@@ -33,7 +41,11 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
         }
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        sizeForViewModel viewModel: Any,
+        at index: Int
+        ) -> CGSize {
         guard let context = collectionContext else { return .zero }
         let height: CGFloat
         if viewModel is String {

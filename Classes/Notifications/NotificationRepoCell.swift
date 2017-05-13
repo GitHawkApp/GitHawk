@@ -11,7 +11,7 @@ import IGListKit
 
 final class NotificationRepoCell: UICollectionViewCell {
 
-    fileprivate let label = UILabel()
+    let label = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
