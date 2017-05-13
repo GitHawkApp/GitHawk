@@ -37,7 +37,7 @@ extension NotificationViewModel: IGListDiffable {
     }
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
-        guard self === object else { return true }
+        if self === object { return true }
         guard let object = object as? NotificationViewModel else { return false }
         return read == object.read
         && type == object.type
