@@ -49,6 +49,7 @@
 		29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
 		29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
+		29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
 		29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB11EC65FEE00EE3A52 /* Branch.swift */; };
 		29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB21EC65FEE00EE3A52 /* Comment.swift */; };
 		29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB31EC65FEE00EE3A52 /* Commit.swift */; };
@@ -123,6 +124,7 @@
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
+		29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsRequest.swift; sourceTree = "<group>"; };
 		29C9FDB11EC65FEE00EE3A52 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		29C9FDB21EC65FEE00EE3A52 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		29C9FDB31EC65FEE00EE3A52 /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
 				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
+				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
 				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
 				29C9FDCC1EC65FEE00EE3A52 /* Link.swift in Sources */,
+				29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
 				29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */,
