@@ -32,6 +32,9 @@
 		29A195081EC7602500C3E289 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 29A195061EC7601000C3E289 /* Localizable.stringsdict */; };
 		29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
 		29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1950B1EC7901400C3E289 /* NotificationType.swift */; };
+		29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */; };
+		29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
+		29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */; };
 		29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB11EC65FEE00EE3A52 /* Branch.swift */; };
 		29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB21EC65FEE00EE3A52 /* Comment.swift */; };
 		29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB31EC65FEE00EE3A52 /* Commit.swift */; };
@@ -99,6 +102,9 @@
 		29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationType+Icon.swift"; sourceTree = "<group>"; };
 		29A1950B1EC7901400C3E289 /* NotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		29A1950D1EC791BD00C3E289 /* LabelPopover.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = LabelPopover.playground; sourceTree = "<group>"; };
+		29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationRepoCell.swift; sourceTree = "<group>"; };
+		29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotificationsSectionController.swift; sourceTree = "<group>"; };
+		29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotifications.swift; sourceTree = "<group>"; };
 		29C9FDB11EC65FEE00EE3A52 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		29C9FDB21EC65FEE00EE3A52 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		29C9FDB31EC65FEE00EE3A52 /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
@@ -314,7 +320,10 @@
 				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
+				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
+				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
+				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -570,12 +579,15 @@
 				29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				29C9FDC81EC65FEE00EE3A52 /* Event.swift in Sources */,
+				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
 				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
 				29C9FDCC1EC65FEE00EE3A52 /* Link.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
+				29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
+				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
