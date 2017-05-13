@@ -9,17 +9,18 @@
 import UIKit
 import IGListKit
 
-protocol NotificationDetailsCellDelegate: class {
-    func didTapMark(cell: NotificationDetailsCell)
+protocol NotificationCellDelegate: class {
+    func didTapMark(cell: NotificationCell)
 }
 
-final class NotificationDetailsCell: UICollectionViewCell {
+final class NotificationCell: UICollectionViewCell {
 
-    weak var delegate: NotificationDetailsCellDelegate? = nil
+    weak var delegate: NotificationCellDelegate? = nil
 
     fileprivate let reasonImageView = UIImageView()
     fileprivate let markButton = UIButton(type: .custom)
     fileprivate let dateLabel = UILabel()
+    fileprivate let titleLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +34,10 @@ final class NotificationDetailsCell: UICollectionViewCell {
         dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.light
         contentView.addSubview(dateLabel)
+
+        titleLabel.font = Styles.Fonts.body
+        titleLabel.textColor = Styles.Colors.Gray.dark
+        contentView.addSubview(titleLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,11 +50,12 @@ final class NotificationDetailsCell: UICollectionViewCell {
 
 }
 
-extension NotificationDetailsCell: IGListBindable {
+extension NotificationCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? NotificationDetailsViewModel else { return }
+        guard let viewModel = viewModel as? NotificationViewModel else { return }
         markButton.isHidden = viewModel.read
+        setNeedsLayout()
     }
 
 }

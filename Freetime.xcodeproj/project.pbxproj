@@ -52,8 +52,8 @@
 		29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC21EC65FEE00EE3A52 /* Status.swift */; };
 		29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC31EC65FEE00EE3A52 /* Subject.swift */; };
 		29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC41EC65FEE00EE3A52 /* User.swift */; };
-		29C9FDDB1EC6627200EE3A52 /* NotificationDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */; };
-		29C9FDDD1EC6628200EE3A52 /* NotificationDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */; };
+		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
+		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29F3A3351EC3D2440048865D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A3341EC3D2440048865D /* ViewController.swift */; };
 		674E68DD8AB2797245D70831 /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598351A26924CB8F4CCDA3 /* Pods_FreetimeTests.framework */; };
@@ -119,8 +119,8 @@
 		29C9FDC21EC65FEE00EE3A52 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		29C9FDC31EC65FEE00EE3A52 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		29C9FDC41EC65FEE00EE3A52 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailsCell.swift; sourceTree = "<group>"; };
-		29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetailsViewModel.swift; sourceTree = "<group>"; };
+		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29F3A3341EC3D2440048865D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
@@ -311,8 +311,8 @@
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				29C9FDDA1EC6627200EE3A52 /* NotificationDetailsCell.swift */,
-				29C9FDDC1EC6628200EE3A52 /* NotificationDetailsViewModel.swift */,
+				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
+				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 			);
@@ -548,9 +548,9 @@
 			files = (
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
-				29C9FDDD1EC6628200EE3A52 /* NotificationDetailsViewModel.swift in Sources */,
+				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
-				29C9FDDB1EC6627200EE3A52 /* NotificationDetailsCell.swift in Sources */,
+				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				29C9FDD21EC65FEE00EE3A52 /* Reaction.swift in Sources */,
 				29C9FDC91EC65FEE00EE3A52 /* Html.swift in Sources */,
 				29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */,
