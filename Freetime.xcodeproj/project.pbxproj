@@ -47,6 +47,8 @@
 		29C2950B1EC7B16800D46CD2 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
+		29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
+		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB11EC65FEE00EE3A52 /* Branch.swift */; };
 		29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB21EC65FEE00EE3A52 /* Comment.swift */; };
 		29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB31EC65FEE00EE3A52 /* Commit.swift */; };
@@ -120,6 +122,7 @@
 		29A195181EC7AF6800C3E289 /* NotificationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTests.swift; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
+		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
 		29C9FDB11EC65FEE00EE3A52 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		29C9FDB21EC65FEE00EE3A52 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		29C9FDB31EC65FEE00EE3A52 /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
@@ -316,6 +319,7 @@
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A195031EC74C4800C3E289 /* Date+Display.swift */,
+				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -612,6 +616,7 @@
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				29C9FDD51EC65FEE00EE3A52 /* Self_.swift in Sources */,
+				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C9FDD41EC65FEE00EE3A52 /* ReviewComment.swift in Sources */,
 				29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */,
 				297AE8791EC0D5C200B44A1F /* App.swift in Sources */,
@@ -633,6 +638,7 @@
 				29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */,
 				29C295051EC7AF8C00D46CD2 /* NotificationRepoCell.swift in Sources */,
 				29A195051EC75F3D00C3E289 /* Date+Display.swift in Sources */,
+				29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C295071EC7AF8C00D46CD2 /* RepoNotificationsSectionController.swift in Sources */,
 				29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */,
 				297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */,
