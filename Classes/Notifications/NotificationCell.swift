@@ -17,10 +17,10 @@ final class NotificationCell: UICollectionViewCell {
 
     weak var delegate: NotificationCellDelegate? = nil
 
-    fileprivate let reasonImageView = UIImageView()
-    fileprivate let markButton = UIButton(type: .custom)
-    fileprivate let dateLabel = UILabel()
-    fileprivate let titleLabel = UILabel()
+    let reasonImageView = UIImageView()
+    let markButton = UIButton(type: .custom)
+    let dateLabel = UILabel()
+    let titleLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +55,7 @@ extension NotificationCell: IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
         markButton.isHidden = viewModel.read
+        titleLabel.text = viewModel.title
         setNeedsLayout()
     }
 
