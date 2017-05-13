@@ -11,12 +11,12 @@ import IGListKit
 
 final class NotificationDetailsViewModel {
 
-    let reason: NotificationReason
+    let reason: NotificationType
     let date: Date
     let read: Bool
 
     init(
-        reason: NotificationReason,
+        reason: NotificationType,
         date: Date,
         read: Bool
         ) {
