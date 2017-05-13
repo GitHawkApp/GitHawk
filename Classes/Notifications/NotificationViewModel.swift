@@ -1,5 +1,5 @@
 //
-//  NotificationDetailsViewModel.swift
+//  NotificationViewModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/12/17.
@@ -9,25 +9,28 @@
 import Foundation
 import IGListKit
 
-final class NotificationDetailsViewModel {
+final class NotificationViewModel {
 
-    let reason: NotificationType
+    let title: String
+    let type: NotificationType
     let date: Date
     let read: Bool
 
     init(
-        reason: NotificationType,
+        title: String,
+        type: NotificationType,
         date: Date,
         read: Bool
         ) {
-        self.reason = reason
+        self.title = title
+        self.type = type
         self.date = date
         self.read = read
     }
 
 }
 
-extension NotificationDetailsViewModel: IGListDiffable {
+extension NotificationViewModel: IGListDiffable {
 
     func diffIdentifier() -> NSObjectProtocol {
         return date as NSObjectProtocol
@@ -35,9 +38,10 @@ extension NotificationDetailsViewModel: IGListDiffable {
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
         guard self === object else { return true }
-        guard let object = object as? NotificationDetailsViewModel else { return false }
+        guard let object = object as? NotificationViewModel else { return false }
         return read == object.read
-        && reason == object.reason
+        && type == object.type
+        && title == object.title
     }
 
 }
