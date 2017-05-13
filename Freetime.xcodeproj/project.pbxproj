@@ -98,6 +98,7 @@
 		29A195061EC7601000C3E289 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationType+Icon.swift"; sourceTree = "<group>"; };
 		29A1950B1EC7901400C3E289 /* NotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
+		29A1950D1EC791BD00C3E289 /* LabelPopover.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = LabelPopover.playground; sourceTree = "<group>"; };
 		29C9FDB11EC65FEE00EE3A52 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		29C9FDB21EC65FEE00EE3A52 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		29C9FDB31EC65FEE00EE3A52 /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
+				29A1950D1EC791BD00C3E289 /* LabelPopover.playground */,
 				29F63FD11EC530E7007F55E4 /* TextViews.playground */,
 				29F63FD01EC530BD007F55E4 /* Github API.playground */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
