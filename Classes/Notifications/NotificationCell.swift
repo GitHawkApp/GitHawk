@@ -19,7 +19,7 @@ final class NotificationCell: UICollectionViewCell {
 
     let reasonImageView = UIImageView()
     let markButton = UIButton(type: .custom)
-    let dateLabel = UILabel()
+    let dateLabel = ShowMoreDetailsLabel()
     let titleLabel = UILabel()
 
     override init(frame: CGRect) {
@@ -50,12 +50,19 @@ final class NotificationCell: UICollectionViewCell {
 
 }
 
+fileprivate let dateFormatter = DateFormatter()
+
 extension NotificationCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
         markButton.isHidden = viewModel.read
         titleLabel.text = viewModel.title
+        dateLabel.text = viewModel.date.agoString
+
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:ss ZZZ"
+        dateLabel.detailText = dateFormatter.string(from: viewModel.date)
+
         setNeedsLayout()
     }
 
