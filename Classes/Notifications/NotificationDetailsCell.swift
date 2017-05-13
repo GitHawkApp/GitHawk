@@ -30,6 +30,8 @@ final class NotificationDetailsCell: UICollectionViewCell {
         contentView.addSubview(markButton)
 
         dateLabel.backgroundColor = .clear
+        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.textColor = Styles.Colors.Gray.light
         contentView.addSubview(dateLabel)
     }
     

@@ -17,9 +17,9 @@ struct Styles {
     }
 
     struct Fonts {
-        static let bodyFont = UIFont.systemFont(ofSize: 17)
-        static let secondaryFont = UIFont.systemFont(ofSize: 17)
-        static let titleFont = UIFont.boldSystemFont(ofSize: 17)
+        static let body = UIFont.systemFont(ofSize: 17)
+        static let secondary = UIFont.systemFont(ofSize: 17)
+        static let title = UIFont.boldSystemFont(ofSize: 17)
     }
 
     struct Colors {
