@@ -26,7 +26,7 @@ class DateDisplayTests: XCTestCase {
         XCTAssertEqual(result, "1 minute ago")
     }
 
-    func test_whenDateMinutes_withUpperBound_withDecimal_withPlural() {
+    func test_whenDateMinutes_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -59.5).agoString
         XCTAssertEqual(result, "1 minute ago")
     }
@@ -41,6 +41,11 @@ class DateDisplayTests: XCTestCase {
         XCTAssertEqual(result, "1 hour ago")
     }
 
+    func test_whenDateHour_withUpperBound_withDecimal_withSingular() {
+        let result = Date(timeIntervalSinceNow: -3599.5).agoString
+        XCTAssertEqual(result, "1 hour ago")
+    }
+
     func test_whenDateHours_withUpperBound_withPlural() {
         let result = Date(timeIntervalSinceNow: -7199).agoString
         XCTAssertEqual(result, "2 hours ago")
@@ -48,6 +53,11 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateDay_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -86401).agoString
+        XCTAssertEqual(result, "1 day ago")
+    }
+
+    func test_whenDateDay_withUpperBound_withDecimal_withSingular() {
+        let result = Date(timeIntervalSinceNow: -86399.5).agoString
         XCTAssertEqual(result, "1 day ago")
     }
 
@@ -61,6 +71,11 @@ class DateDisplayTests: XCTestCase {
         XCTAssertEqual(result, "1 month ago")
     }
 
+    func test_whenDateMonth_withUpperBound_withDecimal_withSingular() {
+        let result = Date(timeIntervalSinceNow: -2591999.5).agoString
+        XCTAssertEqual(result, "1 month ago")
+    }
+
     func test_whenDateMonth_withUpperBound_withPlural() {
         let result = Date(timeIntervalSinceNow: -5183999).agoString
         XCTAssertEqual(result, "2 months ago")
@@ -68,6 +83,11 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateYear_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -31104001).agoString
+        XCTAssertEqual(result, "1 year ago")
+    }
+
+    func test_whenDateYear_withUpperBound_withDecimal_withSingular() {
+        let result = Date(timeIntervalSinceNow: -31103999.5).agoString
         XCTAssertEqual(result, "1 year ago")
     }
 
