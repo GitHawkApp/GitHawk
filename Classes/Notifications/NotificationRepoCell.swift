@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import SnapKit
 
 final class NotificationRepoCell: UICollectionViewCell {
 
@@ -18,15 +19,15 @@ final class NotificationRepoCell: UICollectionViewCell {
 
         label.font = Styles.Fonts.title
         label.textColor = Styles.Colors.Gray.light
+        contentView.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.equalTo(Styles.Sizes.gutter)
+            make.centerY.equalTo(self.contentView)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.frame = contentView.bounds
     }
 
 }
