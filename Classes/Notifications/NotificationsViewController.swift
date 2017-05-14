@@ -13,13 +13,11 @@ import SnapKit
 class NotificationsViewController: UIViewController {
 
     let session: GithubSession
-    let repoNotifications = [
-        RepoNotifications(
-            repoName: "Repo Name",
-            notifications: [
-                NotificationViewModel(title: "Notification 1 title", type: .issue, date: Date(), read: false)
-            ])
-    ]
+    var repoNotifications = [RepoNotifications]() {
+        didSet {
+            adapter.performUpdates(animated: true)
+        }
+    }
 
     lazy var collectionView: UICollectionView = {
         let uicv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -52,16 +50,14 @@ class NotificationsViewController: UIViewController {
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
-        //        requestNotifications(session: session) { result in
-        //            switch result {
-        //            case .noauth:
-        //                print("no auth")
-        //            case .success:
-        //                print("success")
-        //            case .failed:
-        //                print("failed")
-        //            }
-        //        }
+        requestNotifications(session: session) { result in
+            switch result {
+            case .success(let notifications):
+                self.repoNotifications = createRepoNotifications(notifications: notifications)
+            case .failed:
+                print("failed")
+            }
+        }
     }
 
 }
