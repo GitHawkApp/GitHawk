@@ -15,7 +15,7 @@ final class Notification: NSObject, NSCoding {
   let unread: Bool
   let id: String
   let repository: Repository
-  let last_read_at: String
+  let last_read_at: String?
   let url: String
   let subject: Subject
   convenience init?(json: [String: Any]?) {
@@ -25,7 +25,7 @@ final class Notification: NSObject, NSCoding {
     guard let id = json?[Keys.id] as? String else { return nil }
     guard let repositoryJSON = json?[Keys.repository] as? [String: Any] else { return nil }
     guard let repository = Repository(json: repositoryJSON) else { return nil }
-    guard let last_read_at = json?[Keys.last_read_at] as? String else { return nil }
+    let last_read_at = json?[Keys.last_read_at] as? String
     guard let url = json?[Keys.url] as? String else { return nil }
     guard let subjectJSON = json?[Keys.subject] as? [String: Any] else { return nil }
     guard let subject = Subject(json: subjectJSON) else { return nil }
@@ -46,7 +46,7 @@ final class Notification: NSObject, NSCoding {
     unread: Bool,
     id: String,
     repository: Repository,
-    last_read_at: String,
+    last_read_at: String?,
     url: String,
     subject: Subject
     ) {
@@ -65,7 +65,7 @@ final class Notification: NSObject, NSCoding {
     let unread = aDecoder.decodeBool(forKey: Keys.unread)
     guard let id = aDecoder.decodeObject(forKey: Keys.id) as? String else { return nil }
     guard let repository = aDecoder.decodeObject(forKey: Keys.repository) as? Repository else { return nil }
-    guard let last_read_at = aDecoder.decodeObject(forKey: Keys.last_read_at) as? String else { return nil }
+    let last_read_at = aDecoder.decodeObject(forKey: Keys.last_read_at) as? String
     guard let url = aDecoder.decodeObject(forKey: Keys.url) as? String else { return nil }
     guard let subject = aDecoder.decodeObject(forKey: Keys.subject) as? Subject else { return nil }
     self.init(

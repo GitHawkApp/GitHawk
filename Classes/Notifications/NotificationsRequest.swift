@@ -10,7 +10,6 @@ import Foundation
 
 enum NotificationResult {
     case failed(Error?)
-    case noauth
     case success([Notification])
 }
 
@@ -23,7 +22,7 @@ func requestNotifications(
     since: Date = Date(),
     page: Int = 0,
     before: Date? = nil,
-    completion: (NotificationResult) -> ()
+    completion: @escaping (NotificationResult) -> ()
     ) {
     dateFormatter.dateFormat = ""
 
@@ -43,7 +42,17 @@ func requestNotifications(
         parameters: parameters,
         headers: nil,
         session: session) { response in
-            print(response)
+            if let jsonArr = response.value as? [ [String: Any] ] {
+                var notifications = [Notification]()
+                for json in jsonArr {
+                    if let notification = Notification(json: json) {
+                        notifications.append(notification)
+                    }
+                }
+                completion(.success(notifications))
+            } else {
+                completion(.failed(response.error))
+            }
     }
 
     request(r)
