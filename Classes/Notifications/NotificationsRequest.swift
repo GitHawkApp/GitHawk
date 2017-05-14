@@ -25,14 +25,9 @@ func requestNotifications(
     before: Date? = nil,
     completion: (NotificationResult) -> ()
     ) {
-    guard let authorization = session.authorization else {
-        completion(.noauth)
-        return
-    }
     dateFormatter.dateFormat = ""
 
     var parameters: [String: Any] = [
-        "access_token": authorization.token,
         "all": all ? "true" : "false",
         "participating": participating ? "true" : "false",
         "since": dateFormatter.string(from: since),
@@ -42,12 +37,14 @@ func requestNotifications(
         parameters["before"] = dateFormatter.string(from: before)
     }
 
-    let _ = requestGithub(
+    let r = GithubRequest(
         path: "notifications",
         method: .get,
         parameters: parameters,
-        headers: nil
-    ) { response in
-        print(response)
+        headers: nil,
+        session: session) { response in
+            print(response)
     }
+
+    request(r)
 }
