@@ -50,6 +50,7 @@
 		29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
+		29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
 		29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB11EC65FEE00EE3A52 /* Branch.swift */; };
 		29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB21EC65FEE00EE3A52 /* Comment.swift */; };
 		29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB31EC65FEE00EE3A52 /* Commit.swift */; };
@@ -73,7 +74,6 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
-		29F3A3351EC3D2440048865D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A3341EC3D2440048865D /* ViewController.swift */; };
 		674E68DD8AB2797245D70831 /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F598351A26924CB8F4CCDA3 /* Pods_FreetimeTests.framework */; };
 		DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
@@ -125,6 +125,7 @@
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
 		29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsRequest.swift; sourceTree = "<group>"; };
+		29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		29C9FDB11EC65FEE00EE3A52 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		29C9FDB21EC65FEE00EE3A52 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		29C9FDB31EC65FEE00EE3A52 /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
@@ -148,7 +149,6 @@
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		29F3A3341EC3D2440048865D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
 		3F72412896DBFA26D5A721E9 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
@@ -303,7 +303,6 @@
 			children = (
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
-				29F3A3341EC3D2440048865D /* ViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -349,6 +348,7 @@
 				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
 				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
 				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
+				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -598,7 +598,6 @@
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
-				29F3A3351EC3D2440048865D /* ViewController.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
 				29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */,
@@ -619,6 +618,7 @@
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				29C9FDD51EC65FEE00EE3A52 /* Self_.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C9FDD41EC65FEE00EE3A52 /* ReviewComment.swift in Sources */,

@@ -16,10 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     var showingLogin = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if let controller = window?.rootViewController as? ViewController {
-            controller.session = session
-        }
         session.addListener(listener: self)
+        resetRootViewController()
         return true
     }
 
@@ -27,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         showLogin()
     }
 
-    func showLogin(animated: Bool = false) {
+    // MARK: Private API
+
+    private func showLogin(animated: Bool = false) {
         guard showingLogin == false,
             session.authorization == nil,
             let nav = UIStoryboard(
@@ -41,10 +41,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         window?.rootViewController?.present(nav, animated: animated)
     }
 
-    func hideLogin(animated: Bool = false) {
+    private func hideLogin(animated: Bool = false) {
         showingLogin = false
         window?.rootViewController?.presentedViewController?.dismiss(animated: animated)
+        resetRootViewController()
     }
+
+    private func resetRootViewController() {
+        if let nav = window?.rootViewController as? UINavigationController {
+            let notifications = NotificationsViewController(session: session)
+            nav.viewControllers = [notifications]
+        }
+    }
+
+    // MARK: GithubSessionListener
 
     func didAdd(session: GithubSession, authorization: Authorization) {
         hideLogin(animated: true)
