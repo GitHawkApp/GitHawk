@@ -7,32 +7,75 @@
 //
 
 import UIKit
+import IGListKit
+import SnapKit
 
 class NotificationsViewController: UIViewController {
 
     let session: GithubSession
+    let repoNotifications = [
+        RepoNotifications(
+            repoName: "Repo Name",
+            notifications: [
+                NotificationViewModel(title: "Notification 1 title", type: .issue, date: Date(), read: false)
+            ])
+    ]
+
+    lazy var collectionView: UICollectionView = {
+        let uicv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        uicv.backgroundColor = .white
+        uicv.alwaysBounceVertical = true
+        return uicv
+    }()
+    lazy var adapter: IGListAdapter = {
+        return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self)
+    }()
 
     init(session: GithubSession) {
         self.session = session
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestNotifications(session: session) { result in
-            switch result {
-            case .noauth:
-                print("no auth")
-            case .success:
-                print("success")
-            case .failed:
-                print("failed")
-            }
+        view.backgroundColor = .white
+
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view)
         }
+
+        adapter.collectionView = collectionView
+        adapter.dataSource = self
+
+        //        requestNotifications(session: session) { result in
+        //            switch result {
+        //            case .noauth:
+        //                print("no auth")
+        //            case .success:
+        //                print("success")
+        //            case .failed:
+        //                print("failed")
+        //            }
+        //        }
     }
 
+}
+
+extension NotificationsViewController: IGListAdapterDataSource {
+    
+    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+        return repoNotifications
+    }
+
+    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+        return RepoNotificationsSectionController()
+    }
+
+    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+    
 }

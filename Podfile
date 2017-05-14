@@ -4,6 +4,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
+pod 'SnapKit', '~> 3.2.0'
 
 target 'Freetime' do
   pod 'Alamofire', '~> 4.4.0'
