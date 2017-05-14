@@ -12,6 +12,7 @@ import IGListKit
 final class NotificationViewModel {
 
     let title: NSAttributedString
+    let titleSize: CGSize
     let type: NotificationType
     let date: Date
     let read: Bool
@@ -20,7 +21,8 @@ final class NotificationViewModel {
         title: String,
         type: NotificationType,
         date: Date,
-        read: Bool
+        read: Bool,
+        containerWidth: CGFloat
         ) {
         self.type = type
         self.date = date
@@ -31,6 +33,10 @@ final class NotificationViewModel {
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark
         ]
         self.title = NSAttributedString(string: title, attributes: attributes)
+
+        let insetWidth = containerWidth - NotificationCell.labelInset.left - NotificationCell.labelInset.right
+        let sizing = NSAttributedStringSizing(containerWidth: insetWidth, attributedText: self.title)
+        self.titleSize = sizing.textViewSize
     }
 
 }
