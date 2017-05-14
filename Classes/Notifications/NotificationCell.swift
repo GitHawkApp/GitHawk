@@ -56,6 +56,12 @@ final class NotificationCell: UICollectionViewCell {
         titleLabel.font = Styles.Fonts.body
         titleLabel.textColor = Styles.Colors.Gray.dark
         contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalTo(Styles.Sizes.gutter)
+            make.top.equalTo(reasonImageView).offset(Styles.Sizes.rowSpacing)
+            make.width.equalTo(contentView).offset(-2*Styles.Sizes.gutter)
+            make.height.equalTo(contentView).offset(Styles.Sizes.icon.height + Styles.Sizes.rowSpacing)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

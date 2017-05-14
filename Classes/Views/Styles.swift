@@ -15,6 +15,7 @@ struct Styles {
         static let icon = CGSize(width: 25, height: 25)
         static let avatarCornerRadius: CGFloat = 3
         static let columnSpacing: CGFloat = 8
+        static let rowSpacing: CGFloat = 8
     }
 
     struct Fonts {
