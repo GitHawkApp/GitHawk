@@ -14,6 +14,10 @@ enum GithubLogin {
     case twoFactor
 }
 
+private func base64Auth(username: String, password: String) -> String {
+    return "Basic " + ("\(username):\(password)".data(using: .ascii)?.base64EncodedString() ?? "")
+}
+
 func requestGithubLogin(
     username: String,
     password: String,
@@ -27,19 +31,19 @@ func requestGithubLogin(
         "client_secret": GithubAPI.clientSecret
     ]
 
-    let base64Auth = "\(username):\(password)".data(using: .ascii)?.base64EncodedString() ?? ""
     var headers = [
-        "Authorization": "Basic " + base64Auth
+        "Authorization": base64Auth(username: username, password: password)
     ]
     if let code = twoFactorCode {
         headers["X-GitHub-OTP"] = code
     }
 
-    let _ = requestGithub(
+    let r = GithubRequest(
         path: "authorizations",
         method: .post,
         parameters: parameters,
-        headers: headers) { response in
+        headers: headers,
+        session: nil) { response in
             if let twoFactorHeader = response.response?.allHeaderFields["X-GitHub-OTP"] as? String,
                 twoFactorHeader.hasPrefix("required") {
                 completion(.twoFactor)
@@ -50,4 +54,6 @@ func requestGithubLogin(
                 completion(.failed(response.error))
             }
     }
+    
+    request(r)
 }
