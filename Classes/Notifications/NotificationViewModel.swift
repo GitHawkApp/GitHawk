@@ -11,7 +11,7 @@ import IGListKit
 
 final class NotificationViewModel {
 
-    let title: String
+    let title: NSAttributedString
     let type: NotificationType
     let date: Date
     let read: Bool
@@ -22,10 +22,15 @@ final class NotificationViewModel {
         date: Date,
         read: Bool
         ) {
-        self.title = title
         self.type = type
         self.date = date
         self.read = read
+
+        let attributes = [
+            NSFontAttributeName: Styles.Fonts.body,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark
+        ]
+        self.title = NSAttributedString(string: title, attributes: attributes)
     }
 
 }

@@ -18,6 +18,13 @@ final class NotificationCell: UICollectionViewCell {
 
     weak var delegate: NotificationCellDelegate? = nil
 
+    static let labelInset = UIEdgeInsets(
+        top: Styles.Sizes.icon.height + Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter,
+        bottom: 0,
+        right: Styles.Sizes.gutter
+    )
+
     let reasonImageView = UIImageView()
     let markButton = UIButton(type: .custom)
     let dateLabel = ShowMoreDetailsLabel()
@@ -39,7 +46,7 @@ final class NotificationCell: UICollectionViewCell {
         markButton.setImage(UIImage(named: "check"), for: .normal)
         contentView.addSubview(markButton)
         markButton.snp.makeConstraints { make in
-            make.size.equalTo(Styles.Sizes.icon)
+            make.size.equalTo(Styles.Sizes.buttonIcon)
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(reasonImageView)
         }
@@ -53,14 +60,9 @@ final class NotificationCell: UICollectionViewCell {
             make.centerY.equalTo(reasonImageView)
         }
 
-        titleLabel.font = Styles.Fonts.body
-        titleLabel.textColor = Styles.Colors.Gray.dark
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.top.equalTo(reasonImageView).offset(Styles.Sizes.rowSpacing)
-            make.width.equalTo(contentView).offset(-2*Styles.Sizes.gutter)
-            make.height.equalTo(contentView).offset(Styles.Sizes.icon.height + Styles.Sizes.rowSpacing)
+            make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
     }
     
@@ -77,7 +79,7 @@ extension NotificationCell: IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
         markButton.isHidden = viewModel.read
-        titleLabel.text = viewModel.title
+        titleLabel.attributedText = viewModel.title
         dateLabel.text = viewModel.date.agoString
         reasonImageView.image = viewModel.type.icon
 
