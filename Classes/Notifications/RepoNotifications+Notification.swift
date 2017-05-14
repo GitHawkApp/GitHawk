@@ -6,9 +6,9 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-func createRepoNotifications(notifications: [Notification]) -> [RepoNotifications] {
+func createRepoNotifications(containerWidth: CGFloat, notifications: [Notification]) -> [RepoNotifications] {
     var map = [String: [NotificationViewModel]]()
 
     let df = GithubAPIDateFormatter()
@@ -21,8 +21,8 @@ func createRepoNotifications(notifications: [Notification]) -> [RepoNotification
             title: notification.subject.title,
             type: type,
             date: date,
-            read:
-            notification.unread
+            read: notification.unread,
+            containerWidth: containerWidth
         )
 
         let key = notification.repository.name

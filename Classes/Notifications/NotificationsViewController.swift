@@ -53,7 +53,10 @@ class NotificationsViewController: UIViewController {
         requestNotifications(session: session) { result in
             switch result {
             case .success(let notifications):
-                self.repoNotifications = createRepoNotifications(notifications: notifications)
+                self.repoNotifications = createRepoNotifications(
+                    containerWidth: self.view.bounds.width,
+                    notifications: notifications
+                )
             case .failed:
                 print("failed")
             }
