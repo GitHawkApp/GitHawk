@@ -10,8 +10,8 @@ do
 
   mkdir -p out
 
-  convert -density 1200 -background none -resize "60x60" "${file}" "out/${base}@2x.png"
-  convert -density 1200 -background none -resize "90x90" "${file}" "out/${base}@3x.png"
+  convert -density 1200 -background none -resize "50x50" "${file}" "out/${base}@2x.png"
+  convert -density 1200 -background none -resize "75x75" "${file}" "out/${base}@3x.png"
 
   #inkscape --export-png "out/${base}@2x.png" -h 2*$size "${file}"
   #inkscape --export-png "out/${base}@3x.png" -h 3*$size "${file}"
