@@ -72,6 +72,7 @@ class NotificationsViewController: UIViewController {
 extension NotificationsViewController: IGListAdapterDataSource {
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+        guard repoNotifications.count > 0 else { return [] }
         return [selection] + repoNotifications
     }
 
@@ -85,7 +86,11 @@ extension NotificationsViewController: IGListAdapterDataSource {
         }
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+    func emptyView(for listAdapter: IGListAdapter) -> UIView? {
+        let emptyView = EmptyView()
+        emptyView.label.text = NSLocalizedString("Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications ", comment: "")
+        return emptyView
+    }
 
 }
 

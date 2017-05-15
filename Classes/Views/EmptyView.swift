@@ -16,13 +16,14 @@ final class EmptyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         label.backgroundColor = Styles.Colors.Gray.lighter
+        label.textAlignment = .center
         label.font = Styles.Fonts.body
         label.textColor = Styles.Colors.Gray.medium
         label.numberOfLines = 0
         addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalTo(self)
-            make.width.lessThanOrEqualTo(self).offset(Styles.Sizes.gutter)
+            make.width.lessThanOrEqualToSuperview().offset(-Styles.Sizes.gutter)
         }
     }
     
