@@ -22,7 +22,6 @@ class NotificationsViewController: UIViewController {
     init(session: GithubSession) {
         self.session = session
         super.init(nibName: nil, bundle: nil)
-        navigationItem.title = NSLocalizedString("Notifications", comment: "")
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +30,11 @@ class NotificationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        let title = NSLocalizedString("Notifications", comment: "")
+        navigationItem.title = title
+        navigationController?.tabBarItem.title = title
+        navigationController?.tabBarItem.image = UIImage(named: "bell")
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
