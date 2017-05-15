@@ -54,6 +54,8 @@
 		29C167761ECA0DE100439D62 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		29C167781ECA0F9900439D62 /* RepoNotifications+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167771ECA0F9900439D62 /* RepoNotifications+Fake.swift */; };
 		29C1677A1ECA14F700439D62 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167791ECA14F700439D62 /* Feed.swift */; };
+		29C1677D1ECA1D0200439D62 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C1677C1ECA1D0200439D62 /* Settings.storyboard */; };
+		29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */; };
 		29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
@@ -151,6 +153,8 @@
 		29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPIDateFormatter.swift; sourceTree = "<group>"; };
 		29C167771ECA0F9900439D62 /* RepoNotifications+Fake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Fake.swift"; sourceTree = "<group>"; };
 		29C167791ECA14F700439D62 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		29C1677C1ECA1D0200439D62 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Settings.storyboard; path = Classes/Settings/Settings.storyboard; sourceTree = SOURCE_ROOT; };
+		29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				297AE8611EC0D5C100B44A1F /* Other */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
+				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
 				297AE8681EC0D5C200B44A1F /* View Controllers */,
 				297AE86B1EC0D5C200B44A1F /* View Models */,
@@ -382,6 +387,15 @@
 				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
 			);
 			path = SegmentedControl;
+			sourceTree = "<group>";
+		};
+		29C1677B1ECA1CED00439D62 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				29C1677C1ECA1D0200439D62 /* Settings.storyboard */,
+				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
@@ -517,6 +531,7 @@
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
 				297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */,
+				29C1677D1ECA1D0200439D62 /* Settings.storyboard in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 			);
@@ -650,6 +665,7 @@
 				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
