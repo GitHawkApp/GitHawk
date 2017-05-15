@@ -21,7 +21,7 @@ final class NotificationCell: UICollectionViewCell {
     static let labelInset = UIEdgeInsets(
         top: Styles.Sizes.icon.height + Styles.Sizes.rowSpacing,
         left: Styles.Sizes.gutter,
-        bottom: 0,
+        bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
 
@@ -60,10 +60,13 @@ final class NotificationCell: UICollectionViewCell {
             make.centerY.equalTo(reasonImageView)
         }
 
+        titleLabel.numberOfLines = 0
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
+
+        addBottomBorder(left: Styles.Sizes.gutter)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,12 +81,16 @@ extension NotificationCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
-        markButton.isHidden = viewModel.read
         titleLabel.attributedText = viewModel.title
         dateLabel.text = viewModel.date.agoString
         reasonImageView.image = viewModel.type.icon
 
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:ss ZZZ"
+        markButton.isHidden = viewModel.read
+        for view in [titleLabel, reasonImageView] {
+            view.alpha = viewModel.read ? 0.5 : 1
+        }
+
+        dateFormatter.dateFormat = "MMM d, yyyy hh:mm a zzz"
         dateLabel.detailText = dateFormatter.string(from: viewModel.date)
 
         setNeedsLayout()
