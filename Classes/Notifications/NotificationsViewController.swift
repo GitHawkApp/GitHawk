@@ -47,7 +47,7 @@ class NotificationsViewController: UIViewController {
     fileprivate func update(fromNetwork: Bool) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(repoNotifications: allNotifications, unread: unread)
-        feed.update(fromNetwork: fromNetwork)
+        feed.finishLoading(fromNetwork: fromNetwork)
     }
 
     fileprivate func reload() {
