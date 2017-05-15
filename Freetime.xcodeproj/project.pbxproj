@@ -27,7 +27,9 @@
 		298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */; };
 		298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
-		298BA0911EC9453D00B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0901EC9453D00B01946 /* SegmentedControlCell.swift */; };
+		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
+		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
+		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -117,7 +119,9 @@
 		298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Notification.swift"; sourceTree = "<group>"; };
 		298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringSizing.swift; sourceTree = "<group>"; };
 		298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+BottomBorder.swift"; sourceTree = "<group>"; };
-		298BA0901EC9453D00B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
+		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
+		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
+		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSession.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				298BA0941EC947F100B01946 /* SegmentedControl */,
 			);
 			path = "Section Controllers";
 			sourceTree = "<group>";
@@ -331,7 +336,6 @@
 				29A195031EC74C4800C3E289 /* Date+Display.swift */,
 				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				298BA0901EC9453D00B01946 /* SegmentedControlCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -346,6 +350,16 @@
 				29A195061EC7601000C3E289 /* Localizable.stringsdict */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		298BA0941EC947F100B01946 /* SegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				298BA0951EC947F100B01946 /* SegmentedControlCell.swift */,
+				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
+				298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */,
+			);
+			path = SegmentedControl;
 			sourceTree = "<group>";
 		};
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
@@ -612,6 +626,8 @@
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
+				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
+				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
 				29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
@@ -628,7 +644,7 @@
 				29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
-				298BA0911EC9453D00B01946 /* SegmentedControlCell.swift in Sources */,
+				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
