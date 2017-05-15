@@ -44,6 +44,14 @@
 		29A195191EC7AF6800C3E289 /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195181EC7AF6800C3E289 /* NotificationsTests.swift */; };
 		29C167671ECA005500439D62 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
+		29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */; };
+		29C1676C1ECA0D6700439D62 /* RepoNotifications+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */; };
+		29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
+		29C167711ECA0D7C00439D62 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
+		29C167721ECA0D7C00439D62 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
+		29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
+		29C167751ECA0DC300439D62 /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
+		29C167761ECA0DE100439D62 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
@@ -137,6 +145,8 @@
 		29A195181EC7AF6800C3E289 /* NotificationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTests.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Filter.swift"; sourceTree = "<group>"; };
+		29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPIDateFormatter.swift; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
@@ -309,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */,
+				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
 				299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
@@ -375,6 +386,7 @@
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
 				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
+				29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
@@ -626,8 +638,10 @@
 				29C9FDCB1EC65FEE00EE3A52 /* Label.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
+				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29C9FDD11EC65FEE00EE3A52 /* PullRequest.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
+				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
@@ -675,17 +689,23 @@
 			files = (
 				29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */,
 				29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */,
+				29C167761ECA0DE100439D62 /* NSAttributedStringSizing.swift in Sources */,
 				29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */,
+				29C167721ECA0D7C00439D62 /* UIView+BottomBorder.swift in Sources */,
 				29C2950A1EC7AFA500D46CD2 /* ListTestKit.swift in Sources */,
 				29C2950B1EC7B16800D46CD2 /* Styles.swift in Sources */,
+				29C167751ECA0DC300439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29C295061EC7AF8C00D46CD2 /* NotificationType.swift in Sources */,
 				29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */,
 				29C295051EC7AF8C00D46CD2 /* NotificationRepoCell.swift in Sources */,
 				29A195051EC75F3D00C3E289 /* Date+Display.swift in Sources */,
 				29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
+				29C1676C1ECA0D6700439D62 /* RepoNotifications+Filter.swift in Sources */,
+				29C167711ECA0D7C00439D62 /* Strings.swift in Sources */,
 				29C295071EC7AF8C00D46CD2 /* RepoNotificationsSectionController.swift in Sources */,
 				29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */,
 				297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */,
+				29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */,
 				29C295081EC7AF8C00D46CD2 /* RepoNotifications.swift in Sources */,
 				29A195191EC7AF6800C3E289 /* NotificationsTests.swift in Sources */,
 			);

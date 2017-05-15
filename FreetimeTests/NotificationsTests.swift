@@ -18,7 +18,13 @@ class NotificationsTests: ListKitTestCase {
     }
 
     func test_withOneNotification() {
-        let notification = NotificationViewModel(title: "Notification 1 title", type: .issue, date: Date(), read: false)
+        let notification = NotificationViewModel(
+            title: "Notification 1 title",
+            type: .issue,
+            date: Date(),
+            read: false,
+            containerWidth: 320
+        )
         let repo = RepoNotifications(repoName: "Repo Name", notifications: [notification])
         
         kit.objects = [repo]

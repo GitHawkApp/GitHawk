@@ -8,13 +8,6 @@
 
 import Alamofire
 
-private let dateFormatter = DateFormatter()
-func GithubAPIDateFormatter() -> DateFormatter {
-    // https://developer.github.com/v3/#schema
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-    return dateFormatter
-}
-
 struct GithubRequest {
     let path: String
     let method: HTTPMethod
