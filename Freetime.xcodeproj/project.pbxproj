@@ -335,13 +335,13 @@
 		297AE86C1EC0D5C200B44A1F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				29A195031EC74C4800C3E289 /* Date+Display.swift */,
+				29C167681ECA016500439D62 /* EmptyView.swift */,
+				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
+				29C167661ECA005500439D62 /* Strings.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
-				29A195031EC74C4800C3E289 /* Date+Display.swift */,
-				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				29C167661ECA005500439D62 /* Strings.swift */,
-				29C167681ECA016500439D62 /* EmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,8 +362,8 @@
 			isa = PBXGroup;
 			children = (
 				298BA0951EC947F100B01946 /* SegmentedControlCell.swift */,
-				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
 				298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */,
+				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
 			);
 			path = SegmentedControl;
 			sourceTree = "<group>";
@@ -372,15 +372,15 @@
 			isa = PBXGroup;
 			children = (
 				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
-				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
-				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
-				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
-				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
-				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
 				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
+				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
+				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
+				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
+				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
 				298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */,
+				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
