@@ -14,10 +14,7 @@ class NotificationsViewController: UIViewController {
 
     let session: GithubSession
 
-    let selection = SegmentedControlModel(items: [
-        NSLocalizedString("Unread", comment: ""),
-        NSLocalizedString("All", comment: ""),
-        ])
+    let selection = SegmentedControlModel(items: [Strings.all, Strings.unread])
 
     var repoNotifications = [RepoNotifications]() {
         didSet {
@@ -95,7 +92,11 @@ extension NotificationsViewController: IGListAdapterDataSource {
 extension NotificationsViewController: SegmentedControlSectionControllerDelegate {
 
     func didChangeSelection(sectionController: SegmentedControlSectionController, selection: String) {
-        print(selection)
+        switch selection {
+        case Strings.all: print("all")
+        case Strings.unread: print("unread")
+        default: break
+        }
     }
     
 }
