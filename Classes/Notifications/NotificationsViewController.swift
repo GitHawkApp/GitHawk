@@ -13,7 +13,7 @@ import SnapKit
 class NotificationsViewController: UIViewController {
 
     let session: GithubSession
-    let selection = SegmentedControlModel(items: [Strings.all, Strings.unread])
+    let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
     var allNotifications = [RepoNotifications]()
     var filteredNotifications = [RepoNotifications]()
 
