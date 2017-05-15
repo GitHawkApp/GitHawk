@@ -13,27 +13,25 @@ enum NotificationResult {
     case success([Notification])
 }
 
-fileprivate let dateFormatter = DateFormatter()
-
 func requestNotifications(
     session: GithubSession,
     all: Bool = false,
     participating: Bool = false,
-    since: Date = Date(),
+    since: Date? = nil,
     page: Int = 0,
     before: Date? = nil,
     completion: @escaping (NotificationResult) -> ()
     ) {
-    dateFormatter.dateFormat = ""
-
     var parameters: [String: Any] = [
         "all": all ? "true" : "false",
         "participating": participating ? "true" : "false",
-        "since": dateFormatter.string(from: since),
         "page": page,
         ]
+    if let since = since {
+        parameters["since"] = GithubAPIDateFormatter().string(from: since)
+    }
     if let before = before {
-        parameters["before"] = dateFormatter.string(from: before)
+        parameters["before"] = GithubAPIDateFormatter().string(from: before)
     }
 
     let r = GithubRequest(
