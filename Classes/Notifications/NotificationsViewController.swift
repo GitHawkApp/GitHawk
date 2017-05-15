@@ -30,11 +30,6 @@ class NotificationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let title = NSLocalizedString("Notifications", comment: "")
-        navigationItem.title = title
-        navigationController?.tabBarItem.title = title
-        navigationController?.tabBarItem.image = UIImage(named: "bell")
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
