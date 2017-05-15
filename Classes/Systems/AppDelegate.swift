@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         guard showingLogin == false,
             session.authorization == nil,
             let nav = UIStoryboard(
-                name: "GithubLogin", 
+                name: "GithubLogin",
                 bundle: Bundle(for: AppDelegate.self))
                 .instantiateInitialViewController() as? UINavigationController,
             let login = nav.viewControllers.first as? LoginViewController
@@ -48,17 +48,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     }
 
     private func resetRootViewController() {
-        if let tab = window?.rootViewController as? UITabBarController {
-            var viewControllers = [UIViewController]()
+        guard let tab = window?.rootViewController as? UITabBarController else { return }
 
-            let notifications = NotificationsViewController(session: session)
-            viewControllers.append(UINavigationController(rootViewController: notifications))
+        var viewControllers = [UIViewController]()
 
-            if let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() {
-                viewControllers.append(settings)
-            }
-            tab.viewControllers = viewControllers
+        let notifications = NotificationsViewController(session: session)
+        viewControllers.append(UINavigationController(rootViewController: notifications))
+
+        if let settingsNav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
+            let settings = settingsNav.viewControllers.first as? SettingsViewController {
+            settings.session = session
+            viewControllers.append(settingsNav)
         }
+
+        tab.viewControllers = viewControllers
     }
 
     // MARK: GithubSessionListener
