@@ -17,6 +17,8 @@ final class NotificationRepoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = Styles.Colors.Gray.lighter
+
         label.font = Styles.Fonts.title
         label.textColor = Styles.Colors.Gray.light
         contentView.addSubview(label)
@@ -24,6 +26,8 @@ final class NotificationRepoCell: UICollectionViewCell {
             make.left.equalTo(Styles.Sizes.gutter)
             make.centerY.equalTo(self.contentView)
         }
+
+        contentView.addBottomBorder()
     }
     
     required init?(coder aDecoder: NSCoder) {

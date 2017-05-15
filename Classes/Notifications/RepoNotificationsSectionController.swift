@@ -16,6 +16,8 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
     override init() {
         super.init()
         dataSource = self
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.cellSpacing, right: 0)
+        minimumLineSpacing = Styles.Sizes.rowSpacing
     }
 
     // MARK: IGListBindingSectionControllerDataSource
@@ -48,12 +50,10 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
         ) -> CGSize {
         guard let context = collectionContext else { return .zero }
         let height: CGFloat
-        if viewModel is String {
-            height = 55
-        } else if let viewModel = viewModel as? NotificationViewModel {
+        if let viewModel = viewModel as? NotificationViewModel {
             height = viewModel.titleSize.height + NotificationCell.labelInset.top + NotificationCell.labelInset.bottom
         } else {
-            height = 0
+            height = 30
         }
         return CGSize(width: context.containerSize.width, height: height)
     }

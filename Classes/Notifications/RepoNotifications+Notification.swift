@@ -21,11 +21,11 @@ func createRepoNotifications(containerWidth: CGFloat, notifications: [Notificati
             title: notification.subject.title,
             type: type,
             date: date,
-            read: notification.unread,
+            read: !notification.unread,
             containerWidth: containerWidth
         )
 
-        let key = notification.repository.name
+        let key = notification.repository.owner.login + "/" + notification.repository.name
         var viewModels = map[key] ?? []
         viewModels.append(model)
         map[key] = viewModels

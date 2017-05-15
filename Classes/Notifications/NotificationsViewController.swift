@@ -32,6 +32,7 @@ class NotificationsViewController: UIViewController {
     init(session: GithubSession) {
         self.session = session
         super.init(nibName: nil, bundle: nil)
+        navigationItem.title = NSLocalizedString("Notifications", comment: "")
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +51,7 @@ class NotificationsViewController: UIViewController {
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
-        requestNotifications(session: session) { result in
+        requestNotifications(session: session, all: true) { result in
             switch result {
             case .success(let notifications):
                 self.repoNotifications = createRepoNotifications(

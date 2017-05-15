@@ -17,6 +17,7 @@ struct Styles {
         static let avatarCornerRadius: CGFloat = 3
         static let columnSpacing: CGFloat = 8
         static let rowSpacing: CGFloat = 8
+        static let cellSpacing: CGFloat = 15
     }
 
     struct Fonts {
@@ -34,7 +35,7 @@ struct Styles {
             static let dark = UIColor.fromHex("24292e")
             static let medium = UIColor.fromHex("586069")
             static let light = UIColor.fromHex("a3aab1")
-            static let ligher = UIColor.fromHex("fafbfc")
+            static let lighter = UIColor.fromHex("fafbfc")
             static let border = UIColor.fromHex("dfe2e5")
         }
     }
