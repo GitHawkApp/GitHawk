@@ -1,0 +1,416 @@
+[
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115012800"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115012800"
+      }
+    },
+    "body": "Reading through this test I'm even more convinced that this isn't correct. Why would a non-zero size be returned for an object that doesn't exist? The only object in the array is `@1`, so its at section 0 in the collection view. Requesting the size of a supplementary view at section 1 should return `CGSizeZero` b/c the object is out of bounds.",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-05T14:42:48Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115012800",
+    "id": 115012800,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36525126,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-05T14:42:48Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115012800",
+    "user": {
+      "avatar_url": "https://avatars1.githubusercontent.com/u/739696?v=3",
+      "events_url": "https://api.github.com/users/rnystrom/events{/privacy}",
+      "followers_url": "https://api.github.com/users/rnystrom/followers",
+      "following_url": "https://api.github.com/users/rnystrom/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rnystrom/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/rnystrom",
+      "id": 739696,
+      "login": "rnystrom",
+      "organizations_url": "https://api.github.com/users/rnystrom/orgs",
+      "received_events_url": "https://api.github.com/users/rnystrom/received_events",
+      "repos_url": "https://api.github.com/users/rnystrom/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/rnystrom/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rnystrom/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/rnystrom"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115071194"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115071194"
+      }
+    },
+    "body": "IMO you can consider this a second bug, then. Taking your last statement:\r\n> Requesting the size of a supplementary view at section 1 should return CGSizeZero b/c the object is out of bounds.\r\n\r\nIf you create a test for that in the current codebase, it will fail, as it won't return CGSizeZero, instead it will return the CGSize that you have defined for the IGListSupplementaryViewDelegate. But that is not a concern to me. The method's responsibility is to return the size for a supplementary view at a given index path, if you want to add the responsibility of checking if the index path actually exists, that's cool. In my test, I'm considering such responsibility doesn't exist, so the method is just returning the size for a section with index = 1. It wouldn't be able to do so in the current code base as the only possible index is 0.\r\n\r\nI see you won't be convinced, which should mean I'm wrong, so please instruct me which is the expected way to return different sizes for different section indexes. Thanks @rnystrom !",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-05T19:26:52Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115071194",
+    "id": 115071194,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36590519,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-05T19:27:24Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115071194",
+    "user": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12944582?v=3",
+      "events_url": "https://api.github.com/users/gobetti/events{/privacy}",
+      "followers_url": "https://api.github.com/users/gobetti/followers",
+      "following_url": "https://api.github.com/users/gobetti/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gobetti/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/gobetti",
+      "id": 12944582,
+      "login": "gobetti",
+      "organizations_url": "https://api.github.com/users/gobetti/orgs",
+      "received_events_url": "https://api.github.com/users/gobetti/received_events",
+      "repos_url": "https://api.github.com/users/gobetti/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/gobetti/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gobetti/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/gobetti"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115130148"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115130148"
+      }
+    },
+    "body": "@gobetti the way we use `IGListSupplementaryViewSource` in Instagram is to either:\r\n\r\n- Create an object per `IGListSectionController` that conforms to the supplementary source protocol. Attach it as a delegate, inject as many dependencies as you want. @jessesquires might have more tips on this too.\r\n- Just assign `self.supplementaryViewSource = self` inside the section controller and implement the required methods [like this](https://github.com/Instagram/IGListKit/blob/master/Examples/Examples-iOS/IGListKitExamples/SectionControllers/FeedItemSectionController.swift#L46-L65)\r\n\r\nI'll admit you're definitely convincing me that this API could be updated though. I like the idea of creating a single object at the VC level that you can assign to individual section controllers, but there's no way to distinguish between section controllers.\r\n\r\nStarting to think updating the API to include the object would be a nice update! Something like:\r\n\r\n```\r\n- (__kindof UICollectionReusableView *)viewForSupplementaryElementOfKind:(NSString *)elementKind\r\n  withObject:(id)object\r\n  atIndex:(NSInteger)index;\r\n\r\n- (CGSize)sizeForSupplementaryViewOfKind:(NSString *)elementKind\r\n  withObject:(id)object\r\n  atIndex:(NSInteger)index;\r\n```\r\n\r\nWhat do you think?",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-06T22:17:37Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115130148",
+    "id": 115130148,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36653330,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-06T22:17:37Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115130148",
+    "user": {
+      "avatar_url": "https://avatars1.githubusercontent.com/u/739696?v=3",
+      "events_url": "https://api.github.com/users/rnystrom/events{/privacy}",
+      "followers_url": "https://api.github.com/users/rnystrom/followers",
+      "following_url": "https://api.github.com/users/rnystrom/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rnystrom/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/rnystrom",
+      "id": 739696,
+      "login": "rnystrom",
+      "organizations_url": "https://api.github.com/users/rnystrom/orgs",
+      "received_events_url": "https://api.github.com/users/rnystrom/received_events",
+      "repos_url": "https://api.github.com/users/rnystrom/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/rnystrom/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rnystrom/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/rnystrom"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115133993"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115133993"
+      }
+    },
+    "body": "The code you've linked as an example is exactly the one I used as a base for mine lol and I don't see any difference other than my section controller not being the implementer of IGListSupplementaryViewSource (we have a separate class for that, which is injected/composited into the section controller and set as the supplementaryViewSource). The implementation inside that class is identical to yours, except that we want to return one size for section index 0 and another size for other indexes. Sorry for being so repetitive: in the current codebase there's no way we'll receive an index different than 0. My PR does exactly what we need, and I'm not trying to convince you in any way, I'm actually trying to understand where I'm wrong to have this bugfix working for me, fixing @MarvinNazari 's crash and not making sense for you.\r\nThis extra object parameter doesn't seem to help me, I won't use it because today I don't need it either, I need exactly what's in your code example. Try to return a different size for the second section in your example and update me.\r\n\r\nThanks for still going through this!",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-07T04:41:29Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115133993",
+    "id": 115133993,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36656799,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-07T04:52:27Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115133993",
+    "user": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12944582?v=3",
+      "events_url": "https://api.github.com/users/gobetti/events{/privacy}",
+      "followers_url": "https://api.github.com/users/gobetti/followers",
+      "following_url": "https://api.github.com/users/gobetti/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gobetti/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/gobetti",
+      "id": 12944582,
+      "login": "gobetti",
+      "organizations_url": "https://api.github.com/users/gobetti/orgs",
+      "received_events_url": "https://api.github.com/users/gobetti/received_events",
+      "repos_url": "https://api.github.com/users/gobetti/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/gobetti/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gobetti/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/gobetti"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115134042"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115134042"
+      }
+    },
+    "body": "Ooooooooh I finally understood. You want every section to have an index 0 because each section controller is some sort of auto-sufficient unit that has no knowledge about the other sections, so if I'm a section controller and I'm implementing my own supplementary view source, I should know everything I need for my own view, without depending on other sections. I see what you mean, this is good!\r\n\r\nBut do you see now that it also makes sense if the section controller knows its section index? I thought this was possible and intended to be possible from the index parameter that is being passed to the supplementary view source. However, now I need to go back to my question, you answered it before but I didn't understand a practical usage. What is this index parameter for in your current architecture? Where do you use it in Instagram for example?",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-07T04:49:27Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115134042",
+    "id": 115134042,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36656847,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-07T04:49:27Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115134042",
+    "user": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12944582?v=3",
+      "events_url": "https://api.github.com/users/gobetti/events{/privacy}",
+      "followers_url": "https://api.github.com/users/gobetti/followers",
+      "following_url": "https://api.github.com/users/gobetti/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gobetti/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/gobetti",
+      "id": 12944582,
+      "login": "gobetti",
+      "organizations_url": "https://api.github.com/users/gobetti/orgs",
+      "received_events_url": "https://api.github.com/users/gobetti/received_events",
+      "repos_url": "https://api.github.com/users/gobetti/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/gobetti/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gobetti/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/gobetti"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115134235"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115134235"
+      }
+    },
+    "body": "Just adding that the same fix would have to be applied to this method if someone wanted to return a different view according to the section index:\r\n`- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath`\r\n\r\nIt is also taking the item from the index path. So I can see you're offering people the ability of returning multiple views and multiple sizes for each view, and probably all I need to complete my puzzle is to understand:\r\n1) what should I do in order to be able to receive different indexes in my IGListSupplementaryViewSource implementation?\r\n2) let's say that I succeed to have 2 supplementary views, which are the same class but they have different sizes. So I have indexes 0 and 1 for my supplementary views. How can I code the view index 0 to be used for section index 0, and the view index 1 to be used for the other section indexes?\r\n\r\nI'm feeling this will end the discussion. Thanks again!",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-07T05:06:49Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115134235",
+    "id": 115134235,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36657011,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-07T05:06:49Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115134235",
+    "user": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12944582?v=3",
+      "events_url": "https://api.github.com/users/gobetti/events{/privacy}",
+      "followers_url": "https://api.github.com/users/gobetti/followers",
+      "following_url": "https://api.github.com/users/gobetti/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gobetti/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/gobetti",
+      "id": 12944582,
+      "login": "gobetti",
+      "organizations_url": "https://api.github.com/users/gobetti/orgs",
+      "received_events_url": "https://api.github.com/users/gobetti/received_events",
+      "repos_url": "https://api.github.com/users/gobetti/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/gobetti/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gobetti/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/gobetti"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115292255"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115292255"
+      }
+    },
+    "body": "> You want every section to have an index 0 because each section controller is some sort of auto-sufficient unit that has no knowledge about the other sections\r\n\r\n💯 \r\n\r\n> I thought this was possible and intended to be possible from the index parameter that is being passed to the supplementary view source.\r\n\r\nYou're right that it's not possible when a completely separate object implements this protocol. We originally designed this API thinking section controllers would be the ones implementing `IGListSupplementaryViewSource` and not separate objects. Since then, internally we have implementations creating their own supplementary source objects but also providing refs to a section controller as a workaround.\r\n\r\nAtm a section controller can get info about its position with [these APIs](https://github.com/Instagram/IGListKit/blob/master/Source/IGListSectionController.h#L100-L113), so if the section controller implemented `IGListSupplementaryViewSource`, it becomes trivial to get the section.\r\n\r\n> what should I do in order to be able to receive different indexes in my IGListSupplementaryViewSource implementation?\r\n\r\nI'd make your section controllers conform to the protocol and use `self.isFirstSection` to determine if its the first section controller or not.\r\n\r\n> let's say that I succeed to have 2 supplementary views, which are the same class but they have different sizes. So I have indexes 0 and 1 for my supplementary views. How can I code the view index 0 to be used for section index 0, and the view index 1 to be used for the other section indexes?\r\n\r\nIf I'm understanding correctly, I think that might overcomplicate things. Instead do something like this:\r\n\r\n```swift\r\nclass MySectionController: IGListSupplementaryViewSource {\r\n\r\n  // implement stuff you need here\r\n\r\n  // MARK: IGListSupplementaryViewSource\r\n\r\n  func supportedElementKinds() -> [String] {\r\n    return [UICollectionElementKindSectionHeader]\r\n  }\r\n\r\n  func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {\r\n  let view = collectionContext?.dequeueReusableSupplementaryView(\r\n    ofKind: UICollectionElementKindSectionHeader,\r\n    for: self,\r\n    class: MyViewClass.self,\r\n    at: index) as! MyViewClass\r\n  // do some config\r\n  return view\r\n  }\r\n\r\n  func sizeForSupplementaryView(ofKind elementKind: String, at index: Int) -> CGSize {\r\n    let width = collectionContext!.containerSize.width\r\n    let height: CGFloat = isFirstSection ? 100 : 50\r\n    return CGSize(width: width, height: height)\r\n  }\r\n\r\n}\r\n```",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-08T16:32:12Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115292255",
+    "id": 115292255,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36819608,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-08T16:32:12Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115292255",
+    "user": {
+      "avatar_url": "https://avatars1.githubusercontent.com/u/739696?v=3",
+      "events_url": "https://api.github.com/users/rnystrom/events{/privacy}",
+      "followers_url": "https://api.github.com/users/rnystrom/followers",
+      "following_url": "https://api.github.com/users/rnystrom/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rnystrom/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/rnystrom",
+      "id": 739696,
+      "login": "rnystrom",
+      "organizations_url": "https://api.github.com/users/rnystrom/orgs",
+      "received_events_url": "https://api.github.com/users/rnystrom/received_events",
+      "repos_url": "https://api.github.com/users/rnystrom/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/rnystrom/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rnystrom/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/rnystrom"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115296345"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115296345"
+      }
+    },
+    "body": "Thank you @rnystrom ! I'm not a big fan of how IGListKit forces sometimes that some protocols are meant to be implemented by certain classes, but I also acknowledge that in order to achieve such power and flexibility, some drawbacks will always be in the way. With that said, I didn't know the `isFirstSection` property which is exactly what I need for my specific problem. I'll keep having a separate object implementing the protocol, but I'll set this property in it. I'm closing both my PR and my issue. I'm sorry for wasting your time - at least this ended up being productive, right? 😄 ",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-08T16:50:31Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115296345",
+    "id": 115296345,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 36823969,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-08T16:50:32Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115296345",
+    "user": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12944582?v=3",
+      "events_url": "https://api.github.com/users/gobetti/events{/privacy}",
+      "followers_url": "https://api.github.com/users/gobetti/followers",
+      "following_url": "https://api.github.com/users/gobetti/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gobetti/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/gobetti",
+      "id": 12944582,
+      "login": "gobetti",
+      "organizations_url": "https://api.github.com/users/gobetti/orgs",
+      "received_events_url": "https://api.github.com/users/gobetti/received_events",
+      "repos_url": "https://api.github.com/users/gobetti/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/gobetti/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gobetti/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/gobetti"
+    }
+  },
+  {
+    "_links": {
+      "html": {
+        "href": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115498595"
+      },
+      "pull_request": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/715"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115498595"
+      }
+    },
+    "body": "@gobetti no worries at all, and def not a waste of anyone's time! Very productive feedback, and helps me recognize some weaknesses in our language/documentation. Will def be making some additions from this, and really appreciate your patience!",
+    "commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "created_at": "2017-05-09T14:07:55Z",
+    "diff_hunk": "@@ -1067,6 +1067,24 @@ - (void)test_whenSupplementarySourceReturnsNegativeSize_thatAdapterReturnsZero {\n     XCTAssertEqual(size.height, 0.0);\n }\n \n+- (void)test_whenSectionIndexGreaterThanZero_thatAdapterReturnsSizeForSectionIndexesGreaterThanZero {\n+  self.dataSource.objects = @[@1];\n+  [self.adapter reloadDataWithCompletion:nil];\n+  \n+  IGTestSupplementarySource *supplementarySource = [IGTestSupplementarySource new];\n+  supplementarySource.collectionContext = self.adapter;\n+  supplementarySource.supportedElementKinds = @[UICollectionElementKindSectionFooter];\n+  \n+  IGListSectionController *controller = [self.adapter sectionControllerForObject:@1];\n+  controller.supplementaryViewSource = supplementarySource;\n+  supplementarySource.sectionController = controller;\n+  \n+  const CGSize size = [self.adapter sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader\n+                                                       atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];",
+    "html_url": "https://github.com/Instagram/IGListKit/pull/715#discussion_r115498595",
+    "id": 115498595,
+    "original_commit_id": "fcfc5b9695debbb247ffca7374d7fb2473fe2e29",
+    "original_position": 17,
+    "path": "Tests/IGListAdapterTests.m",
+    "position": 17,
+    "pull_request_review_id": 37040637,
+    "pull_request_url": "https://api.github.com/repos/Instagram/IGListKit/pulls/715",
+    "updated_at": "2017-05-09T14:07:55Z",
+    "url": "https://api.github.com/repos/Instagram/IGListKit/pulls/comments/115498595",
+    "user": {
+      "avatar_url": "https://avatars1.githubusercontent.com/u/739696?v=3",
+      "events_url": "https://api.github.com/users/rnystrom/events{/privacy}",
+      "followers_url": "https://api.github.com/users/rnystrom/followers",
+      "following_url": "https://api.github.com/users/rnystrom/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rnystrom/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/rnystrom",
+      "id": 739696,
+      "login": "rnystrom",
+      "organizations_url": "https://api.github.com/users/rnystrom/orgs",
+      "received_events_url": "https://api.github.com/users/rnystrom/received_events",
+      "repos_url": "https://api.github.com/users/rnystrom/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/rnystrom/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rnystrom/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/rnystrom"
+    }
+  }
+]
