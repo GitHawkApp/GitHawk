@@ -30,6 +30,7 @@ struct Styles {
         static let blue = UIColor.fromHex("0366d6")
         static let green = UIColor.fromHex("28a745")
         static let red = UIColor.fromHex("cb2431")
+        static let background = UIColor.white
 
         struct Gray {
             static let dark = UIColor.fromHex("24292e")
