@@ -36,7 +36,8 @@ struct NSAttributedStringSizing {
         hyphenationFactor: CGFloat = 0.0,
         showsInvisibleCharacters: Bool = false,
         showsControlCharacters: Bool = false,
-        usesFontLeading: Bool = true
+        usesFontLeading: Bool = true,
+        screenScale: CGFloat = UIScreen.main.scale
         ) {
         self.attributedText = attributedText
         self.inset = inset
@@ -76,9 +77,8 @@ struct NSAttributedStringSizing {
         viewSize.height += inset.top + inset.bottom
 
         // snap to pixel
-        let scale = UIScreen.main.scale
-        viewSize.width = ceil(viewSize.width * scale) / scale
-        viewSize.height = ceil(viewSize.height * scale) / scale
+        viewSize.width = ceil(viewSize.width * screenScale) / screenScale
+        viewSize.height = ceil(viewSize.height * screenScale) / screenScale
         self.textViewSize = viewSize
     }
 
