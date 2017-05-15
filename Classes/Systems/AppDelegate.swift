@@ -53,7 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         var viewControllers = [UIViewController]()
 
         let notifications = NotificationsViewController(session: session)
-        viewControllers.append(UINavigationController(rootViewController: notifications))
+        let notificationsNav = UINavigationController(rootViewController: notifications)
+        let title = NSLocalizedString("Notifications", comment: "")
+        notifications.navigationItem.title = title
+        notificationsNav.tabBarItem.title = title
+        notificationsNav.tabBarItem.image = UIImage(named: "inbox")
+        viewControllers.append(notificationsNav)
 
         if let settingsNav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settings = settingsNav.viewControllers.first as? SettingsViewController {
