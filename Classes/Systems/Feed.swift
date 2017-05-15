@@ -16,8 +16,7 @@ protocol FeedDelegate: class {
 
 final class Feed {
 
-    weak var delegate: FeedDelegate? = nil
-
+    private(set) var loadedOnce = false
     let adapter: IGListAdapter
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -28,6 +27,7 @@ final class Feed {
         return view
     }()
 
+    private weak var delegate: FeedDelegate? = nil
     private var refreshBegin: TimeInterval = -1
 
     init(viewController: UIViewController, delegate: FeedDelegate) {
@@ -51,7 +51,8 @@ final class Feed {
         refresh()
     }
 
-    func update(fromNetwork: Bool) {
+    func finishLoading(fromNetwork: Bool) {
+        loadedOnce = true
         let block = {
             self.adapter.performUpdates(animated: true) { _ in
                 if fromNetwork {
