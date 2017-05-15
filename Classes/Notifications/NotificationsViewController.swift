@@ -13,6 +13,12 @@ import SnapKit
 class NotificationsViewController: UIViewController {
 
     let session: GithubSession
+
+    let selection = SegmentedControlModel(items: [
+        NSLocalizedString("Unread", comment: ""),
+        NSLocalizedString("All", comment: ""),
+        ])
+
     var repoNotifications = [RepoNotifications]() {
         didSet {
             adapter.performUpdates(animated: true)
@@ -67,15 +73,29 @@ class NotificationsViewController: UIViewController {
 }
 
 extension NotificationsViewController: IGListAdapterDataSource {
-    
+
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return repoNotifications
+        return [selection] + repoNotifications
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-        return RepoNotificationsSectionController()
+        if object is SegmentedControlModel {
+            let controller = SegmentedControlSectionController()
+            controller.delegate = self
+            return controller
+        } else {
+            return RepoNotificationsSectionController()
+        }
     }
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+
+}
+
+extension NotificationsViewController: SegmentedControlSectionControllerDelegate {
+
+    func didChangeSelection(sectionController: SegmentedControlSectionController, selection: String) {
+        print(selection)
+    }
     
 }
