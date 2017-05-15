@@ -18,7 +18,6 @@ private func base64Auth(username: String, password: String) -> String {
     return "Basic " + ("\(username):\(password)".data(using: .ascii)?.base64EncodedString() ?? "")
 }
 
-@discardableResult
 func requestGithubLogin(
     username: String,
     password: String,
