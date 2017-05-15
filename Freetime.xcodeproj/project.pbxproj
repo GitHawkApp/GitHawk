@@ -56,6 +56,7 @@
 		29C1677A1ECA14F700439D62 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167791ECA14F700439D62 /* Feed.swift */; };
 		29C1677D1ECA1D0200439D62 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C1677C1ECA1D0200439D62 /* Settings.storyboard */; };
 		29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */; };
+		29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167811ECA4B1C00439D62 /* IssueEvent.swift */; };
 		29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
@@ -155,6 +156,7 @@
 		29C167791ECA14F700439D62 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		29C1677C1ECA1D0200439D62 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Settings.storyboard; path = Classes/Settings/Settings.storyboard; sourceTree = SOURCE_ROOT; };
 		29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		29C167811ECA4B1C00439D62 /* IssueEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueEvent.swift; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		297AE8571EC0D5C100B44A1F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				29C167801ECA4ACC00439D62 /* Issues */,
 				297AE8581EC0D5C100B44A1F /* Login */,
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
@@ -396,6 +399,14 @@
 				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		29C167801ECA4ACC00439D62 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
+			);
+			path = Issues;
 			sourceTree = "<group>";
 		};
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
@@ -667,6 +678,7 @@
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
+				29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
 				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
