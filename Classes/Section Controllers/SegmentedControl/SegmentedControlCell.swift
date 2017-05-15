@@ -25,7 +25,7 @@ final class SegmentedControlCell: UICollectionViewCell {
         segmentedControl.addTarget(self, action: #selector(SegmentedControlCell.didSelect(sender:)), for: .valueChanged)
         contentView.addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
-            make.left.right.equalTo(contentView).offset(Styles.Sizes.gutter)
+            make.left.equalTo(contentView).offset(Styles.Sizes.gutter)
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
