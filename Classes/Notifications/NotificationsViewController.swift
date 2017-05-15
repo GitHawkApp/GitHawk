@@ -16,11 +16,12 @@ class NotificationsViewController: UIViewController {
 
     let selection = SegmentedControlModel(items: [Strings.all, Strings.unread])
 
-    var repoNotifications = [RepoNotifications]() {
+    var allNotifications = [RepoNotifications]() {
         didSet {
-            adapter.performUpdates(animated: true)
+            update()
         }
     }
+    var filteredNotifications = [RepoNotifications]()
 
     lazy var collectionView: UICollectionView = {
         let uicv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -54,17 +55,27 @@ class NotificationsViewController: UIViewController {
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
-        requestNotifications(session: session, all: true) { result in
-            switch result {
-            case .success(let notifications):
-                self.repoNotifications = createRepoNotifications(
-                    containerWidth: self.view.bounds.width,
-                    notifications: notifications
-                )
-            case .failed:
-                print("failed")
-            }
-        }
+        allNotifications = fakeNotifications(width: view.bounds.width)
+
+//        requestNotifications(session: session, all: true) { result in
+//            switch result {
+//            case .success(let notifications):
+//                self.repoNotifications = createRepoNotifications(
+//                    containerWidth: self.view.bounds.width,
+//                    notifications: notifications
+//                )
+//            case .failed:
+//                print("failed")
+//            }
+//        }
+    }
+
+    // MARK: Private API
+
+    fileprivate func update() {
+        let unread = selection.items[selection.selectedIndex] == Strings.unread
+        filteredNotifications = filter(repoNotifications: allNotifications, unread: unread)
+        adapter.performUpdates(animated: true)
     }
 
 }
@@ -72,8 +83,8 @@ class NotificationsViewController: UIViewController {
 extension NotificationsViewController: IGListAdapterDataSource {
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        guard repoNotifications.count > 0 else { return [] }
-        return [selection] + repoNotifications
+        guard allNotifications.count > 0 else { return [] }
+        return [selection] + filteredNotifications
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
@@ -96,12 +107,8 @@ extension NotificationsViewController: IGListAdapterDataSource {
 
 extension NotificationsViewController: SegmentedControlSectionControllerDelegate {
 
-    func didChangeSelection(sectionController: SegmentedControlSectionController, selection: String) {
-        switch selection {
-        case Strings.all: print("all")
-        case Strings.unread: print("unread")
-        default: break
-        }
+    func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
+        update()
     }
     
 }

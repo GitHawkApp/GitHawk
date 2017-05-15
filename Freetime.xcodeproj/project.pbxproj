@@ -52,6 +52,7 @@
 		29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
 		29C167751ECA0DC300439D62 /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
 		29C167761ECA0DE100439D62 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
+		29C167781ECA0F9900439D62 /* RepoNotifications+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167771ECA0F9900439D62 /* RepoNotifications+Fake.swift */; };
 		29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
@@ -147,6 +148,7 @@
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Filter.swift"; sourceTree = "<group>"; };
 		29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPIDateFormatter.swift; sourceTree = "<group>"; };
+		29C167771ECA0F9900439D62 /* RepoNotifications+Fake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Fake.swift"; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
@@ -386,11 +388,12 @@
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
 				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
-				29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */,
+				29C167771ECA0F9900439D62 /* RepoNotifications+Fake.swift */,
+				29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */,
 				298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */,
 				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
 			);
@@ -662,6 +665,7 @@
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
+				29C167781ECA0F9900439D62 /* RepoNotifications+Fake.swift in Sources */,
 				29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,

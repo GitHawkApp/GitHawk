@@ -10,14 +10,12 @@ import UIKit
 import IGListKit
 
 protocol SegmentedControlSectionControllerDelegate: class {
-    func didChangeSelection(sectionController: SegmentedControlSectionController, selection: String)
+    func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel)
 }
 
 final class SegmentedControlSectionController: IGListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
 
     weak var delegate: SegmentedControlSectionControllerDelegate? = nil
-
-    private var selectedIndex: Int = 0
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let context = collectionContext else { return .zero }
@@ -30,7 +28,7 @@ final class SegmentedControlSectionController: IGListGenericSectionController<Se
         guard let object = object,
             let cell = collectionContext?.dequeueReusableCell(of: SegmentedControlCell.self, for: self, at: index) as? SegmentedControlCell
             else { return UICollectionViewCell() }
-        cell.configure(items: object.items, selectedIndex: selectedIndex)
+        cell.configure(items: object.items, selectedIndex: object.selectedIndex)
         cell.delegate = self
         return cell
     }
@@ -38,8 +36,9 @@ final class SegmentedControlSectionController: IGListGenericSectionController<Se
     // MARK: SegmentedControlCellDelegate
 
     func didChangeSelection(cell: SegmentedControlCell, index: Int) {
-        selectedIndex = index
-        delegate?.didChangeSelection(sectionController: self, selection: object?.items[index] ?? "")
+        guard let object = object else { return }
+        object.selectedIndex = index
+        delegate?.didChangeSelection(sectionController: self, model: object)
     }
     
 }

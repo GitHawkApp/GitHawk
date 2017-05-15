@@ -13,6 +13,7 @@ final class SegmentedControlModel {
 
     let items: [String]
     fileprivate let _diffIdentifier: String
+    var selectedIndex: Int = 0
 
     init(items: [String]) {
         self.items = items
@@ -28,8 +29,9 @@ extension SegmentedControlModel: IGListDiffable {
     }
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
-        // has to match based on the identifier, which is items folded
-        return true
+        if self === object { return true }
+        guard let object = object as? SegmentedControlModel else { return false }
+        return selectedIndex == object.selectedIndex
     }
 
 }
