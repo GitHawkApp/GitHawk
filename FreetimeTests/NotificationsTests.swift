@@ -26,7 +26,7 @@ class NotificationsTests: ListKitTestCase {
             containerWidth: 320
         )
         let repo = RepoNotifications(repoName: "Repo Name", notifications: [notification])
-        
+
         kit.objects = [repo]
 
         let expect = expectation(description: #function)
@@ -43,6 +43,59 @@ class NotificationsTests: ListKitTestCase {
             XCTAssertEqual(notificationCell.titleLabel.text, "Notification 1 title")
         }
         waitForExpectations(timeout: 10, handler: nil)
+    }
+
+    func test_whenFilteringNotifications() {
+        let repos = [
+            RepoNotifications(repoName: "Repo 1", notifications: [
+                NotificationViewModel(
+                    title: "Notification 1-1",
+                    type: .issue,
+                    date: Date(timeIntervalSinceNow: -1),
+                    read: true,
+                    containerWidth: 320
+                ),
+                NotificationViewModel(
+                    title: "Notification 1-2",
+                    type: .issue,
+                    date: Date(timeIntervalSinceNow: -2),
+                    read: false,
+                    containerWidth: 320
+                ),
+                NotificationViewModel(
+                    title: "Notification 1-3",
+                    type: .issue,
+                    date: Date(timeIntervalSinceNow: -3),
+                    read: true,
+                    containerWidth: 320
+                ),
+                ]),
+            RepoNotifications(repoName: "Repo 2", notifications: [
+                NotificationViewModel(
+                    title: "Notification 2-1",
+                    type: .issue,
+                    date: Date(timeIntervalSinceNow: -1),
+                    read: true,
+                    containerWidth: 320
+                ),
+                NotificationViewModel(
+                    title: "Notification 2-2",
+                    type: .issue,
+                    date: Date(timeIntervalSinceNow: -2),
+                    read: true,
+                    containerWidth: 320
+                ),
+                ])
+        ]
+
+        let all = filter(repoNotifications: repos, unread: false)
+        XCTAssertEqual(all.count, 2)
+        XCTAssertEqual(all[0].notifications.count, 3)
+        XCTAssertEqual(all[1].notifications.count, 2)
+
+        let unread = filter(repoNotifications: repos, unread: true)
+        XCTAssertEqual(unread.count, 1)
+        XCTAssertEqual(unread[0].notifications.count, 1)
     }
     
 }
