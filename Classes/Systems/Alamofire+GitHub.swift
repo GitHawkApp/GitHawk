@@ -33,6 +33,7 @@ struct GithubRequest {
     }
 }
 
+@discardableResult
 func request(
     _ request: GithubRequest
     ) -> DataRequest {

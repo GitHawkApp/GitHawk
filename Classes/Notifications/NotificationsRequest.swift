@@ -13,6 +13,7 @@ enum NotificationResult {
     case success([Notification])
 }
 
+@discardableResult
 func requestNotifications(
     session: GithubSession,
     all: Bool = false,
