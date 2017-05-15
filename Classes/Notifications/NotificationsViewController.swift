@@ -35,11 +35,6 @@ class NotificationsViewController: UIViewController {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
-
-        // TODO: remove
-        allNotifications = fakeNotifications(width: view.bounds.width)
-
-        reload()
     }
 
     // MARK: Private API

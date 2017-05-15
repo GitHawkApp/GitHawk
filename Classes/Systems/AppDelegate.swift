@@ -48,9 +48,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     }
 
     private func resetRootViewController() {
-        if let nav = window?.rootViewController as? UINavigationController {
+        if let tab = window?.rootViewController as? UITabBarController {
+            var viewControllers = [UIViewController]()
+
             let notifications = NotificationsViewController(session: session)
-            nav.viewControllers = [notifications]
+            viewControllers.append(UINavigationController(rootViewController: notifications))
+
+            if let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() {
+                viewControllers.append(settings)
+            }
+            tab.viewControllers = viewControllers
         }
     }
 
