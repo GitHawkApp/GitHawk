@@ -13,25 +13,11 @@ import SnapKit
 class NotificationsViewController: UIViewController {
 
     let session: GithubSession
-
     let selection = SegmentedControlModel(items: [Strings.all, Strings.unread])
-
-    var allNotifications = [RepoNotifications]() {
-        didSet {
-            update()
-        }
-    }
+    var allNotifications = [RepoNotifications]()
     var filteredNotifications = [RepoNotifications]()
 
-    lazy var collectionView: UICollectionView = {
-        let uicv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        uicv.backgroundColor = .white
-        uicv.alwaysBounceVertical = true
-        return uicv
-    }()
-    lazy var adapter: IGListAdapter = {
-        return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self)
-    }()
+    lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
     init(session: GithubSession) {
         self.session = session
@@ -47,35 +33,36 @@ class NotificationsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view)
-        }
+        feed.viewDidLoad()
+        feed.adapter.dataSource = self
 
-        adapter.collectionView = collectionView
-        adapter.dataSource = self
-
+        // TODO: remove
         allNotifications = fakeNotifications(width: view.bounds.width)
 
-//        requestNotifications(session: session, all: true) { result in
-//            switch result {
-//            case .success(let notifications):
-//                self.repoNotifications = createRepoNotifications(
-//                    containerWidth: self.view.bounds.width,
-//                    notifications: notifications
-//                )
-//            case .failed:
-//                print("failed")
-//            }
-//        }
+        reload()
     }
 
     // MARK: Private API
 
-    fileprivate func update() {
+    fileprivate func update(fromNetwork: Bool) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(repoNotifications: allNotifications, unread: unread)
-        adapter.performUpdates(animated: true)
+        feed.update(fromNetwork: fromNetwork)
+    }
+
+    fileprivate func reload() {
+        requestNotifications(session: session, all: true) { result in
+            switch result {
+            case .success(let notifications):
+                self.allNotifications = createRepoNotifications(
+                    containerWidth: self.view.bounds.width,
+                    notifications: notifications
+                )
+            case .failed:
+                print("failed")
+            }
+            self.update(fromNetwork: true)
+        }
     }
 
 }
@@ -108,7 +95,15 @@ extension NotificationsViewController: IGListAdapterDataSource {
 extension NotificationsViewController: SegmentedControlSectionControllerDelegate {
 
     func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
-        update()
+        update(fromNetwork: false)
     }
     
+}
+
+extension NotificationsViewController: FeedDelegate {
+
+    func loadFromNetwork(feed: Feed) {
+        reload()
+    }
+
 }
