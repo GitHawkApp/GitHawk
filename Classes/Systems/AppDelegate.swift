@@ -62,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         }
 
         tab.viewControllers = viewControllers
+        tab.selectedIndex = 0
     }
 
     // MARK: GithubSessionListener
