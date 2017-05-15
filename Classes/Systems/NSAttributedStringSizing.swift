@@ -50,7 +50,8 @@ struct NSAttributedStringSizing {
         self.showsControlCharacters = showsControlCharacters
         self.usesFontLeading = usesFontLeading
 
-        let textContainer = NSTextContainer(size: CGSize(width: containerWidth, height: CGFloat.greatestFiniteMagnitude))
+        let insetWidth = containerWidth - inset.left - inset.right
+        let textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: CGFloat.greatestFiniteMagnitude))
         textContainer.exclusionPaths = exclusionPaths
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding

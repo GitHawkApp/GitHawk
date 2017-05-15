@@ -51,7 +51,7 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
         guard let context = collectionContext else { return .zero }
         let height: CGFloat
         if let viewModel = viewModel as? NotificationViewModel {
-            height = viewModel.titleSize.height + NotificationCell.labelInset.top + NotificationCell.labelInset.bottom
+            height = viewModel.titleSize.height
         } else {
             height = 30
         }
