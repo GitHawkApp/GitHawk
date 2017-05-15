@@ -34,8 +34,11 @@ final class NotificationViewModel {
         ]
         self.title = NSAttributedString(string: title, attributes: attributes)
 
-        let insetWidth = containerWidth - NotificationCell.labelInset.left - NotificationCell.labelInset.right
-        let sizing = NSAttributedStringSizing(containerWidth: insetWidth, attributedText: self.title)
+        let sizing = NSAttributedStringSizing(
+            containerWidth: containerWidth,
+            attributedText: self.title,
+            inset: NotificationCell.labelInset
+        )
         self.titleSize = sizing.textViewSize
     }
 
