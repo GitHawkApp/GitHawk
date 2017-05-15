@@ -88,7 +88,7 @@ extension NotificationsViewController: IGListAdapterDataSource {
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? {
         let emptyView = EmptyView()
-        emptyView.label.text = NSLocalizedString("Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications Cannot load notifications ", comment: "")
+        emptyView.label.text = NSLocalizedString("Cannot load notifications", comment: "")
         return emptyView
     }
 
