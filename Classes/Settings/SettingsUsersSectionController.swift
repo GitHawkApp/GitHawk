@@ -11,20 +11,30 @@ import IGListKit
 
 final class SettingsUsersSectionController: IGListBindingSectionController<GithubSessionManager> {
 
+    override init() {
+        super.init()
+        dataSource = self
+    }
+
 }
 
 extension SettingsUsersSectionController: IGListBindingSectionControllerDataSource {
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
-        return []
+        guard let object = self.object else { return [] }
+        return object.allUserSessions
+            .map { SettingsUserModel(name: $0.login, selected: false) }
+            .sorted { $0.name < $1.name }
     }
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
-        return .zero
+        guard let context = self.collectionContext else { return .zero }
+        return CGSize(width: context.containerSize.width, height: Styles.Sizes.tableCellHeight)
     }
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let context = self.collectionContext else { return UICollectionViewCell() }
+        return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
 
 }

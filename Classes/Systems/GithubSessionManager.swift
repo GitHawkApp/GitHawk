@@ -21,7 +21,7 @@ protocol GithubSessionListener: class {
 
 extension GithubUserSession {
     var collectionKey: String {
-        return authorization.token
+        return login
     }
 }
 

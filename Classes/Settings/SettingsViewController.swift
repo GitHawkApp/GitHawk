@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import SnapKit
 import IGListKit
 
 final class SettingsViewController: UIViewController {
 
     let sessionManager: GithubSessionManager
+    lazy var adapter: IGListAdapter = { IGListAdapter(updater: IGListAdapterUpdater(), viewController: self) }()
+    lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        view.alwaysBounceVertical = true
+        view.backgroundColor = Styles.Colors.background
+        return view
+    }()
 
     init(
         sessionManager: GithubSessionManager
@@ -25,18 +33,27 @@ final class SettingsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Private API
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        adapter.dataSource = self
+        adapter.collectionView = collectionView
+
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
+    }
 
 }
 
 extension SettingsViewController: IGListAdapterDataSource {
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return []
+        return [sessionManager]
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-        return IGListSectionController()
+        return SettingsUsersSectionController()
     }
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
@@ -46,11 +63,11 @@ extension SettingsViewController: IGListAdapterDataSource {
 extension SettingsViewController: GithubSessionListener {
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
-
+        adapter.performUpdates(animated: false)
     }
 
     func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult) {
-
+        adapter.performUpdates(animated: false)
     }
 
 }
