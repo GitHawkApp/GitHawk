@@ -11,6 +11,11 @@ import IGListKit
 
 final class SettingsSignoutSectionController: IGListSectionController {
 
+    override init() {
+        super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
         guard let context = collectionContext else { return .zero }
         return CGSize(width: context.containerSize.width, height: Styles.Sizes.tableCellHeight)

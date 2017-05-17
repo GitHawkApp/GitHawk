@@ -19,6 +19,7 @@ struct Styles {
         static let rowSpacing: CGFloat = 8
         static let cellSpacing: CGFloat = 15
         static let tableCellHeight: CGFloat = 55
+        static let tableSectionSpacing: CGFloat = 35
     }
 
     struct Fonts {

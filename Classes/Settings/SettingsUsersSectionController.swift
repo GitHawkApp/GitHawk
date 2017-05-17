@@ -14,6 +14,7 @@ final class SettingsUsersSectionController: IGListBindingSectionController<Githu
     override init() {
         super.init()
         dataSource = self
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
 
 }
@@ -37,5 +38,5 @@ extension SettingsUsersSectionController: IGListBindingSectionControllerDataSour
         guard let context = self.collectionContext else { return UICollectionViewCell() }
         return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
-
+    
 }
