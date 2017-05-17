@@ -35,6 +35,17 @@ struct GithubClient {
 
     let session: GithubSession
     let networker: Alamofire.SessionManager
+    let authorization: Authorization?
+
+    init(
+        session: GithubSession,
+        networker: Alamofire.SessionManager,
+        authorization: Authorization? = nil
+        ) {
+        self.session = session
+        self.networker = networker
+        self.authorization = authorization
+    }
 
     @discardableResult
     func request(
@@ -49,7 +60,7 @@ struct GithubClient {
         }
 
         var parameters = request.parameters ?? [:]
-        if let authorization = session.authorization {
+        if let authorization = authorization {
             parameters["access_token"] = authorization.token
         }
 
@@ -63,9 +74,10 @@ struct GithubClient {
                 print(response.value ?? response.error?.localizedDescription ?? "Unknown error")
 
                 // remove the github session if requesting with a session
-                if let statusCode = response.response?.statusCode,
+                if let authorization = self.authorization,
+                    let statusCode = response.response?.statusCode,
                     (statusCode == 401 || statusCode == 403) {
-                    self.session.remove()
+                    self.session.remove(authorization: authorization)
                 } else {
                     request.completion(response)
                 }

@@ -15,17 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     var window: UIWindow?
     var showingLogin = false
 
-    let client: GithubClient = {
-        let config = URLSessionConfiguration.default
-        config.urlCache = nil
-        config.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
-        let manager = Alamofire.SessionManager(configuration: config)
-        return GithubClient(session: GithubSession(), networker: manager)
-    }()
+    let session = GithubSession()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        client.session.addListener(listener: self)
-        resetRootViewController()
+        session.addListener(listener: self)
+        resetRootViewController(authorization: session.authorizations().first)
         return true
     }
 
@@ -35,9 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
     // MARK: Private API
 
+    private func newClient(authorization: Authorization? = nil) -> GithubClient {
+        let config = URLSessionConfiguration.default
+        config.urlCache = nil
+        config.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
+        let manager = Alamofire.SessionManager(configuration: config)
+        return GithubClient(session: session, networker: manager, authorization: authorization)
+    }
+
     private func showLogin(animated: Bool = false) {
         guard showingLogin == false,
-            client.session.authorization == nil,
+            session.authorizations().first == nil,
             let nav = UIStoryboard(
                 name: "GithubLogin",
                 bundle: Bundle(for: AppDelegate.self))
@@ -45,20 +47,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
             let login = nav.viewControllers.first as? LoginViewController
             else { return }
         showingLogin = true
-        login.client = client
+        login.client = newClient()
         window?.rootViewController?.present(nav, animated: animated)
     }
 
-    private func hideLogin(animated: Bool = false) {
-        showingLogin = false
-        window?.rootViewController?.presentedViewController?.dismiss(animated: animated)
-        resetRootViewController()
-    }
-
-    private func resetRootViewController() {
-        guard let tab = window?.rootViewController as? UITabBarController else { return }
+    private func resetRootViewController(authorization: Authorization?) {
+        guard let tab = window?.rootViewController as? UITabBarController,
+        let authorization = authorization else { return }
 
         var viewControllers = [UIViewController]()
+        let client = newClient(authorization: authorization)
 
         let notifications = NotificationsViewController(client: client)
         let notificationsNav = UINavigationController(rootViewController: notifications)
@@ -70,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
         if let settingsNav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settings = settingsNav.viewControllers.first as? SettingsViewController {
-            settings.session = client.session
+            settings.session = session
             viewControllers.append(settingsNav)
         }
 
@@ -81,7 +79,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     // MARK: GithubSessionListener
 
     func didAdd(session: GithubSession, authorization: Authorization) {
-        hideLogin(animated: true)
+        showingLogin = false
+        window?.rootViewController?.presentedViewController?.dismiss(animated: true)
+        resetRootViewController(authorization: authorization)
     }
 
     func didRemove(session: GithubSession, authorization: Authorization) {

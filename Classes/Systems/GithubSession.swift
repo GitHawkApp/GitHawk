@@ -27,26 +27,41 @@ final class GithubSession: NSObject {
         listeners.remove(listener)
     }
 
-    private(set) var authorization: Authorization?
+    private var _authorizations = [Authorization]()
 
     override init() {
-        if let data = defaults.object(forKey: key) as? Data {
-            authorization = NSKeyedUnarchiver.unarchiveObject(with: data) as? Authorization
+        if let data = defaults.object(forKey: key) as? Data,
+            let auths = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Authorization] {
+            _authorizations = auths
         }
         super.init()
     }
 
-    func add(authorization: Authorization) {
-        self.authorization = authorization
+    // MARK: Public API
+
+    public func authorizations() -> [Authorization] {
+        return _authorizations
+    }
+
+    public func add(authorization: Authorization) {
+        _authorizations.append(authorization)
         save()
         for listener in listeners.allObjects {
             listener.didAdd(session: self, authorization: authorization)
         }
     }
 
-    func remove() {
-        guard let authorization = authorization else { return }
-        self.authorization = nil
+    func remove(authorization: Authorization) {
+        // search for auth match by comparing the tokens. linear search but simple.
+        var index = NSNotFound
+        for (i, auth) in _authorizations.enumerated() {
+            if auth.token == authorization.token {
+                index = i
+            }
+        }
+        guard index < _authorizations.count else { return }
+        _authorizations.remove(at: index)
+
         save()
         for listener in listeners.allObjects {
             listener.didRemove(session: self, authorization: authorization)
@@ -54,11 +69,7 @@ final class GithubSession: NSObject {
     }
 
     func save() {
-        if let auth = authorization {
-            defaults.set(NSKeyedArchiver.archivedData(withRootObject: auth), forKey: key)
-        } else {
-            defaults.removeObject(forKey: key)
-        }
+        defaults.set(NSKeyedArchiver.archivedData(withRootObject: _authorizations), forKey: key)
     }
 
 }
