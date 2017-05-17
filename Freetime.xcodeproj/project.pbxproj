@@ -17,7 +17,6 @@
 		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
 		297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
 		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
-		297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */; };
 		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
 		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
@@ -42,6 +41,7 @@
 		29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
 		29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */; };
 		29A195191EC7AF6800C3E289 /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195181EC7AF6800C3E289 /* NotificationsTests.swift */; };
+		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C167671ECA005500439D62 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
 		29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */; };
@@ -123,7 +123,6 @@
 		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
 		297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
 		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GitHub.swift"; sourceTree = "<group>"; };
 		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingIndicator.swift"; sourceTree = "<group>"; };
@@ -148,6 +147,7 @@
 		29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotificationsSectionController.swift; sourceTree = "<group>"; };
 		29A195141EC7AD4A00C3E289 /* RepoNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotifications.swift; sourceTree = "<group>"; };
 		29A195181EC7AF6800C3E289 /* NotificationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTests.swift; sourceTree = "<group>"; };
+		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RepoNotifications+Filter.swift"; sourceTree = "<group>"; };
@@ -330,12 +330,12 @@
 		297AE8651EC0D5C100B44A1F /* Systems */ = {
 			isa = PBXGroup;
 			children = (
-				297AE8661EC0D5C100B44A1F /* Alamofire+GitHub.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
 				299F2A111EC3BCF0006CE9D7 /* GithubSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				29C167791ECA14F700439D62 /* Feed.swift */,
+				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -680,13 +680,13 @@
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
-				297AE87D1EC0D5C200B44A1F /* Alamofire+GitHub.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
 				29C9FDC51EC65FEE00EE3A52 /* Branch.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				29C9FDC81EC65FEE00EE3A52 /* Event.swift in Sources */,
+				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,

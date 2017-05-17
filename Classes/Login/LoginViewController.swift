@@ -11,7 +11,7 @@ import OnePasswordExtension
 
 final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
-    var session: GithubSession!
+    var client: GithubClient!
 
     let signinCellIndexPath = IndexPath(item: 0, section: 2)
 
@@ -33,7 +33,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         if let controller = segue.destination as? TwoFactorViewController {
             controller.username = usernameTextField.text
             controller.password = passwordTextField.text
-            controller.session = session
+            controller.client = client
         }
     }
 
@@ -75,7 +75,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         showLoadingIndicator(true)
         viewsEnabled(false)
 
-        requestGithubLogin(username: username, password: password) { result in
+        client.requestGithubLogin(username: username, password: password) { result in
             self.showLoadingIndicator(false)
             self.viewsEnabled(true)
             self.handleResult(result)
@@ -85,7 +85,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
     func handleResult(_ result: GithubLogin) {
         switch result {
         case .success(let auth):
-            session.add(authorization: auth)
+            client.session.add(authorization: auth)
         case .failed:
             let title = NSLocalizedString("Sign in Error", comment: "")
             let message = NSLocalizedString("Username or password are incorrect.", comment: "")
