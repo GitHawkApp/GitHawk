@@ -33,18 +33,18 @@ struct GithubClient {
         }
     }
 
-    let session: GithubSession
+    let sessionManager: GithubSessionManager
     let networker: Alamofire.SessionManager
-    let authorization: Authorization?
+    let userSession: GithubUserSession?
 
     init(
-        session: GithubSession,
+        sessionManager: GithubSessionManager,
         networker: Alamofire.SessionManager,
-        authorization: Authorization? = nil
+        userSession: GithubUserSession? = nil
         ) {
-        self.session = session
+        self.sessionManager = sessionManager
         self.networker = networker
-        self.authorization = authorization
+        self.userSession = userSession
     }
 
     @discardableResult
@@ -59,10 +59,9 @@ struct GithubClient {
         default: encoding = JSONEncoding.default
         }
 
+
         var parameters = request.parameters ?? [:]
-        if let authorization = authorization {
-            parameters["access_token"] = authorization.token
-        }
+        parameters["access_token"] = userSession?.authorization.token
 
         return networker.request("https://api.github.com/" + request.path,
                                  method: request.method,
@@ -74,10 +73,10 @@ struct GithubClient {
                 print(response.value ?? response.error?.localizedDescription ?? "Unknown error")
 
                 // remove the github session if requesting with a session
-                if let authorization = self.authorization,
+                if let userSession = self.userSession,
                     let statusCode = response.response?.statusCode,
                     (statusCode == 401 || statusCode == 403) {
-                    self.session.remove(authorization: authorization)
+                    self.sessionManager.remove([userSession])
                 } else {
                     request.completion(response)
                 }

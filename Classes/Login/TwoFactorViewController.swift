@@ -47,7 +47,7 @@ final class TwoFactorViewController: UITableViewController, UITextFieldDelegate 
     func handleResult(_ result: GithubLogin) {
         switch result {
         case .success(let auth):
-            client.session.add(authorization: auth)
+            client.sessionManager.focus(GithubUserSession(authorization: auth, login: self.username))
         default:
             let title = NSLocalizedString("Two-factor Error", comment: "")
             let message = NSLocalizedString("Unable to verify your account.", comment: "")
