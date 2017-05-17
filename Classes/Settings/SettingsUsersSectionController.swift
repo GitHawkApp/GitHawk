@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class SettingsUsersSectionController: IGListBindingSectionController<GithubSession> {
+final class SettingsUsersSectionController: IGListBindingSectionController<GithubSessionManager> {
 
 }
 

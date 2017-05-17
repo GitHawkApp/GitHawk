@@ -11,14 +11,14 @@ import IGListKit
 
 final class SettingsViewController: UIViewController {
 
-    let session: GithubSession
+    let sessionManager: GithubSessionManager
 
     init(
-        session: GithubSession
+        sessionManager: GithubSessionManager
         ) {
-        self.session = session
+        self.sessionManager = sessionManager
         super.init(nibName: nil, bundle: nil)
-        session.addListener(listener: self)
+        sessionManager.addListener(listener: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,11 +45,11 @@ extension SettingsViewController: IGListAdapterDataSource {
 
 extension SettingsViewController: GithubSessionListener {
 
-    func didAdd(session: GithubSession, authorization: Authorization) {
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
 
     }
 
-    func didRemove(session: GithubSession, authorization: Authorization) {
+    func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult) {
 
     }
 

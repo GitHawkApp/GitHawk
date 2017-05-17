@@ -78,14 +78,14 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         client.requestGithubLogin(username: username, password: password) { result in
             self.showLoadingIndicator(false)
             self.viewsEnabled(true)
-            self.handleResult(result)
+            self.handleResult(result, login: username)
         }
     }
 
-    func handleResult(_ result: GithubLogin) {
+    func handleResult(_ result: GithubLogin, login: String) {
         switch result {
         case .success(let auth):
-            client.session.add(authorization: auth)
+            client.sessionManager.focus(GithubUserSession(authorization: auth, login: login))
         case .failed:
             let title = NSLocalizedString("Sign in Error", comment: "")
             let message = NSLocalizedString("Username or password are incorrect.", comment: "")

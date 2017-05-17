@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-extension GithubSession: IGListDiffable {
+extension GithubSessionManager: IGListDiffable {
 
     func diffIdentifier() -> NSObjectProtocol {
         return self
