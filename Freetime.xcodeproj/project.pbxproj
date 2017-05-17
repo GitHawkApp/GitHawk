@@ -17,7 +17,6 @@
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
 		29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */; };
 		29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */; };
-		29316DC71ECCA37B007CAE3F /* SettingsAddUserSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC61ECCA37B007CAE3F /* SettingsAddUserSectionController.swift */; };
 		29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */; };
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
@@ -132,7 +131,6 @@
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
 		29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationManager.swift; sourceTree = "<group>"; };
 		29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GithubAPI.swift"; sourceTree = "<group>"; };
-		29316DC61ECCA37B007CAE3F /* SettingsAddUserSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddUserSectionController.swift; sourceTree = "<group>"; };
 		29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddAccountSectionController.swift; sourceTree = "<group>"; };
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -431,7 +429,6 @@
 				29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */,
 				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
 				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
-				29316DC61ECCA37B007CAE3F /* SettingsAddUserSectionController.swift */,
 				29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */,
 			);
 			path = Settings;
@@ -707,7 +704,6 @@
 				29C9FDCB1EC65FEE00EE3A52 /* Label.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
-				29316DC71ECCA37B007CAE3F /* SettingsAddUserSectionController.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29C9FDD11EC65FEE00EE3A52 /* PullRequest.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,

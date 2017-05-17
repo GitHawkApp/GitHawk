@@ -19,6 +19,12 @@ final class SettingsViewController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
+        view.contentInset = UIEdgeInsets(
+            top: Styles.Sizes.tableSectionSpacing,
+            left: 0,
+            bottom: Styles.Sizes.tableSectionSpacing,
+            right: 0
+        )
         view.backgroundColor = Styles.Colors.Gray.lighter
         return view
     }()
