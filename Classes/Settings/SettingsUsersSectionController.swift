@@ -22,8 +22,9 @@ extension SettingsUsersSectionController: IGListBindingSectionControllerDataSour
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
         guard let object = self.object else { return [] }
+        let focusedLogin = object.focusedLogin
         return object.allUserSessions
-            .map { SettingsUserModel(name: $0.login, selected: false) }
+            .map { SettingsUserModel(name: $0.login, selected: focusedLogin == $0.login) }
             .sorted { $0.name < $1.name }
     }
 
