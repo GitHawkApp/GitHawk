@@ -14,6 +14,7 @@ final class SettingsUsersSectionController: IGListBindingSectionController<Githu
     override init() {
         super.init()
         dataSource = self
+        selectionDelegate = self
         inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
 
@@ -39,4 +40,13 @@ extension SettingsUsersSectionController: IGListBindingSectionControllerDataSour
         return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
     
+}
+
+extension SettingsUsersSectionController: IGListBindingSectionControllerSelectionDelegate {
+
+    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+        guard let object = self.object else { return }
+        object.focus(object.allUserSessions[index])
+    }
+
 }
