@@ -11,7 +11,10 @@ import IGListKit
 
 final class SettingsAddAccountSectionController: IGListSectionController {
 
-    override init() {
+    let rootNavigationManager: RootNavigationManager
+
+    init(rootNavigationManager: RootNavigationManager) {
+        self.rootNavigationManager = rootNavigationManager
         super.init()
         inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
@@ -32,7 +35,7 @@ final class SettingsAddAccountSectionController: IGListSectionController {
     }
 
     override func didSelectItem(at index: Int) {
-        
+        rootNavigationManager.showLogin(animated: true)
     }
 
 }

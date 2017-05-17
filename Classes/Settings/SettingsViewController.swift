@@ -12,11 +12,15 @@ import IGListKit
 
 final class SettingsViewController: UIViewController {
 
-    let addKey = "add"
-    let signoutKey = "signout"
-    let sessionManager: GithubSessionManager
-    lazy var adapter: IGListAdapter = { IGListAdapter(updater: IGListAdapterUpdater(), viewController: self) }()
-    lazy var collectionView: UICollectionView = {
+    // injected
+    fileprivate let sessionManager: GithubSessionManager
+    weak var rootNavigationManager: RootNavigationManager? = nil
+
+    fileprivate lazy var adapter: IGListAdapter = { IGListAdapter(updater: IGListAdapterUpdater(), viewController: self) }()
+
+    fileprivate let addKey = "add"
+    fileprivate let signoutKey = "signout"
+    fileprivate lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.contentInset = UIEdgeInsets(
@@ -30,9 +34,11 @@ final class SettingsViewController: UIViewController {
     }()
 
     init(
-        sessionManager: GithubSessionManager
+        sessionManager: GithubSessionManager,
+        rootNavigationManager: RootNavigationManager
         ) {
         self.sessionManager = sessionManager
+        self.rootNavigationManager = rootNavigationManager
         super.init(nibName: nil, bundle: nil)
         sessionManager.addListener(listener: self)
     }
@@ -65,8 +71,8 @@ extension SettingsViewController: IGListAdapterDataSource {
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-        if let str = object as? String, str == addKey {
-            return SettingsAddAccountSectionController()
+        if let str = object as? String, str == addKey, let mgr = rootNavigationManager {
+            return SettingsAddAccountSectionController(rootNavigationManager: mgr)
         } else if let str = object as? String, str == signoutKey {
             return SettingsSignoutSectionController(sessionManager: sessionManager)
         } else {

@@ -16,26 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var showingLogin = false
 
     let sessionManager = GithubSessionManager()
-    var rootNavigationManager: RootNavigationManager!
-    let settingsViewController: UIViewController
-
-    override init() {
-        settingsViewController = newSettingsRootViewController(sessionManager: sessionManager)
-        super.init()
-    }
+    lazy var rootNavigationManager: RootNavigationManager = {
+        return RootNavigationManager(
+            sessionManager: self.sessionManager,
+            rootTabBarController: self.window?.rootViewController as! UITabBarController
+        )
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        rootNavigationManager = RootNavigationManager(
-            sessionManager: sessionManager,
-            rootTabBarController: window?.rootViewController as! UITabBarController,
-            settingsViewController: settingsViewController
-        )
         rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
         return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        rootNavigationManager.showLogin(animated: false)
+        if sessionManager.focusedUserSession == nil {
+            rootNavigationManager.showLogin(animated: false)
+        }
     }
-
+    
 }
