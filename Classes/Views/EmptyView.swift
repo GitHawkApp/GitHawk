@@ -15,7 +15,8 @@ final class EmptyView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
+
+        backgroundColor = Styles.Colors.Gray.lighter
 
         label.backgroundColor = Styles.Colors.Gray.lighter
         label.textAlignment = .center
