@@ -50,6 +50,8 @@ final class RootNavigationManager {
     public func resetRootViewController(userSession: GithubUserSession?) {
         guard let userSession = userSession else { return }
 
+        let selectedIndex = rootTabBarController?.selectedIndex ?? 0
+
         var viewControllers = [UIViewController]()
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
         viewControllers.append(newNotificationsRootViewController(client: client))
@@ -59,7 +61,7 @@ final class RootNavigationManager {
         }
 
         rootTabBarController?.viewControllers = viewControllers
-        rootTabBarController?.selectedIndex = 0
+        rootTabBarController?.selectedIndex = selectedIndex
     }
 
 }
