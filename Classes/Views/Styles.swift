@@ -39,7 +39,7 @@ struct Styles {
             static let dark = UIColor.fromHex("24292e")
             static let medium = UIColor.fromHex("586069")
             static let light = UIColor.fromHex("a3aab1")
-            static let lighter = UIColor.fromHex("fafbfc")
+            static let lighter = UIColor.fromHex("f6f8fa")
             static let border = UIColor.fromHex("dfe2e5")
         }
     }
