@@ -9,6 +9,22 @@
 import UIKit
 import IGListKit
 
-class SettingsUsersSectionController: IGListBindingSectionController {
+final class SettingsUsersSectionController: IGListBindingSectionController<GithubSession> {
+
+}
+
+extension SettingsUsersSectionController: IGListBindingSectionControllerDataSource {
+
+    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
+        return []
+    }
+
+    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+        return .zero
+    }
+
+    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
 
 }
