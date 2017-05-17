@@ -83,7 +83,7 @@ final class GithubSessionManager: NSObject {
     }
 
     func remove(_ userSessions: [GithubUserSession]) {
-        let keys = userSessions.map { $0.authorization.token }
+        let keys = userSessions.map { $0.collectionKey }
 
         var removed = [GithubUserSession]()
         for key in keys {

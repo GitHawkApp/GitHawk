@@ -11,7 +11,10 @@ import IGListKit
 
 final class SettingsSignoutSectionController: IGListSectionController {
 
-    override init() {
+    let sessionManager: GithubSessionManager
+
+    init(sessionManager: GithubSessionManager) {
+        self.sessionManager = sessionManager
         super.init()
         inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
@@ -35,7 +38,7 @@ final class SettingsSignoutSectionController: IGListSectionController {
         let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
 
         let signoutAction = UIAlertAction(title: Strings.signout, style: .destructive) { _ in
-            // todo
+            self.signout()
         }
 
         let title = NSLocalizedString("Are you sure?", comment: "")
@@ -45,6 +48,10 @@ final class SettingsSignoutSectionController: IGListSectionController {
         alert.addAction(signoutAction)
 
         viewController?.present(alert, animated: true)
+    }
+
+    private func signout() {
+        sessionManager.remove(sessionManager.allUserSessions)
     }
 
 }

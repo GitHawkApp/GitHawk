@@ -68,7 +68,7 @@ extension SettingsViewController: IGListAdapterDataSource {
         if let str = object as? String, str == addKey {
             return SettingsAddAccountSectionController()
         } else if let str = object as? String, str == signoutKey {
-            return SettingsSignoutSectionController()
+            return SettingsSignoutSectionController(sessionManager: sessionManager)
         } else {
             return SettingsUsersSectionController()
         }
