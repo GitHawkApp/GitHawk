@@ -12,6 +12,8 @@ import IGListKit
 
 final class SettingsViewController: UIViewController {
 
+    let addKey = "add"
+    let signoutKey = "signout"
     let sessionManager: GithubSessionManager
     lazy var adapter: IGListAdapter = { IGListAdapter(updater: IGListAdapterUpdater(), viewController: self) }()
     lazy var collectionView: UICollectionView = {
@@ -49,11 +51,21 @@ final class SettingsViewController: UIViewController {
 extension SettingsViewController: IGListAdapterDataSource {
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return [sessionManager]
+        return [
+            addKey as IGListDiffable,
+            sessionManager,
+            signoutKey as IGListDiffable
+        ]
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-        return SettingsUsersSectionController()
+        if let str = object as? String, str == addKey {
+            return SettingsAddAccountSectionController()
+        } else if let str = object as? String, str == signoutKey {
+            return SettingsSignoutSectionController()
+        } else {
+            return SettingsUsersSectionController()
+        }
     }
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
