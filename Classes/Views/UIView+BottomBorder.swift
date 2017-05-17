@@ -11,16 +11,24 @@ import SnapKit
 
 extension UIView {
 
-    func addBottomBorder(left: CGFloat = 0, right: CGFloat = 0) {
+    @discardableResult
+    func addBorder(bottom: Bool = true, left: CGFloat = 0, right: CGFloat = 0) -> UIView {
         let view = UIView()
         view.backgroundColor = Styles.Colors.Gray.border
         addSubview(view)
         view.snp.makeConstraints { make in
             make.height.equalTo(1.0 / UIScreen.main.scale)
-            make.bottom.equalTo(self)
+
+            if bottom {
+                make.bottom.equalTo(self)
+            } else {
+                make.top.equalTo(self)
+            }
+
             make.left.equalTo(left)
             make.right.equalTo(right)
         }
+        return view
     }
 
 }

@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
     var showingLogin = false
 
     let session = GithubSession()
+    let settingsNavController: UINavigationController
+
+    override init() {
+        settingsNavController = UINavigationController(rootViewController: SettingsViewController(session: session))
+        super.init()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         session.addListener(listener: self)
@@ -66,11 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
         notificationsNav.tabBarItem.image = UIImage(named: "inbox")
         viewControllers.append(notificationsNav)
 
-        if let settingsNav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
-            let settings = settingsNav.viewControllers.first as? SettingsViewController {
-            settings.session = session
-            viewControllers.append(settingsNav)
-        }
+        viewControllers.append(settingsNavController)
 
         tab.viewControllers = viewControllers
         tab.selectedIndex = 0
