@@ -8,8 +8,14 @@
 
 import UIKit
 
-func newSettingsRootViewController(sessionManager: GithubSessionManager) -> UIViewController {
-    let controller = SettingsViewController(sessionManager: sessionManager)
+func newSettingsRootViewController(
+    sessionManager: GithubSessionManager,
+    rootNavigationManager: RootNavigationManager
+    ) -> UIViewController {
+    let controller = SettingsViewController(
+        sessionManager: sessionManager,
+        rootNavigationManager: rootNavigationManager
+    )
     let nav = UINavigationController(rootViewController: controller)
     let title = NSLocalizedString("Settings", comment: "")
     controller.navigationItem.title = title

@@ -16,17 +16,14 @@ final class RootNavigationManager {
     fileprivate let sessionManager: GithubSessionManager
 
     // weak refs to avoid cycles
-    weak fileprivate var settingsViewController: UIViewController?
     weak fileprivate var rootTabBarController: UITabBarController?
 
     init(
         sessionManager: GithubSessionManager,
-        rootTabBarController: UITabBarController,
-        settingsViewController: UIViewController
+        rootTabBarController: UITabBarController
         ) {
         self.sessionManager = sessionManager
         self.rootTabBarController = rootTabBarController
-        self.settingsViewController = settingsViewController
 
         sessionManager.addListener(listener: self)
     }
@@ -35,7 +32,6 @@ final class RootNavigationManager {
 
     public func showLogin(animated: Bool = false) {
         guard showingLogin == false,
-            sessionManager.focusedUserSession == nil,
             let nav = UIStoryboard(
                 name: "GithubLogin",
                 bundle: Bundle(for: AppDelegate.self))
@@ -51,14 +47,11 @@ final class RootNavigationManager {
         guard let userSession = userSession else { return }
 
         let selectedIndex = rootTabBarController?.selectedIndex ?? 0
-
         var viewControllers = [UIViewController]()
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
-        viewControllers.append(newNotificationsRootViewController(client: client))
 
-        if let settings = settingsViewController {
-            viewControllers.append(settings)
-        }
+        viewControllers.append(newNotificationsRootViewController(client: client))
+        viewControllers.append(newSettingsRootViewController(sessionManager: sessionManager, rootNavigationManager: self))
 
         rootTabBarController?.viewControllers = viewControllers
         rootTabBarController?.selectedIndex = selectedIndex
