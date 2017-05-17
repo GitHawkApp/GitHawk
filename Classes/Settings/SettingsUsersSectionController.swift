@@ -18,16 +18,18 @@ final class SettingsUsersSectionController: IGListBindingSectionController<Githu
         inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
 
+    fileprivate var activeSessions: [GithubUserSession] {
+        guard let object = self.object else { return [] }
+        return object.allUserSessions.sorted { $0.login < $1.login }
+    }
+
 }
 
 extension SettingsUsersSectionController: IGListBindingSectionControllerDataSource {
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
-        guard let object = self.object else { return [] }
-        let focusedLogin = object.focusedLogin
-        return object.allUserSessions
-            .map { SettingsUserModel(name: $0.login, selected: focusedLogin == $0.login) }
-            .sorted { $0.name < $1.name }
+        let focusedLogin = self.object?.focusedLogin
+        return activeSessions.map { SettingsUserModel(name: $0.login, selected: focusedLogin == $0.login) }
     }
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
@@ -46,7 +48,7 @@ extension SettingsUsersSectionController: IGListBindingSectionControllerSelectio
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let object = self.object else { return }
-        object.focus(object.allUserSessions[index])
+        object.focus(activeSessions[index])
     }
 
 }
