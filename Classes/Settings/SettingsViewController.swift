@@ -20,10 +20,10 @@ final class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        switch indexPath {
-        case signOutIndexPath: session.remove()
-        default: break
-        }
+        //switch indexPath {
+        //case signOutIndexPath: session.remove()
+        //default: break
+        //}
     }
 
 }
