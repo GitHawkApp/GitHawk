@@ -66,7 +66,7 @@ final class NotificationCell: UICollectionViewCell {
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
 
-        addBottomBorder(left: Styles.Sizes.gutter)
+        addBorder(left: Styles.Sizes.gutter)
     }
     
     required init?(coder aDecoder: NSCoder) {

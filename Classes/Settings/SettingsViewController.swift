@@ -7,23 +7,50 @@
 //
 
 import UIKit
+import IGListKit
 
-final class SettingsViewController: UITableViewController {
+final class SettingsViewController: UIViewController {
 
-    // must be injected after init and before viewDidLoad()
-    var session: GithubSession!
+    let session: GithubSession
 
-    let signOutIndexPath = IndexPath(item: 0, section: 0)
+    init(
+        session: GithubSession
+        ) {
+        self.session = session
+        super.init(nibName: nil, bundle: nil)
+        session.addListener(listener: self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    // MARK: UITableViewDelegate
+    // MARK: Private API
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+}
 
-        //switch indexPath {
-        //case signOutIndexPath: session.remove()
-        //default: break
-        //}
+extension SettingsViewController: IGListAdapterDataSource {
+
+    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+        return []
+    }
+
+    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+        return IGListSectionController()
+    }
+
+    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+
+}
+
+extension SettingsViewController: GithubSessionListener {
+
+    func didAdd(session: GithubSession, authorization: Authorization) {
+
+    }
+
+    func didRemove(session: GithubSession, authorization: Authorization) {
+
     }
 
 }
