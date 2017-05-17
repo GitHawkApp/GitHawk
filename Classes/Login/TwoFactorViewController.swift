@@ -10,7 +10,7 @@ import UIKit
 
 final class TwoFactorViewController: UITableViewController, UITextFieldDelegate {
 
-    var session: GithubSession!
+    var client: GithubClient!
     var username: String!
     var password: String!
 
@@ -33,7 +33,11 @@ final class TwoFactorViewController: UITableViewController, UITextFieldDelegate 
         codeTextField.isEnabled = false
         showLoadingIndicator(true)
 
-        requestGithubLogin(username: username, password: password, twoFactorCode: code) { result in
+        client.requestGithubLogin(
+            username: username,
+            password: password,
+            twoFactorCode: code
+        ) { result in
             self.codeTextField.isEnabled = true
             self.showLoadingIndicator(false)
             self.handleResult(result)
@@ -43,7 +47,7 @@ final class TwoFactorViewController: UITableViewController, UITextFieldDelegate 
     func handleResult(_ result: GithubLogin) {
         switch result {
         case .success(let auth):
-            session.add(authorization: auth)
+            client.session.add(authorization: auth)
         default:
             let title = NSLocalizedString("Two-factor Error", comment: "")
             let message = NSLocalizedString("Unable to verify your account.", comment: "")

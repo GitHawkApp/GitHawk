@@ -12,15 +12,15 @@ import SnapKit
 
 class NotificationsViewController: UIViewController {
 
-    let session: GithubSession
+    let client: GithubClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
     var allNotifications = [RepoNotifications]()
     var filteredNotifications = [RepoNotifications]()
 
     lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
-    init(session: GithubSession) {
-        self.session = session
+    init(client: GithubClient) {
+        self.client = client
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,7 +44,7 @@ class NotificationsViewController: UIViewController {
     }
 
     fileprivate func reload() {
-        requestNotifications(session: session, all: true) { result in
+        client.requestNotifications(all: true) { result in
             switch result {
             case .success(let notifications):
                 self.allNotifications = createRepoNotifications(

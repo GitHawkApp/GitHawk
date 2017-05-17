@@ -13,33 +13,35 @@ enum NotificationResult {
     case success([Notification])
 }
 
-func requestNotifications(
-    session: GithubSession,
-    all: Bool = false,
-    participating: Bool = false,
-    since: Date? = nil,
-    page: Int = 0,
-    before: Date? = nil,
-    completion: @escaping (NotificationResult) -> ()
-    ) {
-    var parameters: [String: Any] = [
-        "all": all ? "true" : "false",
-        "participating": participating ? "true" : "false",
-        "page": page,
-        ]
-    if let since = since {
-        parameters["since"] = GithubAPIDateFormatter().string(from: since)
-    }
-    if let before = before {
-        parameters["before"] = GithubAPIDateFormatter().string(from: before)
-    }
 
-    let r = GithubRequest(
-        path: "notifications",
-        method: .get,
-        parameters: parameters,
-        headers: nil,
-        session: session) { response in
+extension GithubClient {
+
+    func requestNotifications(
+        all: Bool = false,
+        participating: Bool = false,
+        since: Date? = nil,
+        page: Int = 0,
+        before: Date? = nil,
+        completion: @escaping (NotificationResult) -> ()
+        ) {
+        var parameters: [String: Any] = [
+            "all": all ? "true" : "false",
+            "participating": participating ? "true" : "false",
+            "page": page,
+            ]
+        if let since = since {
+            parameters["since"] = GithubAPIDateFormatter().string(from: since)
+        }
+        if let before = before {
+            parameters["before"] = GithubAPIDateFormatter().string(from: before)
+        }
+
+        request(Request(
+            path: "notifications",
+            method: .get,
+            parameters: parameters,
+            headers: nil
+        ) { response in
             if let jsonArr = response.value as? [ [String: Any] ] {
                 var notifications = [Notification]()
                 for json in jsonArr {
@@ -51,7 +53,7 @@ func requestNotifications(
             } else {
                 completion(.failed(response.error))
             }
+        })
     }
 
-    request(r)
 }

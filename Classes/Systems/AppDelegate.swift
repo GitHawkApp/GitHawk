@@ -7,16 +7,24 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
     var window: UIWindow?
-    let session = GithubSession()
     var showingLogin = false
 
+    let client: GithubClient = {
+        let config = URLSessionConfiguration.default
+        config.urlCache = nil
+        config.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
+        let manager = Alamofire.SessionManager(configuration: config)
+        return GithubClient(session: GithubSession(), networker: manager)
+    }()
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        session.addListener(listener: self)
+        client.session.addListener(listener: self)
         resetRootViewController()
         return true
     }
@@ -29,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
     private func showLogin(animated: Bool = false) {
         guard showingLogin == false,
-            session.authorization == nil,
+            client.session.authorization == nil,
             let nav = UIStoryboard(
                 name: "GithubLogin",
                 bundle: Bundle(for: AppDelegate.self))
@@ -37,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
             let login = nav.viewControllers.first as? LoginViewController
             else { return }
         showingLogin = true
-        login.session = session
+        login.client = client
         window?.rootViewController?.present(nav, animated: animated)
     }
 
@@ -52,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
         var viewControllers = [UIViewController]()
 
-        let notifications = NotificationsViewController(session: session)
+        let notifications = NotificationsViewController(client: client)
         let notificationsNav = UINavigationController(rootViewController: notifications)
         let title = NSLocalizedString("Notifications", comment: "")
         notifications.navigationItem.title = title
@@ -62,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GithubSessionListener {
 
         if let settingsNav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController,
             let settings = settingsNav.viewControllers.first as? SettingsViewController {
-            settings.session = session
+            settings.session = client.session
             viewControllers.append(settingsNav)
         }
 
