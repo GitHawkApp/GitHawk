@@ -17,7 +17,7 @@ final class SettingsViewController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
-        view.backgroundColor = Styles.Colors.background
+        view.backgroundColor = Styles.Colors.Gray.lighter
         return view
     }()
 

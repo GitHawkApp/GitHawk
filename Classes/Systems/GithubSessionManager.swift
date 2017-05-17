@@ -59,6 +59,10 @@ final class GithubSessionManager: NSObject {
         listeners.append(wrapper)
     }
 
+    public var focusedLogin: String? {
+        return _focusedKey
+    }
+
     public var focusedUserSession: GithubUserSession? {
         guard let focusedKey = _focusedKey else { return nil }
         return _userSessions[focusedKey]

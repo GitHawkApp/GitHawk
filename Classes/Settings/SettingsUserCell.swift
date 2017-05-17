@@ -18,6 +18,8 @@ final class SettingsUserCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         label.backgroundColor = .clear
         label.textAlignment = .left
         label.numberOfLines = 1
@@ -33,9 +35,11 @@ final class SettingsUserCell: UICollectionViewCell {
         contentView.addSubview(accessoryView)
         accessoryView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
-            make.right.equalTo(Styles.Sizes.gutter)
+            make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
+
+        contentView.addBorder(bottom: true, left: Styles.Sizes.gutter)
     }
     
     required init?(coder aDecoder: NSCoder) {
