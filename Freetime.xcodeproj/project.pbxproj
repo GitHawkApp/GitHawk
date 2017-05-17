@@ -15,6 +15,8 @@
 		29316DB91ECC8483007CAE3F /* GithubSession+IGListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB81ECC8483007CAE3F /* GithubSession+IGListDiffable.swift */; };
 		29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */; };
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
+		29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */; };
+		29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -125,6 +127,8 @@
 		29316DB81ECC8483007CAE3F /* GithubSession+IGListDiffable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubSession+IGListDiffable.swift"; sourceTree = "<group>"; };
 		29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubUserSession.swift; sourceTree = "<group>"; };
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
+		29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationManager.swift; sourceTree = "<group>"; };
+		29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GithubAPI.swift"; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -351,6 +355,8 @@
 				299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */,
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
+				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
+				29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -726,9 +732,11 @@
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
+				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29C9FDC61EC65FEE00EE3A52 /* Comment.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
+				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
