@@ -25,14 +25,26 @@ final class SettingsSignoutSectionController: IGListSectionController {
         guard let context = collectionContext,
             let cell = context.dequeueReusableCell(of: CenteredButtonCell.self, for: self, at: index) as? CenteredButtonCell
             else { return UICollectionViewCell() }
-        cell.label.text = NSLocalizedString("Sign out", comment: "")
+        cell.label.text = Strings.signout
         cell.label.textColor = Styles.Colors.red
         cell.configure(topSeparatorHidden: false, bottomSeparatorHidden: false)
         return cell
     }
 
     override func didSelectItem(at index: Int) {
+        let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
 
+        let signoutAction = UIAlertAction(title: Strings.signout, style: .destructive) { _ in
+            // todo
+        }
+
+        let title = NSLocalizedString("Are you sure?", comment: "")
+        let message = NSLocalizedString("All of your accounts will be logged out. Do you want to continue?", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(cancelAction)
+        alert.addAction(signoutAction)
+
+        viewController?.present(alert, animated: true)
     }
 
 }

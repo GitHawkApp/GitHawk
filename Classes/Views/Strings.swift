@@ -12,5 +12,8 @@ struct Strings {
 
     static let all = NSLocalizedString("All", comment: "")
     static let unread = NSLocalizedString("Unread", comment: "")
+    static let ok = NSLocalizedString("Ok", comment: "")
+    static let cancel = NSLocalizedString("Cancel", comment: "")
+    static let signout = NSLocalizedString("Sign out", comment: "")
 
 }
