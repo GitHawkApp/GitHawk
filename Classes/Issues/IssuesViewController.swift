@@ -67,6 +67,7 @@ extension IssuesViewController: FeedDelegate {
             case .success: print("yay")
             case .failure: print("nope")
             }
+            feed.finishLoading(fromNetwork: true)
         }
     }
 
