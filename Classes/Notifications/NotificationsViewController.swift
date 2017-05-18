@@ -73,7 +73,7 @@ extension NotificationsViewController: IGListAdapterDataSource {
             controller.delegate = self
             return controller
         } else {
-            return RepoNotificationsSectionController()
+            return RepoNotificationsSectionController(client: client)
         }
     }
 

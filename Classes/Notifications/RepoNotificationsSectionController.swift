@@ -9,18 +9,23 @@
 import UIKit
 import IGListKit
 
-final class RepoNotificationsSectionController: IGListBindingSectionController<RepoNotifications>, IGListBindingSectionControllerDataSource {
+final class RepoNotificationsSectionController: IGListBindingSectionController<RepoNotifications> {
 
-    var expanded = true
+    fileprivate var expanded = true
+    let client: GithubClient
 
-    override init() {
+    init(client: GithubClient) {
+        self.client = client
         super.init()
         dataSource = self
+        selectionDelegate = self
         inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.cellSpacing, right: 0)
         minimumLineSpacing = Styles.Sizes.rowSpacing
     }
 
-    // MARK: IGListBindingSectionControllerDataSource
+}
+
+extension RepoNotificationsSectionController: IGListBindingSectionControllerDataSource {
 
     func sectionController(
         _ sectionController: IGListBindingSectionController<IGListDiffable>,
@@ -56,6 +61,26 @@ final class RepoNotificationsSectionController: IGListBindingSectionController<R
             height = 30
         }
         return CGSize(width: context.containerSize.width, height: height)
+    }
+
+}
+
+extension RepoNotificationsSectionController: IGListBindingSectionControllerSelectionDelegate {
+
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        didSelectItemAt index: Int,
+        viewModel: Any
+        ) {
+        if let viewModel = viewModel as? NotificationViewModel {
+            let controller = IssuesViewController(
+                client: client,
+                owner: viewModel.owner,
+                repo: viewModel.repo,
+                number: viewModel.issueNumber
+            )
+            viewController?.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 
 }

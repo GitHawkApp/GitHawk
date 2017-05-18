@@ -16,17 +16,26 @@ final class NotificationViewModel {
     let type: NotificationType
     let date: Date
     let read: Bool
+    let owner: String
+    let repo: String
+    let issueNumber: String
 
     init(
         title: String,
         type: NotificationType,
         date: Date,
         read: Bool,
+        owner: String,
+        repo: String,
+        issueNumber: String,
         containerWidth: CGFloat
         ) {
         self.type = type
         self.date = date
         self.read = read
+        self.owner = owner
+        self.repo = repo
+        self.issueNumber = issueNumber
 
         let attributes = [
             NSFontAttributeName: Styles.Fonts.body,
@@ -54,8 +63,8 @@ extension NotificationViewModel: IGListDiffable {
         if self === object { return true }
         guard let object = object as? NotificationViewModel else { return false }
         return read == object.read
-        && type == object.type
-        && title == object.title
+            && type == object.type
+            && title == object.title
     }
-
+    
 }

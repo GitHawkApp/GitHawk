@@ -14,7 +14,8 @@ func createRepoNotifications(containerWidth: CGFloat, notifications: [Notificati
     let df = GithubAPIDateFormatter()
     for notification in notifications {
         guard let type = NotificationType(rawValue: notification.subject.type),
-        let date = df.date(from: notification.updated_at)
+        let date = df.date(from: notification.updated_at),
+        let issueNumber = notification.subject.url.components(separatedBy: "/").last
             else { continue }
 
         let model = NotificationViewModel(
@@ -22,6 +23,9 @@ func createRepoNotifications(containerWidth: CGFloat, notifications: [Notificati
             type: type,
             date: date,
             read: !notification.unread,
+            owner: notification.repository.owner.login,
+            repo: notification.repository.name,
+            issueNumber: issueNumber,
             containerWidth: containerWidth
         )
 

@@ -31,7 +31,7 @@ extension GithubClient {
         ]
 
         request(Request(
-            path: "/repos/\(owner)/\(repo)/issues/\(number)",
+            path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .get,
             parameters: nil,
             headers: headers
