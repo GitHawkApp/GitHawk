@@ -19,6 +19,7 @@
 		29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */; };
 		29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */; };
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
+		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -133,6 +134,7 @@
 		29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GithubAPI.swift"; sourceTree = "<group>"; };
 		29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddAccountSectionController.swift; sourceTree = "<group>"; };
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
+		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
+				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				29C9FDD21EC65FEE00EE3A52 /* Reaction.swift in Sources */,
 				29C9FDC91EC65FEE00EE3A52 /* Html.swift in Sources */,
+				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,

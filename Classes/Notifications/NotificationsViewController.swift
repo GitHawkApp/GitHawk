@@ -52,7 +52,7 @@ class NotificationsViewController: UIViewController {
                     notifications: notifications
                 )
             case .failed:
-                print("failed")
+                StatusBar.showNetworkError()
             }
             self.update(fromNetwork: true)
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import JDStatusBarNotification
 
 struct GithubClient {
 
@@ -76,6 +77,7 @@ struct GithubClient {
                 if let userSession = self.userSession,
                     let statusCode = response.response?.statusCode,
                     (statusCode == 401 || statusCode == 403) {
+                    StatusBar.showRevokeError()
                     self.sessionManager.remove([userSession])
                 } else {
                     request.completion(response)
