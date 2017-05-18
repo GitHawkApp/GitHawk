@@ -9,13 +9,24 @@
 import UIKit
 import IGListKit
 
-class IssuesViewController: UIViewController {
+final class IssuesViewController: UIViewController {
 
     fileprivate let client: GithubClient
+    fileprivate let owner: String
+    fileprivate let repo: String
+    fileprivate let number: String
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
-    init(client: GithubClient) {
+    init(
+        client: GithubClient,
+        owner: String,
+        repo: String, 
+        number: String
+        ) {
         self.client = client
+        self.owner = owner
+        self.repo = repo
+        self.number = number
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -51,7 +62,12 @@ extension IssuesViewController: IGListAdapterDataSource {
 extension IssuesViewController: FeedDelegate {
 
     func loadFromNetwork(feed: Feed) {
-
+        client.requestIssue(owner: owner, repo: repo, number: number) { result in
+            switch result {
+            case .success: print("yay")
+            case .failure: print("nope")
+            }
+        }
     }
 
 }
