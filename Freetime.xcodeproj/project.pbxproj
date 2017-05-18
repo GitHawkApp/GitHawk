@@ -20,6 +20,7 @@
 		29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */; };
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
+		29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -135,6 +136,7 @@
 		29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddAccountSectionController.swift; sourceTree = "<group>"; };
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
+		29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesViewController.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
+				29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -737,6 +740,7 @@
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
+				29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */,
 				29C167781ECA0F9900439D62 /* RepoNotifications+Fake.swift in Sources */,
 				29A195151EC7AD4A00C3E289 /* RepoNotifications.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
