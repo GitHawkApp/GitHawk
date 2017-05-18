@@ -6,6 +6,7 @@ PODS:
   - IGListKit/Default (2.1.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (2.1.0)
+  - JDStatusBarNotification (1.5.5)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.4)
   - Alamofire (~> 4.4.0)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
+  - JDStatusBarNotification (~> 1.5.5)
   - SDWebImage (~> 4.0.0)
   - SnapKit (~> 3.2.0)
 
@@ -32,9 +34,10 @@ SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
+  JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 06d9754f342c6eee643f9894264edcbbdbc63d16
+PODFILE CHECKSUM: bc59ba86de3a048a529dfd9a4f375361ae3cf708
 
 COCOAPODS: 1.2.0
