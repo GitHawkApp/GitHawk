@@ -15,6 +15,7 @@ final class IssuesViewController: UIViewController {
     fileprivate let owner: String
     fileprivate let repo: String
     fileprivate let number: String
+    fileprivate var issue: Issue?
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
     init(
@@ -28,7 +29,7 @@ final class IssuesViewController: UIViewController {
         self.repo = repo
         self.number = number
         super.init(nibName: nil, bundle: nil)
-        title = "\(owner)/\(owner)#\(number)"
+        title = "\(owner)/\(repo)#\(number)"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,10 +48,16 @@ final class IssuesViewController: UIViewController {
 extension IssuesViewController: IGListAdapterDataSource {
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return []
+        guard let issue = self.issue else { return [] }
+        let width = view.bounds.width
+        let title = createIssueTitleString(issue: issue, width: width)
+        return [ title ]
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+        if object is NSAttributedStringSizing {
+            return IssueTitleSectionController()
+        }
         return IGListSectionController()
     }
 
@@ -65,7 +72,8 @@ extension IssuesViewController: FeedDelegate {
     func loadFromNetwork(feed: Feed) {
         client.requestIssue(owner: owner, repo: repo, number: number) { result in
             switch result {
-            case .success: print("yay")
+            case .success(let issue):
+                self.issue = issue
             case .failure: print("nope")
             }
             feed.finishLoading(fromNetwork: true)
