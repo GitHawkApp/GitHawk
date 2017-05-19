@@ -15,7 +15,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d minute ago</string>
+			<string>a minute ago</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
@@ -39,7 +39,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d hour ago</string>
+			<string>an hour ago</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
@@ -63,7 +63,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d day ago</string>
+			<string>a day ago</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
@@ -87,7 +87,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d month ago</string>
+			<string>a month ago</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
@@ -111,7 +111,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d year ago</string>
+			<string>a year ago</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
