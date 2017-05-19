@@ -14,8 +14,8 @@ class NotificationsViewController: UIViewController {
 
     let client: GithubClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
-    var allNotifications = [RepoNotifications]()
-    var filteredNotifications = [RepoNotifications]()
+    var allNotifications = [NotificationViewModel]()
+    var filteredNotifications = [NotificationViewModel]()
 
     lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
@@ -39,7 +39,7 @@ class NotificationsViewController: UIViewController {
 
     fileprivate func update(fromNetwork: Bool) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
-        filteredNotifications = filter(repoNotifications: allNotifications, unread: unread)
+        filteredNotifications = filter(notifications: allNotifications, unread: unread)
         feed.finishLoading(fromNetwork: fromNetwork)
     }
 
@@ -47,7 +47,7 @@ class NotificationsViewController: UIViewController {
         client.requestNotifications(all: true) { result in
             switch result {
             case .success(let notifications):
-                self.allNotifications = createRepoNotifications(
+                self.allNotifications = createNotificationViewModels(
                     containerWidth: self.view.bounds.width,
                     notifications: notifications
                 )

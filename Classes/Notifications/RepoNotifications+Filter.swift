@@ -8,22 +8,16 @@
 
 import Foundation
 
-func filter(repoNotifications: [RepoNotifications], unread: Bool = false) -> [RepoNotifications] {
+func filter(notifications: [NotificationViewModel], unread: Bool = false) -> [NotificationViewModel] {
     if unread {
-        var unreadRepos = [RepoNotifications]()
-        for repo in repoNotifications {
-            var unreadNotifications = [NotificationViewModel]()
-            for notification in repo.notifications {
-                if !notification.read {
-                    unreadNotifications.append(notification)
-                }
-            }
-            if unreadNotifications.count > 0 {
-                unreadRepos.append(RepoNotifications(repoName: repo.repoName, notifications: unreadNotifications))
+        var unreadNotifications = [NotificationViewModel]()
+        for notification in notifications {
+            if !notification.read {
+                unreadNotifications.append(notification)
             }
         }
-        return unreadRepos
+        return unreadNotifications
     } else {
-        return repoNotifications
+        return notifications
     }
 }

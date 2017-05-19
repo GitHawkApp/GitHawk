@@ -9,78 +9,40 @@
 import UIKit
 import IGListKit
 
-final class RepoNotificationsSectionController: IGListBindingSectionController<RepoNotifications> {
+final class RepoNotificationsSectionController: IGListGenericSectionController<NotificationViewModel> {
 
-    fileprivate var expanded = true
     let client: GithubClient
 
     init(client: GithubClient) {
         self.client = client
         super.init()
-        dataSource = self
-        selectionDelegate = self
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.cellSpacing, right: 0)
-        minimumLineSpacing = Styles.Sizes.rowSpacing
     }
 
-}
-
-extension RepoNotificationsSectionController: IGListBindingSectionControllerDataSource {
-
-    func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
-        viewModelsFor object: Any
-        ) -> [IGListDiffable] {
-        guard let object = self.object else { return [] }
-        return [object.repoName as IGListDiffable] + object.notifications
+    override func sizeForItem(at index: Int) -> CGSize {
+        guard let context = collectionContext,
+            let object = self.object
+            else { return .zero }
+        return CGSize(width: context.containerSize.width, height: object.titleSize.height)
     }
 
-    func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
-        cellForViewModel viewModel: Any,
-        at index: Int
-        ) -> UICollectionViewCell {
-        guard let context = collectionContext else { return UICollectionViewCell() }
-        if viewModel is String {
-            return context.dequeueReusableCell(of: NotificationRepoCell.self, for: self, at: index)
-        } else {
-            return context.dequeueReusableCell(of: NotificationCell.self, for: self, at: index)
-        }
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        guard let context = collectionContext,
+            let object = self.object,
+            let cell = context.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
+            else { return UICollectionViewCell() }
+        cell.bindViewModel(object)
+        return cell
     }
 
-    func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
-        sizeForViewModel viewModel: Any,
-        at index: Int
-        ) -> CGSize {
-        guard let context = collectionContext else { return .zero }
-        let height: CGFloat
-        if let viewModel = viewModel as? NotificationViewModel {
-            height = viewModel.titleSize.height
-        } else {
-            height = 30
-        }
-        return CGSize(width: context.containerSize.width, height: height)
-    }
-
-}
-
-extension RepoNotificationsSectionController: IGListBindingSectionControllerSelectionDelegate {
-
-    func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
-        didSelectItemAt index: Int,
-        viewModel: Any
-        ) {
-        if let viewModel = viewModel as? NotificationViewModel {
-            let controller = IssuesViewController(
-                client: client,
-                owner: viewModel.owner,
-                repo: viewModel.repo,
-                number: viewModel.issueNumber
-            )
-            viewController?.navigationController?.pushViewController(controller, animated: true)
-        }
+    override func didSelectItem(at index: Int) {
+        guard let object = self.object else { return }
+        let controller = IssuesViewController(
+            client: client,
+            owner: object.owner,
+            repo: object.repo,
+            number: object.issueNumber
+        )
+        viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 
 }
