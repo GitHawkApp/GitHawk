@@ -28,6 +28,7 @@ final class IssuesViewController: UIViewController {
         self.repo = repo
         self.number = number
         super.init(nibName: nil, bundle: nil)
+        title = "\(owner)/\(owner)#\(number)"
     }
 
     required init?(coder aDecoder: NSCoder) {
