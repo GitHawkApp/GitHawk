@@ -11,6 +11,7 @@ import IGListKit
 
 final class NotificationViewModel {
 
+    let id: String
     let title: NSAttributedString
     let titleSize: CGSize
     let type: NotificationType
@@ -21,6 +22,7 @@ final class NotificationViewModel {
     let issueNumber: String
 
     init(
+        id: String,
         title: String,
         type: NotificationType,
         date: Date,
@@ -30,6 +32,7 @@ final class NotificationViewModel {
         issueNumber: String,
         containerWidth: CGFloat
         ) {
+        self.id = id
         self.type = type
         self.date = date
         self.read = read
@@ -56,7 +59,7 @@ final class NotificationViewModel {
 extension NotificationViewModel: IGListDiffable {
 
     func diffIdentifier() -> NSObjectProtocol {
-        return date as NSObjectProtocol
+        return id as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
@@ -64,7 +67,9 @@ extension NotificationViewModel: IGListDiffable {
         guard let object = object as? NotificationViewModel else { return false }
         return read == object.read
             && type == object.type
-            && title == object.title
+            && date == object.date
+            && repo == object.repo
+            && owner == object.owner
     }
     
 }
