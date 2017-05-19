@@ -44,6 +44,13 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
+		299217391ECFA01D00883760 /* IssueCommentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */; };
+		2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */; };
+		2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173C1ECFA03800883760 /* IssueTitleCell.swift */; };
+		2992173F1ECFA08600883760 /* IssueReactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173E1ECFA08600883760 /* IssueReactionsCell.swift */; };
+		299217411ECFA09A00883760 /* IssueImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217401ECFA09A00883760 /* IssueImageCell.swift */; };
+		299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217421ECFA2C700883760 /* IssueTitleSectionController.swift */; };
+		299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217441ECFA41E00883760 /* IssueViewModels.swift */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -162,6 +169,13 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
+		299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentDetailCell.swift; sourceTree = "<group>"; };
+		2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentTextCell.swift; sourceTree = "<group>"; };
+		2992173C1ECFA03800883760 /* IssueTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleCell.swift; sourceTree = "<group>"; };
+		2992173E1ECFA08600883760 /* IssueReactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReactionsCell.swift; sourceTree = "<group>"; };
+		299217401ECFA09A00883760 /* IssueImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueImageCell.swift; sourceTree = "<group>"; };
+		299217421ECFA2C700883760 /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
+		299217441ECFA41E00883760 /* IssueViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModels.swift; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -439,9 +453,16 @@
 		29C167801ECA4ACC00439D62 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
-				29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */,
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
+				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
+				2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */,
+				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
+				299217401ECFA09A00883760 /* IssueImageCell.swift */,
+				2992173E1ECFA08600883760 /* IssueReactionsCell.swift */,
+				29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */,
+				2992173C1ECFA03800883760 /* IssueTitleCell.swift */,
+				299217421ECFA2C700883760 /* IssueTitleSectionController.swift */,
+				299217441ECFA41E00883760 /* IssueViewModels.swift */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -702,8 +723,10 @@
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
+				2992173F1ECFA08600883760 /* IssueReactionsCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
+				2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */,
 				29C9FDCB1EC65FEE00EE3A52 /* Label.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
@@ -712,9 +735,12 @@
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
 				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
 				29316DD11ECD358B007CAE3F /* GithubClient+Issues.swift in Sources */,
+				299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */,
 				290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */,
+				299217411ECFA09A00883760 /* IssueImageCell.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */,
@@ -741,6 +767,7 @@
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
+				299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */,
 				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */,
@@ -752,6 +779,7 @@
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
+				299217391ECFA01D00883760 /* IssueCommentDetailCell.swift in Sources */,
 				29316DB91ECC8483007CAE3F /* GithubSession+IGListDiffable.swift in Sources */,
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				29C9FDD51EC65FEE00EE3A52 /* Self_.swift in Sources */,
