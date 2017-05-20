@@ -37,6 +37,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: reuse)
+        collectionView.isUserInteractionEnabled = false
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(label.snp.right).offset(Styles.Sizes.columnSpacing)

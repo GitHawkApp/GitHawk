@@ -15,6 +15,7 @@ final class IssueLabelsSectionController: IGListBindingSectionController<IssueLa
 
     override init() {
         super.init()
+        selectionDelegate = self
         dataSource = self
     }
 
@@ -25,7 +26,8 @@ extension IssueLabelsSectionController: IGListBindingSectionControllerDataSource
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
         guard let object = self.object else { return [] }
         let colors = object.labels.map { UIColor.fromHex($0.color) }
-        return [ IssueLabelSummaryModel(colors: colors) ] + object.labels
+        return [ IssueLabelSummaryModel(colors: colors) ]
+            + (expanded ? object.labels : [])
     }
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
@@ -42,6 +44,15 @@ extension IssueLabelsSectionController: IGListBindingSectionControllerDataSource
             cellClass = IssueLabelCell.self
         }
         return context.dequeueReusableCell(of: cellClass, for: self, at: index)
+    }
+
+}
+
+extension IssueLabelsSectionController: IGListBindingSectionControllerSelectionDelegate {
+
+    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+        expanded = !expanded
+        update(animated: true)
     }
 
 }

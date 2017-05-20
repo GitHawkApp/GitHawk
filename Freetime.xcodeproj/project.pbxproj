@@ -487,11 +487,10 @@
 				2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */,
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
 				299217401ECFA09A00883760 /* IssueImageCell.swift */,
+				29A4769B1ED0DEE2005D0953 /* IssueLabelCell.swift */,
 				29A476931ED0A9FB005D0953 /* IssueLabelDotCell.swift */,
 				29A476991ED0AD09005D0953 /* IssueLabelsModel.swift */,
 				29A476971ED0ACBE005D0953 /* IssueLabelsSectionController.swift */,
-				29A4769B1ED0DEE2005D0953 /* IssueLabelCell.swift */,
-				29A4769D1ED0E083005D0953 /* Label+IGListDiffable.swift */,
 				29A476911ED0A890005D0953 /* IssueLabelSummaryCell.swift */,
 				29A476951ED0AAFC005D0953 /* IssueLabelSummaryModel.swift */,
 				29A4768F1ED07B2B005D0953 /* IssueState.swift */,
@@ -499,6 +498,7 @@
 				2992173C1ECFA03800883760 /* IssueTitleCell.swift */,
 				299217421ECFA2C700883760 /* IssueTitleSectionController.swift */,
 				299217441ECFA41E00883760 /* IssueViewModels.swift */,
+				29A4769D1ED0E083005D0953 /* Label+IGListDiffable.swift */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
