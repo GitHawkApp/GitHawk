@@ -13,6 +13,8 @@ private func createViewModels(_ issue: Issue, width: CGFloat) -> [IGListDiffable
     var result = [IGListDiffable]()
     result.append(createIssueTitleString(issue: issue, width: width))
 
+    result.append(IssueLabelsModel(labels: issue.labels ?? []))
+
     if let root = createRootIssueComment(issue: issue, width: width) {
         result.append(root)
     }

@@ -57,6 +57,8 @@ extension IssuesViewController: IGListAdapterDataSource {
             return IssueTitleSectionController()
         } else if object is IssueCommentModel {
             return IssueCommentSectionController()
+        } else if object is IssueLabelsModel {
+            return IssueLabelsSectionController()
         }
         return IGListSectionController()
     }
