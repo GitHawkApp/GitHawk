@@ -22,6 +22,7 @@
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */; };
 		29316DD11ECD358B007CAE3F /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */; };
+		293E147D1ECFE8CF001FB0EB /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -47,7 +48,7 @@
 		299217391ECFA01D00883760 /* IssueCommentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */; };
 		2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */; };
 		2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173C1ECFA03800883760 /* IssueTitleCell.swift */; };
-		2992173F1ECFA08600883760 /* IssueReactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173E1ECFA08600883760 /* IssueReactionsCell.swift */; };
+		2992173F1ECFA08600883760 /* IssueCommentReactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */; };
 		299217411ECFA09A00883760 /* IssueImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217401ECFA09A00883760 /* IssueImageCell.swift */; };
 		299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217421ECFA2C700883760 /* IssueTitleSectionController.swift */; };
 		299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217441ECFA41E00883760 /* IssueViewModels.swift */; };
@@ -62,6 +63,10 @@
 		29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */; };
 		29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
 		29A195191EC7AF6800C3E289 /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195181EC7AF6800C3E289 /* NotificationsTests.swift */; };
+		29A4768A1ECFEC55005D0953 /* IssueCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476891ECFEC55005D0953 /* IssueCommentSectionController.swift */; };
+		29A4768C1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */; };
+		29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */; };
+		29A476901ED07B2B005D0953 /* IssueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768F1ED07B2B005D0953 /* IssueState.swift */; };
 		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C167671ECA005500439D62 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
@@ -143,6 +148,7 @@
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesViewController.swift; sourceTree = "<group>"; };
 		29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
+		293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentModel.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -172,7 +178,7 @@
 		299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentDetailCell.swift; sourceTree = "<group>"; };
 		2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentTextCell.swift; sourceTree = "<group>"; };
 		2992173C1ECFA03800883760 /* IssueTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleCell.swift; sourceTree = "<group>"; };
-		2992173E1ECFA08600883760 /* IssueReactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReactionsCell.swift; sourceTree = "<group>"; };
+		2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionsCell.swift; sourceTree = "<group>"; };
 		299217401ECFA09A00883760 /* IssueImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueImageCell.swift; sourceTree = "<group>"; };
 		299217421ECFA2C700883760 /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
 		299217441ECFA41E00883760 /* IssueViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModels.swift; sourceTree = "<group>"; };
@@ -186,6 +192,10 @@
 		29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationRepoCell.swift; sourceTree = "<group>"; };
 		29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotificationsSectionController.swift; sourceTree = "<group>"; };
 		29A195181EC7AF6800C3E289 /* NotificationsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsTests.swift; sourceTree = "<group>"; };
+		29A476891ECFEC55005D0953 /* IssueCommentSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSectionController.swift; sourceTree = "<group>"; };
+		29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentDetailsViewModel.swift; sourceTree = "<group>"; };
+		29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsFormatter.swift; sourceTree = "<group>"; };
+		29A4768F1ED07B2B005D0953 /* IssueState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueState.swift; sourceTree = "<group>"; };
 		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -409,6 +419,7 @@
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -455,10 +466,14 @@
 			children = (
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
 				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
+				29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */,
+				293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */,
+				2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */,
+				29A476891ECFEC55005D0953 /* IssueCommentSectionController.swift */,
 				2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */,
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
 				299217401ECFA09A00883760 /* IssueImageCell.swift */,
-				2992173E1ECFA08600883760 /* IssueReactionsCell.swift */,
+				29A4768F1ED07B2B005D0953 /* IssueState.swift */,
 				29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */,
 				2992173C1ECFA03800883760 /* IssueTitleCell.swift */,
 				299217421ECFA2C700883760 /* IssueTitleSectionController.swift */,
@@ -723,13 +738,15 @@
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29C9FDC71EC65FEE00EE3A52 /* Commit.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
-				2992173F1ECFA08600883760 /* IssueReactionsCell.swift in Sources */,
+				2992173F1ECFA08600883760 /* IssueCommentReactionsCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
 				2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */,
 				29C9FDCB1EC65FEE00EE3A52 /* Label.swift in Sources */,
+				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
+				29A4768C1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29C9FDD11EC65FEE00EE3A52 /* PullRequest.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
@@ -746,6 +763,7 @@
 				29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */,
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */,
+				293E147D1ECFE8CF001FB0EB /* IssueCommentModel.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
@@ -761,6 +779,7 @@
 				29C9FDCC1EC65FEE00EE3A52 /* Link.swift in Sources */,
 				29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
+				29A476901ED07B2B005D0953 /* IssueState.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
 				29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */,
@@ -777,6 +796,7 @@
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
+				29A4768A1ECFEC55005D0953 /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				299217391ECFA01D00883760 /* IssueCommentDetailCell.swift in Sources */,

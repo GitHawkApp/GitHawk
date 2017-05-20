@@ -86,7 +86,7 @@ final class NSAttributedStringSizing: NSObject {
 
     func configure(textView: UITextView) {
         textView.attributedText = attributedText
-        textView.contentInset = inset
+        textView.contentInset = .zero
         textView.textContainerInset = inset
 
         let textContainer = textView.textContainer
