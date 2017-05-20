@@ -24,7 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
+//        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
+
+        let controller = IssuesViewController(client: newGithubClient(sessionManager: sessionManager), owner: "Instagram", repo: "IGListKit", number: "42")
+        window?.rootViewController = UINavigationController(rootViewController: controller)
+
         return true
     }
 

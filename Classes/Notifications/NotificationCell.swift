@@ -87,14 +87,12 @@ extension NotificationCell: IGListBindable {
         titleLabel.text = "\(viewModel.owner)/\(viewModel.repo)"
         textLabel.attributedText = viewModel.title
         dateLabel.text = viewModel.date.agoString
+        dateLabel.detailText = DateDetailsFormatter().string(from: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
 
         for view in [titleLabel, textLabel, reasonImageView] {
             view.alpha = viewModel.read ? 0.5 : 1
         }
-        
-        dateFormatter.dateFormat = "MMM d, yyyy hh:mm a zzz"
-        dateLabel.detailText = dateFormatter.string(from: viewModel.date)
         
         setNeedsLayout()
     }

@@ -1,5 +1,5 @@
 //
-//  IssueReactionsCell.swift
+//  IssueCommentReactionsCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/19/17.
@@ -10,6 +10,6 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueReactionsCell: UICollectionViewCell {
+final class IssueCommentReactionsCell: UICollectionViewCell {
     
 }
