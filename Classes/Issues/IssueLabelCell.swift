@@ -45,8 +45,10 @@ extension IssueLabelCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? Label else { return }
-        background.backgroundColor = UIColor.fromHex(viewModel.color)
+        let color = UIColor.fromHex(viewModel.color)
+        background.backgroundColor = color
         label.text = viewModel.name
+        label.textColor = color.textOverlayColor
     }
 
 }
