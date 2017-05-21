@@ -49,7 +49,7 @@
 		2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */; };
 		2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173C1ECFA03800883760 /* IssueTitleCell.swift */; };
 		2992173F1ECFA08600883760 /* IssueCommentReactionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */; };
-		299217411ECFA09A00883760 /* IssueImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217401ECFA09A00883760 /* IssueImageCell.swift */; };
+		299217411ECFA09A00883760 /* IssueCommentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217401ECFA09A00883760 /* IssueCommentImageCell.swift */; };
 		299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217421ECFA2C700883760 /* IssueTitleSectionController.swift */; };
 		299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217441ECFA41E00883760 /* IssueViewModels.swift */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
@@ -191,7 +191,7 @@
 		2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentTextCell.swift; sourceTree = "<group>"; };
 		2992173C1ECFA03800883760 /* IssueTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleCell.swift; sourceTree = "<group>"; };
 		2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionsCell.swift; sourceTree = "<group>"; };
-		299217401ECFA09A00883760 /* IssueImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueImageCell.swift; sourceTree = "<group>"; };
+		299217401ECFA09A00883760 /* IssueCommentImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentImageCell.swift; sourceTree = "<group>"; };
 		299217421ECFA2C700883760 /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
 		299217441ECFA41E00883760 /* IssueViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModels.swift; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
@@ -487,13 +487,13 @@
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
 				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
 				29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */,
+				299217401ECFA09A00883760 /* IssueCommentImageCell.swift */,
 				29A476AB1ED24111005D0953 /* IssueCommentImageModel.swift */,
 				293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */,
 				2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */,
 				29A476891ECFEC55005D0953 /* IssueCommentSectionController.swift */,
 				2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */,
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
-				299217401ECFA09A00883760 /* IssueImageCell.swift */,
 				29A4769B1ED0DEE2005D0953 /* IssueLabelCell.swift */,
 				29A476931ED0A9FB005D0953 /* IssueLabelDotCell.swift */,
 				29A476991ED0AD09005D0953 /* IssueLabelsModel.swift */,
@@ -784,7 +784,7 @@
 				29A476AC1ED24111005D0953 /* IssueCommentImageModel.swift in Sources */,
 				299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */,
 				290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */,
-				299217411ECFA09A00883760 /* IssueImageCell.swift in Sources */,
+				299217411ECFA09A00883760 /* IssueCommentImageCell.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */,
