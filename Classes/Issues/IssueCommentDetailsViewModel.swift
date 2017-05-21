@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentDetailsViewModel {
+final class IssueCommentDetailsViewModel: IGListDiffable {
 
     let date: Date
     let login: String
@@ -25,10 +25,6 @@ final class IssueCommentDetailsViewModel {
         self.avatarURL = avatarURL
     }
 
-}
-
-extension IssueCommentDetailsViewModel: IGListDiffable {
-
     func diffIdentifier() -> NSObjectProtocol {
         return login as NSObjectProtocol
     }
@@ -39,5 +35,5 @@ extension IssueCommentDetailsViewModel: IGListDiffable {
         return date == object.date
             && avatarURL == object.avatarURL
     }
-    
+
 }

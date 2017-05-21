@@ -24,7 +24,9 @@ final class IssueLabelsSectionController: IGListBindingSectionController<IssueLa
 extension IssueLabelsSectionController: IGListBindingSectionControllerDataSource {
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
-        guard let object = self.object else { return [] }
+        guard let object = self.object,
+            object.labels.count > 0
+            else { return [] }
         let colors = object.labels.map { UIColor.fromHex($0.color) }
         return [ IssueLabelSummaryModel(colors: colors) ]
             + (expanded ? object.labels : [])
@@ -54,5 +56,5 @@ extension IssueLabelsSectionController: IGListBindingSectionControllerSelectionD
         expanded = !expanded
         update(animated: true)
     }
-
+    
 }

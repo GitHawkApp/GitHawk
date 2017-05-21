@@ -20,6 +20,8 @@ final class IssueLabelSummaryModel: IGListDiffable {
         _diffIdentifier = colors.reduce("") { $0 + $1.description }
     }
 
+    // MARK: IGListDiffable
+
     func diffIdentifier() -> NSObjectProtocol {
         return _diffIdentifier as NSObjectProtocol
     }
@@ -31,17 +33,3 @@ final class IssueLabelSummaryModel: IGListDiffable {
     }
 
 }
-
-//extension IssueLabelSummaryModel: IGListDiffable {
-//
-//    func diffIdentifier() -> NSObjectProtocol {
-//        return _diffIdentifier as NSObjectProtocol
-//    }
-//
-//    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
-//        if self === object { return true }
-//        guard let object = object as? IssueLabelSummaryModel else { return false }
-//        return title == object.title
-//    }
-//
-//}
