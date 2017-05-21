@@ -79,13 +79,15 @@ func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
         let sizing = sizingString(body: body, width: width, startIndex: location, endIndex: betweenEnd)
         result.append(sizing)
 
+        location = body.index(betweenEnd, offsetBy: match.range.length)
+
         let imageRange = match.rangeAt(1)
         let imageBegin = body.index(body.startIndex, offsetBy: imageRange.location)
         let imageEnd = body.index(imageBegin, offsetBy: imageRange.length)
-        let image = body.substring(with: imageBegin..<imageEnd)
-        result.append(image as IGListDiffable)
-
-        location = body.index(betweenEnd, offsetBy: match.range.length)
+        let imageURLString = body.substring(with: imageBegin..<imageEnd)
+        if let url = URL(string: imageURLString) {
+            result.append(IssueCommentImageModel(url: url))
+        }
     }
 
     let remaining = sizingString(body: body, width: width, startIndex: location, endIndex: body.endIndex)
