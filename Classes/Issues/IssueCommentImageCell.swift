@@ -1,5 +1,5 @@
 //
-//  IssueImageCell.swift
+//  IssueCommentImageCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/19/17.
@@ -9,6 +9,6 @@
 import UIKit
 import SnapKit
 
-final class IssueImageCell: UICollectionViewCell {
+final class IssueCommentImageCell: UICollectionViewCell {
     
 }
