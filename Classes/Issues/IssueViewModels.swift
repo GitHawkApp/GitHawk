@@ -45,9 +45,9 @@ func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringS
     )
 }
 
-func createIssueCommentStrings(issue: Issue, width: CGFloat) -> [NSAttributedStringSizing] {
+func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
     let attributedString = NSAttributedString(
-        string: issue.body ?? "",
+        string: body,
         attributes: [
             NSFontAttributeName: Styles.Fonts.body,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark
@@ -69,6 +69,6 @@ func createRootIssueComment(issue: Issue, width: CGFloat) -> IssueCommentModel? 
         else { return nil }
 
     let details = IssueCommentDetailsViewModel(date: date, login: login, avatarURL: avatarURL)
-    let bodies = createIssueCommentStrings(issue: issue, width: width)
+    let bodies = createCommentModels(body: issue.body ?? "", width: width)
     return IssueCommentModel(id: id, details: details, bodyModels: bodies)
 }
