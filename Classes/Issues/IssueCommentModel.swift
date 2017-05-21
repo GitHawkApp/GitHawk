@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentModel {
+final class IssueCommentModel: IGListDiffable {
 
     let id: Int
     let details: IssueCommentDetailsViewModel
@@ -25,9 +25,7 @@ final class IssueCommentModel {
         self.bodyModels = bodyModels
     }
 
-}
-
-extension IssueCommentModel: IGListDiffable {
+    // MARK: IGListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
@@ -36,5 +34,6 @@ extension IssueCommentModel: IGListDiffable {
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
         return true
     }
+
 
 }

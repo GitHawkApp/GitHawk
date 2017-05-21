@@ -17,6 +17,8 @@ final class IssueLabelsModel: IGListDiffable {
         self.labels = labels
     }
 
+    // MARK: IGListDiffable
+
     func diffIdentifier() -> NSObjectProtocol {
         // hardcoded b/c one per list
         return "labels" as NSObjectProtocol
@@ -27,16 +29,3 @@ final class IssueLabelsModel: IGListDiffable {
     }
 
 }
-
-//extension IssueLabelsModel: IGListDiffable {
-//
-//    func diffIdentifier() -> NSObjectProtocol {
-//        // hardcoded b/c one per list
-//        return "labels" as NSObjectProtocol
-//    }
-//
-//    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
-//        return true
-//    }
-//
-//}
