@@ -45,18 +45,53 @@ func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringS
     )
 }
 
-func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
+func sizingString(
+    body: String,
+    width: CGFloat,
+    startIndex: String.Index,
+    endIndex: String.Index
+    ) -> NSAttributedStringSizing {
+    let between = body.substring(with: startIndex..<endIndex)
     let attributedString = NSAttributedString(
-        string: body,
+        string: between,
         attributes: [
             NSFontAttributeName: Styles.Fonts.body,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark
         ])
-    return [ NSAttributedStringSizing(
+    return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: attributedString,
         inset: IssueCommentTextCell.inset
-    ) ]
+    )
+}
+
+private let imageRegex = try! NSRegularExpression(pattern: "!\\[.+]\\((.+)\\)", options: [])
+
+func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
+
+    var result = [IGListDiffable]()
+
+    let matches = imageRegex.matches(in: body, options: [], range: NSRange(location: 0, length: body.characters.count))
+    var location = body.startIndex
+    
+    for match in matches {
+        let betweenEnd = body.index(body.startIndex, offsetBy: match.range.location)
+        let sizing = sizingString(body: body, width: width, startIndex: location, endIndex: betweenEnd)
+        result.append(sizing)
+
+        let imageRange = match.rangeAt(1)
+        let imageBegin = body.index(body.startIndex, offsetBy: imageRange.location)
+        let imageEnd = body.index(imageBegin, offsetBy: imageRange.length)
+        let image = body.substring(with: imageBegin..<imageEnd)
+        result.append(image as IGListDiffable)
+
+        location = body.index(betweenEnd, offsetBy: match.range.length)
+    }
+
+    let remaining = sizingString(body: body, width: width, startIndex: location, endIndex: body.endIndex)
+    result.append(remaining)
+
+    return result
 }
 
 func createRootIssueComment(issue: Issue, width: CGFloat) -> IssueCommentModel? {
@@ -65,7 +100,7 @@ func createRootIssueComment(issue: Issue, width: CGFloat) -> IssueCommentModel? 
         let date = GithubAPIDateFormatter().date(from: created),
         let login = issue.user?.login,
         let avatar = issue.user?.avatar_url,
-    let avatarURL = URL(string: avatar)
+        let avatarURL = URL(string: avatar)
         else { return nil }
 
     let details = IssueCommentDetailsViewModel(date: date, login: login, avatarURL: avatarURL)
