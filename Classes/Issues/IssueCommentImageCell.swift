@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
+import IGListKit
 
 final class IssueCommentImageCell: UICollectionViewCell {
 
@@ -28,4 +30,13 @@ final class IssueCommentImageCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension IssueCommentImageCell: IGListBindable {
+
+    func bindViewModel(_ viewModel: Any) {
+        guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        imageView.sd_setImage(with: viewModel.url)
+    }
+
 }
