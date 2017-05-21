@@ -10,5 +10,18 @@ import UIKit
 import SnapKit
 
 final class IssueCommentImageCell: UICollectionViewCell {
+
+    let imageView = UIImageView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        imageView.backgroundColor = Styles.Colors.Gray.lighter
+        imageView.contentMode = .scaleAspectFit
+        contentView.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.edges.equalTo(contentView)
+        }
+    }
     
 }
