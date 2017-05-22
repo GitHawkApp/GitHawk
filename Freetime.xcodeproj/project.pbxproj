@@ -52,6 +52,8 @@
 		299217411ECFA09A00883760 /* IssueCommentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217401ECFA09A00883760 /* IssueCommentImageCell.swift */; };
 		299217431ECFA2C700883760 /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217421ECFA2C700883760 /* IssueTitleSectionController.swift */; };
 		299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299217441ECFA41E00883760 /* IssueViewModels.swift */; };
+		299F16461ED344C3006379ED /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 299F16451ED344C3006379ED /* CocoaMarkdown.framework */; };
+		299F16471ED344C3006379ED /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 299F16451ED344C3006379ED /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -149,6 +151,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		299F16481ED344C3006379ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				299F16471ED344C3006379ED /* CocoaMarkdown.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		290DB4F31ECBF11300CA2790 /* SettingsButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonCell.swift; sourceTree = "<group>"; };
 		29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUsersSectionController.swift; sourceTree = "<group>"; };
@@ -199,6 +215,8 @@
 		299217401ECFA09A00883760 /* IssueCommentImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentImageCell.swift; sourceTree = "<group>"; };
 		299217421ECFA2C700883760 /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
 		299217441ECFA41E00883760 /* IssueViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModels.swift; sourceTree = "<group>"; };
+		299F16411ED342A6006379ED /* CocoaMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaMarkdown.framework; path = "Vendor/CocoaMarkdown/build/Debug-iphoneos/CocoaMarkdown.framework"; sourceTree = "<group>"; };
+		299F16451ED344C3006379ED /* CocoaMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -275,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD90977AA501F48119302FB5 /* Pods_Freetime.framework in Frameworks */,
+				299F16461ED344C3006379ED /* CocoaMarkdown.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +311,7 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
+				299F16451ED344C3006379ED /* CocoaMarkdown.framework */,
 				29A1950D1EC791BD00C3E289 /* LabelPopover.playground */,
 				29F63FD11EC530E7007F55E4 /* TextViews.playground */,
 				29F63FD01EC530BD007F55E4 /* Github API.playground */,
@@ -550,6 +570,7 @@
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				299F16411ED342A6006379ED /* CocoaMarkdown.framework */,
 				CB244B0359DB993E361ADAC6 /* Pods_Freetime.framework */,
 				9F598351A26924CB8F4CCDA3 /* Pods_FreetimeTests.framework */,
 			);
@@ -569,6 +590,7 @@
 				297AE8321EC0D58A00B44A1F /* Resources */,
 				FE3202C6698C4BD3C4722F31 /* [CP] Embed Pods Frameworks */,
 				DE198372B82E5C9AC3006E7E /* [CP] Copy Pods Resources */,
+				299F16481ED344C3006379ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1026,6 +1048,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 523C4DWBTH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor/CocoaMarkdown/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;
@@ -1040,6 +1066,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 523C4DWBTH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor/CocoaMarkdown/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;

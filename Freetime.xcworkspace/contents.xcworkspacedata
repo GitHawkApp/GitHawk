@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CocoaMarkdown/CocoaMarkdown.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Freetime.xcodeproj">
    </FileRef>
    <FileRef

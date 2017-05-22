@@ -1,0 +1,3 @@
+[submodule "CocoaMarkdown"]
+	path = CocoaMarkdown
+	url = https://github.com/indragiek/CocoaMarkdown.git
