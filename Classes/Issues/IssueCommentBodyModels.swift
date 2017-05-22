@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import CocoaMarkdown
 
 private func bodyString(
     body: String,
@@ -22,12 +23,34 @@ private func bodyString(
         .substring(with: NSRange(location: start, length: end - start))?
         .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else { return nil }
 
-    let attributedString = NSAttributedString(
-        string: between,
-        attributes: [
-            NSFontAttributeName: Styles.Fonts.body,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark
-        ])
+    let data = between.data(using: .utf8)
+    let document = CMDocument(data: data, options: [])
+
+    let textAttributes = CMTextAttributes()
+    textAttributes?.textAttributes = [
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: Styles.Fonts.body,
+    ]
+    textAttributes?.linkAttributes = [
+        NSForegroundColorAttributeName: Styles.Colors.blue,
+        NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue
+    ]
+    textAttributes?.inlineCodeAttributes = [
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSBackgroundColorAttributeName: Styles.Colors.Gray.lighter,
+        NSFontAttributeName: Styles.Fonts.code
+    ]
+
+    let listStyle = NSMutableParagraphStyle()
+    textAttributes?.orderedListAttributes = [
+        NSParagraphStyleAttributeName: listStyle
+    ]
+    textAttributes?.unorderedListAttributes = [
+        NSParagraphStyleAttributeName: listStyle
+    ]
+
+    let attributedString = document!.attributedString(with: textAttributes)!
+
     return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: attributedString,
