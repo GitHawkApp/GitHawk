@@ -26,6 +26,7 @@ final class IssueCommentDetailCell: UICollectionViewCell {
         imageView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
         imageView.layer.borderColor = Styles.Colors.Gray.light.cgColor
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
+        imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
