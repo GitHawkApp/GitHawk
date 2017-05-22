@@ -14,15 +14,21 @@ import IGListKit
 final class IssueCommentImageCell: UICollectionViewCell {
 
     let imageView = UIImageView()
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        imageView.backgroundColor = Styles.Colors.Gray.lighter
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
+        }
+
+        spinner.hidesWhenStopped = true
+        contentView.addSubview(spinner)
+        spinner.snp.makeConstraints { make in
+            make.center.equalTo(contentView)
         }
     }
     
@@ -36,7 +42,12 @@ extension IssueCommentImageCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
-        imageView.sd_setImage(with: viewModel.url)
+        imageView.backgroundColor = Styles.Colors.Gray.lighter
+        spinner.startAnimating()
+        imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
+            self.imageView.backgroundColor = .clear
+            self.spinner.stopAnimating()
+        }
     }
 
 }

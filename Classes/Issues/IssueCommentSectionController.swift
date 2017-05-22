@@ -32,7 +32,7 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         if let viewModel = viewModel as? NSAttributedStringSizing {
             height = viewModel.textViewSize.height
         } else if viewModel is IssueCommentImageModel {
-            height = 100.0
+            height = 200.0
         } else {
             height = Styles.Sizes.tableCellHeight
         }
