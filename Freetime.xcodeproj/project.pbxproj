@@ -513,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
+				29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */,
 				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
 				29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */,
 				299217401ECFA09A00883760 /* IssueCommentImageCell.swift */,
@@ -533,7 +534,6 @@
 				2992173C1ECFA03800883760 /* IssueTitleCell.swift */,
 				299217421ECFA2C700883760 /* IssueTitleSectionController.swift */,
 				299217441ECFA41E00883760 /* IssueViewModels.swift */,
-				29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */,
 				29A4769D1ED0E083005D0953 /* Label+IGListDiffable.swift */,
 			);
 			path = Issues;

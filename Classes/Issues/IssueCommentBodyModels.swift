@@ -9,13 +9,16 @@
 import Foundation
 import IGListKit
 
-private func sizingString(
+private func bodyString(
     body: String,
     width: CGFloat,
     start: Int,
     end: Int
     ) -> NSAttributedStringSizing? {
-    guard let between = body
+    guard
+        end > 0,
+        end - start > 0,
+        let between = body
         .substring(with: NSRange(location: start, length: end - start))?
         .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else { return nil }
 
@@ -78,8 +81,7 @@ func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
     var location = 0
 
     for match in matches {
-        if match.range.location > 0,
-            let sizing = sizingString(body: body, width: width, start: location, end: match.range.location) {
+        if let sizing = bodyString(body: body, width: width, start: location, end: match.range.location) {
             result.append(sizing)
         }
 
@@ -91,8 +93,7 @@ func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
     }
 
     let end = body.utf16.count
-    if end - location > 0,
-        let remaining = sizingString(body: body, width: width, start: location, end: end) {
+    if let remaining = bodyString(body: body, width: width, start: location, end: end) {
         result.append(remaining)
     }
 
