@@ -20,7 +20,6 @@ final class IssueCommentTextCell: UICollectionViewCell {
         super.init(frame: frame)
 
         textView.backgroundColor = .clear
-        textView.isEditable = false
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         textView.isSelectable = true
@@ -41,6 +40,8 @@ extension IssueCommentTextCell: IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
         viewModel.configure(textView: textView)
+        textView.isEditable = false
+        textView.isSelectable = true
 
         setNeedsLayout()
     }

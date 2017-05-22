@@ -29,6 +29,7 @@ struct Styles {
         static let title = UIFont.boldSystemFont(ofSize: 14)
         static let button = UIFont.systemFont(ofSize: 17)
         static let headline = UIFont.boldSystemFont(ofSize: 22)
+        static let code = UIFont(name: "Courier", size: 16)!
     }
 
     struct Colors {
