@@ -31,6 +31,8 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         let height: CGFloat
         if let viewModel = viewModel as? NSAttributedStringSizing {
             height = viewModel.textViewSize.height
+        } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
+            height = viewModel.code.textViewSize.height
         } else if viewModel is IssueCommentImageModel {
             height = 200.0
         } else {
@@ -47,6 +49,8 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
             cellClass = IssueCommentDetailCell.self
         } else if viewModel is IssueCommentImageModel {
             cellClass = IssueCommentImageCell.self
+        } else if viewModel is IssueCommentCodeBlockModel {
+            cellClass = IssueCommentCodeBlockCell.self
         } else {
             cellClass = IssueCommentTextCell.self
         }
