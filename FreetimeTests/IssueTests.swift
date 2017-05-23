@@ -71,6 +71,13 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
     }
 
+    func test_whenStringHasNewlines() {
+        let body = "foo\r\nbar"
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 1)
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "foo\nbar")
+    }
+
     func test_whenImageAtTheBeginning() {
         let body = [
             "![alt text](https://apple.com)",
@@ -80,7 +87,7 @@ class IssueTests: XCTestCase {
         let models = createCommentModels(body: body, width: 300)
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\r\nthen some more text")
+        XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
     }
 
     func test_whenImageAtTheEnd() {
@@ -91,7 +98,7 @@ class IssueTests: XCTestCase {
             ].joined(separator: "\r\n")
         let models = createCommentModels(body: body, width: 300)
         XCTAssertEqual(models.count, 2)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\r\nthen some more text")
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
 
@@ -104,7 +111,7 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
 
-    func test_whenMultipleImagesSurroundedByText() {
+    func test_whenMultipleImages_withSurroundedByText() {
         let body = [
             "this is the first line",
             "![alt text](https://apple.com)",
@@ -119,6 +126,22 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
         XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+    }
+
+    func test_whenCodeBlock_withSurroundedByText() {
+        let body = [
+            "this is some text",
+            "```swift",
+            "let a = 5",
+            "```",
+            "this is the end"
+        ].joined(separator: "\r\n")
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 3)
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "swift")
+        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "this is the end")
     }
     
 }
