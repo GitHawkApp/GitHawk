@@ -22,7 +22,6 @@ final class IssueCommentTextCell: UICollectionViewCell {
         textView.backgroundColor = .clear
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
-        textView.isSelectable = true
         contentView.addSubview(textView)
         textView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)

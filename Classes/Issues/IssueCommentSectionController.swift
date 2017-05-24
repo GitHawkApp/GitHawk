@@ -51,6 +51,8 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
             cellClass = IssueCommentImageCell.self
         } else if viewModel is IssueCommentCodeBlockModel {
             cellClass = IssueCommentCodeBlockCell.self
+        } else if viewModel is IssueCommentSummaryModel {
+            cellClass = IssueCommentSummaryCell.self
         } else {
             cellClass = IssueCommentTextCell.self
         }

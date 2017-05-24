@@ -12,6 +12,13 @@ import IGListKit
 
 final class IssueCommentCodeBlockCell: UICollectionViewCell {
 
+    static let inset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.gutter
+    )
+
     let textView = UITextView()
     let scrollView = UIScrollView()
 
@@ -24,16 +31,17 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
             make.edges.equalTo(contentView)
         }
 
+        textView.backgroundColor = .clear
+        textView.scrollsToTop = false
+        textView.isScrollEnabled = false
         scrollView.addSubview(textView)
+        textView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        textView.frame = scrollView.bounds
     }
 
 }
@@ -43,6 +51,8 @@ extension IssueCommentCodeBlockCell: IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }
         viewModel.code.configure(textView: textView)
+        textView.isEditable = false
+        textView.isSelectable = true
         scrollView.contentSize = viewModel.code.textViewSize
     }
 
