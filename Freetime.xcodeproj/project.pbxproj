@@ -61,6 +61,18 @@
 		299F16541ED3E277006379ED /* IssueCommentSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16531ED3E277006379ED /* IssueCommentSummaryCell.swift */; };
 		299F16551ED3E476006379ED /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F164F1ED3D50C006379ED /* IssueCommentCodeBlockCell.swift */; };
 		299F16561ED3E481006379ED /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16511ED3E0AF006379ED /* IssueCommentSummaryModel.swift */; };
+		299F16591ED5F0FA006379ED /* MarkdownScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16581ED5F0FA006379ED /* MarkdownScanner.swift */; };
+		299F165B1ED5F108006379ED /* CreateCommentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165A1ED5F108006379ED /* CreateCommentModels.swift */; };
+		299F165D1ED5F111006379ED /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165C1ED5F111006379ED /* String+NSRange.swift */; };
+		299F165F1ED5F11D006379ED /* ImageScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165E1ED5F11D006379ED /* ImageScanner.swift */; };
+		299F16611ED5F125006379ED /* CodeBlockScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16601ED5F125006379ED /* CodeBlockScanner.swift */; };
+		299F16631ED5F12E006379ED /* DetailsScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16621ED5F12E006379ED /* DetailsScanner.swift */; };
+		299F16641ED5F20E006379ED /* CodeBlockScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16601ED5F125006379ED /* CodeBlockScanner.swift */; };
+		299F16651ED5F20E006379ED /* CreateCommentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165A1ED5F108006379ED /* CreateCommentModels.swift */; };
+		299F16661ED5F20E006379ED /* DetailsScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16621ED5F12E006379ED /* DetailsScanner.swift */; };
+		299F16671ED5F20E006379ED /* ImageScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165E1ED5F11D006379ED /* ImageScanner.swift */; };
+		299F16681ED5F20E006379ED /* MarkdownScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F16581ED5F0FA006379ED /* MarkdownScanner.swift */; };
+		299F16691ED5F20E006379ED /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F165C1ED5F111006379ED /* String+NSRange.swift */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -90,9 +102,7 @@
 		29A476A81ED23FC4005D0953 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDB71EC65FEE00EE3A52 /* Label.swift */; };
 		29A476AA1ED24032005D0953 /* ListTestKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295091EC7AFA500D46CD2 /* ListTestKit.swift */; };
 		29A476AC1ED24111005D0953 /* IssueCommentImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476AB1ED24111005D0953 /* IssueCommentImageModel.swift */; };
-		29A476AE1ED24D6B005D0953 /* IssueCommentBodyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */; };
 		29A476B21ED24D99005D0953 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476B11ED24D99005D0953 /* IssueTests.swift */; };
-		29A476B31ED24DA8005D0953 /* IssueCommentBodyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */; };
 		29A476B41ED24DC6005D0953 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */; };
 		29A476B51ED24DCA005D0953 /* IssueCommentImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476AB1ED24111005D0953 /* IssueCommentImageModel.swift */; };
 		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
@@ -228,6 +238,12 @@
 		299F164F1ED3D50C006379ED /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
 		299F16511ED3E0AF006379ED /* IssueCommentSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryModel.swift; sourceTree = "<group>"; };
 		299F16531ED3E277006379ED /* IssueCommentSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryCell.swift; sourceTree = "<group>"; };
+		299F16581ED5F0FA006379ED /* MarkdownScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownScanner.swift; sourceTree = "<group>"; };
+		299F165A1ED5F108006379ED /* CreateCommentModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentModels.swift; sourceTree = "<group>"; };
+		299F165C1ED5F111006379ED /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
+		299F165E1ED5F11D006379ED /* ImageScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScanner.swift; sourceTree = "<group>"; };
+		299F16601ED5F125006379ED /* CodeBlockScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeBlockScanner.swift; sourceTree = "<group>"; };
+		299F16621ED5F12E006379ED /* DetailsScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsScanner.swift; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -250,7 +266,6 @@
 		29A4769D1ED0E083005D0953 /* Label+IGListDiffable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Label+IGListDiffable.swift"; sourceTree = "<group>"; };
 		29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Overlay.swift"; sourceTree = "<group>"; };
 		29A476AB1ED24111005D0953 /* IssueCommentImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentImageModel.swift; sourceTree = "<group>"; };
-		29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentBodyModels.swift; sourceTree = "<group>"; };
 		29A476B11ED24D99005D0953 /* IssueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTests.swift; sourceTree = "<group>"; };
 		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -505,6 +520,19 @@
 			path = SegmentedControl;
 			sourceTree = "<group>";
 		};
+		299F16571ED5F0E9006379ED /* MarkdownScanning */ = {
+			isa = PBXGroup;
+			children = (
+				299F16601ED5F125006379ED /* CodeBlockScanner.swift */,
+				299F165A1ED5F108006379ED /* CreateCommentModels.swift */,
+				299F16621ED5F12E006379ED /* DetailsScanner.swift */,
+				299F165E1ED5F11D006379ED /* ImageScanner.swift */,
+				299F16581ED5F0FA006379ED /* MarkdownScanner.swift */,
+				299F165C1ED5F111006379ED /* String+NSRange.swift */,
+			);
+			path = MarkdownScanning;
+			sourceTree = "<group>";
+		};
 		29C1677B1ECA1CED00439D62 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,8 +551,8 @@
 		29C167801ECA4ACC00439D62 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				299F16571ED5F0E9006379ED /* MarkdownScanning */,
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
-				29A476AD1ED24D6B005D0953 /* IssueCommentBodyModels.swift */,
 				299F164F1ED3D50C006379ED /* IssueCommentCodeBlockCell.swift */,
 				299F164B1ED35A19006379ED /* IssueCommentCodeBlockModel.swift */,
 				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
@@ -805,6 +833,7 @@
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
+				299F165B1ED5F108006379ED /* CreateCommentModels.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				29C9FDD21EC65FEE00EE3A52 /* Reaction.swift in Sources */,
@@ -816,6 +845,7 @@
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
 				2992173D1ECFA03800883760 /* IssueTitleCell.swift in Sources */,
+				299F16611ED5F125006379ED /* CodeBlockScanner.swift in Sources */,
 				29C9FDCB1EC65FEE00EE3A52 /* Label.swift in Sources */,
 				29A476981ED0ACBE005D0953 /* IssueLabelsSectionController.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
@@ -841,6 +871,7 @@
 				29C9FDD61EC65FEE00EE3A52 /* Status.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */,
 				293E147D1ECFE8CF001FB0EB /* IssueCommentModel.swift in Sources */,
+				299F16591ED5F0FA006379ED /* MarkdownScanner.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				29A476961ED0AAFC005D0953 /* IssueLabelSummaryModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
@@ -866,6 +897,7 @@
 				29C9FDCD1EC65FEE00EE3A52 /* Milestone.swift in Sources */,
 				29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
+				299F16631ED5F12E006379ED /* DetailsScanner.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				299217451ECFA41E00883760 /* IssueViewModels.swift in Sources */,
@@ -880,14 +912,15 @@
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
+				299F165F1ED5F11D006379ED /* ImageScanner.swift in Sources */,
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
+				299F165D1ED5F111006379ED /* String+NSRange.swift in Sources */,
 				29A4768A1ECFEC55005D0953 /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				299217391ECFA01D00883760 /* IssueCommentDetailCell.swift in Sources */,
 				29316DB91ECC8483007CAE3F /* GithubSession+IGListDiffable.swift in Sources */,
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
-				29A476AE1ED24D6B005D0953 /* IssueCommentBodyModels.swift in Sources */,
 				29A4769A1ED0AD09005D0953 /* IssueLabelsModel.swift in Sources */,
 				29C9FDD51EC65FEE00EE3A52 /* Self_.swift in Sources */,
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
@@ -907,8 +940,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */,
+				299F16641ED5F20E006379ED /* CodeBlockScanner.swift in Sources */,
 				29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */,
+				299F16671ED5F20E006379ED /* ImageScanner.swift in Sources */,
 				29A476B41ED24DC6005D0953 /* IssueCommentTextCell.swift in Sources */,
+				299F16691ED5F20E006379ED /* String+NSRange.swift in Sources */,
 				29A476B51ED24DCA005D0953 /* IssueCommentImageModel.swift in Sources */,
 				29C167761ECA0DE100439D62 /* NSAttributedStringSizing.swift in Sources */,
 				29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */,
@@ -923,19 +959,21 @@
 				29A195051EC75F3D00C3E289 /* Date+Display.swift in Sources */,
 				29A476A61ED23FAE005D0953 /* App.swift in Sources */,
 				29A476A71ED23FBA005D0953 /* Label+IGListDiffable.swift in Sources */,
+				299F16651ED5F20E006379ED /* CreateCommentModels.swift in Sources */,
 				29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29A476A51ED23FA2005D0953 /* Authorization.swift in Sources */,
 				29C1676C1ECA0D6700439D62 /* RepoNotifications+Filter.swift in Sources */,
 				29C167711ECA0D7C00439D62 /* Strings.swift in Sources */,
 				29A476AA1ED24032005D0953 /* ListTestKit.swift in Sources */,
+				299F16681ED5F20E006379ED /* MarkdownScanner.swift in Sources */,
 				299F16551ED3E476006379ED /* IssueCommentCodeBlockCell.swift in Sources */,
 				29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */,
 				29A476A11ED23F83005D0953 /* DateDetailsFormatter.swift in Sources */,
 				297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */,
 				29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */,
 				29A476A81ED23FC4005D0953 /* Label.swift in Sources */,
-				29A476B31ED24DA8005D0953 /* IssueCommentBodyModels.swift in Sources */,
 				29A476B21ED24D99005D0953 /* IssueTests.swift in Sources */,
+				299F16661ED5F20E006379ED /* DetailsScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
