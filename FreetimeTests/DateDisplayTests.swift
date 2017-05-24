@@ -23,12 +23,12 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateMinutes_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -61).agoString
-        XCTAssertEqual(result, "1 minute ago")
+        XCTAssertEqual(result, "a minute ago")
     }
 
     func test_whenDateMinutes_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -59.5).agoString
-        XCTAssertEqual(result, "1 minute ago")
+        XCTAssertEqual(result, "a minute ago")
     }
 
     func test_whenDateMinutes_withUpperBound_withPlural() {
@@ -38,12 +38,12 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateHour_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -3601).agoString
-        XCTAssertEqual(result, "1 hour ago")
+        XCTAssertEqual(result, "an hour ago")
     }
 
     func test_whenDateHour_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -3599.5).agoString
-        XCTAssertEqual(result, "1 hour ago")
+        XCTAssertEqual(result, "an hour ago")
     }
 
     func test_whenDateHours_withUpperBound_withPlural() {
@@ -53,12 +53,12 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateDay_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -86401).agoString
-        XCTAssertEqual(result, "1 day ago")
+        XCTAssertEqual(result, "a day ago")
     }
 
     func test_whenDateDay_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -86399.5).agoString
-        XCTAssertEqual(result, "1 day ago")
+        XCTAssertEqual(result, "a day ago")
     }
 
     func test_whenDateDay_withUpperBound_withPlural() {
@@ -68,12 +68,12 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateMonth_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -2592001).agoString
-        XCTAssertEqual(result, "1 month ago")
+        XCTAssertEqual(result, "a month ago")
     }
 
     func test_whenDateMonth_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -2591999.5).agoString
-        XCTAssertEqual(result, "1 month ago")
+        XCTAssertEqual(result, "a month ago")
     }
 
     func test_whenDateMonth_withUpperBound_withPlural() {
@@ -83,12 +83,12 @@ class DateDisplayTests: XCTestCase {
 
     func test_whenDateYear_withLowerBound_withSingular() {
         let result = Date(timeIntervalSinceNow: -31104001).agoString
-        XCTAssertEqual(result, "1 year ago")
+        XCTAssertEqual(result, "a year ago")
     }
 
     func test_whenDateYear_withUpperBound_withDecimal_withSingular() {
         let result = Date(timeIntervalSinceNow: -31103999.5).agoString
-        XCTAssertEqual(result, "1 year ago")
+        XCTAssertEqual(result, "a year ago")
     }
 
     func test_whenDateYear_withUpperBound_withPlural() {
