@@ -203,5 +203,47 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(results[0].location, 3)
         XCTAssertEqual(results[0].length, 29)
     }
+
+    func test_whenImageEmbeddedInCode() {
+        let body = [
+            "this is the first line",
+            "```lang",
+            "![alt text](https://apple.com)",
+            "```",
+            "then some more text",
+            "![alt text](https://google.com)",
+            "foo bar baz",
+            ].joined(separator: "\r\n")
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 5)
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "lang")
+        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
+        XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
+        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+    }
+
+    func test_whenCodeEmbeddedInDetails() {
+        let body = [
+            "this is the first line",
+            "<details>",
+            "<summary>",
+            "sum",
+            "</summary>",
+            "```lang",
+            "![alt text](https://apple.com)",
+            "```",
+            "then some more text",
+            "</details>",
+            "![alt text](https://google.com)",
+            "foo bar baz",
+            ].joined(separator: "\r\n")
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 5)
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
+        XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
+        XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
+        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+    }
     
 }

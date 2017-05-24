@@ -84,6 +84,8 @@ func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
     var results = [IGListDiffable]()
     var location = 0
     for (range, model) in scannerResults {
+        guard range.location >= location else { continue }
+
         if let sizing = bodyString(body: newlineCleanedBody, width: width, start: location, end: range.location) {
             results.append(sizing)
         }
