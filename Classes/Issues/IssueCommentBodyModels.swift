@@ -41,7 +41,8 @@ private func codeBlockString(
     )
     return NSAttributedStringSizing(
         containerWidth: CGFloat.greatestFiniteMagnitude,
-        attributedText: attributedText
+        attributedText: attributedText,
+        inset: IssueCommentCodeBlockCell.inset
     )
 }
 
@@ -88,40 +89,95 @@ private func bodyString(
     )
 }
 
-private let imageRegex = try! NSRegularExpression(pattern: "!\\[.+]\\((.+)\\)", options: [.useUnixLineSeparators])
-private let blockCodeRegex = try! NSRegularExpression(pattern: "(?s)```([a-zA-Z0-9-]+)?(.*?)```", options: [.useUnixLineSeparators])
+let detailsStart = try! NSRegularExpression(
+    pattern: "<details>",
+    options: [.useUnixLineSeparators, .dotMatchesLineSeparators]
+)
+let detailsEnd = try! NSRegularExpression(
+    pattern: "</details>",
+    options: [.useUnixLineSeparators, .dotMatchesLineSeparators]
+)
+let detailsSummary = try! NSRegularExpression(
+    pattern: "<summary>(.+)</summary>",
+    options: []
+)
+func detailsRanges(_ body: String) -> [NSRange] {
+    var matches = [ (range: NSRange, start: Bool) ]()
 
-func imageURLMatches(body: String) -> [NSTextCheckingResult] {
-    return imageRegex.matches(in: body, options: [], range: body.nsrange)
+    matches += detailsStart
+        .matches(in: body, options: [], range: body.nsrange)
+        .map { (range: $0.range, start: true) }
+
+    matches += detailsEnd
+        .matches(in: body, options: [], range: body.nsrange)
+        .map { (range: $0.range, start: false) }
+
+    matches.sort { $0.range.location < $1.range.location }
+
+    var count = 0
+    var start = 0
+
+    var ranges = [NSRange]()
+
+    for match in matches {
+        if match.start {
+            count += 1
+        } else {
+            count -= 1
+        }
+
+        if count == 1, match.start {
+            start = match.range.location
+        } else if count == 0 {
+            ranges.append(NSRange(location: start, length: match.range.location + match.range.length - start))
+        }
+    }
+
+    return ranges
 }
 
 struct BodyScanner {
 
-    let regex: NSRegularExpression
-    let handler: (String, CGFloat, NSTextCheckingResult) -> IGListDiffable?
+    let handler: (String, CGFloat) -> [(NSRange, IGListDiffable)]
 
 }
 
-let imageScanner = BodyScanner(
-    regex: try! NSRegularExpression(pattern: "!\\[.+]\\((.+)\\)", options: [.useUnixLineSeparators]),
-    handler: { (body, width, match) in
-        if let string = body.substring(with: match.rangeAt(1)), let url = URL(string: string) {
-            return IssueCommentImageModel(url: url)
+let detailsScanner = BodyScanner { (body, width) in
+    var results = [(NSRange, IGListDiffable)]()
+    let ranges = detailsRanges(body)
+    for range in ranges {
+        if let match = detailsSummary.firstMatch(in: body, options: [], range: range),
+            let summary = body.substring(with: match.rangeAt(1)) {
+            results.append((range, IssueCommentSummaryModel(summary: summary)))
         }
-        return nil
+    }
+    return results
 }
-)
 
-let codeBlockScanner = BodyScanner(
-    regex: try! NSRegularExpression(pattern: "```([a-zA-Z0-9-]+)?(.*?)```", options: [.useUnixLineSeparators, .dotMatchesLineSeparators]),
-    handler: { (body, width, match) in
-        let language = body.substring(with: match.rangeAt(1))
-        if let code = body.substring(with: match.rangeAt(2)) {
-            return IssueCommentCodeBlockModel(code: codeBlockString(code), language: language)
+let imageRegex = try! NSRegularExpression(pattern: "!\\[.+]\\((.+)\\)", options: [.useUnixLineSeparators])
+let imageScanner =  BodyScanner { (body, width) in
+        var results = [(NSRange, IGListDiffable)]()
+        let matches = imageRegex.matches(in: body, options: [], range: body.nsrange)
+        for match in matches {
+            if let string = body.substring(with: match.rangeAt(1)), let url = URL(string: string) {
+                results.append((match.range, IssueCommentImageModel(url: url)))
+            }
         }
-        return nil
+        return results
+        }
+
+let codeRegex = try! NSRegularExpression(pattern: "```([a-zA-Z0-9-]+)?(.*?)```", options: [.useUnixLineSeparators, .dotMatchesLineSeparators])
+let codeBlockScanner =  BodyScanner { (body, width) in
+        var results = [(NSRange, IGListDiffable)]()
+        let matches = codeRegex.matches(in: body, options: [], range: body.nsrange)
+        for match in matches {
+            let language = body.substring(with: match.rangeAt(1))
+            if let code = body.substring(with: match.rangeAt(2)) {
+                results.append((match.range, IssueCommentCodeBlockModel(code: codeBlockString(code), language: language)))
+            }
+        }
+        return results
 }
-)
 
 // http://nshipster.com/nsregularexpression/
 extension String {
@@ -159,30 +215,22 @@ func createCommentModels(body: String, width: CGFloat) -> [IGListDiffable] {
 
     let newlineCleanedBody = body.replacingOccurrences(of: "\r\n", with: "\n")
 
-    var results = [IGListDiffable]()
-
-    var matchPairs = [ (NSTextCheckingResult, BodyScanner) ]()
-
-    for scanner in [imageScanner, codeBlockScanner] {
-        let matches = scanner.regex.matches(in: newlineCleanedBody, options: [], range: newlineCleanedBody.nsrange)
-        let pairs = matches.map { ($0, scanner) }
-        matchPairs += pairs
+    var scannerResults = [(NSRange, IGListDiffable)]()
+    for scanner in [imageScanner, codeBlockScanner, detailsScanner] {
+        scannerResults += scanner.handler(newlineCleanedBody, width)
     }
+    scannerResults.sort { $0.0.location < $1.0.location }
 
-    matchPairs.sort { $0.0.range.location < $1.0.range.location }
-
+    var results = [IGListDiffable]()
     var location = 0
-
-    for (match, scanner) in matchPairs {
-        if let sizing = bodyString(body: newlineCleanedBody, width: width, start: location, end: match.range.location) {
+    for (range, model) in scannerResults {
+        if let sizing = bodyString(body: newlineCleanedBody, width: width, start: location, end: range.location) {
             results.append(sizing)
         }
 
-        location = match.range.location + match.range.length
+        location = range.location + range.length
 
-        if let result = scanner.handler(newlineCleanedBody, width, match) {
-            results.append(result)
-        }
+        results.append(model)
     }
 
     let end = newlineCleanedBody.utf16.count
