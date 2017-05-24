@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 
 private let imageRegex = try! NSRegularExpression(
-    pattern: "!\\[.+]\\((.+)\\)",
+    pattern: "!\\[.+]\\((.*?)\\)",
     options: [.useUnixLineSeparators]
 )
 
