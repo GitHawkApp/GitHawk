@@ -18,8 +18,8 @@ private let detailsEnd = try! NSRegularExpression(
     options: [.useUnixLineSeparators, .dotMatchesLineSeparators]
 )
 private let detailsSummary = try! NSRegularExpression(
-    pattern: "<summary>(.+)</summary>",
-    options: []
+    pattern: "<summary>(.*?)</summary>",
+    options: [.useUnixLineSeparators, .dotMatchesLineSeparators]
 )
 
 func detailsRanges(_ body: String) -> [NSRange] {
@@ -63,7 +63,7 @@ let detailsScanner = MarkdownScanner { (body, width) in
     for range in ranges {
         if let match = detailsSummary.firstMatch(in: body, options: [], range: range),
             let summary = body.substring(with: match.rangeAt(1)) {
-            results.append((range, IssueCommentSummaryModel(summary: summary)))
+            results.append((range, IssueCommentSummaryModel(summary: summary.trimmingCharacters(in: .whitespacesAndNewlines))))
         }
     }
     return results
