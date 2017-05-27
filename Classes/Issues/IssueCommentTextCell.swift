@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 import IGListKit
 
 final class IssueCommentTextCell: UICollectionViewCell {
@@ -23,13 +22,15 @@ final class IssueCommentTextCell: UICollectionViewCell {
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         contentView.addSubview(textView)
-        textView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textView.frame = contentView.bounds
     }
 
 }

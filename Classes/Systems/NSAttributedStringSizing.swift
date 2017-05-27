@@ -52,7 +52,7 @@ final class NSAttributedStringSizing: NSObject {
         self.usesFontLeading = usesFontLeading
 
         let insetWidth = containerWidth - inset.left - inset.right
-        let textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: CGFloat.greatestFiniteMagnitude))
+        let textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: 0))
         textContainer.exclusionPaths = exclusionPaths
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
@@ -70,8 +70,9 @@ final class NSAttributedStringSizing: NSObject {
         textStorage.addLayoutManager(layoutManager)
 
         // find the size of the text now that everything is configured
-        let glyphRange = layoutManager.glyphRange(for: textContainer)
-        let bounds = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+//        let glyphRange = layoutManager.glyphRange(for: textContainer)
+//        let bounds = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+        let bounds = layoutManager.usedRect(for: textContainer)
 
         // adjust for the text view inset (contentInset + textContainerInset)
         var viewSize = bounds.size

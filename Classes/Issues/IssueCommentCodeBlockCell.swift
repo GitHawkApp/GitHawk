@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 import IGListKit
 
 final class IssueCommentCodeBlockCell: UICollectionViewCell {
@@ -27,21 +26,23 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
 
         scrollView.backgroundColor = Styles.Colors.Gray.lighter
         contentView.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
-        }
 
         textView.backgroundColor = .clear
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         scrollView.addSubview(textView)
-        textView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        scrollView.frame = contentView.bounds
+
+        let contentSize = scrollView.contentSize
+        textView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
     }
 
 }
@@ -53,7 +54,10 @@ extension IssueCommentCodeBlockCell: IGListBindable {
         viewModel.code.configure(textView: textView)
         textView.isEditable = false
         textView.isSelectable = true
+
         scrollView.contentSize = viewModel.code.textViewSize
+
+        setNeedsLayout()
     }
 
 }
