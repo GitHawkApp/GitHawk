@@ -70,8 +70,6 @@ final class NSAttributedStringSizing: NSObject {
         textStorage.addLayoutManager(layoutManager)
 
         // find the size of the text now that everything is configured
-//        let glyphRange = layoutManager.glyphRange(for: textContainer)
-//        let bounds = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
         let bounds = layoutManager.usedRect(for: textContainer)
 
         // adjust for the text view inset (contentInset + textContainerInset)

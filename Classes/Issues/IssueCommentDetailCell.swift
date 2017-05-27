@@ -50,7 +50,8 @@ final class IssueCommentDetailCell: UICollectionViewCell {
             make.top.equalTo(loginLabel.snp.bottom).offset(Styles.Sizes.rowSpacing/2)
         }
 
-        editButton.setImage(UIImage(named: "pencil")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        editButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        editButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         editButton.tintColor = Styles.Colors.Gray.light
         contentView.addSubview(editButton)
         editButton.snp.makeConstraints { make in
