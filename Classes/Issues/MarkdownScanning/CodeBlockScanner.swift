@@ -22,7 +22,7 @@ private func codeBlockString(
         attributes: attributes
     )
     return NSAttributedStringSizing(
-        containerWidth: CGFloat.greatestFiniteMagnitude,
+        containerWidth: 0,
         attributedText: attributedText,
         inset: IssueCommentCodeBlockCell.inset
     )
