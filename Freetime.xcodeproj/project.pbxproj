@@ -22,6 +22,7 @@
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */; };
 		29316DD11ECD358B007CAE3F /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */; };
+		29356E4F1EDA87E100D24533 /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E4E1EDA87E100D24533 /* IssueCommentViewModelHeight.swift */; };
 		293E147D1ECFE8CF001FB0EB /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
@@ -198,6 +199,7 @@
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesViewController.swift; sourceTree = "<group>"; };
 		29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
+		29356E4E1EDA87E100D24533 /* IssueCommentViewModelHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentViewModelHeight.swift; sourceTree = "<group>"; };
 		293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentModel.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -551,20 +553,20 @@
 		29C167801ECA4ACC00439D62 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				299F16571ED5F0E9006379ED /* MarkdownScanning */,
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
 				299F164F1ED3D50C006379ED /* IssueCommentCodeBlockCell.swift */,
 				299F164B1ED35A19006379ED /* IssueCommentCodeBlockModel.swift */,
 				299217381ECFA01D00883760 /* IssueCommentDetailCell.swift */,
-				299F16511ED3E0AF006379ED /* IssueCommentSummaryModel.swift */,
-				299F16531ED3E277006379ED /* IssueCommentSummaryCell.swift */,
 				29A4768B1ECFED5E005D0953 /* IssueCommentDetailsViewModel.swift */,
 				299217401ECFA09A00883760 /* IssueCommentImageCell.swift */,
 				29A476AB1ED24111005D0953 /* IssueCommentImageModel.swift */,
 				293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */,
 				2992173E1ECFA08600883760 /* IssueCommentReactionsCell.swift */,
 				29A476891ECFEC55005D0953 /* IssueCommentSectionController.swift */,
+				299F16531ED3E277006379ED /* IssueCommentSummaryCell.swift */,
+				299F16511ED3E0AF006379ED /* IssueCommentSummaryModel.swift */,
 				2992173A1ECFA02B00883760 /* IssueCommentTextCell.swift */,
+				29356E4E1EDA87E100D24533 /* IssueCommentViewModelHeight.swift */,
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
 				29A4769B1ED0DEE2005D0953 /* IssueLabelCell.swift */,
 				29A476931ED0A9FB005D0953 /* IssueLabelDotCell.swift */,
@@ -578,6 +580,7 @@
 				299217421ECFA2C700883760 /* IssueTitleSectionController.swift */,
 				299217441ECFA41E00883760 /* IssueViewModels.swift */,
 				29A4769D1ED0E083005D0953 /* Label+IGListDiffable.swift */,
+				299F16571ED5F0E9006379ED /* MarkdownScanning */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -865,6 +868,7 @@
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				2992173B1ECFA02B00883760 /* IssueCommentTextCell.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
+				29356E4F1EDA87E100D24533 /* IssueCommentViewModelHeight.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				29C167821ECA4B1C00439D62 /* IssueEvent.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,

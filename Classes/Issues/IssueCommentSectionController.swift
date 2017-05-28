@@ -27,18 +27,7 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
-
-        let height: CGFloat
-        if let viewModel = viewModel as? NSAttributedStringSizing {
-            height = viewModel.textViewSize.height
-        } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
-            height = viewModel.code.textViewSize.height
-        } else if viewModel is IssueCommentImageModel {
-            height = 200.0
-        } else {
-            height = Styles.Sizes.tableCellHeight
-        }
-
+        let height = bodyHeight(viewModel: viewModel)
         return CGSize(width: context.containerSize.width, height: height)
     }
 
