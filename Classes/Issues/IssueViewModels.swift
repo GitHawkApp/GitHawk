@@ -52,7 +52,8 @@ func collapsedBodyInfo(bodies: [Any]) -> (Int, CGFloat)? {
         let height = bodyHeight(viewModel: body)
         totalHeight += height
         if totalHeight > cap {
-            return (i, height - totalHeight + cap)
+            let collapsedBodyHeight = max(cap - (totalHeight - height), CollapseCellMinHeight)
+            return (i, collapsedBodyHeight)
         }
     }
     return nil
