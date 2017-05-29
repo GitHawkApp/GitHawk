@@ -57,8 +57,8 @@ extension IssueCommentCodeBlockCell: IGListBindable {
         scrollView.contentSize = viewModel.code.textViewSize
 
         label.attributedText = viewModel.code.attributedText
-        let inset = IssueCommentTextCell.inset
-        label.frame = CGRect(x: inset.left, y: inset.top, width: contentSize.width, height: contentSize.height)
+        let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
+        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
     }
 
 }
