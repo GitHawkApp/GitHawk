@@ -14,15 +14,18 @@ final class IssueCommentModel: IGListDiffable {
     let id: Int
     let details: IssueCommentDetailsViewModel
     let bodyModels: [IGListDiffable]
+    let collapse: (model: AnyObject, height: CGFloat)?
 
     init(
         id: Int,
         details: IssueCommentDetailsViewModel,
-        bodyModels: [IGListDiffable]
+        bodyModels: [IGListDiffable],
+        collapse: (AnyObject, CGFloat)?
         ) {
         self.id = id
         self.details = details
         self.bodyModels = bodyModels
+        self.collapse = collapse
     }
 
     // MARK: IGListDiffable

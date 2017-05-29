@@ -45,15 +45,15 @@ func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringS
     )
 }
 
-func collapsedBodyInfo(bodies: [Any]) -> (Int, CGFloat)? {
+func collapsedBodyInfo(bodies: [AnyObject]) -> (AnyObject, CGFloat)? {
     let cap: CGFloat = 300
     var totalHeight: CGFloat = 0
-    for (i, body) in bodies.enumerated() {
+    for body in bodies {
         let height = bodyHeight(viewModel: body)
         totalHeight += height
         if totalHeight > cap {
             let collapsedBodyHeight = max(cap - (totalHeight - height), CollapseCellMinHeight)
-            return (i, collapsedBodyHeight)
+            return (body, collapsedBodyHeight)
         }
     }
     return nil
@@ -70,5 +70,6 @@ func createRootIssueComment(issue: Issue, width: CGFloat) -> IssueCommentModel? 
 
     let details = IssueCommentDetailsViewModel(date: date, login: login, avatarURL: avatarURL)
     let bodies = createCommentModels(body: issue.body ?? "", width: width)
-    return IssueCommentModel(id: id, details: details, bodyModels: bodies)
+    let collapse = collapsedBodyInfo(bodies: bodies)
+    return IssueCommentModel(id: id, details: details, bodyModels: bodies, collapse: collapse)
 }
