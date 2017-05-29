@@ -20,9 +20,12 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
 
     let textView = UITextView()
     let scrollView = UIScrollView()
+    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentView.clipsToBounds = true
 
         scrollView.backgroundColor = Styles.Colors.Gray.lighter
         contentView.addSubview(scrollView)
@@ -39,10 +42,10 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        scrollView.frame = contentView.bounds
-
-        let contentSize = scrollView.contentSize
-        textView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
+        // size the scrollview to the width of the cell but match its height to its content size
+        // that way when the cell is collapsed, the scroll view isn't vertically scrollable
+        scrollView.frame = CGRect(x: 0, y: 0, width: contentView.bounds.width, height: scrollView.contentSize.height)
+        LayoutCollapsible(layer: overlay, view: contentView)
     }
 
 }
@@ -55,9 +58,19 @@ extension IssueCommentCodeBlockCell: IGListBindable {
         textView.isEditable = false
         textView.isSelectable = true
 
+        let contentSize = viewModel.code.textViewSize
         scrollView.contentSize = viewModel.code.textViewSize
+        textView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
 
         setNeedsLayout()
     }
 
+}
+
+extension IssueCommentCodeBlockCell: CollapsibleCell {
+
+    func setCollapse(visible: Bool) {
+        overlay.isHidden = !visible
+    }
+    
 }

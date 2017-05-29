@@ -24,6 +24,7 @@
 		29316DD11ECD358B007CAE3F /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */; };
 		29356E4F1EDA87E100D24533 /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E4E1EDA87E100D24533 /* IssueCommentViewModelHeight.swift */; };
 		29356E511EDB2CB500D24533 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E501EDB2CB500D24533 /* CollapsibleCell.swift */; };
+		29356E521EDBD5B700D24533 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E501EDB2CB500D24533 /* CollapsibleCell.swift */; };
 		293E147D1ECFE8CF001FB0EB /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E147C1ECFE8CF001FB0EB /* IssueCommentModel.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
@@ -977,6 +978,7 @@
 				299F16551ED3E476006379ED /* IssueCommentCodeBlockCell.swift in Sources */,
 				29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */,
 				29A476A11ED23F83005D0953 /* DateDetailsFormatter.swift in Sources */,
+				29356E521EDBD5B700D24533 /* CollapsibleCell.swift in Sources */,
 				297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */,
 				29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */,
 				29A476A81ED23FC4005D0953 /* Label.swift in Sources */,

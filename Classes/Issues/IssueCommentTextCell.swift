@@ -14,9 +14,12 @@ final class IssueCommentTextCell: UICollectionViewCell {
     static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
 
     let textView = UITextView()
+    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentView.clipsToBounds = true
 
         textView.backgroundColor = .clear
         textView.scrollsToTop = false
@@ -30,7 +33,7 @@ final class IssueCommentTextCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        textView.frame = contentView.bounds
+        LayoutCollapsible(layer: overlay, view: contentView)
     }
 
 }
@@ -42,8 +45,20 @@ extension IssueCommentTextCell: IGListBindable {
         viewModel.configure(textView: textView)
         textView.isEditable = false
         textView.isSelectable = true
-
-        setNeedsLayout()
+        textView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: viewModel.textViewSize.width,
+            height: viewModel.textViewSize.height
+        )
     }
 
+}
+
+extension IssueCommentTextCell: CollapsibleCell {
+
+    func setCollapse(visible: Bool) {
+        overlay.isHidden = !visible
+    }
+    
 }
