@@ -11,6 +11,8 @@ import IGListKit
 
 final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel> {
 
+    fileprivate var collapsed = true
+
     override init() {
         super.init()
         dataSource = self
@@ -20,18 +22,43 @@ final class IssueCommentSectionController: IGListBindingSectionController<IssueC
 
 extension IssueCommentSectionController: IGListBindingSectionControllerDataSource {
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        viewModelsFor object: Any
+        ) -> [IGListDiffable] {
         guard let object = self.object else { return [] }
-        return [ object.details ] + object.bodyModels
+
+        var bodies = [IGListDiffable]()
+        for body in object.bodyModels {
+            bodies.append(body)
+            if body === object.collapse?.model {
+                break
+            }
+        }
+
+        return [ object.details ] + bodies
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        sizeForViewModel viewModel: Any,
+        at index: Int
+        ) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
-        let height = bodyHeight(viewModel: viewModel)
+        let height: CGFloat
+        if (viewModel as AnyObject) === self.object?.collapse?.model {
+            height = self.object?.collapse?.height ?? 0
+        } else {
+            height = bodyHeight(viewModel: viewModel)
+        }
         return CGSize(width: context.containerSize.width, height: height)
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        cellForViewModel viewModel: Any,
+        at index: Int
+        ) -> UICollectionViewCell {
         guard let context = self.collectionContext else { return UICollectionViewCell() }
         let cellClass: AnyClass
         if viewModel is IssueCommentDetailsViewModel {
