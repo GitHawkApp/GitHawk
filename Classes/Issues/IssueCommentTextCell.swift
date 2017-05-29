@@ -11,8 +11,6 @@ import IGListKit
 
 protocol IssueCommentTextCellDelegate: class {
 
-    func didTap(commentTextCell: IssueCommentTextCell)
-
 }
 
 final class IssueCommentTextCell: UICollectionViewCell {
@@ -20,7 +18,7 @@ final class IssueCommentTextCell: UICollectionViewCell {
     static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
 
     weak var delegate: IssueCommentTextCellDelegate? = nil
-    let textView = UITextView()
+    let label = UILabel()
     let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
@@ -28,16 +26,8 @@ final class IssueCommentTextCell: UICollectionViewCell {
 
         contentView.clipsToBounds = true
 
-        textView.backgroundColor = .clear
-        textView.scrollsToTop = false
-        textView.isScrollEnabled = false
-        contentView.addSubview(textView)
-
-        let tap = UITapGestureRecognizer(
-            target: self,
-            action: #selector(IssueCommentTextCell.didTapTextView(sender:))
-        )
-        textView.addGestureRecognizer(tap)
+        label.numberOfLines = 0
+        contentView.addSubview(label)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,27 +39,16 @@ final class IssueCommentTextCell: UICollectionViewCell {
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-    // Mark: Private API
-
-    @objc private func didTapTextView(sender: Any) {
-        delegate?.didTap(commentTextCell: self)
-    }
-
 }
 
 extension IssueCommentTextCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
-        viewModel.configure(textView: textView)
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: viewModel.textViewSize.width,
-            height: viewModel.textViewSize.height
-        )
+        label.attributedText = viewModel.attributedText
+        let inset = IssueCommentTextCell.inset
+        let contentSize = viewModel.textViewSize
+        label.frame = CGRect(x: inset.left, y: inset.top, width: contentSize.width, height: contentSize.height)
     }
 
 }

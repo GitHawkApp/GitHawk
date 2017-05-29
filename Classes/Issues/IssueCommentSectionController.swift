@@ -110,8 +110,4 @@ IssueCommentTextCellDelegate {
 
     // MARK: IssueCommentTextCellDelegate
 
-    func didTap(commentTextCell: IssueCommentTextCell) {
-        uncollapse()
-    }
-
 }
