@@ -9,18 +9,34 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel> {
+final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel>,
+IGListBindingSectionControllerDataSource,
+IGListBindingSectionControllerSelectionDelegate,
+IssueCommentTextCellDelegate {
 
-    fileprivate var collapsed = true
+    private var collapsed = true
 
     override init() {
         super.init()
         dataSource = self
+        selectionDelegate = self
     }
 
-}
+    // MARK: Private API
 
-extension IssueCommentSectionController: IGListBindingSectionControllerDataSource {
+    private func uncollapse() {
+        guard collapsed else { return }
+        collapsed = false
+        // clear any collapse state before updating so we don't have a dangling overlay
+        for cell in collectionContext?.visibleCells(for: self) ?? [] {
+            if let cell = cell as? CollapsibleCell {
+                cell.setCollapse(visible: false)
+            }
+        }
+        update(animated: true)
+    }
+
+    // MARK: IGListBindingSectionControllerDataSource
 
     func sectionController(
         _ sectionController: IGListBindingSectionController<IGListDiffable>,
@@ -31,7 +47,7 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         var bodies = [IGListDiffable]()
         for body in object.bodyModels {
             bodies.append(body)
-            if body === object.collapse?.model {
+            if collapsed && body === object.collapse?.model {
                 break
             }
         }
@@ -46,7 +62,7 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         ) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
         let height: CGFloat
-        if (viewModel as AnyObject) === object?.collapse?.model {
+        if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
         } else {
             height = bodyHeight(viewModel: viewModel)
@@ -76,7 +92,26 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
         }
+        if let cell = cell as? IssueCommentTextCell {
+            cell.delegate = self
+        }
         return cell
     }
-    
+
+    // MARK: IGListBindingSectionControllerSelectionDelegate
+
+    func sectionController(
+        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        didSelectItemAt index: Int,
+        viewModel: Any
+        ) {
+        uncollapse()
+    }
+
+    // MARK: IssueCommentTextCellDelegate
+
+    func didTap(commentTextCell: IssueCommentTextCell) {
+        uncollapse()
+    }
+
 }

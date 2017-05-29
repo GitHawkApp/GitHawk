@@ -9,10 +9,17 @@
 import UIKit
 import IGListKit
 
+protocol IssueCommentTextCellDelegate: class {
+
+    func didTap(commentTextCell: IssueCommentTextCell)
+
+}
+
 final class IssueCommentTextCell: UICollectionViewCell {
 
     static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
 
+    weak var delegate: IssueCommentTextCellDelegate? = nil
     let textView = UITextView()
     let overlay = CreateCollapsibleOverlay()
 
@@ -25,6 +32,12 @@ final class IssueCommentTextCell: UICollectionViewCell {
         textView.scrollsToTop = false
         textView.isScrollEnabled = false
         contentView.addSubview(textView)
+
+        let tap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(IssueCommentTextCell.didTapTextView(sender:))
+        )
+        textView.addGestureRecognizer(tap)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,6 +47,12 @@ final class IssueCommentTextCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
+    }
+
+    // Mark: Private API
+
+    @objc private func didTapTextView(sender: Any) {
+        delegate?.didTap(commentTextCell: self)
     }
 
 }
