@@ -15,6 +15,7 @@ final class IssueCommentImageCell: UICollectionViewCell {
 
     let imageView = UIImageView()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +36,11 @@ final class IssueCommentImageCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        LayoutCollapsible(layer: overlay, view: contentView)
+    }
     
 }
 
@@ -48,6 +54,14 @@ extension IssueCommentImageCell: IGListBindable {
             self.imageView.backgroundColor = .clear
             self.spinner.stopAnimating()
         }
+    }
+
+}
+
+extension IssueCommentImageCell: CollapsibleCell {
+
+    func setCollapse(visible: Bool) {
+        overlay.isHidden = !visible
     }
 
 }

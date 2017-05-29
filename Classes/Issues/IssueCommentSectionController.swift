@@ -46,8 +46,8 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         ) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
         let height: CGFloat
-        if (viewModel as AnyObject) === self.object?.collapse?.model {
-            height = self.object?.collapse?.height ?? 0
+        if (viewModel as AnyObject) === object?.collapse?.model {
+            height = object?.collapse?.height ?? 0
         } else {
             height = bodyHeight(viewModel: viewModel)
         }
@@ -72,7 +72,11 @@ extension IssueCommentSectionController: IGListBindingSectionControllerDataSourc
         } else {
             cellClass = IssueCommentTextCell.self
         }
-        return context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        if let cell = cell as? CollapsibleCell {
+            cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
+        }
+        return cell
     }
     
 }

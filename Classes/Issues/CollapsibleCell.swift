@@ -13,15 +13,17 @@ let CollapseCellMinHeight: CGFloat = 20
 func CreateCollapsibleOverlay() -> CALayer {
     let layer = CAGradientLayer()
     layer.colors = [
-        UIColor.clear.cgColor,
+        UIColor(white: 1, alpha: 0).cgColor,
         UIColor.white.cgColor
     ]
-    layer.startPoint = .zero
-    layer.endPoint = CGPoint(x: 0, y: CollapseCellMinHeight)
     return layer
 }
 
 func LayoutCollapsible(layer: CALayer, view: UIView) {
+    if layer.superlayer != view.layer {
+        view.layer.addSublayer(layer)
+    }
+
     let bounds = view.bounds
     layer.frame = CGRect(
         x: 0,
@@ -33,6 +35,6 @@ func LayoutCollapsible(layer: CALayer, view: UIView) {
 
 protocol CollapsibleCell {
 
-    func setCollapse(hidden: Bool)
+    func setCollapse(visible: Bool)
 
 }
