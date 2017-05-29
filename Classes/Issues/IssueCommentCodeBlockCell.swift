@@ -18,7 +18,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
         right: Styles.Sizes.gutter
     )
 
-    let textView = UITextView()
+    let label = UILabel()
     let scrollView = UIScrollView()
     let overlay = CreateCollapsibleOverlay()
 
@@ -30,10 +30,8 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
         scrollView.backgroundColor = Styles.Colors.Gray.lighter
         contentView.addSubview(scrollView)
 
-        textView.backgroundColor = .clear
-        textView.scrollsToTop = false
-        textView.isScrollEnabled = false
-        scrollView.addSubview(textView)
+        label.numberOfLines = 0
+        contentView.addSubview(label)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,15 +52,13 @@ extension IssueCommentCodeBlockCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }
-        viewModel.code.configure(textView: textView)
-        textView.isEditable = false
-        textView.isSelectable = true
 
         let contentSize = viewModel.code.textViewSize
         scrollView.contentSize = viewModel.code.textViewSize
-        textView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
 
-        setNeedsLayout()
+        label.attributedText = viewModel.code.attributedText
+        let inset = IssueCommentTextCell.inset
+        label.frame = CGRect(x: inset.left, y: inset.top, width: contentSize.width, height: contentSize.height)
     }
 
 }
