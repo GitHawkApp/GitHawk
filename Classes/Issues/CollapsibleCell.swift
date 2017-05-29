@@ -14,7 +14,7 @@ func CreateCollapsibleOverlay() -> CALayer {
     let layer = CAGradientLayer()
     layer.colors = [
         UIColor(white: 1, alpha: 0).cgColor,
-        UIColor.white.cgColor
+        UIColor(white: 0, alpha: 0.1).cgColor
     ]
     return layer
 }

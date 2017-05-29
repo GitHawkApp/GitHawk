@@ -46,9 +46,9 @@ extension IssueCommentTextCell: IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
         label.attributedText = viewModel.attributedText
-        let inset = IssueCommentTextCell.inset
         let contentSize = viewModel.textViewSize
-        label.frame = CGRect(x: inset.left, y: inset.top, width: contentSize.width, height: contentSize.height)
+        let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
+        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
     }
 
 }
