@@ -13,6 +13,7 @@ import IGListKit
 
 final class IssueCommentImageCell: UICollectionViewCell {
 
+    static let preferredHeight: CGFloat = 200
     let imageView = UIImageView()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     let overlay = CreateCollapsibleOverlay()
@@ -20,16 +21,19 @@ final class IssueCommentImageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.clipsToBounds = true
+
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
+            make.top.left.right.equalTo(contentView)
+            make.height.equalTo(IssueCommentImageCell.preferredHeight)
         }
 
         spinner.hidesWhenStopped = true
         contentView.addSubview(spinner)
         spinner.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.center.equalTo(imageView)
         }
     }
     
