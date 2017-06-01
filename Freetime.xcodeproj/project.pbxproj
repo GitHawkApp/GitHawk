@@ -38,6 +38,7 @@
 		292FCABC1EDFC9B60026635E /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCABA1EDFC9B60026635E /* IssueTitleSectionController.swift */; };
 		292FCABE1EDFCA120026635E /* IssueCollapsedBodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCABD1EDFCA120026635E /* IssueCollapsedBodies.swift */; };
 		292FCAC01EDFCA3B0026635E /* IssueRootComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCABF1EDFCA3B0026635E /* IssueRootComment.swift */; };
+		292FCAC21EDFCB450026635E /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAC11EDFCB450026635E /* CollapsibleCell.swift */; };
 		29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */; };
 		29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
 		29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */; };
@@ -52,8 +53,6 @@
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		29316DCF1ECD3442007CAE3F /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */; };
 		29316DD11ECD358B007CAE3F /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */; };
-		29356E511EDB2CB500D24533 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E501EDB2CB500D24533 /* CollapsibleCell.swift */; };
-		29356E521EDBD5B700D24533 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29356E501EDB2CB500D24533 /* CollapsibleCell.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -209,6 +208,7 @@
 		292FCABA1EDFC9B60026635E /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
 		292FCABD1EDFCA120026635E /* IssueCollapsedBodies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCollapsedBodies.swift; sourceTree = "<group>"; };
 		292FCABF1EDFCA3B0026635E /* IssueRootComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRootComment.swift; sourceTree = "<group>"; };
+		292FCAC11EDFCB450026635E /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
 		29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUsersSectionController.swift; sourceTree = "<group>"; };
 		29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCell.swift; sourceTree = "<group>"; };
 		29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredButtonCell.swift; sourceTree = "<group>"; };
@@ -223,7 +223,6 @@
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		29316DCE1ECD3442007CAE3F /* IssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesViewController.swift; sourceTree = "<group>"; };
 		29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
-		29356E501EDB2CB500D24533 /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -345,6 +344,8 @@
 		292FCA831EDFC9670026635E /* Comments */ = {
 			isa = PBXGroup;
 			children = (
+				292FCAC11EDFCB450026635E /* CollapsibleCell.swift */,
+				292FCABD1EDFCA120026635E /* IssueCollapsedBodies.swift */,
 				292FCA841EDFC9670026635E /* IssueCommentCodeBlockCell.swift */,
 				292FCA851EDFC9670026635E /* IssueCommentCodeBlockModel.swift */,
 				292FCA861EDFC9670026635E /* IssueCommentDetailCell.swift */,
@@ -358,9 +359,8 @@
 				292FCA8E1EDFC9670026635E /* IssueCommentSummaryModel.swift */,
 				292FCA8F1EDFC9670026635E /* IssueCommentTextCell.swift */,
 				292FCA901EDFC9670026635E /* IssueCommentViewModelHeight.swift */,
-				292FCA9E1EDFC97F0026635E /* MarkdownScanning */,
-				292FCABD1EDFCA120026635E /* IssueCollapsedBodies.swift */,
 				292FCABF1EDFCA3B0026635E /* IssueRootComment.swift */,
+				292FCA9E1EDFC97F0026635E /* MarkdownScanning */,
 			);
 			name = Comments;
 			path = Classes/Issues/Comments;
@@ -605,7 +605,6 @@
 		29C167801ECA4ACC00439D62 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				29356E501EDB2CB500D24533 /* CollapsibleCell.swift */,
 				292FCA831EDFC9670026635E /* Comments */,
 				29316DD01ECD358B007CAE3F /* GithubClient+Issues.swift */,
 				29C167811ECA4B1C00439D62 /* IssueEvent.swift */,
@@ -923,6 +922,7 @@
 				29C9FDC81EC65FEE00EE3A52 /* Event.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */,
+				292FCAC21EDFCB450026635E /* CollapsibleCell.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
@@ -958,7 +958,6 @@
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				29C9FDCA1EC65FEE00EE3A52 /* Issue.swift in Sources */,
 				292FCAA81EDFC97F0026635E /* ImageScanner.swift in Sources */,
-				29356E511EDB2CB500D24533 /* CollapsibleCell.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				29316DB91ECC8483007CAE3F /* GithubSession+IGListDiffable.swift in Sources */,
@@ -1002,7 +1001,6 @@
 				29A476AA1ED24032005D0953 /* ListTestKit.swift in Sources */,
 				29C2950C1EC7B16C00D46CD2 /* UIColor+Hex.swift in Sources */,
 				29A476A11ED23F83005D0953 /* DateDetailsFormatter.swift in Sources */,
-				29356E521EDBD5B700D24533 /* CollapsibleCell.swift in Sources */,
 				297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */,
 				29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */,
 				29A476A81ED23FC4005D0953 /* Label.swift in Sources */,
