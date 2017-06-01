@@ -43,6 +43,7 @@
 		292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF21EDFCC510026635E /* IssueLabelSummaryModel.swift */; };
 		292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF41EDFCC510026635E /* IssueTitleCell.swift */; };
 		292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */; };
+		292FCB1B1EDFCCBD0026635E /* ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1A1EDFCCBD0026635E /* ReactionType.swift */; };
 		29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */; };
 		29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
 		29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */; };
@@ -210,6 +211,7 @@
 		292FCAF21EDFCC510026635E /* IssueLabelSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelSummaryModel.swift; sourceTree = "<group>"; };
 		292FCAF41EDFCC510026635E /* IssueTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleCell.swift; sourceTree = "<group>"; };
 		292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
+		292FCB1A1EDFCCBD0026635E /* ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionType.swift; sourceTree = "<group>"; };
 		29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUsersSectionController.swift; sourceTree = "<group>"; };
 		29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCell.swift; sourceTree = "<group>"; };
 		29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredButtonCell.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */,
+				292FCB1A1EDFCCBD0026635E /* ReactionType.swift */,
 			);
 			path = Reactions;
 			sourceTree = "<group>";
@@ -905,6 +908,7 @@
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				29316DB71ECC83AC007CAE3F /* SettingsUserModel.swift in Sources */,
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
+				292FCB1B1EDFCCBD0026635E /* ReactionType.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				292FCB0E1EDFCC510026635E /* IssueState.swift in Sources */,
