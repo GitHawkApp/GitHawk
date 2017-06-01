@@ -1,0 +1,102 @@
+{
+  repository(owner: "Instagram", name: "IGListKit") {
+    issue(number: 760) {
+      labels(first: 100) {
+        nodes {
+          color
+          name
+        }
+      }
+      timeline(first: 100) {
+        nodes {
+          __typename
+          ... on Commit {
+            author {
+              name
+              date
+            }
+            messageHeadline
+          }
+          ... on IssueComment {
+            ...reactionFields
+            ...commentFields
+          }
+          ... on LabeledEvent {
+            actor {
+              login
+            }
+            label {
+              color
+              name
+            }
+          }
+          ... on UnlabeledEvent {
+            actor {
+              login
+            }
+            label {
+              color
+              name
+            }
+          }
+          ... on ClosedEvent {
+            actor {
+              login
+            }
+            createdAt
+          }
+          ... on ReopenedEvent {
+            actor {
+              login
+            }
+            createdAt
+          }
+          ... on RenamedTitleEvent {
+            actor {
+              login
+            }
+            createdAt
+            currentTitle
+          }
+          ... on LockedEvent {
+            actor {
+              login
+            }
+            createdAt
+          }
+        }
+      }
+      ...reactionFields
+      ...commentFields
+      closed
+      locked
+      number
+      title
+      viewerCanReact
+      viewerCanUpdate
+    }
+  }
+}
+
+fragment reactionFields on Reactable {
+  reactionGroups {
+    viewerHasReacted
+    users {
+      totalCount
+    }
+    content
+  }
+}
+
+fragment commentFields on Comment {
+  author {
+    login
+    avatarUrl
+  }
+  editor {
+    login
+  }
+  body
+  createdAt
+  viewerDidAuthor
+}
