@@ -12,15 +12,18 @@ import IGListKit
 
 final class IssueLabelSummaryCell: UICollectionViewCell {
 
+    static let reuse = "cell"
+
     let label = UILabel()
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 15, height: 15)
         layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueLabelSummaryCell.reuse)
+        return view
     }()
-    let reuse = "cell"
     var colors = [UIColor]()
 
     override init(frame: CGRect) {
@@ -36,7 +39,6 @@ final class IssueLabelSummaryCell: UICollectionViewCell {
 
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
-        collectionView.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: reuse)
         collectionView.isUserInteractionEnabled = false
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
@@ -67,7 +69,7 @@ extension IssueLabelSummaryCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuse, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelSummaryCell.reuse, for: indexPath)
         cell.backgroundColor = colors[indexPath.item]
         return cell
     }
