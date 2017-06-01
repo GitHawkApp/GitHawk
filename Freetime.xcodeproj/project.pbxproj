@@ -44,6 +44,8 @@
 		292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF41EDFCC510026635E /* IssueTitleCell.swift */; };
 		292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */; };
 		292FCB1B1EDFCCBD0026635E /* ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1A1EDFCCBD0026635E /* ReactionType.swift */; };
+		292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
+		292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */; };
 		29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
 		29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */; };
@@ -212,6 +214,8 @@
 		292FCAF41EDFCC510026635E /* IssueTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleCell.swift; sourceTree = "<group>"; };
 		292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTitleSectionController.swift; sourceTree = "<group>"; };
 		292FCB1A1EDFCCBD0026635E /* ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionType.swift; sourceTree = "<group>"; };
+		292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionViewModel.swift; sourceTree = "<group>"; };
+		292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionViewModel.swift; sourceTree = "<group>"; };
 		29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUsersSectionController.swift; sourceTree = "<group>"; };
 		29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCell.swift; sourceTree = "<group>"; };
 		29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredButtonCell.swift; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 			children = (
 				292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */,
 				292FCB1A1EDFCCBD0026635E /* ReactionType.swift */,
+				292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */,
+				292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */,
 			);
 			path = Reactions;
 			sourceTree = "<group>";
@@ -940,6 +946,7 @@
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
 				292FCAFB1EDFCC510026635E /* IssueCommentImageCell.swift in Sources */,
 				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
+				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
 				290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
@@ -976,6 +983,7 @@
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				292FCB131EDFCC510026635E /* IssueLabelDotCell.swift in Sources */,
+				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
