@@ -15,7 +15,7 @@ private func createViewModels(_ issue: Issue, width: CGFloat) -> [IGListDiffable
 
     result.append(IssueLabelsModel(labels: issue.labels ?? []))
 
-    if let root = IssueCreateRootCommentModel(issue: issue, width: width) {
+    if let root = createIssueRootCommentModel(issue: issue, width: width) {
         result.append(root)
     }
 
@@ -43,4 +43,19 @@ func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringS
         attributedText: attributedString,
         inset: IssueTitleCell.inset
     )
+}
+
+func createIssueRootCommentModel(issue: Issue, width: CGFloat) -> IssueCommentModel? {
+    guard let id = issue.id?.intValue,
+        let created = issue.created_at,
+        let date = GithubAPIDateFormatter().date(from: created),
+        let login = issue.user?.login,
+        let avatar = issue.user?.avatar_url,
+        let avatarURL = URL(string: avatar)
+        else { return nil }
+
+    let details = IssueCommentDetailsViewModel(date: date, login: login, avatarURL: avatarURL)
+    let bodies = createCommentModels(body: issue.body ?? "", width: width)
+    let collapse = IssueCollapsedBodies(bodies: bodies)
+    return IssueCommentModel(id: id, details: details, bodyModels: bodies, collapse: collapse)
 }

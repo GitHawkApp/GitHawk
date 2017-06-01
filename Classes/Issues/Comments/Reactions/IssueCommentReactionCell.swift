@@ -1,5 +1,5 @@
 //
-//  IssueReactionCell.swift
+//  IssueCommentReactionCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/29/17.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueReactionCell: UICollectionViewCell, IGListBindable {
+final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable {
 
     static let reuse = "cell"
 
@@ -21,7 +21,7 @@ final class IssueReactionCell: UICollectionViewCell, IGListBindable {
         layout.itemSize = Styles.Sizes.icon
         layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueReactionCell.reuse)
+        view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
     }()
 
@@ -107,14 +107,14 @@ final class IssueReactionCell: UICollectionViewCell, IGListBindable {
     
 }
 
-extension IssueReactionCell: UICollectionViewDataSource {
+extension IssueCommentReactionCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return reactions.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: IssueReactionCell.reuse, for: indexPath)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: IssueCommentReactionCell.reuse, for: indexPath)
     }
 
 }
