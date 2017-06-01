@@ -21,11 +21,10 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable {
         layout.itemSize = Styles.Sizes.icon
         layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
+        view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
     }()
 
-    typealias ReactionViewModel = (emoji: String, count: Int)
     var reactions = [ReactionViewModel]()
 
     override init(frame: CGRect) {
@@ -68,40 +67,8 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable {
     
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? Reaction else { return }
-        var models = [ReactionViewModel]()
-
-        let plus1 = viewModel.plus1.intValue
-        if plus1 > 0 {
-            models.append(("👍", plus1))
-        }
-
-        let minus1 = viewModel.minus1.intValue
-        if minus1 > 0 {
-            models.append(("👎", minus1))
-        }
-
-        let laugh = viewModel.laugh.intValue
-        if laugh > 0 {
-            models.append(("😄", laugh))
-        }
-
-        let hooray = viewModel.hooray.intValue
-        if hooray > 0 {
-            models.append(("🎉", hooray))
-        }
-
-        let confused = viewModel.confused.intValue
-        if confused > 0 {
-            models.append(("😕", confused))
-        }
-
-        let heart = viewModel.heart.intValue
-        if heart > 0 {
-            models.append(("❤️", heart))
-        }
-
-        reactions = models
+        guard let viewModel = viewModel as? IssueCommentReactionViewModel else { return }
+        reactions = viewModel.models
         collectionView.reloadData()
     }
     
@@ -114,7 +81,14 @@ extension IssueCommentReactionCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: IssueCommentReactionCell.reuse, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: IssueCommentReactionCell.reuse,
+            for: indexPath
+            ) as! IssueReactionCell
+        let model = reactions[indexPath.item]
+        cell.label.text = "\(model.type.rawValue) \(model.count)"
+        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.blue : .clear
+        return cell
     }
 
 }
