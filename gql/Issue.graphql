@@ -1,6 +1,6 @@
-{
-  repository(owner: "Instagram", name: "IGListKit") {
-    issue(number: 760) {
+query Issue($owner: String!, $name: String!, $number: Int!) {
+  repository(owner: $owner, name: $name) {
+    issue(number: $number) {
       labels(first: 100) {
         nodes {
           color
@@ -9,7 +9,6 @@
       }
       timeline(first: 100) {
         nodes {
-          __typename
           ... on Commit {
             author {
               name
