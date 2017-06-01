@@ -91,6 +91,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension/OnePasswordExtension.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Apollo/Apollo.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IGListKit/IGListKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/JDStatusBarNotification/JDStatusBarNotification.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"
@@ -99,6 +100,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension/OnePasswordExtension.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Apollo/Apollo.framework"
   install_framework "$BUILT_PRODUCTS_DIR/IGListKit/IGListKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/JDStatusBarNotification/JDStatusBarNotification.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"

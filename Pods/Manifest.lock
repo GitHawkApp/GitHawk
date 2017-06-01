@@ -1,6 +1,7 @@
 PODS:
   - 1PasswordExtension (1.8.4)
   - Alamofire (4.4.0)
+  - Apollo (0.5.6)
   - IGListKit (2.1.0):
     - IGListKit/Default (= 2.1.0)
   - IGListKit/Default (2.1.0):
@@ -15,6 +16,7 @@ PODS:
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.4)
   - Alamofire (~> 4.4.0)
+  - Apollo (~> 0.5.6)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
   - SDWebImage (~> 4.0.0)
@@ -33,11 +35,12 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 8270c4afdb933f836e03cf408d9a2c44a07802df
+PODFILE CHECKSUM: fb063676cd90f49ec3bda4a03fcd9cef297a262c
 
 COCOAPODS: 1.2.0
