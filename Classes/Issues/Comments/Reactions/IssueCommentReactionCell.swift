@@ -17,7 +17,7 @@ UICollectionViewDelegateFlowLayout {
 
     static let reuse = "cell"
 
-    let addButton = UIButton()
+    let addButton = ResponderButton()
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -34,6 +34,9 @@ UICollectionViewDelegateFlowLayout {
 
         addButton.tintColor = Styles.Colors.Gray.light
         addButton.setTitle("+", for: .normal)
+        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        addButton.setTitleColor(Styles.Colors.Gray.light, for: .normal)
+        addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
         contentView.addSubview(addButton)
@@ -60,7 +63,34 @@ UICollectionViewDelegateFlowLayout {
     // MARK: Private API
 
     func onAddButton() {
-        UIMenuController.shared.showReactions(fromView: addButton)
+        addButton.becomeFirstResponder()
+
+        let menu = UIMenuController.shared
+        let reactions: [ReactionType] = [
+            .thumbsUp,
+            .thumbsDown,
+            .laugh,
+            .hooray,
+            .confused,
+            .heart,
+        ]
+
+        menu.menuItems = reactions.map {
+            UIMenuItem(title: $0.rawValue, action: #selector(IssueCommentReactionCell.empty(item:)))
+        }
+        menu.setTargetRect(addButton.bounds, in: addButton)
+        menu.setMenuVisible(true, animated: true)
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(IssueCommentReactionCell.empty(item:)): return true
+        default: return false
+        }
+    }
+
+    func empty(item: Any) {
+        print("selected")
     }
 
     // MARK: IGListBindable

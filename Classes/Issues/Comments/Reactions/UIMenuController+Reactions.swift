@@ -12,7 +12,7 @@ extension UIMenuController {
 
     func showReactions(fromView: UIView) {
 
-        fromView.becomeFirstResponder()
+//        fromView.becomeFirstResponder()
 
         let reactions: [ReactionType] = [
             .thumbsUp,
@@ -23,12 +23,11 @@ extension UIMenuController {
             .confused
         ]
 
-        let menu = UIMenuController.shared
-        menu.menuItems = reactions.map {
+        menuItems = reactions.map {
             UIMenuItem(title: $0.rawValue, action: #selector(UIMenuController._empty))
         }
-        menu.setTargetRect(fromView.bounds, in: fromView)
-        menu.setMenuVisible(true, animated: true)
+        setTargetRect(fromView.bounds, in: fromView)
+        setMenuVisible(true, animated: true)
     }
 
     func _empty() {}

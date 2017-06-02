@@ -27,9 +27,7 @@ final class DetailMenuLabel: UILabel {
     }
 
     func showMenu(recognizer: UITapGestureRecognizer) {
-        guard let superview = superview,
-        recognizer.state == .began
-            else { return }
+        guard recognizer.state == .began else { return }
 
         becomeFirstResponder()
 
