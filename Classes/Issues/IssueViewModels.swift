@@ -89,10 +89,10 @@ func createIssueRootCommentModel(
     let reactions = createIssueReactions(reactions: issue.fragments.reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies)
     return IssueCommentModel(
-        id: issue.number,
+        number: issue.number,
         details: details,
-        reactions: reactions,
         bodyModels: bodies,
+        reactions: reactions,
         collapse: collapse
     )
 }
