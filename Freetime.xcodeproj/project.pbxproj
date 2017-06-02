@@ -133,6 +133,7 @@
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29FF859C1EE0E11B007B8762 /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */; };
 		29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */; };
+		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		7C3E80AE871BAB9F2CE23FBA /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56223772300F4C201A21701F /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
 
@@ -274,6 +275,7 @@
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
 		29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaMarkdown.framework; path = "CocoaMarkdown/build/Debug-iphoneos/CocoaMarkdown.framework"; sourceTree = "<group>"; };
 		29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelModel.swift; sourceTree = "<group>"; };
+		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		56223772300F4C201A21701F /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		973BBF7EFCCB4E5D694BB825 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		C2E6E7219C526C7C04A7190E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				292FCB201EDFCF870026635E /* IssueReactionCell.swift */,
 				292FCB1A1EDFCCBD0026635E /* ReactionType.swift */,
 				292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */,
+				29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */,
 			);
 			path = Reactions;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
 				292FCB031EDFCC510026635E /* DetailsScanner.swift in Sources */,
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
+				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,

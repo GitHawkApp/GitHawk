@@ -14,17 +14,20 @@ final class IssueCommentModel: IGListDiffable {
     let number: Int
     let details: IssueCommentDetailsViewModel
     let bodyModels: [IGListDiffable]
+    let reactions: IssueCommentReactionViewModel
     let collapse: (model: AnyObject, height: CGFloat)?
 
     init(
         id: Int,
         details: IssueCommentDetailsViewModel,
         bodyModels: [IGListDiffable],
+        reactions: IssueCommentReactionViewModel,
         collapse: (AnyObject, CGFloat)?
         ) {
         self.number = id
         self.details = details
         self.bodyModels = bodyModels
+        self.reactions = reactions
         self.collapse = collapse
     }
 

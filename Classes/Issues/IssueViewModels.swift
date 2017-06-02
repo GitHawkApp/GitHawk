@@ -60,6 +60,19 @@ func createIssueTitleString(
     )
 }
 
+func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionViewModel {
+    var models = [ReactionViewModel]()
+
+    for group in reactions.reactionGroups ?? [] {
+        // do not display reactions for 0 count
+        let count = group.users.totalCount
+        guard count > 0 else { continue }
+        models.append(ReactionViewModel(type: group.content.type, count: count, viewerDidReact: group.viewerHasReacted))
+    }
+
+    return IssueCommentReactionViewModel(models: models)
+}
+
 func createIssueRootCommentModel(
     issue: IssueQuery.Data.Repository.Issue,
     width: CGFloat
@@ -73,6 +86,13 @@ func createIssueRootCommentModel(
 
     let details = IssueCommentDetailsViewModel(date: date, login: author.login, avatarURL: avatarURL)
     let bodies = createCommentModels(body: issue.fragments.commentFields.body, width: width)
+    let reactions = createIssueReactions(reactions: issue.fragments.reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies)
-    return IssueCommentModel(id: issue.number, details: details, bodyModels: bodies, collapse: collapse)
+    return IssueCommentModel(
+        id: issue.number,
+        details: details,
+        reactions: reactions,
+        bodyModels: bodies,
+        collapse: collapse
+    )
 }
