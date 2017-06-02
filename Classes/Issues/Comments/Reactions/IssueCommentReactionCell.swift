@@ -35,6 +35,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.tintColor = Styles.Colors.Gray.light
         addButton.setTitle("+", for: .normal)
         addButton.setImage(UIImage(named: "smiley")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
@@ -54,6 +55,12 @@ UICollectionViewDelegateFlowLayout {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private API
+
+    func onAddButton() {
+        UIMenuController.shared.showReactions(fromView: addButton)
     }
 
     // MARK: IGListBindable
