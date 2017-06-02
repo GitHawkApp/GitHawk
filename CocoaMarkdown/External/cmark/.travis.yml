@@ -1,0 +1,34 @@
+# Ensures that sudo is disabled, so that containerized builds are allowed
+sudo: false
+
+os:
+ - linux
+ - osx
+language: c
+compiler:
+ - clang
+ - gcc
+addons:
+  apt:
+    # we need a more recent cmake than travis/linux provides (at least 2.8.9):
+    sources:
+    - kubuntu-backports
+    packages:
+    - cmake
+    - python3
+    - valgrind
+before_install:
+ - |
+     if [ ${TRAVIS_OS_NAME:-'linux'} = 'osx' ]
+     then
+         echo "Building without python3, to make sure that works."
+     fi
+script:
+ - make
+ - make test
+ - |
+     if [ ${TRAVIS_OS_NAME:-'linux'} = 'linux' ]
+     then
+         make roundtrip_test
+         make leakcheck
+     fi

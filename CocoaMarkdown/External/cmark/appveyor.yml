@@ -1,0 +1,15 @@
+environment:
+  PYTHON: "C:\\Python34-x64"
+  PYTHON_VERSION: "3.4.3"
+  PYTHON_ARCH: "64"
+
+# set up for nmake:
+install:
+  - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+build_script:
+  - 'nmake'
+
+test_script:
+  - 'nmake test'
