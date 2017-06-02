@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import JDStatusBarNotification
+import Apollo
 
 struct GithubClient {
 
@@ -35,15 +36,18 @@ struct GithubClient {
     }
 
     let sessionManager: GithubSessionManager
+    let apollo: ApolloClient
     let networker: Alamofire.SessionManager
     let userSession: GithubUserSession?
 
     init(
         sessionManager: GithubSessionManager,
+        apollo: ApolloClient,
         networker: Alamofire.SessionManager,
         userSession: GithubUserSession? = nil
         ) {
         self.sessionManager = sessionManager
+        self.apollo = apollo
         self.networker = networker
         self.userSession = userSession
     }

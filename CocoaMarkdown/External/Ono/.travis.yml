@@ -1,0 +1,5 @@
+language: objective-c
+xcode_workspace: Ono.xcworkspace
+xcode_scheme: Ono Example
+xcode_sdk: macosx
+

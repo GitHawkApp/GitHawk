@@ -48,7 +48,6 @@
 		292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
 		292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
-		292FCB271EE0526D0026635E /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 299F16451ED344C3006379ED /* CocoaMarkdown.framework */; };
 		292FCB2C1EE054900026635E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
 		29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */; };
 		29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
@@ -84,7 +83,6 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
-		299F16471ED344C3006379ED /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 299F16451ED344C3006379ED /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -151,6 +149,7 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
+		29FF859C1EE0E11B007B8762 /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */; };
 		7C3E80AE871BAB9F2CE23FBA /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56223772300F4C201A21701F /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
 
@@ -171,7 +170,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				299F16471ED344C3006379ED /* CocoaMarkdown.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,7 +257,6 @@
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		299F16411ED342A6006379ED /* CocoaMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaMarkdown.framework; path = "Vendor/CocoaMarkdown/build/Debug-iphoneos/CocoaMarkdown.framework"; sourceTree = "<group>"; };
-		299F16451ED344C3006379ED /* CocoaMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -309,6 +306,7 @@
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
+		29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaMarkdown.framework; path = "CocoaMarkdown/build/Debug-iphoneos/CocoaMarkdown.framework"; sourceTree = "<group>"; };
 		56223772300F4C201A21701F /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		973BBF7EFCCB4E5D694BB825 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		C2E6E7219C526C7C04A7190E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -322,7 +320,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				292FCB271EE0526D0026635E /* CocoaMarkdown.framework in Frameworks */,
+				29FF859C1EE0E11B007B8762 /* CocoaMarkdown.framework in Frameworks */,
 				7C3E80AE871BAB9F2CE23FBA /* Pods_Freetime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,7 +474,6 @@
 			isa = PBXGroup;
 			children = (
 				297AE8571EC0D5C100B44A1F /* Classes */,
-				299F16451ED344C3006379ED /* CocoaMarkdown.framework */,
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				29F63FD01EC530BD007F55E4 /* Github API.playground */,
@@ -705,6 +702,7 @@
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */,
 				299F16411ED342A6006379ED /* CocoaMarkdown.framework */,
 				56223772300F4C201A21701F /* Pods_Freetime.framework */,
 				D411020FCC4B0B8F9FF6399A /* Pods_FreetimeTests.framework */,
@@ -1214,9 +1212,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/CocoaMarkdown/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/CocoaMarkdown/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -1232,9 +1232,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendor/CocoaMarkdown/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/CocoaMarkdown/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.Freetime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
