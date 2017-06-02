@@ -29,7 +29,7 @@ final class SettingsAddAccountSectionController: IGListSectionController {
         let cell = context.dequeueReusableCell(of: CenteredButtonCell.self, for: self, at: index) as? CenteredButtonCell
             else { return UICollectionViewCell() }
         cell.label.text = NSLocalizedString("Add another account", comment: "")
-        cell.label.textColor = Styles.Colors.blue
+        cell.label.textColor = Styles.Colors.Blue.medium
         cell.configure(topSeparatorHidden: false, bottomSeparatorHidden: false)
         return cell
     }
