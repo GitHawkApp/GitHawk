@@ -16,9 +16,11 @@ extension ReactionContent: JSONDecodable, JSONEncodable {}
 
 public final class IssueQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query Issue($owner: String!, $name: String!, $number: Int!) {" +
-    "  repository(owner: $owner, name: $name) {" +
+    "query Issue($owner: String!, $repo: String!, $number: Int!) {" +
+    "  repository(owner: $owner, name: $repo) {" +
     "    __typename" +
+    "    id" +
+    "    name" +
     "    issue(number: $number) {" +
     "      __typename" +
     "      labels(first: 100) {" +
@@ -108,6 +110,8 @@ public final class IssueQuery: GraphQLQuery {
     "      }" +
     "      ...reactionFields" +
     "      ...commentFields" +
+    "      id" +
+    "      number" +
     "      closed" +
     "      locked" +
     "      number" +
@@ -120,17 +124,17 @@ public final class IssueQuery: GraphQLQuery {
   public static let queryDocument = operationDefinition.appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition)
 
   public let owner: String
-  public let name: String
+  public let repo: String
   public let number: Int
 
-  public init(owner: String, name: String, number: Int) {
+  public init(owner: String, repo: String, number: Int) {
     self.owner = owner
-    self.name = name
+    self.repo = repo
     self.number = number
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name, "number": number]
+    return ["owner": owner, "repo": repo, "number": number]
   }
 
   public struct Data: GraphQLMappable {
@@ -138,16 +142,21 @@ public final class IssueQuery: GraphQLQuery {
     public let repository: Repository?
 
     public init(reader: GraphQLResultReader) throws {
-      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["name"]]))
+      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["repo"]]))
     }
 
     public struct Repository: GraphQLMappable {
       public let __typename: String
+      public let id: GraphQLID
+      /// The name of the repository.
+      public let name: String
       /// Returns a single issue from the current repository by number.
       public let issue: Issue?
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
+        id = try reader.value(for: Field(responseName: "id"))
+        name = try reader.value(for: Field(responseName: "name"))
         issue = try reader.optionalValue(for: Field(responseName: "issue", arguments: ["number": reader.variables["number"]]))
       }
 
@@ -157,12 +166,13 @@ public final class IssueQuery: GraphQLQuery {
         public let labels: Label?
         /// A list of events associated with an Issue.
         public let timeline: Timeline
+        public let id: GraphQLID
+        /// Identifies the issue number.
+        public let number: Int
         /// true if the object is `closed` (definition of closed may depend on type)
         public let closed: Bool
         /// `true` if the object is locked
         public let locked: Bool
-        /// Identifies the issue number.
-        public let number: Int
         /// Identifies the issue title.
         public let title: String
         /// Can user react to this subject
@@ -176,9 +186,10 @@ public final class IssueQuery: GraphQLQuery {
           __typename = try reader.value(for: Field(responseName: "__typename"))
           labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 100]))
           timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": 100]))
+          id = try reader.value(for: Field(responseName: "id"))
+          number = try reader.value(for: Field(responseName: "number"))
           closed = try reader.value(for: Field(responseName: "closed"))
           locked = try reader.value(for: Field(responseName: "locked"))
-          number = try reader.value(for: Field(responseName: "number"))
           title = try reader.value(for: Field(responseName: "title"))
           viewerCanReact = try reader.value(for: Field(responseName: "viewerCanReact"))
           viewerCanUpdate = try reader.value(for: Field(responseName: "viewerCanUpdate"))

@@ -44,7 +44,7 @@ final class IssueLabelCell: UICollectionViewCell {
 extension IssueLabelCell: IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? Label else { return }
+        guard let viewModel = viewModel as? IssueLabelModel else { return }
         let color = UIColor.fromHex(viewModel.color)
         background.backgroundColor = color
         label.text = viewModel.name

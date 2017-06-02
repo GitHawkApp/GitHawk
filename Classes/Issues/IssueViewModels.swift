@@ -9,11 +9,19 @@
 import UIKit
 import IGListKit
 
-private func createViewModels(_ issue: Issue, width: CGFloat) -> [IGListDiffable] {
+private func createViewModels(
+    _ issue: IssueQuery.Data.Repository.Issue,
+    width: CGFloat
+    ) -> [IGListDiffable] {
     var result = [IGListDiffable]()
     result.append(createIssueTitleString(issue: issue, width: width))
 
-    result.append(IssueLabelsModel(labels: issue.labels ?? []))
+    var labels = [IssueLabelModel]()
+    for node in issue.labels?.nodes ?? [] {
+        guard let node = node else { continue }
+        labels.append(IssueLabelModel(color: node.color, name: node.name))
+    }
+    result.append(IssueLabelsModel(labels: labels))
 
     if let root = createIssueRootCommentModel(issue: issue, width: width) {
         result.append(root)
@@ -22,7 +30,11 @@ private func createViewModels(_ issue: Issue, width: CGFloat) -> [IGListDiffable
     return result
 }
 
-func createViewModels(issue: Issue, width: CGFloat, completion: @escaping ([IGListDiffable]) -> ()) {
+func createViewModels(
+    issue: IssueQuery.Data.Repository.Issue,
+    width: CGFloat,
+    completion: @escaping ([IGListDiffable]) -> ()
+    ) {
     DispatchQueue.global().async {
         let result = createViewModels(issue, width: width)
         DispatchQueue.main.async {
@@ -31,9 +43,12 @@ func createViewModels(issue: Issue, width: CGFloat, completion: @escaping ([IGLi
     }
 }
 
-func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringSizing {
+func createIssueTitleString(
+    issue: IssueQuery.Data.Repository.Issue,
+    width: CGFloat
+    ) -> NSAttributedStringSizing {
     let attributedString = NSAttributedString(
-        string: issue.title ?? "",
+        string: issue.title,
         attributes: [
             NSFontAttributeName: Styles.Fonts.headline,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark
@@ -45,17 +60,19 @@ func createIssueTitleString(issue: Issue, width: CGFloat) -> NSAttributedStringS
     )
 }
 
-func createIssueRootCommentModel(issue: Issue, width: CGFloat) -> IssueCommentModel? {
-    guard let id = issue.id?.intValue,
-        let created = issue.created_at,
-        let date = GithubAPIDateFormatter().date(from: created),
-        let login = issue.user?.login,
-        let avatar = issue.user?.avatar_url,
-        let avatarURL = URL(string: avatar)
+func createIssueRootCommentModel(
+    issue: IssueQuery.Data.Repository.Issue,
+    width: CGFloat
+    ) -> IssueCommentModel? {
+    let commentFields = issue.fragments.commentFields
+
+    guard let author = commentFields.author,
+        let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
+        let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
-    let details = IssueCommentDetailsViewModel(date: date, login: login, avatarURL: avatarURL)
-    let bodies = createCommentModels(body: issue.body ?? "", width: width)
+    let details = IssueCommentDetailsViewModel(date: date, login: author.login, avatarURL: avatarURL)
+    let bodies = createCommentModels(body: issue.fragments.commentFields.body, width: width)
     let collapse = IssueCollapsedBodies(bodies: bodies)
-    return IssueCommentModel(id: id, details: details, bodyModels: bodies, collapse: collapse)
+    return IssueCommentModel(id: issue.number, details: details, bodyModels: bodies, collapse: collapse)
 }

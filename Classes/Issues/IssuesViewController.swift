@@ -14,8 +14,8 @@ final class IssuesViewController: UIViewController {
     fileprivate let client: GithubClient
     fileprivate let owner: String
     fileprivate let repo: String
-    fileprivate let number: String
-    fileprivate var issue: Issue?
+    fileprivate let number: Int
+    fileprivate var issue: IssueQuery.Data.Repository.Issue?
     fileprivate var models = [IGListDiffable]()
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
@@ -23,7 +23,7 @@ final class IssuesViewController: UIViewController {
         client: GithubClient,
         owner: String,
         repo: String,
-        number: String
+        number: Int
         ) {
         self.client = client
         self.owner = owner
@@ -69,7 +69,7 @@ extension IssuesViewController: IGListAdapterDataSource {
 
 extension IssuesViewController: FeedDelegate {
 
-    private func createModels(_ issue: Issue) {
+    private func createModels(_ issue: IssueQuery.Data.Repository.Issue) {
         self.issue = issue
         createViewModels(issue: issue, width: self.view.bounds.width) { results in
             self.models = results
@@ -78,11 +78,10 @@ extension IssuesViewController: FeedDelegate {
     }
 
     func loadFromNetwork(feed: Feed) {
-        client.requestIssue(owner: owner, repo: repo, number: number) { result in
-            switch result {
-            case .success(let issue):
+        client.apollo.fetch(query: IssueQuery(owner: owner, repo: repo, number: number)) { (result, error) in
+            if let issue = result?.data?.repository?.issue {
                 self.createModels(issue)
-            case .failure: print("nope")
+            } else {
                 feed.finishLoading(fromNetwork: true)
             }
         }

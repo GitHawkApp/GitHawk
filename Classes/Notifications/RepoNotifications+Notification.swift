@@ -15,7 +15,7 @@ func createNotificationViewModels(containerWidth: CGFloat, notifications: [Notif
     for notification in notifications {
         guard let type = NotificationType(rawValue: notification.subject.type),
             let date = df.date(from: notification.updated_at),
-            let issueNumber = notification.subject.url.components(separatedBy: "/").last
+            let number = (notification.subject.url.components(separatedBy: "/").last as NSString?)?.integerValue
             else { continue }
 
         let model = NotificationViewModel(
@@ -26,7 +26,7 @@ func createNotificationViewModels(containerWidth: CGFloat, notifications: [Notif
             read: !notification.unread,
             owner: notification.repository.owner.login,
             repo: notification.repository.name,
-            issueNumber: issueNumber,
+            number: number,
             containerWidth: containerWidth
         )
         viewModels.append(model)
