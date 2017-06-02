@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable {
+final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICollectionViewDataSource {
 
     static let reuse = "cell"
 
@@ -64,17 +64,13 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable {
 
     // MARK: IGListBindable
 
-    
-
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentReactionViewModel else { return }
         reactions = viewModel.models
         collectionView.reloadData()
     }
-    
-}
 
-extension IssueCommentReactionCell: UICollectionViewDataSource {
+    // MARK: UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return reactions.count

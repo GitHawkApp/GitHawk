@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssuesViewController: UIViewController {
+final class IssuesViewController: UIViewController, IGListAdapterDataSource, FeedDelegate {
 
     fileprivate let client: GithubClient
     fileprivate let owner: String
@@ -44,9 +44,7 @@ final class IssuesViewController: UIViewController {
         feed.adapter.dataSource = self
     }
 
-}
-
-extension IssuesViewController: IGListAdapterDataSource {
+    // MARK: IGListAdapterDataSource
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
         return models
@@ -65,9 +63,7 @@ extension IssuesViewController: IGListAdapterDataSource {
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
 
-}
-
-extension IssuesViewController: FeedDelegate {
+    // MARK: FeedDelegate
 
     private func createModels(_ issue: IssueQuery.Data.Repository.Issue) {
         self.issue = issue
@@ -86,5 +82,5 @@ extension IssuesViewController: FeedDelegate {
             }
         }
     }
-    
+
 }

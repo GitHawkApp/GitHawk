@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueLabelCell: UICollectionViewCell {
+final class IssueLabelCell: UICollectionViewCell, IGListBindable {
 
     let background = UIView()
     let label = UILabel()
@@ -38,10 +38,8 @@ final class IssueLabelCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-}
 
-extension IssueLabelCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueLabelModel else { return }
@@ -50,5 +48,5 @@ extension IssueLabelCell: IGListBindable {
         label.text = viewModel.name
         label.textColor = color.textOverlayColor
     }
-
+    
 }

@@ -9,7 +9,9 @@
 import UIKit
 import IGListKit
 
-final class IssueLabelsSectionController: IGListBindingSectionController<IssueLabelsModel> {
+final class IssueLabelsSectionController: IGListBindingSectionController<IssueLabelsModel>,
+IGListBindingSectionControllerDataSource,
+IGListBindingSectionControllerSelectionDelegate {
 
     var expanded = false
 
@@ -19,9 +21,7 @@ final class IssueLabelsSectionController: IGListBindingSectionController<IssueLa
         dataSource = self
     }
 
-}
-
-extension IssueLabelsSectionController: IGListBindingSectionControllerDataSource {
+    // MARK: IGListBindingSectionControllerDataSource
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
         guard let object = self.object,
@@ -48,13 +48,11 @@ extension IssueLabelsSectionController: IGListBindingSectionControllerDataSource
         return context.dequeueReusableCell(of: cellClass, for: self, at: index)
     }
 
-}
-
-extension IssueLabelsSectionController: IGListBindingSectionControllerSelectionDelegate {
+    // MARK: IGListBindingSectionControllerSelectionDelegate
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         expanded = !expanded
         update(animated: true)
     }
-    
+
 }

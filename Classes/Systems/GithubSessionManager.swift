@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import IGListKit
 
 enum GithubSessionResult {
     case unchanged
@@ -25,7 +26,7 @@ extension GithubUserSession {
     }
 }
 
-final class GithubSessionManager: NSObject {
+final class GithubSessionManager: NSObject, IGListDiffable {
 
     private class ListenerWrapper: NSObject {
         weak var listener: GithubSessionListener? = nil
@@ -117,6 +118,16 @@ final class GithubSessionManager: NSObject {
     func save() {
         defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.sessions)
         defaults.set(_focusedKey, forKey: Keys.focused)
+    }
+
+    // MARK: IGListDiffable
+
+    func diffIdentifier() -> NSObjectProtocol {
+        return self
+    }
+
+    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+        return self === object
     }
 
 }

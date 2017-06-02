@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class SegmentedControlModel {
+final class SegmentedControlModel: IGListDiffable {
 
     let items: [String]
     fileprivate let _diffIdentifier: String
@@ -20,9 +20,7 @@ final class SegmentedControlModel {
         _diffIdentifier = items.reduce("") { return $0 + $1 }
     }
 
-}
-
-extension SegmentedControlModel: IGListDiffable {
+    // MARK: IGListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return _diffIdentifier as NSObjectProtocol

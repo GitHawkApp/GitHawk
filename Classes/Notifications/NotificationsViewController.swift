@@ -10,7 +10,10 @@ import UIKit
 import IGListKit
 import SnapKit
 
-class NotificationsViewController: UIViewController {
+class NotificationsViewController: UIViewController,
+IGListAdapterDataSource,
+SegmentedControlSectionControllerDelegate,
+FeedDelegate {
 
     let client: GithubClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
@@ -58,9 +61,7 @@ class NotificationsViewController: UIViewController {
         }
     }
 
-}
-
-extension NotificationsViewController: IGListAdapterDataSource {
+    // MARK: IGListAdapterDataSource
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
         guard allNotifications.count > 0 else { return [] }
@@ -83,17 +84,13 @@ extension NotificationsViewController: IGListAdapterDataSource {
         return emptyView
     }
 
-}
-
-extension NotificationsViewController: SegmentedControlSectionControllerDelegate {
+    // MARK: SegmentedControlSectionControllerDelegate
 
     func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
         update(fromNetwork: false)
     }
-    
-}
 
-extension NotificationsViewController: FeedDelegate {
+    // MARK: FeedDelegate
 
     func loadFromNetwork(feed: Feed) {
         reload()

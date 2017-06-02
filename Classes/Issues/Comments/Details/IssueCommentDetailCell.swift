@@ -11,7 +11,7 @@ import SnapKit
 import IGListKit
 import SDWebImage
 
-final class IssueCommentDetailCell: UICollectionViewCell {
+final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
 
     let imageView = UIImageView()
     let loginLabel = UILabel()
@@ -66,9 +66,7 @@ final class IssueCommentDetailCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-extension IssueCommentDetailCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }

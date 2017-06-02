@@ -76,11 +76,7 @@ final class NotificationCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-}
-
-fileprivate let dateFormatter = DateFormatter()
-
-extension NotificationCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
@@ -93,8 +89,8 @@ extension NotificationCell: IGListBindable {
         for view in [titleLabel, textLabel, reasonImageView] {
             view.alpha = viewModel.read ? 0.5 : 1
         }
-        
+
         setNeedsLayout()
     }
-    
+
 }
