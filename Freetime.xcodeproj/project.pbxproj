@@ -60,6 +60,7 @@
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
+		2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2963A9351EE215DD0066509C /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -133,7 +134,6 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
-		29FF859C1EE0E11B007B8762 /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29FF859B1EE0E11B007B8762 /* CocoaMarkdown.framework */; };
 		29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		7C3E80AE871BAB9F2CE23FBA /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56223772300F4C201A21701F /* Pods_Freetime.framework */; };
@@ -156,6 +156,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,6 +216,7 @@
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIMenuController+Reactions.swift"; sourceTree = "<group>"; };
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
+		2963A9351EE215DD0066509C /* CocoaMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -293,7 +295,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29FF859C1EE0E11B007B8762 /* CocoaMarkdown.framework in Frameworks */,
 				7C3E80AE871BAB9F2CE23FBA /* Pods_Freetime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,6 +448,7 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
+				2963A9351EE215DD0066509C /* CocoaMarkdown.framework */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
