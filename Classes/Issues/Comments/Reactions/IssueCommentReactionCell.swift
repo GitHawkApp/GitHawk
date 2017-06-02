@@ -135,7 +135,7 @@ UICollectionViewDelegateFlowLayout {
             case 100000..<1000000: modifier = 4
             default: modifier = 5
         }
-        return CGSize(width: 20 + modifier * 5, height: collectionView.bounds.height)
+        return CGSize(width: 40 + modifier * 5, height: collectionView.bounds.height)
     }
 
 }
