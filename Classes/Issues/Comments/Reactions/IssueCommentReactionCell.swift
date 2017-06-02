@@ -10,7 +10,10 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICollectionViewDataSource {
+final class IssueCommentReactionCell: UICollectionViewCell,
+IGListBindable,
+UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout {
 
     static let reuse = "cell"
 
@@ -18,7 +21,6 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICo
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = Styles.Sizes.icon
         layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
@@ -41,6 +43,7 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICo
 
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.isUserInteractionEnabled = false
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
@@ -51,15 +54,6 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICo
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        let height = contentView.bounds.height
-        let size = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
-        let inset = (height - size.height)/2
-        collectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
     }
 
     // MARK: IGListBindable
@@ -85,6 +79,26 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICo
         cell.label.text = "\(model.type.rawValue) \(model.count)"
         cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light : .clear
         return cell
+    }
+
+    // MARK: UICollectionViewDelegateFlowLayout
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+        ) -> CGSize {
+        // lazy, simple width calculation
+        let modifier: CGFloat
+        switch reactions[indexPath.item].count {
+        case 0..<10: modifier = 0
+        case 10..<100: modifier = 1
+        case 100..<1000: modifier = 2
+            case 1000..<10000: modifier = 3
+            case 100000..<1000000: modifier = 4
+            default: modifier = 5
+        }
+        return CGSize(width: 20 + modifier * 5, height: collectionView.bounds.height)
     }
 
 }
