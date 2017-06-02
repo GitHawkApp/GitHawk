@@ -79,9 +79,14 @@ FeedDelegate {
     }
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? {
-        let emptyView = EmptyView()
-        emptyView.label.text = NSLocalizedString("Cannot load notifications", comment: "")
-        return emptyView
+        switch feed.status {
+        case .idle:
+            let emptyView = EmptyView()
+            emptyView.label.text = NSLocalizedString("Cannot load notifications", comment: "")
+            return emptyView
+        case .loading:
+            return nil
+        }
     }
 
     // MARK: SegmentedControlSectionControllerDelegate
