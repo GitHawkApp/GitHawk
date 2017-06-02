@@ -31,7 +31,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
         contentView.addSubview(scrollView)
 
         label.numberOfLines = 0
-        contentView.addSubview(label)
+        scrollView.addSubview(label)
     }
     
     required init?(coder aDecoder: NSCoder) {
