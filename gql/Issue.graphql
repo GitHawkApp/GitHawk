@@ -1,5 +1,7 @@
-query Issue($owner: String!, $name: String!, $number: Int!) {
-  repository(owner: $owner, name: $name) {
+query Issue($owner: String!, $repo: String!, $number: Int!) {
+  repository(owner: $owner, name: $repo) {
+    id
+    name
     issue(number: $number) {
       labels(first: 100) {
         nodes {
@@ -67,6 +69,8 @@ query Issue($owner: String!, $name: String!, $number: Int!) {
       }
       ...reactionFields
       ...commentFields
+      id
+      number
       closed
       locked
       number

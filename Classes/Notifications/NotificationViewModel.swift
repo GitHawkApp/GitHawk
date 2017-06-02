@@ -19,7 +19,7 @@ final class NotificationViewModel {
     let read: Bool
     let owner: String
     let repo: String
-    let issueNumber: String
+    let number: Int
 
     init(
         id: String,
@@ -29,7 +29,7 @@ final class NotificationViewModel {
         read: Bool,
         owner: String,
         repo: String,
-        issueNumber: String,
+        number: Int,
         containerWidth: CGFloat
         ) {
         self.id = id
@@ -38,7 +38,7 @@ final class NotificationViewModel {
         self.read = read
         self.owner = owner
         self.repo = repo
-        self.issueNumber = issueNumber
+        self.number = number
 
         let attributes = [
             NSFontAttributeName: Styles.Fonts.body,

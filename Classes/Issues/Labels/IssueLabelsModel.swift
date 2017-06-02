@@ -11,9 +11,9 @@ import IGListKit
 
 final class IssueLabelsModel: IGListDiffable {
 
-    let labels: [Label]
+    let labels: [IssueLabelModel]
 
-    init(labels: [Label]) {
+    init(labels: [IssueLabelModel]) {
         self.labels = labels
     }
 
