@@ -48,7 +48,7 @@ private func bodyString(
         NSFontAttributeName: Styles.Fonts.body,
     ]
     textAttributes.linkAttributes = [
-        NSForegroundColorAttributeName: Styles.Colors.blue,
+        NSForegroundColorAttributeName: Styles.Colors.Blue.medium,
         NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
     ]
     textAttributes.inlineCodeAttributes = [

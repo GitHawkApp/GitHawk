@@ -83,7 +83,7 @@ final class IssueCommentReactionCell: UICollectionViewCell, IGListBindable, UICo
             ) as! IssueReactionCell
         let model = reactions[indexPath.item]
         cell.label.text = "\(model.type.rawValue) \(model.count)"
-        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.blue : .clear
+        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light : .clear
         return cell
     }
 

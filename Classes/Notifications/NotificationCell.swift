@@ -55,7 +55,7 @@ final class NotificationCell: UICollectionViewCell {
 
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.tintColor = Styles.Colors.blue
+        reasonImageView.tintColor = Styles.Colors.Blue.medium
         contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
