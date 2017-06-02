@@ -12,7 +12,7 @@ import IGListKit
 final class IssueCommentReactionViewModel: IGListDiffable {
 
     let models: [ReactionViewModel]
-    let map: [String: Int]
+    private let map: [String: Int]
 
     init(models: [ReactionViewModel]) {
         self.models = models
