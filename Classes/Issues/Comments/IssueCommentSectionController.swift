@@ -51,7 +51,9 @@ IGListBindingSectionControllerSelectionDelegate {
             }
         }
 
-        return [ object.details ] + bodies
+        return [ object.details ]
+            + bodies
+            + [ object.reactions ]
     }
 
     func sectionController(
@@ -84,6 +86,8 @@ IGListBindingSectionControllerSelectionDelegate {
             cellClass = IssueCommentCodeBlockCell.self
         } else if viewModel is IssueCommentSummaryModel {
             cellClass = IssueCommentSummaryCell.self
+        } else if viewModel is IssueCommentReactionViewModel {
+            cellClass = IssueCommentReactionCell.self
         } else {
             cellClass = IssueCommentTextCell.self
         }
