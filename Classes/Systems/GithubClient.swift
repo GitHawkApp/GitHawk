@@ -64,7 +64,6 @@ struct GithubClient {
         default: encoding = JSONEncoding.default
         }
 
-
         var parameters = request.parameters ?? [:]
         parameters["access_token"] = userSession?.authorization.token
 
