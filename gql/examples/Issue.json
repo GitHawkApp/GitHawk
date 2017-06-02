@@ -1,6 +1,7 @@
 {
   "data": {
     "repository": {
+      "id": "MDEwOlJlcG9zaXRvcnk2NzU4ODUxMg==",
       "issue": {
         "author": {
           "avatarUrl": "https://avatars1.githubusercontent.com/u/739696?v=3",
@@ -12,6 +13,7 @@
         "editor": {
           "login": "rnystrom"
         },
+        "id": "MDU6SXNzdWUyMzA3NDYxMDc=",
         "labels": {
           "nodes": [
             {
@@ -73,7 +75,6 @@
         "timeline": {
           "nodes": [
             {
-              "__typename": "LabeledEvent",
               "actor": {
                 "login": "rnystrom"
               },
@@ -83,7 +84,6 @@
               }
             },
             {
-              "__typename": "LabeledEvent",
               "actor": {
                 "login": "rnystrom"
               },
@@ -93,7 +93,6 @@
               }
             },
             {
-              "__typename": "LabeledEvent",
               "actor": {
                 "login": "rnystrom"
               },
@@ -103,7 +102,6 @@
               }
             },
             {
-              "__typename": "UnlabeledEvent",
               "actor": {
                 "login": "rnystrom"
               },
@@ -113,7 +111,6 @@
               }
             },
             {
-              "__typename": "UnlabeledEvent",
               "actor": {
                 "login": "rnystrom"
               },
@@ -123,7 +120,6 @@
               }
             },
             {
-              "__typename": "RenamedTitleEvent",
               "actor": {
                 "login": "heshamsalman"
               },
@@ -131,7 +127,6 @@
               "currentTitle": "Grammar improvement: \"long term\" in README"
             },
             {
-              "__typename": "IssueComment",
               "author": {
                 "avatarUrl": "https://avatars3.githubusercontent.com/u/3388381?v=3",
                 "login": "heshamsalman"
@@ -186,7 +181,6 @@
               "viewerDidAuthor": false
             },
             {
-              "__typename": "IssueComment",
               "author": {
                 "avatarUrl": "https://avatars1.githubusercontent.com/u/739696?v=3",
                 "login": "rnystrom"
@@ -241,7 +235,6 @@
               "viewerDidAuthor": true
             },
             {
-              "__typename": "IssueComment",
               "author": {
                 "avatarUrl": "https://avatars1.githubusercontent.com/u/739696?v=3",
                 "login": "rnystrom"
@@ -296,7 +289,6 @@
               "viewerDidAuthor": true
             },
             {
-              "__typename": "IssueComment",
               "author": {
                 "avatarUrl": "https://avatars3.githubusercontent.com/u/4190298?v=3",
                 "login": "BasThomas"
@@ -351,7 +343,6 @@
               "viewerDidAuthor": false
             },
             {
-              "__typename": "IssueComment",
               "author": {
                 "avatarUrl": "https://avatars1.githubusercontent.com/u/6430396?v=3",
                 "login": "danalamo"
@@ -406,7 +397,6 @@
               "viewerDidAuthor": false
             },
             {
-              "__typename": "LabeledEvent",
               "actor": {
                 "login": "Sherlouk"
               },
@@ -416,7 +406,6 @@
               }
             },
             {
-              "__typename": "ClosedEvent",
               "actor": {
                 "login": "Sherlouk"
               },
@@ -428,7 +417,8 @@
         "viewerCanReact": true,
         "viewerCanUpdate": true,
         "viewerDidAuthor": true
-      }
+      },
+      "name": "IGListKit"
     }
   }
 }
