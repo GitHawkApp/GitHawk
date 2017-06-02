@@ -11,7 +11,7 @@ import SnapKit
 import SDWebImage
 import IGListKit
 
-final class IssueCommentImageCell: UICollectionViewCell {
+final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
     static let preferredHeight: CGFloat = 200
     let imageView = UIImageView()
@@ -45,10 +45,8 @@ final class IssueCommentImageCell: UICollectionViewCell {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
     }
-    
-}
 
-extension IssueCommentImageCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
@@ -60,12 +58,10 @@ extension IssueCommentImageCell: IGListBindable {
         }
     }
 
-}
-
-extension IssueCommentImageCell: CollapsibleCell {
+    // MARK: CollapsibleCell
 
     func setCollapse(visible: Bool) {
         overlay.isHidden = !visible
     }
-
+    
 }

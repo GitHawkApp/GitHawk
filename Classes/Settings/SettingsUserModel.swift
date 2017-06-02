@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class SettingsUserModel {
+final class SettingsUserModel: IGListDiffable {
 
     let name: String
     let selected: Bool
@@ -22,9 +22,7 @@ final class SettingsUserModel {
         self.selected = selected
     }
 
-}
-
-extension SettingsUserModel: IGListDiffable {
+    // MARK: IGListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return name as NSObjectProtocol

@@ -9,7 +9,9 @@
 import UIKit
 import IGListKit
 
-final class SettingsUsersSectionController: IGListBindingSectionController<GithubSessionManager> {
+final class SettingsUsersSectionController: IGListBindingSectionController<GithubSessionManager>,
+IGListBindingSectionControllerDataSource,
+IGListBindingSectionControllerSelectionDelegate {
 
     override init() {
         super.init()
@@ -23,9 +25,7 @@ final class SettingsUsersSectionController: IGListBindingSectionController<Githu
         return object.allUserSessions.sorted { $0.login < $1.login }
     }
 
-}
-
-extension SettingsUsersSectionController: IGListBindingSectionControllerDataSource {
+    // MARK: IGListBindingSectionControllerDataSource
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
         let focusedLogin = self.object?.focusedLogin
@@ -41,10 +41,8 @@ extension SettingsUsersSectionController: IGListBindingSectionControllerDataSour
         guard let context = self.collectionContext else { return UICollectionViewCell() }
         return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
-    
-}
 
-extension SettingsUsersSectionController: IGListBindingSectionControllerSelectionDelegate {
+    // MARK: IGListBindingSectionControllerSelectionDelegate
 
     func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let object = self.object else { return }

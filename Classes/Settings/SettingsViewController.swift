@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController, IGListAdapterDataSource, GithubSessionListener {
 
     // injected
     fileprivate let sessionManager: GithubSessionManager
@@ -58,9 +58,7 @@ final class SettingsViewController: UIViewController {
         }
     }
 
-}
-
-extension SettingsViewController: IGListAdapterDataSource {
+    // MARK: IGListAdapterDataSource
 
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
         return [
@@ -82,9 +80,7 @@ extension SettingsViewController: IGListAdapterDataSource {
 
     func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
 
-}
-
-extension SettingsViewController: GithubSessionListener {
+    // MARK: GithubSessionListener
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
         adapter.performUpdates(animated: false)

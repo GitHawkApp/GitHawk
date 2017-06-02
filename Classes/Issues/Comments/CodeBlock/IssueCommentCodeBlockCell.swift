@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentCodeBlockCell: UICollectionViewCell {
+final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
     static let inset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -46,9 +46,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell {
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-}
-
-extension IssueCommentCodeBlockCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }
@@ -61,12 +59,10 @@ extension IssueCommentCodeBlockCell: IGListBindable {
         label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
     }
 
-}
-
-extension IssueCommentCodeBlockCell: CollapsibleCell {
+    // MARK: CollapsibleCell
 
     func setCollapse(visible: Bool) {
         overlay.isHidden = !visible
     }
-    
+
 }

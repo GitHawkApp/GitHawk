@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueLabelSummaryCell: UICollectionViewCell {
+final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSource, IGListBindable {
 
     static let reuse = "cell"
 
@@ -60,9 +60,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell {
         collectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
     }
 
-}
-
-extension IssueLabelSummaryCell: UICollectionViewDataSource {
+    // MARK: UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
@@ -74,9 +72,7 @@ extension IssueLabelSummaryCell: UICollectionViewDataSource {
         return cell
     }
 
-}
-
-extension IssueLabelSummaryCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueLabelSummaryModel else { return }

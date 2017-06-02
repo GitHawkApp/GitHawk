@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-final class RootNavigationManager {
+final class RootNavigationManager: GithubSessionListener {
 
     fileprivate var showingLogin = false
 
@@ -57,9 +57,7 @@ final class RootNavigationManager {
         rootTabBarController?.selectedIndex = selectedIndex
     }
 
-}
-
-extension RootNavigationManager: GithubSessionListener {
+    // MARK: GithubSessionListener
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
         showingLogin = false

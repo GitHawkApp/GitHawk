@@ -9,15 +9,10 @@
 import UIKit
 import IGListKit
 
-protocol IssueCommentTextCellDelegate: class {
-
-}
-
-final class IssueCommentTextCell: UICollectionViewCell {
+final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
     static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
 
-    weak var delegate: IssueCommentTextCellDelegate? = nil
     let label = UILabel()
     let overlay = CreateCollapsibleOverlay()
 
@@ -39,9 +34,7 @@ final class IssueCommentTextCell: UICollectionViewCell {
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-}
-
-extension IssueCommentTextCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
@@ -51,12 +44,10 @@ extension IssueCommentTextCell: IGListBindable {
         label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
     }
 
-}
-
-extension IssueCommentTextCell: CollapsibleCell {
+    // MARK: CollapsibleCell
 
     func setCollapse(visible: Bool) {
         overlay.isHidden = !visible
     }
-    
+
 }

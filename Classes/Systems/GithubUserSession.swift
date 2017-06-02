@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GithubUserSession: NSObject {
+final class GithubUserSession: NSObject, NSCoding {
 
     struct Keys {
         static let authorization = "authorization"
@@ -25,10 +25,8 @@ final class GithubUserSession: NSObject {
         self.authorization = authorization
         self.login = login
     }
-    
-}
 
-extension GithubUserSession: NSCoding {
+    // MARK: NSCoding
 
     convenience init?(coder aDecoder: NSCoder) {
         guard let authorization = aDecoder.decodeObject(forKey: Keys.authorization) as? Authorization,

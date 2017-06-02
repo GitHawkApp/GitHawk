@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentSummaryCell: UICollectionViewCell {
+final class IssueCommentSummaryCell: UICollectionViewCell, IGListBindable {
 
     let label = UILabel()
 
@@ -29,14 +29,12 @@ final class IssueCommentSummaryCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-}
 
-extension IssueCommentSummaryCell: IGListBindable {
+    // MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentSummaryModel else { return }
         label.text = "▶ \(viewModel.summary)"
     }
-
+    
 }

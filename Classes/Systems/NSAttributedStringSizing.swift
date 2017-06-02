@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class NSAttributedStringSizing: NSObject {
+final class NSAttributedStringSizing: NSObject, IGListDiffable {
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
     let textViewSize: CGSize
@@ -101,9 +101,8 @@ final class NSAttributedStringSizing: NSObject {
         layoutManager.usesFontLeading = usesFontLeading
         layoutManager.addTextContainer(textContainer)
     }
-}
 
-extension NSAttributedStringSizing: IGListDiffable {
+    // MARK: IGListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return attributedText
