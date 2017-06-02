@@ -88,8 +88,8 @@
 /**
  @deprecated Use `enumerateElementsWithCSS:usingBlock:` instead
  */
-- (void)enumerateElementsWithCSS:(NSString *)CSS
-                           block:(void (^)(ONOXMLElement *element))block DEPRECATED_ATTRIBUTE;
+//- (void)enumerateElementsWithCSS:(NSString *)CSS
+//                           block:(void (^)(ONOXMLElement *element))block DEPRECATED_ATTRIBUTE;
 
 /**
  Enumerate elements matching a CSS selector.

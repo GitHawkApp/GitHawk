@@ -343,11 +343,11 @@ static BOOL ONOXMLNodeMatchesTagInNamespace(xmlNodePtr node, NSString *tag, NSSt
     return [self.rootElement CSS:CSS];
 }
 
-- (void)enumerateElementsWithCSS:(NSString *)CSS
-                           block:(void (^)(ONOXMLElement *))block
-{
-    [self.rootElement enumerateElementsWithCSS:CSS block:block];
-}
+//- (void)enumerateElementsWithCSS:(NSString *)CSS
+//                           block:(void (^)(ONOXMLElement *))block
+//{
+//    [self.rootElement enumerateElementsWithCSS:CSS block:block];
+//}
 
 - (void)enumerateElementsWithCSS:(NSString *)CSS
                       usingBlock:(void (^)(ONOXMLElement *element, NSUInteger idx, BOOL *stop))block
