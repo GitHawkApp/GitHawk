@@ -10,19 +10,23 @@ import UIKit
 import IGListKit
 
 private func createViewModels(
-    _ issue: IssueQuery.Data.Repository.Issue,
+    number: Int,
+    title: String,
+    labelableFields: LabelableFields,
+    commentFields: CommentFields,
+    reactionFields: ReactionFields,
     width: CGFloat
     ) -> [IGListDiffable] {
     var result = [IGListDiffable]()
-    result.append(titleStringSizing(title: issue.title, width: width))
+    result.append(titleStringSizing(title: title, width: width))
 
-    let labels = issue.fragments.labelableFields.issueLabelModels
+    let labels = labelableFields.issueLabelModels
     result.append(IssueLabelsModel(labels: labels))
 
     if let root = createCommentModel(
-        number: issue.number,
-        commentFields: issue.fragments.commentFields,
-        reactionFields: issue.fragments.reactionFields,
+        number: number,
+        commentFields: commentFields,
+        reactionFields: reactionFields,
         width: width
         ) {
         result.append(root)
@@ -37,7 +41,14 @@ func createViewModels(
     completion: @escaping ([IGListDiffable]) -> ()
     ) {
     DispatchQueue.global().async {
-        let result = createViewModels(issue, width: width)
+        let result = createViewModels(
+            number: issue.number,
+            title: issue.title,
+            labelableFields: issue.fragments.labelableFields,
+            commentFields: issue.fragments.commentFields,
+            reactionFields: issue.fragments.reactionFields,
+            width: width
+        )
         DispatchQueue.main.async {
             completion(result)
         }
