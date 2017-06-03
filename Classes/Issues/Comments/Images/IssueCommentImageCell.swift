@@ -22,6 +22,7 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
         super.init(frame: frame)
 
         contentView.clipsToBounds = true
+        contentView.backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)

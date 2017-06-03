@@ -32,6 +32,8 @@ UICollectionViewDelegateFlowLayout {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         addButton.tintColor = Styles.Colors.Gray.light
         addButton.setTitle("+", for: .normal)
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
@@ -54,6 +56,8 @@ UICollectionViewDelegateFlowLayout {
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
             make.top.bottom.right.equalTo(contentView)
         }
+
+        contentView.addBorder(bottom: true)
     }
     
     required init?(coder aDecoder: NSCoder) {

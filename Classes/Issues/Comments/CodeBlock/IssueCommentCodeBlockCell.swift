@@ -25,6 +25,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
         contentView.clipsToBounds = true
 
         scrollView.backgroundColor = Styles.Colors.Gray.lighter

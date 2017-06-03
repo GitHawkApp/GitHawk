@@ -21,6 +21,8 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = Styles.Colors.Gray.lighter
         imageView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
@@ -59,6 +61,8 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
             make.centerY.equalTo(contentView)
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
         }
+
+        contentView.addBorder(bottom: false)
 
     }
     
