@@ -19,14 +19,27 @@ extension GithubClient {
         width: CGFloat,
         completion: @escaping ([IGListDiffable]) -> ()
         ) {
-        let query = IssueQuery(owner: owner, repo: repo, number: number)
-        apollo.fetch(query: query) { (result, error) in
-            if let issue = result?.data?.repository?.issue {
-                createViewModels(issue: issue, width: width) { results in
-                    completion(results)
+        if pullRequest {
+            let query = PullRequestQuery(owner: owner, repo: repo, number: number)
+            apollo.fetch(query: query) { (result, error) in
+                if let pullRequest = result?.data?.repository?.pullRequest {
+                    createViewModels(pullRequest: pullRequest, width: width) { results in
+                        completion(results)
+                    }
+                } else {
+                    completion([])
                 }
-            } else {
-                completion([])
+            }
+        } else {
+            let query = IssueQuery(owner: owner, repo: repo, number: number)
+            apollo.fetch(query: query) { (result, error) in
+                if let issue = result?.data?.repository?.issue {
+                    createViewModels(issue: issue, width: width) { results in
+                        completion(results)
+                    }
+                } else {
+                    completion([])
+                }
             }
         }
     }
