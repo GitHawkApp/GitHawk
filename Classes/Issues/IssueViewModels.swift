@@ -14,12 +14,17 @@ private func createViewModels(
     width: CGFloat
     ) -> [IGListDiffable] {
     var result = [IGListDiffable]()
-    result.append(createIssueTitleString(issue: issue, width: width))
+    result.append(titleStringSizing(title: issue.title, width: width))
 
     let labels = issue.fragments.labelableFields.issueLabelModels
     result.append(IssueLabelsModel(labels: labels))
 
-    if let root = createIssueRootCommentModel(issue: issue, width: width) {
+    if let root = createCommentModel(
+        number: issue.number,
+        commentFields: issue.fragments.commentFields,
+        reactionFields: issue.fragments.reactionFields,
+        width: width
+        ) {
         result.append(root)
     }
 
@@ -39,12 +44,9 @@ func createViewModels(
     }
 }
 
-func createIssueTitleString(
-    issue: IssueQuery.Data.Repository.Issue,
-    width: CGFloat
-    ) -> NSAttributedStringSizing {
+func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
     let attributedString = NSAttributedString(
-        string: issue.title,
+        string: title,
         attributes: [
             NSFontAttributeName: Styles.Fonts.headline,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark
@@ -69,23 +71,23 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
     return IssueCommentReactionViewModel(models: models)
 }
 
-func createIssueRootCommentModel(
-    issue: IssueQuery.Data.Repository.Issue,
+func createCommentModel(
+    number: Int,
+    commentFields: CommentFields,
+    reactionFields: ReactionFields, 
     width: CGFloat
     ) -> IssueCommentModel? {
-    let commentFields = issue.fragments.commentFields
-
     guard let author = commentFields.author,
         let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
     let details = IssueCommentDetailsViewModel(date: date, login: author.login, avatarURL: avatarURL)
-    let bodies = createCommentModels(body: issue.fragments.commentFields.body, width: width)
-    let reactions = createIssueReactions(reactions: issue.fragments.reactionFields)
+    let bodies = createCommentModels(body: commentFields.body, width: width)
+    let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies)
     return IssueCommentModel(
-        number: issue.number,
+        number: number,
         details: details,
         bodyModels: bodies,
         reactions: reactions,
