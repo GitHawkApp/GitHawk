@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 import IGListKit
 
+protocol IssueCommentReactionCellDelegate {
+    func didSelect(cell: IssueCommentReactionCell, reaction: ReactionType)
+}
+
 final class IssueCommentReactionCell: UICollectionViewCell,
 IGListBindable,
 UICollectionViewDataSource,
@@ -17,8 +21,10 @@ UICollectionViewDelegateFlowLayout {
 
     static let reuse = "cell"
 
-    let addButton = ResponderButton()
-    let collectionView: UICollectionView = {
+    public var delegate: IssueCommentReactionCellDelegate? = nil
+
+    private let addButton = ResponderButton()
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
@@ -26,8 +32,7 @@ UICollectionViewDelegateFlowLayout {
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
     }()
-
-    var reactions = [ReactionViewModel]()
+    private var reactions = [ReactionViewModel]()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,32 +74,56 @@ UICollectionViewDelegateFlowLayout {
     func onAddButton() {
         addButton.becomeFirstResponder()
 
-        let menu = UIMenuController.shared
-        let reactions: [ReactionType] = [
-            .thumbsUp,
-            .thumbsDown,
-            .laugh,
-            .hooray,
-            .confused,
-            .heart,
+        let actions = [
+            ReactionType.thumbsUp.rawValue: #selector(IssueCommentReactionCell.onThumbsUp),
+            ReactionType.thumbsDown.rawValue: #selector(IssueCommentReactionCell.onThumbsDown),
+            ReactionType.laugh.rawValue: #selector(IssueCommentReactionCell.onLaugh),
+            ReactionType.hooray.rawValue: #selector(IssueCommentReactionCell.onHooray),
+            ReactionType.confused.rawValue: #selector(IssueCommentReactionCell.onConfused),
+            ReactionType.heart.rawValue: #selector(IssueCommentReactionCell.onHeart),
         ]
 
-        menu.menuItems = reactions.map {
-            UIMenuItem(title: $0.rawValue, action: #selector(IssueCommentReactionCell.empty(item:)))
-        }
+        let menu = UIMenuController.shared
+        menu.menuItems = actions.map { UIMenuItem(title: $0, action: $1) }
         menu.setTargetRect(addButton.bounds, in: addButton)
         menu.setMenuVisible(true, animated: true)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
-        case #selector(IssueCommentReactionCell.empty(item:)): return true
+        case #selector(IssueCommentReactionCell.onThumbsUp),
+             #selector(IssueCommentReactionCell.onThumbsDown),
+             #selector(IssueCommentReactionCell.onLaugh),
+             #selector(IssueCommentReactionCell.onHooray),
+             #selector(IssueCommentReactionCell.onConfused),
+             #selector(IssueCommentReactionCell.onHeart):
+            return true
         default: return false
         }
     }
 
-    func empty(item: Any) {
-        print("selected")
+    func onThumbsUp() {
+        delegate?.didSelect(cell: self, reaction: .thumbsUp)
+    }
+
+    func onThumbsDown() {
+        delegate?.didSelect(cell: self, reaction: .thumbsDown)
+    }
+
+    func onLaugh() {
+        delegate?.didSelect(cell: self, reaction: .laugh)
+    }
+
+    func onHooray() {
+        delegate?.didSelect(cell: self, reaction: .hooray)
+    }
+
+    func onConfused() {
+        delegate?.didSelect(cell: self, reaction: .confused)
+    }
+
+    func onHeart() {
+        delegate?.didSelect(cell: self, reaction: .heart)
     }
 
     // MARK: IGListBindable
