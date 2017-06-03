@@ -17,7 +17,7 @@ private func createViewModels(
     result.append(createIssueTitleString(issue: issue, width: width))
 
     var labels = [IssueLabelModel]()
-    for node in issue.labels?.nodes ?? [] {
+    for node in issue.fragments.labelableFields.labels?.nodes ?? [] {
         guard let node = node else { continue }
         labels.append(IssueLabelModel(color: node.color, name: node.name))
     }

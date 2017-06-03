@@ -1,0 +1,44 @@
+fragment reactionFields on Reactable {
+  viewerCanReact
+  reactionGroups {
+    viewerHasReacted
+    users {
+      totalCount
+    }
+    content
+  }
+}
+
+fragment commentFields on Comment {
+  author {
+    login
+    avatarUrl
+  }
+  editor {
+    login
+  }
+  body
+  createdAt
+  viewerDidAuthor
+}
+
+fragment lockableFields on Lockable {
+  locked
+}
+
+fragment closableFields on Closable {
+  closed
+}
+
+fragment labelableFields on Labelable {
+  labels(first: 100) {
+    nodes {
+      color
+      name
+    }
+  }
+}
+
+fragment updatableFields on Updatable {
+  viewerCanUpdate
+}

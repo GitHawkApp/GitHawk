@@ -1,8 +1,8 @@
-query Issue($owner: String!, $repo: String!, $number: Int!) {
+query PullRequest($owner: String!, $repo: String!, $number: Int!) {
   repository(owner: $owner, name: $repo) {
     id
     name
-    issue(number: $number) {
+    pullRequest(number: $number) {
       timeline(first: 100) {
         nodes {
           ... on Commit {
