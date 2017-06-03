@@ -85,7 +85,7 @@ UICollectionViewDelegateFlowLayout {
 
         let menu = UIMenuController.shared
         menu.menuItems = actions.map { UIMenuItem(title: $0, action: $1) }
-        menu.setTargetRect(addButton.bounds, in: addButton)
+        menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
         menu.setMenuVisible(true, animated: true)
     }
 
