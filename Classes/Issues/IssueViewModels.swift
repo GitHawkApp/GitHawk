@@ -16,11 +16,7 @@ private func createViewModels(
     var result = [IGListDiffable]()
     result.append(createIssueTitleString(issue: issue, width: width))
 
-    var labels = [IssueLabelModel]()
-    for node in issue.fragments.labelableFields.labels?.nodes ?? [] {
-        guard let node = node else { continue }
-        labels.append(IssueLabelModel(color: node.color, name: node.name))
-    }
+    let labels = issue.fragments.labelableFields.issueLabelModels
     result.append(IssueLabelsModel(labels: labels))
 
     if let root = createIssueRootCommentModel(issue: issue, width: width) {
