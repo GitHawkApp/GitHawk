@@ -105,6 +105,11 @@ IGListBindingSectionControllerSelectionDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
+        switch viewModel {
+        case is IssueCommentReactionViewModel,
+             is IssueCommentDetailsViewModel: return
+        default: break
+        }
         uncollapse()
     }
 
