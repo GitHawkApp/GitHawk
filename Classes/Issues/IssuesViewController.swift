@@ -15,6 +15,7 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
     fileprivate let owner: String
     fileprivate let repo: String
     fileprivate let number: Int
+    fileprivate let pullRequest: Bool
     fileprivate var issue: IssueQuery.Data.Repository.Issue?
     fileprivate var models = [IGListDiffable]()
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
@@ -23,12 +24,14 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
         client: GithubClient,
         owner: String,
         repo: String,
-        number: Int
+        number: Int,
+        pullRequest: Bool
         ) {
         self.client = client
         self.owner = owner
         self.repo = repo
         self.number = number
+        self.pullRequest = pullRequest
         super.init(nibName: nil, bundle: nil)
         title = "\(owner)/\(repo)#\(number)"
     }
@@ -70,7 +73,7 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
             owner: owner,
             repo: repo,
             number: number,
-            pullRequest: false,
+            pullRequest: pullRequest,
             width: view.bounds.width
         ) { results in
             self.models = results

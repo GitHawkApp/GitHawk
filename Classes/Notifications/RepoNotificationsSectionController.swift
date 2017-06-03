@@ -40,7 +40,8 @@ final class RepoNotificationsSectionController: IGListGenericSectionController<N
             client: client,
             owner: object.owner,
             repo: object.repo,
-            number: object.number
+            number: object.number,
+            pullRequest: object.type == .pullRequest
         )
         viewController?.navigationController?.pushViewController(controller, animated: true)
     }

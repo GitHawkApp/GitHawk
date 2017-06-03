@@ -313,10 +313,10 @@
 			isa = PBXGroup;
 			children = (
 				292FCAC81EDFCC510026635E /* Comments */,
+				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
 				292FCAE61EDFCC510026635E /* IssueEvent.swift */,
 				292FCAE81EDFCC510026635E /* IssueState.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
-				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
 				292FCAEA1EDFCC510026635E /* IssueViewModels.swift */,
 				292FCAEC1EDFCC510026635E /* Labels */,
 				292FCAF31EDFCC510026635E /* Title */,

@@ -55,6 +55,26 @@ func createViewModels(
     }
 }
 
+func createViewModels(
+    pullRequest: PullRequestQuery.Data.Repository.PullRequest,
+    width: CGFloat,
+    completion: @escaping ([IGListDiffable]) -> ()
+    ) {
+    DispatchQueue.global().async {
+        let result = createViewModels(
+            number: pullRequest.number,
+            title: pullRequest.title,
+            labelableFields: pullRequest.fragments.labelableFields,
+            commentFields: pullRequest.fragments.commentFields,
+            reactionFields: pullRequest.fragments.reactionFields,
+            width: width
+        )
+        DispatchQueue.main.async {
+            completion(result)
+        }
+    }
+}
+
 func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
     let attributedString = NSAttributedString(
         string: title,
