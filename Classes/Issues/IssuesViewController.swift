@@ -65,22 +65,17 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
 
     // MARK: FeedDelegate
 
-    private func createModels(_ issue: IssueQuery.Data.Repository.Issue) {
-        self.issue = issue
-        createViewModels(issue: issue, width: self.view.bounds.width) { results in
+    func loadFromNetwork(feed: Feed) {
+        client.fetch(
+            owner: owner,
+            repo: repo,
+            number: number,
+            pullRequest: false,
+            width: view.bounds.width
+        ) { results in
             self.models = results
             self.feed.finishLoading(fromNetwork: true)
         }
     }
-
-    func loadFromNetwork(feed: Feed) {
-        client.apollo.fetch(query: IssueQuery(owner: owner, repo: repo, number: number)) { (result, error) in
-            if let issue = result?.data?.repository?.issue {
-                self.createModels(issue)
-            } else {
-                feed.finishLoading(fromNetwork: true)
-            }
-        }
-    }
-
+    
 }
