@@ -33,6 +33,8 @@ final class NotificationCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         titleLabel.numberOfLines = 1
         titleLabel.font = Styles.Fonts.title
         titleLabel.textColor = Styles.Colors.Gray.light

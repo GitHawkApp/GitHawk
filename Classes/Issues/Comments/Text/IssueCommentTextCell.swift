@@ -19,6 +19,7 @@ final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, Collapsi
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
         contentView.clipsToBounds = true
 
         label.numberOfLines = 0

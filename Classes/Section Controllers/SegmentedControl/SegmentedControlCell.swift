@@ -22,6 +22,8 @@ final class SegmentedControlCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         segmentedControl.addTarget(self, action: #selector(SegmentedControlCell.didSelect(sender:)), for: .valueChanged)
         segmentedControl.tintColor = Styles.Colors.Blue.medium
         contentView.addSubview(segmentedControl)
