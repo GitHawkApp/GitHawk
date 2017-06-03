@@ -75,16 +75,16 @@ UICollectionViewDelegateFlowLayout {
         addButton.becomeFirstResponder()
 
         let actions = [
-            ReactionType.thumbsUp.rawValue: #selector(IssueCommentReactionCell.onThumbsUp),
-            ReactionType.thumbsDown.rawValue: #selector(IssueCommentReactionCell.onThumbsDown),
-            ReactionType.laugh.rawValue: #selector(IssueCommentReactionCell.onLaugh),
-            ReactionType.hooray.rawValue: #selector(IssueCommentReactionCell.onHooray),
-            ReactionType.confused.rawValue: #selector(IssueCommentReactionCell.onConfused),
-            ReactionType.heart.rawValue: #selector(IssueCommentReactionCell.onHeart),
+            (ReactionType.thumbsUp.rawValue, #selector(IssueCommentReactionCell.onThumbsUp)),
+            (ReactionType.thumbsDown.rawValue, #selector(IssueCommentReactionCell.onThumbsDown)),
+            (ReactionType.laugh.rawValue, #selector(IssueCommentReactionCell.onLaugh)),
+            (ReactionType.hooray.rawValue, #selector(IssueCommentReactionCell.onHooray)),
+            (ReactionType.confused.rawValue, #selector(IssueCommentReactionCell.onConfused)),
+            (ReactionType.heart.rawValue, #selector(IssueCommentReactionCell.onHeart)),
         ]
 
         let menu = UIMenuController.shared
-        menu.menuItems = actions.map { UIMenuItem(title: $0, action: $1) }
+        menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
         menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
         menu.setMenuVisible(true, animated: true)
     }
