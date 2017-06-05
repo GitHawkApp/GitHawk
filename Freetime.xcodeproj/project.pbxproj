@@ -57,6 +57,12 @@
 		29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */; };
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
+		294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */; };
+		294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */; };
+		294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */; };
+		294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */; };
+		294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */; };
+		294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EF1EE5036A00DBCD35 /* IssueType.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
 		2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2963A9351EE215DD0066509C /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -215,6 +221,12 @@
 		29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddAccountSectionController.swift; sourceTree = "<group>"; };
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
+		294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusModel.swift; sourceTree = "<group>"; };
+		294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusSectionController.swift; sourceTree = "<group>"; };
+		294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusCell.swift; sourceTree = "<group>"; };
+		294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Issue+IssueType.swift"; sourceTree = "<group>"; };
+		294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PullRequest+IssueType.swift"; sourceTree = "<group>"; };
+		294563EF1EE5036A00DBCD35 /* IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueType.swift; sourceTree = "<group>"; };
 		2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIMenuController+Reactions.swift"; sourceTree = "<group>"; };
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
 		2963A9351EE215DD0066509C /* CocoaMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -314,11 +326,15 @@
 			children = (
 				292FCAC81EDFCC510026635E /* Comments */,
 				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
+				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
 				292FCAE61EDFCC510026635E /* IssueEvent.swift */,
 				292FCAE81EDFCC510026635E /* IssueState.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
+				294563EF1EE5036A00DBCD35 /* IssueType.swift */,
 				292FCAEA1EDFCC510026635E /* IssueViewModels.swift */,
 				292FCAEC1EDFCC510026635E /* Labels */,
+				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
+				294563E41EE4EE5B00DBCD35 /* Status */,
 				292FCAF31EDFCC510026635E /* Title */,
 			);
 			path = Issues;
@@ -443,6 +459,16 @@
 				292FCB2B1EE054900026635E /* API.swift */,
 			);
 			name = gql;
+			sourceTree = "<group>";
+		};
+		294563E41EE4EE5B00DBCD35 /* Status */ = {
+			isa = PBXGroup;
+			children = (
+				294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */,
+				294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */,
+				294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */,
+			);
+			path = Status;
 			sourceTree = "<group>";
 		};
 		297AE82B1EC0D58A00B44A1F = {
@@ -914,6 +940,7 @@
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				292FCB061EDFCC510026635E /* String+NSRange.swift in Sources */,
+				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
 				2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
@@ -930,6 +957,7 @@
 				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
 				290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */,
+				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
@@ -943,10 +971,12 @@
 				292FCB081EDFCC510026635E /* IssueCommentSummaryCell.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				297AE8781EC0D5C200B44A1F /* TwoFactorViewController.swift in Sources */,
+				294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */,
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
 				292FCB031EDFCC510026635E /* DetailsScanner.swift in Sources */,
+				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
@@ -987,10 +1017,12 @@
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
+				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				292FCB0C1EDFCC510026635E /* IssueEvent.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */,
 				297AE8791EC0D5C200B44A1F /* App.swift in Sources */,
+				294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
 				297AE8771EC0D5C200B44A1F /* OnePassword.swift in Sources */,

@@ -9,70 +9,27 @@
 import UIKit
 import IGListKit
 
-private func createViewModels(
-    number: Int,
-    title: String,
-    labelableFields: LabelableFields,
-    commentFields: CommentFields,
-    reactionFields: ReactionFields,
+func createViewModels(
+    issue: IssueType,
     width: CGFloat
     ) -> [IGListDiffable] {
-    var result = [IGListDiffable]()
-    result.append(titleStringSizing(title: title, width: width))
 
-    let labels = labelableFields.issueLabelModels
-    result.append(IssueLabelsModel(labels: labels))
+    var result = [IGListDiffable]()
+
+    result.append(IssueStatusModel(closed: issue.closableFields.closed, pullRequest: issue.pullRequest))
+    result.append(titleStringSizing(title: issue.title, width: width))
+    result.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
 
     if let root = createCommentModel(
-        number: number,
-        commentFields: commentFields,
-        reactionFields: reactionFields,
+        number: issue.number,
+        commentFields: issue.commentFields,
+        reactionFields: issue.reactionFields,
         width: width
         ) {
         result.append(root)
     }
 
     return result
-}
-
-func createViewModels(
-    issue: IssueQuery.Data.Repository.Issue,
-    width: CGFloat,
-    completion: @escaping ([IGListDiffable]) -> ()
-    ) {
-    DispatchQueue.global().async {
-        let result = createViewModels(
-            number: issue.number,
-            title: issue.title,
-            labelableFields: issue.fragments.labelableFields,
-            commentFields: issue.fragments.commentFields,
-            reactionFields: issue.fragments.reactionFields,
-            width: width
-        )
-        DispatchQueue.main.async {
-            completion(result)
-        }
-    }
-}
-
-func createViewModels(
-    pullRequest: PullRequestQuery.Data.Repository.PullRequest,
-    width: CGFloat,
-    completion: @escaping ([IGListDiffable]) -> ()
-    ) {
-    DispatchQueue.global().async {
-        let result = createViewModels(
-            number: pullRequest.number,
-            title: pullRequest.title,
-            labelableFields: pullRequest.fragments.labelableFields,
-            commentFields: pullRequest.fragments.commentFields,
-            reactionFields: pullRequest.fragments.reactionFields,
-            width: width
-        )
-        DispatchQueue.main.async {
-            completion(result)
-        }
-    }
 }
 
 func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
