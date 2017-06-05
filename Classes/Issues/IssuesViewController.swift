@@ -60,6 +60,8 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
             return IssueCommentSectionController()
         } else if object is IssueLabelsModel {
             return IssueLabelsSectionController()
+        } else if object is IssueStatusModel {
+            return IssueStatusSectionController()
         }
         return IGListSectionController()
     }

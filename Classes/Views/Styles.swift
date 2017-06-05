@@ -28,7 +28,8 @@ struct Styles {
         static let secondary = UIFont.systemFont(ofSize: 13)
         static let title = UIFont.boldSystemFont(ofSize: 14)
         static let button = UIFont.systemFont(ofSize: 17)
-        static let headline = UIFont.boldSystemFont(ofSize: 22)
+        static let headline = UIFont.boldSystemFont(ofSize: 18)
+        static let smallTitle = UIFont.boldSystemFont(ofSize: 12.0)
         static let code = UIFont(name: "Courier", size: 16)!
     }
 
