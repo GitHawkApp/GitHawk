@@ -21,13 +21,15 @@ func createViewModels(
     result.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
 
     if let root = createCommentModel(
-        number: issue.number,
+        id: issue.id,
         commentFields: issue.commentFields,
         reactionFields: issue.reactionFields,
         width: width
         ) {
         result.append(root)
     }
+
+    result += issue.timelineViewModels(width: width)
 
     return result
 }
@@ -60,7 +62,7 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
 }
 
 func createCommentModel(
-    number: Int,
+    id: String,
     commentFields: CommentFields,
     reactionFields: ReactionFields, 
     width: CGFloat
@@ -75,7 +77,7 @@ func createCommentModel(
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies)
     return IssueCommentModel(
-        number: number,
+        id: id,
         details: details,
         bodyModels: bodies,
         reactions: reactions,

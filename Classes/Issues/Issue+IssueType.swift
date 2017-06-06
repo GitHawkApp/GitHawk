@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import IGListKit
 
 extension IssueQuery.Data.Repository.Issue: IssueType {
 
@@ -28,6 +29,26 @@ extension IssueQuery.Data.Repository.Issue: IssueType {
 
     var closableFields: ClosableFields {
         return fragments.closableFields
+    }
+
+    func timelineViewModels(width: CGFloat) -> [IGListDiffable] {
+        var results = [IGListDiffable]()
+
+        for node in timeline.nodes ?? [] {
+            guard let node = node else { continue }
+            if let comment = node.asIssueComment {
+                if let model = createCommentModel(
+                    id: comment.id, 
+                    commentFields: comment.fragments.commentFields,
+                    reactionFields: comment.fragments.reactionFields,
+                    width: width
+                    ) {
+                    results.append(model)
+                }
+            }
+        }
+
+        return results
     }
 
 }

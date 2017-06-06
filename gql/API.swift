@@ -38,11 +38,13 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on IssueComment {" +
     "            __typename" +
+    "            id" +
     "            ...reactionFields" +
     "            ...commentFields" +
     "          }" +
     "          ... on LabeledEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -55,6 +57,7 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on UnlabeledEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -67,6 +70,7 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on ClosedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -75,6 +79,7 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on ReopenedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -83,6 +88,7 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on RenamedTitleEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -92,6 +98,7 @@ public final class IssueQuery: GraphQLQuery {
     "          }" +
     "          ... on LockedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -202,25 +209,25 @@ public final class IssueQuery: GraphQLQuery {
             public let __typename: String
 
             public let asCommit: AsCommit?
+            public let asIssueComment: AsIssueComment?
             public let asLabeledEvent: AsLabeledEvent?
             public let asUnlabeledEvent: AsUnlabeledEvent?
             public let asClosedEvent: AsClosedEvent?
             public let asReopenedEvent: AsReopenedEvent?
             public let asRenamedTitleEvent: AsRenamedTitleEvent?
             public let asLockedEvent: AsLockedEvent?
-            public let asIssueComment: AsIssueComment?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
 
               asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
+              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
               asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
               asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
               asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
               asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
               asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
-              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
             }
 
             public struct AsCommit: GraphQLConditionalFragment {
@@ -253,10 +260,34 @@ public final class IssueQuery: GraphQLQuery {
               }
             }
 
+            public struct AsIssueComment: GraphQLConditionalFragment {
+              public static let possibleTypes = ["IssueComment"]
+
+              public let __typename: String
+              public let id: GraphQLID
+
+              public let fragments: Fragments
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
+
+                let reactionFields = try ReactionFields(reader: reader)
+                let commentFields = try CommentFields(reader: reader)
+                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
+              }
+
+              public struct Fragments {
+                public let reactionFields: ReactionFields
+                public let commentFields: CommentFields
+              }
+            }
+
             public struct AsLabeledEvent: GraphQLConditionalFragment {
               public static let possibleTypes = ["LabeledEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'label' event.
               public let actor: Actor?
               /// Identifies the label associated with the 'labeled' event.
@@ -264,6 +295,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 label = try reader.value(for: Field(responseName: "label"))
               }
@@ -298,6 +330,7 @@ public final class IssueQuery: GraphQLQuery {
               public static let possibleTypes = ["UnlabeledEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'unlabel' event.
               public let actor: Actor?
               /// Identifies the label associated with the 'unlabeled' event.
@@ -305,6 +338,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 label = try reader.value(for: Field(responseName: "label"))
               }
@@ -339,6 +373,7 @@ public final class IssueQuery: GraphQLQuery {
               public static let possibleTypes = ["ClosedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who closed the item.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -346,6 +381,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -366,6 +402,7 @@ public final class IssueQuery: GraphQLQuery {
               public static let possibleTypes = ["ReopenedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who reopened the item.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -373,6 +410,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -393,6 +431,7 @@ public final class IssueQuery: GraphQLQuery {
               public static let possibleTypes = ["RenamedTitleEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'renamed' event.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -402,6 +441,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
                 currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
@@ -423,6 +463,7 @@ public final class IssueQuery: GraphQLQuery {
               public static let possibleTypes = ["LockedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'locked' event.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -430,6 +471,7 @@ public final class IssueQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -443,27 +485,6 @@ public final class IssueQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   login = try reader.value(for: Field(responseName: "login"))
                 }
-              }
-            }
-
-            public struct AsIssueComment: GraphQLConditionalFragment {
-              public static let possibleTypes = ["IssueComment"]
-
-              public let __typename: String
-
-              public let fragments: Fragments
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-
-                let reactionFields = try ReactionFields(reader: reader)
-                let commentFields = try CommentFields(reader: reader)
-                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
-              }
-
-              public struct Fragments {
-                public let reactionFields: ReactionFields
-                public let commentFields: CommentFields
               }
             }
           }
@@ -497,11 +518,13 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on IssueComment {" +
     "            __typename" +
+    "            id" +
     "            ...reactionFields" +
     "            ...commentFields" +
     "          }" +
     "          ... on LabeledEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -514,6 +537,7 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on UnlabeledEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -526,6 +550,7 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on ClosedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -534,6 +559,7 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on ReopenedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -542,6 +568,7 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on RenamedTitleEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -551,6 +578,7 @@ public final class PullRequestQuery: GraphQLQuery {
     "          }" +
     "          ... on LockedEvent {" +
     "            __typename" +
+    "            id" +
     "            actor {" +
     "              __typename" +
     "              login" +
@@ -661,25 +689,25 @@ public final class PullRequestQuery: GraphQLQuery {
             public let __typename: String
 
             public let asCommit: AsCommit?
+            public let asIssueComment: AsIssueComment?
             public let asLabeledEvent: AsLabeledEvent?
             public let asUnlabeledEvent: AsUnlabeledEvent?
             public let asClosedEvent: AsClosedEvent?
             public let asReopenedEvent: AsReopenedEvent?
             public let asRenamedTitleEvent: AsRenamedTitleEvent?
             public let asLockedEvent: AsLockedEvent?
-            public let asIssueComment: AsIssueComment?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
 
               asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
+              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
               asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
               asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
               asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
               asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
               asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
-              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
             }
 
             public struct AsCommit: GraphQLConditionalFragment {
@@ -712,10 +740,34 @@ public final class PullRequestQuery: GraphQLQuery {
               }
             }
 
+            public struct AsIssueComment: GraphQLConditionalFragment {
+              public static let possibleTypes = ["IssueComment"]
+
+              public let __typename: String
+              public let id: GraphQLID
+
+              public let fragments: Fragments
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
+
+                let reactionFields = try ReactionFields(reader: reader)
+                let commentFields = try CommentFields(reader: reader)
+                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
+              }
+
+              public struct Fragments {
+                public let reactionFields: ReactionFields
+                public let commentFields: CommentFields
+              }
+            }
+
             public struct AsLabeledEvent: GraphQLConditionalFragment {
               public static let possibleTypes = ["LabeledEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'label' event.
               public let actor: Actor?
               /// Identifies the label associated with the 'labeled' event.
@@ -723,6 +775,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 label = try reader.value(for: Field(responseName: "label"))
               }
@@ -757,6 +810,7 @@ public final class PullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["UnlabeledEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'unlabel' event.
               public let actor: Actor?
               /// Identifies the label associated with the 'unlabeled' event.
@@ -764,6 +818,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 label = try reader.value(for: Field(responseName: "label"))
               }
@@ -798,6 +853,7 @@ public final class PullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["ClosedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who closed the item.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -805,6 +861,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -825,6 +882,7 @@ public final class PullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["ReopenedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who reopened the item.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -832,6 +890,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -852,6 +911,7 @@ public final class PullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["RenamedTitleEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'renamed' event.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -861,6 +921,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
                 currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
@@ -882,6 +943,7 @@ public final class PullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["LockedEvent"]
 
               public let __typename: String
+              public let id: GraphQLID
               /// Identifies the actor who performed the 'locked' event.
               public let actor: Actor?
               /// Identifies the date and time when the object was created.
@@ -889,6 +951,7 @@ public final class PullRequestQuery: GraphQLQuery {
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
+                id = try reader.value(for: Field(responseName: "id"))
                 actor = try reader.optionalValue(for: Field(responseName: "actor"))
                 createdAt = try reader.value(for: Field(responseName: "createdAt"))
               }
@@ -902,27 +965,6 @@ public final class PullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   login = try reader.value(for: Field(responseName: "login"))
                 }
-              }
-            }
-
-            public struct AsIssueComment: GraphQLConditionalFragment {
-              public static let possibleTypes = ["IssueComment"]
-
-              public let __typename: String
-
-              public let fragments: Fragments
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-
-                let reactionFields = try ReactionFields(reader: reader)
-                let commentFields = try CommentFields(reader: reader)
-                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
-              }
-
-              public struct Fragments {
-                public let reactionFields: ReactionFields
-                public let commentFields: CommentFields
               }
             }
           }

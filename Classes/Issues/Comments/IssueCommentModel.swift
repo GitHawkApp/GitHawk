@@ -11,20 +11,20 @@ import IGListKit
 
 final class IssueCommentModel: IGListDiffable {
 
-    let number: Int
+    let id: String
     let details: IssueCommentDetailsViewModel
     let bodyModels: [IGListDiffable]
     let reactions: IssueCommentReactionViewModel
     let collapse: (model: AnyObject, height: CGFloat)?
 
     init(
-        number: Int,
+        id: String,
         details: IssueCommentDetailsViewModel,
         bodyModels: [IGListDiffable],
         reactions: IssueCommentReactionViewModel,
         collapse: (AnyObject, CGFloat)?
         ) {
-        self.number = number
+        self.id = id
         self.details = details
         self.bodyModels = bodyModels
         self.reactions = reactions
@@ -34,7 +34,7 @@ final class IssueCommentModel: IGListDiffable {
     // MARK: IGListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return number as NSObjectProtocol
+        return id as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
