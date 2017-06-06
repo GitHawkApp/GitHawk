@@ -9,7 +9,11 @@
 import Foundation
 import IGListKit
 
-extension IssueQuery.Data.Repository.Issue: IssueType {
+extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
+
+    var id: String {
+        return fragments.nodeFields.id
+    }
 
     var pullRequest: Bool {
         return false
@@ -38,7 +42,7 @@ extension IssueQuery.Data.Repository.Issue: IssueType {
             guard let node = node else { continue }
             if let comment = node.asIssueComment {
                 if let model = createCommentModel(
-                    id: comment.id, 
+                    id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
                     width: width
@@ -47,7 +51,7 @@ extension IssueQuery.Data.Repository.Issue: IssueType {
                 }
             } else if let unlabeled = node.asUnlabeledEvent {
                 let model = IssueLabeledModel(
-                    id: unlabeled.id,
+                    id: unlabeled.fragments.nodeFields.id,
                     actor: unlabeled.actor?.login ?? Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
@@ -56,7 +60,7 @@ extension IssueQuery.Data.Repository.Issue: IssueType {
                 results.append(model)
             } else if let labeled = node.asLabeledEvent {
                 let model = IssueLabeledModel(
-                    id: labeled.id,
+                    id: labeled.fragments.nodeFields.id,
                     actor: labeled.actor?.login ?? Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,

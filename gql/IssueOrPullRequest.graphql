@@ -1,0 +1,159 @@
+query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {
+  repository(owner: $owner, name: $repo) {
+    name
+    issueOrPullRequest(number: $number) {
+      ... on Issue {
+        timeline(first: $page_size) {
+          nodes {
+            ... on Commit {
+              author {
+                name
+                date
+              }
+              messageHeadline
+            }
+            ... on IssueComment {
+              ...nodeFields
+              ...reactionFields
+              ...commentFields
+            }
+            ... on LabeledEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              label {
+                color
+                name
+              }
+            }
+            ... on UnlabeledEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              label {
+                color
+                name
+              }
+            }
+            ... on ClosedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+            ... on ReopenedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+            ... on RenamedTitleEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+              currentTitle
+            }
+            ... on LockedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+          }
+        }
+        ...reactionFields
+        ...commentFields
+        ...lockableFields
+        ...closableFields
+        ...labelableFields
+        ...updatableFields
+        ...nodeFields
+        number
+        title
+      }
+      ... on PullRequest {
+        timeline(first: $page_size) {
+          nodes {
+            ... on Commit {
+              author {
+                name
+                date
+              }
+              messageHeadline
+            }
+            ... on IssueComment {
+              ...nodeFields
+              ...reactionFields
+              ...commentFields
+            }
+            ... on LabeledEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              label {
+                color
+                name
+              }
+            }
+            ... on UnlabeledEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              label {
+                color
+                name
+              }
+            }
+            ... on ClosedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+            ... on ReopenedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+            ... on RenamedTitleEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+              currentTitle
+            }
+            ... on LockedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+          }
+        }
+        ...reactionFields
+        ...commentFields
+        ...lockableFields
+        ...closableFields
+        ...labelableFields
+        ...updatableFields
+        ...nodeFields
+        number
+        title
+      }
+    }
+  }
+}

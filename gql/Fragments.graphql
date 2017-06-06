@@ -42,3 +42,7 @@ fragment labelableFields on Labelable {
 fragment updatableFields on Updatable {
   viewerCanUpdate
 }
+
+fragment nodeFields on Node {
+  id
+}

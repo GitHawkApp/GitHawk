@@ -15,33 +15,22 @@ extension GithubClient {
         owner: String,
         repo: String,
         number: Int,
-        pullRequest: Bool,
         width: CGFloat,
         completion: @escaping ([IGListDiffable]) -> ()
         ) {
 
-        let block = { (issue: IssueType?) in
-            if let issue = issue {
+        let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
+        apollo.fetch(query: query) { (result, error) in
+            let issueOrPullRequest = result?.data?.repository?.issueOrPullRequest
+            if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
-                    let result = createViewModels(issue: issue, width: width)
+                    let result = createViewModels(issue: issueType, width: width)
                     DispatchQueue.main.async {
                         completion(result)
                     }
                 }
             } else {
                 completion([])
-            }
-        }
-
-        if pullRequest {
-            let query = PullRequestQuery(owner: owner, repo: repo, number: number)
-            apollo.fetch(query: query) { (result, error) in
-                block(result?.data?.repository?.pullRequest)
-            }
-        } else {
-            let query = IssueQuery(owner: owner, repo: repo, number: number)
-            apollo.fetch(query: query) { (result, error) in
-                block(result?.data?.repository?.issue)
             }
         }
     }

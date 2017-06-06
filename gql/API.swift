@@ -14,125 +14,225 @@ public enum ReactionContent: String {
 
 extension ReactionContent: JSONDecodable, JSONEncodable {}
 
-public final class IssueQuery: GraphQLQuery {
+public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query Issue($owner: String!, $repo: String!, $number: Int!) {" +
+    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {" +
     "  repository(owner: $owner, name: $repo) {" +
     "    __typename" +
-    "    id" +
     "    name" +
-    "    issue(number: $number) {" +
+    "    issueOrPullRequest(number: $number) {" +
     "      __typename" +
-    "      timeline(first: 100) {" +
+    "      ... on Issue {" +
     "        __typename" +
-    "        nodes {" +
+    "        timeline(first: $page_size) {" +
     "          __typename" +
-    "          ... on Commit {" +
+    "          nodes {" +
     "            __typename" +
-    "            author {" +
+    "            ... on Commit {" +
     "              __typename" +
-    "              name" +
-    "              date" +
+    "              author {" +
+    "                __typename" +
+    "                name" +
+    "                date" +
+    "              }" +
+    "              messageHeadline" +
     "            }" +
-    "            messageHeadline" +
-    "          }" +
-    "          ... on IssueComment {" +
-    "            __typename" +
-    "            id" +
-    "            ...reactionFields" +
-    "            ...commentFields" +
-    "          }" +
-    "          ... on LabeledEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
+    "            ... on IssueComment {" +
     "              __typename" +
-    "              login" +
+    "              ...nodeFields" +
+    "              ...reactionFields" +
+    "              ...commentFields" +
     "            }" +
-    "            label {" +
+    "            ... on LabeledEvent {" +
     "              __typename" +
-    "              color" +
-    "              name" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              label {" +
+    "                __typename" +
+    "                color" +
+    "                name" +
+    "              }" +
     "            }" +
-    "          }" +
-    "          ... on UnlabeledEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
+    "            ... on UnlabeledEvent {" +
     "              __typename" +
-    "              login" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              label {" +
+    "                __typename" +
+    "                color" +
+    "                name" +
+    "              }" +
     "            }" +
-    "            label {" +
+    "            ... on ClosedEvent {" +
     "              __typename" +
-    "              color" +
-    "              name" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
     "            }" +
-    "          }" +
-    "          ... on ClosedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
+    "            ... on ReopenedEvent {" +
     "              __typename" +
-    "              login" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
     "            }" +
-    "            createdAt" +
-    "          }" +
-    "          ... on ReopenedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
+    "            ... on RenamedTitleEvent {" +
     "              __typename" +
-    "              login" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "              currentTitle" +
     "            }" +
-    "            createdAt" +
-    "          }" +
-    "          ... on RenamedTitleEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
+    "            ... on LockedEvent {" +
     "              __typename" +
-    "              login" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
     "            }" +
-    "            createdAt" +
-    "            currentTitle" +
-    "          }" +
-    "          ... on LockedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            createdAt" +
     "          }" +
     "        }" +
+    "        ...reactionFields" +
+    "        ...commentFields" +
+    "        ...lockableFields" +
+    "        ...closableFields" +
+    "        ...labelableFields" +
+    "        ...updatableFields" +
+    "        ...nodeFields" +
+    "        number" +
+    "        title" +
     "      }" +
-    "      ...reactionFields" +
-    "      ...commentFields" +
-    "      ...lockableFields" +
-    "      ...closableFields" +
-    "      ...labelableFields" +
-    "      ...updatableFields" +
-    "      id" +
-    "      number" +
-    "      title" +
+    "      ... on PullRequest {" +
+    "        __typename" +
+    "        timeline(first: $page_size) {" +
+    "          __typename" +
+    "          nodes {" +
+    "            __typename" +
+    "            ... on Commit {" +
+    "              __typename" +
+    "              author {" +
+    "                __typename" +
+    "                name" +
+    "                date" +
+    "              }" +
+    "              messageHeadline" +
+    "            }" +
+    "            ... on IssueComment {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              ...reactionFields" +
+    "              ...commentFields" +
+    "            }" +
+    "            ... on LabeledEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              label {" +
+    "                __typename" +
+    "                color" +
+    "                name" +
+    "              }" +
+    "            }" +
+    "            ... on UnlabeledEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              label {" +
+    "                __typename" +
+    "                color" +
+    "                name" +
+    "              }" +
+    "            }" +
+    "            ... on ClosedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "            }" +
+    "            ... on ReopenedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "            }" +
+    "            ... on RenamedTitleEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "              currentTitle" +
+    "            }" +
+    "            ... on LockedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "            }" +
+    "          }" +
+    "        }" +
+    "        ...reactionFields" +
+    "        ...commentFields" +
+    "        ...lockableFields" +
+    "        ...closableFields" +
+    "        ...labelableFields" +
+    "        ...updatableFields" +
+    "        ...nodeFields" +
+    "        number" +
+    "        title" +
+    "      }" +
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
   public let number: Int
+  public let pageSize: Int
 
-  public init(owner: String, repo: String, number: Int) {
+  public init(owner: String, repo: String, number: Int, pageSize: Int) {
     self.owner = owner
     self.repo = repo
     self.number = number
+    self.pageSize = pageSize
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "repo": repo, "number": number]
+    return ["owner": owner, "repo": repo, "number": number, "page_size": pageSize]
   }
 
   public struct Data: GraphQLMappable {
@@ -145,825 +245,778 @@ public final class IssueQuery: GraphQLQuery {
 
     public struct Repository: GraphQLMappable {
       public let __typename: String
-      public let id: GraphQLID
       /// The name of the repository.
       public let name: String
-      /// Returns a single issue from the current repository by number.
-      public let issue: Issue?
+      /// Returns a single issue-like object from the current repository by number.
+      public let issueOrPullRequest: IssueOrPullRequest?
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        id = try reader.value(for: Field(responseName: "id"))
         name = try reader.value(for: Field(responseName: "name"))
-        issue = try reader.optionalValue(for: Field(responseName: "issue", arguments: ["number": reader.variables["number"]]))
+        issueOrPullRequest = try reader.optionalValue(for: Field(responseName: "issueOrPullRequest", arguments: ["number": reader.variables["number"]]))
       }
 
-      public struct Issue: GraphQLMappable {
+      public struct IssueOrPullRequest: GraphQLMappable {
         public let __typename: String
-        /// A list of events associated with an Issue.
-        public let timeline: Timeline
-        public let id: GraphQLID
-        /// Identifies the issue number.
-        public let number: Int
-        /// Identifies the issue title.
-        public let title: String
 
-        public let fragments: Fragments
+        public let asIssue: AsIssue?
+        public let asPullRequest: AsPullRequest?
 
         public init(reader: GraphQLResultReader) throws {
           __typename = try reader.value(for: Field(responseName: "__typename"))
-          timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": 100]))
-          id = try reader.value(for: Field(responseName: "id"))
-          number = try reader.value(for: Field(responseName: "number"))
-          title = try reader.value(for: Field(responseName: "title"))
 
-          let reactionFields = try ReactionFields(reader: reader)
-          let commentFields = try CommentFields(reader: reader)
-          let lockableFields = try LockableFields(reader: reader)
-          let closableFields = try ClosableFields(reader: reader)
-          let labelableFields = try LabelableFields(reader: reader)
-          let updatableFields = try UpdatableFields(reader: reader)
-          fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields)
+          asIssue = try AsIssue(reader: reader, ifTypeMatches: __typename)
+          asPullRequest = try AsPullRequest(reader: reader, ifTypeMatches: __typename)
         }
 
-        public struct Fragments {
-          public let reactionFields: ReactionFields
-          public let commentFields: CommentFields
-          public let lockableFields: LockableFields
-          public let closableFields: ClosableFields
-          public let labelableFields: LabelableFields
-          public let updatableFields: UpdatableFields
-        }
+        public struct AsIssue: GraphQLConditionalFragment {
+          public static let possibleTypes = ["Issue"]
 
-        public struct Timeline: GraphQLMappable {
           public let __typename: String
-          /// A list of nodes.
-          public let nodes: [Node?]?
+          /// A list of events associated with an Issue.
+          public let timeline: Timeline
+          /// Identifies the issue number.
+          public let number: Int
+          /// Identifies the issue title.
+          public let title: String
+
+          public let fragments: Fragments
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
+            number = try reader.value(for: Field(responseName: "number"))
+            title = try reader.value(for: Field(responseName: "title"))
+
+            let reactionFields = try ReactionFields(reader: reader)
+            let commentFields = try CommentFields(reader: reader)
+            let lockableFields = try LockableFields(reader: reader)
+            let closableFields = try ClosableFields(reader: reader)
+            let labelableFields = try LabelableFields(reader: reader)
+            let updatableFields = try UpdatableFields(reader: reader)
+            let nodeFields = try NodeFields(reader: reader)
+            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields)
           }
 
-          public struct Node: GraphQLMappable {
-            public let __typename: String
+          public struct Fragments {
+            public let reactionFields: ReactionFields
+            public let commentFields: CommentFields
+            public let lockableFields: LockableFields
+            public let closableFields: ClosableFields
+            public let labelableFields: LabelableFields
+            public let updatableFields: UpdatableFields
+            public let nodeFields: NodeFields
+          }
 
-            public let asCommit: AsCommit?
-            public let asIssueComment: AsIssueComment?
-            public let asLabeledEvent: AsLabeledEvent?
-            public let asUnlabeledEvent: AsUnlabeledEvent?
-            public let asClosedEvent: AsClosedEvent?
-            public let asReopenedEvent: AsReopenedEvent?
-            public let asRenamedTitleEvent: AsRenamedTitleEvent?
-            public let asLockedEvent: AsLockedEvent?
+          public struct Timeline: GraphQLMappable {
+            public let __typename: String
+            /// A list of nodes.
+            public let nodes: [Node?]?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
-
-              asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
-              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
-              asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
-              asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
-              asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
-              asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
-              asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
-              asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
+              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
             }
 
-            public struct AsCommit: GraphQLConditionalFragment {
-              public static let possibleTypes = ["Commit"]
-
+            public struct Node: GraphQLMappable {
               public let __typename: String
-              /// Authorship details of the commit.
-              public let author: Author?
-              /// The Git commit message headline
-              public let messageHeadline: String
+
+              public let asCommit: AsCommit?
+              public let asLabeledEvent: AsLabeledEvent?
+              public let asUnlabeledEvent: AsUnlabeledEvent?
+              public let asClosedEvent: AsClosedEvent?
+              public let asReopenedEvent: AsReopenedEvent?
+              public let asRenamedTitleEvent: AsRenamedTitleEvent?
+              public let asLockedEvent: AsLockedEvent?
+              public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
-                author = try reader.optionalValue(for: Field(responseName: "author"))
-                messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
+
+                asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
+                asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
+                asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
+                asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
+                asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
+                asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
+                asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
+                asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
-              public struct Author: GraphQLMappable {
+              public struct AsCommit: GraphQLConditionalFragment {
+                public static let possibleTypes = ["Commit"]
+
                 public let __typename: String
-                /// The name in the Git commit.
-                public let name: String?
-                /// The timestamp of the Git action (authoring or committing).
-                public let date: String?
+                /// Authorship details of the commit.
+                public let author: Author?
+                /// The Git commit message headline
+                public let messageHeadline: String
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  name = try reader.optionalValue(for: Field(responseName: "name"))
-                  date = try reader.optionalValue(for: Field(responseName: "date"))
+                  author = try reader.optionalValue(for: Field(responseName: "author"))
+                  messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
                 }
-              }
-            }
 
-            public struct AsIssueComment: GraphQLConditionalFragment {
-              public static let possibleTypes = ["IssueComment"]
+                public struct Author: GraphQLMappable {
+                  public let __typename: String
+                  /// The name in the Git commit.
+                  public let name: String?
+                  /// The timestamp of the Git action (authoring or committing).
+                  public let date: String?
 
-              public let __typename: String
-              public let id: GraphQLID
-
-              public let fragments: Fragments
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-
-                let reactionFields = try ReactionFields(reader: reader)
-                let commentFields = try CommentFields(reader: reader)
-                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
-              }
-
-              public struct Fragments {
-                public let reactionFields: ReactionFields
-                public let commentFields: CommentFields
-              }
-            }
-
-            public struct AsLabeledEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["LabeledEvent"]
-
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'label' event.
-              public let actor: Actor?
-              /// Identifies the label associated with the 'labeled' event.
-              public let label: Label
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                label = try reader.value(for: Field(responseName: "label"))
-              }
-
-              public struct Actor: GraphQLMappable {
-                public let __typename: String
-                /// The username of the actor.
-                public let login: String
-
-                public init(reader: GraphQLResultReader) throws {
-                  __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    name = try reader.optionalValue(for: Field(responseName: "name"))
+                    date = try reader.optionalValue(for: Field(responseName: "date"))
+                  }
                 }
               }
 
-              public struct Label: GraphQLMappable {
+              public struct AsLabeledEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["LabeledEvent"]
+
                 public let __typename: String
-                /// Identifies the label color.
-                public let color: String
-                /// Identifies the label name.
-                public let name: String
+                /// Identifies the actor who performed the 'label' event.
+                public let actor: Actor?
+                /// Identifies the label associated with the 'labeled' event.
+                public let label: Label
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  color = try reader.value(for: Field(responseName: "color"))
-                  name = try reader.value(for: Field(responseName: "name"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  label = try reader.value(for: Field(responseName: "label"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Label: GraphQLMappable {
+                  public let __typename: String
+                  /// Identifies the label color.
+                  public let color: String
+                  /// Identifies the label name.
+                  public let name: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    color = try reader.value(for: Field(responseName: "color"))
+                    name = try reader.value(for: Field(responseName: "name"))
+                  }
                 }
               }
-            }
 
-            public struct AsUnlabeledEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["UnlabeledEvent"]
+              public struct AsUnlabeledEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["UnlabeledEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'unlabel' event.
-              public let actor: Actor?
-              /// Identifies the label associated with the 'unlabeled' event.
-              public let label: Label
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                label = try reader.value(for: Field(responseName: "label"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'unlabel' event.
+                public let actor: Actor?
+                /// Identifies the label associated with the 'unlabeled' event.
+                public let label: Label
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  label = try reader.value(for: Field(responseName: "label"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Label: GraphQLMappable {
+                  public let __typename: String
+                  /// Identifies the label color.
+                  public let color: String
+                  /// Identifies the label name.
+                  public let name: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    color = try reader.value(for: Field(responseName: "color"))
+                    name = try reader.value(for: Field(responseName: "name"))
+                  }
                 }
               }
 
-              public struct Label: GraphQLMappable {
+              public struct AsClosedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ClosedEvent"]
+
                 public let __typename: String
-                /// Identifies the label color.
-                public let color: String
-                /// Identifies the label name.
-                public let name: String
+                /// Identifies the actor who closed the item.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  color = try reader.value(for: Field(responseName: "color"))
-                  name = try reader.value(for: Field(responseName: "name"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsClosedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["ClosedEvent"]
+              public struct AsReopenedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReopenedEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who closed the item.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who reopened the item.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsReopenedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["ReopenedEvent"]
+              public struct AsRenamedTitleEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["RenamedTitleEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who reopened the item.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'renamed' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the current title of the issue or pull request.
+                public let currentTitle: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsRenamedTitleEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["RenamedTitleEvent"]
+              public struct AsLockedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["LockedEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'renamed' event.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-              /// Identifies the current title of the issue or pull request.
-              public let currentTitle: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'locked' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsLockedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["LockedEvent"]
+              public struct AsIssueComment: GraphQLConditionalFragment {
+                public static let possibleTypes = ["IssueComment"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'locked' event.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  let reactionFields = try ReactionFields(reader: reader)
+                  let commentFields = try CommentFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                  public let reactionFields: ReactionFields
+                  public let commentFields: CommentFields
                 }
               }
             }
           }
         }
-      }
-    }
-  }
-}
 
-public final class PullRequestQuery: GraphQLQuery {
-  public static let operationDefinition =
-    "query PullRequest($owner: String!, $repo: String!, $number: Int!) {" +
-    "  repository(owner: $owner, name: $repo) {" +
-    "    __typename" +
-    "    id" +
-    "    name" +
-    "    pullRequest(number: $number) {" +
-    "      __typename" +
-    "      timeline(first: 100) {" +
-    "        __typename" +
-    "        nodes {" +
-    "          __typename" +
-    "          ... on Commit {" +
-    "            __typename" +
-    "            author {" +
-    "              __typename" +
-    "              name" +
-    "              date" +
-    "            }" +
-    "            messageHeadline" +
-    "          }" +
-    "          ... on IssueComment {" +
-    "            __typename" +
-    "            id" +
-    "            ...reactionFields" +
-    "            ...commentFields" +
-    "          }" +
-    "          ... on LabeledEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            label {" +
-    "              __typename" +
-    "              color" +
-    "              name" +
-    "            }" +
-    "          }" +
-    "          ... on UnlabeledEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            label {" +
-    "              __typename" +
-    "              color" +
-    "              name" +
-    "            }" +
-    "          }" +
-    "          ... on ClosedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            createdAt" +
-    "          }" +
-    "          ... on ReopenedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            createdAt" +
-    "          }" +
-    "          ... on RenamedTitleEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            createdAt" +
-    "            currentTitle" +
-    "          }" +
-    "          ... on LockedEvent {" +
-    "            __typename" +
-    "            id" +
-    "            actor {" +
-    "              __typename" +
-    "              login" +
-    "            }" +
-    "            createdAt" +
-    "          }" +
-    "        }" +
-    "      }" +
-    "      ...reactionFields" +
-    "      ...commentFields" +
-    "      ...lockableFields" +
-    "      ...closableFields" +
-    "      ...labelableFields" +
-    "      ...updatableFields" +
-    "      id" +
-    "      number" +
-    "      title" +
-    "    }" +
-    "  }" +
-    "}"
-  public static let queryDocument = operationDefinition.appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
+        public struct AsPullRequest: GraphQLConditionalFragment {
+          public static let possibleTypes = ["PullRequest"]
 
-  public let owner: String
-  public let repo: String
-  public let number: Int
-
-  public init(owner: String, repo: String, number: Int) {
-    self.owner = owner
-    self.repo = repo
-    self.number = number
-  }
-
-  public var variables: GraphQLMap? {
-    return ["owner": owner, "repo": repo, "number": number]
-  }
-
-  public struct Data: GraphQLMappable {
-    /// Lookup a given repository by the owner and repository name.
-    public let repository: Repository?
-
-    public init(reader: GraphQLResultReader) throws {
-      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["repo"]]))
-    }
-
-    public struct Repository: GraphQLMappable {
-      public let __typename: String
-      public let id: GraphQLID
-      /// The name of the repository.
-      public let name: String
-      /// Returns a single pull request from the current repository by number.
-      public let pullRequest: PullRequest?
-
-      public init(reader: GraphQLResultReader) throws {
-        __typename = try reader.value(for: Field(responseName: "__typename"))
-        id = try reader.value(for: Field(responseName: "id"))
-        name = try reader.value(for: Field(responseName: "name"))
-        pullRequest = try reader.optionalValue(for: Field(responseName: "pullRequest", arguments: ["number": reader.variables["number"]]))
-      }
-
-      public struct PullRequest: GraphQLMappable {
-        public let __typename: String
-        /// A list of events associated with a PullRequest.
-        public let timeline: Timeline
-        public let id: GraphQLID
-        /// Identifies the pull request number.
-        public let number: Int
-        /// Identifies the pull request title.
-        public let title: String
-
-        public let fragments: Fragments
-
-        public init(reader: GraphQLResultReader) throws {
-          __typename = try reader.value(for: Field(responseName: "__typename"))
-          timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": 100]))
-          id = try reader.value(for: Field(responseName: "id"))
-          number = try reader.value(for: Field(responseName: "number"))
-          title = try reader.value(for: Field(responseName: "title"))
-
-          let reactionFields = try ReactionFields(reader: reader)
-          let commentFields = try CommentFields(reader: reader)
-          let lockableFields = try LockableFields(reader: reader)
-          let closableFields = try ClosableFields(reader: reader)
-          let labelableFields = try LabelableFields(reader: reader)
-          let updatableFields = try UpdatableFields(reader: reader)
-          fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields)
-        }
-
-        public struct Fragments {
-          public let reactionFields: ReactionFields
-          public let commentFields: CommentFields
-          public let lockableFields: LockableFields
-          public let closableFields: ClosableFields
-          public let labelableFields: LabelableFields
-          public let updatableFields: UpdatableFields
-        }
-
-        public struct Timeline: GraphQLMappable {
           public let __typename: String
-          /// A list of nodes.
-          public let nodes: [Node?]?
+          /// A list of events associated with a PullRequest.
+          public let timeline: Timeline
+          /// Identifies the pull request number.
+          public let number: Int
+          /// Identifies the pull request title.
+          public let title: String
+
+          public let fragments: Fragments
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
+            number = try reader.value(for: Field(responseName: "number"))
+            title = try reader.value(for: Field(responseName: "title"))
+
+            let reactionFields = try ReactionFields(reader: reader)
+            let commentFields = try CommentFields(reader: reader)
+            let lockableFields = try LockableFields(reader: reader)
+            let closableFields = try ClosableFields(reader: reader)
+            let labelableFields = try LabelableFields(reader: reader)
+            let updatableFields = try UpdatableFields(reader: reader)
+            let nodeFields = try NodeFields(reader: reader)
+            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields)
           }
 
-          public struct Node: GraphQLMappable {
-            public let __typename: String
+          public struct Fragments {
+            public let reactionFields: ReactionFields
+            public let commentFields: CommentFields
+            public let lockableFields: LockableFields
+            public let closableFields: ClosableFields
+            public let labelableFields: LabelableFields
+            public let updatableFields: UpdatableFields
+            public let nodeFields: NodeFields
+          }
 
-            public let asCommit: AsCommit?
-            public let asIssueComment: AsIssueComment?
-            public let asLabeledEvent: AsLabeledEvent?
-            public let asUnlabeledEvent: AsUnlabeledEvent?
-            public let asClosedEvent: AsClosedEvent?
-            public let asReopenedEvent: AsReopenedEvent?
-            public let asRenamedTitleEvent: AsRenamedTitleEvent?
-            public let asLockedEvent: AsLockedEvent?
+          public struct Timeline: GraphQLMappable {
+            public let __typename: String
+            /// A list of nodes.
+            public let nodes: [Node?]?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
-
-              asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
-              asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
-              asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
-              asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
-              asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
-              asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
-              asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
-              asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
+              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
             }
 
-            public struct AsCommit: GraphQLConditionalFragment {
-              public static let possibleTypes = ["Commit"]
-
+            public struct Node: GraphQLMappable {
               public let __typename: String
-              /// Authorship details of the commit.
-              public let author: Author?
-              /// The Git commit message headline
-              public let messageHeadline: String
+
+              public let asCommit: AsCommit?
+              public let asLabeledEvent: AsLabeledEvent?
+              public let asUnlabeledEvent: AsUnlabeledEvent?
+              public let asClosedEvent: AsClosedEvent?
+              public let asReopenedEvent: AsReopenedEvent?
+              public let asRenamedTitleEvent: AsRenamedTitleEvent?
+              public let asLockedEvent: AsLockedEvent?
+              public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
-                author = try reader.optionalValue(for: Field(responseName: "author"))
-                messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
+
+                asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
+                asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
+                asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
+                asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
+                asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
+                asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
+                asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
+                asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
-              public struct Author: GraphQLMappable {
+              public struct AsCommit: GraphQLConditionalFragment {
+                public static let possibleTypes = ["Commit"]
+
                 public let __typename: String
-                /// The name in the Git commit.
-                public let name: String?
-                /// The timestamp of the Git action (authoring or committing).
-                public let date: String?
+                /// Authorship details of the commit.
+                public let author: Author?
+                /// The Git commit message headline
+                public let messageHeadline: String
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  name = try reader.optionalValue(for: Field(responseName: "name"))
-                  date = try reader.optionalValue(for: Field(responseName: "date"))
+                  author = try reader.optionalValue(for: Field(responseName: "author"))
+                  messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
                 }
-              }
-            }
 
-            public struct AsIssueComment: GraphQLConditionalFragment {
-              public static let possibleTypes = ["IssueComment"]
+                public struct Author: GraphQLMappable {
+                  public let __typename: String
+                  /// The name in the Git commit.
+                  public let name: String?
+                  /// The timestamp of the Git action (authoring or committing).
+                  public let date: String?
 
-              public let __typename: String
-              public let id: GraphQLID
-
-              public let fragments: Fragments
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-
-                let reactionFields = try ReactionFields(reader: reader)
-                let commentFields = try CommentFields(reader: reader)
-                fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields)
-              }
-
-              public struct Fragments {
-                public let reactionFields: ReactionFields
-                public let commentFields: CommentFields
-              }
-            }
-
-            public struct AsLabeledEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["LabeledEvent"]
-
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'label' event.
-              public let actor: Actor?
-              /// Identifies the label associated with the 'labeled' event.
-              public let label: Label
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                label = try reader.value(for: Field(responseName: "label"))
-              }
-
-              public struct Actor: GraphQLMappable {
-                public let __typename: String
-                /// The username of the actor.
-                public let login: String
-
-                public init(reader: GraphQLResultReader) throws {
-                  __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    name = try reader.optionalValue(for: Field(responseName: "name"))
+                    date = try reader.optionalValue(for: Field(responseName: "date"))
+                  }
                 }
               }
 
-              public struct Label: GraphQLMappable {
+              public struct AsLabeledEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["LabeledEvent"]
+
                 public let __typename: String
-                /// Identifies the label color.
-                public let color: String
-                /// Identifies the label name.
-                public let name: String
+                /// Identifies the actor who performed the 'label' event.
+                public let actor: Actor?
+                /// Identifies the label associated with the 'labeled' event.
+                public let label: Label
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  color = try reader.value(for: Field(responseName: "color"))
-                  name = try reader.value(for: Field(responseName: "name"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  label = try reader.value(for: Field(responseName: "label"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Label: GraphQLMappable {
+                  public let __typename: String
+                  /// Identifies the label color.
+                  public let color: String
+                  /// Identifies the label name.
+                  public let name: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    color = try reader.value(for: Field(responseName: "color"))
+                    name = try reader.value(for: Field(responseName: "name"))
+                  }
                 }
               }
-            }
 
-            public struct AsUnlabeledEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["UnlabeledEvent"]
+              public struct AsUnlabeledEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["UnlabeledEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'unlabel' event.
-              public let actor: Actor?
-              /// Identifies the label associated with the 'unlabeled' event.
-              public let label: Label
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                label = try reader.value(for: Field(responseName: "label"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'unlabel' event.
+                public let actor: Actor?
+                /// Identifies the label associated with the 'unlabeled' event.
+                public let label: Label
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  label = try reader.value(for: Field(responseName: "label"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Label: GraphQLMappable {
+                  public let __typename: String
+                  /// Identifies the label color.
+                  public let color: String
+                  /// Identifies the label name.
+                  public let name: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    color = try reader.value(for: Field(responseName: "color"))
+                    name = try reader.value(for: Field(responseName: "name"))
+                  }
                 }
               }
 
-              public struct Label: GraphQLMappable {
+              public struct AsClosedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ClosedEvent"]
+
                 public let __typename: String
-                /// Identifies the label color.
-                public let color: String
-                /// Identifies the label name.
-                public let name: String
+                /// Identifies the actor who closed the item.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  color = try reader.value(for: Field(responseName: "color"))
-                  name = try reader.value(for: Field(responseName: "name"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsClosedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["ClosedEvent"]
+              public struct AsReopenedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReopenedEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who closed the item.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who reopened the item.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsReopenedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["ReopenedEvent"]
+              public struct AsRenamedTitleEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["RenamedTitleEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who reopened the item.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'renamed' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the current title of the issue or pull request.
+                public let currentTitle: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsRenamedTitleEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["RenamedTitleEvent"]
+              public struct AsLockedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["LockedEvent"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'renamed' event.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-              /// Identifies the current title of the issue or pull request.
-              public let currentTitle: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+                /// Identifies the actor who performed the 'locked' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
               }
-            }
 
-            public struct AsLockedEvent: GraphQLConditionalFragment {
-              public static let possibleTypes = ["LockedEvent"]
+              public struct AsIssueComment: GraphQLConditionalFragment {
+                public static let possibleTypes = ["IssueComment"]
 
-              public let __typename: String
-              public let id: GraphQLID
-              /// Identifies the actor who performed the 'locked' event.
-              public let actor: Actor?
-              /// Identifies the date and time when the object was created.
-              public let createdAt: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                id = try reader.value(for: Field(responseName: "id"))
-                actor = try reader.optionalValue(for: Field(responseName: "actor"))
-                createdAt = try reader.value(for: Field(responseName: "createdAt"))
-              }
-
-              public struct Actor: GraphQLMappable {
                 public let __typename: String
-                /// The username of the actor.
-                public let login: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
-                  login = try reader.value(for: Field(responseName: "login"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  let reactionFields = try ReactionFields(reader: reader)
+                  let commentFields = try CommentFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                  public let reactionFields: ReactionFields
+                  public let commentFields: CommentFields
                 }
               }
             }
@@ -1205,5 +1258,24 @@ public struct UpdatableFields: GraphQLNamedFragment {
   public init(reader: GraphQLResultReader) throws {
     __typename = try reader.value(for: Field(responseName: "__typename"))
     viewerCanUpdate = try reader.value(for: Field(responseName: "viewerCanUpdate"))
+  }
+}
+
+public struct NodeFields: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment nodeFields on Node {" +
+    "  __typename" +
+    "  id" +
+    "}"
+
+  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "Integration", "IssueComment", "PullRequestCommit", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "Milestone", "ProtectedBranch", "PushAllowance", "Team", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "GistComment", "RepositoryInvitation", "Tag"]
+
+  public let __typename: String
+  /// ID of the object.
+  public let id: GraphQLID
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    id = try reader.value(for: Field(responseName: "id"))
   }
 }
