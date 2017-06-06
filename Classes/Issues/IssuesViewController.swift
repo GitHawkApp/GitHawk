@@ -41,6 +41,23 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+
+        let rightItem = UIBarButtonItem(
+            image: UIImage(named: "bullets"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.onMore)
+        )
+        navigationItem.rightBarButtonItem = rightItem
+    }
+
+    // MARK: Private API
+
+    func onMore() {
+        let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
+        let url = URL(string: path)!
+        let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(activity, animated: true)
     }
 
     // MARK: IGListAdapterDataSource
