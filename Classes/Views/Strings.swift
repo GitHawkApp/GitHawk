@@ -17,5 +17,6 @@ struct Strings {
     static let signout = NSLocalizedString("Sign out", comment: "")
     static let open = NSLocalizedString("Open", comment: "")
     static let closed = NSLocalizedString("Closed", comment: "")
+    static let unknown = NSLocalizedString("Unknown", comment: "")
 
 }

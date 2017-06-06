@@ -45,6 +45,24 @@ extension IssueQuery.Data.Repository.Issue: IssueType {
                     ) {
                     results.append(model)
                 }
+            } else if let unlabeled = node.asUnlabeledEvent {
+                let model = IssueLabeledModel(
+                    id: unlabeled.id,
+                    actor: unlabeled.actor?.login ?? Strings.unknown,
+                    title: unlabeled.label.name,
+                    color: unlabeled.label.color,
+                    type: .removed
+                )
+                results.append(model)
+            } else if let labeled = node.asLabeledEvent {
+                let model = IssueLabeledModel(
+                    id: labeled.id,
+                    actor: labeled.actor?.login ?? Strings.unknown,
+                    title: labeled.label.name,
+                    color: labeled.label.color,
+                    type: .added
+                )
+                results.append(model)
             }
         }
 
