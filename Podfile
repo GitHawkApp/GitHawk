@@ -10,6 +10,7 @@ pod 'SDWebImage', '~> 4.0.0'
 pod '1PasswordExtension', '~> 1.8.4'
 pod 'JDStatusBarNotification', '~> 1.5.5'
 pod 'Apollo', '~> 0.5.6'
+pod 'TUSafariActivity', '~> 1.0.0'
 
 target 'Freetime' do
 end

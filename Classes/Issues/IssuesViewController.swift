@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import TUSafariActivity
 
 final class IssuesViewController: UIViewController, IGListAdapterDataSource, FeedDelegate {
 
@@ -56,7 +57,8 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
     func onMore() {
         let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
         let url = URL(string: path)!
-        let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        let safari = TUSafariActivity()
+        let activity = UIActivityViewController(activityItems: [url], applicationActivities: [safari])
         present(activity, animated: true)
     }
 
