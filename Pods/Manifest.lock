@@ -12,6 +12,7 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (3.2.0)
+  - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.4)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - JDStatusBarNotification (~> 1.5.5)
   - SDWebImage (~> 4.0.0)
   - SnapKit (~> 3.2.0)
+  - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
   IGListKit:
@@ -40,7 +42,8 @@ SPEC CHECKSUMS:
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: fb063676cd90f49ec3bda4a03fcd9cef297a262c
+PODFILE CHECKSUM: 66f6281eadd195f5b60cdd3de783cd965ccce055
 
 COCOAPODS: 1.2.0
