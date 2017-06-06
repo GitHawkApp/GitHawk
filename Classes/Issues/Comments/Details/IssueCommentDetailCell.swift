@@ -11,12 +11,18 @@ import SnapKit
 import IGListKit
 import SDWebImage
 
+protocol IssueCommentDetailCellDelegate: class {
+    func didTapMore(cell: IssueCommentDetailCell)
+}
+
 final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
 
-    let imageView = UIImageView()
-    let loginLabel = UILabel()
-    let dateLabel = ShowMoreDetailsLabel()
-    let editButton = UIButton()
+    weak var delegate: IssueCommentDetailCellDelegate? = nil
+
+    private let imageView = UIImageView()
+    private let loginLabel = UILabel()
+    private let dateLabel = ShowMoreDetailsLabel()
+    private let moreButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,11 +58,12 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
             make.top.equalTo(loginLabel.snp.bottom).offset(Styles.Sizes.rowSpacing/2)
         }
 
-        editButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        editButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        editButton.tintColor = Styles.Colors.Gray.light
-        contentView.addSubview(editButton)
-        editButton.snp.makeConstraints { make in
+        moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        moreButton.tintColor = Styles.Colors.Gray.light
+        moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore), for: .touchUpInside)
+        contentView.addSubview(moreButton)
+        moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalTo(contentView)
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
@@ -68,6 +75,12 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private API
+
+    func onMore() {
+        delegate?.didTapMore(cell: self)
     }
 
     // MARK: IGListBindable

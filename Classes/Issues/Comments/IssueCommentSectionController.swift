@@ -11,7 +11,8 @@ import IGListKit
 
 final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel>,
 IGListBindingSectionControllerDataSource,
-IGListBindingSectionControllerSelectionDelegate {
+IGListBindingSectionControllerSelectionDelegate,
+IssueCommentDetailCellDelegate {
 
     private var collapsed = true
 
@@ -96,6 +97,9 @@ IGListBindingSectionControllerSelectionDelegate {
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
         }
+        if let cell = cell as? IssueCommentDetailCell {
+            cell.delegate = self
+        }
         return cell
     }
 
@@ -112,6 +116,12 @@ IGListBindingSectionControllerSelectionDelegate {
         default: break
         }
         uncollapse()
+    }
+
+    // MARK: IssueCommentDetailCellDelegate
+
+    func didTapMore(cell: IssueCommentDetailCell) {
+
     }
 
 }
