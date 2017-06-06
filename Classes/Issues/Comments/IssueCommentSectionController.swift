@@ -19,6 +19,7 @@ IGListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
 
     // MARK: Private API

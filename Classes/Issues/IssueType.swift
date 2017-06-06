@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import IGListKit
+import UIKit
 
 protocol IssueType {
+    var id: String { get }
     var pullRequest: Bool { get }
     var number: Int { get }
     var title: String { get }
@@ -16,4 +19,6 @@ protocol IssueType {
     var commentFields: CommentFields { get }
     var reactionFields: ReactionFields { get }
     var closableFields: ClosableFields { get }
+
+    func timelineViewModels(width: CGFloat) -> [IGListDiffable]
 }

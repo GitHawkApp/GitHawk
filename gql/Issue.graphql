@@ -13,10 +13,12 @@ query Issue($owner: String!, $repo: String!, $number: Int!) {
             messageHeadline
           }
           ... on IssueComment {
+            id
             ...reactionFields
             ...commentFields
           }
           ... on LabeledEvent {
+            id
             actor {
               login
             }
@@ -26,6 +28,7 @@ query Issue($owner: String!, $repo: String!, $number: Int!) {
             }
           }
           ... on UnlabeledEvent {
+            id
             actor {
               login
             }
@@ -35,18 +38,21 @@ query Issue($owner: String!, $repo: String!, $number: Int!) {
             }
           }
           ... on ClosedEvent {
+            id
             actor {
               login
             }
             createdAt
           }
           ... on ReopenedEvent {
+            id
             actor {
               login
             }
             createdAt
           }
           ... on RenamedTitleEvent {
+            id
             actor {
               login
             }
@@ -54,6 +60,7 @@ query Issue($owner: String!, $repo: String!, $number: Int!) {
             currentTitle
           }
           ... on LockedEvent {
+            id
             actor {
               login
             }
