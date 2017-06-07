@@ -12,7 +12,8 @@ import IGListKit
 final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel>,
 IGListBindingSectionControllerDataSource,
 IGListBindingSectionControllerSelectionDelegate,
-IssueCommentDetailCellDelegate {
+IssueCommentDetailCellDelegate,
+IssueCommentReactionCellDelegate {
 
     private var collapsed = true
 
@@ -122,6 +123,16 @@ IssueCommentDetailCellDelegate {
 
     func didTapMore(cell: IssueCommentDetailCell) {
 
+    }
+
+    // MARK: IssueCommentReactionCellDelegate
+
+    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionType) {
+
+    }
+
+    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionType) {
+        
     }
 
 }
