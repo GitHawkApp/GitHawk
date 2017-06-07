@@ -14,6 +14,69 @@ public enum ReactionContent: String {
 
 extension ReactionContent: JSONDecodable, JSONEncodable {}
 
+public final class AddReactionMutation: GraphQLMutation {
+  public static let operationDefinition =
+    "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {" +
+    "  addReaction(input: {subjectId: $subject_id, content: $content}) {" +
+    "    __typename" +
+    "    subject {" +
+    "      __typename" +
+    "      ...reactionFields" +
+    "    }" +
+    "  }" +
+    "}"
+  public static let queryDocument = operationDefinition.appending(ReactionFields.fragmentDefinition)
+
+  public let subjectId: GraphQLID
+  public let content: ReactionContent
+
+  public init(subjectId: GraphQLID, content: ReactionContent) {
+    self.subjectId = subjectId
+    self.content = content
+  }
+
+  public var variables: GraphQLMap? {
+    return ["subject_id": subjectId, "content": content]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Adds a reaction to a subject.
+    public let addReaction: AddReaction?
+
+    public init(reader: GraphQLResultReader) throws {
+      addReaction = try reader.optionalValue(for: Field(responseName: "addReaction", arguments: ["input": ["subjectId": reader.variables["subject_id"], "content": reader.variables["content"]]]))
+    }
+
+    public struct AddReaction: GraphQLMappable {
+      public let __typename: String
+      /// The reactable subject.
+      public let subject: Subject
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        subject = try reader.value(for: Field(responseName: "subject"))
+      }
+
+      public struct Subject: GraphQLMappable {
+        public let __typename: String
+
+        public let fragments: Fragments
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+
+          let reactionFields = try ReactionFields(reader: reader)
+          fragments = Fragments(reactionFields: reactionFields)
+        }
+
+        public struct Fragments {
+          public let reactionFields: ReactionFields
+        }
+      }
+    }
+  }
+}
+
 public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationDefinition =
     "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {" +
@@ -1021,6 +1084,69 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+public final class RemoveReactionMutation: GraphQLMutation {
+  public static let operationDefinition =
+    "mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {" +
+    "  removeReaction(input: {subjectId: $subject_id, content: $content}) {" +
+    "    __typename" +
+    "    subject {" +
+    "      __typename" +
+    "      ...reactionFields" +
+    "    }" +
+    "  }" +
+    "}"
+  public static let queryDocument = operationDefinition.appending(ReactionFields.fragmentDefinition)
+
+  public let subjectId: GraphQLID
+  public let content: ReactionContent
+
+  public init(subjectId: GraphQLID, content: ReactionContent) {
+    self.subjectId = subjectId
+    self.content = content
+  }
+
+  public var variables: GraphQLMap? {
+    return ["subject_id": subjectId, "content": content]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Removes a reaction from a subject.
+    public let removeReaction: RemoveReaction?
+
+    public init(reader: GraphQLResultReader) throws {
+      removeReaction = try reader.optionalValue(for: Field(responseName: "removeReaction", arguments: ["input": ["subjectId": reader.variables["subject_id"], "content": reader.variables["content"]]]))
+    }
+
+    public struct RemoveReaction: GraphQLMappable {
+      public let __typename: String
+      /// The reactable subject.
+      public let subject: Subject
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        subject = try reader.value(for: Field(responseName: "subject"))
+      }
+
+      public struct Subject: GraphQLMappable {
+        public let __typename: String
+
+        public let fragments: Fragments
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+
+          let reactionFields = try ReactionFields(reader: reader)
+          fragments = Fragments(reactionFields: reactionFields)
+        }
+
+        public struct Fragments {
+          public let reactionFields: ReactionFields
         }
       }
     }
