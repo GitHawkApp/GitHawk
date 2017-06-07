@@ -9,14 +9,14 @@
 import Foundation
 
 extension ReactionContent {
-    var type: ReactionType {
+    var emoji: String {
         switch self {
-        case .confused: return .confused
-        case .heart: return .heart
-        case .hooray: return .hooray
-        case .laugh: return .laugh
-        case .thumbsUp: return .thumbsUp
-        case .thumbsDown: return .thumbsDown
+        case .confused: return "😕"
+        case .heart: return "❤️"
+        case .hooray: return "🎉"
+        case .laugh: return "😄"
+        case .thumbsUp: return "👍"
+        case .thumbsDown: return "👎"
         }
     }
 }

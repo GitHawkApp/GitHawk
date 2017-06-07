@@ -55,7 +55,7 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
         // do not display reactions for 0 count
         let count = group.users.totalCount
         guard count > 0 else { continue }
-        models.append(ReactionViewModel(type: group.content.type, count: count, viewerDidReact: group.viewerHasReacted))
+        models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted))
     }
 
     return IssueCommentReactionViewModel(models: models)

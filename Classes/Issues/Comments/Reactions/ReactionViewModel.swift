@@ -10,7 +10,7 @@ import Foundation
 
 struct ReactionViewModel {
 
-    let type: ReactionType
+    let content: ReactionContent
     let count: Int
     let viewerDidReact: Bool
 

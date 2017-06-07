@@ -12,9 +12,7 @@ extension UIMenuController {
 
     func showReactions(fromView: UIView) {
 
-//        fromView.becomeFirstResponder()
-
-        let reactions: [ReactionType] = [
+        let reactions: [ReactionContent] = [
             .thumbsUp,
             .hooray,
             .thumbsDown,

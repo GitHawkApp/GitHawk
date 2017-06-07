@@ -11,8 +11,8 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate {
-    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionType)
-    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionType)
+    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
+    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
 
 final class IssueCommentReactionCell: UICollectionViewCell,
@@ -56,7 +56,6 @@ UICollectionViewDelegateFlowLayout {
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.isUserInteractionEnabled = false
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
@@ -76,12 +75,12 @@ UICollectionViewDelegateFlowLayout {
         addButton.becomeFirstResponder()
 
         let actions = [
-            (ReactionType.thumbsUp.rawValue, #selector(IssueCommentReactionCell.onThumbsUp)),
-            (ReactionType.thumbsDown.rawValue, #selector(IssueCommentReactionCell.onThumbsDown)),
-            (ReactionType.laugh.rawValue, #selector(IssueCommentReactionCell.onLaugh)),
-            (ReactionType.hooray.rawValue, #selector(IssueCommentReactionCell.onHooray)),
-            (ReactionType.confused.rawValue, #selector(IssueCommentReactionCell.onConfused)),
-            (ReactionType.heart.rawValue, #selector(IssueCommentReactionCell.onHeart)),
+            (ReactionContent.thumbsUp.emoji, #selector(IssueCommentReactionCell.onThumbsUp)),
+            (ReactionContent.thumbsDown.emoji, #selector(IssueCommentReactionCell.onThumbsDown)),
+            (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
+            (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
+            (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
+            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart)),
         ]
 
         let menu = UIMenuController.shared
@@ -147,7 +146,7 @@ UICollectionViewDelegateFlowLayout {
             for: indexPath
             ) as! IssueReactionCell
         let model = reactions[indexPath.item]
-        cell.label.text = "\(model.type.rawValue) \(model.count)"
+        cell.label.text = "\(model.content.emoji) \(model.count)"
         cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light : .clear
         return cell
     }
@@ -177,9 +176,9 @@ UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = reactions[indexPath.item]
         if model.viewerDidReact {
-            delegate?.didRemove(cell: self, reaction: model.type)
+            delegate?.didRemove(cell: self, reaction: model.content)
         } else {
-            delegate?.didAdd(cell: self, reaction: model.type)
+            delegate?.didAdd(cell: self, reaction: model.content)
         }
     }
 
