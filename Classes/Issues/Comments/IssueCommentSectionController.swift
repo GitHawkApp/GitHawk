@@ -16,8 +16,10 @@ IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate {
 
     private var collapsed = true
+    private let client: GithubClient
 
-    override init() {
+    init(client: GithubClient) {
+        self.client = client
         super.init()
         dataSource = self
         selectionDelegate = self
@@ -132,7 +134,7 @@ IssueCommentReactionCellDelegate {
     }
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionType) {
-        
+
     }
 
 }
