@@ -44,7 +44,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
         addButton.setTitleColor(Styles.Colors.Gray.light, for: .normal)
         addButton.semanticContentAttribute = .forceRightToLeft
-        addButton.setImage(UIImage(named: "smiley")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
