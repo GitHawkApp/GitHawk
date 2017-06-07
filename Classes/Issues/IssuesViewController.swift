@@ -72,7 +72,7 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
         if object is NSAttributedStringSizing {
             return IssueTitleSectionController()
         } else if object is IssueCommentModel {
-            return IssueCommentSectionController()
+            return IssueCommentSectionController(client: client)
         } else if object is IssueLabelsModel {
             return IssueLabelsSectionController()
         } else if object is IssueStatusModel {
