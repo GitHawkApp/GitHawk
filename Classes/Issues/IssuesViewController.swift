@@ -83,7 +83,16 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
         return IGListSectionController()
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+    func emptyView(for listAdapter: IGListAdapter) -> UIView? {
+        switch feed.status {
+        case .idle:
+            let emptyView = EmptyView()
+            emptyView.label.text = NSLocalizedString("Issue cannot be found", comment: "")
+            return emptyView
+        case .loading:
+            return nil
+        }
+    }
 
     // MARK: FeedDelegate
 
