@@ -35,4 +35,29 @@ extension GithubClient {
         }
     }
 
+    func react(
+        subjectID: String,
+        content: ReactionContent,
+        isAdd: Bool,
+        completion: @escaping (IssueCommentReactionViewModel?) -> ()
+        ) {
+        if isAdd {
+            apollo.perform(mutation: AddReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
+                if let reactionFields = result?.data?.addReaction?.subject.fragments.reactionFields {
+                    completion(createIssueReactions(reactions: reactionFields))
+                } else {
+                    completion(nil)
+                }
+            }
+        } else {
+            apollo.perform(mutation: RemoveReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
+                if let reactionFields = result?.data?.removeReaction?.subject.fragments.reactionFields {
+                    completion(createIssueReactions(reactions: reactionFields))
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+
 }

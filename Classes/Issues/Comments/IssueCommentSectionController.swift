@@ -18,6 +18,9 @@ IssueCommentReactionCellDelegate {
     private var collapsed = true
     private let client: GithubClient
 
+    // set when sending a mutation and override the original issue query reactions
+    private var reactionMutation: IssueCommentReactionViewModel? = nil
+
     init(client: GithubClient) {
         self.client = client
         super.init()
@@ -40,6 +43,16 @@ IssueCommentReactionCellDelegate {
         update(animated: true)
     }
 
+    private func react(content: ReactionContent, isAdd: Bool) {
+        guard let id = object?.id else { return }
+        client.react(subjectID: id, content: content, isAdd: isAdd) { result in
+            if let result = result {
+                self.reactionMutation = result
+                self.update(animated: true)
+            }
+        }
+    }
+
     // MARK: IGListBindingSectionControllerDataSource
 
     func sectionController(
@@ -58,7 +71,7 @@ IssueCommentReactionCellDelegate {
 
         return [ object.details ]
             + bodies
-            + [ object.reactions ]
+            + [ reactionMutation ?? object.reactions ]
     }
 
     func sectionController(
@@ -103,6 +116,9 @@ IssueCommentReactionCellDelegate {
         if let cell = cell as? IssueCommentDetailCell {
             cell.delegate = self
         }
+        if let cell = cell as? IssueCommentReactionCell {
+            cell.delegate = self
+        }
         return cell
     }
 
@@ -129,12 +145,12 @@ IssueCommentReactionCellDelegate {
 
     // MARK: IssueCommentReactionCellDelegate
 
-    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionType) {
-
+    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        react(content: reaction, isAdd: true)
     }
 
-    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionType) {
-
+    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        react(content: reaction, isAdd: false)
     }
 
 }

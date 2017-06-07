@@ -19,7 +19,7 @@ final class IssueCommentReactionViewModel: IGListDiffable {
 
         var map = [String: Int]()
         for model in models {
-            map[model.type.rawValue] = model.count
+            map[model.content.rawValue] = model.count
         }
         self.map = map
     }
