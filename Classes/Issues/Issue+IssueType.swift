@@ -67,6 +67,26 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     type: .added
                 )
                 results.append(model)
+            } else if let closed = node.asClosedEvent,
+                let date = GithubAPIDateFormatter().date(from: closed.createdAt) {
+                let model = IssueClosedModel(
+                    id: closed.fragments.nodeFields.id, 
+                    actor: closed.actor?.login ?? Strings.unknown,
+                    date: date,
+                    closed: true,
+                    pullRequest: false
+                )
+                results.append(model)
+            } else if let reopened = node.asReopenedEvent,
+                let date = GithubAPIDateFormatter().date(from: reopened.createdAt) {
+                let model = IssueClosedModel(
+                    id: reopened.fragments.nodeFields.id,
+                    actor: reopened.actor?.login ?? Strings.unknown,
+                    date: date,
+                    closed: false,
+                    pullRequest: false
+                )
+                results.append(model)
             }
         }
 
