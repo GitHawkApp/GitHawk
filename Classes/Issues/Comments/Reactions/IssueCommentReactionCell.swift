@@ -28,7 +28,6 @@ UICollectionViewDelegateFlowLayout {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
@@ -158,17 +157,8 @@ UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
-        // lazy, simple width calculation
-        let modifier: CGFloat
-        switch reactions[indexPath.item].count {
-        case 0..<10: modifier = 0
-        case 10..<100: modifier = 1
-        case 100..<1000: modifier = 2
-            case 1000..<10000: modifier = 3
-            case 100000..<1000000: modifier = 4
-            default: modifier = 5
-        }
-        return CGSize(width: 40 + modifier * 5, height: collectionView.bounds.height)
+        let modifier = CGFloat(reactions[indexPath.item].count.description.characters.count - 1)
+        return CGSize(width: 44 + modifier * 5, height: collectionView.bounds.height)
     }
 
     // MARK: UICollectionViewDelegate
