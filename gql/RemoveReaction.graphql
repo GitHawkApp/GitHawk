@@ -1,0 +1,7 @@
+mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {
+  removeReaction(input:{subjectId: $subject_id, content:$content}) {
+    subject{
+      ...reactionFields
+    }
+  }
+}

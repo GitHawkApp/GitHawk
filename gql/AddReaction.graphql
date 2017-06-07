@@ -1,0 +1,7 @@
+mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {
+  addReaction(input:{subjectId: $subject_id, content:$content}) {
+    subject{
+      ...reactionFields
+    }
+  }
+}
