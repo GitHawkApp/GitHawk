@@ -11,7 +11,8 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate {
-    func didSelect(cell: IssueCommentReactionCell, reaction: ReactionType)
+    func didAdd(cell: IssueCommentReactionCell, reaction: ReactionType)
+    func didRemove(cell: IssueCommentReactionCell, reaction: ReactionType)
 }
 
 final class IssueCommentReactionCell: UICollectionViewCell,
@@ -103,27 +104,27 @@ UICollectionViewDelegateFlowLayout {
     }
 
     func onThumbsUp() {
-        delegate?.didSelect(cell: self, reaction: .thumbsUp)
+        delegate?.didAdd(cell: self, reaction: .thumbsUp)
     }
 
     func onThumbsDown() {
-        delegate?.didSelect(cell: self, reaction: .thumbsDown)
+        delegate?.didAdd(cell: self, reaction: .thumbsDown)
     }
 
     func onLaugh() {
-        delegate?.didSelect(cell: self, reaction: .laugh)
+        delegate?.didAdd(cell: self, reaction: .laugh)
     }
 
     func onHooray() {
-        delegate?.didSelect(cell: self, reaction: .hooray)
+        delegate?.didAdd(cell: self, reaction: .hooray)
     }
 
     func onConfused() {
-        delegate?.didSelect(cell: self, reaction: .confused)
+        delegate?.didAdd(cell: self, reaction: .confused)
     }
 
     func onHeart() {
-        delegate?.didSelect(cell: self, reaction: .heart)
+        delegate?.didAdd(cell: self, reaction: .heart)
     }
 
     // MARK: IGListBindable
@@ -169,6 +170,17 @@ UICollectionViewDelegateFlowLayout {
             default: modifier = 5
         }
         return CGSize(width: 40 + modifier * 5, height: collectionView.bounds.height)
+    }
+
+    // MARK: UICollectionViewDelegate
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = reactions[indexPath.item]
+        if model.viewerDidReact {
+            delegate?.didRemove(cell: self, reaction: model.type)
+        } else {
+            delegate?.didAdd(cell: self, reaction: model.type)
+        }
     }
 
 }
