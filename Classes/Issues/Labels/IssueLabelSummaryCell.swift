@@ -19,7 +19,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 15, height: 15)
-        layout.minimumInteritemSpacing = Styles.Sizes.columnSpacing / 2.0
+        layout.minimumLineSpacing = Styles.Sizes.columnSpacing / 2.0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueLabelSummaryCell.reuse)
         return view
