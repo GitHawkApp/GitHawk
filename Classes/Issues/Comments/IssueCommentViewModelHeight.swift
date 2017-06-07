@@ -15,6 +15,8 @@ func bodyHeight(viewModel: Any) -> CGFloat {
         return viewModel.code.textViewSize.height
     } else if viewModel is IssueCommentImageModel {
         return 200.0
+    } else if viewModel is IssueCommentReactionViewModel {
+        return 34.0
     } else {
         return Styles.Sizes.tableCellHeight
     }
