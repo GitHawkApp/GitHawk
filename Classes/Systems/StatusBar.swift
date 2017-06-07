@@ -27,4 +27,12 @@ struct StatusBar {
         )
     }
 
+    static func showGenericError() {
+        JDStatusBarNotification.show(
+            withStatus: NSLocalizedString("Something went wrong.", comment: ""),
+            dismissAfter: 3,
+            styleName: JDStatusBarStyleError
+        )
+    }
+
 }

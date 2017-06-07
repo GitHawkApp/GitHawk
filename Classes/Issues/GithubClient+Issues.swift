@@ -9,6 +9,15 @@
 import UIKit
 import IGListKit
 
+private func showErrors(graphQLErrors: [Error]?, networkError: Error?) {
+    if networkError != nil {
+        StatusBar.showNetworkError()
+    }
+    else if graphQLErrors != nil && graphQLErrors!.count > 0 {
+        StatusBar.showGenericError()
+    }
+}
+
 extension GithubClient {
 
     func fetch(
@@ -32,6 +41,7 @@ extension GithubClient {
             } else {
                 completion([])
             }
+            showErrors(graphQLErrors: result?.errors, networkError: error)
         }
     }
 
@@ -48,6 +58,7 @@ extension GithubClient {
                 } else {
                     completion(nil)
                 }
+                showErrors(graphQLErrors: result?.errors, networkError: error)
             }
         } else {
             apollo.perform(mutation: RemoveReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
@@ -56,6 +67,7 @@ extension GithubClient {
                 } else {
                     completion(nil)
                 }
+                showErrors(graphQLErrors: result?.errors, networkError: error)
             }
         }
     }
