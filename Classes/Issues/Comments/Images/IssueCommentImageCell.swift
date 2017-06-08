@@ -60,7 +60,10 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
     // MARK: Private API
 
     func onTap(recognizer: UITapGestureRecognizer) {
-        guard let image = imageView.image else { return }
+        guard let image = imageView.image,
+        overlay.isHidden
+            else { return }
+        
         let imageSize = image.size
         let imageViewBounds = imageView.bounds
 
