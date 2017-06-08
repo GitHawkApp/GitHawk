@@ -21,6 +21,7 @@ struct Styles {
         static let tableCellHeight: CGFloat = 55
         static let tableSectionSpacing: CGFloat = 35
         static let avatar = CGSize(width: 30, height: 30)
+        static let inlineSpacing: CGFloat = 4
     }
 
     struct Fonts {

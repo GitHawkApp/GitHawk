@@ -33,7 +33,7 @@ final class IssueClosedCell: UICollectionViewCell {
         button.contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
-            make.left.equalTo(label.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.left.equalTo(label.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
 
@@ -42,7 +42,7 @@ final class IssueClosedCell: UICollectionViewCell {
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(button.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.left.equalTo(button.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
     }

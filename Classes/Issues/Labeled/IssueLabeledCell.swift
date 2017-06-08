@@ -14,6 +14,7 @@ final class IssueLabeledCell: UICollectionViewCell {
     let descriptionLabel = UILabel()
     let labelBackgroundView = UIView()
     let titleLabel = UILabel()
+    let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +29,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         titleLabel.font = Styles.Fonts.smallTitle
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(descriptionLabel.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.left.equalTo(descriptionLabel.snp.right).offset(Styles.Sizes.inlineSpacing * 2)
             make.centerY.equalTo(descriptionLabel)
         }
 
@@ -38,12 +39,20 @@ final class IssueLabeledCell: UICollectionViewCell {
         contentView.addSubview(labelBackgroundView)
         labelBackgroundView.snp.makeConstraints { make in
             make.center.equalTo(titleLabel)
-            make.width.equalTo(titleLabel).offset(Styles.Sizes.columnSpacing)
+            make.width.equalTo(titleLabel).offset(Styles.Sizes.inlineSpacing * 2)
             make.height.equalTo(titleLabel).offset(Styles.Sizes.rowSpacing)
         }
 
         // then swap the z indexes of the label and background
         contentView.bringSubview(toFront: titleLabel)
+
+        dateLabel.font = Styles.Fonts.body
+        dateLabel.textColor = Styles.Colors.Gray.medium
+        contentView.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.left.equalTo(labelBackgroundView.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.centerY.equalTo(contentView)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,8 +70,8 @@ final class IssueLabeledCell: UICollectionViewCell {
 
         let actionString: String
         switch model.type {
-        case .added: actionString = NSLocalizedString(" added label", comment: "")
-        case .removed: actionString = NSLocalizedString(" removed label", comment: "")
+        case .added: actionString = NSLocalizedString(" added", comment: "")
+        case .removed: actionString = NSLocalizedString(" removed", comment: "")
         }
         let actionAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.medium,
@@ -78,6 +87,9 @@ final class IssueLabeledCell: UICollectionViewCell {
 
         titleLabel.text = model.title
         titleLabel.textColor = color.textOverlayColor
+
+        dateLabel.text = model.date.agoString
+        dateLabel.detailText = DateDetailsFormatter().string(from: model.date)
     }
 
 }
