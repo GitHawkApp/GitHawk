@@ -95,7 +95,7 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
     }
 
-    func test_whenCodeBlock_withSurroundedByText() {
+    func test_whenCodeBlock_withLanguage_withSurroundedByText() {
         let body = [
             "this is some text",
             "```swift",
@@ -108,6 +108,22 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "swift")
+        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "this is the end")
+    }
+
+    func test_whenCodeBlock_withoutLanguage_withSurroundedByText() {
+        let body = [
+            "this is some text",
+            "```",
+            "let a = 5",
+            "```",
+            "this is the end"
+            ].joined(separator: "\r\n")
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 3)
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
+        XCTAssertNil((models[1] as! IssueCommentCodeBlockModel).language)
         XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "this is the end")
     }
 
@@ -244,6 +260,12 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
         XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+    }
+
+    func test_whenCodePartOfParagraph() {
+        let body = "text with ````` inline with ````` more"
+        let models = createCommentModels(body: body, width: 300)
+        XCTAssertEqual(models.count, 1)
     }
     
 }
