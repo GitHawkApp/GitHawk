@@ -11,7 +11,7 @@ import IGListKit
 
 final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
-    static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
+    static let inset = Styles.Sizes.textCellInset
 
     let label = UILabel()
     let overlay = CreateCollapsibleOverlay()

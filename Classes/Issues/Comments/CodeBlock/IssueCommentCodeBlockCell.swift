@@ -11,12 +11,7 @@ import IGListKit
 
 final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
-    static let inset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.gutter,
-        bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
-    )
+    static let inset = Styles.Sizes.textCellInset
 
     let label = UILabel()
     let scrollView = UIScrollView()
