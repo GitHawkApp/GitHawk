@@ -46,7 +46,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         loginLabel.textColor = Styles.Colors.Gray.dark
         contentView.addSubview(loginLabel)
         loginLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(imageView.snp.centerY).offset(-Styles.Sizes.rowSpacing/2)
+            make.bottom.equalTo(imageView.snp.centerY)
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
         }
 
@@ -55,7 +55,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.left.equalTo(loginLabel)
-            make.top.equalTo(loginLabel.snp.bottom).offset(Styles.Sizes.rowSpacing/2)
+            make.top.equalTo(loginLabel.snp.bottom).offset(2)
         }
 
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
