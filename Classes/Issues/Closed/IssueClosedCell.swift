@@ -25,12 +25,7 @@ final class IssueClosedCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        button.tintColor = .white
-        button.titleLabel?.font = Styles.Fonts.smallTitle
-        button.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        button.clipsToBounds = true
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -Styles.Sizes.columnSpacing, bottom: 0, right: 0)
-        button.contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
+        button.setupAsLabel()
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalTo(label.snp.right).offset(Styles.Sizes.inlineSpacing)
@@ -60,22 +55,9 @@ final class IssueClosedCell: UICollectionViewCell {
         ]
         label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
-        let title: String
-        let color: UIColor
-        let iconName: String
-        let prName = "git-pull-request-small"
-        if model.closed {
-            title = Strings.closed
-            color = Styles.Colors.red
-            iconName = model.pullRequest ? "issue-closed-small" : prName
-        } else {
-            title = Strings.reopened
-            color = Styles.Colors.green
-            iconName = model.pullRequest ? "issue-opened-small" : prName
-        }
-        button.setTitle(title, for: .normal)
-        button.setImage(UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.backgroundColor = color
+        button.setStatusIcon(pullRequest: model.pullRequest, closed: model.closed)
+        button.setBackgroundColor(closed: model.closed)
+        button.setTitle(model.closed ? Strings.closed : Strings.reopened, for: .normal)
 
         dateLabel.text = model.date.agoString
         dateLabel.detailText = DateDetailsFormatter().string(from: model.date)
