@@ -11,12 +11,19 @@ import SnapKit
 import SDWebImage
 import IGListKit
 
+protocol IssueCommentImageCellDelegate: class {
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage)
+}
+
 final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
     static let preferredHeight: CGFloat = 200
+
+    weak var delegate: IssueCommentImageCellDelegate? = nil
     let imageView = UIImageView()
-    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    let overlay = CreateCollapsibleOverlay()
+
+    private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,6 +43,9 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
         spinner.snp.makeConstraints { make in
             make.center.equalTo(imageView)
         }
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(IssueCommentImageCell.onTap(recognizer:)))
+        contentView.addGestureRecognizer(tap)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +55,41 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
+    }
+
+    // MARK: Private API
+
+    func onTap(recognizer: UITapGestureRecognizer) {
+        guard let image = imageView.image else { return }
+        let imageSize = image.size
+        let imageViewBounds = imageView.bounds
+
+        // https://stackoverflow.com/a/2351101/940936
+        let ratioX = imageViewBounds.width/imageSize.width
+        let ratioY = imageViewBounds.height/imageSize.height
+        let imageBounds: CGRect
+        if ratioX < ratioY {
+            let height = ratioX * imageSize.height
+            imageBounds = CGRect(
+                x: 0,
+                y: (imageViewBounds.height - height) / 2,
+                width: imageViewBounds.width,
+                height: height
+            )
+        } else {
+            let width = ratioY * imageSize.width
+            imageBounds = CGRect(
+                x: (imageViewBounds.width - width) / 2,
+                y: 0,
+                width: width,
+                height: imageViewBounds.height
+            )
+        }
+
+        let location = recognizer.location(in: imageView)
+        guard imageBounds.contains(location) else { return }
+
+        delegate?.didTapImage(cell: self, image: image)
     }
 
     // MARK: IGListBindable

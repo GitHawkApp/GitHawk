@@ -8,18 +8,23 @@
 
 import UIKit
 import IGListKit
+import NYTPhotoViewer
 
 final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel>,
 IGListBindingSectionControllerDataSource,
 IGListBindingSectionControllerSelectionDelegate,
 IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate {
+IssueCommentReactionCellDelegate,
+IssueCommentImageCellDelegate,
+NYTPhotosViewControllerDelegate {
 
     private var collapsed = true
     private let client: GithubClient
 
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
+
+    private weak var referenceImageView: UIImageView? = nil
 
     init(client: GithubClient) {
         self.client = client
@@ -31,8 +36,9 @@ IssueCommentReactionCellDelegate {
 
     // MARK: Private API
 
-    private func uncollapse() {
-        guard collapsed else { return }
+    @discardableResult
+    private func uncollapse() -> Bool {
+        guard collapsed else { return false }
         collapsed = false
         // clear any collapse state before updating so we don't have a dangling overlay
         for cell in collectionContext?.visibleCells(for: self) ?? [] {
@@ -41,6 +47,7 @@ IssueCommentReactionCellDelegate {
             }
         }
         update(animated: true)
+        return true
     }
 
     private func react(content: ReactionContent, isAdd: Bool) {
@@ -119,6 +126,9 @@ IssueCommentReactionCellDelegate {
         if let cell = cell as? IssueCommentReactionCell {
             cell.delegate = self
         }
+        if let cell = cell as? IssueCommentImageCell {
+            cell.delegate = self
+        }
         return cell
     }
 
@@ -151,6 +161,22 @@ IssueCommentReactionCellDelegate {
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
         react(content: reaction, isAdd: false)
+    }
+
+    // MARK: IssueCommentImageCellDelegate
+
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage) {
+        referenceImageView = cell.imageView
+        let photo = IssueCommentPhoto(image: image)
+        let photosViewController = NYTPhotosViewController(photos: [photo])
+        photosViewController.delegate = self
+        viewController?.present(photosViewController, animated: true)
+    }
+
+    // MARK: NYTPhotosViewControllerDelegate
+
+    func photosViewController(_ photosViewController: NYTPhotosViewController, referenceViewFor photo: NYTPhoto) -> UIView? {
+        return referenceImageView
     }
 
 }
