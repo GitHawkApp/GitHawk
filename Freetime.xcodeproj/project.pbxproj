@@ -66,6 +66,7 @@
 		295840671EE89FE4007723C6 /* IssueClosedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueClosedCell.swift */; };
 		295840691EE8A328007723C6 /* IssueClosedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueClosedSectionController.swift */; };
 		2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */; };
+		2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406E1EE9F21E007723C6 /* UIButton+Label.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
 		2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2963A9351EE215DD0066509C /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -237,6 +238,7 @@
 		295840661EE89FE4007723C6 /* IssueClosedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueClosedCell.swift; sourceTree = "<group>"; };
 		295840681EE8A328007723C6 /* IssueClosedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueClosedSectionController.swift; sourceTree = "<group>"; };
 		2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentPhoto.swift; sourceTree = "<group>"; };
+		2958406E1EE9F21E007723C6 /* UIButton+Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Label.swift"; sourceTree = "<group>"; };
 		2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIMenuController+Reactions.swift"; sourceTree = "<group>"; };
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
 		2963A9351EE215DD0066509C /* CocoaMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -492,8 +494,8 @@
 		295840631EE89F19007723C6 /* Closed */ = {
 			isa = PBXGroup;
 			children = (
-				295840641EE89F28007723C6 /* IssueClosedModel.swift */,
 				295840661EE89FE4007723C6 /* IssueClosedCell.swift */,
+				295840641EE89F28007723C6 /* IssueClosedModel.swift */,
 				295840681EE8A328007723C6 /* IssueClosedSectionController.swift */,
 			);
 			path = Closed;
@@ -647,6 +649,7 @@
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1004,6 +1007,7 @@
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
+				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,

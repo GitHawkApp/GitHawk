@@ -17,12 +17,7 @@ final class IssueStatusCell: UICollectionViewCell, IGListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        button.tintColor = .white
-        button.titleLabel?.font = Styles.Fonts.smallTitle
-        button.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        button.clipsToBounds = true
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -Styles.Sizes.columnSpacing, bottom: 0, right: 0)
-        button.contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
+        button.setupAsLabel()
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -38,22 +33,10 @@ final class IssueStatusCell: UICollectionViewCell, IGListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueStatusModel else { return }
-        let title: String
-        let color: UIColor
-        let iconName: String
-        let prName = "git-pull-request-small"
-        if viewModel.closed {
-            title = Strings.closed
-            color = Styles.Colors.red
-            iconName = viewModel.pullRequest ? "issue-closed-small" : prName
-        } else {
-            title = Strings.open
-            color = Styles.Colors.green
-            iconName = viewModel.pullRequest ? "issue-opened-small" : prName
-        }
-        button.setTitle(title, for: .normal)
-        button.setImage(UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.backgroundColor = color
+
+        button.setBackgroundColor(closed: viewModel.closed)
+        button.setStatusIcon(pullRequest: viewModel.pullRequest, closed: viewModel.closed)
+        button.setTitle(viewModel.closed ? Strings.closed : Strings.open, for: .normal)
     }
 
 }
