@@ -88,8 +88,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         titleLabel.text = model.title
         titleLabel.textColor = color.textOverlayColor
 
-        dateLabel.text = model.date.agoString
-        dateLabel.detailText = DateDetailsFormatter().string(from: model.date)
+        dateLabel.setText(date: model.date)
     }
 
 }
