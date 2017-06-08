@@ -11,6 +11,11 @@ import IGListKit
 
 final class IssueClosedSectionController: IGListGenericSectionController<IssueClosedModel> {
 
+    override init() {
+        super.init()
+        inset = Styles.Sizes.listInsetTight
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { return .zero }
         return CGSize(width: width, height: 30)

@@ -11,6 +11,11 @@ import IGListKit
 
 final class IssueTitleSectionController: IGListGenericSectionController<NSAttributedStringSizing> {
 
+    override init() {
+        super.init()
+        inset = Styles.Sizes.listInsetTight
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
         guard let context = collectionContext
             else { return .zero }

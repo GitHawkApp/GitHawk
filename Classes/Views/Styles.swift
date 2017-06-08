@@ -22,6 +22,8 @@ struct Styles {
         static let tableSectionSpacing: CGFloat = 35
         static let avatar = CGSize(width: 30, height: 30)
         static let inlineSpacing: CGFloat = 4
+        static let listInsetLarge = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
     }
 
     struct Fonts {

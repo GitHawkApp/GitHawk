@@ -11,12 +11,7 @@ import SnapKit
 
 final class IssueTitleCell: UICollectionViewCell {
 
-    static let inset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.gutter,
-        bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
-    )
+    static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
 
     let label = UILabel()
 

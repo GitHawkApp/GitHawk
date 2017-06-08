@@ -26,7 +26,7 @@ IssueCommentReactionCellDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
+        inset = Styles.Sizes.listInsetLarge
     }
 
     // MARK: Private API
