@@ -26,6 +26,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                 color
                 name
               }
+              createdAt
             }
             ... on UnlabeledEvent {
               ...nodeFields
@@ -36,6 +37,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                 color
                 name
               }
+              createdAt
             }
             ... on ClosedEvent {
               ...nodeFields
@@ -102,6 +104,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                 color
                 name
               }
+              createdAt
             }
             ... on UnlabeledEvent {
               ...nodeFields
@@ -112,6 +115,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                 color
                 name
               }
+              createdAt
             }
             ... on ClosedEvent {
               ...nodeFields

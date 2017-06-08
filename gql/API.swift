@@ -118,6 +118,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                color" +
     "                name" +
     "              }" +
+    "              createdAt" +
     "            }" +
     "            ... on UnlabeledEvent {" +
     "              __typename" +
@@ -131,6 +132,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                color" +
     "                name" +
     "              }" +
+    "              createdAt" +
     "            }" +
     "            ... on ClosedEvent {" +
     "              __typename" +
@@ -214,6 +216,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                color" +
     "                name" +
     "              }" +
+    "              createdAt" +
     "            }" +
     "            ... on UnlabeledEvent {" +
     "              __typename" +
@@ -227,6 +230,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                color" +
     "                name" +
     "              }" +
+    "              createdAt" +
     "            }" +
     "            ... on ClosedEvent {" +
     "              __typename" +
@@ -444,6 +448,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the label associated with the 'labeled' event.
                 public let label: Label
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
 
                 public let fragments: Fragments
 
@@ -451,6 +457,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   label = try reader.value(for: Field(responseName: "label"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -494,6 +501,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the label associated with the 'unlabeled' event.
                 public let label: Label
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
 
                 public let fragments: Fragments
 
@@ -501,6 +510,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   label = try reader.value(for: Field(responseName: "label"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -821,6 +831,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the label associated with the 'labeled' event.
                 public let label: Label
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
 
                 public let fragments: Fragments
 
@@ -828,6 +840,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   label = try reader.value(for: Field(responseName: "label"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -871,6 +884,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the label associated with the 'unlabeled' event.
                 public let label: Label
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
 
                 public let fragments: Fragments
 
@@ -878,6 +893,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   label = try reader.value(for: Field(responseName: "label"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
