@@ -49,21 +49,25 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     ) {
                     results.append(model)
                 }
-            } else if let unlabeled = node.asUnlabeledEvent {
+            } else if let unlabeled = node.asUnlabeledEvent,
+                let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
                 let model = IssueLabeledModel(
                     id: unlabeled.fragments.nodeFields.id,
                     actor: unlabeled.actor?.login ?? Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
+                    date: date,
                     type: .removed
                 )
                 results.append(model)
-            } else if let labeled = node.asLabeledEvent {
+            } else if let labeled = node.asLabeledEvent,
+                let date = GithubAPIDateFormatter().date(from: labeled.createdAt) {
                 let model = IssueLabeledModel(
                     id: labeled.fragments.nodeFields.id,
                     actor: labeled.actor?.login ?? Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,
+                    date: date,
                     type: .added
                 )
                 results.append(model)
