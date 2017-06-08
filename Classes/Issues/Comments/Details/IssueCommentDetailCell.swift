@@ -58,6 +58,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
             make.top.equalTo(loginLabel.snp.bottom).offset(2)
         }
 
+        moreButton.isHidden = true
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         moreButton.tintColor = Styles.Colors.Gray.light
