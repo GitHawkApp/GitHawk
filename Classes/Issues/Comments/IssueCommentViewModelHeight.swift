@@ -12,7 +12,8 @@ func bodyHeight(viewModel: Any) -> CGFloat {
     if let viewModel = viewModel as? NSAttributedStringSizing {
         return viewModel.textViewSize.height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
-        return viewModel.code.textViewSize.height
+        let inset = IssueCommentCodeBlockCell.scrollViewInset
+        return viewModel.code.textViewSize.height + inset.top + inset.bottom
     } else if viewModel is IssueCommentImageModel {
         return 200.0
     } else if viewModel is IssueCommentReactionViewModel {

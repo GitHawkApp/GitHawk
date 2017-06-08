@@ -11,7 +11,18 @@ import IGListKit
 
 final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
-    static let inset = Styles.Sizes.textCellInset
+    static let scrollViewInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: 0,
+        bottom: Styles.Sizes.rowSpacing,
+        right: 0
+    )
+    static let textViewInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.gutter
+    )
 
     let label = UILabel()
     let scrollView = UIScrollView()
@@ -38,7 +49,13 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
         super.layoutSubviews()
         // size the scrollview to the width of the cell but match its height to its content size
         // that way when the cell is collapsed, the scroll view isn't vertically scrollable
-        scrollView.frame = CGRect(x: 0, y: 0, width: contentView.bounds.width, height: scrollView.contentSize.height)
+        let inset = IssueCommentCodeBlockCell.scrollViewInset
+        scrollView.frame = CGRect(
+            x: inset.left,
+            y: inset.top,
+            width: contentView.bounds.width - inset.left - inset.right,
+            height: scrollView.contentSize.height
+        )
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
@@ -52,7 +69,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
 
         label.attributedText = viewModel.code.attributedText
         let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
+        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentCodeBlockCell.textViewInset)
     }
 
     // MARK: CollapsibleCell
