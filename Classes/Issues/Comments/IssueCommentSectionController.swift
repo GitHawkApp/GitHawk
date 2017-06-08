@@ -113,6 +113,8 @@ NYTPhotosViewControllerDelegate {
             cellClass = IssueCommentSummaryCell.self
         } else if viewModel is IssueCommentReactionViewModel {
             cellClass = IssueCommentReactionCell.self
+        } else if viewModel is IssueCommentQuoteModel {
+            cellClass = IssueCommentQuoteCell.self
         } else {
             cellClass = IssueCommentTextCell.self
         }
