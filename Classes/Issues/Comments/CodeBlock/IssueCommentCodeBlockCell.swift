@@ -34,6 +34,11 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
         contentView.backgroundColor = .white
         contentView.clipsToBounds = true
 
+        // make didSelectItem work for the cell
+        // https://stackoverflow.com/a/24853578/940936
+        scrollView.isUserInteractionEnabled = false
+        contentView.addGestureRecognizer(scrollView.panGestureRecognizer)
+
         scrollView.backgroundColor = Styles.Colors.Gray.lighter
         contentView.addSubview(scrollView)
 
