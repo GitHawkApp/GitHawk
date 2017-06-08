@@ -32,8 +32,8 @@ private func codeBlockString(
 }
 
 private let codeRegex = try! NSRegularExpression(
-    pattern: "```([a-zA-Z0-9-]+)?(.*?)```",
-    options: [.useUnixLineSeparators, .dotMatchesLineSeparators]
+    pattern: "^```([a-zA-Z0-9-]+)?$(.*?)^```$",
+    options: [.useUnixLineSeparators, .dotMatchesLineSeparators, .anchorsMatchLines]
 )
 
 let codeBlockScanner =  MarkdownScanner { (body, width) in
