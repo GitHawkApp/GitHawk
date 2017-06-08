@@ -89,8 +89,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
         imageView.sd_setImage(with: viewModel.avatarURL)
-        dateLabel.text = viewModel.date.agoString
-        dateLabel.detailText = DateDetailsFormatter().string(from: viewModel.date)
+        dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
     }
 

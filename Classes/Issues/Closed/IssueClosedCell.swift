@@ -59,8 +59,7 @@ final class IssueClosedCell: UICollectionViewCell {
         button.setBackgroundColor(closed: model.closed)
         button.setTitle(model.closed ? Strings.closed : Strings.reopened, for: .normal)
 
-        dateLabel.text = model.date.agoString
-        dateLabel.detailText = DateDetailsFormatter().string(from: model.date)
+        dateLabel.setText(date: model.date)
     }
 
 }
