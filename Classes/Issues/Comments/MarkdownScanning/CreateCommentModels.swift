@@ -49,7 +49,6 @@ private func bodyString(
     ]
     textAttributes.linkAttributes = [
         NSForegroundColorAttributeName: Styles.Colors.Blue.medium,
-        NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
     ]
     textAttributes.inlineCodeAttributes = [
         NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
@@ -61,6 +60,40 @@ private func bodyString(
     ]
     textAttributes.unorderedListAttributes = [
         NSParagraphStyleAttributeName: NSParagraphStyle(),
+    ]
+
+    let headerParaStyle = NSMutableParagraphStyle()
+    headerParaStyle.paragraphSpacingBefore = 8
+
+    textAttributes.h1Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 24),
+    ]
+    textAttributes.h2Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 22),
+    ]
+    textAttributes.h3Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20),
+    ]
+    textAttributes.h4Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18),
+    ]
+    textAttributes.h5Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
+    ]
+    textAttributes.h6Attributes = [
+        NSParagraphStyleAttributeName: headerParaStyle,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.medium,
+        NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
     ]
 
     return markdownString(

@@ -21,10 +21,13 @@ private func codeBlockString(
         string: body.trimmingCharacters(in: .whitespacesAndNewlines),
         attributes: attributes
     )
+    var inset = IssueCommentCodeBlockCell.textViewInset
+    inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
+    inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
     return NSAttributedStringSizing(
         containerWidth: 0,
         attributedText: attributedText,
-        inset: IssueCommentCodeBlockCell.inset
+        inset: inset
     )
 }
 
