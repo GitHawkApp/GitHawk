@@ -25,7 +25,7 @@ struct Styles {
         static let listInsetLarge = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         static let textCellInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing,
+            top: 0,
             left: Styles.Sizes.gutter,
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.gutter

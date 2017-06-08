@@ -39,7 +39,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
             make.left.equalTo(Styles.Sizes.gutter)
-            make.centerY.equalTo(contentView)
+            make.top.equalTo(Styles.Sizes.gutter)
         }
 
         loginLabel.font = Styles.Fonts.title
