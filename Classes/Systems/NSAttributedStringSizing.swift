@@ -10,21 +10,14 @@ import UIKit
 import IGListKit
 
 final class NSAttributedStringSizing: NSObject, IGListDiffable {
+
+    private let textContainer: NSTextContainer
+    private let textStorage: NSTextStorage
+    private let layoutManager: NSLayoutManager
+
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
     let textViewSize: CGSize
-
-    // NSTextContainer
-    let exclusionPaths: [UIBezierPath]
-    let maximumNumberOfLines: Int
-    let lineFragmentPadding: CGFloat
-
-    // NSLayoutManager
-    let allowsNonContiguousLayout: Bool
-    let hyphenationFactor: CGFloat
-    let showsInvisibleCharacters: Bool
-    let showsControlCharacters: Bool
-    let usesFontLeading: Bool
 
     init(
         containerWidth: CGFloat,
@@ -42,22 +35,14 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         ) {
         self.attributedText = attributedText
         self.inset = inset
-        self.exclusionPaths = exclusionPaths
-        self.maximumNumberOfLines = maximumNumberOfLines
-        self.lineFragmentPadding = lineFragmentPadding
-        self.allowsNonContiguousLayout = allowsNonContiguousLayout
-        self.hyphenationFactor = hyphenationFactor
-        self.showsInvisibleCharacters = showsInvisibleCharacters
-        self.showsControlCharacters = showsControlCharacters
-        self.usesFontLeading = usesFontLeading
 
         let insetWidth = containerWidth - inset.left - inset.right
-        let textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: 0))
+        textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: 0))
         textContainer.exclusionPaths = exclusionPaths
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
 
-        let layoutManager = NSLayoutManager()
+        layoutManager = NSLayoutManager()
         layoutManager.allowsNonContiguousLayout = allowsNonContiguousLayout
         layoutManager.hyphenationFactor = hyphenationFactor
         layoutManager.showsInvisibleCharacters = showsInvisibleCharacters
@@ -66,7 +51,7 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         layoutManager.addTextContainer(textContainer)
 
         // storage implicitly required to use NSLayoutManager + NSTextContainer and find a size
-        let textStorage = NSTextStorage(attributedString: attributedText)
+        textStorage = NSTextStorage(attributedString: attributedText)
         textStorage.addLayoutManager(layoutManager)
 
         // find the size of the text now that everything is configured
@@ -89,16 +74,16 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         textView.textContainerInset = inset
 
         let textContainer = textView.textContainer
-        textContainer.exclusionPaths = exclusionPaths
-        textContainer.maximumNumberOfLines = maximumNumberOfLines
-        textContainer.lineFragmentPadding = lineFragmentPadding
+        textContainer.exclusionPaths = self.textContainer.exclusionPaths
+        textContainer.maximumNumberOfLines = self.textContainer.maximumNumberOfLines
+        textContainer.lineFragmentPadding = self.textContainer.lineFragmentPadding
 
         let layoutManager = textView.layoutManager
-        layoutManager.allowsNonContiguousLayout = allowsNonContiguousLayout
-        layoutManager.hyphenationFactor = hyphenationFactor
-        layoutManager.showsInvisibleCharacters = showsInvisibleCharacters
-        layoutManager.showsControlCharacters = showsControlCharacters
-        layoutManager.usesFontLeading = usesFontLeading
+        layoutManager.allowsNonContiguousLayout = self.layoutManager.allowsNonContiguousLayout
+        layoutManager.hyphenationFactor = self.layoutManager.hyphenationFactor
+        layoutManager.showsInvisibleCharacters = self.layoutManager.showsInvisibleCharacters
+        layoutManager.showsControlCharacters = self.layoutManager.showsControlCharacters
+        layoutManager.usesFontLeading = self.layoutManager.usesFontLeading
         layoutManager.addTextContainer(textContainer)
     }
 

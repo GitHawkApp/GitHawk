@@ -35,15 +35,15 @@ private func quoteString(_ body: String, width: CGFloat) -> NSAttributedStringSi
 }
 
 private let quoteRegex = try! NSRegularExpression(
-    pattern: "^>( )?([^\n>]*)",
-    options: [.useUnixLineSeparators, .dotMatchesLineSeparators, .anchorsMatchLines]
+    pattern: "^(>.*(\n|$))+",
+    options: [.useUnixLineSeparators, .anchorsMatchLines]
 )
 
 let quoteScanner = MarkdownScanner { (body, width) in
     var results = [(NSRange, IGListDiffable)]()
     let matches = quoteRegex.matches(in: body, options: [], range: body.nsrange)
     for match in matches {
-        if let substr = body.substring(with: match.rangeAt(2)),
+        if let substr = body.substring(with: match.rangeAt(0)),
         let quote = quoteString(substr, width: width) {
             results.append((match.range, IssueCommentQuoteModel(quote: quote)))
         }

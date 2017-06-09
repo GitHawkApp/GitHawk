@@ -278,13 +278,12 @@ class IssueTests: XCTestCase {
             "line three"
         ].joined(separator: "\r\n")
         let models = createCommentModels(body: body, width: 300)
-        XCTAssertEqual(models.count, 6)
+        XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "line one")
         XCTAssertEqual((models[1] as! IssueCommentQuoteModel).quote.attributedText.string, "quote one")
         XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "line two")
-        XCTAssertEqual((models[3] as! IssueCommentQuoteModel).quote.attributedText.string, "quote two")
-        XCTAssertEqual((models[4] as! IssueCommentQuoteModel).quote.attributedText.string, "quote three")
-        XCTAssertEqual((models[5] as! NSAttributedStringSizing).attributedText.string, "line three")
+        XCTAssertEqual((models[3] as! IssueCommentQuoteModel).quote.attributedText.string, "quote two\nquote three")
+        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "line three")
     }
     
 }
