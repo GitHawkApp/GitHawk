@@ -18,6 +18,8 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
     let textViewSize: CGSize
+    let textSize: CGSize
+    let screenScale: CGFloat
 
     init(
         containerWidth: CGFloat,
@@ -35,6 +37,7 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         ) {
         self.attributedText = attributedText
         self.inset = inset
+        self.screenScale = screenScale
 
         let insetWidth = containerWidth - inset.left - inset.right
         textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: 0))
@@ -57,16 +60,20 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         // find the size of the text now that everything is configured
         let bounds = layoutManager.usedRect(for: textContainer)
 
-        // adjust for the text view inset (contentInset + textContainerInset)
         var viewSize = bounds.size
-        viewSize.width += inset.left + inset.right
-        viewSize.height += inset.top + inset.bottom
 
         // snap to pixel
         viewSize.width = ceil(viewSize.width * screenScale) / screenScale
         viewSize.height = ceil(viewSize.height * screenScale) / screenScale
-        self.textViewSize = viewSize
+        textSize = viewSize
+
+        // adjust for the text view inset (contentInset + textContainerInset)
+        viewSize.width += inset.left + inset.right
+        viewSize.height += inset.top + inset.bottom
+        textViewSize = viewSize
     }
+
+    // MARK: Public API
 
     func configure(textView: UITextView) {
         textView.attributedText = attributedText
@@ -85,6 +92,21 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         layoutManager.showsControlCharacters = self.layoutManager.showsControlCharacters
         layoutManager.usesFontLeading = self.layoutManager.usesFontLeading
         layoutManager.addTextContainer(textContainer)
+    }
+
+    private var _contents: CGImage? = nil
+    func contents() -> CGImage? {
+        guard _contents == nil else { return _contents }
+        UIGraphicsBeginImageContextWithOptions(textSize, true, screenScale)
+        UIColor.white.setFill()
+        UIBezierPath(rect: CGRect(origin: .zero, size: textSize)).fill()
+        let glyphRange = layoutManager.glyphRange(for: textContainer)
+        layoutManager.drawBackground(forGlyphRange: glyphRange, at: .zero)
+        layoutManager.drawGlyphs(forGlyphRange: glyphRange, at: .zero)
+        let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        UIGraphicsEndImageContext()
+        _contents = contents
+        return contents
     }
 
     // MARK: IGListDiffable

@@ -19,7 +19,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
         right: Styles.Sizes.gutter
     )
 
-    private let label = UILabel()
+    private let textView = UIView()
     private let border = UIView()
     private let overlay = CreateCollapsibleOverlay()
 
@@ -32,8 +32,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
         border.backgroundColor = Styles.Colors.Gray.light
         contentView.addSubview(border)
 
-        label.numberOfLines = 0
-        contentView.addSubview(label)
+        contentView.addSubview(textView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,12 +42,11 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
-        let labelFrame = label.frame
         border.frame = CGRect(
             x: Styles.Sizes.gutter,
-            y: labelFrame.minY,
+            y: 0,
             width: IssueCommentQuoteCell.borderWidth,
-            height: labelFrame.height
+            height: contentView.bounds.height - Styles.Sizes.rowSpacing
         )
     }
 
@@ -56,10 +54,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentQuoteModel else { return }
-        label.attributedText = viewModel.quote.attributedText
-        let contentSize = viewModel.quote.textViewSize
-        let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentQuoteCell.inset)
+        textView.configureAndLayout(viewModel.quote)
     }
 
     // MARK: CollapsibleCell
