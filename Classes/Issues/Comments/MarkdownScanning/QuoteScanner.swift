@@ -30,7 +30,7 @@ private func quoteString(_ body: String, width: CGFloat) -> NSAttributedStringSi
         body: body,
         width: width,
         attributes: textAttributes,
-        inset: IssueCommentTextCell.inset
+        inset: IssueCommentQuoteCell.inset
     )
 }
 

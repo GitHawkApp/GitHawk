@@ -243,6 +243,8 @@
 		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
 		29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
+		29C76D4C1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C76D4B1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift */; };
+		29C76D4D1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C76D4B1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift */; };
 		29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */; };
 		29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */; };
 		29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */; };
@@ -406,6 +408,7 @@
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
 		29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsRequest.swift; sourceTree = "<group>"; };
 		29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		29C76D4B1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+NSAttributedStringSizing.swift"; sourceTree = "<group>"; };
 		29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
@@ -619,8 +622,8 @@
 		295840D61EEA05F2007723C6 /* Quotes */ = {
 			isa = PBXGroup;
 			children = (
-				295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */,
 				295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */,
+				295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */,
 			);
 			path = Quotes;
 			sourceTree = "<group>";
@@ -771,10 +774,11 @@
 				295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */,
 				29C167661ECA005500439D62 /* Strings.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
+				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
+				29C76D4B1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1105,6 +1109,7 @@
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */,
 				292FCB021EDFCC510026635E /* CreateCommentModels.swift in Sources */,
+				29C76D4C1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
@@ -1219,6 +1224,7 @@
 				295840811EEA00E1007723C6 /* CodeBlockScanner.swift in Sources */,
 				295840D21EEA00E1007723C6 /* UIButton+Label.swift in Sources */,
 				2958409B1EEA00E1007723C6 /* IssueLabelDotCell.swift in Sources */,
+				29C76D4D1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */,
 				2958408F1EEA00E1007723C6 /* IssueCommentTextCell.swift in Sources */,
 				295840BC1EEA00E1007723C6 /* SettingsAddAccountSectionController.swift in Sources */,
 				2958407A1EEA00E1007723C6 /* IssueCommentImageCell.swift in Sources */,
