@@ -8,6 +8,9 @@
       location = "group:Freetime.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:MMMarkdown/MMMarkdown.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
