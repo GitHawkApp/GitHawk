@@ -13,7 +13,7 @@ final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, Collapsi
 
     static let inset = Styles.Sizes.textCellInset
 
-    let label = UILabel()
+    let textView = UIView()
     let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
@@ -22,8 +22,7 @@ final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, Collapsi
         contentView.backgroundColor = .white
         contentView.clipsToBounds = true
 
-        label.numberOfLines = 0
-        contentView.addSubview(label)
+        contentView.addSubview(textView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,10 +38,7 @@ final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, Collapsi
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
-        label.attributedText = viewModel.attributedText
-        let contentSize = viewModel.textViewSize
-        let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentTextCell.inset)
+        textView.configureAndLayout(viewModel)
     }
 
     // MARK: CollapsibleCell

@@ -17,7 +17,8 @@ func CreateMarkdownString(
     ) -> NSAttributedStringSizing? {
     let data = body.data(using: .utf8)
     guard let document = CMDocument(data: data, options: [.hardBreaks]),
-        let attributedString = document.attributedString(with: attributes)
+        let attributedString = document.attributedString(with: attributes),
+        attributedString.length > 0
         else { return nil }
 
     return NSAttributedStringSizing(
