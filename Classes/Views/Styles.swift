@@ -35,6 +35,7 @@ struct Styles {
     struct Fonts {
         static let body = UIFont.systemFont(ofSize: 16)
         static let bodyBold = UIFont.boldSystemFont(ofSize: 16)
+        static let bodyItalic = UIFont.italicSystemFont(ofSize: 16)
         static let secondary = UIFont.systemFont(ofSize: 13)
         static let title = UIFont.boldSystemFont(ofSize: 14)
         static let button = UIFont.systemFont(ofSize: 17)

@@ -948,6 +948,8 @@ static NSString * __HTMLEntityForCharacter(unichar character)
     
     MMElement *element = [MMElement new];
     element.type = isBulleted ? MMElementTypeBulletedList : MMElementTypeNumberedList;
+
+    NSUInteger numberedListPosition = 0;
     
     while (!scanner.atEndOfString)
     {
@@ -969,7 +971,12 @@ static NSString * __HTMLEntityForCharacter(unichar character)
             break;
         }
         [scanner commitTransaction:YES];
-        
+
+        numberedListPosition++;
+        if (listType == MMListTypeNumbered) {
+            item.numberedListPosition = numberedListPosition;
+        }
+
         [element addChild:item];
     }
     
