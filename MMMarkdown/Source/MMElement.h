@@ -27,7 +27,7 @@
 
 @class MMElement;
 
-typedef enum
+typedef NS_ENUM(NSInteger, MMElementType)
 {
     MMElementTypeNone,
     MMElementTypeHeader,
@@ -54,7 +54,7 @@ typedef enum
     MMElementTypeTableHeaderCell,
     MMElementTypeTableRow,
     MMElementTypeTableRowCell,
-} MMElementType;
+};
 
 typedef NS_ENUM(NSInteger, MMTableCellAlignment)
 {
@@ -68,25 +68,26 @@ typedef NS_ENUM(NSInteger, MMTableCellAlignment)
 
 @property (assign, nonatomic) NSRange        range;
 @property (assign, nonatomic) MMElementType  type;
-@property (copy,   nonatomic) NSArray       *innerRanges;
+@property (copy,   nonatomic, nonnull) NSArray       *innerRanges;
 
 @property (assign, nonatomic) MMTableCellAlignment alignment;
 @property (assign, nonatomic) NSUInteger     level;
-@property (copy,   nonatomic) NSString      *href;
-@property (copy,   nonatomic) NSString      *title;
-@property (copy,   nonatomic) NSString      *identifier;
-@property (copy,   nonatomic) NSString      *stringValue;
+@property (copy,   nonatomic, nullable) NSString      *href;
+@property (copy,   nonatomic, nullable) NSString      *title;
+@property (copy,   nonatomic, nullable) NSString      *identifier;
+@property (copy,   nonatomic, nullable) NSString      *stringValue;
+@property (assign, nonatomic) NSUInteger numberedListPosition;
 
-@property (weak, nonatomic) MMElement *parent;
-@property (copy,   nonatomic) NSArray<MMElement *>   *children;
+@property (weak, nonatomic, nullable) MMElement *parent;
+@property (copy,   nonatomic, nonnull) NSArray<MMElement *>   *children;
 
-@property (copy,   nonatomic) NSString  *language;
+@property (copy,   nonatomic, nullable) NSString  *language;
 
 - (void)addInnerRange:(NSRange)aRange;
 - (void)removeLastInnerRange;
 
-- (void)addChild:(MMElement *)aChild;
-- (void)removeChild:(MMElement *)aChild;
-- (MMElement *)removeLastChild;
+- (void)addChild:(MMElement * _Nonnull)aChild;
+- (void)removeChild:(MMElement * _Nonnull)aChild;
+- (MMElement * _Nonnull)removeLastChild;
 
 @end

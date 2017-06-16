@@ -10,10 +10,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,17 +25,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MMMarkdown/MMDocument.h>
-#import <MMMarkdown/MMMarkdownExtensions.h>
+typedef NS_OPTIONS(NSUInteger, MMMarkdownExtensions)
+{
+    MMMarkdownExtensionsNone = 0,
 
-@class MMDocument;
+    MMMarkdownExtensionsAutolinkedURLs      = 1 << 0,
+    //    MMMarkdownExtensionsCrossReferences     = 1 << 1,
+    //    MMMarkdownExtensionsCustomAttributes    = 1 << 2,
+    MMMarkdownExtensionsFencedCodeBlocks    = 1 << 3,
+    //    MMMarkdownExtensionsFootnotes           = 1 << 4,
+    MMMarkdownExtensionsHardNewlines        = 1 << 5,
+    MMMarkdownExtensionsStrikethroughs      = 1 << 6,
+    //    MMMarkdownExtensionsTableCaptions       = 1 << 7,
+    MMMarkdownExtensionsTables              = 1 << 8,
+    MMMarkdownExtensionsUnderscoresInWords  = 1 << 9,
 
-NS_ASSUME_NONNULL_BEGIN
-@interface MMParser : NSObject
+    MMMarkdownExtensionsGitHubFlavored = MMMarkdownExtensionsAutolinkedURLs|MMMarkdownExtensionsFencedCodeBlocks|MMMarkdownExtensionsHardNewlines|MMMarkdownExtensionsStrikethroughs|MMMarkdownExtensionsTables|MMMarkdownExtensionsUnderscoresInWords,
+};
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions;
-
-- (MMDocument *)parseMarkdown:(NSString *)markdown error:(NSError * __autoreleasing * _Nullable)error;
-
-@end
-NS_ASSUME_NONNULL_END
