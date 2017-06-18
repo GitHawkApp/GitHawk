@@ -10,14 +10,21 @@ import Foundation
 
 // https://stackoverflow.com/a/38738940/940936
 extension NSAttributedString {
+
     public func attributedStringByTrimmingCharacterSet(charSet: CharacterSet) -> NSAttributedString {
         let modifiedString = NSMutableAttributedString(attributedString: self)
         modifiedString.trimCharactersInSet(charSet: charSet)
         return NSAttributedString(attributedString: modifiedString)
     }
+    
 }
 
 extension NSMutableAttributedString {
+
+    public func removeAll() {
+        deleteCharacters(in: string.nsrange)
+    }
+
     public func trimCharactersInSet(charSet: CharacterSet) {
         var range = (string as NSString).rangeOfCharacter(from: charSet)
 
@@ -34,4 +41,5 @@ extension NSMutableAttributedString {
             range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
         }
     }
+
 }

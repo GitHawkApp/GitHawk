@@ -208,6 +208,10 @@
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
 		298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
+		29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */; };
+		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
+		29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCD1EF624F500C1E848 /* MMElement+Image.swift */; };
+		29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
@@ -397,6 +401,10 @@
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlSectionController.swift; sourceTree = "<group>"; };
 		298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
+		29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+Attributes.swift"; sourceTree = "<group>"; };
+		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
+		29921BCD1EF624F500C1E848 /* MMElement+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+Image.swift"; sourceTree = "<group>"; };
+		29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+CodeBlock.swift"; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195031EC74C4800C3E289 /* Date+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Display.swift"; sourceTree = "<group>"; };
@@ -648,7 +656,11 @@
 			isa = PBXGroup;
 			children = (
 				295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */,
+				29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */,
+				29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */,
+				29921BCD1EF624F500C1E848 /* MMElement+Image.swift */,
 				29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */,
+				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -1132,13 +1144,16 @@
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
+				29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */,
 				292FCB0E1EDFCC510026635E /* IssueState.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
+				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */,
 				292FCB021EDFCC510026635E /* CreateCommentModels.swift in Sources */,
+				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				29C76D4C1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
@@ -1232,6 +1247,7 @@
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
+				29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */,
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
 				295840D51EEA05A9007723C6 /* QuoteScanner.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,

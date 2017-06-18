@@ -1,0 +1,42 @@
+//
+//  MMElement+CodeBlock.swift
+//  Freetime
+//
+//  Created by Ryan Nystrom on 6/17/17.
+//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//
+
+import UIKit
+import MMMarkdown
+
+extension MMElement {
+
+    func codeBlock(markdown: String) -> IssueCommentCodeBlockModel {
+        // create the text from all 1d "none" child elements
+        // code blocks should not have any other child element type aside from "entity", which is skipped
+        let text = children.reduce("") {
+            guard $1.type == .none else { return $0 }
+            return $0 + substringOrNewline(text: markdown, range: $1.range)
+            }.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        var inset = IssueCommentCodeBlockCell.textViewInset
+        inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
+        inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
+
+        let attributes: [String: Any] = [
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+            NSFontAttributeName: Styles.Fonts.code
+        ]
+
+        let stringSizing = NSAttributedStringSizing(
+            containerWidth: 0,
+            attributedText: NSAttributedString(string: text, attributes: attributes),
+            inset: inset
+        )
+        return IssueCommentCodeBlockModel(
+            code: stringSizing,
+            language: language
+        )
+    }
+
+}
