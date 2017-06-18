@@ -11,7 +11,7 @@ import MMMarkdown
 
 extension MMElement {
 
-    public func attributes(
+    func attributes(
         currentAttributes: [String: Any],
         listLevel: Int
         ) -> [String: Any] {
