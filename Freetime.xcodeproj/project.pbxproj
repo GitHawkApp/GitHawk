@@ -19,12 +19,6 @@
 		292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD41EDFCC510026635E /* IssueCommentModel.swift */; };
 		292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */; };
 		292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */; };
-		292FCB011EDFCC510026635E /* CodeBlockScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD81EDFCC510026635E /* CodeBlockScanner.swift */; };
-		292FCB021EDFCC510026635E /* CreateCommentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD91EDFCC510026635E /* CreateCommentModels.swift */; };
-		292FCB031EDFCC510026635E /* DetailsScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADA1EDFCC510026635E /* DetailsScanner.swift */; };
-		292FCB041EDFCC510026635E /* ImageScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADB1EDFCC510026635E /* ImageScanner.swift */; };
-		292FCB051EDFCC510026635E /* MarkdownScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADC1EDFCC510026635E /* MarkdownScanner.swift */; };
-		292FCB061EDFCC510026635E /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADD1EDFCC510026635E /* String+NSRange.swift */; };
 		292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */; };
 		292FCB081EDFCC510026635E /* IssueCommentSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE11EDFCC510026635E /* IssueCommentSummaryCell.swift */; };
 		292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */; };
@@ -56,6 +50,7 @@
 		29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */; };
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
+		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
 		294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */; };
 		294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */; };
 		294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */; };
@@ -83,12 +78,6 @@
 		2958407E1EEA00E1007723C6 /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD41EDFCC510026635E /* IssueCommentModel.swift */; };
 		2958407F1EEA00E1007723C6 /* IssueCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */; };
 		295840801EEA00E1007723C6 /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */; };
-		295840811EEA00E1007723C6 /* CodeBlockScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD81EDFCC510026635E /* CodeBlockScanner.swift */; };
-		295840821EEA00E1007723C6 /* CreateCommentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD91EDFCC510026635E /* CreateCommentModels.swift */; };
-		295840831EEA00E1007723C6 /* DetailsScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADA1EDFCC510026635E /* DetailsScanner.swift */; };
-		295840841EEA00E1007723C6 /* ImageScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADB1EDFCC510026635E /* ImageScanner.swift */; };
-		295840851EEA00E1007723C6 /* MarkdownScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADC1EDFCC510026635E /* MarkdownScanner.swift */; };
-		295840861EEA00E1007723C6 /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADD1EDFCC510026635E /* String+NSRange.swift */; };
 		295840871EEA00E1007723C6 /* IssueCommentReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */; };
 		295840881EEA00E1007723C6 /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		295840891EEA00E1007723C6 /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
@@ -166,14 +155,10 @@
 		295840D11EEA00E1007723C6 /* UIColor+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */; };
 		295840D21EEA00E1007723C6 /* UIButton+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406E1EE9F21E007723C6 /* UIButton+Label.swift */; };
 		295840D31EEA00FB007723C6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
-		295840D51EEA05A9007723C6 /* QuoteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D41EEA05A9007723C6 /* QuoteScanner.swift */; };
 		295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */; };
 		295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
 		295840DB1EEA09B5007723C6 /* IssueCommentQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */; };
 		295840DC1EEA09B5007723C6 /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
-		295840DD1EEA09B8007723C6 /* QuoteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D41EEA05A9007723C6 /* QuoteScanner.swift */; };
-		295840DF1EEA0A08007723C6 /* CreateMarkdownString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840DE1EEA0A08007723C6 /* CreateMarkdownString.swift */; };
-		295840E01EEA0A46007723C6 /* CreateMarkdownString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840DE1EEA0A08007723C6 /* CreateMarkdownString.swift */; };
 		295F52A71EF1B9D2000B53CF /* Test.md in Sources */ = {isa = PBXBuildFile; fileRef = 295F52A61EF1B9D2000B53CF /* Test.md */; };
 		295F52A91EF1B9E2000B53CF /* MMMarkdownASTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295F52A81EF1B9E2000B53CF /* MMMarkdownASTTests.swift */; };
 		295F52AA1EF1BB86000B53CF /* Test.md in Resources */ = {isa = PBXBuildFile; fileRef = 295F52A61EF1B9D2000B53CF /* Test.md */; };
@@ -183,7 +168,6 @@
 		295F52E11EF1C2C9000B53CF /* CommentModelsFromMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
-		2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2963A9351EE215DD0066509C /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9381EE258C20066509C /* GithubClient+Issues.swift */; };
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
@@ -292,7 +276,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2963A9371EE215DD0066509C /* CocoaMarkdown.framework in Embed Frameworks */,
 				295F52DB1EF1C0C7000B53CF /* MMMarkdown.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -313,12 +296,6 @@
 		292FCAD41EDFCC510026635E /* IssueCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentModel.swift; sourceTree = "<group>"; };
 		292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSectionController.swift; sourceTree = "<group>"; };
 		292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentViewModelHeight.swift; sourceTree = "<group>"; };
-		292FCAD81EDFCC510026635E /* CodeBlockScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeBlockScanner.swift; sourceTree = "<group>"; };
-		292FCAD91EDFCC510026635E /* CreateCommentModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCommentModels.swift; sourceTree = "<group>"; };
-		292FCADA1EDFCC510026635E /* DetailsScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsScanner.swift; sourceTree = "<group>"; };
-		292FCADB1EDFCC510026635E /* ImageScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScanner.swift; sourceTree = "<group>"; };
-		292FCADC1EDFCC510026635E /* MarkdownScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownScanner.swift; sourceTree = "<group>"; };
-		292FCADD1EDFCC510026635E /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionCell.swift; sourceTree = "<group>"; };
 		292FCAE11EDFCC510026635E /* IssueCommentSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryCell.swift; sourceTree = "<group>"; };
 		292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryModel.swift; sourceTree = "<group>"; };
@@ -350,6 +327,7 @@
 		29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddAccountSectionController.swift; sourceTree = "<group>"; };
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
+		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusModel.swift; sourceTree = "<group>"; };
 		294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusSectionController.swift; sourceTree = "<group>"; };
 		294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusCell.swift; sourceTree = "<group>"; };
@@ -362,10 +340,8 @@
 		2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentPhoto.swift; sourceTree = "<group>"; };
 		2958406E1EE9F21E007723C6 /* UIButton+Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Label.swift"; sourceTree = "<group>"; };
 		295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShowMoreDetailsLabel+Date.swift"; sourceTree = "<group>"; };
-		295840D41EEA05A9007723C6 /* QuoteScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteScanner.swift; sourceTree = "<group>"; };
 		295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentQuoteModel.swift; sourceTree = "<group>"; };
 		295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentQuoteCell.swift; sourceTree = "<group>"; };
-		295840DE1EEA0A08007723C6 /* CreateMarkdownString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMarkdownString.swift; sourceTree = "<group>"; };
 		295F52A61EF1B9D2000B53CF /* Test.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Test.md; sourceTree = "<group>"; };
 		295F52A81EF1B9E2000B53CF /* MMMarkdownASTTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMMarkdownASTTests.swift; sourceTree = "<group>"; };
 		295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentModelsFromMarkdown.swift; sourceTree = "<group>"; };
@@ -510,7 +486,6 @@
 				292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */,
 				292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */,
 				295F52AB1EF1BCF6000B53CF /* Markdown */,
-				292FCAD71EDFCC510026635E /* MarkdownScanning */,
 				295840D61EEA05F2007723C6 /* Quotes */,
 				292FCADE1EDFCC510026635E /* Reactions */,
 				292FCAE01EDFCC510026635E /* Summary */,
@@ -545,21 +520,6 @@
 				2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		292FCAD71EDFCC510026635E /* MarkdownScanning */ = {
-			isa = PBXGroup;
-			children = (
-				292FCAD81EDFCC510026635E /* CodeBlockScanner.swift */,
-				292FCAD91EDFCC510026635E /* CreateCommentModels.swift */,
-				295840DE1EEA0A08007723C6 /* CreateMarkdownString.swift */,
-				292FCADA1EDFCC510026635E /* DetailsScanner.swift */,
-				292FCADB1EDFCC510026635E /* ImageScanner.swift */,
-				292FCADC1EDFCC510026635E /* MarkdownScanner.swift */,
-				295840D41EEA05A9007723C6 /* QuoteScanner.swift */,
-				292FCADD1EDFCC510026635E /* String+NSRange.swift */,
-			);
-			path = MarkdownScanning;
 			sourceTree = "<group>";
 		};
 		292FCADE1EDFCC510026635E /* Reactions */ = {
@@ -655,6 +615,7 @@
 		295F52AB1EF1BCF6000B53CF /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
+				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
 				295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */,
 				29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */,
 				29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */,
@@ -1137,7 +1098,6 @@
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				292FCAFC1EDFCC510026635E /* IssueCommentImageModel.swift in Sources */,
-				292FCB011EDFCC510026635E /* CodeBlockScanner.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				29316DB71ECC83AC007CAE3F /* SettingsUserModel.swift in Sources */,
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
@@ -1152,14 +1112,12 @@
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */,
-				292FCB021EDFCC510026635E /* CreateCommentModels.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				29C76D4C1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
-				292FCB061EDFCC510026635E /* String+NSRange.swift in Sources */,
 				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
 				2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
@@ -1170,7 +1128,6 @@
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
 				292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */,
-				292FCB041EDFCC510026635E /* ImageScanner.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueClosedCell.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
@@ -1198,7 +1155,6 @@
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
-				292FCB031EDFCC510026635E /* DetailsScanner.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
@@ -1234,7 +1190,6 @@
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				292FCB0A1EDFCC510026635E /* IssueCommentTextCell.swift in Sources */,
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
-				295840DF1EEA0A08007723C6 /* CreateMarkdownString.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
@@ -1243,13 +1198,11 @@
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */,
 				29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */,
-				292FCB051EDFCC510026635E /* MarkdownScanner.swift in Sources */,
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */,
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
-				295840D51EEA05A9007723C6 /* QuoteScanner.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				292FCB0C1EDFCC510026635E /* IssueEvent.swift in Sources */,
 				29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */,
@@ -1259,6 +1212,7 @@
 				294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
+				2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */,
 				297AE8771EC0D5C200B44A1F /* OnePassword.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1268,7 +1222,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2958407E1EEA00E1007723C6 /* IssueCommentModel.swift in Sources */,
-				295840811EEA00E1007723C6 /* CodeBlockScanner.swift in Sources */,
 				295840D21EEA00E1007723C6 /* UIButton+Label.swift in Sources */,
 				2958409B1EEA00E1007723C6 /* IssueLabelDotCell.swift in Sources */,
 				29C76D4D1EEB46B40048B23F /* UIView+NSAttributedStringSizing.swift in Sources */,
@@ -1305,7 +1258,6 @@
 				295840A91EEA00E1007723C6 /* LoginViewController.swift in Sources */,
 				295840741EEA00E1007723C6 /* IssueClosedSectionController.swift in Sources */,
 				295840AA1EEA00E1007723C6 /* OnePassword.swift in Sources */,
-				295840861EEA00E1007723C6 /* String+NSRange.swift in Sources */,
 				295840C81EEA00E1007723C6 /* GithubUserSession.swift in Sources */,
 				29C2950B1EC7B16800D46CD2 /* Styles.swift in Sources */,
 				29C167751ECA0DC300439D62 /* GithubAPIDateFormatter.swift in Sources */,
@@ -1316,7 +1268,6 @@
 				295840991EEA00E1007723C6 /* IssueLabeledSectionController.swift in Sources */,
 				295840C91EEA00E1007723C6 /* RootNavigationManager.swift in Sources */,
 				2958408C1EEA00E1007723C6 /* UIMenuController+Reactions.swift in Sources */,
-				295840821EEA00E1007723C6 /* CreateCommentModels.swift in Sources */,
 				295840981EEA00E1007723C6 /* IssueLabeledModel.swift in Sources */,
 				29C295061EC7AF8C00D46CD2 /* NotificationType.swift in Sources */,
 				295840A31EEA00E1007723C6 /* IssueStatusModel.swift in Sources */,
@@ -1327,7 +1278,6 @@
 				295840CE1EEA00E1007723C6 /* CenteredButtonCell.swift in Sources */,
 				2958408B1EEA00E1007723C6 /* ReactionViewModel.swift in Sources */,
 				2958408A1EEA00E1007723C6 /* ReactionContent+ReactionType.swift in Sources */,
-				295840851EEA00E1007723C6 /* MarkdownScanner.swift in Sources */,
 				295840891EEA00E1007723C6 /* IssueReactionCell.swift in Sources */,
 				295840AF1EEA00E1007723C6 /* Repository.swift in Sources */,
 				2958409D1EEA00E1007723C6 /* IssueLabelsSectionController.swift in Sources */,
@@ -1337,7 +1287,6 @@
 				2958407C1EEA00E1007723C6 /* IssueCommentPhoto.swift in Sources */,
 				29A195051EC75F3D00C3E289 /* Date+Display.swift in Sources */,
 				295840791EEA00E1007723C6 /* IssueCommentDetailsViewModel.swift in Sources */,
-				295840E01EEA0A46007723C6 /* CreateMarkdownString.swift in Sources */,
 				29A476A61ED23FAE005D0953 /* App.swift in Sources */,
 				295840CA1EEA00E1007723C6 /* StatusBar.swift in Sources */,
 				295840971EEA00E1007723C6 /* IssueLabeledCell.swift in Sources */,
@@ -1363,9 +1312,7 @@
 				295840B31EEA00E1007723C6 /* NotificationsRequest.swift in Sources */,
 				295F52A71EF1B9D2000B53CF /* Test.md in Sources */,
 				29C167711ECA0D7C00439D62 /* Strings.swift in Sources */,
-				295840DD1EEA09B8007723C6 /* QuoteScanner.swift in Sources */,
 				295840911EEA00E1007723C6 /* Issue+IssueType.swift in Sources */,
-				295840841EEA00E1007723C6 /* ImageScanner.swift in Sources */,
 				295840BE1EEA00E1007723C6 /* SettingsSignoutSectionController.swift in Sources */,
 				295840AB1EEA00E1007723C6 /* TwoFactorViewController.swift in Sources */,
 				295840781EEA00E1007723C6 /* IssueCommentDetailCell.swift in Sources */,
@@ -1392,7 +1339,6 @@
 				295840B81EEA00E1007723C6 /* Secrets.swift in Sources */,
 				295840721EEA00E1007723C6 /* IssueClosedCell.swift in Sources */,
 				295840C61EEA00E1007723C6 /* GithubClient.swift in Sources */,
-				295840831EEA00E1007723C6 /* DetailsScanner.swift in Sources */,
 				295840C31EEA00E1007723C6 /* Alamofire+GithubAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
