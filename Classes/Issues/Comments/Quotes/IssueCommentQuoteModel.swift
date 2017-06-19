@@ -11,9 +11,11 @@ import IGListKit
 
 final class IssueCommentQuoteModel: NSObject, IGListDiffable {
 
+    let level: Int
     let quote: NSAttributedStringSizing
 
-    init(quote: NSAttributedStringSizing) {
+    init(level: Int, quote: NSAttributedStringSizing) {
+        self.level = level
         self.quote = quote
     }
 

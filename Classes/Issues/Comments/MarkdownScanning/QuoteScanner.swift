@@ -30,7 +30,7 @@ private func quoteString(_ body: String, width: CGFloat) -> NSAttributedStringSi
         body: body,
         width: width,
         attributes: textAttributes,
-        inset: IssueCommentQuoteCell.inset
+        inset: IssueCommentQuoteCell.inset(quoteLevel: 0)
     )
 }
 
@@ -45,7 +45,7 @@ let quoteScanner = MarkdownScanner { (body, width) in
     for match in matches {
         if let substr = body.substring(with: match.rangeAt(0)),
         let quote = quoteString(substr, width: width) {
-            results.append((match.range, IssueCommentQuoteModel(quote: quote)))
+            results.append((match.range, IssueCommentQuoteModel(level: 0, quote: quote)))
         }
     }
     return results

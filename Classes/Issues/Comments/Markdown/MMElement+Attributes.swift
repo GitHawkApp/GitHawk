@@ -72,13 +72,17 @@ extension MMElement {
             currentPara.firstLineHeadIndent = indent
             currentPara.firstLineHeadIndent = indent
             newAttributes = [NSParagraphStyleAttributeName: currentPara]
+        case .blockquote: newAttributes = [
+            NSForegroundColorAttributeName: Styles.Colors.Gray.medium
+            ]
         default: newAttributes = [:]
         }
-        for (k, v) in currentAttributes {
-            newAttributes[k] = v
+        var attributes = currentAttributes
+        for (k, v) in newAttributes {
+            attributes[k] = v
         }
-        return newAttributes
-
+        return attributes
+        
     }
-
+    
 }

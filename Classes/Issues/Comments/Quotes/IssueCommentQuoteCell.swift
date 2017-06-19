@@ -12,15 +12,17 @@ import IGListKit
 final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
 
     static let borderWidth: CGFloat = 2
-    static let inset = UIEdgeInsets(
-        top: 0,
-        left: Styles.Sizes.gutter + IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing,
-        bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
-    )
+    static func inset(quoteLevel: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: 0,
+            left: Styles.Sizes.gutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(quoteLevel),
+            bottom: Styles.Sizes.rowSpacing,
+            right: Styles.Sizes.gutter
+        )
+    }
 
     private let textView = UIView()
-    private let border = UIView()
+    private var borders = [UIView]()
     private let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
@@ -28,9 +30,6 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
 
         contentView.backgroundColor = .white
         contentView.clipsToBounds = true
-
-        border.backgroundColor = Styles.Colors.Gray.light
-        contentView.addSubview(border)
 
         contentView.addSubview(textView)
     }
@@ -42,19 +41,36 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
-        border.frame = CGRect(
-            x: Styles.Sizes.gutter,
-            y: 0,
-            width: IssueCommentQuoteCell.borderWidth,
-            height: contentView.bounds.height - Styles.Sizes.rowSpacing
-        )
+        for (i, border) in borders.enumerated() {
+            border.frame = CGRect(
+                x: Styles.Sizes.gutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
+                y: 0,
+                width: IssueCommentQuoteCell.borderWidth,
+                height: contentView.bounds.height - Styles.Sizes.rowSpacing
+            )
+        }
     }
 
     //MARK: IGListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentQuoteModel else { return }
+
+        // hack, remove all border views and add them again
+        for border in borders {
+            border.removeFromSuperview()
+        }
+        borders.removeAll()
+        for _ in 0..<viewModel.level {
+            let border = UIView()
+            border.backgroundColor = Styles.Colors.Gray.light
+            contentView.addSubview(border)
+            borders.append(border)
+        }
+
         textView.configureAndLayout(viewModel.quote)
+
+        setNeedsLayout()
     }
 
     // MARK: CollapsibleCell
