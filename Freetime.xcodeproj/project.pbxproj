@@ -51,6 +51,8 @@
 		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
+		293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */; };
+		293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */; };
 		294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */; };
 		294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */; };
 		294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */; };
@@ -328,6 +330,8 @@
 		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
+		293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentUnsupportedModel.swift; sourceTree = "<group>"; };
+		293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentUnsupportedCell.swift; sourceTree = "<group>"; };
 		294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusModel.swift; sourceTree = "<group>"; };
 		294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusSectionController.swift; sourceTree = "<group>"; };
 		294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusCell.swift; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 		292FCAC81EDFCC510026635E /* Comments */ = {
 			isa = PBXGroup;
 			children = (
+				293B58511EF808D1001D067D /* Unsupported */,
 				292FCAC91EDFCC510026635E /* CodeBlock */,
 				292FCACC1EDFCC510026635E /* CollapsibleCell.swift */,
 				292FCACD1EDFCC510026635E /* Details */,
@@ -581,6 +586,15 @@
 				292FCB2B1EE054900026635E /* API.swift */,
 			);
 			name = gql;
+			sourceTree = "<group>";
+		};
+		293B58511EF808D1001D067D /* Unsupported */ = {
+			isa = PBXGroup;
+			children = (
+				293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */,
+				293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */,
+			);
+			path = Unsupported;
 			sourceTree = "<group>";
 		};
 		294563E41EE4EE5B00DBCD35 /* Status */ = {
@@ -1118,6 +1132,7 @@
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
+				293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */,
 				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
 				2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
@@ -1138,6 +1153,7 @@
 				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				298BA08B1EC9031E00B01946 /* RepoNotifications+Notification.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
