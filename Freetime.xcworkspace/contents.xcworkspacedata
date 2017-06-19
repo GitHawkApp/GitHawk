@@ -5,9 +5,6 @@
       location = "group:MMMarkdown/MMMarkdown.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:CocoaMarkdown/CocoaMarkdown.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Freetime.xcodeproj">
    </FileRef>
    <FileRef
