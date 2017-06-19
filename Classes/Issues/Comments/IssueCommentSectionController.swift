@@ -102,6 +102,8 @@ NYTPhotosViewControllerDelegate {
         at index: Int
         ) -> UICollectionViewCell {
         guard let context = self.collectionContext else { return UICollectionViewCell() }
+
+        // cell class based on view model type
         let cellClass: AnyClass
         if viewModel is IssueCommentDetailsViewModel {
             cellClass = IssueCommentDetailCell.self
@@ -115,10 +117,15 @@ NYTPhotosViewControllerDelegate {
             cellClass = IssueCommentReactionCell.self
         } else if viewModel is IssueCommentQuoteModel {
             cellClass = IssueCommentQuoteCell.self
+        } else if viewModel is IssueCommentUnsupportedModel {
+            cellClass = IssueCommentUnsupportedCell.self
         } else {
             cellClass = IssueCommentTextCell.self
         }
+
         let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
+
+        // extra config outside of bind API
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
         }
@@ -131,6 +138,7 @@ NYTPhotosViewControllerDelegate {
         if let cell = cell as? IssueCommentImageCell {
             cell.delegate = self
         }
+
         return cell
     }
 

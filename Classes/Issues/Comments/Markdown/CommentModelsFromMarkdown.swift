@@ -116,6 +116,12 @@ func createModel(markdown: String, element: MMElement) -> IGListDiffable? {
         return element.codeBlock(markdown: markdown)
     case .image:
         return element.imageModel
+    case .table:
+        return IssueCommentUnsupportedModel(name: "Table")
+    case .HTML:
+        return IssueCommentUnsupportedModel(name: "HTML")
+    case .horizontalRule:
+        return IssueCommentUnsupportedModel(name: "<hr>")
     default: return nil
     }
 }
