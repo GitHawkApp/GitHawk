@@ -49,6 +49,7 @@ func commentModels(markdown: String, width: CGFloat) -> [IGListDiffable] {
             attributeStack: baseAttributes,
             width: width,
             listLevel: 0,
+            quoteLevel: 0,
             results: &results
         )
     }
@@ -61,7 +62,7 @@ func commentModels(markdown: String, width: CGFloat) -> [IGListDiffable] {
     return results
 }
 
-private func createTextModel(
+func createTextModel(
     attributedString: NSAttributedString,
     width: CGFloat
     ) -> NSAttributedStringSizing {
@@ -75,7 +76,23 @@ private func createTextModel(
     )
 }
 
-public func substringOrNewline(text: String, range: NSRange) -> String {
+func createQuoteModel(
+    level: Int,
+    attributedString: NSAttributedString,
+    width: CGFloat
+    ) -> IssueCommentQuoteModel {
+    // remove head/tail whitespace and newline from text blocks
+    let trimmedString = attributedString
+        .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
+    let text = NSAttributedStringSizing(
+        containerWidth: width,
+        attributedText: trimmedString,
+        inset: IssueCommentQuoteCell.inset(quoteLevel: level)
+    )
+    return IssueCommentQuoteModel(level: level, quote: text)
+}
+
+func substringOrNewline(text: String, range: NSRange) -> String {
     let substring = text.substring(with: range) ?? ""
     if substring.characters.count > 0 {
         return substring
@@ -84,7 +101,7 @@ public func substringOrNewline(text: String, range: NSRange) -> String {
     }
 }
 
-private func typeNeedsNewline(type: MMElementType) -> Bool {
+func typeNeedsNewline(type: MMElementType) -> Bool {
     switch type {
     case .paragraph: return true
     case .listItem: return true
@@ -93,7 +110,7 @@ private func typeNeedsNewline(type: MMElementType) -> Bool {
     }
 }
 
-private func createModel(markdown: String, element: MMElement) -> IGListDiffable? {
+func createModel(markdown: String, element: MMElement) -> IGListDiffable? {
     switch element.type {
     case .codeBlock:
         return element.codeBlock(markdown: markdown)
@@ -103,29 +120,43 @@ private func createModel(markdown: String, element: MMElement) -> IGListDiffable
     }
 }
 
-private func isList(type: MMElementType) -> Bool {
+func isList(type: MMElementType) -> Bool {
     switch type {
     case .bulletedList, .numberedList: return true
     default: return false
     }
 }
 
-private func travelAST(
+func travelAST(
     markdown: String,
     element: MMElement,
     attributedString: NSMutableAttributedString,
     attributeStack: [String: Any],
     width: CGFloat,
     listLevel: Int,
+    quoteLevel: Int,
     results: inout [IGListDiffable]
     ) {
     let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
+
+    let isQuote = element.type == .blockquote
+    let nextQuoteLevel = quoteLevel + (isQuote ? 1 : 0)
 
     // push more text attributes on the stack the deeper we go
     let pushedAttributes = element.attributes(currentAttributes: attributeStack, listLevel: nextListLevel)
 
     if typeNeedsNewline(type: element.type) {
         attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))
+    }
+
+    // if entering a block quote, finish up any string that was building
+    if isQuote && attributedString.length > 0 {
+        if quoteLevel > 0 {
+            results.append(createQuoteModel(level: quoteLevel, attributedString: attributedString, width: width))
+        } else {
+            results.append(createTextModel(attributedString: attributedString, width: width))
+        }
+        attributedString.removeAll()
     }
 
     if element.type == .none {
@@ -163,8 +194,15 @@ private func travelAST(
                 attributeStack: pushedAttributes,
                 width: width,
                 listLevel: nextListLevel,
+                quoteLevel: nextQuoteLevel,
                 results: &results
             )
         }
+    }
+
+    // cap the child before exiting
+    if isQuote && attributedString.length > 0 {
+        results.append(createQuoteModel(level: nextQuoteLevel, attributedString: attributedString, width: width))
+        attributedString.removeAll()
     }
 }
