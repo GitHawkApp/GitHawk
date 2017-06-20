@@ -73,7 +73,6 @@ func createCommentModel(
         else { return nil }
 
     let details = IssueCommentDetailsViewModel(date: date, login: author.login, avatarURL: avatarURL)
-//    let bodies = createCommentModels(body: commentFields.body, width: width)
     let bodies = commentModels(markdown: commentFields.body, width: width)
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies)

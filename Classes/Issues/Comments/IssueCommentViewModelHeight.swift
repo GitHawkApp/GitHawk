@@ -22,6 +22,8 @@ func bodyHeight(viewModel: Any) -> CGFloat {
         return Styles.Sizes.gutter * 2 + Styles.Sizes.avatar.height
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
         return viewModel.quote.textViewSize.height
+    } else if viewModel is IssueCommentHrModel {
+        return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
     } else {
         return Styles.Sizes.tableCellHeight
     }
