@@ -9,7 +9,8 @@
 import UIKit
 
 private func bodyIsCollapsible(body: Any) -> Bool {
-    if body is IssueCommentHrModel {
+    if body is IssueCommentHrModel,
+        body is IssueCommentHtmlModel {
         return false
     } else {
         return true

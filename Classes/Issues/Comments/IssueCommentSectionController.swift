@@ -16,10 +16,12 @@ IGListBindingSectionControllerSelectionDelegate,
 IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
 IssueCommentImageCellDelegate,
-NYTPhotosViewControllerDelegate {
+NYTPhotosViewControllerDelegate,
+IssueCommentHtmlCellDelegate {
 
     private var collapsed = true
     private let client: GithubClient
+    private var htmlSizes = [String: CGSize]()
 
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
@@ -90,6 +92,9 @@ NYTPhotosViewControllerDelegate {
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
+        } else if let viewModel = viewModel as? IssueCommentHtmlModel,
+            let size = htmlSizes[viewModel.html] {
+            height = size.height
         } else {
             height = bodyHeight(viewModel: viewModel)
         }
@@ -119,6 +124,8 @@ NYTPhotosViewControllerDelegate {
             cellClass = IssueCommentQuoteCell.self
         } else if viewModel is IssueCommentUnsupportedModel {
             cellClass = IssueCommentUnsupportedCell.self
+        } else if viewModel is IssueCommentHtmlModel {
+            cellClass = IssueCommentHtmlCell.self
         } else if viewModel is IssueCommentHrModel {
             cellClass = IssueCommentHrCell.self
         } else {
@@ -130,14 +137,13 @@ NYTPhotosViewControllerDelegate {
         // extra config outside of bind API
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
-        }
-        if let cell = cell as? IssueCommentDetailCell {
+        } else if let cell = cell as? IssueCommentDetailCell {
             cell.delegate = self
-        }
-        if let cell = cell as? IssueCommentReactionCell {
+        } else if let cell = cell as? IssueCommentReactionCell {
             cell.delegate = self
-        }
-        if let cell = cell as? IssueCommentImageCell {
+        } else if let cell = cell as? IssueCommentImageCell {
+            cell.delegate = self
+        } else if let cell = cell as? IssueCommentHtmlCell {
             cell.delegate = self
         }
 
@@ -189,6 +195,19 @@ NYTPhotosViewControllerDelegate {
 
     func photosViewController(_ photosViewController: NYTPhotosViewController, referenceViewFor photo: NYTPhoto) -> UIView? {
         return referenceImageView
+    }
+
+    // MARK: IssueCommentHtmlCellDelegate
+
+    func webViewDidLoad(cell: IssueCommentHtmlCell) {
+        guard let index = collectionContext?.index(for: cell, sectionController: self),
+        let model = viewModels[index] as? IssueCommentHtmlModel,
+        htmlSizes[model.html] == nil
+        else { return }
+        htmlSizes[model.html] = cell.webViewPreferredSize()
+        UIView.performWithoutAnimation {
+            self.collectionContext?.invalidateLayout(for: self)
+        }
     }
 
 }

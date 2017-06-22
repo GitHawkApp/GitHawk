@@ -119,7 +119,8 @@ func createModel(markdown: String, element: MMElement) -> IGListDiffable? {
     case .table:
         return IssueCommentUnsupportedModel(name: "Table")
     case .HTML:
-        return IssueCommentUnsupportedModel(name: "HTML")
+        guard let html = markdown.substring(with: element.range) else { return nil }
+        return IssueCommentHtmlModel(html: html)
     case .horizontalRule:
         return IssueCommentHrModel()
     default: return nil
