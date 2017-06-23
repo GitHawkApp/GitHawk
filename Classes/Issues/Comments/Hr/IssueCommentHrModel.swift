@@ -9,15 +9,15 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentHrModel: NSObject, IGListDiffable {
+final class IssueCommentHrModel: NSObject, ListDiffable {
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return self
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
 

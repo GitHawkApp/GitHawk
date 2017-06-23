@@ -9,9 +9,9 @@
 import UIKit
 import IGListKit
 
-final class IssueLabelsSectionController: IGListBindingSectionController<IssueLabelsModel>,
-IGListBindingSectionControllerDataSource,
-IGListBindingSectionControllerSelectionDelegate {
+final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
+ListBindingSectionControllerDataSource,
+ListBindingSectionControllerSelectionDelegate {
 
     var expanded = false
 
@@ -21,9 +21,9 @@ IGListBindingSectionControllerSelectionDelegate {
         dataSource = self
     }
 
-    // MARK: IGListBindingSectionControllerDataSource
+    // MARK: ListBindingSectionControllerDataSource
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, viewModelsFor object: Any) -> [ListDiffable] {
         guard let object = self.object,
             object.labels.count > 0
             else { return [] }
@@ -32,12 +32,12 @@ IGListBindingSectionControllerSelectionDelegate {
             + (expanded ? object.labels : [])
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
         return CGSize(width: context.containerSize.width, height: 30    )
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
         guard let context = self.collectionContext else { return UICollectionViewCell() }
         let cellClass: AnyClass
         if viewModel is IssueLabelSummaryModel {
@@ -48,9 +48,9 @@ IGListBindingSectionControllerSelectionDelegate {
         return context.dequeueReusableCell(of: cellClass, for: self, at: index)
     }
 
-    // MARK: IGListBindingSectionControllerSelectionDelegate
+    // MARK: ListBindingSectionControllerSelectionDelegate
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         expanded = !expanded
         update(animated: true)
     }

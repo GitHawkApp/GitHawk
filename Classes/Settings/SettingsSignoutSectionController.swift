@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class SettingsSignoutSectionController: IGListSectionController {
+final class SettingsSignoutSectionController: ListSectionController {
 
     let sessionManager: GithubSessionManager
 

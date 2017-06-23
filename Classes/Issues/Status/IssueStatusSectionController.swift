@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueStatusSectionController: IGListGenericSectionController<IssueStatusModel> {
+final class IssueStatusSectionController: ListGenericSectionController<IssueStatusModel> {
 
     override init() {
         super.init()

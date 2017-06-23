@@ -13,7 +13,7 @@ protocol IssueCommentHtmlCellDelegate: class {
     func webViewDidLoad(cell: IssueCommentHtmlCell)
 }
 
-final class IssueCommentHtmlCell: UICollectionViewCell, IGListBindable, UIWebViewDelegate {
+final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
 
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
 
@@ -49,7 +49,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, IGListBindable, UIWebVie
         return webView.sizeThatFits(.zero)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }

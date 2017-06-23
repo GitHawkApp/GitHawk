@@ -9,15 +9,15 @@
 import Foundation
 import IGListKit
 
-class ListTestKit: NSObject, IGListAdapterDataSource {
+class ListTestKit: NSObject, ListAdapterDataSource {
 
     let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    let adapter = IGListAdapter(updater: IGListAdapterUpdater(), viewController: nil)
+    let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: nil)
 
-    var objects: [IGListDiffable] = []
-    var sectionControllerBlock: (Any) -> (IGListSectionController) = { _ in
-        return IGListSectionController()
+    var objects: [ListDiffable] = []
+    var sectionControllerBlock: (Any) -> (ListSectionController) = { _ in
+        return ListSectionController()
     }
 
     func setup() {
@@ -27,17 +27,17 @@ class ListTestKit: NSObject, IGListAdapterDataSource {
         adapter.dataSource = self
     }
 
-    // MARK: IGListAdapterDataSource
+    // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return objects
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         return sectionControllerBlock(object)
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? {
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
 

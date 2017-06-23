@@ -10,13 +10,13 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 
-final class IssuesViewController: UIViewController, IGListAdapterDataSource, FeedDelegate {
+final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate {
 
     fileprivate let client: GithubClient
     fileprivate let owner: String
     fileprivate let repo: String
     fileprivate let number: Int
-    fileprivate var models = [IGListDiffable]()
+    fileprivate var models = [ListDiffable]()
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
     init(
@@ -62,13 +62,13 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
         present(activity, animated: true)
     }
 
-    // MARK: IGListAdapterDataSource
+    // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return models
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         if object is NSAttributedStringSizing {
             return IssueTitleSectionController()
         } else if object is IssueCommentModel {
@@ -82,10 +82,10 @@ final class IssuesViewController: UIViewController, IGListAdapterDataSource, Fee
         } else if object is IssueClosedModel {
             return IssueClosedSectionController()
         }
-        return IGListSectionController()
+        return ListSectionController()
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? {
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch feed.status {
         case .idle:
             let emptyView = EmptyView()

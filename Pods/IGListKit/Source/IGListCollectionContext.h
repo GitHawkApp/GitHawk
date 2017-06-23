@@ -15,12 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class IGListSectionController;
 
-
-
 /**
  The collection context provides limited access to the collection-related information that
- section controllers need for operations like sizing, dequeing cells, insterting, deleting, reloading, etc.
+ section controllers need for operations like sizing, dequeuing cells, insterting, deleting, reloading, etc.
  */
+NS_SWIFT_NAME(ListCollectionContext)
 @protocol IGListCollectionContext <NSObject>
 
 /**
@@ -99,15 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deselectItemAtIndex:(NSInteger)index
           sectionController:(IGListSectionController *)sectionController
                    animated:(BOOL)animated;
-
-/**
- Returns the section index of an section controller.
-
- @param sectionController A section controller object.
-
- @return The section index of the controller if found, otherwise `NSNotFound`.
- */
-- (NSInteger)sectionForSectionController:(IGListSectionController *)sectionController;
 
 /**
  Dequeues a cell from the collection view reuse pool.

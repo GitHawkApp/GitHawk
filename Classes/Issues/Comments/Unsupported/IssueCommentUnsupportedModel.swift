@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentUnsupportedModel: IGListDiffable {
+final class IssueCommentUnsupportedModel: ListDiffable {
 
     let name: String
     let uuid = NSUUID()
@@ -18,13 +18,13 @@ final class IssueCommentUnsupportedModel: IGListDiffable {
         self.name = name
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return uuid
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
 

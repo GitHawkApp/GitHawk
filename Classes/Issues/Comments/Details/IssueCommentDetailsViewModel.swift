@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentDetailsViewModel: IGListDiffable {
+final class IssueCommentDetailsViewModel: ListDiffable {
 
     let date: Date
     let login: String
@@ -29,7 +29,7 @@ final class IssueCommentDetailsViewModel: IGListDiffable {
         return login as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueCommentDetailsViewModel else { return false }
         return date == object.date

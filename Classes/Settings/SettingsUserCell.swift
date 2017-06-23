@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class SettingsUserCell: UICollectionViewCell, IGListBindable {
+final class SettingsUserCell: UICollectionViewCell, ListBindable {
 
     fileprivate let label = UILabel()
     fileprivate let accessoryView = UIImageView(image: UIImage(named: "check"))
@@ -46,7 +46,7 @@ final class SettingsUserCell: UICollectionViewCell, IGListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? SettingsUserModel else { return }

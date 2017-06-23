@@ -13,7 +13,7 @@ protocol SegmentedControlSectionControllerDelegate: class {
     func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel)
 }
 
-final class SegmentedControlSectionController: IGListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
+final class SegmentedControlSectionController: ListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
 
     weak var delegate: SegmentedControlSectionControllerDelegate? = nil
 

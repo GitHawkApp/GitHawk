@@ -21,7 +21,7 @@ final class Feed {
         case loading
     }
 
-    let adapter: IGListAdapter
+    let adapter: ListAdapter
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
@@ -36,7 +36,7 @@ final class Feed {
     private var refreshBegin: TimeInterval = -1
 
     init(viewController: UIViewController, delegate: FeedDelegate) {
-        self.adapter = IGListAdapter(updater: IGListAdapterUpdater(), viewController: viewController)
+        self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
         self.delegate = delegate
     }
 

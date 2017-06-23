@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class SettingsAddAccountSectionController: IGListSectionController {
+final class SettingsAddAccountSectionController: ListSectionController {
 
     let rootNavigationManager: RootNavigationManager
 

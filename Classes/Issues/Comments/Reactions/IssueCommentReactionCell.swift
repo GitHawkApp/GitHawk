@@ -16,7 +16,7 @@ protocol IssueCommentReactionCellDelegate {
 }
 
 final class IssueCommentReactionCell: UICollectionViewCell,
-IGListBindable,
+ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
 
@@ -127,7 +127,7 @@ UICollectionViewDelegateFlowLayout {
         delegate?.didAdd(cell: self, reaction: .heart)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentReactionViewModel else { return }

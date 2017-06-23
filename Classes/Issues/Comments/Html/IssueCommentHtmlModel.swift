@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentHtmlModel: NSObject, IGListDiffable {
+final class IssueCommentHtmlModel: NSObject, ListDiffable {
 
     let html: String
 
@@ -17,13 +17,13 @@ final class IssueCommentHtmlModel: NSObject, IGListDiffable {
         self.html = html
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return html as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
 

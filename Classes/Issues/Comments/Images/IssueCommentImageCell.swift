@@ -15,7 +15,7 @@ protocol IssueCommentImageCellDelegate: class {
     func didTapImage(cell: IssueCommentImageCell, image: UIImage)
 }
 
-final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
+final class IssueCommentImageCell: UICollectionViewCell, ListBindable, CollapsibleCell {
 
     static let preferredHeight: CGFloat = 200
 
@@ -95,7 +95,7 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
         delegate?.didTapImage(cell: self, image: image)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }

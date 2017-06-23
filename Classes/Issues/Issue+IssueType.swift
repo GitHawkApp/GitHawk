@@ -35,8 +35,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return fragments.closableFields
     }
 
-    func timelineViewModels(width: CGFloat) -> [IGListDiffable] {
-        var results = [IGListDiffable]()
+    func timelineViewModels(width: CGFloat) -> [ListDiffable] {
+        var results = [ListDiffable]()
 
         for node in timeline.nodes ?? [] {
             guard let node = node else { continue }

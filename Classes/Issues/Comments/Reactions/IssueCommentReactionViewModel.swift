@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentReactionViewModel: IGListDiffable {
+final class IssueCommentReactionViewModel: ListDiffable {
 
     let models: [ReactionViewModel]
     private let map: [String: Int]
@@ -24,14 +24,14 @@ final class IssueCommentReactionViewModel: IGListDiffable {
         self.map = map
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         // assume only one model per usage
         return "reactions" as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueCommentReactionViewModel else { return false }
         return map == object.map

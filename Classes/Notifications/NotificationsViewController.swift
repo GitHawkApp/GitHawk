@@ -11,7 +11,7 @@ import IGListKit
 import SnapKit
 
 class NotificationsViewController: UIViewController,
-IGListAdapterDataSource,
+ListAdapterDataSource,
 SegmentedControlSectionControllerDelegate,
 FeedDelegate {
 
@@ -61,14 +61,14 @@ FeedDelegate {
         }
     }
 
-    // MARK: IGListAdapterDataSource
+    // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard allNotifications.count > 0 else { return [] }
         return [selection] + filteredNotifications
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         if object is SegmentedControlModel {
             let controller = SegmentedControlSectionController()
             controller.delegate = self
@@ -78,7 +78,7 @@ FeedDelegate {
         }
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? {
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch feed.status {
         case .idle:
             let emptyView = EmptyView()

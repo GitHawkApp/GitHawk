@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class SettingsViewController: UIViewController, IGListAdapterDataSource, GithubSessionListener {
+final class SettingsViewController: UIViewController, ListAdapterDataSource, GithubSessionListener {
 
     // injected
     fileprivate let sessionManager: GithubSessionManager
     weak var rootNavigationManager: RootNavigationManager? = nil
 
-    fileprivate lazy var adapter: IGListAdapter = { IGListAdapter(updater: IGListAdapterUpdater(), viewController: self) }()
+    fileprivate lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
 
     fileprivate let addKey = "add"
     fileprivate let signoutKey = "signout"
@@ -58,17 +58,17 @@ final class SettingsViewController: UIViewController, IGListAdapterDataSource, G
         }
     }
 
-    // MARK: IGListAdapterDataSource
+    // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return [
-            addKey as IGListDiffable,
+            addKey as ListDiffable,
             sessionManager,
-            signoutKey as IGListDiffable
+            signoutKey as ListDiffable
         ]
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         if let str = object as? String, str == addKey, let mgr = rootNavigationManager {
             return SettingsAddAccountSectionController(rootNavigationManager: mgr)
         } else if let str = object as? String, str == signoutKey {
@@ -78,7 +78,7 @@ final class SettingsViewController: UIViewController, IGListAdapterDataSource, G
         }
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+    func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
 
     // MARK: GithubSessionListener
 

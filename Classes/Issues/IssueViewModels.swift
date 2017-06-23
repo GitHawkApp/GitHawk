@@ -12,9 +12,9 @@ import IGListKit
 func createViewModels(
     issue: IssueType,
     width: CGFloat
-    ) -> [IGListDiffable] {
+    ) -> [ListDiffable] {
 
-    var result = [IGListDiffable]()
+    var result = [ListDiffable]()
 
     result.append(IssueStatusModel(closed: issue.closableFields.closed, pullRequest: issue.pullRequest))
     result.append(titleStringSizing(title: issue.title, width: width))

@@ -9,9 +9,9 @@
 import UIKit
 import IGListKit
 
-final class SettingsUsersSectionController: IGListBindingSectionController<GithubSessionManager>,
-IGListBindingSectionControllerDataSource,
-IGListBindingSectionControllerSelectionDelegate {
+final class SettingsUsersSectionController: ListBindingSectionController<GithubSessionManager>,
+ListBindingSectionControllerDataSource,
+ListBindingSectionControllerSelectionDelegate {
 
     override init() {
         super.init()
@@ -25,26 +25,26 @@ IGListBindingSectionControllerSelectionDelegate {
         return object.allUserSessions.sorted { $0.login < $1.login }
     }
 
-    // MARK: IGListBindingSectionControllerDataSource
+    // MARK: ListBindingSectionControllerDataSource
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, viewModelsFor object: Any) -> [IGListDiffable] {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, viewModelsFor object: Any) -> [ListDiffable] {
         let focusedLogin = self.object?.focusedLogin
         return activeSessions.map { SettingsUserModel(name: $0.login, selected: focusedLogin == $0.login) }
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
         guard let context = self.collectionContext else { return .zero }
         return CGSize(width: context.containerSize.width, height: Styles.Sizes.tableCellHeight)
     }
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
         guard let context = self.collectionContext else { return UICollectionViewCell() }
         return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
 
-    // MARK: IGListBindingSectionControllerSelectionDelegate
+    // MARK: ListBindingSectionControllerSelectionDelegate
 
-    func sectionController(_ sectionController: IGListBindingSectionController<IGListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let object = self.object else { return }
         object.focus(activeSessions[index])
     }

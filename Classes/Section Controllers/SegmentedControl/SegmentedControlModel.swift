@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class SegmentedControlModel: IGListDiffable {
+final class SegmentedControlModel: ListDiffable {
 
     let items: [String]
     fileprivate let _diffIdentifier: String
@@ -20,13 +20,13 @@ final class SegmentedControlModel: IGListDiffable {
         _diffIdentifier = items.reduce("") { return $0 + $1 }
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return _diffIdentifier as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? SegmentedControlModel else { return false }
         return selectedIndex == object.selectedIndex

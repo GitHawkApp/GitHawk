@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The base class for section controllers used in a list. This class is intended to be subclassed.
  */
+NS_SWIFT_NAME(ListSectionController)
 @interface IGListSectionController : NSObject
 
 /**
@@ -93,9 +94,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A context object for interacting with the collection. 
  
- Use this property for accessing the collection size, dequeing cells, reloading, inserting, deleting, etc.
+ Use this property for accessing the collection size, dequeuing cells, reloading, inserting, deleting, etc.
  */
 @property (nonatomic, weak, nullable, readonly) id <IGListCollectionContext> collectionContext;
+
+/**
+ Returns the section within the list for this section controller.
+
+ @note This value also relates to the section within a `UICollectionView` that this section controller's cells belong.
+ It also relates to the `-[NSIndexPath section]` value for individual cells within the collection view.
+ */
+@property (nonatomic, assign, readonly) NSInteger section;
 
 /**
  Returns `YES` if the section controller is the first section in the list, `NO` otherwise.

@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
+final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, CollapsibleCell {
 
     static let scrollViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -64,7 +64,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }

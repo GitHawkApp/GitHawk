@@ -25,7 +25,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping ([IGListDiffable]) -> ()
+        completion: @escaping ([ListDiffable]) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)

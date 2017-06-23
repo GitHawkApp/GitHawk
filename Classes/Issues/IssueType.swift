@@ -20,5 +20,5 @@ protocol IssueType {
     var reactionFields: ReactionFields { get }
     var closableFields: ClosableFields { get }
 
-    func timelineViewModels(width: CGFloat) -> [IGListDiffable]
+    func timelineViewModels(width: CGFloat) -> [ListDiffable]
 }

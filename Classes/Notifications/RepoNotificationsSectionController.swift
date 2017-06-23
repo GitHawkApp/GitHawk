@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class RepoNotificationsSectionController: IGListGenericSectionController<NotificationViewModel> {
+final class RepoNotificationsSectionController: ListGenericSectionController<NotificationViewModel> {
 
     let client: GithubClient
 

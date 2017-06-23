@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueClosedModel: IGListDiffable {
+final class IssueClosedModel: ListDiffable {
 
     let id: String
     let actor: String
@@ -25,13 +25,13 @@ final class IssueClosedModel: IGListDiffable {
         self.pullRequest = pullRequest
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         // if the ids match, it should be the same object
         return true
     }
