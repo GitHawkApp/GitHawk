@@ -66,7 +66,7 @@ func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
 func createTextModel(
     attributedString: NSAttributedString,
     width: CGFloat
-    ) -> NSAttributedStringSizing {
+    ) -> NSAttributedStringSizing? {
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
