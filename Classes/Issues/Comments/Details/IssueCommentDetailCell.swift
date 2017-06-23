@@ -30,9 +30,9 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         contentView.backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = Styles.Colors.Gray.lighter
+        imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         imageView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        imageView.layer.borderColor = Styles.Colors.Gray.light.cgColor
+        imageView.layer.borderColor = Styles.Colors.Gray.light.color?.cgColor
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
@@ -43,7 +43,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         }
 
         loginLabel.font = Styles.Fonts.title
-        loginLabel.textColor = Styles.Colors.Gray.dark
+        loginLabel.textColor = Styles.Colors.Gray.dark.color
         contentView.addSubview(loginLabel)
         loginLabel.snp.makeConstraints { make in
             make.bottom.equalTo(imageView.snp.centerY)
@@ -51,7 +51,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         }
 
         dateLabel.font = Styles.Fonts.secondary
-        dateLabel.textColor = Styles.Colors.Gray.light
+        dateLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.left.equalTo(loginLabel)
@@ -61,7 +61,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         moreButton.isHidden = true
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        moreButton.tintColor = Styles.Colors.Gray.light
+        moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore), for: .touchUpInside)
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in

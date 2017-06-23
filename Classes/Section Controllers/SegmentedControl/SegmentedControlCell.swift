@@ -25,7 +25,7 @@ final class SegmentedControlCell: UICollectionViewCell {
         contentView.backgroundColor = .white
 
         segmentedControl.addTarget(self, action: #selector(SegmentedControlCell.didSelect(sender:)), for: .valueChanged)
-        segmentedControl.tintColor = Styles.Colors.Blue.medium
+        segmentedControl.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
             make.left.equalTo(contentView).offset(Styles.Sizes.gutter)

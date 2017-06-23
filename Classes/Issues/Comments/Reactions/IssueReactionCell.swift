@@ -19,7 +19,7 @@ final class IssueReactionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.font = Styles.Fonts.body
-        label.textColor = Styles.Colors.Blue.medium
+        label.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.edges.equalTo(contentView)

@@ -63,7 +63,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
         borders.removeAll()
         for _ in 0..<viewModel.level {
             let border = UIView()
-            border.backgroundColor = Styles.Colors.Gray.light
+            border.backgroundColor = Styles.Colors.Gray.light.color
             contentView.addSubview(border)
             borders.append(border)
         }

@@ -29,7 +29,7 @@ final class SettingsViewController: UIViewController, IGListAdapterDataSource, G
             bottom: Styles.Sizes.tableSectionSpacing,
             right: 0
         )
-        view.backgroundColor = Styles.Colors.Gray.lighter
+        view.backgroundColor = Styles.Colors.Gray.lighter.color
         return view
     }()
 

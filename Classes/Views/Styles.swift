@@ -30,37 +30,58 @@ struct Styles {
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.gutter
         )
+
+        struct Text {
+            static let body: CGFloat = 16
+            static let secondary: CGFloat = 13
+            static let title: CGFloat = 14
+            static let button: CGFloat = 16
+            static let headline: CGFloat = 18
+            static let smallTitle: CGFloat = 12
+            static let h1: CGFloat = 24
+            static let h2: CGFloat = 22
+            static let h3: CGFloat = 20
+            static let h4: CGFloat = 18
+            static let h5: CGFloat = 16
+            static let h6: CGFloat = 16
+        }
     }
 
     struct Fonts {
-        static let body = UIFont.systemFont(ofSize: 16)
-        static let bodyBold = UIFont.boldSystemFont(ofSize: 16)
-        static let bodyItalic = UIFont.italicSystemFont(ofSize: 16)
-        static let secondary = UIFont.systemFont(ofSize: 13)
-        static let title = UIFont.boldSystemFont(ofSize: 14)
-        static let button = UIFont.systemFont(ofSize: 17)
-        static let headline = UIFont.boldSystemFont(ofSize: 18)
-        static let smallTitle = UIFont.boldSystemFont(ofSize: 12.0)
-        static let code = UIFont(name: "Courier", size: 16)!
+        static let body = UIFont.systemFont(ofSize: Styles.Sizes.Text.body)
+        static let bodyBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.body)
+        static let secondary = UIFont.systemFont(ofSize: Styles.Sizes.Text.secondary)
+        static let title = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.title)
+        static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
+        static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)
+        static let smallTitle = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.smallTitle)
+        static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
     }
 
     struct Colors {
-        static let green = UIColor.fromHex("28a745")
-        static let red = UIColor.fromHex("cb2431")
-        static let background = UIColor.white
+        static let green = "28a745"
+        static let red = "cb2431"
+        static let background = "ffffff"
 
         struct Blue {
-            static let medium = UIColor.fromHex("0366d6")
-            static let light = UIColor.fromHex("f1f8ff")
+            static let medium = "0366d6"
+            static let light = "f1f8ff"
         }
 
         struct Gray {
-            static let dark = UIColor.fromHex("24292e")
-            static let medium = UIColor.fromHex("586069")
-            static let light = UIColor.fromHex("a3aab1")
-            static let lighter = UIColor.fromHex("f6f8fa")
-            static let border = UIColor.fromHex("dfe2e5")
+            static let dark = "24292e"
+            static let medium = "586069"
+            static let light = "a3aab1"
+            static let lighter = "f6f8fa"
+            static let border = "dfe2e5"
         }
     }
 
 }
+
+extension String {
+    var color: UIColor? {
+        return UIColor.fromHex(self)
+    }
+}
+

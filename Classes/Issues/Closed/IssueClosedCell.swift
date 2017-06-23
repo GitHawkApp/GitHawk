@@ -33,7 +33,7 @@ final class IssueClosedCell: UICollectionViewCell {
         }
 
         dateLabel.font = Styles.Fonts.body
-        dateLabel.textColor = Styles.Colors.Gray.medium
+        dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -50,7 +50,7 @@ final class IssueClosedCell: UICollectionViewCell {
 
     func configure(_ model: IssueClosedModel) {
         let actorAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color ?? .black,
             NSFontAttributeName: Styles.Fonts.bodyBold
         ]
         label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)

@@ -25,7 +25,7 @@ final class Feed {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
-        view.backgroundColor = Styles.Colors.Gray.lighter
+        view.backgroundColor = Styles.Colors.Gray.lighter.color
         view.refreshControl = UIRefreshControl()
         view.refreshControl?.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
         return view
