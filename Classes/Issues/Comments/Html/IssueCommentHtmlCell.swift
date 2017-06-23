@@ -15,6 +15,32 @@ protocol IssueCommentHtmlCellDelegate: class {
 
 final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
 
+    private static let htmlHead = [
+        "<html><head><style>",
+        "body{",
+        // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
+        "font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;",
+        "color: #\(Styles.Colors.Gray.dark);",
+        "padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0px;",
+        "}",
+        "b, strong{font-weight: 600;}",
+        "i, em{font-style: italic;}",
+        "a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}",
+        "h1{font-size: \(Styles.Sizes.Text.h1);}",
+        "h2{font-size: \(Styles.Sizes.Text.h2);}",
+        "h3{font-size: \(Styles.Sizes.Text.h3);}",
+        "h4{font-size: \(Styles.Sizes.Text.h4);}",
+        "h5{font-size: \(Styles.Sizes.Text.h5);}",
+        "h6, h7, h8{font-size: \(Styles.Sizes.Text.h6), color: #\(Styles.Colors.Gray.medium);}",
+        "dl dt{margin-top: 16px; font-style: italic; font-weight: 600;}",
+        "dl dd{padding: 0 16px;}",
+        "blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}",
+        "pre, code{background-color: #\(Styles.Colors.Gray.lighter);}",
+        "pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}",
+        "</style></head><body>",
+        ].joined(separator: "")
+    private static let htmlTail = "</body></html>"
+
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
 
     private let webView = UIWebView()
@@ -53,7 +79,8 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
-        webView.loadHTMLString(viewModel.html, baseURL: nil)
+        let html = IssueCommentHtmlCell.htmlHead + viewModel.html + IssueCommentHtmlCell.htmlTail
+        webView.loadHTMLString(html, baseURL: nil)
     }
 
     // MARK: UIWebViewDelegate

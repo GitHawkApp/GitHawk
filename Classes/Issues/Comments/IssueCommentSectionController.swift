@@ -201,6 +201,7 @@ IssueCommentHtmlCellDelegate {
 
     func webViewDidLoad(cell: IssueCommentHtmlCell) {
         guard let index = collectionContext?.index(for: cell, sectionController: self),
+        index < viewModels.count,
         let model = viewModels[index] as? IssueCommentHtmlModel,
         htmlSizes[model.html] == nil
         else { return }

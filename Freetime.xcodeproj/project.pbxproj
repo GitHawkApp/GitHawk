@@ -629,8 +629,8 @@
 		2949674F1EFC1E9200B1CF1A /* Html */ = {
 			isa = PBXGroup;
 			children = (
-				294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */,
 				294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */,
+				294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */,
 			);
 			path = Html;
 			sourceTree = "<group>";
@@ -657,12 +657,12 @@
 		295F52AB1EF1BCF6000B53CF /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
-				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
 				295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */,
 				29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */,
 				29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */,
 				29921BCD1EF624F500C1E848 /* MMElement+Image.swift */,
 				29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */,
+				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
 			);
 			path = Markdown;

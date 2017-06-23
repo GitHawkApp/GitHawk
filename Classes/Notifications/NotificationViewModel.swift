@@ -42,7 +42,7 @@ final class NotificationViewModel: ListDiffable {
 
         let attributes = [
             NSFontAttributeName: Styles.Fonts.body,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color ?? .black
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
         ]
         self.title = NSAttributedString(string: title, attributes: attributes)
 
