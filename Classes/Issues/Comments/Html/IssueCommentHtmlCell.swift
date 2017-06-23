@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 
 protocol IssueCommentHtmlCellDelegate: class {
-    func webViewDidLoad(cell: IssueCommentHtmlCell)
+    func webViewDidLoad(cell: IssueCommentHtmlCell, html: String)
 }
 
 final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
@@ -48,6 +48,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
 
     private let webView = UIWebView()
+    private var body = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,14 +88,15 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
-        let html = IssueCommentHtmlCell.htmlHead + viewModel.html + IssueCommentHtmlCell.htmlTail
+        body = viewModel.html
+        let html = IssueCommentHtmlCell.htmlHead + body + IssueCommentHtmlCell.htmlTail
         webView.loadHTMLString(html, baseURL: nil)
     }
 
     // MARK: UIWebViewDelegate
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        delegate?.webViewDidLoad(cell: self)
+        delegate?.webViewDidLoad(cell: self, html: body)
     }
 
 }
