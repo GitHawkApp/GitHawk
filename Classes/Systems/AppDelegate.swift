@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var showingLogin = false
+    let flexController = FlexController()
 
     let sessionManager = GithubSessionManager()
     lazy var rootNavigationManager: RootNavigationManager = {
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // initialize a webview at the start so webview startup later on isn't so slow
         let _ = UIWebView()
+        flexController.configureWindow(window)
         rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
         return true
     }
