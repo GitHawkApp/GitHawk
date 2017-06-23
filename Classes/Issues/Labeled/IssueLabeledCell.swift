@@ -63,7 +63,7 @@ final class IssueLabeledCell: UICollectionViewCell {
 
     func configure(_ model: IssueLabeledModel) {
         let actorAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color ?? .black,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             NSFontAttributeName: Styles.Fonts.bodyBold
         ]
         let actor = NSAttributedString(string: model.actor, attributes: actorAttributes)
@@ -74,7 +74,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         case .removed: actionString = NSLocalizedString(" removed", comment: "")
         }
         let actionAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color ?? .black,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
             NSFontAttributeName: Styles.Fonts.body
         ]
         let action = NSAttributedString(string: actionString, attributes: actionAttributes)

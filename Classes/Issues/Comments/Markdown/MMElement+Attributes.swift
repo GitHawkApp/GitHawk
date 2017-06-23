@@ -28,7 +28,7 @@ extension MMElement {
         switch type {
         case .strikethrough: newAttributes = [
             NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-            NSStrikethroughColorAttributeName: currentAttributes[NSForegroundColorAttributeName] ?? Styles.Colors.Gray.dark,
+            NSStrikethroughColorAttributeName: currentAttributes[NSForegroundColorAttributeName] ?? Styles.Colors.Gray.dark.color,
             ]
         case .strong: newAttributes = [
             NSFontAttributeName: currentFont.addingTraits(traits: .traitBold),
@@ -38,11 +38,11 @@ extension MMElement {
             ]
         case .codeSpan: newAttributes = [
             NSFontAttributeName: Styles.Fonts.code,
-            NSBackgroundColorAttributeName: Styles.Colors.Gray.lighter,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+            NSBackgroundColorAttributeName: Styles.Colors.Gray.lighter.color,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             ]
         case .link: newAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Blue.medium,
+            NSForegroundColorAttributeName: Styles.Colors.Blue.medium.color,
             "FIXME": href ?? "",
             ]
         case .header:
@@ -63,7 +63,7 @@ extension MMElement {
                 NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5),
                 ]
             default: newAttributes = [
-                NSForegroundColorAttributeName: Styles.Colors.Gray.medium,
+                NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
                 NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6),
                 ]
             }
@@ -73,7 +73,7 @@ extension MMElement {
             currentPara.firstLineHeadIndent = indent
             newAttributes = [NSParagraphStyleAttributeName: currentPara]
         case .blockquote: newAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium
+            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
             ]
         default: newAttributes = [:]
         }

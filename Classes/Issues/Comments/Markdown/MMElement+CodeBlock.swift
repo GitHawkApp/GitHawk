@@ -24,7 +24,7 @@ extension MMElement {
         inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
 
         let attributes: [String: Any] = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             NSFontAttributeName: Styles.Fonts.code
         ]
 

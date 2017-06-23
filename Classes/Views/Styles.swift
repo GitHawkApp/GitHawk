@@ -80,7 +80,7 @@ struct Styles {
 }
 
 extension String {
-    var color: UIColor? {
+    var color: UIColor {
         return UIColor.fromHex(self)
     }
 }

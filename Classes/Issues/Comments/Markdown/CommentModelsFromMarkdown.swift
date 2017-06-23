@@ -30,7 +30,7 @@ func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
 
     let baseAttributes: [String: Any] = [
         NSFontAttributeName: Styles.Fonts.body,
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
         NSParagraphStyleAttributeName: {
             let para = NSMutableParagraphStyle()
             para.paragraphSpacingBefore = 12;
