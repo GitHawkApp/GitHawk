@@ -11,12 +11,12 @@ import IGListKit
 import NYTPhotoViewer
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
-ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate,
-IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate,
-IssueCommentImageCellDelegate,
-NYTPhotosViewControllerDelegate,
+    ListBindingSectionControllerDataSource,
+    ListBindingSectionControllerSelectionDelegate,
+    IssueCommentDetailCellDelegate,
+    IssueCommentReactionCellDelegate,
+    IssueCommentImageCellDelegate,
+    NYTPhotosViewControllerDelegate,
 IssueCommentHtmlCellDelegate {
 
     private var collapsed = true
@@ -137,7 +137,9 @@ IssueCommentHtmlCellDelegate {
         // extra config outside of bind API
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
-        } else if let cell = cell as? IssueCommentDetailCell {
+        }
+        
+        if let cell = cell as? IssueCommentDetailCell {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
             cell.delegate = self
@@ -201,10 +203,10 @@ IssueCommentHtmlCellDelegate {
 
     func webViewDidLoad(cell: IssueCommentHtmlCell) {
         guard let index = collectionContext?.index(for: cell, sectionController: self),
-        index < viewModels.count,
-        let model = viewModels[index] as? IssueCommentHtmlModel,
-        htmlSizes[model.html] == nil
-        else { return }
+            index < viewModels.count,
+            let model = viewModels[index] as? IssueCommentHtmlModel,
+            htmlSizes[model.html] == nil
+            else { return }
         htmlSizes[model.html] = cell.webViewPreferredSize()
         UIView.performWithoutAnimation {
             self.collectionContext?.invalidateLayout(for: self)
@@ -212,3 +214,4 @@ IssueCommentHtmlCellDelegate {
     }
 
 }
+
