@@ -50,10 +50,12 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
         contentView.backgroundColor = .white
 
+        webView.backgroundColor = .white
         webView.delegate = self
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
+        scrollView.bounces = true
 
         contentView.addSubview(webView)
     }
