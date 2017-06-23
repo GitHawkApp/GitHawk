@@ -56,8 +56,8 @@ func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
     }
 
     // add any remaining text
-    if seedString.length > 0 {
-        results.append(createTextModel(attributedString: seedString, width: width))
+    if let text = createTextModel(attributedString: seedString, width: width) {
+        results.append(text)
     }
 
     return results
@@ -70,6 +70,7 @@ func createTextModel(
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
+    guard trimmedString.length > 0 else { return nil }
     return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: trimmedString,
@@ -161,8 +162,8 @@ func travelAST(
     if isQuote && attributedString.length > 0 {
         if quoteLevel > 0 {
             results.append(createQuoteModel(level: quoteLevel, attributedString: attributedString, width: width))
-        } else {
-            results.append(createTextModel(attributedString: attributedString, width: width))
+        } else if let text = createTextModel(attributedString: attributedString, width: width) {
+            results.append(text)
         }
         attributedString.removeAll()
     }
@@ -190,7 +191,9 @@ func travelAST(
 
     // if a model exists, push a new model with the current text stack _before_ the model. remember to drain the text
     if let model = model {
-        results.append(createTextModel(attributedString: attributedString, width: width))
+        if let text = createTextModel(attributedString: attributedString, width: width) {
+            results.append(text)
+        }
         results.append(model)
         attributedString.removeAll()
     } else {
