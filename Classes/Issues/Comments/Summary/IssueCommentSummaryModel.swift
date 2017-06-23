@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentSummaryModel: IGListDiffable {
+final class IssueCommentSummaryModel: ListDiffable {
 
     let summary: String
 
@@ -17,13 +17,13 @@ final class IssueCommentSummaryModel: IGListDiffable {
         self.summary = summary
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return summary as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
 

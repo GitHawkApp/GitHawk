@@ -23,10 +23,10 @@ func createCommentAST(markdown: String) -> MMDocument? {
     return document
 }
 
-func commentModels(markdown: String, width: CGFloat) -> [IGListDiffable] {
+func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
     guard let document = createCommentAST(markdown: markdown) else { return [] }
 
-    var results = [IGListDiffable]()
+    var results = [ListDiffable]()
 
     let baseAttributes: [String: Any] = [
         NSFontAttributeName: Styles.Fonts.body,
@@ -110,7 +110,7 @@ func typeNeedsNewline(type: MMElementType) -> Bool {
     }
 }
 
-func createModel(markdown: String, element: MMElement) -> IGListDiffable? {
+func createModel(markdown: String, element: MMElement) -> ListDiffable? {
     switch element.type {
     case .codeBlock:
         return element.codeBlock(markdown: markdown)
@@ -142,7 +142,7 @@ func travelAST(
     width: CGFloat,
     listLevel: Int,
     quoteLevel: Int,
-    results: inout [IGListDiffable]
+    results: inout [ListDiffable]
     ) {
     let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
 

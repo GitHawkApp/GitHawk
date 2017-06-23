@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabelSummaryModel: IGListDiffable {
+final class IssueLabelSummaryModel: ListDiffable {
 
     let title = NSLocalizedString("Labels:", comment: "")
     let colors: [UIColor]
@@ -20,13 +20,13 @@ final class IssueLabelSummaryModel: IGListDiffable {
         _diffIdentifier = colors.reduce("") { $0 + $1.description }
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return _diffIdentifier as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueLabelSummaryModel else { return false }
         return title == object.title

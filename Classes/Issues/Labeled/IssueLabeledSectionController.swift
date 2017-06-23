@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: IGListGenericSectionController<IssueLabeledModel> {
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { return .zero }

@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentCodeBlockModel: NSObject, IGListDiffable {
+final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
 
     let code: NSAttributedStringSizing
     let language: String?
@@ -22,13 +22,13 @@ final class IssueCommentCodeBlockModel: NSObject, IGListDiffable {
         self.language = language
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return self
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return isEqual(object)
     }
 

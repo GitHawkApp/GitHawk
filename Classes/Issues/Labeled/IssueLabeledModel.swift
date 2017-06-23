@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledModel: IGListDiffable {
+final class IssueLabeledModel: ListDiffable {
 
     enum EventType {
         case added
@@ -39,13 +39,13 @@ final class IssueLabeledModel: IGListDiffable {
         self.type = type
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         // assume that if ids match then its the same object
         return true
     }

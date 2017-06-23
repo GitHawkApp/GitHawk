@@ -3,11 +3,11 @@ PODS:
   - Alamofire (4.4.0)
   - Apollo (0.5.6)
   - FLAnimatedImage (1.0.12)
-  - IGListKit (2.1.0):
-    - IGListKit/Default (= 2.1.0)
-  - IGListKit/Default (2.1.0):
+  - IGListKit (3.0.0):
+    - IGListKit/Default (= 3.0.0)
+  - IGListKit/Default (3.0.0):
     - IGListKit/Diffing
-  - IGListKit/Diffing (2.1.0)
+  - IGListKit/Diffing (3.0.0)
   - JDStatusBarNotification (1.5.5)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
@@ -40,7 +40,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   IGListKit:
-    :commit: f1ebfbdb7d5ab69c93948bbba3dea16d6753452f
+    :commit: d0253b705ab87c99a4de209436fbc66733287994
     :git: https://github.com/Instagram/IGListKit.git
 
 SPEC CHECKSUMS:
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
+  IGListKit: 9eab6856a15fa25ad72018ff9d9eb2178c240fff
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41

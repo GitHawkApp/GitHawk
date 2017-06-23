@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class NSAttributedStringSizing: NSObject, IGListDiffable {
+final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     private let textContainer: NSTextContainer
     private let textStorage: NSTextStorage
@@ -109,13 +109,13 @@ final class NSAttributedStringSizing: NSObject, IGListDiffable {
         return contents
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return attributedText
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? NSAttributedStringSizing else { return false }
         return textViewSize == object.textViewSize

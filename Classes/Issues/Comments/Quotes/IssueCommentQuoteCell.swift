@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
+final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, CollapsibleCell {
 
     static let borderWidth: CGFloat = 2
     static func inset(quoteLevel: Int) -> UIEdgeInsets {
@@ -51,7 +51,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, IGListBindable, Collaps
         }
     }
 
-    //MARK: IGListBindable
+    //MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentQuoteModel else { return }

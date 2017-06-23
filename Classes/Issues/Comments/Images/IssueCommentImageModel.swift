@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentImageModel: IGListDiffable {
+final class IssueCommentImageModel: ListDiffable {
 
     let url: URL
 
@@ -17,13 +17,13 @@ final class IssueCommentImageModel: IGListDiffable {
         self.url = url
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return url as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         // lazy, assuming anything matching this url as the diffidentifier is the same object
         return true
     }

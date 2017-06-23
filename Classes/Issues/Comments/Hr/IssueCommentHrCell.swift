@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentHrCell: UICollectionViewCell, IGListBindable {
+final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
 
     static let inset = UIEdgeInsets(
         top: 0,
@@ -37,7 +37,7 @@ final class IssueCommentHrCell: UICollectionViewCell, IGListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {}
 

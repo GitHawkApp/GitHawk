@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueStatusCell: UICollectionViewCell, IGListBindable {
+final class IssueStatusCell: UICollectionViewCell, ListBindable {
 
     let button = UIButton()
 
@@ -29,7 +29,7 @@ final class IssueStatusCell: UICollectionViewCell, IGListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueStatusModel else { return }

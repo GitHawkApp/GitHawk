@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueCommentQuoteModel: NSObject, IGListDiffable {
+final class IssueCommentQuoteModel: NSObject, ListDiffable {
 
     let level: Int
     let quote: NSAttributedStringSizing
@@ -19,13 +19,13 @@ final class IssueCommentQuoteModel: NSObject, IGListDiffable {
         self.quote = quote
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return quote.attributedText.string as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
 

@@ -15,7 +15,7 @@ protocol IssueCommentDetailCellDelegate: class {
     func didTapMore(cell: IssueCommentDetailCell)
 }
 
-final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
+final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     weak var delegate: IssueCommentDetailCellDelegate? = nil
 
@@ -84,7 +84,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, IGListBindable {
         delegate?.didTapMore(cell: self)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }

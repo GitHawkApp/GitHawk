@@ -26,7 +26,7 @@ extension GithubUserSession {
     }
 }
 
-final class GithubSessionManager: NSObject, IGListDiffable {
+final class GithubSessionManager: NSObject, ListDiffable {
 
     private class ListenerWrapper: NSObject {
         weak var listener: GithubSessionListener? = nil
@@ -120,13 +120,13 @@ final class GithubSessionManager: NSObject, IGListDiffable {
         defaults.set(_focusedKey, forKey: Keys.focused)
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return self
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return self === object
     }
 

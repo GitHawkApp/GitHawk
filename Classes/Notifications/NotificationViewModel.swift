@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class NotificationViewModel: IGListDiffable {
+final class NotificationViewModel: ListDiffable {
 
     let id: String
     let title: NSAttributedString
@@ -54,13 +54,13 @@ final class NotificationViewModel: IGListDiffable {
         self.titleSize = sizing.textViewSize
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? NotificationViewModel else { return false }
         return read == object.read

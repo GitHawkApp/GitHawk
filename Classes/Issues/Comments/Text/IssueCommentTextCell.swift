@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
+final class IssueCommentTextCell: UICollectionViewCell, ListBindable, CollapsibleCell {
 
     static let inset = Styles.Sizes.textCellInset
 
@@ -34,7 +34,7 @@ final class IssueCommentTextCell: UICollectionViewCell, IGListBindable, Collapsi
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }

@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueClosedSectionController: IGListGenericSectionController<IssueClosedModel> {
+final class IssueClosedSectionController: ListGenericSectionController<IssueClosedModel> {
 
     override init() {
         super.init()

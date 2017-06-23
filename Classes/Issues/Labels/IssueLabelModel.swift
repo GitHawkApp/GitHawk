@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabelModel: IGListDiffable {
+final class IssueLabelModel: ListDiffable {
 
     let color: String
     let name: String
@@ -19,13 +19,13 @@ final class IssueLabelModel: IGListDiffable {
         self.name = name
     }
 
-    // MARK: IGListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         return name as NSObjectProtocol
     }
 
-    func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueLabelModel else { return false }
         return color == object.color

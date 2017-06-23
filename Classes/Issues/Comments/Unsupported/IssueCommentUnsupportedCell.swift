@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentUnsupportedCell: UICollectionViewCell, IGListBindable {
+final class IssueCommentUnsupportedCell: UICollectionViewCell, ListBindable {
 
     let label = UILabel()
 
@@ -33,7 +33,7 @@ final class IssueCommentUnsupportedCell: UICollectionViewCell, IGListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentUnsupportedModel else { return }

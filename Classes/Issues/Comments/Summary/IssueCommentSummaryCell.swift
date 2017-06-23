@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentSummaryCell: UICollectionViewCell, IGListBindable, CollapsibleCell {
+final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, CollapsibleCell {
 
     let label = UILabel()
     let overlay = CreateCollapsibleOverlay()
@@ -38,7 +38,7 @@ final class IssueCommentSummaryCell: UICollectionViewCell, IGListBindable, Colla
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentSummaryModel else { return }

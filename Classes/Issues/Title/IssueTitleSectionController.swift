@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueTitleSectionController: IGListGenericSectionController<NSAttributedStringSizing> {
+final class IssueTitleSectionController: ListGenericSectionController<NSAttributedStringSizing> {
 
     override init() {
         super.init()

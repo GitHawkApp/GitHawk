@@ -10,9 +10,9 @@ import UIKit
 import IGListKit
 import NYTPhotoViewer
 
-final class IssueCommentSectionController: IGListBindingSectionController<IssueCommentModel>,
-IGListBindingSectionControllerDataSource,
-IGListBindingSectionControllerSelectionDelegate,
+final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
+ListBindingSectionControllerDataSource,
+ListBindingSectionControllerSelectionDelegate,
 IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
 IssueCommentImageCellDelegate,
@@ -62,15 +62,15 @@ IssueCommentHtmlCellDelegate {
         }
     }
 
-    // MARK: IGListBindingSectionControllerDataSource
+    // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
-        ) -> [IGListDiffable] {
+        ) -> [ListDiffable] {
         guard let object = self.object else { return [] }
 
-        var bodies = [IGListDiffable]()
+        var bodies = [ListDiffable]()
         for body in object.bodyModels {
             bodies.append(body)
             if collapsed && body === object.collapse?.model {
@@ -84,7 +84,7 @@ IssueCommentHtmlCellDelegate {
     }
 
     func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        _ sectionController: ListBindingSectionController<ListDiffable>,
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
@@ -102,7 +102,7 @@ IssueCommentHtmlCellDelegate {
     }
 
     func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        _ sectionController: ListBindingSectionController<ListDiffable>,
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell {
@@ -150,10 +150,10 @@ IssueCommentHtmlCellDelegate {
         return cell
     }
 
-    // MARK: IGListBindingSectionControllerSelectionDelegate
+    // MARK: ListBindingSectionControllerSelectionDelegate
 
     func sectionController(
-        _ sectionController: IGListBindingSectionController<IGListDiffable>,
+        _ sectionController: ListBindingSectionController<ListDiffable>,
         didSelectItemAt index: Int,
         viewModel: Any
         ) {

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSource, IGListBindable {
+final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSource, ListBindable {
 
     static let reuse = "cell"
 
@@ -72,7 +72,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
         return cell
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueLabelSummaryModel else { return }

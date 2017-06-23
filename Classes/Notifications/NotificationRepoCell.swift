@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class NotificationRepoCell: UICollectionViewCell, IGListBindable {
+final class NotificationRepoCell: UICollectionViewCell, ListBindable {
 
     let label = UILabel()
 
@@ -34,7 +34,7 @@ final class NotificationRepoCell: UICollectionViewCell, IGListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: IGListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? String else { return }
