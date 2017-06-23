@@ -45,6 +45,11 @@ struct Styles {
             static let h5: CGFloat = 16
             static let h6: CGFloat = 16
         }
+
+        struct HTML {
+            static let boldWeight = 600
+            static let spacing = 16
+        }
     }
 
     struct Fonts {
