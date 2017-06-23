@@ -9,6 +9,8 @@
 import UIKit
 import MMMarkdown
 
+let MarkdownURLName = "MarkdownURLName"
+
 extension MMElement {
 
     func attributes(
@@ -43,7 +45,7 @@ extension MMElement {
             ]
         case .link: newAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Blue.medium.color,
-            "FIXME": href ?? "",
+            MarkdownURLName: href ?? "",
             ]
         case .header:
             switch level {

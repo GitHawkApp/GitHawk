@@ -21,7 +21,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
         )
     }
 
-    private let textView = UIView()
+    let textView = AttributedStringView()
     private var borders = [UIView]()
     private let overlay = CreateCollapsibleOverlay()
 
@@ -68,7 +68,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
             borders.append(border)
         }
 
-        textView.configureAndLayout(viewModel.quote)
+        textView.configureAndSizeToFit(text: viewModel.quote)
 
         setNeedsLayout()
     }
