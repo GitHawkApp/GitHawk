@@ -37,7 +37,7 @@ final class NotificationCell: UICollectionViewCell {
 
         titleLabel.numberOfLines = 1
         titleLabel.font = Styles.Fonts.title
-        titleLabel.textColor = Styles.Colors.Gray.light
+        titleLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
@@ -47,7 +47,7 @@ final class NotificationCell: UICollectionViewCell {
         dateLabel.backgroundColor = .clear
         dateLabel.numberOfLines = 1
         dateLabel.font = Styles.Fonts.secondary
-        dateLabel.textColor = Styles.Colors.Gray.light
+        dateLabel.textColor = Styles.Colors.Gray.light.color
         dateLabel.textAlignment = .right
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -57,7 +57,7 @@ final class NotificationCell: UICollectionViewCell {
 
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.tintColor = Styles.Colors.Blue.medium
+        reasonImageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)

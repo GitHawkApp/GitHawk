@@ -29,7 +29,7 @@ final class SettingsSignoutSectionController: IGListSectionController {
             let cell = context.dequeueReusableCell(of: CenteredButtonCell.self, for: self, at: index) as? CenteredButtonCell
             else { return UICollectionViewCell() }
         cell.label.text = Strings.signout
-        cell.label.textColor = Styles.Colors.red
+        cell.label.textColor = Styles.Colors.red.color
         cell.configure(topSeparatorHidden: false, bottomSeparatorHidden: false)
         return cell
     }

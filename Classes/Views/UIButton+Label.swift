@@ -31,7 +31,7 @@ extension UIButton {
     }
 
     func setBackgroundColor(closed: Bool) {
-        backgroundColor = closed ? Styles.Colors.red : Styles.Colors.green
+        backgroundColor = closed ? Styles.Colors.red.color : Styles.Colors.green.color
     }
 
 }

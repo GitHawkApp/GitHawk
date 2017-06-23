@@ -16,12 +16,12 @@ final class EmptyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = Styles.Colors.Gray.lighter
+        backgroundColor = Styles.Colors.Gray.lighter.color
 
-        label.backgroundColor = Styles.Colors.Gray.lighter
+        label.backgroundColor = Styles.Colors.Gray.lighter.color
         label.textAlignment = .center
         label.font = Styles.Fonts.body
-        label.textColor = Styles.Colors.Gray.medium
+        label.textColor = Styles.Colors.Gray.medium.color
         label.numberOfLines = 0
         addSubview(label)
         label.snp.makeConstraints { make in

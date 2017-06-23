@@ -20,7 +20,7 @@ final class IssueCommentSummaryCell: UICollectionViewCell, IGListBindable, Colla
 
         contentView.backgroundColor = .white
 
-        label.textColor = Styles.Colors.Gray.dark
+        label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

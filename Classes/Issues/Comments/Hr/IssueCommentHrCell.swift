@@ -26,7 +26,7 @@ final class IssueCommentHrCell: UICollectionViewCell, IGListBindable {
 
         contentView.backgroundColor = .white
 
-        hr.backgroundColor = Styles.Colors.Gray.lighter
+        hr.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(hr)
         hr.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(IssueCommentHrCell.inset)

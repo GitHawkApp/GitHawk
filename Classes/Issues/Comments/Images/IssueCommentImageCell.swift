@@ -99,7 +99,7 @@ final class IssueCommentImageCell: UICollectionViewCell, IGListBindable, Collaps
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
-        imageView.backgroundColor = Styles.Colors.Gray.lighter
+        imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
         imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
             self.imageView.backgroundColor = .clear

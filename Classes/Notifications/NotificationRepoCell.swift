@@ -17,10 +17,10 @@ final class NotificationRepoCell: UICollectionViewCell, IGListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = Styles.Colors.Gray.lighter
+        contentView.backgroundColor = Styles.Colors.Gray.lighter.color
 
         label.font = Styles.Fonts.title
-        label.textColor = Styles.Colors.Gray.light
+        label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)

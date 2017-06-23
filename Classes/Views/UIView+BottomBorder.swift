@@ -14,7 +14,7 @@ extension UIView {
     @discardableResult
     func addBorder(bottom: Bool = true, left: CGFloat = 0, right: CGFloat = 0) -> UIView {
         let view = UIView()
-        view.backgroundColor = Styles.Colors.Gray.border
+        view.backgroundColor = Styles.Colors.Gray.border.color
         addSubview(view)
         view.snp.makeConstraints { make in
             make.height.equalTo(1.0 / UIScreen.main.scale)

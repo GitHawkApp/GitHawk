@@ -40,10 +40,10 @@ UICollectionViewDelegateFlowLayout {
 
         contentView.backgroundColor = .white
 
-        addButton.tintColor = Styles.Colors.Gray.light
+        addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-        addButton.setTitleColor(Styles.Colors.Gray.light, for: .normal)
+        addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
         addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
@@ -148,7 +148,7 @@ UICollectionViewDelegateFlowLayout {
             ) as! IssueReactionCell
         let model = reactions[indexPath.item]
         cell.label.text = "\(model.content.emoji) \(model.count)"
-        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light : .clear
+        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light.color : .clear
         return cell
     }
 

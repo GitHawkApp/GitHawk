@@ -39,7 +39,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, IGListBindable, Col
         scrollView.isUserInteractionEnabled = false
         contentView.addGestureRecognizer(scrollView.panGestureRecognizer)
 
-        scrollView.backgroundColor = Styles.Colors.Gray.lighter
+        scrollView.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(scrollView)
 
         label.numberOfLines = 0

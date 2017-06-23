@@ -48,23 +48,23 @@ extension MMElement {
         case .header:
             switch level {
             case 1: newAttributes = [
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 24),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h1),
                 ]
             case 2: newAttributes = [
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 22),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h2),
                 ]
             case 3: newAttributes = [
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h3),
                 ]
             case 4: newAttributes = [
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 18),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h4),
                 ]
             case 5: newAttributes = [
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5),
                 ]
             default: newAttributes = [
                 NSForegroundColorAttributeName: Styles.Colors.Gray.medium,
-                NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
+                NSFontAttributeName: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6),
                 ]
             }
         case .bulletedList, .numberedList:
