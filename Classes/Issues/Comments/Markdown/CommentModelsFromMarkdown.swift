@@ -121,7 +121,9 @@ func createModel(markdown: String, element: MMElement) -> ListDiffable? {
     case .table:
         return IssueCommentUnsupportedModel(name: "Table")
     case .HTML:
-        guard let html = markdown.substring(with: element.range) else { return nil }
+        guard let html = markdown.substring(with: element.range),
+            html.characters.count > 0
+            else { return nil }
         return IssueCommentHtmlModel(html: html)
     case .horizontalRule:
         return IssueCommentHrModel()
@@ -217,3 +219,4 @@ func travelAST(
         attributedString.removeAll()
     }
 }
+
