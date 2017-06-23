@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import NYTPhotoViewer
+import SafariServices
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
@@ -207,6 +208,11 @@ IssueCommentHtmlCellDelegate {
         UIView.performWithoutAnimation {
             self.collectionContext?.invalidateLayout(for: self)
         }
+    }
+
+    func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL) {
+        let safari = SFSafariViewController(url: url)
+        viewController?.present(safari, animated: true)
     }
 
 }
