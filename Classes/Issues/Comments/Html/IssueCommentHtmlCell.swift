@@ -16,7 +16,7 @@ protocol IssueCommentHtmlCellDelegate: class {
 final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
 
     private static let htmlHead = [
-        "<html><head><style>",
+        "<!DOCTYPE html><html><head><style>",
         "body{",
         // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
         "font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;",
@@ -35,7 +35,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         "dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}",
         "dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}",
         "blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}",
-        "pre, code{background-color: #\(Styles.Colors.Gray.lighter);}",
+        "pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}",
         "pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}",
         "table{border-spacing: 0; border-collapse: collapse;}",
         "th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}",
