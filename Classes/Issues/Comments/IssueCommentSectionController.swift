@@ -180,9 +180,7 @@ AttributedStringViewDelegate {
 
     // MARK: IssueCommentDetailCellDelegate
 
-    func didTapMore(cell: IssueCommentDetailCell) {
-
-    }
+    func didTapMore(cell: IssueCommentDetailCell) {}
 
     // MARK: IssueCommentReactionCellDelegate
 

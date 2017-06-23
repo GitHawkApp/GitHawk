@@ -26,6 +26,7 @@ final class AttributedStringView: UIView {
         layer.contentsGravity = kCAGravityTopLeft
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(AttributedStringView.onTap(recognizer:)))
+        tap.cancelsTouchesInView = false
         addGestureRecognizer(tap)
     }
     
