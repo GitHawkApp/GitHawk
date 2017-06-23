@@ -14,6 +14,7 @@ private let newlineString = "\n"
 private let bulletString = "\u{2022}"
 
 func createCommentAST(markdown: String) -> MMDocument? {
+    guard markdown.characters.count > 0 else { return nil }
     let parser = MMParser(extensions: .gitHubFlavored)
     var error: NSError? = nil
     let document = parser.parseMarkdown(markdown, error: &error)
