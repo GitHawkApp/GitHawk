@@ -18,7 +18,8 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     IssueCommentReactionCellDelegate,
     IssueCommentImageCellDelegate,
     NYTPhotosViewControllerDelegate,
-IssueCommentHtmlCellDelegate {
+    IssueCommentHtmlCellDelegate,
+AttributedStringViewDelegate {
 
     private var collapsed = true
     private let client: GithubClient
@@ -61,6 +62,11 @@ IssueCommentHtmlCellDelegate {
                 self.update(animated: true)
             }
         }
+    }
+
+    private func open(url: URL) {
+        let safari = SFSafariViewController(url: url)
+        viewController?.present(safari, animated: true)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -139,7 +145,7 @@ IssueCommentHtmlCellDelegate {
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
         }
-        
+
         if let cell = cell as? IssueCommentDetailCell {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
@@ -148,6 +154,10 @@ IssueCommentHtmlCellDelegate {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentHtmlCell {
             cell.delegate = self
+        } else if let cell = cell as? IssueCommentTextCell {
+            cell.textView.delegate = self
+        } else if let cell = cell as? IssueCommentQuoteCell {
+            cell.textView.delegate = self
         }
 
         return cell
@@ -211,8 +221,13 @@ IssueCommentHtmlCellDelegate {
     }
 
     func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL) {
-        let safari = SFSafariViewController(url: url)
-        viewController?.present(safari, animated: true)
+        open(url: url)
+    }
+
+    // MARK: AttributedStringViewDelegate
+
+    func didTapURL(view: AttributedStringView, url: URL) {
+        open(url: url)
     }
 
 }

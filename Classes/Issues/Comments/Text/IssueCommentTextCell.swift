@@ -13,7 +13,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
 
     static let inset = Styles.Sizes.textCellInset
 
-    let textView = UIView()
+    let textView = AttributedStringView()
     let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
@@ -38,7 +38,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
-        textView.configureAndLayout(viewModel)
+        textView.configureAndSizeToFit(text: viewModel)
     }
 
     // MARK: CollapsibleCell
