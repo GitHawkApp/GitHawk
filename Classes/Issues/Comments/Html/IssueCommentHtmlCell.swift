@@ -19,9 +19,10 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         "<!DOCTYPE html><html><head><style>",
         "body{",
         // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
+        // lint compiled style with http://csslint.net/
         "font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;",
         "color: #\(Styles.Colors.Gray.dark);",
-        "padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0px;",
+        "padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;",
         "}",
         "b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}",
         "i, em{font-style: italic;}",
@@ -31,7 +32,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         "h3{font-size: \(Styles.Sizes.Text.h3);}",
         "h4{font-size: \(Styles.Sizes.Text.h4);}",
         "h5{font-size: \(Styles.Sizes.Text.h5);}",
-        "h6, h7, h8{font-size: \(Styles.Sizes.Text.h6), color: #\(Styles.Colors.Gray.medium);}",
+        "h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}",
         "dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}",
         "dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}",
         "blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}",
