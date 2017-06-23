@@ -12,6 +12,7 @@ pod 'JDStatusBarNotification', '~> 1.5.5'
 pod 'Apollo', '~> 0.5.6'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'NYTPhotoViewer', '~> 1.1.0'
+pod 'FLEX', '~> 2.0', :configurations => ['Debug']
 
 target 'Freetime' do
 end

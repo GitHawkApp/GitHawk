@@ -3,6 +3,7 @@ PODS:
   - Alamofire (4.4.0)
   - Apollo (0.5.6)
   - FLAnimatedImage (1.0.12)
+  - FLEX (2.4.0)
   - IGListKit (3.0.0):
     - IGListKit/Default (= 3.0.0)
   - IGListKit/Default (3.0.0):
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.4)
   - Alamofire (~> 4.4.0)
   - Apollo (~> 0.5.6)
+  - FLEX (~> 2.0)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
   - NYTPhotoViewer (~> 1.1.0)
@@ -48,6 +50,7 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   IGListKit: 9eab6856a15fa25ad72018ff9d9eb2178c240fff
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
@@ -55,6 +58,6 @@ SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 8c4d2e505829d99642cb079b6910c561478c00ad
+PODFILE CHECKSUM: 6386b55b1cf22e09eb9808a0cc8da9a37acc7cd3
 
 COCOAPODS: 1.2.0
