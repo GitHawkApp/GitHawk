@@ -782,12 +782,12 @@
 				29C167791ECA14F700439D62 /* Feed.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
+				2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */,
 				299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */,
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
-				2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
