@@ -8,7 +8,15 @@
 
 import Foundation
 
-private let emojiMap = [
+func replaceGithubEmoji(string: String) -> String {
+    var replacedString = string
+    for (k, v) in GithubEmojiMap {
+        replacedString = replacedString.replacingOccurrences(of: k, with: v)
+    }
+    return replacedString
+}
+
+let GithubEmojiMap: [String: String] = [
     ":smile:": "😄",
     ":laughing:": "😆",
     ":blush:": "😊",
