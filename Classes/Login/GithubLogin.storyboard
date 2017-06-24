@@ -129,6 +129,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="8pk-bv-Eed" id="yQg-Up-uN3"/>
                         <outlet property="onepasswordButton" destination="RD1-5K-AYO" id="izh-i0-FRe"/>
                         <outlet property="passwordTextField" destination="R6o-vG-04h" id="LeG-oC-nTw"/>
                         <outlet property="usernameTextField" destination="ulH-vQ-S5c" id="46x-Gk-rHY"/>

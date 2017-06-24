@@ -19,6 +19,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var onepasswordButton: UIButton!
+    @IBOutlet var cancelButton: UIBarButtonItem!
 
     var textFields: [UITextField] {
         return [usernameTextField, passwordTextField]
@@ -28,9 +29,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         onepasswordButton.setImage(onePasswordButtonImage(), for: .normal)
         onepasswordButton.isHidden = !onePasswordAvailable()
-        if isInitialLogin {
-            navigationItem.rightBarButtonItems = []
-        }
+        showCancelButton(!isInitialLogin)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -86,6 +85,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
         client.requestGithubLogin(username: username, password: password) { result in
             self.showLoadingIndicator(false)
+            self.showCancelButton(!self.isInitialLogin)
             self.viewsEnabled(true)
             self.handleResult(result, login: username)
         }
@@ -103,6 +103,14 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             performSegue(withIdentifier: "show2fac", sender: nil)
         case .cancelled:
             client.sessionManager.cancel()
+        }
+    }
+    
+    func showCancelButton(_ show: Bool) {
+        if show {
+            navigationItem.rightBarButtonItem = cancelButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
 
