@@ -12,6 +12,7 @@ enum GithubLogin {
     case failed(Error?)
     case success(Authorization)
     case twoFactor
+    case cancelled
 }
 
 private func base64Auth(username: String, password: String) -> String {

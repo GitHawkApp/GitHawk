@@ -89,5 +89,9 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
     func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult) {
         adapter.performUpdates(animated: false)
     }
+    
+    func didCancel(manager: GithubSessionManager) {
+        // No-op; no updates needed
+    }
 
 }

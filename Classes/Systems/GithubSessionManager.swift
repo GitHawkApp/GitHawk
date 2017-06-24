@@ -18,6 +18,7 @@ enum GithubSessionResult {
 protocol GithubSessionListener: class {
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession)
     func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult)
+    func didCancel(manager: GithubSessionManager)
 }
 
 extension GithubUserSession {
@@ -80,6 +81,12 @@ final class GithubSessionManager: NSObject, ListDiffable {
         save()
         for wrapper in listeners {
             wrapper.listener?.didFocus(manager: self, userSession: userSession)
+        }
+    }
+    
+    public func cancel() {
+        for wrapper in listeners {
+            wrapper.listener?.didCancel(manager: self)
         }
     }
 

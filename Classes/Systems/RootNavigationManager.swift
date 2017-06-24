@@ -30,7 +30,7 @@ final class RootNavigationManager: GithubSessionListener {
 
     // MARK: Public API
 
-    public func showLogin(animated: Bool = false) {
+    public func showLogin(animated: Bool = false, isInitialLogin: Bool = true) {
         guard showingLogin == false,
             let nav = UIStoryboard(
                 name: "GithubLogin",
@@ -40,6 +40,7 @@ final class RootNavigationManager: GithubSessionListener {
             else { return }
         showingLogin = true
         login.client = newGithubClient(sessionManager: sessionManager)
+        login.isInitialLogin = isInitialLogin
         rootTabBarController?.present(nav, animated: animated)
     }
 
@@ -71,6 +72,11 @@ final class RootNavigationManager: GithubSessionListener {
         case .logout: showLogin(animated: true)
         case .unchanged: break
         }
+    }
+    
+    func didCancel(manager: GithubSessionManager) {
+        showingLogin = false
+        rootTabBarController?.presentedViewController?.dismiss(animated: true)
     }
 
 }

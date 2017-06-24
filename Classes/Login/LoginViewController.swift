@@ -12,6 +12,7 @@ import OnePasswordExtension
 final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
     var client: GithubClient!
+    var isInitialLogin: Bool = true
 
     let signinCellIndexPath = IndexPath(item: 0, section: 2)
 
@@ -27,6 +28,9 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         onepasswordButton.setImage(onePasswordButtonImage(), for: .normal)
         onepasswordButton.isHidden = !onePasswordAvailable()
+        if isInitialLogin {
+            navigationItem.rightBarButtonItems = []
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,6 +56,11 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             case .cancelled: break
             }
         }
+    }
+    
+    @IBAction func onCancel(_ sender: Any) {
+        guard !isInitialLogin else { fatalError("Should not be able to cancel during initial login") }
+        handleResult(.cancelled, login: "")
     }
 
     func viewsEnabled(_ enabled: Bool) {
@@ -92,6 +101,8 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             showAlert(title: title, message: message)
         case .twoFactor:
             performSegue(withIdentifier: "show2fac", sender: nil)
+        case .cancelled:
+            client.sessionManager.cancel()
         }
     }
 
