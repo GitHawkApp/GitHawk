@@ -14,11 +14,8 @@ default_platform :ios
 # don't worry, fastlane will prompt you for required
 # info which you can add here later
 lane :beta do
-  # build your iOS app
-  gym(
-    # scheme: "YourScheme",
-    export_method: "app-store"
-  )
+  # match(type: "appstore")
+  gym(scheme: "Freetime")
 
   # upload to Testflight
   pilot(skip_waiting_for_build_processing: true)

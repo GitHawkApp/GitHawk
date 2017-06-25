@@ -4,5 +4,5 @@
 # For more details, check out the documentation at:
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md
 
-# app_identifier "com.your.app" # the bundle identifier of your app
-# apple_id "apple@fastlane.tools" # Your Apple ID
+app_identifier "com.whoisryannystrom.freetime" # the bundle identifier of your app
+apple_id "rnystrom@whoisryannystrom.com" # Your Apple ID
