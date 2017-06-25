@@ -8,7 +8,7 @@
 
 import Foundation
 
-func replaceGithubEmoji(string: String) -> String {
+func replaceGithubEmojiBrute(string: String) -> String {
     var replacedString = string
     for (k, v) in GithubEmojiMap {
         replacedString = replacedString.replacingOccurrences(of: k, with: v)
@@ -16,6 +16,20 @@ func replaceGithubEmoji(string: String) -> String {
     return replacedString
 }
 
+func replaceGithubEmojiRegex(string: String) -> String {
+    let matches = GithubEmojiRegex.matches(in: string, options: [], range: string.nsrange)
+    var replacedString = string
+    for match in matches.reversed() {
+        guard let substr = string.substring(with: match.range),
+            let range = string.range(from: match.range),
+            let emoji = GithubEmojiMap[substr]
+            else { continue }
+        replacedString = replacedString.replacingCharacters(in: range, with: emoji)
+    }
+    return replacedString
+}
+
+// https://www.webpagefx.com/tools/emoji-cheat-sheet/
 let GithubEmojiMap: [String: String] = [
     ":smile:": "😄",
     ":laughing:": "😆",
@@ -868,3 +882,8 @@ let GithubEmojiMap: [String: String] = [
     ":eight:": "8️⃣",
     ":nine:": "9️⃣",
 ]
+
+let GithubEmojiRegex: NSRegularExpression = {
+    let pattern = "(" + GithubEmojiMap.keys.joined(separator: "|") + ")"
+    return try! NSRegularExpression(pattern: pattern, options: [])
+}()

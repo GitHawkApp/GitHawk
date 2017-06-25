@@ -25,7 +25,7 @@ func createCommentAST(markdown: String) -> MMDocument? {
 }
 
 func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
-    let emojiMarkdown = replaceGithubEmoji(string: markdown)
+    let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     guard let document = createCommentAST(markdown: emojiMarkdown) else { return [] }
 
     var results = [ListDiffable]()
