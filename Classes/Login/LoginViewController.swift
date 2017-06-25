@@ -12,12 +12,14 @@ import OnePasswordExtension
 final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
     var client: GithubClient!
+    var isInitialLogin: Bool = true
 
     let signinCellIndexPath = IndexPath(item: 0, section: 2)
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var onepasswordButton: UIButton!
+    @IBOutlet var cancelButton: UIBarButtonItem!
 
     var textFields: [UITextField] {
         return [usernameTextField, passwordTextField]
@@ -27,6 +29,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         onepasswordButton.setImage(onePasswordButtonImage(), for: .normal)
         onepasswordButton.isHidden = !onePasswordAvailable()
+        showCancelButton(!isInitialLogin)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,6 +56,11 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    @IBAction func onCancel(_ sender: Any) {
+        guard !isInitialLogin else { fatalError("Should not be able to cancel during initial login") }
+        handleResult(.cancelled, login: "")
+    }
 
     func viewsEnabled(_ enabled: Bool) {
         for field in textFields {
@@ -77,6 +85,7 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
 
         client.requestGithubLogin(username: username, password: password) { result in
             self.showLoadingIndicator(false)
+            self.showCancelButton(!self.isInitialLogin)
             self.viewsEnabled(true)
             self.handleResult(result, login: username)
         }
@@ -92,6 +101,25 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             showAlert(title: title, message: message)
         case .twoFactor:
             performSegue(withIdentifier: "show2fac", sender: nil)
+        case .cancelled:
+            client.sessionManager.cancel()
+        }
+    }
+    
+    func showCancelButton(_ show: Bool) {
+        if show {
+            navigationItem.rightBarButtonItem = cancelButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    override func accessibilityPerformEscape() -> Bool {
+        if isInitialLogin {
+            return false
+        } else {
+            handleResult(.cancelled, login: "")
+            return true
         }
     }
 

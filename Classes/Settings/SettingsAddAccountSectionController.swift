@@ -34,7 +34,7 @@ final class SettingsAddAccountSectionController: ListSectionController {
     }
 
     override func didSelectItem(at index: Int) {
-        rootNavigationManager.showLogin(animated: true)
+        rootNavigationManager.showLogin(animated: true, isInitialLogin: false)
     }
 
 }
