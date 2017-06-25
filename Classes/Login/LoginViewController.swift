@@ -113,6 +113,15 @@ final class LoginViewController: UITableViewController, UITextFieldDelegate {
             navigationItem.rightBarButtonItem = nil
         }
     }
+    
+    override func accessibilityPerformEscape() -> Bool {
+        if isInitialLogin {
+            return false
+        } else {
+            handleResult(.cancelled, login: "")
+            return true
+        }
+    }
 
     // MARK: UITextFieldDelegate
 
