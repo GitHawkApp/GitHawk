@@ -26,7 +26,7 @@ final class SettingsSignoutSectionController: ListSectionController {
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let context = collectionContext,
-            let cell = context.dequeueReusableCell(of: CenteredButtonCell.self, for: self, at: index) as? CenteredButtonCell
+            let cell = context.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
             else { return UICollectionViewCell() }
         cell.label.text = Strings.signout
         cell.label.textColor = Styles.Colors.red.color

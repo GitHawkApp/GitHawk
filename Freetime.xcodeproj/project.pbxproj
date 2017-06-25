@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290DB4F31ECBF11300CA2790 /* SettingsButtonCell.swift */; };
+		291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
 		292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
 		292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
 		292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
@@ -41,7 +41,7 @@
 		292FCB2C1EE054900026635E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
 		29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */; };
 		29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
-		29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */; };
+		29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		29316DB71ECC83AC007CAE3F /* SettingsUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB61ECC83AC007CAE3F /* SettingsUserModel.swift */; };
 		29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */; };
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
@@ -137,7 +137,6 @@
 		295840B91EEA00E1007723C6 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		295840BA1EEA00E1007723C6 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
 		295840BB1EEA00E1007723C6 /* SegmentedControlSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */; };
-		295840BD1EEA00E1007723C6 /* SettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290DB4F31ECBF11300CA2790 /* SettingsButtonCell.swift */; };
 		295840BE1EEA00E1007723C6 /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		295840BF1EEA00E1007723C6 /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
 		295840C01EEA00E1007723C6 /* SettingsUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB61ECC83AC007CAE3F /* SettingsUserModel.swift */; };
@@ -150,7 +149,7 @@
 		295840CA1EEA00E1007723C6 /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		295840CC1EEA00E1007723C6 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		295840CD1EEA00E1007723C6 /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
-		295840CE1EEA00E1007723C6 /* CenteredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */; };
+		295840CE1EEA00E1007723C6 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		295840CF1EEA00E1007723C6 /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
 		295840D01EEA00E1007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */; };
 		295840D11EEA00E1007723C6 /* UIColor+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */; };
@@ -302,7 +301,7 @@
 
 /* Begin PBXFileReference section */
 		2161D42FE580EF8B85D6834C /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
-		290DB4F31ECBF11300CA2790 /* SettingsButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonCell.swift; sourceTree = "<group>"; };
+		291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsReportSectionController.swift; sourceTree = "<group>"; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
 		292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockModel.swift; sourceTree = "<group>"; };
 		292FCACC1EDFCC510026635E /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
@@ -336,7 +335,7 @@
 		292FCB2B1EE054900026635E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = gql/API.swift; sourceTree = "<group>"; };
 		29316DB01ECC7D89007CAE3F /* SettingsUsersSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUsersSectionController.swift; sourceTree = "<group>"; };
 		29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserCell.swift; sourceTree = "<group>"; };
-		29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredButtonCell.swift; sourceTree = "<group>"; };
+		29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		29316DB61ECC83AC007CAE3F /* SettingsUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserModel.swift; sourceTree = "<group>"; };
 		29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubUserSession.swift; sourceTree = "<group>"; };
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
@@ -825,7 +824,7 @@
 			isa = PBXGroup;
 			children = (
 				299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */,
-				29316DB41ECC7DEB007CAE3F /* CenteredButtonCell.swift */,
+				29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */,
 				29A195031EC74C4800C3E289 /* Date+Display.swift */,
 				29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */,
 				29C167681ECA016500439D62 /* EmptyView.swift */,
@@ -871,7 +870,7 @@
 			isa = PBXGroup;
 			children = (
 				29316DC81ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift */,
-				290DB4F31ECBF11300CA2790 /* SettingsButtonCell.swift */,
+				291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */,
 				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
 				29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */,
 				29316DB61ECC83AC007CAE3F /* SettingsUserModel.swift */,
@@ -1162,6 +1161,7 @@
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				29316DB71ECC83AC007CAE3F /* SettingsUserModel.swift in Sources */,
 				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
+				291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
@@ -1198,7 +1198,6 @@
 				292FCAFB1EDFCC510026635E /* IssueCommentImageCell.swift in Sources */,
 				29C1676B1ECA0B0A00439D62 /* RepoNotifications+Filter.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
-				290DB4F41ECBF11300CA2790 /* SettingsButtonCell.swift in Sources */,
 				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
@@ -1209,7 +1208,7 @@
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
-				29316DB51ECC7DEB007CAE3F /* CenteredButtonCell.swift in Sources */,
+				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
 				292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
@@ -1341,14 +1340,13 @@
 				295840AC1EEA00E1007723C6 /* Notification.swift in Sources */,
 				29C295031EC7AF8C00D46CD2 /* NotificationViewModel.swift in Sources */,
 				29C295051EC7AF8C00D46CD2 /* NotificationRepoCell.swift in Sources */,
-				295840CE1EEA00E1007723C6 /* CenteredButtonCell.swift in Sources */,
+				295840CE1EEA00E1007723C6 /* ButtonCell.swift in Sources */,
 				2958408B1EEA00E1007723C6 /* ReactionViewModel.swift in Sources */,
 				2958408A1EEA00E1007723C6 /* ReactionContent+ReactionType.swift in Sources */,
 				295840891EEA00E1007723C6 /* IssueReactionCell.swift in Sources */,
 				295840AF1EEA00E1007723C6 /* Repository.swift in Sources */,
 				2958409D1EEA00E1007723C6 /* IssueLabelsSectionController.swift in Sources */,
 				295840BA1EEA00E1007723C6 /* SegmentedControlModel.swift in Sources */,
-				295840BD1EEA00E1007723C6 /* SettingsButtonCell.swift in Sources */,
 				295840AE1EEA00E1007723C6 /* Permission.swift in Sources */,
 				2958407C1EEA00E1007723C6 /* IssueCommentPhoto.swift in Sources */,
 				29A195051EC75F3D00C3E289 /* Date+Display.swift in Sources */,
