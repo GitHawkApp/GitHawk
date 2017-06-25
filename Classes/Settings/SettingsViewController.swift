@@ -18,9 +18,10 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
 
     fileprivate lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
 
-    fileprivate let addKey = "add"
-    fileprivate let signoutKey = "signout"
-    fileprivate lazy var collectionView: UICollectionView = {
+    private let addKey = "add" as ListDiffable
+    private let signoutKey = "signout" as ListDiffable
+    private let reportKey = "report" as ListDiffable
+    private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.contentInset = UIEdgeInsets(
@@ -62,17 +63,21 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return [
-            addKey as ListDiffable,
+            addKey,
             sessionManager,
-            signoutKey as ListDiffable
+            reportKey,
+            signoutKey
         ]
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let str = object as? String, str == addKey, let mgr = rootNavigationManager {
+        guard let object = object as? ListDiffable else { fatalError() }
+        if object === addKey, let mgr = rootNavigationManager {
             return SettingsAddAccountSectionController(rootNavigationManager: mgr)
-        } else if let str = object as? String, str == signoutKey {
+        } else if object === signoutKey {
             return SettingsSignoutSectionController(sessionManager: sessionManager)
+        } else if object === reportKey {
+            return SettingsReportSectionController()
         } else {
             return SettingsUsersSectionController()
         }

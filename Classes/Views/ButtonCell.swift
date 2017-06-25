@@ -1,5 +1,5 @@
 //
-//  CenteredButtonCell.swift
+//  ButtonCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/17/17.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class CenteredButtonCell: UICollectionViewCell {
+final class ButtonCell: UICollectionViewCell {
 
     let label = UILabel()
 
@@ -29,7 +29,8 @@ final class CenteredButtonCell: UICollectionViewCell {
         label.font = Styles.Fonts.button
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.centerY.equalTo(contentView)
+            make.left.equalTo(Styles.Sizes.gutter)
         }
     }
     

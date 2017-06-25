@@ -16,7 +16,6 @@ final class SettingsAddAccountSectionController: ListSectionController {
     init(rootNavigationManager: RootNavigationManager) {
         self.rootNavigationManager = rootNavigationManager
         super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
@@ -26,7 +25,7 @@ final class SettingsAddAccountSectionController: ListSectionController {
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let context = collectionContext,
-        let cell = context.dequeueReusableCell(of: CenteredButtonCell.self, for: self, at: index) as? CenteredButtonCell
+        let cell = context.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
             else { return UICollectionViewCell() }
         cell.label.text = NSLocalizedString("Add another account", comment: "")
         cell.label.textColor = Styles.Colors.Blue.medium.color
