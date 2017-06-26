@@ -83,7 +83,7 @@ final class NotificationCell: UICollectionViewCell {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NotificationViewModel else { return }
         titleLabel.text = "\(viewModel.owner)/\(viewModel.repo)"
-        textLabel.attributedText = viewModel.title
+        textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
 

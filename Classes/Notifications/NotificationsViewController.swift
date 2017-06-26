@@ -38,6 +38,14 @@ FeedDelegate {
         feed.adapter.dataSource = self
     }
 
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+//        coordinator.animate(alongsideTransition: { _ in
+//            print("alongside")
+//        }) { _ in
+//            self.feed.collectionView.collectionViewLayout.invalidateLayout()
+//        }
+    }
+
     // MARK: Private API
 
     private func update(fromNetwork: Bool) {

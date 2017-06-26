@@ -17,9 +17,9 @@ final class IssueTitleSectionController: ListGenericSectionController<NSAttribut
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext
+        guard let width = collectionContext?.containerSize.width
             else { return .zero }
-        return CGSize(width: context.containerSize.width, height: self.object?.textViewSize.height ?? 0)
+        return CGSize(width: width, height: self.object?.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

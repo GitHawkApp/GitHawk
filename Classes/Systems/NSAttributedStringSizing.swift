@@ -9,6 +9,24 @@
 import UIKit
 import IGListKit
 
+extension CGSize {
+
+    func snapped(scale: CGFloat) -> CGSize {
+        var size = self
+        size.width = ceil(size.width * scale) / scale
+        size.height = ceil(size.height * scale) / scale
+        return size
+    }
+
+    func resized(inset: UIEdgeInsets) -> CGSize {
+        var size = self
+        size.width += inset.left + inset.right
+        size.height += inset.top + inset.bottom
+        return size
+    }
+
+}
+
 final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     private let textContainer: NSTextContainer
@@ -17,8 +35,6 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
-    let textViewSize: CGSize
-    let textSize: CGSize
     let screenScale: CGFloat
 
     init(
@@ -39,8 +55,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         self.inset = inset
         self.screenScale = screenScale
 
-        let insetWidth = containerWidth - inset.left - inset.right
-        textContainer = NSTextContainer(size: CGSize(width: insetWidth, height: 0))
+        textContainer = NSTextContainer()
         textContainer.exclusionPaths = exclusionPaths
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
@@ -57,23 +72,28 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         textStorage = NSTextStorage(attributedString: attributedText)
         textStorage.addLayoutManager(layoutManager)
 
-        // find the size of the text now that everything is configured
-        let bounds = layoutManager.usedRect(for: textContainer)
+        super.init()
 
-        var viewSize = bounds.size
-
-        // snap to pixel
-        viewSize.width = ceil(viewSize.width * screenScale) / screenScale
-        viewSize.height = ceil(viewSize.height * screenScale) / screenScale
-        textSize = viewSize
-
-        // adjust for the text view inset (contentInset + textContainerInset)
-        viewSize.width += inset.left + inset.right
-        viewSize.height += inset.top + inset.bottom
-        textViewSize = viewSize
+        computeSize(containerWidth)
     }
 
     // MARK: Public API
+
+    private var _textSize = [CGFloat: CGSize]()
+    func textSize(_ width: CGFloat) -> CGSize {
+        if let cache = _textSize[width] {
+            return cache
+        }
+        return computeSize(width).size
+    }
+
+    private var _textViewSize = [CGFloat: CGSize]()
+    func textViewSize(_ width: CGFloat) -> CGSize {
+        if let cache = _textViewSize[width] {
+            return cache
+        }
+        return computeSize(width).viewSize
+    }
 
     func configure(textView: UITextView) {
         textView.attributedText = attributedText
@@ -94,18 +114,25 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private var _contents: CGImage? = nil
-    func contents() -> CGImage? {
-        guard _contents == nil else { return _contents }
-        UIGraphicsBeginImageContextWithOptions(textSize, true, screenScale)
+    private var _contents = [CGFloat: CGImage]()
+    func contents(_ width: CGFloat) -> CGImage? {
+        if let contents = _contents[width] {
+            return contents
+        }
+
+        let size = textSize(width)
+
+        UIGraphicsBeginImageContextWithOptions(size, true, screenScale)
         UIColor.white.setFill()
-        UIBezierPath(rect: CGRect(origin: .zero, size: textSize)).fill()
+        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let glyphRange = layoutManager.glyphRange(for: textContainer)
         layoutManager.drawBackground(forGlyphRange: glyphRange, at: .zero)
         layoutManager.drawGlyphs(forGlyphRange: glyphRange, at: .zero)
         let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
-        _contents = contents
+
+        _contents[width] = contents
+
         return contents
     }
 
@@ -118,6 +145,27 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         return nil
     }
 
+    // MARK: Private API
+
+    @discardableResult
+    func computeSize(_ width: CGFloat) -> (size: CGSize, viewSize: CGSize) {
+        let insetWidth = width - inset.left - inset.right
+        textContainer.size = CGSize(width: insetWidth, height: 0)
+
+        // find the size of the text now that everything is configured
+        let bounds = layoutManager.usedRect(for: textContainer)
+
+        // snap to pixel
+        let size = bounds.size.snapped(scale: screenScale)
+        _textSize[width] = size
+
+        // adjust for the text view inset (contentInset + textContainerInset)
+        let viewSize = size.resized(inset: inset)
+        _textViewSize[width] = viewSize
+
+        return (size, viewSize)
+    }
+
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
@@ -125,9 +173,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? NSAttributedStringSizing else { return false }
-        return textViewSize == object.textViewSize
+        return true
     }
 
 }

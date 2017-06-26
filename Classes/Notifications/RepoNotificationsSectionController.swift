@@ -19,10 +19,9 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext,
-            let object = self.object
+        guard let width = collectionContext?.containerSize.width
             else { return .zero }
-        return CGSize(width: context.containerSize.width, height: object.titleSize.height)
+        return CGSize(width: width, height: object?.title.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

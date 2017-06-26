@@ -95,7 +95,9 @@ AttributedStringViewDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let context = self.collectionContext else { return .zero }
+        guard let width = collectionContext?.containerSize.width
+            else { return .zero }
+
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
@@ -103,9 +105,10 @@ AttributedStringViewDelegate {
             let size = htmlSizes[viewModel.html] {
             height = size.height
         } else {
-            height = bodyHeight(viewModel: viewModel)
+            height = bodyHeight(viewModel: viewModel, width: width)
         }
-        return CGSize(width: context.containerSize.width, height: height)
+
+        return CGSize(width: width, height: height)
     }
 
     func sectionController(
