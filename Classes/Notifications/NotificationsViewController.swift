@@ -40,13 +40,13 @@ FeedDelegate {
 
     // MARK: Private API
 
-    fileprivate func update(fromNetwork: Bool) {
+    private func update(fromNetwork: Bool) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(notifications: allNotifications, unread: unread)
         feed.finishLoading(fromNetwork: fromNetwork)
     }
 
-    fileprivate func reload() {
+    private func reload() {
         client.requestNotifications(all: true) { result in
             switch result {
             case .success(let notifications):

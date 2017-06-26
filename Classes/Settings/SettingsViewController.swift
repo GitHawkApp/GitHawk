@@ -57,6 +57,18 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(SettingsViewController.onDone)
+        )
+    }
+
+    // MARK: Private API
+
+    @objc private func onDone() {
+        dismiss(animated: true)
     }
 
     // MARK: ListAdapterDataSource

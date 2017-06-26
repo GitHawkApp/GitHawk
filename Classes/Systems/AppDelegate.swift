@@ -13,14 +13,14 @@ import Alamofire
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var showingLogin = false
+    private var showingLogin = false
     let flexController = FlexController()
 
     let sessionManager = GithubSessionManager()
     lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
             sessionManager: self.sessionManager,
-            rootTabBarController: self.window?.rootViewController as! UITabBarController
+            rootViewController: self.window?.rootViewController as! UISplitViewController
         )
     }()
 
@@ -33,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if sessionManager.focusedUserSession == nil {
+        if showingLogin == false && sessionManager.focusedUserSession == nil {
+            showingLogin = true
             rootNavigationManager.showLogin(animated: false)
         }
     }
