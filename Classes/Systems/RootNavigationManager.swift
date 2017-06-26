@@ -56,8 +56,8 @@ final class RootNavigationManager: GithubSessionListener {
     // MARK: GithubSessionListener
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
-        rootViewController?.presentedViewController?.dismiss(animated: true)
         resetRootViewController(userSession: userSession)
+        rootViewController?.presentedViewController?.dismiss(animated: true)
     }
 
     func didRemove(

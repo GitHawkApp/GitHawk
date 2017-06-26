@@ -73,9 +73,6 @@ struct GithubClient {
                                  encoding: encoding,
                                  headers: request.headers)
             .responseJSON(completionHandler: { response in
-                print(response.response ?? "")
-                print(response.value ?? response.error?.localizedDescription ?? "Unknown error")
-
                 // remove the github session if requesting with a session
                 if let userSession = self.userSession,
                     let statusCode = response.response?.statusCode,
