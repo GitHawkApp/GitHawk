@@ -17,14 +17,15 @@ final class IssueStatusSectionController: ListGenericSectionController<IssueStat
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext else { return .zero }
-        return CGSize(width: context.containerSize.width, height: 30)
+        guard let width = collectionContext?.containerSize.width
+            else { fatalError("Collection context must be set") }
+        return CGSize(width: width, height: 30)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: IssueStatusCell.self, for: self, at: index) as? IssueStatusCell,
         let object = self.object
-            else { return UICollectionViewCell() }
+            else { fatalError("Collection context must be set, cell incorrect type, or missing object") }
         cell.bindViewModel(object)
         return cell
     }

@@ -96,7 +96,7 @@ AttributedStringViewDelegate {
         at index: Int
         ) -> CGSize {
         guard let width = collectionContext?.containerSize.width
-            else { return .zero }
+            else { fatalError("Collection context must be set") }
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
@@ -116,7 +116,7 @@ AttributedStringViewDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell {
-        guard let context = self.collectionContext else { return UICollectionViewCell() }
+        guard let context = self.collectionContext else { fatalError("Collection context must be set") }
 
         // cell class based on view model type
         let cellClass: AnyClass
@@ -232,5 +232,4 @@ AttributedStringViewDelegate {
     }
 
 }
-
 

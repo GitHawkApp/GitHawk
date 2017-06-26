@@ -18,17 +18,17 @@ final class IssueTitleSectionController: ListGenericSectionController<NSAttribut
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width
-            else { return .zero }
+            else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: self.object?.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let context = collectionContext,
-            let object = self.object,
-            let cell = context.dequeueReusableCell(of: IssueTitleCell.self, for: self, at: index) as? IssueTitleCell
-            else { return UICollectionViewCell() }
+        guard let object = self.object,
+            let cell = collectionContext?.dequeueReusableCell(of: IssueTitleCell.self, for: self, at: index) as? IssueTitleCell
+            else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.label.attributedText = object.attributedText
         return cell
     }
-    
+
 }
+

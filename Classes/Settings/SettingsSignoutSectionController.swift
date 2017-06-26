@@ -20,14 +20,13 @@ final class SettingsSignoutSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let context = collectionContext else { return .zero }
+        guard let context = collectionContext else { fatalError("Collection context must be set") }
         return CGSize(width: context.containerSize.width, height: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let context = collectionContext,
-            let cell = context.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
-            else { return UICollectionViewCell() }
+        guard let cell = collectionContext?.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
+            else { fatalError("Collection context must be set or cell incorrect type") }
         cell.label.text = Strings.signout
         cell.label.textColor = Styles.Colors.red.color
         cell.configure(topSeparatorHidden: false, bottomSeparatorHidden: false)
@@ -55,3 +54,4 @@ final class SettingsSignoutSectionController: ListSectionController {
     }
 
 }
+
