@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		299A17351F015D740004BF0E /* MailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A17341F015D740004BF0E /* MailCollectionViewController.swift */; };
+		299A17371F015DAA0004BF0E /* ActionDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A17361F015DAA0004BF0E /* ActionDescriptor.swift */; };
+		299A17391F015DCC0004BF0E /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A17381F015DCC0004BF0E /* Buttons.swift */; };
+		299A173B1F015DF90004BF0E /* MailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A173A1F015DF90004BF0E /* MailTableCell.swift */; };
+		299A173D1F015E0B0004BF0E /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A173C1F015E0B0004BF0E /* IndicatorView.swift */; };
+		299A17411F015ED10004BF0E /* MailCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A17401F015ED10004BF0E /* MailCollectionCell.swift */; };
 		3F234B0A1E44AC2600E22A38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F234B041E44AC2600E22A38 /* AppDelegate.swift */; };
 		3F234B0B1E44AC2600E22A38 /* MailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F234B051E44AC2600E22A38 /* MailViewController.swift */; };
 		3F234B0C1E44AC2600E22A38 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F234B061E44AC2600E22A38 /* Data.swift */; };
@@ -49,6 +55,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		299A17341F015D740004BF0E /* MailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailCollectionViewController.swift; sourceTree = "<group>"; };
+		299A17361F015DAA0004BF0E /* ActionDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionDescriptor.swift; sourceTree = "<group>"; };
+		299A17381F015DCC0004BF0E /* Buttons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		299A173A1F015DF90004BF0E /* MailTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailTableCell.swift; sourceTree = "<group>"; };
+		299A173C1F015E0B0004BF0E /* IndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		299A17401F015ED10004BF0E /* MailCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailCollectionCell.swift; sourceTree = "<group>"; };
 		3F234AE31E44AA5E00E22A38 /* MailExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MailExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F234AF21E44AA5E00E22A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F234AFE1E44AB7A00E22A38 /* SwipeCellKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwipeCellKit.xcodeproj; path = ../SwipeCellKit.xcodeproj; sourceTree = "<group>"; };
@@ -92,9 +104,15 @@
 		3F234AE51E44AA5E00E22A38 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				299A17361F015DAA0004BF0E /* ActionDescriptor.swift */,
 				3F234B041E44AC2600E22A38 /* AppDelegate.swift */,
-				3F234B051E44AC2600E22A38 /* MailViewController.swift */,
+				299A17381F015DCC0004BF0E /* Buttons.swift */,
 				3F234B061E44AC2600E22A38 /* Data.swift */,
+				299A173C1F015E0B0004BF0E /* IndicatorView.swift */,
+				299A17341F015D740004BF0E /* MailCollectionViewController.swift */,
+				299A173A1F015DF90004BF0E /* MailTableCell.swift */,
+				299A17401F015ED10004BF0E /* MailCollectionCell.swift */,
+				3F234B051E44AC2600E22A38 /* MailViewController.swift */,
 				3F234B101E44AC3400E22A38 /* Supporting Files */,
 			);
 			name = Source;
@@ -210,9 +228,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				299A17371F015DAA0004BF0E /* ActionDescriptor.swift in Sources */,
+				299A17411F015ED10004BF0E /* MailCollectionCell.swift in Sources */,
 				3F234B0A1E44AC2600E22A38 /* AppDelegate.swift in Sources */,
 				3F234B0C1E44AC2600E22A38 /* Data.swift in Sources */,
+				299A17391F015DCC0004BF0E /* Buttons.swift in Sources */,
 				3F234B0B1E44AC2600E22A38 /* MailViewController.swift in Sources */,
+				299A173B1F015DF90004BF0E /* MailTableCell.swift in Sources */,
+				299A173D1F015E0B0004BF0E /* IndicatorView.swift in Sources */,
+				299A17351F015D740004BF0E /* MailCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
