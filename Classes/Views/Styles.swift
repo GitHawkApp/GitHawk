@@ -78,7 +78,7 @@ struct Styles {
             static let medium = "586069"
             static let light = "a3aab1"
             static let lighter = "f6f8fa"
-            static let border = "dfe2e5"
+            static let border = "bcbbc1"
         }
     }
 
