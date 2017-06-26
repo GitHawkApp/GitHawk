@@ -38,7 +38,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
-        textView.configureAndSizeToFit(text: viewModel)
+        textView.configureAndSizeToFit(text: viewModel, width: contentView.bounds.width)
     }
 
     // MARK: CollapsibleCell

@@ -68,7 +68,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
             borders.append(border)
         }
 
-        textView.configureAndSizeToFit(text: viewModel.quote)
+        textView.configureAndSizeToFit(text: viewModel.quote, width: contentView.bounds.width)
 
         setNeedsLayout()
     }
