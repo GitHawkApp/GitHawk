@@ -354,6 +354,7 @@
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCD1EF624F500C1E848 /* MMElement+Image.swift */; };
 		29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */; };
+		299A174D1F016B690004BF0E /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 299A174C1F016B690004BF0E /* SwipeCellKit.framework */; };
 		299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
 		299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 299E86481EFD9DBB00E5FE70 /* FlexController.m */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
@@ -566,6 +567,7 @@
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
 		29921BCD1EF624F500C1E848 /* MMElement+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+Image.swift"; sourceTree = "<group>"; };
 		29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+CodeBlock.swift"; sourceTree = "<group>"; };
+		299A174C1F016B690004BF0E /* SwipeCellKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwipeCellKit.framework; path = "SwipeCellKit/build/Debug-iphoneos/SwipeCellKit.framework"; sourceTree = "<group>"; };
 		299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
 		299E86471EFD9DBB00E5FE70 /* FlexController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexController.h; sourceTree = "<group>"; };
 		299E86481EFD9DBB00E5FE70 /* FlexController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlexController.m; sourceTree = "<group>"; };
@@ -633,6 +635,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				299A174D1F016B690004BF0E /* SwipeCellKit.framework in Frameworks */,
 				295F52DA1EF1C0C7000B53CF /* MMMarkdown.framework in Frameworks */,
 				4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */,
 			);
@@ -1106,6 +1109,7 @@
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				299A174C1F016B690004BF0E /* SwipeCellKit.framework */,
 				2963A9351EE215DD0066509C /* CocoaMarkdown.framework */,
 				295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */,
 				665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */,

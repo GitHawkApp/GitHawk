@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SwipeCellKit/SwipeCellKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:MMMarkdown/MMMarkdown.xcodeproj">
    </FileRef>
    <FileRef
