@@ -9,14 +9,9 @@
 import UIKit
 import IGListKit
 import SnapKit
+import SwipeCellKit
 
-protocol NotificationCellDelegate: class {
-    func didTapMark(cell: NotificationCell)
-}
-
-final class NotificationCell: UICollectionViewCell {
-
-    weak var delegate: NotificationCellDelegate? = nil
+final class NotificationCell: SwipeCollectionViewCell {
 
     static let labelInset = UIEdgeInsets(
         top: Styles.Fonts.title.lineHeight + 2*Styles.Sizes.rowSpacing,

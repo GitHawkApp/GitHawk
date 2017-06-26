@@ -9,7 +9,7 @@
 import Foundation
 
 func runningInSample() -> Bool {
-    return true
+    return false
 }
 
 func sampleUserSession() -> GithubUserSession? {
