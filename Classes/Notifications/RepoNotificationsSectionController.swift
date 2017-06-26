@@ -40,7 +40,8 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
             repo: object.repo,
             number: object.number
         )
-        viewController?.showDetailViewController(controller, sender: nil)
+        let nav = UINavigationController(rootViewController: controller)
+        viewController?.showDetailViewController(nav, sender: nil)
     }
 
 }

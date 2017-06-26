@@ -18,6 +18,4 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         return true
     }
 
-    
-
 }
