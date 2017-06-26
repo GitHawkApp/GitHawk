@@ -36,10 +36,9 @@ final class AttributedStringView: UIView {
     
     // MARK: Public API
 
-    func configureAndSizeToFit(text: NSAttributedStringSizing) {
+    func configureAndSizeToFit(text: NSAttributedStringSizing, width: CGFloat) {
         self.text = text
 
-        let width = bounds.width
         layer.contentsScale = text.screenScale
         layer.contents = text.contents(width)
         
