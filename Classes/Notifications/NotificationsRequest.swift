@@ -36,24 +36,34 @@ extension GithubClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
-        request(Request(
-            path: "notifications",
-            method: .get,
-            parameters: parameters,
-            headers: nil
-        ) { response in
-            if let jsonArr = response.value as? [ [String: Any] ] {
-                var notifications = [Notification]()
-                for json in jsonArr {
-                    if let notification = Notification(json: json) {
-                        notifications.append(notification)
-                    }
+        typealias NotificationsPayload = [[String: Any]]
+
+        let success = { (jsonArr: NotificationsPayload) in
+            var notifications = [Notification]()
+            for json in jsonArr {
+                if let notification = Notification(json: json) {
+                    notifications.append(notification)
                 }
-                completion(.success(notifications))
-            } else {
-                completion(.failed(response.error))
             }
-        })
+            completion(.success(notifications))
+        }
+
+        if let sampleJSON = loadSample(path: "notifications") as? NotificationsPayload {
+            success(sampleJSON)
+        } else {
+            request(Request(
+                path: "notifications",
+                method: .get,
+                parameters: parameters,
+                headers: nil
+            ) { response in
+                if let jsonArr = response.value as? NotificationsPayload {
+                    success(jsonArr)
+                } else {
+                    completion(.failed(response.error))
+                }
+            })
+        }
     }
 
 }
