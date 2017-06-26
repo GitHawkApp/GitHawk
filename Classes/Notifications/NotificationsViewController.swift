@@ -11,9 +11,10 @@ import IGListKit
 import SnapKit
 
 class NotificationsViewController: UIViewController,
-ListAdapterDataSource,
-SegmentedControlSectionControllerDelegate,
-FeedDelegate {
+    ListAdapterDataSource,
+    SegmentedControlSectionControllerDelegate,
+    FeedDelegate,
+RepoNotificationsSectionControllerDelegate {
 
     let client: GithubClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
@@ -74,7 +75,7 @@ FeedDelegate {
             controller.delegate = self
             return controller
         } else {
-            return RepoNotificationsSectionController(client: client)
+            return RepoNotificationsSectionController(client: client, delegate: self)
         }
     }
 
@@ -96,9 +97,15 @@ FeedDelegate {
     }
 
     // MARK: FeedDelegate
-
+    
     func loadFromNetwork(feed: Feed) {
         reload()
     }
 
+    // MARK: RepoNotificationsSectionControllerDelegate
+
+    func didMarkRead(sectionController: RepoNotificationsSectionController) {
+        // TODO
+    }
+    
 }

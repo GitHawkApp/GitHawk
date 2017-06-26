@@ -41,7 +41,8 @@ class SwipeActionButton: UIButton {
         titleLabel?.numberOfLines = 0
         
         accessibilityLabel = action.accessibilityLabel
-        
+
+        tintColor = action.tintColor
         setTitle(action.title, for: .normal)
         setTitleColor(tintColor, for: .normal)
         setImage(action.image, for: .normal)

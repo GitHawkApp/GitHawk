@@ -12,6 +12,8 @@ open class SwipeCollectionViewCell: UICollectionViewCell {
 
     public weak var delegate: SwipeCollectionViewCellDelegate?
 
+    public var canDelete = false
+
     var animator: SwipeAnimator?
 
     var state = SwipeState.center
@@ -435,7 +437,9 @@ extension SwipeCollectionViewCell: SwipeActionsViewDelegate {
             case .delete:
                 self?.mask = actionsView.createDeletionMask()
 
-                collectionView.deleteItems(at: [indexPath])
+                if self?.canDelete == true {
+                    collectionView.deleteItems(at: [indexPath])
+                }
 
                 UIView.animate(withDuration: 0.3, animations: {
                     self?.center.x = newCenter

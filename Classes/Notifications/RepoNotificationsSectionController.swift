@@ -8,13 +8,21 @@
 
 import UIKit
 import IGListKit
+import SwipeCellKit
 
-final class RepoNotificationsSectionController: ListGenericSectionController<NotificationViewModel> {
+protocol RepoNotificationsSectionControllerDelegate: class {
+    func didMarkRead(sectionController: RepoNotificationsSectionController)
+}
 
-    let client: GithubClient
+final class RepoNotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
+SwipeCollectionViewCellDelegate {
 
-    init(client: GithubClient) {
+    private let client: GithubClient
+    private weak var delegate: RepoNotificationsSectionControllerDelegate?
+
+    init(client: GithubClient, delegate: RepoNotificationsSectionControllerDelegate) {
         self.client = client
+        self.delegate = delegate
         super.init()
     }
 
@@ -28,6 +36,7 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
+        cell.delegate = self
         cell.bindViewModel(object)
         return cell
     }
@@ -44,5 +53,27 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
         viewController?.showDetailViewController(nav, sender: nil)
     }
 
-}
+    // MARK: SwipeCollectionViewCellDelegate
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForRowAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+        ) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let title = NSLocalizedString("Read", comment: "")
+        let action = SwipeAction(style: .destructive, title: title) { [weak self] (_, _) in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didMarkRead(sectionController: strongSelf)
+        }
+        action.backgroundColor = Styles.Colors.Blue.medium.color
+        action.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+        action.textColor = .white
+        action.tintColor = .white
+        action.font = Styles.Fonts.button
+        action.transitionDelegate = ScaleTransition.default
+        return [action]
+    }
+
+}
