@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 
 final class SettingsUsersSectionController: ListBindingSectionController<GithubSessionManager>,
-ListBindingSectionControllerDataSource,
+    ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate {
 
     override init() {
@@ -27,26 +27,44 @@ ListBindingSectionControllerSelectionDelegate {
 
     // MARK: ListBindingSectionControllerDataSource
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, viewModelsFor object: Any) -> [ListDiffable] {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        viewModelsFor object: Any
+        ) -> [ListDiffable] {
         let focusedLogin = self.object?.focusedLogin
         return activeSessions.map { SettingsUserModel(name: $0.login, selected: focusedLogin == $0.login) }
     }
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
-        guard let context = self.collectionContext else { return .zero }
-        return CGSize(width: context.containerSize.width, height: Styles.Sizes.tableCellHeight)
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        sizeForViewModel viewModel: Any,
+        at index: Int
+        ) -> CGSize {
+        guard let width = collectionContext?.containerSize.width
+            else { fatalError("Collection context must be set") }
+        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
     }
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
-        guard let context = self.collectionContext else { return UICollectionViewCell() }
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        cellForViewModel viewModel: Any,
+        at index: Int
+        ) -> UICollectionViewCell {
+        guard let context = collectionContext
+            else { fatalError("Collection context must be set") }
         return context.dequeueReusableCell(of: SettingsUserCell.self, for: self, at: index)
     }
 
     // MARK: ListBindingSectionControllerSelectionDelegate
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        didSelectItemAt index: Int,
+        viewModel: Any
+        ) {
         guard let object = self.object else { return }
         object.focus(activeSessions[index])
     }
 
 }
+

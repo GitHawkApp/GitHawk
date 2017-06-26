@@ -18,19 +18,20 @@ final class SettingsReportSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { return .zero }
+        guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
-            else { return UICollectionViewCell() }
+            else { fatalError("Collection context must be set or cell incorrect type") }
         cell.label.text = NSLocalizedString("Report a Bug", comment: "")
         return cell
     }
 
     override func didSelectItem(at index: Int) {
-        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new") else { return }
+        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new")
+            else { fatalError("Should always create GitHub issue URL") }
         let safari = SFSafariViewController(url: url)
         viewController?.present(safari, animated: true)
     }

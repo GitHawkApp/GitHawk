@@ -17,16 +17,17 @@ final class IssueClosedSectionController: ListGenericSectionController<IssueClos
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { return .zero }
+        guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: 30)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: IssueClosedCell.self, for: self, at: index) as? IssueClosedCell,
-        let object = self.object
-            else { return UICollectionViewCell() }
+            let object = self.object
+            else { fatalError("Cell incorrect type or object does not exist") }
         cell.configure(object)
         return cell
     }
 
 }
+

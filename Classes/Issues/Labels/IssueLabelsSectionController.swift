@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
-ListBindingSectionControllerDataSource,
+    ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate {
 
     var expanded = false
@@ -33,12 +33,15 @@ ListBindingSectionControllerSelectionDelegate {
     }
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
-        guard let context = self.collectionContext else { return .zero }
-        return CGSize(width: context.containerSize.width, height: 30    )
+        guard let width = collectionContext?.containerSize.width
+            else { fatalError("Collection context must be set") }
+        return CGSize(width: width, height: 30)
     }
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
-        guard let context = self.collectionContext else { return UICollectionViewCell() }
+        guard let context = self.collectionContext
+            else { fatalError("Collection context must be set") }
+
         let cellClass: AnyClass
         if viewModel is IssueLabelSummaryModel {
             cellClass = IssueLabelSummaryCell.self
@@ -56,3 +59,4 @@ ListBindingSectionControllerSelectionDelegate {
     }
 
 }
+

@@ -20,15 +20,14 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width
-            else { return .zero }
+            else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: object?.title.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let context = collectionContext,
-            let object = self.object,
-            let cell = context.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
-            else { return UICollectionViewCell() }
+        guard let object = self.object,
+            let cell = collectionContext?.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
+            else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.bindViewModel(object)
         return cell
     }
@@ -45,3 +44,4 @@ final class RepoNotificationsSectionController: ListGenericSectionController<Not
     }
 
 }
+
