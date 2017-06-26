@@ -308,6 +308,10 @@
 		296CD8171F013FBF001190B9 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		296CD8261F01413B001190B9 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* issue.json */; };
 		296CD8271F01413B001190B9 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* notifications.json */; };
+		296CD8291F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
+		296CD82A1F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
+		296CD82B1F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
+		296CD82D1F0147CF001190B9 /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -528,6 +532,8 @@
 		296CD8211F0140E3001190B9 /* FreetimeSamples-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FreetimeSamples-Info.plist"; sourceTree = "<group>"; };
 		296CD8241F014130001190B9 /* issue.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		296CD8251F014130001190B9 /* notifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
+		296CD8281F0141A6001190B9 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
+		296CD82C1F01476D001190B9 /* authorizations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = authorizations.json; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -849,8 +855,10 @@
 		296CD8231F014130001190B9 /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				296CD82C1F01476D001190B9 /* authorizations.json */,
 				296CD8241F014130001190B9 /* issue.json */,
 				296CD8251F014130001190B9 /* notifications.json */,
+				296CD8281F0141A6001190B9 /* Samples.swift */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -1235,6 +1243,7 @@
 				296CD8261F01413B001190B9 /* issue.json in Resources */,
 				296CD8141F013FBF001190B9 /* Localizable.stringsdict in Resources */,
 				296CD8151F013FBF001190B9 /* Main.storyboard in Resources */,
+				296CD82D1F0147CF001190B9 /* authorizations.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1516,6 +1525,7 @@
 				296CD7C01F013FBF001190B9 /* IssueClosedModel.swift in Sources */,
 				296CD7C11F013FBF001190B9 /* IssueCommentDetailCell.swift in Sources */,
 				296CD7C21F013FBF001190B9 /* ButtonCell.swift in Sources */,
+				296CD82B1F0141A6001190B9 /* Samples.swift in Sources */,
 				296CD7C31F013FBF001190B9 /* IssueCommentModel.swift in Sources */,
 				296CD7C41F013FBF001190B9 /* SegmentedControlModel.swift in Sources */,
 				296CD7C51F013FBF001190B9 /* SegmentedControlSectionController.swift in Sources */,
@@ -1651,6 +1661,7 @@
 				295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
+				296CD8291F0141A6001190B9 /* Samples.swift in Sources */,
 				292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
@@ -1757,6 +1768,7 @@
 				2958409E1EEA00E1007723C6 /* IssueLabelSummaryCell.swift in Sources */,
 				29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */,
 				29C167721ECA0D7C00439D62 /* UIView+BottomBorder.swift in Sources */,
+				296CD82A1F0141A6001190B9 /* Samples.swift in Sources */,
 				295840B71EEA00E1007723C6 /* ErrorMessages.swift in Sources */,
 				295840921EEA00E1007723C6 /* IssueEvent.swift in Sources */,
 				2958407B1EEA00E1007723C6 /* IssueCommentImageModel.swift in Sources */,

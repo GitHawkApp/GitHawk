@@ -44,11 +44,14 @@ final class GithubSessionManager: NSObject, ListDiffable {
     private let defaults = UserDefaults.standard
 
     override init() {
-        if let data = defaults.object(forKey: Keys.sessions) as? Data,
+        if let sample = sampleUserSession() {
+            _userSessions = [sample.collectionKey: sample]
+            _focusedKey = sample.collectionKey
+        } else if let data = defaults.object(forKey: Keys.sessions) as? Data,
             let sessions = NSKeyedUnarchiver.unarchiveObject(with: data) as? SessionCollection {
             _userSessions = sessions
+            _focusedKey = defaults.object(forKey: Keys.focused) as? String
         }
-        _focusedKey = defaults.object(forKey: Keys.focused) as? String
         super.init()
     }
 
