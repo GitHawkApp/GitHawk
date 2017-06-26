@@ -12,6 +12,7 @@ import Alamofire
 final class RootNavigationManager: GithubSessionListener {
 
     private let sessionManager: GithubSessionManager
+    private let splitDelegate = SplitViewControllerDelegate()
 
     // weak refs to avoid cycles
     weak private var rootViewController: UISplitViewController?
@@ -22,6 +23,7 @@ final class RootNavigationManager: GithubSessionListener {
         ) {
         self.sessionManager = sessionManager
         self.rootViewController = rootViewController
+        rootViewController.delegate = splitDelegate
         sessionManager.addListener(listener: self)
     }
 
