@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SwipeCellKit  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="SwipeCellKit  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SwipeCellKit Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/jerkoch/SwipeCellKit"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SwipeCellKit Reference</a>
+        <img id="carat" src="img/carat.png" />
+        SwipeCellKit  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="advanced.html">Advanced</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SwipeAction.html">SwipeAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SwipeTableViewCell.html">SwipeTableViewCell</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/ExpansionFulfillmentStyle.html">ExpansionFulfillmentStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SwipeActionStyle.html">SwipeActionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SwipeActionsOrientation.html">SwipeActionsOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SwipeTransitionStyle.html">SwipeTransitionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SwipeVerticalAlignment.html">SwipeVerticalAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SwipeActionTransitioning.html">SwipeActionTransitioning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SwipeExpanding.html">SwipeExpanding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SwipeTableViewCellDelegate.html">SwipeTableViewCellDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/ScaleAndAlphaExpansion.html">ScaleAndAlphaExpansion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ScaleTransition.html">ScaleTransition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeActionTransitioningContext.html">SwipeActionTransitioningContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionAnimationTimingParameters.html">SwipeExpansionAnimationTimingParameters</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionStyle.html">SwipeExpansionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionStyle/Target.html">– Target</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionStyle/Trigger.html">– Trigger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionStyle/CompletionAnimation.html">– CompletionAnimation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeExpansionStyle/FillOptions.html">– FillOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SwipeTableOptions.html">SwipeTableOptions</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='swipecellkit' class='heading'>SwipeCellKit</h1>
+
+<p><a href="https://travis-ci.org/jerkoch/SwipeCellKit"><img src="https://travis-ci.org/jerkoch/SwipeCellKit.svg" alt="Build Status"></a> 
+<a href="https://cocoapods.org/pods/SwipeCellKit"><img src="https://img.shields.io/cocoapods/v/SwipeCellKit.svg" alt="Version Status"></a> 
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat" alt="Swift 3.0"></a>
+<a href="http://opensource.org/licenses/MIT"><img src="https://img.shields.io/cocoapods/l/SwipeCellKit.svg" alt="license MIT"></a> 
+<a href="http://www.jerkoch.com/SwipeCellKit"><img src="https://img.shields.io/cocoapods/p/SwipeCellKit.svg" alt="Platform"></a> 
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
+<a href="https://twitter.com/jerkoch"><img src="https://img.shields.io/badge/twitter-@jerkoch-blue.svg?style=flat" alt="Twitter"></a></p>
+
+<p><em>Swipeable UITableViewCell based on the stock Mail.app, implemented in Swift.</em></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Hero.gif" /></p>
+<h2 id='about' class='heading'>About</h2>
+
+<p>A swipeable UITableViewCell with support for:</p>
+
+<ul>
+<li>Left and right swipe actions</li>
+<li>Action buttons with: <em>text only, text + image, image only</em></li>
+<li>Haptic Feedback</li>
+<li>Customizable transitions: <em>Border, Drag, and Reveal</em></li>
+<li>Customizable action button behavior during swipe</li>
+<li>Animated expansion when dragging past threshold</li>
+<li>Customizable expansion animations</li>
+<li>Accessibility</li>
+</ul>
+<h2 id='background' class='heading'>Background</h2>
+
+<p>Check out my <a href="https://jerkoch.com/2017/02/07/swiper-no-swiping.html">blog post</a> on how <em>SwipeCellKit</em> came to be.</p>
+<h2 id='demo' class='heading'>Demo</h2>
+<h3 id='transition-styles' class='heading'>Transition Styles</h3>
+
+<p>The transition style describes how the action buttons are exposed during the swipe.</p>
+<h4 id='border' class='heading'>Border</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Transition-Border.gif" /></p>
+<h4 id='drag' class='heading'>Drag</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Transition-Drag.gif" /></p>
+<h4 id='reveal' class='heading'>Reveal</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Transition-Reveal.gif" /></p>
+<h4 id='customized' class='heading'>Customized</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Transition-Delegate.gif" /></p>
+<h3 id='expansion-styles' class='heading'>Expansion Styles</h3>
+
+<p>The expansion style describes the behavior when the cell is swiped past a defined threshold.</p>
+<h4 id='none' class='heading'>None</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Expansion-None.gif" /></p>
+<h4 id='selection' class='heading'>Selection</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Expansion-Selection.gif" /></p>
+<h4 id='destructive' class='heading'>Destructive</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Expansion-Destructive.gif" /></p>
+<h4 id='customized' class='heading'>Customized</h4>
+
+<p align="center"><img src="https://raw.githubusercontent.com/jerkoch/SwipeCellKit/develop/Screenshots/Expansion-Delegate.gif" /></p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>Swift 3.0</li>
+<li>Xcode 8</li>
+<li>iOS 9.0+</li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+<h4 id='a-href-http-cocoapods-org-cocoapods-a-recommended' class='heading'><a href="http://cocoapods.org">CocoaPods</a> (recommended)</h4>
+<pre class="highlight ruby"><code><span class="n">use_frameworks!</span>
+
+<span class="c1"># Latest release in CocoaPods</span>
+<span class="n">pod</span> <span class="s1">'SwipeCellKit'</span>
+
+<span class="c1"># Get the latest on develop</span>
+<span class="n">pod</span> <span class="s1">'SwipeCellKit'</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">'https://github.com/jerkoch/SwipeCellKit.git'</span><span class="p">,</span> <span class="ss">:branch</span> <span class="o">=&gt;</span> <span class="s1">'develop'</span>
+</code></pre>
+<h4 id='a-href-https-github-com-carthage-carthage-carthage-a' class='heading'><a href="https://github.com/Carthage/Carthage">Carthage</a></h4>
+<pre class="highlight shell"><code>github <span class="s2">"jerkoch/SwipeCellKit"</span>
+</code></pre>
+<h2 id='documentation' class='heading'>Documentation</h2>
+
+<p>Read the <a href="http://www.jerkoch.com/SwipeCellKit">docs</a>. Generated with <a href="https://github.com/realm/jazzy">jazzy</a>. Hosted by <a href="https://pages.github.com">GitHub Pages</a>.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>Set the <code>delegate</code> property on <code>SwipeTableViewCell</code>:</p>
+<pre class="highlight swift"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">cellForRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UITableViewCell</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">cell</span> <span class="o">=</span> <span class="n">tableView</span><span class="o">.</span><span class="nf">dequeueReusableCell</span><span class="p">(</span><span class="nv">withIdentifier</span><span class="p">:</span> <span class="s">"Cell"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SwipeTableViewCell</span>
+    <span class="n">cell</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+    <span class="k">return</span> <span class="n">cell</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Adopt the <code>SwipeTableViewCellDelegate</code> protocol:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">editActionsForRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="k">for</span> <span class="nv">orientation</span><span class="p">:</span> <span class="kt">SwipeActionsOrientation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">SwipeAction</span><span class="p">]?</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="n">orientation</span> <span class="o">==</span> <span class="o">.</span><span class="k">right</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">deleteAction</span> <span class="o">=</span> <span class="kt">SwipeAction</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="o">.</span><span class="n">destructive</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="s">"Delete"</span><span class="p">)</span> <span class="p">{</span> <span class="n">action</span><span class="p">,</span> <span class="n">indexPath</span> <span class="k">in</span>
+        <span class="c1">// handle action by updating model with deletion</span>
+    <span class="p">}</span>
+
+    <span class="c1">// customize the action appearance</span>
+    <span class="n">deleteAction</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"delete"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">deleteAction</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Optionally, you can implement the <code>editActionsOptionsForRowAt</code> method to customize the behavior of the swipe actions:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">editActionsOptionsForRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="k">for</span> <span class="nv">orientation</span><span class="p">:</span> <span class="kt">SwipeActionsOrientation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SwipeTableOptions</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">SwipeTableOptions</span><span class="p">()</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">expansionStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">destructive</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">transitionStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">border</span>
+    <span class="k">return</span> <span class="n">options</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='transitions' class='heading'>Transitions</h3>
+
+<p>Three built-in transition styles are provided by <code>SwipeTransitionStyle</code>:  </p>
+
+<ul>
+<li>.border: The visible action area is equally divide between all action buttons.</li>
+<li>.drag: The visible action area is dragged, pinned to the cell, with each action button fully sized as it is exposed.</li>
+<li>.reveal: The visible action area sits behind the cell, pinned to the edge of the table view, and is revealed as the cell is dragged aside.</li>
+</ul>
+
+<p>See <a href="https://github.com/jerkoch/SwipeCellKit/blob/develop/Guides/Advanced.md">Customizing Transitions</a> for more details on customizing button appearance as the swipe is performed.</p>
+<h3 id='expansion' class='heading'>Expansion</h3>
+
+<p>Four built-in expansion styles are provided by <code>SwipeExpansionStyle</code>:  </p>
+
+<ul>
+<li>.selection</li>
+<li>.destructive (like Mail.app)</li>
+<li>.destructiveAfterFill (like Mailbox/Tweetbot)</li>
+<li>.fill</li>
+</ul>
+
+<p>Much effort has gone into making <code>SwipeExpansionStyle</code> extremely customizable. If these built-in styles do not meet your needs, see <a href="https://github.com/jerkoch/SwipeCellKit/blob/develop/Guides/Advanced.md">Customizing Expansion</a> for more details on creating custom styles.</p>
+
+<p>The built-in <code>.fill</code> expansion style requires manual action fulfillment. This means your action handler must call <code>SwipeAction.fulfill(style:)</code> at some point during or after invocation to resolve the fill expansion. The supplied <code>ExpansionFulfillmentStyle</code> allows you to delete or reset the cell at some later point (possibly after further user interaction).</p>
+
+<p>The built-in <code>.destructive</code>, and <code>.destructiveAfterFill</code> expansion styles are configured to automatically perform row deletion when the action handler is invoked (automatic fulfillment).  Your deletion behavior may require coordination with other row animations (eg. inside <code>beginUpdates</code> and <code>endUpdates</code>). In this case, you can easily create a custom <code>SwipeExpansionStyle</code> which requires manual fulfillment to trigger deletion:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">SwipeTableOptions</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">expansionStyle</span> <span class="o">=</span> <span class="o">.</span><span class="nf">destructive</span><span class="p">(</span><span class="nv">automaticallyDelete</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+</code></pre>
+
+<blockquote>
+<p><strong>NOTE</strong>: You must call <code>SwipeAction.fulfill(with style:)</code> at some point while/after your action handler is invoked to trigger deletion. Do not call <code>deleteRows</code> directly.</p>
+</blockquote>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">delete</span> <span class="o">=</span> <span class="kt">SwipeAction</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="o">.</span><span class="n">destructive</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span> <span class="p">{</span> <span class="n">action</span><span class="p">,</span> <span class="n">indexPath</span> <span class="k">in</span>
+    <span class="c1">// Update model</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">emails</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="n">indexPath</span><span class="o">.</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="c1">// Coordinate table view update animations</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="nf">beginUpdates</span><span class="p">()</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="nf">insertRows</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">section</span><span class="p">:</span> <span class="mi">1</span><span class="p">)],</span> <span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">automatic</span><span class="p">)</span>
+    <span class="n">action</span><span class="o">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="o">.</span><span class="n">delete</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="nf">endUpdates</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='advanced' class='heading'>Advanced</h2>
+
+<p>See the <a href="https://github.com/jerkoch/SwipeCellKit/blob/develop/Guides/Advanced.md">Advanced Guide</a> for more details on customization.</p>
+<h2 id='credits' class='heading'>Credits</h2>
+
+<p>Maintained by <a href="https://twitter.com/mkurabi"><strong>@mkurabi</strong></a>.</p>
+<h2 id='showcase' class='heading'>Showcase</h2>
+
+<p>We&rsquo;re interested in knowing <a href="https://github.com/jerkoch/SwipeCellKit/blob/develop/SHOWCASE.md">who&rsquo;s using <em>SwipeCellKit</em></a> in their app. Please submit a pull request to add your app! </p>
+<h2 id='license' class='heading'>License</h2>
+
+<p><code>SwipeCellKit</code> is released under an <a href="http://opensource.org/licenses/MIT">MIT License</a>. See <code>LICENSE</code> for details.</p>
+
+<p><em>Please provide attribution, it is greatly appreciated.</em></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://twitter.com/jerkoch" target="_blank" rel="external">Jeremy Koch</a>. All rights reserved. (Last updated: 2017-06-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

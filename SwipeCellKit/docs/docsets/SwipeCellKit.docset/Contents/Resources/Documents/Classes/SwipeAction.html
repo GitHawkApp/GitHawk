@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SwipeAction Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/SwipeAction" class="dashAnchor"></a>
+    <a title="SwipeAction Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SwipeCellKit Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/jerkoch/SwipeCellKit"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SwipeCellKit Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        SwipeAction Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../advanced.html">Advanced</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SwipeAction.html">SwipeAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SwipeTableViewCell.html">SwipeTableViewCell</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ExpansionFulfillmentStyle.html">ExpansionFulfillmentStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SwipeActionStyle.html">SwipeActionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SwipeActionsOrientation.html">SwipeActionsOrientation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SwipeTransitionStyle.html">SwipeTransitionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SwipeVerticalAlignment.html">SwipeVerticalAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/SwipeActionTransitioning.html">SwipeActionTransitioning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SwipeExpanding.html">SwipeExpanding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SwipeTableViewCellDelegate.html">SwipeTableViewCellDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ScaleAndAlphaExpansion.html">ScaleAndAlphaExpansion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ScaleTransition.html">ScaleTransition</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeActionTransitioningContext.html">SwipeActionTransitioningContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionAnimationTimingParameters.html">SwipeExpansionAnimationTimingParameters</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionStyle.html">SwipeExpansionStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionStyle/Target.html">– Target</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionStyle/Trigger.html">– Trigger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionStyle/CompletionAnimation.html">– CompletionAnimation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeExpansionStyle/FillOptions.html">– FillOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SwipeTableOptions.html">SwipeTableOptions</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SwipeAction</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SwipeAction</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>The <code>SwipeAction</code> object defines a single action to present when the user swipes horizontally in a table row.</p>
+
+<p>This class lets you define one or more custom actions to display for a given row in your table. Each instance of this class represents a single action to perform and includes the text, formatting information, and behavior for the corresponding button.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction10identifierGSqSS_"></a>
+                    <a name="//apple_ref/swift/Property/identifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction10identifierGSqSS_">identifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An optional unique action identifier.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction5titleGSqSS_"></a>
+                    <a name="//apple_ref/swift/Property/title" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction5titleGSqSS_">title</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The title of the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    You must specify a title or an image.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction5styleOS_16SwipeActionStyle"></a>
+                    <a name="//apple_ref/swift/Property/style" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction5styleOS_16SwipeActionStyle">style</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The style applied to the action button.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Enums/SwipeActionStyle.html">SwipeActionStyle</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction18transitionDelegateGSqPS_24SwipeActionTransitioning__"></a>
+                    <a name="//apple_ref/swift/Property/transitionDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction18transitionDelegateGSqPS_24SwipeActionTransitioning__">transitionDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The object that is notified as transitioning occurs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">transitionDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SwipeActionTransitioning.html">SwipeActionTransitioning</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction4fontGSqCSo6UIFont_"></a>
+                    <a name="//apple_ref/swift/Property/font" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction4fontGSqCSo6UIFont_">font</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The font to use for the title of the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If you do not specify a font, a 15pt system font is used.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction9textColorGSqCSo7UIColor_"></a>
+                    <a name="//apple_ref/swift/Property/textColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction9textColorGSqCSo7UIColor_">textColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The text color of the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If you do not specify a color, white is used.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction5imageGSqCSo7UIImage_"></a>
+                    <a name="//apple_ref/swift/Property/image" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction5imageGSqCSo7UIImage_">image</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The image used for the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    You must specify a title or an image.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction16highlightedImageGSqCSo7UIImage_"></a>
+                    <a name="//apple_ref/swift/Property/highlightedImage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction16highlightedImageGSqCSo7UIImage_">highlightedImage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The highlighted image used for the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If you do not specify a highlight image, the default <code><a href="../Classes/SwipeAction.html#/s:vC12SwipeCellKit11SwipeAction5imageGSqCSo7UIImage_">image</a></code> is used for the highlighted state.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">highlightedImage</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction7handlerGSqFTS0_V10Foundation9IndexPath_T__"></a>
+                    <a name="//apple_ref/swift/Property/handler" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction7handlerGSqFTS0_V10Foundation9IndexPath_T__">handler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The closure to execute when the user taps the button associated with this action.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">handler</span><span class="p">:</span> <span class="p">((</span><span class="kt">SwipeAction</span><span class="p">,</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction15backgroundColorGSqCSo7UIColor_"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction15backgroundColorGSqCSo7UIColor_">backgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The background color of the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Use this property to specify the background color for your button. If you do not specify a value for this property, the framework assigns a default color based on the value in the style property.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction26highlightedBackgroundColorGSqCSo7UIColor_"></a>
+                    <a name="//apple_ref/swift/Property/highlightedBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction26highlightedBackgroundColorGSqCSo7UIColor_">highlightedBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The highlighted background color of the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Use this property to specify the highlighted background color for your button.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">highlightedBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction16backgroundEffectGSqCSo14UIVisualEffect_"></a>
+                    <a name="//apple_ref/swift/Property/backgroundEffect" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction16backgroundEffectGSqCSo14UIVisualEffect_">backgroundEffect</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The visual effect to apply to the action button.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Assigning a visual effect object to this property adds that effect to the background of the action button.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">backgroundEffect</span><span class="p">:</span> <span class="kt">UIVisualEffect</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC12SwipeCellKit11SwipeAction17hidesWhenSelectedSb"></a>
+                    <a name="//apple_ref/swift/Property/hidesWhenSelected" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC12SwipeCellKit11SwipeAction17hidesWhenSelectedSb">hidesWhenSelected</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A Boolean value that determines whether the actions menu is automatically hidden upon selection.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    When set to <code>true</code>, the actions menu is automatically hidden when the action is selected. The default value is <code>false</code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">hidesWhenSelected</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC12SwipeCellKit11SwipeActioncFT5styleOS_16SwipeActionStyle5titleGSqSS_7handlerGSqFTS0_V10Foundation9IndexPath_T___S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(style:title:handler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC12SwipeCellKit11SwipeActioncFT5styleOS_16SwipeActionStyle5titleGSqSS_7handlerGSqFTS0_V10Foundation9IndexPath_T___S0_">init(style:title:handler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constructs a new <code>SwipeAction</code> instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Enums/SwipeActionStyle.html">SwipeActionStyle</a></span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">handler</span><span class="p">:</span> <span class="p">((</span><span class="kt">SwipeAction</span><span class="p">,</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>style</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The style of the action button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The title of the action button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The closure to execute when the user taps the button associated with this action.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC12SwipeCellKit11SwipeAction7fulfillFT4withOS_25ExpansionFulfillmentStyle_T_"></a>
+                    <a name="//apple_ref/swift/Method/fulfill(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC12SwipeCellKit11SwipeAction7fulfillFT4withOS_25ExpansionFulfillmentStyle_T_">fulfill(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Calling this method performs the configured expansion completion animation including deletion, if necessary. Calling this method more than once has no effect.</p>
+
+<p>You should only call this method from the implementation of your action <code><a href="../Classes/SwipeAction.html#/s:vC12SwipeCellKit11SwipeAction7handlerGSqFTS0_V10Foundation9IndexPath_T__">handler</a></code> method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fulfill</span><span class="p">(</span><span class="n">with</span> <span class="nv">style</span><span class="p">:</span> <span class="kt"><a href="../Enums/ExpansionFulfillmentStyle.html">ExpansionFulfillmentStyle</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>style</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The desired style for completing the expansion action.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://twitter.com/jerkoch" target="_blank" rel="external">Jeremy Koch</a>. All rights reserved. (Last updated: 2017-06-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
