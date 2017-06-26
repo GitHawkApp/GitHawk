@@ -12,8 +12,7 @@ import IGListKit
 final class NotificationViewModel: ListDiffable {
 
     let id: String
-    let title: NSAttributedString
-    let titleSize: CGSize
+    let title: NSAttributedStringSizing
     let type: NotificationType
     let date: Date
     let read: Bool
@@ -44,14 +43,11 @@ final class NotificationViewModel: ListDiffable {
             NSFontAttributeName: Styles.Fonts.body,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
         ]
-        self.title = NSAttributedString(string: title, attributes: attributes)
-
-        let sizing = NSAttributedStringSizing(
+        self.title = NSAttributedStringSizing(
             containerWidth: containerWidth,
-            attributedText: self.title,
+            attributedText: NSAttributedString(string: title, attributes: attributes),
             inset: NotificationCell.labelInset
         )
-        self.titleSize = sizing.textViewSize
     }
 
     // MARK: ListDiffable

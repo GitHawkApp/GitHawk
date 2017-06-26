@@ -17,14 +17,14 @@ private func bodyIsCollapsible(body: Any) -> Bool {
     }
 }
 
-func IssueCollapsedBodies(bodies: [AnyObject]) -> (AnyObject, CGFloat)? {
+func IssueCollapsedBodies(bodies: [AnyObject], width: CGFloat) -> (AnyObject, CGFloat)? {
     let cap: CGFloat = 300
     // minimum height to collapse so expanding shows significant amount of content
     let minDelta = CollapseCellMinHeight * 3
 
     var totalHeight: CGFloat = 0
     for body in bodies {
-        let height = bodyHeight(viewModel: body)
+        let height = bodyHeight(viewModel: body, width: width)
         totalHeight += height
         if bodyIsCollapsible(body: body),
             totalHeight > cap,

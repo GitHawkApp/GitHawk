@@ -38,9 +38,13 @@ final class AttributedStringView: UIView {
 
     func configureAndSizeToFit(text: NSAttributedStringSizing) {
         self.text = text
+
+        let width = bounds.width
         layer.contentsScale = text.screenScale
-        layer.contents = text.contents()
-        frame = UIEdgeInsetsInsetRect(CGRect(origin: .zero, size: text.textViewSize), text.inset)
+        layer.contents = text.contents(width)
+        
+        let rect = CGRect(origin: .zero, size: text.textViewSize(width))
+        frame = UIEdgeInsetsInsetRect(rect, text.inset)
     }
 
     // MARK: Private API

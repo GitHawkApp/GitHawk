@@ -69,8 +69,8 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentCodeBlockModel else { return }
 
-        let contentSize = viewModel.code.textViewSize
-        scrollView.contentSize = viewModel.code.textViewSize
+        let contentSize = viewModel.code.textViewSize(contentView.bounds.width)
+        scrollView.contentSize = contentSize
 
         label.attributedText = viewModel.code.attributedText
         let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
