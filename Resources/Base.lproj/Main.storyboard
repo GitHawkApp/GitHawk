@@ -1,32 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="RpL-qn-z7e">
-            <objects>
-                <viewController id="iBP-8L-gSM" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Krp-Rw-K1x"/>
-                        <viewControllerLayoutGuide type="bottom" id="1OT-nD-NXL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Olt-6H-CV5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7c7-1v-spD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-670" y="1192"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="5Pm-pl-ZQT">
             <objects>
@@ -51,7 +33,6 @@
                 <splitViewController id="EPN-4V-9Hj" sceneMemberID="viewController">
                     <connections>
                         <segue destination="AKn-8S-pzd" kind="relationship" relationship="masterViewController" id="aFN-Se-rpt"/>
-                        <segue destination="iBP-8L-gSM" kind="relationship" relationship="detailViewController" id="M6X-n0-6Wd"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jzo-Kg-YFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
