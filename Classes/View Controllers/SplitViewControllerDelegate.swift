@@ -10,12 +10,4 @@ import UIKit
 
 final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
 
-    func splitViewController(
-        _ splitViewController: UISplitViewController,
-        collapseSecondary secondaryViewController: UIViewController,
-        onto primaryViewController: UIViewController
-        ) -> Bool {
-        return true
-    }
-
 }
