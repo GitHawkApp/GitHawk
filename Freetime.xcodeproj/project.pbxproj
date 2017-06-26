@@ -990,9 +990,9 @@
 			isa = PBXGroup;
 			children = (
 				29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */,
+				29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */,
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
-				29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
