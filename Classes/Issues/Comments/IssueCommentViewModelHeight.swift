@@ -13,7 +13,7 @@ func bodyHeight(viewModel: Any, width: CGFloat) -> CGFloat {
         return viewModel.textViewSize(width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
         let inset = IssueCommentCodeBlockCell.scrollViewInset
-        return viewModel.code.textViewSize(0).height + inset.top + inset.bottom
+        return viewModel.contentSize.height + inset.top + inset.bottom
     } else if viewModel is IssueCommentImageModel {
         return 200.0
     } else if viewModel is IssueCommentReactionViewModel {
