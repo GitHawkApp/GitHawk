@@ -52,6 +52,11 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         navigationItem.rightBarButtonItem = rightItem
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        feed.viewWillTransition(to: size, with: coordinator)
+    }
+
     // MARK: Private API
 
     func onMore() {

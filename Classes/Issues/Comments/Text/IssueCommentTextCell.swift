@@ -32,6 +32,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
+        textView.reposition(width: contentView.bounds.width)
     }
 
     // MARK: ListBindable

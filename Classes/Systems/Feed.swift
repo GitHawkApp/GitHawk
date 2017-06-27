@@ -75,6 +75,14 @@ final class Feed {
         }
     }
 
+    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let layout = collectionView.collectionViewLayout
+        layout.invalidateLayout()
+        coordinator.animate(alongsideTransition: { _ in
+            layout.invalidateLayout()
+        })
+    }
+
     // MARK: Private API
 
     private func refresh() {

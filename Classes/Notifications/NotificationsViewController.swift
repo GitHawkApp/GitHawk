@@ -39,6 +39,11 @@ RepoNotificationsSectionControllerDelegate {
         feed.adapter.dataSource = self
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        feed.viewWillTransition(to: size, with: coordinator)
+    }
+
     // MARK: Private API
 
     private func update(fromNetwork: Bool) {
