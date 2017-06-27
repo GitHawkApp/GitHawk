@@ -41,6 +41,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
     override func layoutSubviews() {
         super.layoutSubviews()
         LayoutCollapsible(layer: overlay, view: contentView)
+        textView.reposition(width: contentView.bounds.width)
         for (i, border) in borders.enumerated() {
             border.frame = CGRect(
                 x: Styles.Sizes.gutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),

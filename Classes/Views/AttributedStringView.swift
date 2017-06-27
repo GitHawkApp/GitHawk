@@ -23,6 +23,7 @@ final class AttributedStringView: UIView {
 
         backgroundColor = .white
         isOpaque = true
+
         layer.contentsGravity = kCAGravityTopLeft
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(AttributedStringView.onTap(recognizer:)))
@@ -36,15 +37,31 @@ final class AttributedStringView: UIView {
     
     // MARK: Public API
 
-    func configureAndSizeToFit(text: NSAttributedStringSizing, width: CGFloat) {
-        self.text = text
-
-        layer.contentsScale = text.screenScale
+    func reposition(width: CGFloat) {
+        guard let text = text else { return }
         layer.contents = text.contents(width)
-        
         let rect = CGRect(origin: .zero, size: text.textViewSize(width))
         frame = UIEdgeInsetsInsetRect(rect, text.inset)
     }
+
+    func configureAndSizeToFit(text: NSAttributedStringSizing, width: CGFloat) {
+        self.text = text
+        layer.contentsScale = text.screenScale
+        reposition(width: width)
+    }
+
+//    override func draw(_ rect: CGRect) {
+//        guard let text = text,
+//            let image = text.contents(rect.width),
+//            let context = UIGraphicsGetCurrentContext()
+//            else { return }
+//        let textRect = text.rect(rect.width)
+//        context.saveGState()
+//        context.translateBy(x: 0, y: textRect.height)
+//        context.scaleBy(x: 1, y: -1)
+//        context.draw(image, in: textRect)
+//        context.restoreGState()
+//    }
 
     // MARK: Private API
 

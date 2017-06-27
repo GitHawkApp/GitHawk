@@ -84,15 +84,21 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         if let cache = _textSize[width] {
             return cache
         }
-        return computeSize(width).size
+        return computeSize(width)
     }
 
-    private var _textViewSize = [CGFloat: CGSize]()
     func textViewSize(_ width: CGFloat) -> CGSize {
-        if let cache = _textViewSize[width] {
-            return cache
-        }
-        return computeSize(width).viewSize
+        return textSize(width).resized(inset: inset)
+    }
+
+    func rect(_ width: CGFloat) -> CGRect {
+        let size = textSize(width)
+        return CGRect(
+            x: inset.left,
+            y: inset.top,
+            width: size.width - inset.left - inset.right,
+            height: size.height - inset.top - inset.bottom
+        )
     }
 
     func configure(textView: UITextView) {
@@ -148,7 +154,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
     // MARK: Private API
 
     @discardableResult
-    func computeSize(_ width: CGFloat) -> (size: CGSize, viewSize: CGSize) {
+    func computeSize(_ width: CGFloat) -> CGSize {
         let insetWidth = width - inset.left - inset.right
         textContainer.size = CGSize(width: insetWidth, height: 0)
 
@@ -159,11 +165,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         let size = bounds.size.snapped(scale: screenScale)
         _textSize[width] = size
 
-        // adjust for the text view inset (contentInset + textContainerInset)
-        let viewSize = size.resized(inset: inset)
-        _textViewSize[width] = viewSize
-
-        return (size, viewSize)
+        return size
     }
 
     // MARK: ListDiffable
