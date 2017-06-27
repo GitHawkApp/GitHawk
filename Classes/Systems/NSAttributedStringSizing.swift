@@ -36,11 +36,13 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
     let screenScale: CGFloat
+    let backgroundColor: UIColor
 
     init(
         containerWidth: CGFloat,
         attributedText: NSAttributedString,
         inset: UIEdgeInsets = .zero,
+        backgroundColor: UIColor = .white,
         exclusionPaths: [UIBezierPath] = [],
         maximumNumberOfLines: Int = 0,
         lineFragmentPadding: CGFloat = 0.0,
@@ -54,6 +56,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         self.attributedText = attributedText
         self.inset = inset
         self.screenScale = screenScale
+        self.backgroundColor = backgroundColor
 
         textContainer = NSTextContainer()
         textContainer.exclusionPaths = exclusionPaths
@@ -129,7 +132,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         let size = textSize(width)
 
         UIGraphicsBeginImageContextWithOptions(size, true, screenScale)
-        UIColor.white.setFill()
+        backgroundColor.setFill()
         UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let glyphRange = layoutManager.glyphRange(for: textContainer)
         layoutManager.drawBackground(forGlyphRange: glyphRange, at: .zero)

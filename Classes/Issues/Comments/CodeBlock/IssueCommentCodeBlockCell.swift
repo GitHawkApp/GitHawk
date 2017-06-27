@@ -24,7 +24,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
         right: Styles.Sizes.gutter
     )
 
-    let label = UILabel()
+    let textView = AttributedStringView()
     let scrollView = UIScrollView()
     let overlay = CreateCollapsibleOverlay()
 
@@ -42,8 +42,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
         scrollView.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(scrollView)
 
-        label.numberOfLines = 0
-        scrollView.addSubview(label)
+        scrollView.addSubview(textView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,9 +71,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
         let contentSize = viewModel.contentSize
         scrollView.contentSize = contentSize
 
-        label.attributedText = viewModel.code.attributedText
-        let textFrame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        label.frame = UIEdgeInsetsInsetRect(textFrame, IssueCommentCodeBlockCell.textViewInset)
+        textView.configureAndSizeToFit(text: viewModel.code, width: 0)
     }
 
     // MARK: CollapsibleCell

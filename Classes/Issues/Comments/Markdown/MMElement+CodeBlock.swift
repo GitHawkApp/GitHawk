@@ -31,7 +31,8 @@ extension MMElement {
         let stringSizing = NSAttributedStringSizing(
             containerWidth: 0,
             attributedText: NSAttributedString(string: text, attributes: attributes),
-            inset: inset
+            inset: inset,
+            backgroundColor: Styles.Colors.Gray.lighter.color
         )
         return IssueCommentCodeBlockModel(
             code: stringSizing,
