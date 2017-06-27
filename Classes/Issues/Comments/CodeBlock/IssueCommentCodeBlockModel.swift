@@ -22,6 +22,12 @@ final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
         self.language = language
     }
 
+    // MARK: Public API
+
+    var contentSize: CGSize {
+        return code.textViewSize(0)
+    }
+
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
