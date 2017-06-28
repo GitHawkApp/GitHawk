@@ -79,6 +79,8 @@ struct Styles {
             static let light = "a3aab1"
             static let lighter = "f6f8fa"
             static let border = "bcbbc1"
+
+            static let alphaLighter = UIColor(white: 0, alpha: 0.10)
         }
     }
 

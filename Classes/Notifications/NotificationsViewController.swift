@@ -39,6 +39,11 @@ RepoNotificationsSectionControllerDelegate {
         feed.adapter.dataSource = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(feed.collectionView)
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         feed.viewWillTransition(to: size, with: coordinator)

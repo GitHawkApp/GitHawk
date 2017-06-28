@@ -344,7 +344,7 @@ open class SwipeCollectionViewCell: UICollectionViewCell {
     /// :nodoc:
     open override var isHighlighted: Bool {
         didSet {
-            super.isHighlighted = state != .center
+            super.isHighlighted = isHighlighted && state == .center
         }
     }
 
