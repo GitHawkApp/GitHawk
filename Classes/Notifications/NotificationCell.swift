@@ -20,10 +20,11 @@ final class NotificationCell: SwipeCollectionViewCell {
         right: Styles.Sizes.gutter
     )
 
-    let reasonImageView = UIImageView()
-    let dateLabel = ShowMoreDetailsLabel()
-    let titleLabel = UILabel()
-    let textLabel = UILabel()
+    private let reasonImageView = UIImageView()
+    private let dateLabel = ShowMoreDetailsLabel()
+    private let titleLabel = UILabel()
+    private let textLabel = UILabel()
+    private let selectionOverlay = CALayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,10 +68,37 @@ final class NotificationCell: SwipeCollectionViewCell {
         }
 
         addBorder(left: NotificationCell.labelInset.left)
+
+        selectionOverlay.backgroundColor = Styles.Colors.Gray.alphaLighter.cgColor
+        selectionOverlay.opacity = 0
+        contentView.layer.addSublayer(selectionOverlay)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        selectionOverlay.frame = contentView.bounds
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            showOverlay(show: isSelected)
+        }
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            showOverlay(show: isHighlighted)
+        }
+    }
+
+    // MARK: Private API
+
+    private func showOverlay(show: Bool) {
+        selectionOverlay.opacity = show ? 1 : 0
     }
 
     // MARK: ListBindable
