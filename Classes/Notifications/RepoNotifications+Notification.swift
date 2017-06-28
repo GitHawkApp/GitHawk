@@ -8,6 +8,22 @@
 
 import UIKit
 
+extension String {
+
+    var notificationIdentifier: NotificationViewModel.Identifier? {
+        let split = components(separatedBy: "/")
+        guard split.count > 2,
+            let identifier = split.last
+            else { return nil }
+        if split[split.count - 2] == "commits" {
+            return .hash(identifier)
+        } else {
+            return .number((identifier as NSString).integerValue)
+        }
+    }
+
+}
+
 func createNotificationViewModels(containerWidth: CGFloat, notifications: [Notification]) -> [NotificationViewModel] {
     var viewModels = [NotificationViewModel]()
 
@@ -15,7 +31,7 @@ func createNotificationViewModels(containerWidth: CGFloat, notifications: [Notif
     for notification in notifications {
         guard let type = NotificationType(rawValue: notification.subject.type),
             let date = df.date(from: notification.updated_at),
-            let number = (notification.subject.url.components(separatedBy: "/").last as NSString?)?.integerValue
+            let identifier = notification.subject.url.notificationIdentifier
             else { continue }
 
         let model = NotificationViewModel(
@@ -26,7 +42,7 @@ func createNotificationViewModels(containerWidth: CGFloat, notifications: [Notif
             read: !notification.unread,
             owner: notification.repository.owner.login,
             repo: notification.repository.name,
-            number: number,
+            identifier: identifier,
             containerWidth: containerWidth
         )
         viewModels.append(model)

@@ -42,15 +42,9 @@ SwipeCollectionViewCellDelegate {
     }
 
     override func didSelectItem(at index: Int) {
-        guard let object = self.object else { return }
-        let controller = IssuesViewController(
-            client: client,
-            owner: object.owner,
-            repo: object.repo,
-            number: object.number
-        )
-        let nav = UINavigationController(rootViewController: controller)
-        viewController?.showDetailViewController(nav, sender: nil)
+        guard let object = self.object else { fatalError("Should have an object") }
+        let controller = NavigateToNotificationContent(object: object, client: client)
+        viewController?.showDetailViewController(controller, sender: nil)
     }
 
     // MARK: SwipeCollectionViewCellDelegate

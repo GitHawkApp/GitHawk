@@ -11,6 +11,11 @@ import IGListKit
 
 final class NotificationViewModel: ListDiffable {
 
+    enum Identifier {
+        case number(Int)
+        case hash(String)
+    }
+
     let id: String
     let title: NSAttributedStringSizing
     let type: NotificationType
@@ -18,7 +23,7 @@ final class NotificationViewModel: ListDiffable {
     let read: Bool
     let owner: String
     let repo: String
-    let number: Int
+    let identifier: Identifier
 
     init(
         id: String,
@@ -28,7 +33,7 @@ final class NotificationViewModel: ListDiffable {
         read: Bool,
         owner: String,
         repo: String,
-        number: Int,
+        identifier: Identifier,
         containerWidth: CGFloat
         ) {
         self.id = id
@@ -37,7 +42,7 @@ final class NotificationViewModel: ListDiffable {
         self.read = read
         self.owner = owner
         self.repo = repo
-        self.number = number
+        self.identifier = identifier
 
         let attributes = [
             NSFontAttributeName: Styles.Fonts.body,

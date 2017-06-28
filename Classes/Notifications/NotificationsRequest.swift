@@ -13,7 +13,6 @@ enum NotificationResult {
     case success([Notification])
 }
 
-
 extension GithubClient {
 
     func requestNotifications(

@@ -12,11 +12,11 @@ import TUSafariActivity
 
 final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate {
 
-    fileprivate let client: GithubClient
-    fileprivate let owner: String
-    fileprivate let repo: String
-    fileprivate let number: Int
-    fileprivate var models = [ListDiffable]()
+    private let client: GithubClient
+    private let owner: String
+    private let repo: String
+    private let number: Int
+    private var models = [ListDiffable]()
     lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
     init(
