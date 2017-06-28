@@ -60,7 +60,9 @@ SwipeCollectionViewCellDelegate {
         editActionsForRowAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
         ) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
+        guard orientation == .right,
+            self.object?.read == false
+            else { return nil }
 
         let title = NSLocalizedString("Read", comment: "")
         let action = SwipeAction(style: .destructive, title: title) { [weak self] (_, _) in
