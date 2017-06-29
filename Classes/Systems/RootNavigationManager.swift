@@ -101,6 +101,7 @@ final class RootNavigationManager: GithubSessionListener {
 
     @objc private func onSettings() {
         let settings = newSettingsRootViewController(sessionManager: sessionManager, rootNavigationManager: self)
+        settings.modalPresentationStyle = .formSheet
         rootViewController?.present(settings, animated: true)
     }
     
