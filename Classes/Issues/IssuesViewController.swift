@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
+import SafariServices
 
 final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate {
 
@@ -44,7 +45,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.adapter.dataSource = self
 
         let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets"),
+            image: UIImage(named: "bullets-hollow"),
             style: .plain,
             target: self,
             action: #selector(IssuesViewController.onMore)
@@ -60,11 +61,26 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     // MARK: Private API
 
     func onMore() {
+        let alert = UIAlertController()
+
         let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
-        let url = URL(string: path)!
-        let safari = TUSafariActivity()
-        let activity = UIActivityViewController(activityItems: [url], applicationActivities: [safari])
-        present(activity, animated: true)
+        let externalURL = URL(string: path)!
+
+        let share = UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
+            let safariActivity = TUSafariActivity()
+            let controller = UIActivityViewController(activityItems: [externalURL], applicationActivities: [safariActivity])
+            self.present(controller, animated: true)
+        }
+        let safari = UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { _ in
+            let controller = SFSafariViewController(url: externalURL)
+            self.present(controller, animated: true)
+        }
+        let cancel = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
+        alert.addAction(share)
+        alert.addAction(safari)
+        alert.addAction(cancel)
+
+        present(alert, animated: true)
     }
 
     // MARK: ListAdapterDataSource
