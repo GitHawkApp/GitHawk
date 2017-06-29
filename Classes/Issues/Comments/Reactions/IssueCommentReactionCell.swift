@@ -47,6 +47,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
+        addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)

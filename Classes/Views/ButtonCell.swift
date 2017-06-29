@@ -20,6 +20,7 @@ final class ButtonCell: UICollectionViewCell {
         super.init(frame: frame)
 
         contentView.backgroundColor = .white
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         topSeparator = contentView.addBorder(bottom: false, left: 0, right: 0)
         bottomSeparator = contentView.addBorder(bottom: true, left: 0, right: 0)
