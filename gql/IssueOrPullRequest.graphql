@@ -151,6 +151,9 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               commit {
                 oid
               }
+              actor {
+                login
+              }
               createdAt
             }
           }

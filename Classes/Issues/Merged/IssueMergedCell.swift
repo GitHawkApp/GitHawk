@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import IGListKit
 import SnapKit
 
-final class IssueMergedCell: UICollectionViewCell, ListBindable {
+final class IssueMergedCell: UICollectionViewCell {
 
     let actorLabel = UILabel()
     let hashLabel = UILabel()
@@ -30,9 +29,8 @@ final class IssueMergedCell: UICollectionViewCell, ListBindable {
         }
 
         button.setTitle(Strings.merged, for: .normal)
-        button.setImage(UIImage(named: "git-merged-small"), for: .normal)
-        button.backgroundColor = Styles.Colors.purple.color
         button.setupAsLabel()
+        button.config(pullRequest: false, status: .merged)
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalTo(actorLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
@@ -62,11 +60,9 @@ final class IssueMergedCell: UICollectionViewCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: ListBindable
+    // MARK: Public API
 
-    func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueMergedModel else { return }
-
+    func configure(viewModel: IssueMergedModel) {
         actorLabel.text = viewModel.actor
         dateLabel.setText(date: viewModel.date)
 
