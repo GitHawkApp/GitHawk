@@ -30,6 +30,7 @@ struct Styles {
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.gutter
         )
+        static let labelEventHeight: CGFloat = 30
 
         struct Text {
             static let body: CGFloat = 16

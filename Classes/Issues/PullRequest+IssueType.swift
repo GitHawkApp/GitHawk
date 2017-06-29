@@ -91,6 +91,14 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     pullRequest: true
                 )
                 results.append(model)
+            } else if let merged = node.asMergedEvent,
+                let date = GithubAPIDateFormatter().date(from: merged.createdAt) {
+                let model = IssueMergedModel(
+                    date: date,
+                    commitHash: merged.commit.oid,
+                    actor: merged.actor?.login ?? Strings.unknown
+                )
+                results.append(model)
             }
         }
 
