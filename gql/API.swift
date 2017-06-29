@@ -269,6 +269,19 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "              }" +
     "              createdAt" +
     "            }" +
+    "            ... on MergedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              commit {" +
+    "                __typename" +
+    "                oid" +
+    "              }" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              createdAt" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -782,6 +795,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asReopenedEvent: AsReopenedEvent?
               public let asRenamedTitleEvent: AsRenamedTitleEvent?
               public let asLockedEvent: AsLockedEvent?
+              public let asMergedEvent: AsMergedEvent?
               public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
@@ -794,6 +808,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asReopenedEvent = try AsReopenedEvent(reader: reader, ifTypeMatches: __typename)
                 asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
                 asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
+                asMergedEvent = try AsMergedEvent(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
@@ -1076,6 +1091,56 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsMergedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["MergedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'merge' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the commit associated with the `merge` event.
+                public let commit: Commit
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  commit = try reader.value(for: Field(responseName: "commit"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Commit: GraphQLMappable {
+                  public let __typename: String
+                  /// The Git object ID
+                  public let oid: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    oid = try reader.value(for: Field(responseName: "oid"))
                   }
                 }
               }

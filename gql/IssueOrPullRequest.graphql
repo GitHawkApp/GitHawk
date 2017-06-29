@@ -146,6 +146,16 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
               createdAt
             }
+            ... on MergedEvent {
+              ...nodeFields
+              commit {
+                oid
+              }
+              actor {
+                login
+              }
+              createdAt
+            }
           }
         }
         ...reactionFields

@@ -33,6 +33,8 @@ final class RootNavigationManager: GithubSessionListener {
         guard let root = rootViewController else { return }
         
         let nav = UINavigationController(rootViewController: newLoginViewController())
+        nav.modalPresentationStyle = .formSheet
+
         let block: () -> () = { root.present(nav, animated: animated) }
 
         if let presented = root.presentedViewController {
@@ -101,6 +103,7 @@ final class RootNavigationManager: GithubSessionListener {
 
     @objc private func onSettings() {
         let settings = newSettingsRootViewController(sessionManager: sessionManager, rootNavigationManager: self)
+        settings.modalPresentationStyle = .formSheet
         rootViewController?.present(settings, animated: true)
     }
     
