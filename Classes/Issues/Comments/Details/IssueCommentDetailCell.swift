@@ -63,6 +63,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore), for: .touchUpInside)
+        moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)

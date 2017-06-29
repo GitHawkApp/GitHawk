@@ -50,12 +50,14 @@ final class RootNavigationManager: GithubSessionListener {
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
 
         let notifications = newNotificationsRootViewController(client: client)
-        notifications.navigationItem.leftBarButtonItem = UIBarButtonItem(
+        let settingsBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
             style: .plain,
             target: self,
             action: #selector(RootNavigationManager.onSettings)
         )
+        settingsBarButtonItem.accessibilityLabel = NSLocalizedString("Settings", comment: "")
+        notifications.navigationItem.leftBarButtonItem = settingsBarButtonItem
 
         masterNavigationController?.viewControllers = [notifications]
     }

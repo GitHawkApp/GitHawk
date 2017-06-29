@@ -64,6 +64,13 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
             action: #selector(SettingsViewController.onDone)
         )
     }
+    
+    // MARK: Accessibility
+    
+    override func accessibilityPerformEscape() -> Bool {
+        onDone()
+        return true
+    }
 
     // MARK: Private API
 
