@@ -19,5 +19,6 @@ struct Strings {
     static let closed = NSLocalizedString("Closed", comment: "")
     static let reopened = NSLocalizedString("Reopened", comment: "")
     static let unknown = NSLocalizedString("Unknown", comment: "")
+    static let merged = NSLocalizedString("Merged", comment: "")
 
 }

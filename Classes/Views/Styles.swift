@@ -67,6 +67,7 @@ struct Styles {
         static let green = "28a745"
         static let red = "cb2431"
         static let background = "ffffff"
+        static let purple = "6f42c1"
 
         struct Blue {
             static let medium = "0366d6"

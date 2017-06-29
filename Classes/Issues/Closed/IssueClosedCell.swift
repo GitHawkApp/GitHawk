@@ -55,8 +55,7 @@ final class IssueClosedCell: UICollectionViewCell {
         ]
         label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
-        button.setStatusIcon(pullRequest: model.pullRequest, closed: model.closed)
-        button.setBackgroundColor(closed: model.closed)
+        button.config(pullRequest: model.pullRequest, status: model.closed ? .closed : .open)
         button.setTitle(model.closed ? Strings.closed : Strings.reopened, for: .normal)
 
         dateLabel.setText(date: model.date)

@@ -11,11 +11,11 @@ import IGListKit
 
 final class IssueStatusModel: ListDiffable {
 
-    let closed: Bool
+    let status: IssueStatus
     let pullRequest: Bool
 
-    init(closed: Bool, pullRequest: Bool) {
-        self.closed = closed
+    init(status: IssueStatus, pullRequest: Bool) {
+        self.status = status
         self.pullRequest = pullRequest
     }
 
@@ -28,7 +28,7 @@ final class IssueStatusModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueStatusModel else { return false }
-        return closed == object.closed && pullRequest == object.pullRequest
+        return status == object.status && pullRequest == object.pullRequest
     }
 
 }
