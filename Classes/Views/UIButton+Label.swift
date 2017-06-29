@@ -11,6 +11,7 @@ import UIKit
 extension UIButton {
 
     func setupAsLabel() {
+        accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
         titleLabel?.font = Styles.Fonts.smallTitle
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius

@@ -19,6 +19,7 @@ final class SettingsUserCell: UICollectionViewCell, ListBindable {
         super.init(frame: frame)
 
         contentView.backgroundColor = .white
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         label.backgroundColor = .clear
         label.textAlignment = .left
@@ -52,6 +53,11 @@ final class SettingsUserCell: UICollectionViewCell, ListBindable {
         guard let viewModel = viewModel as? SettingsUserModel else { return }
         label.text = viewModel.name
         accessoryView.isHidden = !viewModel.selected
+        
+        let format = NSLocalizedString("%@, %@ account", comment: "") // eg. "rnystrom, selected account"
+        accessibilityLabel = .localizedStringWithFormat(format,
+                                                        viewModel.name,
+                                                        (viewModel.selected) ? NSLocalizedString("selected", comment: "") : "")
     }
 
 }
