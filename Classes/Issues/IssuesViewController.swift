@@ -48,7 +48,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             image: UIImage(named: "bullets-hollow"),
             style: .plain,
             target: self,
-            action: #selector(IssuesViewController.onMore)
+            action: #selector(IssuesViewController.onMore(sender:))
         )
         navigationItem.rightBarButtonItem = rightItem
     }
@@ -60,7 +60,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
 
     // MARK: Private API
 
-    func onMore() {
+    func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
 
         let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
@@ -79,6 +79,8 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         alert.addAction(share)
         alert.addAction(safari)
         alert.addAction(cancel)
+
+        alert.popoverPresentationController?.barButtonItem = sender
 
         present(alert, animated: true)
     }
