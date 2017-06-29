@@ -33,6 +33,8 @@ final class RootNavigationManager: GithubSessionListener {
         guard let root = rootViewController else { return }
         
         let nav = UINavigationController(rootViewController: newLoginViewController())
+        nav.modalPresentationStyle = .formSheet
+
         let block: () -> () = { root.present(nav, animated: animated) }
 
         if let presented = root.presentedViewController {
