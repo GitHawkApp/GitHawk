@@ -34,9 +34,15 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueStatusModel else { return }
 
-        button.setBackgroundColor(closed: viewModel.closed)
-        button.setStatusIcon(pullRequest: viewModel.pullRequest, closed: viewModel.closed)
-        button.setTitle(viewModel.closed ? Strings.closed : Strings.open, for: .normal)
+        button.config(pullRequest: viewModel.pullRequest, status: viewModel.status)
+
+        let title: String
+        switch viewModel.status {
+        case .closed: title = Strings.closed
+        case .open: title = Strings.open
+        case .merged: title = Strings.merged
+        }
+        button.setTitle(title, for: .normal)
     }
 
 }

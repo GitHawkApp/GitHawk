@@ -280,6 +280,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "        ...nodeFields" +
     "        number" +
     "        title" +
+    "        merged" +
     "      }" +
     "    }" +
     "  }" +
@@ -729,6 +730,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public let number: Int
           /// Identifies the pull request title.
           public let title: String
+          /// Whether or not the pull request was merged.
+          public let merged: Bool
 
           public let fragments: Fragments
 
@@ -737,6 +740,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
+            merged = try reader.value(for: Field(responseName: "merged"))
 
             let reactionFields = try ReactionFields(reader: reader)
             let commentFields = try CommentFields(reader: reader)

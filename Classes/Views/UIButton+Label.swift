@@ -19,19 +19,25 @@ extension UIButton {
         contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
     }
 
-    func setStatusIcon(pullRequest: Bool, closed: Bool) {
-        let prName = "git-pull-request-small"
-        let iconName: String
-        if closed {
-            iconName = !pullRequest ? "issue-closed-small" : prName
-        } else {
-            iconName = !pullRequest ? "issue-opened-small" : prName
-        }
-        setImage(UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate), for: .normal)
-    }
+    func config(pullRequest: Bool, status: IssueStatus) {
 
-    func setBackgroundColor(closed: Bool) {
-        backgroundColor = closed ? Styles.Colors.red.color : Styles.Colors.green.color
+        let prName = "git-pull-request-small"
+
+        let icon: String
+        let color: UIColor
+        switch status {
+        case .closed:
+            icon = pullRequest ? prName : "issue-closed-small"
+            color = Styles.Colors.red.color
+        case .open:
+            icon = pullRequest ? prName : "issue-opened-small"
+            color = Styles.Colors.green.color
+        case .merged:
+            icon = "git-merge-small"
+            color = Styles.Colors.purple.color
+        }
+        setImage(UIImage(named: icon)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        backgroundColor = color
     }
 
 }
