@@ -1,15 +1,15 @@
 //
-//  IssueClosedSectionController.swift
+//  IssueMergedSectionController.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 6/7/17.
+//  Created by Ryan Nystrom on 6/29/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 import IGListKit
 
-final class IssueClosedSectionController: ListGenericSectionController<IssueClosedModel> {
+final class IssueMergedSectionController: ListGenericSectionController<IssueMergedModel> {
 
     override init() {
         super.init()
@@ -22,12 +22,11 @@ final class IssueClosedSectionController: ListGenericSectionController<IssueClos
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueClosedCell.self, for: self, at: index) as? IssueClosedCell,
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueMergedCell.self, for: self, at: index) as? IssueMergedCell,
             let object = self.object
-            else { fatalError("Cell incorrect type or object does not exist") }
-        cell.configure(object)
+            else { fatalError("Missing context, object, or cell wrong type") }
+        cell.configure(viewModel: object)
         return cell
     }
 
 }
-

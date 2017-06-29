@@ -108,6 +108,8 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             return IssueLabeledSectionController()
         } else if object is IssueClosedModel {
             return IssueClosedSectionController()
+        } else if object is IssueMergedModel {
+            return IssueMergedSectionController()
         }
         return ListSectionController()
     }
