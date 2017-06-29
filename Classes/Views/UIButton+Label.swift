@@ -23,9 +23,9 @@ extension UIButton {
         let prName = "git-pull-request-small"
         let iconName: String
         if closed {
-            iconName = pullRequest ? "issue-closed-small" : prName
+            iconName = !pullRequest ? "issue-closed-small" : prName
         } else {
-            iconName = pullRequest ? "issue-opened-small" : prName
+            iconName = !pullRequest ? "issue-opened-small" : prName
         }
         setImage(UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate), for: .normal)
     }
