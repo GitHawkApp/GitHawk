@@ -30,8 +30,16 @@ final class RootNavigationManager: GithubSessionListener {
     // MARK: Public API
 
     public func showLogin(animated: Bool = false) {
+        guard let root = rootViewController else { return }
+        
         let nav = UINavigationController(rootViewController: newLoginViewController())
-        rootViewController?.present(nav, animated: animated)
+        let block: () -> () = { root.present(nav, animated: animated) }
+
+        if let presented = root.presentedViewController {
+            presented.dismiss(animated: animated, completion: block)
+        } else {
+            block()
+        }
     }
 
     public func resetRootViewController(userSession: GithubUserSession?) {
