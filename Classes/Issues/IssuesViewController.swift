@@ -69,6 +69,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         let share = UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
             let safariActivity = TUSafariActivity()
             let controller = UIActivityViewController(activityItems: [externalURL], applicationActivities: [safariActivity])
+            controller.popoverPresentationController?.barButtonItem = sender
             self.present(controller, animated: true)
         }
         let safari = UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { _ in
