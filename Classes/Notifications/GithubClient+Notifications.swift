@@ -65,4 +65,16 @@ extension GithubClient {
         }
     }
 
+    typealias MarkAllCompletion = (Bool) -> ()
+    func markAllNotifications(completion: MarkAllCompletion? = nil) {
+        request(Request(
+            path: "notifications",
+            method: .put) { response in
+                guard let completion = completion else { return }
+                // https://developer.github.com/v3/activity/notifications/#mark-as-read
+                let success = response.response?.statusCode == 205
+                completion(success)
+        })
+    }
+
 }

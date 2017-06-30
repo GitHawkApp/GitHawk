@@ -38,12 +38,7 @@ RepoNotificationsSectionControllerDelegate {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Mark All", comment: ""),
-            style: .plain,
-            target: self,
-            action: #selector(NotificationsViewController.onMarkAll(sender:))
-        )
+        resetRightBarItem()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -58,18 +53,41 @@ RepoNotificationsSectionControllerDelegate {
 
     // MARK: Private API
 
+    func resetRightBarItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Mark All", comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(NotificationsViewController.onMarkAll(sender:))
+        )
+    }
+
+    func setRightBarItemSpinning() {
+        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activity.startAnimating()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
+    }
+
+    private func markAllRead() {
+        self.setRightBarItemSpinning()
+        self.client.markAllNotifications { _ in
+            self.reload()
+        }
+    }
+
     @objc private func onMarkAll(sender: UIBarButtonItem) {
         let alert = UIAlertController(
             title: NSLocalizedString("Notifications", comment: ""),
             message: "Mark all notifications as read?",
             preferredStyle: .alert
         )
-        let ok = UIAlertAction(
+        let markAll = UIAlertAction(
             title: NSLocalizedString("Mark all", comment: ""),
-            style: .default,
-            handler: nil
-        )
-        alert.addAction(ok)
+            style: .default
+        ) { _ in
+            self.markAllRead()
+        }
+        alert.addAction(markAll)
 
         let cancel = UIAlertAction(title: Strings.cancel, style: .cancel)
         alert.addAction(cancel)
@@ -86,6 +104,9 @@ RepoNotificationsSectionControllerDelegate {
 
     private func reload() {
         client.requestNotifications(all: true) { result in
+            // in case coming from "mark all" action
+            self.resetRightBarItem()
+
             switch result {
             case .success(let notifications):
                 self.allNotifications = createNotificationViewModels(
