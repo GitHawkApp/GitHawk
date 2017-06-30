@@ -1,5 +1,5 @@
 //
-//  NotificationsRequest.swift
+//  GithubClient+Notifications.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/13/17.

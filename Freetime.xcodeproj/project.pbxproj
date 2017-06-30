@@ -136,7 +136,7 @@
 		295840B01EEA00E1007723C6 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC31EC65FEE00EE3A52 /* Subject.swift */; };
 		295840B11EEA00E1007723C6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC41EC65FEE00EE3A52 /* User.swift */; };
 		295840B21EEA00E1007723C6 /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
-		295840B31EEA00E1007723C6 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
+		295840B31EEA00E1007723C6 /* GithubClient+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* GithubClient+Notifications.swift */; };
 		295840B41EEA00E1007723C6 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
 		295840B51EEA00E1007723C6 /* RepoNotifications+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */; };
 		295840B61EEA00E1007723C6 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
@@ -254,7 +254,7 @@
 		296CD7D51F013FBF001190B9 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		296CD7D61F013FBF001190B9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85B1EC0D5C100B44A1F /* LoginViewController.swift */; };
 		296CD7D71F013FBF001190B9 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
-		296CD7D81F013FBF001190B9 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
+		296CD7D81F013FBF001190B9 /* GithubClient+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* GithubClient+Notifications.swift */; };
 		296CD7D91F013FBF001190B9 /* IssueLabelsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAEF1EDFCC510026635E /* IssueLabelsModel.swift */; };
 		296CD7DA1F013FBF001190B9 /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		296CD7DB1F013FBF001190B9 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
@@ -405,7 +405,7 @@
 		29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
 		29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
-		29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */; };
+		29C295141EC7BAFE00D46CD2 /* GithubClient+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295121EC7B9D500D46CD2 /* GithubClient+Notifications.swift */; };
 		29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
 		29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */; };
 		29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */; };
@@ -606,7 +606,7 @@
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
-		29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsRequest.swift; sourceTree = "<group>"; };
+		29C295121EC7B9D500D46CD2 /* GithubClient+Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Notifications.swift"; sourceTree = "<group>"; };
 		29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
@@ -1097,7 +1097,7 @@
 				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
 				290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */,
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
-				29C295121EC7B9D500D46CD2 /* NotificationsRequest.swift */,
+				29C295121EC7B9D500D46CD2 /* GithubClient+Notifications.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
@@ -1573,7 +1573,7 @@
 				296CD7D51F013FBF001190B9 /* UIView+BottomBorder.swift in Sources */,
 				296CD7D61F013FBF001190B9 /* LoginViewController.swift in Sources */,
 				296CD7D71F013FBF001190B9 /* LoginRequest.swift in Sources */,
-				296CD7D81F013FBF001190B9 /* NotificationsRequest.swift in Sources */,
+				296CD7D81F013FBF001190B9 /* GithubClient+Notifications.swift in Sources */,
 				296CD7D91F013FBF001190B9 /* IssueLabelsModel.swift in Sources */,
 				296CD7DA1F013FBF001190B9 /* LabelableFields+IssueLabelModel.swift in Sources */,
 				296CD7DB1F013FBF001190B9 /* NSAttributedStringSizing.swift in Sources */,
@@ -1713,7 +1713,7 @@
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
 				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
 				290D2A471F05AE640082E6CC /* IssueMergedCell.swift in Sources */,
-				29C295141EC7BAFE00D46CD2 /* NotificationsRequest.swift in Sources */,
+				29C295141EC7BAFE00D46CD2 /* GithubClient+Notifications.swift in Sources */,
 				292FCB141EDFCC510026635E /* IssueLabelsModel.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
@@ -1862,7 +1862,7 @@
 				295840B41EEA00E1007723C6 /* NotificationsViewController.swift in Sources */,
 				295840761EEA00E1007723C6 /* IssueCommentCodeBlockModel.swift in Sources */,
 				2981A8AD1EFF49EE00E25EF1 /* String+NSRange.swift in Sources */,
-				295840B31EEA00E1007723C6 /* NotificationsRequest.swift in Sources */,
+				295840B31EEA00E1007723C6 /* GithubClient+Notifications.swift in Sources */,
 				295F52A71EF1B9D2000B53CF /* Test.md in Sources */,
 				29C167711ECA0D7C00439D62 /* Strings.swift in Sources */,
 				295840911EEA00E1007723C6 /* Issue+IssueType.swift in Sources */,
