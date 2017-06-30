@@ -128,7 +128,7 @@ final class NotificationClient {
 
         githubClient.request(GithubClient.Request(
             path: "notifications/threads/\(id)",
-            method: .put) { response in
+            method: .patch) { response in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
                 let success = response.response?.statusCode == 205
                 if !success {
