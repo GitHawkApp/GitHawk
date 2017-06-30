@@ -328,6 +328,10 @@
 		297172271F069A7C005E43AC /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
 		297172281F069A7C005E43AC /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* issue.json */; };
 		297172291F069A7C005E43AC /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* notifications.json */; };
+		2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
+		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
+		2971722E1F069E9B005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
+		2971722F1F069EA0005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -574,6 +578,8 @@
 		296CD82C1F01476D001190B9 /* authorizations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = authorizations.json; sourceTree = "<group>"; };
 		297172251F069A38005E43AC /* FreetimeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreetimeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297172261F069A38005E43AC /* Freetime copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Freetime copy-Info.plist"; path = "/Users/rnystrom/Development/iOS/Freetime/Freetime copy-Info.plist"; sourceTree = "<absolute>"; };
+		2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
+		2971722C1F069E96005E43AC /* SpinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerCell.swift; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -1034,6 +1040,7 @@
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
+				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
 			);
 			path = Systems;
@@ -1065,6 +1072,7 @@
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
 				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
 				295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */,
+				2971722C1F069E96005E43AC /* SpinnerCell.swift */,
 				29C167661ECA005500439D62 /* Strings.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
@@ -1648,8 +1656,10 @@
 				297172091F069A38005E43AC /* Notification.swift in Sources */,
 				2971720A1F069A38005E43AC /* App.swift in Sources */,
 				2971720B1F069A38005E43AC /* NotificationNavigation.swift in Sources */,
+				2971722E1F069E9B005E43AC /* SpinnerCell.swift in Sources */,
 				2971720C1F069A38005E43AC /* IssueType.swift in Sources */,
 				2971720D1F069A38005E43AC /* GithubUserSession.swift in Sources */,
+				2971722F1F069EA0005E43AC /* SpinnerSectionController.swift in Sources */,
 				2971720E1F069A38005E43AC /* AppDelegate.swift in Sources */,
 				2971720F1F069A38005E43AC /* FlexController.m in Sources */,
 				297172101F069A38005E43AC /* String+NSRange.swift in Sources */,
@@ -1673,6 +1683,7 @@
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */,
+				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				292FCB0E1EDFCC510026635E /* IssueState.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
@@ -1717,6 +1728,7 @@
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
+				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
