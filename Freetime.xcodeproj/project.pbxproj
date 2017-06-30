@@ -835,7 +835,6 @@
 				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
 				297AE8681EC0D5C200B44A1F /* View Controllers */,
-				297AE86B1EC0D5C200B44A1F /* View Models */,
 				297AE86C1EC0D5C200B44A1F /* Views */,
 			);
 			path = Classes;
@@ -915,13 +914,6 @@
 				297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		297AE86B1EC0D5C200B44A1F /* View Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "View Models";
 			sourceTree = "<group>";
 		};
 		297AE86C1EC0D5C200B44A1F /* Views */ = {
