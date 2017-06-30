@@ -26,14 +26,17 @@ final class NotificationClient {
 
     // Public API
 
+    // https://developer.github.com/v3/activity/notifications/#list-your-notifications
     func requestNotifications(
         all: Bool = false,
         participating: Bool = false,
         since: Date? = nil,
-        page: Int = 0,
+        nextPage: Bool = false,
         before: Date? = nil,
         completion: @escaping (Result) -> ()
         ) {
+        let page = nextPage ? currentPage + 1 : currentPage
+
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
             "participating": participating ? "true" : "false",
