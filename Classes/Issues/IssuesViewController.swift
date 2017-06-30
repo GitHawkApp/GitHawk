@@ -96,22 +96,16 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if object is NSAttributedStringSizing {
-            return IssueTitleSectionController()
-        } else if object is IssueCommentModel {
-            return IssueCommentSectionController(client: client)
-        } else if object is IssueLabelsModel {
-            return IssueLabelsSectionController()
-        } else if object is IssueStatusModel {
-            return IssueStatusSectionController()
-        } else if object is IssueLabeledModel {
-            return IssueLabeledSectionController()
-        } else if object is IssueClosedModel {
-            return IssueClosedSectionController()
-        } else if object is IssueMergedModel {
-            return IssueMergedSectionController()
+        switch object {
+        case is NSAttributedStringSizing: return IssueTitleSectionController()
+        case is IssueCommentModel: return IssueCommentSectionController(client: client)
+        case is IssueLabelsModel: return IssueLabelsSectionController()
+        case is IssueStatusModel: return IssueStatusSectionController()
+        case is IssueLabeledModel: return IssueLabeledSectionController()
+        case is IssueClosedModel: return IssueClosedSectionController()
+        case is IssueMergedModel: return IssueMergedSectionController()
+        default: fatalError("Unhandled object: \(object)")
         }
-        return ListSectionController()
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

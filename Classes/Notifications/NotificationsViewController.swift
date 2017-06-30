@@ -80,12 +80,10 @@ RepoNotificationsSectionControllerDelegate {
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if object is SegmentedControlModel {
-            let controller = SegmentedControlSectionController()
-            controller.delegate = self
-            return controller
-        } else {
-            return RepoNotificationsSectionController(client: client, delegate: self)
+        switch object {
+        case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
+        case is NotificationViewModel: return RepoNotificationsSectionController(client: client, delegate: self)
+        default: fatalError("Unhandled object: \(object)")
         }
     }
 

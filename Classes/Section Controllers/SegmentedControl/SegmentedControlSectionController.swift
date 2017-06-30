@@ -16,6 +16,10 @@ protocol SegmentedControlSectionControllerDelegate: class {
 final class SegmentedControlSectionController: ListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
 
     weak var delegate: SegmentedControlSectionControllerDelegate? = nil
+    init(delegate: SegmentedControlSectionControllerDelegate?) {
+        self.delegate = delegate
+        super.init()
+    }
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let context = collectionContext else { fatalError("Collection context must be set") }
