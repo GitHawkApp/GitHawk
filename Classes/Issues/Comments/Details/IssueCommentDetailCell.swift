@@ -13,6 +13,7 @@ import SDWebImage
 
 protocol IssueCommentDetailCellDelegate: class {
     func didTapMore(cell: IssueCommentDetailCell)
+    func didTapProfile(cell: IssueCommentDetailCell)
 }
 
 final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
@@ -23,6 +24,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
+    private var login = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +37,11 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         imageView.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(IssueCommentDetailCell.onTapAvatar))
+        )
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
@@ -44,6 +51,11 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
         loginLabel.font = Styles.Fonts.title
         loginLabel.textColor = Styles.Colors.Gray.dark.color
+        loginLabel.isUserInteractionEnabled = true
+        loginLabel.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(IssueCommentDetailCell.onTapLoginLabel))
+        )
         contentView.addSubview(loginLabel)
         loginLabel.snp.makeConstraints { make in
             make.bottom.equalTo(imageView.snp.centerY)
@@ -72,7 +84,6 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
 
         contentView.addBorder(bottom: false)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,6 +94,14 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     func onMore() {
         delegate?.didTapMore(cell: self)
+    }
+
+    func onTapAvatar() {
+        delegate?.didTapProfile(cell: self)
+    }
+
+    func onTapLoginLabel() {
+        delegate?.didTapProfile(cell: self)
     }
 
     // MARK: ListBindable
