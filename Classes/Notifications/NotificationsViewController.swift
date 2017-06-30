@@ -152,7 +152,7 @@ RepoNotificationsSectionControllerDelegate {
         if object === spinnerKey { return SpinnerSectionController() }
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
-        case is NotificationViewModel: return RepoNotificationsSectionController(client: client.githubClient, delegate: self)
+        case is NotificationViewModel: return RepoNotificationsSectionController(client: client, delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }

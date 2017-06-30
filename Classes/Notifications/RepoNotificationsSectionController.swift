@@ -17,10 +17,10 @@ protocol RepoNotificationsSectionControllerDelegate: class {
 final class RepoNotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
 SwipeCollectionViewCellDelegate {
 
-    private let client: GithubClient
+    private let client: NotificationClient
     private weak var delegate: RepoNotificationsSectionControllerDelegate?
 
-    init(client: GithubClient, delegate: RepoNotificationsSectionControllerDelegate) {
+    init(client: NotificationClient, delegate: RepoNotificationsSectionControllerDelegate) {
         self.client = client
         self.delegate = delegate
         super.init()
@@ -43,7 +43,7 @@ SwipeCollectionViewCellDelegate {
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { fatalError("Should have an object") }
-        let controller = NavigateToNotificationContent(object: object, client: client)
+        let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
     }
 
