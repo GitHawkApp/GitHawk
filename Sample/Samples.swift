@@ -9,7 +9,7 @@
 import Foundation
 
 func runningInSample() -> Bool {
-    return true
+    return Bundle.main.object(forInfoDictionaryKey: "RUN_AS_SAMPLE") as? Bool ?? false
 }
 
 func sampleUserSession() -> GithubUserSession? {
