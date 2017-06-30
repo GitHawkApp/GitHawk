@@ -96,27 +96,42 @@ RepoNotificationsSectionControllerDelegate {
         present(alert, animated: true)
     }
 
-    private func update(fromNetwork: Bool) {
+    private func update(fromNetwork: Bool, animated: Bool = true) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(notifications: allNotifications, unread: unread)
-        feed.finishLoading(fromNetwork: fromNetwork)
+        feed.finishLoading(fromNetwork: fromNetwork, animated: animated)
+    }
+
+    private func handle(result: NotificationClient.Result, append: Bool, animated: Bool) {
+        // in case coming from "mark all" action
+        self.resetRightBarItem()
+
+        switch result {
+        case .success(let notifications):
+            let models = createNotificationViewModels(
+                containerWidth: self.view.bounds.width,
+                notifications: notifications
+            )
+            if append {
+                self.allNotifications += models
+            } else {
+                self.allNotifications = models
+            }
+        case .failed:
+            StatusBar.showNetworkError()
+        }
+        self.update(fromNetwork: true, animated: animated)
     }
 
     private func reload() {
         client.requestNotifications(all: true) { result in
-            // in case coming from "mark all" action
-            self.resetRightBarItem()
+            self.handle(result: result, append: false, animated: true)
+        }
+    }
 
-            switch result {
-            case .success(let notifications):
-                self.allNotifications = createNotificationViewModels(
-                    containerWidth: self.view.bounds.width,
-                    notifications: notifications
-                )
-            case .failed:
-                StatusBar.showNetworkError()
-            }
-            self.update(fromNetwork: true)
+    private func nextPage() {
+        client.requestNotifications(all: true, nextPage: true) { result in
+            self.handle(result: result, append: true, animated: false)
         }
     }
 

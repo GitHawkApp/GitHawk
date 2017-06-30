@@ -18,7 +18,6 @@ final class NotificationClient {
     let githubClient: GithubClient
 
     private var currentPage: Int = 0
-    private var notifications = [Notification]()
 
     init(githubClient: GithubClient) {
         self.githubClient = githubClient
