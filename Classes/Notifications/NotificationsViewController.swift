@@ -14,7 +14,7 @@ class NotificationsViewController: UIViewController,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
     FeedDelegate,
-RepoNotificationsSectionControllerDelegate {
+NotificationsSectionControllerDelegate {
 
     let client: NotificationClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
@@ -152,7 +152,7 @@ RepoNotificationsSectionControllerDelegate {
         if object === spinnerKey { return SpinnerSectionController() }
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
-        case is NotificationViewModel: return RepoNotificationsSectionController(client: client, delegate: self)
+        case is NotificationViewModel: return NotificationsSectionController(client: client, delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -185,9 +185,9 @@ RepoNotificationsSectionControllerDelegate {
         return false
     }
 
-    // MARK: RepoNotificationsSectionControllerDelegate
+    // MARK: NotificationsSectionControllerDelegate
 
-    func didMarkRead(sectionController: RepoNotificationsSectionController) {
+    func didMarkRead(sectionController: NotificationsSectionController) {
         // TODO
     }
 

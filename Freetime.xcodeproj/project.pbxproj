@@ -13,6 +13,9 @@
 		290D2A451F05ADDC0082E6CC /* IssueMergedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */; };
 		290D2A471F05AE640082E6CC /* IssueMergedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A461F05AE640082E6CC /* IssueMergedCell.swift */; };
 		290D2A491F05B5B00082E6CC /* IssueMergedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */; };
+		290EF5621F06A738006A2160 /* NotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */; };
+		290EF5631F06A739006A2160 /* NotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */; };
+		290EF5641F06A740006A2160 /* NotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */; };
 		291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
 		292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -138,7 +141,6 @@
 		295840B21EEA00E1007723C6 /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		295840B41EEA00E1007723C6 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
 		295840B51EEA00E1007723C6 /* RepoNotifications+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */; };
-		295840B61EEA00E1007723C6 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
 		295840B71EEA00E1007723C6 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
 		295840B81EEA00E1007723C6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		295840B91EEA00E1007723C6 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
@@ -271,7 +273,6 @@
 		297171E31F069A38005E43AC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
 		297171E41F069A38005E43AC /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
 		297171E51F069A38005E43AC /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
-		297171E61F069A38005E43AC /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
 		297171E71F069A38005E43AC /* IssueLabelDotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAEE1EDFCC510026635E /* IssueLabelDotCell.swift */; };
 		297171E81F069A38005E43AC /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		297171E91F069A38005E43AC /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
@@ -402,7 +403,6 @@
 		29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */; };
 		29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1950B1EC7901400C3E289 /* NotificationType.swift */; };
 		29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */; };
-		29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */; };
 		29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */; };
 		29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */; };
 		29A476A11ED23F83005D0953 /* DateDetailsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */; };
@@ -498,6 +498,7 @@
 		290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedModel.swift; sourceTree = "<group>"; };
 		290D2A461F05AE640082E6CC /* IssueMergedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedCell.swift; sourceTree = "<group>"; };
 		290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedSectionController.swift; sourceTree = "<group>"; };
+		290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSectionController.swift; sourceTree = "<group>"; };
 		291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsReportSectionController.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
@@ -625,7 +626,6 @@
 		29A1950B1EC7901400C3E289 /* NotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		29A1950D1EC791BD00C3E289 /* LabelPopover.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = LabelPopover.playground; sourceTree = "<group>"; };
 		29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationRepoCell.swift; sourceTree = "<group>"; };
-		29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoNotificationsSectionController.swift; sourceTree = "<group>"; };
 		29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDetailsFormatter.swift; sourceTree = "<group>"; };
 		29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Overlay.swift"; sourceTree = "<group>"; };
 		29A476B11ED24D99005D0953 /* IssueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTests.swift; sourceTree = "<group>"; };
@@ -1128,13 +1128,13 @@
 				297DD5E21F06922A006E7E63 /* NotificationClient.swift */,
 				290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */,
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
+				290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				29C1676A1ECA0B0A00439D62 /* RepoNotifications+Filter.swift */,
 				298BA08A1EC9031E00B01946 /* RepoNotifications+Notification.swift */,
-				29A195121EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1618,7 +1618,6 @@
 				297171E31F069A38005E43AC /* IssueStatus.swift in Sources */,
 				297171E41F069A38005E43AC /* Date+Display.swift in Sources */,
 				297171E51F069A38005E43AC /* IssueCommentQuoteCell.swift in Sources */,
-				297171E61F069A38005E43AC /* RepoNotificationsSectionController.swift in Sources */,
 				297171E71F069A38005E43AC /* IssueLabelDotCell.swift in Sources */,
 				297171E81F069A38005E43AC /* IssueCommentReactionViewModel.swift in Sources */,
 				297171E91F069A38005E43AC /* IssueCommentHtmlCell.swift in Sources */,
@@ -1651,6 +1650,7 @@
 				297172041F069A38005E43AC /* SettingsUsersSectionController.swift in Sources */,
 				297172051F069A38005E43AC /* PullRequest+IssueType.swift in Sources */,
 				297172061F069A38005E43AC /* IssueEvent.swift in Sources */,
+				290EF5631F06A739006A2160 /* NotificationsSectionController.swift in Sources */,
 				297172071F069A38005E43AC /* IssueLabeledModel.swift in Sources */,
 				297172081F069A38005E43AC /* ShowMoreDetailsLabel.swift in Sources */,
 				297172091F069A38005E43AC /* Notification.swift in Sources */,
@@ -1765,7 +1765,6 @@
 				290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
-				29A195131EC7AD2D00C3E289 /* RepoNotificationsSectionController.swift in Sources */,
 				292FCB131EDFCC510026635E /* IssueLabelDotCell.swift in Sources */,
 				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -1796,6 +1795,7 @@
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */,
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
+				290EF5621F06A738006A2160 /* NotificationsSectionController.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				292FCB0C1EDFCC510026635E /* IssueEvent.swift in Sources */,
 				29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */,
@@ -1822,7 +1822,6 @@
 				2958408F1EEA00E1007723C6 /* IssueCommentTextCell.swift in Sources */,
 				2958407A1EEA00E1007723C6 /* IssueCommentImageCell.swift in Sources */,
 				295840961EEA00E1007723C6 /* IssueViewModels.swift in Sources */,
-				295840B61EEA00E1007723C6 /* RepoNotificationsSectionController.swift in Sources */,
 				297DD5EC1F06946C006E7E63 /* IssueMergedCell.swift in Sources */,
 				29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */,
 				295F52E11EF1C2C9000B53CF /* CommentModelsFromMarkdown.swift in Sources */,
@@ -1833,6 +1832,7 @@
 				295840871EEA00E1007723C6 /* IssueCommentReactionCell.swift in Sources */,
 				295840A41EEA00E1007723C6 /* IssueStatusSectionController.swift in Sources */,
 				295840C01EEA00E1007723C6 /* SettingsUserModel.swift in Sources */,
+				290EF5641F06A740006A2160 /* NotificationsSectionController.swift in Sources */,
 				295840941EEA00E1007723C6 /* IssuesViewController.swift in Sources */,
 				295840C11EEA00E1007723C6 /* SettingsUsersSectionController.swift in Sources */,
 				295840B91EEA00E1007723C6 /* SegmentedControlCell.swift in Sources */,
