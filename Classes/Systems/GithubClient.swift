@@ -56,7 +56,7 @@ struct GithubClient {
     func request(
         _ request: GithubClient.Request
         ) -> DataRequest {
-        print("Requesting: " + request.path)
+        print("Requesting \(request.method.rawValue): \(request.path)")
 
         let encoding: ParameterEncoding
         switch request.method {
