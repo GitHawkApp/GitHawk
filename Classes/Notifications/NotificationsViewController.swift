@@ -37,6 +37,13 @@ RepoNotificationsSectionControllerDelegate {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Mark All", comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(NotificationsViewController.onMarkAll(sender:))
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +57,26 @@ RepoNotificationsSectionControllerDelegate {
     }
 
     // MARK: Private API
+
+    @objc private func onMarkAll(sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Notifications", comment: ""),
+            message: "Mark all notifications as read?",
+            preferredStyle: .alert
+        )
+        let ok = UIAlertAction(
+            title: NSLocalizedString("Mark all", comment: ""),
+            style: .default,
+            handler: nil
+        )
+        alert.addAction(ok)
+
+        let cancel = UIAlertAction(title: Strings.cancel, style: .cancel)
+        alert.addAction(cancel)
+
+        alert.popoverPresentationController?.barButtonItem = sender
+        present(alert, animated: true)
+    }
 
     private func update(fromNetwork: Bool) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
