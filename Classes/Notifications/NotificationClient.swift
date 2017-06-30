@@ -1,19 +1,30 @@
 //
-//  GithubClient+Notifications.swift
+//  NotificationClient.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/13/17.
+//  Created by Ryan Nystrom on 6/30/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
 
-enum NotificationResult {
-    case failed(Error?)
-    case success([Notification])
-}
+final class NotificationClient {
 
-extension GithubClient {
+    enum Result {
+        case failed(Error?)
+        case success([Notification])
+    }
+
+    let githubClient: GithubClient
+
+    private var currentPage: Int = 0
+    private var notifications = [Notification]()
+
+    init(githubClient: GithubClient) {
+        self.githubClient = githubClient
+    }
+
+    // Public API
 
     func requestNotifications(
         all: Bool = false,
@@ -21,7 +32,7 @@ extension GithubClient {
         since: Date? = nil,
         page: Int = 0,
         before: Date? = nil,
-        completion: @escaping (NotificationResult) -> ()
+        completion: @escaping (Result) -> ()
         ) {
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
@@ -38,19 +49,23 @@ extension GithubClient {
         typealias NotificationsPayload = [[String: Any]]
 
         let success = { (jsonArr: NotificationsPayload) in
+            // update the current page only when request is succesful
+            self.currentPage = page
+
             var notifications = [Notification]()
             for json in jsonArr {
                 if let notification = Notification(json: json) {
                     notifications.append(notification)
                 }
             }
+
             completion(.success(notifications))
         }
 
         if let sampleJSON = loadSample(path: "notifications") as? NotificationsPayload {
             success(sampleJSON)
         } else {
-            request(Request(
+            githubClient.request(GithubClient.Request(
                 path: "notifications",
                 method: .get,
                 parameters: parameters,
@@ -67,7 +82,7 @@ extension GithubClient {
 
     typealias MarkAllCompletion = (Bool) -> ()
     func markAllNotifications(completion: MarkAllCompletion? = nil) {
-        request(Request(
+        githubClient.request(GithubClient.Request(
             path: "notifications",
             method: .put) { response in
                 guard let completion = completion else { return }
