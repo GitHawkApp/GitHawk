@@ -185,6 +185,11 @@ AttributedStringViewDelegate {
 
     func didTapMore(cell: IssueCommentDetailCell) {}
 
+    func didTapProfile(cell: IssueCommentDetailCell) {
+        guard let login = object?.details.login else { return }
+        viewController?.present(CreateProfileViewController(login: login), animated: true)
+    }
+
     // MARK: IssueCommentReactionCellDelegate
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
