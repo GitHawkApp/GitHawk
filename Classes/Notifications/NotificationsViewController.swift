@@ -141,7 +141,7 @@ RepoNotificationsSectionControllerDelegate {
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Cannot load notifications", comment: "")
             return emptyView
-        case .loading:
+        case .loading, .loadingNext:
             return nil
         }
     }
@@ -156,6 +156,11 @@ RepoNotificationsSectionControllerDelegate {
     
     func loadFromNetwork(feed: Feed) {
         reload()
+    }
+
+    func loadNextPage(feed: Feed) -> Bool {
+        print("would load page")
+        return false
     }
 
     // MARK: RepoNotificationsSectionControllerDelegate

@@ -12,13 +12,15 @@ import IGListKit
 
 protocol FeedDelegate: class {
     func loadFromNetwork(feed: Feed)
+    func loadNextPage(feed: Feed) -> Bool
 }
 
-final class Feed {
+final class Feed: NSObject, UIScrollViewDelegate {
 
     enum Status {
         case idle
         case loading
+        case loadingNext
     }
 
     let adapter: ListAdapter
@@ -38,6 +40,8 @@ final class Feed {
     init(viewController: UIViewController, delegate: FeedDelegate) {
         self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
         self.delegate = delegate
+        super.init()
+        self.adapter.scrollViewDelegate = self
     }
 
     // MARK: Public API
@@ -86,6 +90,7 @@ final class Feed {
     // MARK: Private API
 
     private func refresh() {
+        guard status == .idle else { return }
         status = .loading
         refreshBegin = CFAbsoluteTimeGetCurrent()
         delegate?.loadFromNetwork(feed: self)
@@ -95,4 +100,25 @@ final class Feed {
         refresh()
     }
 
+    // MARK: UIScrollViewDelegate
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let contentHeight = scrollView.contentSize.height
+        let viewHeight = scrollView.bounds.height
+        let currentTopOffset = scrollView.contentOffset.y
+        let topTargetOffset = targetContentOffset.pointee.y
+
+        guard status == .idle, // dont page if already loading something
+            contentHeight > viewHeight, // dont page if only one page of content
+            topTargetOffset - currentTopOffset > 0 // only page when scrolling to the bottom
+            else { return }
+
+        if topTargetOffset > contentHeight - viewHeight * 2 {
+            if delegate?.loadNextPage(feed: self) == true {
+                status = .loadingNext
+            }
+        }
+    }
+
 }
+
