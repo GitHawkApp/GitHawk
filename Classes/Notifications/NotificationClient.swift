@@ -9,8 +9,8 @@
 import Foundation
 
 protocol NotificationClientListener: class {
-    func willMarkRead(client: NotificationClient, id: String)
-    func didFailToMarkRead(client: NotificationClient, id: String)
+    func willMarkRead(client: NotificationClient, id: String, optimistic: Bool)
+    func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool)
 }
 
 final class NotificationClient {
@@ -35,9 +35,9 @@ final class NotificationClient {
 
     // Public API
 
-    private var _localReadIDs = Set<String>()
-    var localReadIDs: Set<String> {
-        return _localReadIDs
+    private var _optimisticReadIDs = Set<String>()
+    var optimisticReadIDs: Set<String> {
+        return _optimisticReadIDs
     }
 
     func add(listener: NotificationClientListener) {
@@ -115,12 +115,14 @@ final class NotificationClient {
         })
     }
 
-    func markNotificationRead(id: String) {
-        _localReadIDs.insert(id)
+    func markNotificationRead(id: String, optimistic: Bool = true) {
+        if optimistic {
+            _optimisticReadIDs.insert(id)
+        }
 
         for wrapper in listeners {
             if let listener = wrapper.listener {
-                listener.willMarkRead(client: self, id: id)
+                listener.willMarkRead(client: self, id: id, optimistic: optimistic)
             }
         }
 
@@ -131,11 +133,12 @@ final class NotificationClient {
                 let success = response.response?.statusCode == 205
                 if !success {
                     // remove so lists can re-show the notification
-                    self._localReadIDs.remove(id)
+                    // skip optimistic check, should no-op if wasn't previously added
+                    self._optimisticReadIDs.remove(id)
 
                     for wrapper in self.listeners {
                         if let listener = wrapper.listener {
-                            listener.didFailToMarkRead(client: self, id: id)
+                            listener.didFailToMarkRead(client: self, id: id, optimistic: optimistic)
                         }
                     }
                 }
