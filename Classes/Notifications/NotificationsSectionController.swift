@@ -10,19 +10,13 @@ import UIKit
 import IGListKit
 import SwipeCellKit
 
-protocol NotificationsSectionControllerDelegate: class {
-    func didMarkRead(sectionController: NotificationsSectionController)
-}
-
 final class NotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
-    private weak var delegate: NotificationsSectionControllerDelegate?
 
-    init(client: NotificationClient, delegate: NotificationsSectionControllerDelegate) {
+    init(client: NotificationClient) {
         self.client = client
-        self.delegate = delegate
         super.init()
     }
 
@@ -54,14 +48,16 @@ SwipeCollectionViewCellDelegate {
         editActionsForRowAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
         ) -> [SwipeAction]? {
+        guard let object = object else { fatalError("Should have an object") }
+
         guard orientation == .right,
-            self.object?.read == false
+            object.read == false
             else { return nil }
 
         let title = NSLocalizedString("Read", comment: "")
         let action = SwipeAction(style: .destructive, title: title) { [weak self] (_, _) in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.didMarkRead(sectionController: strongSelf)
+            strongSelf.client.markNotificationRead(id: object.id)
         }
         action.backgroundColor = Styles.Colors.Blue.medium.color
         action.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)

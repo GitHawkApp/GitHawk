@@ -129,7 +129,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             width: view.bounds.width
         ) { results in
             self.models = results
-            self.feed.finishLoading(fromNetwork: true)
+            self.feed.finishLoading(dismissRefresh: true)
         }
     }
 

@@ -8,11 +8,16 @@
 
 import Foundation
 
-func filter(notifications: [NotificationViewModel], unread: Bool = false) -> [NotificationViewModel] {
+func filter(
+    notifications: [NotificationViewModel],
+    localReadIDs: Set<String>,
+    unread: Bool = false
+    ) -> [NotificationViewModel] {
     if unread {
         var unreadNotifications = [NotificationViewModel]()
         for notification in notifications {
-            if !notification.read {
+            if !notification.read
+                && !localReadIDs.contains(notification.id) {
                 unreadNotifications.append(notification)
             }
         }

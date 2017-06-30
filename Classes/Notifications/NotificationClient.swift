@@ -8,7 +8,17 @@
 
 import Foundation
 
+protocol NotificationClientListener: class {
+    func willMarkRead(client: NotificationClient, id: String)
+    func didFailToMarkRead(client: NotificationClient, id: String)
+}
+
 final class NotificationClient {
+
+    private class ListenerWrapper: NSObject {
+        weak var listener: NotificationClientListener? = nil
+    }
+    private var listeners = [ListenerWrapper]()
 
     enum Result {
         case failed(Error?)
@@ -24,6 +34,17 @@ final class NotificationClient {
     }
 
     // Public API
+
+    private var _localReadIDs = Set<String>()
+    var localReadIDs: Set<String> {
+        return _localReadIDs
+    }
+
+    func add(listener: NotificationClientListener) {
+        let wrapper = ListenerWrapper()
+        wrapper.listener = listener
+        listeners.append(wrapper)
+    }
 
     // https://developer.github.com/v3/activity/notifications/#list-your-notifications
     func requestNotifications(
@@ -91,6 +112,33 @@ final class NotificationClient {
                 // https://developer.github.com/v3/activity/notifications/#mark-as-read
                 let success = response.response?.statusCode == 205
                 completion(success)
+        })
+    }
+
+    func markNotificationRead(id: String) {
+        _localReadIDs.insert(id)
+
+        for wrapper in listeners {
+            if let listener = wrapper.listener {
+                listener.willMarkRead(client: self, id: id)
+            }
+        }
+
+        githubClient.request(GithubClient.Request(
+            path: "notifications/threads/\(id)",
+            method: .put) { response in
+                // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
+                let success = response.response?.statusCode == 205
+                if !success {
+                    // remove so lists can re-show the notification
+                    self._localReadIDs.remove(id)
+
+                    for wrapper in self.listeners {
+                        if let listener = wrapper.listener {
+                            listener.didFailToMarkRead(client: self, id: id)
+                        }
+                    }
+                }
         })
     }
 
