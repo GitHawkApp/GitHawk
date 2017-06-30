@@ -28,20 +28,26 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.centerY.equalTo(contentView).offset(-Styles.Sizes.tableSectionSpacing)
         }
 
+        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        let duration: TimeInterval = 1
+
         let emojiBounce = CABasicAnimation(keyPath: "transform.translation.y")
         emojiBounce.toValue = -10
         emojiBounce.repeatCount = Float.greatestFiniteMagnitude
         emojiBounce.autoreverses = true
-        emojiBounce.duration = 1
+        emojiBounce.duration = duration
+        emojiBounce.timingFunction = timingFunction
         emoji.layer.add(emojiBounce, forKey: nil)
 
+        shadow.fillColor = UIColor(white: 0, alpha: 0.05).cgColor
         contentView.layer.addSublayer(shadow)
 
         let shadowScale = CABasicAnimation(keyPath: "transform.scale")
         shadowScale.toValue = 0.9
         shadowScale.repeatCount = Float.greatestFiniteMagnitude
         shadowScale.autoreverses = true
-        shadowScale.duration = 1
+        shadowScale.duration = duration
+        shadowScale.timingFunction = timingFunction
         shadow.add(shadowScale, forKey: nil)
 
         label.text = NSLocalizedString("No new notifications", comment: "")
@@ -64,11 +70,11 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         super.layoutSubviews()
 
         let width: CGFloat = 30
-        let height: CGFloat = 13
-        let rect = CGRect(x: contentView.center.x - width/2 - 10, y: contentView.center.y + 5, width: width, height: height)
+        let height: CGFloat = 12
+//        let rect = CGRect(x: (contentView.bounds.width - width)/2 - 10, y: (contentView.bounds.height)/2 + 5, width: width, height: height)
         shadow.path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: CGSize(width: width, height: height))).cgPath
 //        shadow.bounds = rect
-        shadow.position = CGPoint(x: contentView.bounds.width/2 - 25, y: contentView.bounds.height/2 + 5)
+        shadow.position = CGPoint(x: contentView.bounds.width/2 - 20, y: contentView.bounds.height/2 + 5)
     }
 
 }
