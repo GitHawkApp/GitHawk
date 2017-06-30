@@ -14,6 +14,7 @@ final class NotificationsSectionController: ListGenericSectionController<Notific
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
+    private var opened = false
 
     init(client: NotificationClient) {
         self.client = client
@@ -31,12 +32,21 @@ SwipeCollectionViewCellDelegate {
             let cell = collectionContext?.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.delegate = self
-        cell.bindViewModel(object)
+        cell.configure(object)
+        cell.isRead = opened || object.read
         return cell
     }
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { fatalError("Should have an object") }
+        guard let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
+            else { fatalError("Cell missing or incorrect type") }
+
+        opened = true
+        cell.isRead = true
+        
+        client.markNotificationRead(id: object.id, optimistic: false)
+
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
     }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IGListKit
 import SnapKit
 import SwipeCellKit
 
@@ -95,26 +94,27 @@ final class NotificationCell: SwipeCollectionViewCell {
         }
     }
 
-    // MARK: Private API
+    // MARK: Public API
 
-    private func showOverlay(show: Bool) {
-        selectionOverlay.opacity = show ? 1 : 0
+    var isRead = false {
+        didSet {
+            for view in [titleLabel, textLabel, reasonImageView] {
+                view.alpha = isRead ? 0.5 : 1
+            }
+        }
     }
 
-    // MARK: ListBindable
-
-    func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? NotificationViewModel else { return }
+    func configure(_ viewModel: NotificationViewModel) {
         titleLabel.text = "\(viewModel.owner)/\(viewModel.repo)"
         textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
+    }
 
-        for view in [titleLabel, textLabel, reasonImageView] {
-            view.alpha = viewModel.read ? 0.5 : 1
-        }
+    // MARK: Private API
 
-        setNeedsLayout()
+    private func showOverlay(show: Bool) {
+        selectionOverlay.opacity = show ? 1 : 0
     }
 
 }
