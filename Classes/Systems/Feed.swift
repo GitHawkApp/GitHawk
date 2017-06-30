@@ -60,11 +60,11 @@ final class Feed: NSObject, UIScrollViewDelegate {
         refresh()
     }
 
-    func finishLoading(fromNetwork: Bool, animated: Bool = true) {
+    func finishLoading(dismissRefresh: Bool, animated: Bool = true) {
         status = .idle
         let block = {
             self.adapter.performUpdates(animated: animated) { _ in
-                if fromNetwork {
+                if dismissRefresh {
                     self.collectionView.refreshControl?.endRefreshing()
                 }
             }

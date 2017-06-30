@@ -14,7 +14,7 @@ class NotificationsViewController: UIViewController,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
     FeedDelegate,
-NotificationsSectionControllerDelegate {
+NotificationClientListener {
 
     let client: NotificationClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
@@ -27,6 +27,7 @@ NotificationsSectionControllerDelegate {
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
         super.init(nibName: nil, bundle: nil)
+        self.client.add(listener: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -97,10 +98,14 @@ NotificationsSectionControllerDelegate {
         present(alert, animated: true)
     }
 
-    private func update(fromNetwork: Bool, animated: Bool = true) {
+    private func update(dismissRefresh: Bool, animated: Bool = true) {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
-        filteredNotifications = filter(notifications: allNotifications, unread: unread)
-        feed.finishLoading(fromNetwork: fromNetwork, animated: animated)
+        filteredNotifications = filter(
+            notifications: allNotifications,
+            localReadIDs: client.localReadIDs,
+            unread: unread
+        )
+        feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
     }
 
     private func handle(result: NotificationClient.Result, append: Bool, animated: Bool) {
@@ -121,7 +126,7 @@ NotificationsSectionControllerDelegate {
         case .failed:
             StatusBar.showNetworkError()
         }
-        self.update(fromNetwork: true, animated: animated)
+        self.update(dismissRefresh: true, animated: animated)
     }
 
     private func reload() {
@@ -152,7 +157,7 @@ NotificationsSectionControllerDelegate {
         if object === spinnerKey { return SpinnerSectionController() }
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
-        case is NotificationViewModel: return NotificationsSectionController(client: client, delegate: self)
+        case is NotificationViewModel: return NotificationsSectionController(client: client)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -171,7 +176,7 @@ NotificationsSectionControllerDelegate {
     // MARK: SegmentedControlSectionControllerDelegate
 
     func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
-        update(fromNetwork: false)
+        update(dismissRefresh: false)
     }
 
     // MARK: FeedDelegate
@@ -185,11 +190,15 @@ NotificationsSectionControllerDelegate {
         return false
     }
 
-    // MARK: NotificationsSectionControllerDelegate
+    // MARK: NotificationClientListener
 
-    func didMarkRead(sectionController: NotificationsSectionController) {
-        // TODO
+    func willMarkRead(client: NotificationClient, id: String) {
+        update(dismissRefresh: false, animated: true)
+    }
+
+    func didFailToMarkRead(client: NotificationClient, id: String) {
+        StatusBar.showGenericError()
+        update(dismissRefresh: false, animated: true)
     }
 
 }
-
