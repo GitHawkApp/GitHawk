@@ -20,6 +20,7 @@ RepoNotificationsSectionControllerDelegate {
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
     var allNotifications = [NotificationViewModel]()
     var filteredNotifications = [NotificationViewModel]()
+    let spinnerKey: ListDiffable = "spinnerKey" as ListDiffable
 
     lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
@@ -139,10 +140,16 @@ RepoNotificationsSectionControllerDelegate {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard allNotifications.count > 0 else { return [] }
-        return [selection] + filteredNotifications
+        var objects: [ListDiffable] = [selection] + filteredNotifications
+        if feed.status == .loadingNext {
+            objects.append(spinnerKey)
+        }
+        return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
+        if object === spinnerKey { return SpinnerSectionController() }
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
         case is NotificationViewModel: return RepoNotificationsSectionController(client: client.githubClient, delegate: self)
@@ -168,7 +175,7 @@ RepoNotificationsSectionControllerDelegate {
     }
 
     // MARK: FeedDelegate
-    
+
     func loadFromNetwork(feed: Feed) {
         reload()
     }
@@ -183,5 +190,6 @@ RepoNotificationsSectionControllerDelegate {
     func didMarkRead(sectionController: RepoNotificationsSectionController) {
         // TODO
     }
-    
+
 }
+
