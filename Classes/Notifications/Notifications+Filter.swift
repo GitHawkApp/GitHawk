@@ -1,5 +1,5 @@
 //
-//  RepoNotifications+Filter.swift
+//  Notifications+Filter.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/15/17.
