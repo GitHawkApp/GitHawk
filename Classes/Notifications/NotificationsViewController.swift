@@ -16,7 +16,7 @@ class NotificationsViewController: UIViewController,
     FeedDelegate,
 RepoNotificationsSectionControllerDelegate {
 
-    let client: GithubClient
+    let client: NotificationClient
     let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
     var allNotifications = [NotificationViewModel]()
     var filteredNotifications = [NotificationViewModel]()
@@ -24,7 +24,7 @@ RepoNotificationsSectionControllerDelegate {
     lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
     init(client: GithubClient) {
-        self.client = client
+        self.client = NotificationClient(githubClient: client)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -130,7 +130,7 @@ RepoNotificationsSectionControllerDelegate {
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
-        case is NotificationViewModel: return RepoNotificationsSectionController(client: client, delegate: self)
+        case is NotificationViewModel: return RepoNotificationsSectionController(client: client.githubClient, delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
