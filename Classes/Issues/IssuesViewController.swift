@@ -114,7 +114,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Issue cannot be found", comment: "")
             return emptyView
-        case .loading:
+        case .loading, .loadingNext:
             return nil
         }
     }
@@ -131,6 +131,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             self.models = results
             self.feed.finishLoading(fromNetwork: true)
         }
+    }
+
+    func loadNextPage(feed: Feed) -> Bool {
+        return false
     }
     
 }
