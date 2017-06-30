@@ -90,16 +90,17 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard let object = object as? ListDiffable else { fatalError() }
+        guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
         if object === addKey, let mgr = rootNavigationManager {
             return SettingsAddAccountSectionController(rootNavigationManager: mgr)
         } else if object === signoutKey {
             return SettingsSignoutSectionController(sessionManager: sessionManager)
         } else if object === reportKey {
             return SettingsReportSectionController()
-        } else {
+        } else if object is GithubSessionManager {
             return SettingsUsersSectionController()
         }
+        fatalError("Unhandled object: \(object)")
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
