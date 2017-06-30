@@ -1,5 +1,5 @@
 //
-//  RepoNotificationsSectionController.swift
+//  NotificationsSectionControllerDelegate.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/13/17.
@@ -10,17 +10,17 @@ import UIKit
 import IGListKit
 import SwipeCellKit
 
-protocol RepoNotificationsSectionControllerDelegate: class {
-    func didMarkRead(sectionController: RepoNotificationsSectionController)
+protocol NotificationsSectionControllerDelegate: class {
+    func didMarkRead(sectionController: NotificationsSectionController)
 }
 
-final class RepoNotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
+final class NotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
-    private weak var delegate: RepoNotificationsSectionControllerDelegate?
+    private weak var delegate: NotificationsSectionControllerDelegate?
 
-    init(client: NotificationClient, delegate: RepoNotificationsSectionControllerDelegate) {
+    init(client: NotificationClient, delegate: NotificationsSectionControllerDelegate) {
         self.client = client
         self.delegate = delegate
         super.init()
