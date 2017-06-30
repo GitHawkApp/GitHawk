@@ -22,6 +22,10 @@
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
 		290EF56B1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
 		290EF56C1F06A822006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
+		290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */; };
+		290EF5771F06BA87006A2160 /* NoNewNotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */; };
+		290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */; };
+		290EF57A1F06BBF6006A2160 /* NoNewNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */; };
 		291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
 		292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -501,6 +505,8 @@
 		290EF5611F06A6B3006A2160 /* NotificationsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSectionController.swift; sourceTree = "<group>"; };
 		290EF5651F06A794006A2160 /* Notifications+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notifications+Filter.swift"; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
+		290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsCell.swift; sourceTree = "<group>"; };
+		290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsSectionController.swift; sourceTree = "<group>"; };
 		291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsReportSectionController.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
@@ -1124,6 +1130,8 @@
 		29C9FDD91EC6613F00EE3A52 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */,
+				290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */,
 				290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */,
 				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
 				297DD5E21F06922A006E7E63 /* NotificationClient.swift */,
@@ -1498,6 +1506,7 @@
 			files = (
 				2971718A1F069A38005E43AC /* NotificationClient.swift in Sources */,
 				2971718B1F069A38005E43AC /* IssueCommentSummaryModel.swift in Sources */,
+				290EF57A1F06BBF6006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
 				2971718C1F069A38005E43AC /* IssueLabelsSectionController.swift in Sources */,
 				2971718D1F069A38005E43AC /* IssueCommentImageModel.swift in Sources */,
 				2971718E1F069A38005E43AC /* CollapsibleCell.swift in Sources */,
@@ -1609,6 +1618,7 @@
 				297171F91F069A38005E43AC /* RootNavigationManager.swift in Sources */,
 				297171FA1F069A38005E43AC /* Organization.swift in Sources */,
 				297171FB1F069A38005E43AC /* IssueCommentSectionController.swift in Sources */,
+				290EF5771F06BA87006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				297171FC1F069A38005E43AC /* Authorization.swift in Sources */,
 				297171FD1F069A38005E43AC /* Feed.swift in Sources */,
 				297171FE1F069A38005E43AC /* IssueLabelSummaryModel.swift in Sources */,
@@ -1643,6 +1653,7 @@
 			files = (
 				297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */,
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
+				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				292FCAFC1EDFCC510026635E /* IssueCommentImageModel.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
@@ -1754,6 +1765,7 @@
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
+				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
