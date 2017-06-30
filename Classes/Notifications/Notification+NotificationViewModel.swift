@@ -1,5 +1,5 @@
 //
-//  RepoNotifications+Notification.swift
+//  Notification+NotificationViewModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/14/17.
