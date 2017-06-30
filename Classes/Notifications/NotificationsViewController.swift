@@ -102,7 +102,7 @@ NotificationClientListener {
         let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(
             notifications: allNotifications,
-            localReadIDs: client.localReadIDs,
+            optimisticReadIDs: client.optimisticReadIDs,
             unread: unread
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
@@ -192,13 +192,17 @@ NotificationClientListener {
 
     // MARK: NotificationClientListener
 
-    func willMarkRead(client: NotificationClient, id: String) {
-        update(dismissRefresh: false, animated: true)
+    func willMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
+        if optimistic {
+            update(dismissRefresh: false, animated: true)
+        }
     }
 
-    func didFailToMarkRead(client: NotificationClient, id: String) {
+    func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
         StatusBar.showGenericError()
-        update(dismissRefresh: false, animated: true)
+        if optimistic {
+            update(dismissRefresh: false, animated: true)
+        }
     }
 
 }
