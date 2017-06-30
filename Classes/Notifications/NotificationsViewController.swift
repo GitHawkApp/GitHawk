@@ -21,6 +21,7 @@ NotificationClientListener {
     var allNotifications = [NotificationViewModel]()
     var filteredNotifications = [NotificationViewModel]()
     let spinnerKey: ListDiffable = "spinnerKey" as ListDiffable
+    let emptyKey: ListDiffable = "emptyKey" as ListDiffable
 
     lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
@@ -145,7 +146,14 @@ NotificationClientListener {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard allNotifications.count > 0 else { return [] }
-        var objects: [ListDiffable] = [selection] + filteredNotifications
+        var objects: [ListDiffable] = [selection]
+
+        if filteredNotifications.count == 0 {
+            objects.append(emptyKey)
+        } else {
+            objects += filteredNotifications as [ListDiffable]
+        }
+
         if feed.status == .loadingNext {
             objects.append(spinnerKey)
         }
@@ -154,9 +162,15 @@ NotificationClientListener {
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
+
+        // 28 is the default height of UISegmentedControl
+        let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
+        
         if object === spinnerKey { return SpinnerSectionController() }
+        else if object === emptyKey { return NoNewNotificationsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
+
         switch object {
-        case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self)
+        case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
         case is NotificationViewModel: return NotificationsSectionController(client: client)
         default: fatalError("Unhandled object: \(object)")
         }

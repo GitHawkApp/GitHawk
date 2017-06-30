@@ -15,9 +15,12 @@ protocol SegmentedControlSectionControllerDelegate: class {
 
 final class SegmentedControlSectionController: ListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
 
-    weak var delegate: SegmentedControlSectionControllerDelegate? = nil
-    init(delegate: SegmentedControlSectionControllerDelegate?) {
+    private weak var delegate: SegmentedControlSectionControllerDelegate? = nil
+    private let height: CGFloat
+
+    init(delegate: SegmentedControlSectionControllerDelegate?, height: CGFloat) {
         self.delegate = delegate
+        self.height = height
         super.init()
     }
 
