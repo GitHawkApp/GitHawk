@@ -32,7 +32,6 @@ SwipeCollectionViewCellDelegate {
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.delegate = self
         cell.configure(object)
-
         cell.isRead = object.read || client.optimisticReadIDs.contains(object.id)
 
         return cell
@@ -64,9 +63,10 @@ SwipeCollectionViewCellDelegate {
             else { return nil }
 
         let title = NSLocalizedString("Read", comment: "")
-        let action = SwipeAction(style: .destructive, title: title) { [weak self] (_, _) in
+        let action = SwipeAction(style: .destructive, title: title) { [weak self] (action, _) in
             guard let strongSelf = self else { return }
             strongSelf.client.markNotificationRead(id: object.id)
+            action.fulfill(with: ExpansionFulfillmentStyle.delete)
         }
         action.backgroundColor = Styles.Colors.Blue.medium.color
         action.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
@@ -79,7 +79,7 @@ SwipeCollectionViewCellDelegate {
 
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .destructive
+        options.expansionStyle = .destructiveAfterFill
         return options
     }
 
