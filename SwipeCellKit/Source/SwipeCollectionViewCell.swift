@@ -441,7 +441,7 @@ extension SwipeCollectionViewCell: SwipeActionsViewDelegate {
                     collectionView.deleteItems(at: [indexPath])
                 }
 
-                UIView.animate(withDuration: 0.3, animations: {
+                UIView.animate(withDuration: 0.15, animations: {
                     self?.center.x = newCenter
                     self?.mask?.frame.size.height = 0
 
