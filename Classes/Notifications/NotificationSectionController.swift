@@ -1,5 +1,5 @@
 //
-//  NotificationsSectionControllerDelegate.swift
+//  NotificationSectionControllerDelegate.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/13/17.
@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SwipeCellKit
 
-final class NotificationsSectionController: ListGenericSectionController<NotificationViewModel>,
+final class NotificationSectionController: ListGenericSectionController<NotificationViewModel>,
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient

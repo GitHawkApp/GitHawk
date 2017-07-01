@@ -167,11 +167,11 @@ NotificationClientListener {
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
         
         if object === spinnerKey { return SpinnerSectionController() }
-        else if object === emptyKey { return NoNewNotificationsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
+        else if object === emptyKey { return NoNewNotificationSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
 
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
-        case is NotificationViewModel: return NotificationsSectionController(client: client)
+        case is NotificationViewModel: return NotificationSectionController(client: client)
         default: fatalError("Unhandled object: \(object)")
         }
     }
