@@ -1,5 +1,5 @@
 //
-//  NoNewNotificationsSectionController.swift
+//  NoNewNotificationSectionController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/30/17.
@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class NoNewNotificationsSectionController: ListSectionController {
+final class NoNewNotificationSectionController: ListSectionController {
 
     let topInset: CGFloat
     let topLayoutGuide: UILayoutSupport
