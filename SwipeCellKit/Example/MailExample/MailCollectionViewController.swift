@@ -46,6 +46,7 @@ class MailCollectioViewController: UICollectionViewController, UICollectionViewD
         cell.subjectLabel.text = email.subject
         cell.bodyLabel.text = email.body
         cell.unread = email.unread
+        cell.canDelete = true
 
         return cell
     }

@@ -14,7 +14,6 @@ final class NotificationSectionController: ListGenericSectionController<Notifica
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
-    private var opened = false
 
     init(client: NotificationClient) {
         self.client = client
@@ -33,7 +32,9 @@ SwipeCollectionViewCellDelegate {
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.delegate = self
         cell.configure(object)
-        cell.isRead = opened || object.read
+
+        cell.isRead = object.read || client.optimisticReadIDs.contains(object.id)
+
         return cell
     }
 
@@ -42,9 +43,7 @@ SwipeCollectionViewCellDelegate {
         guard let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
             else { fatalError("Cell missing or incorrect type") }
 
-        opened = true
         cell.isRead = true
-        
         client.markNotificationRead(id: object.id, optimistic: false)
 
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
@@ -76,6 +75,12 @@ SwipeCollectionViewCellDelegate {
         action.font = Styles.Fonts.button
         action.transitionDelegate = ScaleTransition.default
         return [action]
+    }
+
+    func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive
+        return options
     }
 
 }
