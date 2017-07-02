@@ -42,9 +42,6 @@ SwipeCollectionViewCellDelegate {
         guard let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
             else { fatalError("Cell missing or incorrect type") }
 
-        cell.isRead = true
-        client.markNotificationRead(id: object.id, optimistic: false)
-
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
     }
