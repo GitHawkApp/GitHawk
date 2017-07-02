@@ -19,7 +19,7 @@ func bodyHeight(viewModel: Any, width: CGFloat) -> CGFloat {
     } else if viewModel is IssueCommentReactionViewModel {
         return 40.0
     } else if viewModel is IssueCommentDetailsViewModel {
-        return Styles.Sizes.gutter * 2 + Styles.Sizes.avatar.height
+        return Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
         return viewModel.quote.textViewSize(width).height
     } else if viewModel is IssueCommentHrModel {

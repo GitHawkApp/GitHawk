@@ -20,6 +20,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     weak var delegate: IssueCommentDetailCellDelegate? = nil
 
+    private let authorBackgroundView = UIView()
     private let imageView = UIImageView()
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
@@ -46,7 +47,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
             make.left.equalTo(Styles.Sizes.gutter)
-            make.top.equalTo(Styles.Sizes.gutter)
+            make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
         loginLabel.font = Styles.Fonts.title
@@ -67,7 +68,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.left.equalTo(loginLabel)
-            make.top.equalTo(loginLabel.snp.bottom).offset(2)
+            make.top.equalTo(loginLabel.snp.bottom)
         }
 
         moreButton.isHidden = true
@@ -84,6 +85,13 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
 
         contentView.addBorder(bottom: false)
+
+        contentView.insertSubview(authorBackgroundView, at: 0)
+        authorBackgroundView.snp.makeConstraints { make in
+            make.top.left.right.equalTo(contentView)
+            make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
+        }
+        authorBackgroundView.addBorder()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -108,6 +116,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
+        authorBackgroundView.backgroundColor = viewModel.didAuthor ? Styles.Colors.Blue.light.color : .white
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
