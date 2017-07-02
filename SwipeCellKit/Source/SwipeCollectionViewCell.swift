@@ -15,6 +15,7 @@ open class SwipeCollectionViewCell: UICollectionViewCell {
     public var canDelete = false
 
     var animator: SwipeAnimator?
+    var deleting = false
 
     var state = SwipeState.center
     var originalCenter: CGFloat = 0
@@ -41,8 +42,14 @@ open class SwipeCollectionViewCell: UICollectionViewCell {
 
     /// :nodoc:
     override open var center: CGPoint {
-        didSet {
+        set {
+            if !deleting {
+                super.center = newValue
+            }
             actionsView?.visibleWidth = abs(frame.minX)
+        }
+        get {
+            return super.center
         }
     }
 
@@ -378,6 +385,7 @@ extension SwipeCollectionViewCell {
     }
 
     func reset() {
+        deleting = false
         state = .center
         
         collectionView?.setGestureEnabled(true)
@@ -428,6 +436,8 @@ extension SwipeCollectionViewCell: SwipeActionsViewDelegate {
 
         let newCenter = bounds.midX - (bounds.width + actionsView.minimumButtonWidth) * actionsView.orientation.scale
 
+
+
         action.completionHandler = { [weak self] style in
             action.completionHandler = nil
 
@@ -441,7 +451,7 @@ extension SwipeCollectionViewCell: SwipeActionsViewDelegate {
                     collectionView.deleteItems(at: [indexPath])
                 }
 
-                UIView.animate(withDuration: 0.15, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self?.center.x = newCenter
                     self?.mask?.frame.size.height = 0
 
@@ -467,11 +477,13 @@ extension SwipeCollectionViewCell: SwipeActionsViewDelegate {
 
         animate(duration: 0.3, toOffset: newCenter) { _ in
             if fillOption.timing == .after {
+                self.deleting = true
                 invokeAction()
             }
         }
 
         if fillOption.timing == .with {
+            self.deleting = true
             invokeAction()
         }
     }
