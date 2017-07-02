@@ -39,8 +39,6 @@ SwipeCollectionViewCellDelegate {
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { fatalError("Should have an object") }
-        guard let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
-            else { fatalError("Cell missing or incorrect type") }
 
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
@@ -74,7 +72,7 @@ SwipeCollectionViewCellDelegate {
 
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .destructive(automaticallyDelete: false, timing: .with)
+        options.expansionStyle = .destructive(automaticallyDelete: true, timing: .with)
         return options
     }
 
