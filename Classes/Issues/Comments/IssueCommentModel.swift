@@ -20,7 +20,8 @@ final class IssueCommentModel: ListDiffable {
 
     enum ThreadState {
         case none
-        case inside
+        case head
+        case neck
         case tail
     }
     let threadState: ThreadState
