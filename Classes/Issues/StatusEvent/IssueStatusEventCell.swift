@@ -55,8 +55,15 @@ final class IssueStatusEventCell: UICollectionViewCell {
         ]
         label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
-        button.config(pullRequest: model.pullRequest, status: model.closed ? .closed : .open)
-        button.setTitle(model.closed ? Strings.closed : Strings.reopened, for: .normal)
+        button.config(pullRequest: model.pullRequest, status: model.status)
+
+        let title: String
+        switch model.status {
+        case .open: title = Strings.reopened // open event only happens when RE-opening
+        case .closed: title = Strings.closed
+        case .merged: fatalError("Merge events handled in other model+cell")
+        }
+        button.setTitle(title, for: .normal)
 
         dateLabel.setText(date: model.date)
     }

@@ -81,7 +81,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: closed.fragments.nodeFields.id, 
                     actor: closed.actor?.login ?? Strings.unknown,
                     date: date,
-                    closed: true,
+                    status: .closed,
                     pullRequest: false
                 )
                 results.append(model)
@@ -91,7 +91,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
                     date: date,
-                    closed: false,
+                    status: .open,
                     pullRequest: false
                 )
                 results.append(model)
