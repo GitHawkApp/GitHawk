@@ -93,7 +93,6 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.top.left.right.equalTo(contentView)
             make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
-        authorBackgroundView.addBorder()
     }
     
     required init?(coder aDecoder: NSCoder) {
