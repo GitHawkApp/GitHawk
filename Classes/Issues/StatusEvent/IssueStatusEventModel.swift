@@ -14,10 +14,10 @@ final class IssueStatusEventModel: ListDiffable {
     let id: String
     let actor: String
     let date: Date
-    let status: IssueStatus
+    let status: IssueStatusEvent
     let pullRequest: Bool
 
-    init(id: String, actor: String, date: Date, status: IssueStatus, pullRequest: Bool) {
+    init(id: String, actor: String, date: Date, status: IssueStatusEvent, pullRequest: Bool) {
         self.id = id
         self.actor = actor
         self.date = date

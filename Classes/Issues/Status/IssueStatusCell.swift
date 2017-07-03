@@ -34,7 +34,7 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueStatusModel else { return }
 
-        button.config(pullRequest: viewModel.pullRequest, status: viewModel.status)
+        button.config(pullRequest: viewModel.pullRequest, state: viewModel.status.buttonState)
 
         let title: String
         switch viewModel.status {

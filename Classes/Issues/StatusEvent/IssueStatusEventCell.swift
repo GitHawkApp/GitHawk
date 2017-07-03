@@ -55,13 +55,15 @@ final class IssueStatusEventCell: UICollectionViewCell {
         ]
         label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
-        button.config(pullRequest: model.pullRequest, status: model.status)
+        button.config(pullRequest: model.pullRequest, state: model.status.buttonState)
 
         let title: String
         switch model.status {
-        case .open: title = Strings.reopened // open event only happens when RE-opening
+        case .reopened: title = Strings.reopened // open event only happens when RE-opening
         case .closed: title = Strings.closed
         case .merged: fatalError("Merge events handled in other model+cell")
+        case .locked: title = NSLocalizedString("Locked", comment: "")
+        case .unlocked: title = NSLocalizedString("Unlocked", comment: "")
         }
         button.setTitle(title, for: .normal)
 

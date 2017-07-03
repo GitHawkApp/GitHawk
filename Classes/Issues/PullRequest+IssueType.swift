@@ -87,7 +87,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
                     date: date,
-                    status: .open,
+                    status: .reopened,
                     pullRequest: true
                 )
                 results.append(model)
