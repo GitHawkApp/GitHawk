@@ -109,7 +109,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
         let topTargetOffset = targetContentOffset.pointee.y
 
         guard status == .idle, // dont page if already loading something
-            contentHeight > viewHeight, // dont page if only one page of content
             topTargetOffset - currentTopOffset > 0 // only page when scrolling to the bottom
             else { return }
 

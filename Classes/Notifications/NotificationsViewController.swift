@@ -115,19 +115,21 @@ NotificationClientListener {
 
         switch result {
         case .success(let notifications):
-            let models = createNotificationViewModels(
+            createNotificationViewModels(
                 containerWidth: self.view.bounds.width,
                 notifications: notifications
-            )
-            if append {
-                self.allNotifications += models
-            } else {
-                self.allNotifications = models
+            ) { models in
+                if append {
+                    self.allNotifications += models
+                } else {
+                    self.allNotifications = models
+                }
+                self.update(dismissRefresh: !append, animated: animated)
             }
         case .failed:
             StatusBar.showNetworkError()
+            self.update(dismissRefresh: !append, animated: animated)
         }
-        self.update(dismissRefresh: true, animated: animated)
     }
 
     private func reload() {
@@ -200,8 +202,8 @@ NotificationClientListener {
     }
 
     func loadNextPage(feed: Feed) -> Bool {
-        print("would load page")
-        return false
+        nextPage()
+        return true
     }
 
     // MARK: NotificationClientListener
