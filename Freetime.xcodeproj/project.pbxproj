@@ -42,7 +42,6 @@
 		292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */; };
 		292FCB0A1EDFCC510026635E /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE41EDFCC510026635E /* IssueCommentTextCell.swift */; };
 		292FCB0C1EDFCC510026635E /* IssueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE61EDFCC510026635E /* IssueEvent.swift */; };
-		292FCB0E1EDFCC510026635E /* IssueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE81EDFCC510026635E /* IssueState.swift */; };
 		292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE91EDFCC510026635E /* IssuesViewController.swift */; };
 		292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAEA1EDFCC510026635E /* IssueViewModels.swift */; };
 		292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAED1EDFCC510026635E /* IssueLabelCell.swift */; };
@@ -114,7 +113,6 @@
 		295840901EEA00E1007723C6 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9381EE258C20066509C /* GithubClient+Issues.swift */; };
 		295840911EEA00E1007723C6 /* Issue+IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */; };
 		295840921EEA00E1007723C6 /* IssueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE61EDFCC510026635E /* IssueEvent.swift */; };
-		295840931EEA00E1007723C6 /* IssueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE81EDFCC510026635E /* IssueState.swift */; };
 		295840941EEA00E1007723C6 /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE91EDFCC510026635E /* IssuesViewController.swift */; };
 		295840951EEA00E1007723C6 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EF1EE5036A00DBCD35 /* IssueType.swift */; };
 		295840961EEA00E1007723C6 /* IssueViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAEA1EDFCC510026635E /* IssueViewModels.swift */; };
@@ -201,7 +199,6 @@
 		297171931F069A38005E43AC /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE91EDFCC510026635E /* IssuesViewController.swift */; };
 		297171941F069A38005E43AC /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
 		297171951F069A38005E43AC /* MMElement+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCD1EF624F500C1E848 /* MMElement+Image.swift */; };
-		297171961F069A38005E43AC /* IssueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE81EDFCC510026635E /* IssueState.swift */; };
 		297171971F069A38005E43AC /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC31EC65FEE00EE3A52 /* Subject.swift */; };
 		297171981F069A38005E43AC /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		297171991F069A38005E43AC /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
@@ -526,7 +523,6 @@
 		292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryModel.swift; sourceTree = "<group>"; };
 		292FCAE41EDFCC510026635E /* IssueCommentTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentTextCell.swift; sourceTree = "<group>"; };
 		292FCAE61EDFCC510026635E /* IssueEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueEvent.swift; sourceTree = "<group>"; };
-		292FCAE81EDFCC510026635E /* IssueState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueState.swift; sourceTree = "<group>"; };
 		292FCAE91EDFCC510026635E /* IssuesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuesViewController.swift; sourceTree = "<group>"; };
 		292FCAEA1EDFCC510026635E /* IssueViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModels.swift; sourceTree = "<group>"; };
 		292FCAED1EDFCC510026635E /* IssueLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelCell.swift; sourceTree = "<group>"; };
@@ -719,12 +715,10 @@
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAC81EDFCC510026635E /* Comments */,
 				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
 				292FCAE61EDFCC510026635E /* IssueEvent.swift */,
-				292FCAE81EDFCC510026635E /* IssueState.swift */,
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
 				294563EF1EE5036A00DBCD35 /* IssueType.swift */,
@@ -734,6 +728,7 @@
 				290D2A431F05ADD00082E6CC /* Merged */,
 				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
 				294563E41EE4EE5B00DBCD35 /* Status */,
+				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAF31EDFCC510026635E /* Title */,
 			);
 			path = Issues;
@@ -1523,7 +1518,6 @@
 				297171931F069A38005E43AC /* IssuesViewController.swift in Sources */,
 				297171941F069A38005E43AC /* RootViewControllers.swift in Sources */,
 				297171951F069A38005E43AC /* MMElement+Image.swift in Sources */,
-				297171961F069A38005E43AC /* IssueState.swift in Sources */,
 				297171971F069A38005E43AC /* Subject.swift in Sources */,
 				297171981F069A38005E43AC /* IssueCommentHtmlModel.swift in Sources */,
 				297171991F069A38005E43AC /* NotificationViewModel.swift in Sources */,
@@ -1671,7 +1665,6 @@
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
-				292FCB0E1EDFCC510026635E /* IssueState.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
@@ -1912,7 +1905,6 @@
 				295840A81EEA00E1007723C6 /* LoginRequest.swift in Sources */,
 				2958407F1EEA00E1007723C6 /* IssueCommentSectionController.swift in Sources */,
 				29A476AA1ED24032005D0953 /* ListTestKit.swift in Sources */,
-				295840931EEA00E1007723C6 /* IssueState.swift in Sources */,
 				2981A8AE1EFF49EE00E25EF1 /* UIFont+MutableTraits.swift in Sources */,
 				2981A8AF1EFF4A0400E25EF1 /* IssueCommentHtmlCell.swift in Sources */,
 				297DD5F71F0694A3006E7E63 /* RootViewControllers.swift in Sources */,
