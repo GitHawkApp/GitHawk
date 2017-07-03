@@ -68,6 +68,13 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
               createdAt
             }
+            ... on UnlockedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
           }
         }
         ...reactionFields
@@ -140,6 +147,13 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               currentTitle
             }
             ... on LockedEvent {
+              ...nodeFields
+              actor {
+                login
+              }
+              createdAt
+            }
+            ... on UnlockedEvent {
               ...nodeFields
               actor {
                 login
