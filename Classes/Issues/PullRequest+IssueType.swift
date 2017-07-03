@@ -50,7 +50,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
-                    width: width
+                    width: width,
+                    threadState: .none
                     ) {
                     results.append(model)
                 }
@@ -134,14 +135,19 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
     private func commentModels(thread: Timeline.Node.AsPullRequestReviewThread, width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
+        let lastNodeId = thread.comments.nodes?.last??.fragments.nodeFields.id
         for node in thread.comments.nodes ?? [] {
             guard let fragments = node?.fragments else { continue }
+
+            // the last comment in a thread should know that its the tail end
+            let isInsideThread = fragments.nodeFields.id != lastNodeId
 
             if let model = createCommentModel(
                 id: fragments.nodeFields.id,
                 commentFields: fragments.commentFields,
                 reactionFields: fragments.reactionFields,
-                width: width
+                width: width,
+                threadState: isInsideThread ? .inside : .tail
                 ) {
                 results.append(model)
             }

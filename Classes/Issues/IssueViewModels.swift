@@ -25,7 +25,8 @@ func createViewModels(
         id: issue.id,
         commentFields: issue.commentFields,
         reactionFields: issue.reactionFields,
-        width: width
+        width: width,
+        threadState: .none
         ) {
         result.append(root)
     }
@@ -66,7 +67,8 @@ func createCommentModel(
     id: String,
     commentFields: CommentFields,
     reactionFields: ReactionFields, 
-    width: CGFloat
+    width: CGFloat,
+    threadState: IssueCommentModel.ThreadState
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
         let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
@@ -88,6 +90,7 @@ func createCommentModel(
         details: details,
         bodyModels: bodies,
         reactions: reactions,
-        collapse: collapse
+        collapse: collapse,
+        threadState: threadState
     )
 }
