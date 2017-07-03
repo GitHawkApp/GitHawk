@@ -889,10 +889,10 @@
 			isa = PBXGroup;
 			children = (
 				295C31CC1F0AA55400521CED /* IssueStatusEvent.swift */,
+				295C31D01F0AA72000521CED /* IssueStatusEvent+ButtonState.swift */,
 				295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */,
 				295840641EE89F28007723C6 /* IssueStatusEventModel.swift */,
 				295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */,
-				295C31D01F0AA72000521CED /* IssueStatusEvent+ButtonState.swift */,
 			);
 			path = StatusEvent;
 			sourceTree = "<group>";
