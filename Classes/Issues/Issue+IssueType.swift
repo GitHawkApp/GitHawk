@@ -95,6 +95,26 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     pullRequest: false
                 )
                 results.append(model)
+            } else if let locked = node.asLockedEvent,
+                let date = GithubAPIDateFormatter().date(from: locked.createdAt) {
+                    let model = IssueStatusEventModel(
+                        id: locked.fragments.nodeFields.id,
+                        actor: locked.actor?.login ?? Strings.unknown,
+                        date: date,
+                        status: .locked,
+                        pullRequest: false
+                    )
+                    results.append(model)
+            } else if let unlocked = node.asUnlockedEvent,
+                let date = GithubAPIDateFormatter().date(from: unlocked.createdAt) {
+                let model = IssueStatusEventModel(
+                    id: unlocked.fragments.nodeFields.id,
+                    actor: unlocked.actor?.login ?? Strings.unknown,
+                    date: date,
+                    status: .unlocked,
+                    pullRequest: false
+                )
+                results.append(model)
             }
         }
 

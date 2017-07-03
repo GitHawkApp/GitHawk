@@ -46,10 +46,10 @@ extension UIButton {
             icon = "git-merge-small"
             color = Styles.Colors.purple.color
         case .locked:
-            icon = "lock"
+            icon = "lock-small"
             color = Styles.Colors.Gray.dark.color
         case .unlocked:
-            icon = "key"
+            icon = "key-small"
             color = Styles.Colors.Gray.dark.color
         }
         setImage(UIImage(named: icon)?.withRenderingMode(.alwaysTemplate), for: .normal)
