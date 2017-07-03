@@ -14,6 +14,17 @@ public enum ReactionContent: String {
 
 extension ReactionContent: JSONDecodable, JSONEncodable {}
 
+/// The possible states of a pull request review.
+public enum PullRequestReviewState: String {
+  case pending = "PENDING" /// A review that has not yet been submitted.
+  case commented = "COMMENTED" /// An informational review.
+  case approved = "APPROVED" /// A review allowing the pull request to merge.
+  case changesRequested = "CHANGES_REQUESTED" /// A review blocking the pull request from merging.
+  case dismissed = "DISMISSED" /// A review that has been dismissed.
+}
+
+extension PullRequestReviewState: JSONDecodable, JSONEncodable {}
+
 public final class AddReactionMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {" +
@@ -281,6 +292,29 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                login" +
     "              }" +
     "              createdAt" +
+    "            }" +
+    "            ... on PullRequestReviewThread {" +
+    "              __typename" +
+    "              comments(first: $page_size) {" +
+    "                __typename" +
+    "                nodes {" +
+    "                  __typename" +
+    "                  ...commentFields" +
+    "                  position" +
+    "                  path" +
+    "                  diffHunk" +
+    "                }" +
+    "              }" +
+    "            }" +
+    "            ... on PullRequestReview {" +
+    "              __typename" +
+    "              ...commentFields" +
+    "              state" +
+    "              submittedAt" +
+    "              author {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
     "            }" +
     "          }" +
     "        }" +
@@ -789,6 +823,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let __typename: String
 
               public let asCommit: AsCommit?
+              public let asPullRequestReview: AsPullRequestReview?
               public let asLabeledEvent: AsLabeledEvent?
               public let asUnlabeledEvent: AsUnlabeledEvent?
               public let asClosedEvent: AsClosedEvent?
@@ -796,12 +831,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asRenamedTitleEvent: AsRenamedTitleEvent?
               public let asLockedEvent: AsLockedEvent?
               public let asMergedEvent: AsMergedEvent?
+              public let asPullRequestReviewThread: AsPullRequestReviewThread?
               public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
 
                 asCommit = try AsCommit(reader: reader, ifTypeMatches: __typename)
+                asPullRequestReview = try AsPullRequestReview(reader: reader, ifTypeMatches: __typename)
                 asLabeledEvent = try AsLabeledEvent(reader: reader, ifTypeMatches: __typename)
                 asUnlabeledEvent = try AsUnlabeledEvent(reader: reader, ifTypeMatches: __typename)
                 asClosedEvent = try AsClosedEvent(reader: reader, ifTypeMatches: __typename)
@@ -809,6 +846,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
                 asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
                 asMergedEvent = try AsMergedEvent(reader: reader, ifTypeMatches: __typename)
+                asPullRequestReviewThread = try AsPullRequestReviewThread(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
@@ -838,6 +876,45 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     name = try reader.optionalValue(for: Field(responseName: "name"))
                     date = try reader.optionalValue(for: Field(responseName: "date"))
+                  }
+                }
+              }
+
+              public struct AsPullRequestReview: GraphQLConditionalFragment {
+                public static let possibleTypes = ["PullRequestReview"]
+
+                public let __typename: String
+                /// The actor who authored the comment.
+                public let author: Author?
+                /// Identifies the current state of the pull request review.
+                public let state: PullRequestReviewState
+                /// Identifies when the Pull Request Review was submitted
+                public let submittedAt: String?
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  author = try reader.optionalValue(for: Field(responseName: "author"))
+                  state = try reader.value(for: Field(responseName: "state"))
+                  submittedAt = try reader.optionalValue(for: Field(responseName: "submittedAt"))
+
+                  let commentFields = try CommentFields(reader: reader)
+                  fragments = Fragments(commentFields: commentFields)
+                }
+
+                public struct Fragments {
+                  public let commentFields: CommentFields
+                }
+
+                public struct Author: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
                   }
                 }
               }
@@ -1141,6 +1218,56 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     oid = try reader.value(for: Field(responseName: "oid"))
+                  }
+                }
+              }
+
+              public struct AsPullRequestReviewThread: GraphQLConditionalFragment {
+                public static let possibleTypes = ["PullRequestReviewThread"]
+
+                public let __typename: String
+                /// A list of pull request comments associated with the thread.
+                public let comments: Comment
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  comments = try reader.value(for: Field(responseName: "comments", arguments: ["first": reader.variables["page_size"]]))
+                }
+
+                public struct Comment: GraphQLMappable {
+                  public let __typename: String
+                  /// A list of nodes.
+                  public let nodes: [Node?]?
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+                  }
+
+                  public struct Node: GraphQLMappable {
+                    public let __typename: String
+                    /// The line index in the diff to which the comment applies.
+                    public let position: Int?
+                    /// The path to which the comment applies.
+                    public let path: String
+                    /// The diff hunk to which the comment applies.
+                    public let diffHunk: String
+
+                    public let fragments: Fragments
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      position = try reader.optionalValue(for: Field(responseName: "position"))
+                      path = try reader.value(for: Field(responseName: "path"))
+                      diffHunk = try reader.value(for: Field(responseName: "diffHunk"))
+
+                      let commentFields = try CommentFields(reader: reader)
+                      fragments = Fragments(commentFields: commentFields)
+                    }
+
+                    public struct Fragments {
+                      public let commentFields: CommentFields
+                    }
                   }
                 }
               }
