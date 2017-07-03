@@ -43,7 +43,7 @@ AttributedStringViewDelegate {
         // set the inset based on whether or not this is part of a comment thread
         guard let object = self.object else { return }
         switch object.threadState {
-        case .none:
+        case .single:
             inset = Styles.Sizes.listInsetLarge
         case .head:
             inset = Styles.Sizes.listInsetLargeHead
@@ -159,8 +159,14 @@ AttributedStringViewDelegate {
 
         // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
+            let threadState = object?.threadState
+            let showBorder = threadState == .single || threadState == .head
+            cell.setBorderVisible(showBorder)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
+            let threadState = object?.threadState
+            let showBorder = threadState == .single || threadState == .tail
+            cell.setBorderVisible(showBorder)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentImageCell {
             cell.delegate = self

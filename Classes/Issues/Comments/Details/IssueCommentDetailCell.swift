@@ -26,6 +26,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     private let dateLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
     private var login = ""
+    private var border: UIView? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,7 +85,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
         }
 
-        contentView.addBorder(bottom: false)
+        border = contentView.addBorder(bottom: false)
 
         authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.insertSubview(authorBackgroundView, at: 0)
@@ -97,6 +98,12 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public API
+
+    func setBorderVisible(_ visible: Bool) {
+        border?.isHidden = !visible
     }
 
     // MARK: Private API
