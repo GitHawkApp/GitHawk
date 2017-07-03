@@ -26,7 +26,7 @@ func createViewModels(
         commentFields: issue.commentFields,
         reactionFields: issue.reactionFields,
         width: width,
-        threadState: .none
+        threadState: .single
         ) {
         result.append(root)
     }

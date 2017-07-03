@@ -19,7 +19,7 @@ final class IssueCommentModel: ListDiffable {
     let collapse: (model: AnyObject, height: CGFloat)?
 
     enum ThreadState {
-        case none
+        case single
         case head
         case neck
         case tail

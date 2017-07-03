@@ -51,7 +51,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
                     width: width,
-                    threadState: .none
+                    threadState: .single
                     ) {
                     results.append(model)
                 }

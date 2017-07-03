@@ -34,6 +34,7 @@ UICollectionViewDelegateFlowLayout {
         return view
     }()
     private var reactions = [ReactionViewModel]()
+    private var border: UIView? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,17 +64,22 @@ UICollectionViewDelegateFlowLayout {
             make.top.bottom.right.equalTo(contentView)
         }
 
-        contentView.addBorder(bottom: false)
-        contentView.addBorder(bottom: true)
+        border = contentView.addBorder()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Public API
+
+    func setBorderVisible(_ visible: Bool) {
+        border?.isHidden = !visible
+    }
+
     // MARK: Private API
 
-    func onAddButton() {
+    @objc private func onAddButton() {
         addButton.becomeFirstResponder()
 
         let actions = [
@@ -104,27 +110,27 @@ UICollectionViewDelegateFlowLayout {
         }
     }
 
-    func onThumbsUp() {
+    @objc private func onThumbsUp() {
         delegate?.didAdd(cell: self, reaction: .thumbsUp)
     }
 
-    func onThumbsDown() {
+    @objc private func onThumbsDown() {
         delegate?.didAdd(cell: self, reaction: .thumbsDown)
     }
 
-    func onLaugh() {
+    @objc private func onLaugh() {
         delegate?.didAdd(cell: self, reaction: .laugh)
     }
 
-    func onHooray() {
+    @objc private func onHooray() {
         delegate?.didAdd(cell: self, reaction: .hooray)
     }
 
-    func onConfused() {
+    @objc private func onConfused() {
         delegate?.didAdd(cell: self, reaction: .confused)
     }
 
-    func onHeart() {
+    @objc private func onHeart() {
         delegate?.didAdd(cell: self, reaction: .heart)
     }
 
@@ -138,11 +144,11 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDataSource
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return reactions.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: IssueCommentReactionCell.reuse,
             for: indexPath
@@ -155,7 +161,7 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDelegateFlowLayout
 
-    func collectionView(
+    internal func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
@@ -166,7 +172,7 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDelegate
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = reactions[indexPath.item]
         if model.viewerDidReact {
             delegate?.didRemove(cell: self, reaction: model.content)
