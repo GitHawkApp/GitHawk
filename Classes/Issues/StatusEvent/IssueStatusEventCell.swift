@@ -61,9 +61,9 @@ final class IssueStatusEventCell: UICollectionViewCell {
         switch model.status {
         case .reopened: title = Strings.reopened // open event only happens when RE-opening
         case .closed: title = Strings.closed
-        case .merged: fatalError("Merge events handled in other model+cell")
-        case .locked: title = NSLocalizedString("Locked", comment: "")
+        case .locked: title = Strings.locked
         case .unlocked: title = NSLocalizedString("Unlocked", comment: "")
+        case .merged: fatalError("Merge events handled in other model+cell")
         }
         button.setTitle(title, for: .normal)
 

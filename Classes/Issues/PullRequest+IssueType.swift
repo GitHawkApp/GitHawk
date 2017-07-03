@@ -35,6 +35,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.closableFields
     }
 
+    var locked: Bool {
+        return fragments.lockableFields.locked
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 

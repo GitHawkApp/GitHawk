@@ -17,7 +17,7 @@ func createViewModels(
     var result = [ListDiffable]()
 
     let status: IssueStatus = issue.merged ? .merged : issue.closableFields.closed ? .closed : .open
-    result.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest))
+    result.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest, locked: issue.locked))
     result.append(titleStringSizing(title: issue.title, width: width))
     result.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
 

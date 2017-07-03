@@ -20,6 +20,7 @@ protocol IssueType {
     var reactionFields: ReactionFields { get }
     var closableFields: ClosableFields { get }
     var merged: Bool { get }
+    var locked: Bool { get }
 
     func timelineViewModels(width: CGFloat) -> [ListDiffable]
 }
