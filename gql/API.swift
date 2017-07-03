@@ -317,8 +317,9 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                __typename" +
     "                nodes {" +
     "                  __typename" +
+    "                  ...reactionFields" +
+    "                  ...nodeFields" +
     "                  ...commentFields" +
-    "                  position" +
     "                  path" +
     "                  diffHunk" +
     "                }" +
@@ -326,6 +327,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on PullRequestReview {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              ...commentFields" +
     "              state" +
     "              submittedAt" +
@@ -957,11 +959,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   state = try reader.value(for: Field(responseName: "state"))
                   submittedAt = try reader.optionalValue(for: Field(responseName: "submittedAt"))
 
+                  let nodeFields = try NodeFields(reader: reader)
                   let commentFields = try CommentFields(reader: reader)
-                  fragments = Fragments(commentFields: commentFields)
+                  fragments = Fragments(nodeFields: nodeFields, commentFields: commentFields)
                 }
 
                 public struct Fragments {
+                  public let nodeFields: NodeFields
                   public let commentFields: CommentFields
                 }
 
@@ -1340,8 +1344,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                   public struct Node: GraphQLMappable {
                     public let __typename: String
-                    /// The line index in the diff to which the comment applies.
-                    public let position: Int?
                     /// The path to which the comment applies.
                     public let path: String
                     /// The diff hunk to which the comment applies.
@@ -1351,15 +1353,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
-                      position = try reader.optionalValue(for: Field(responseName: "position"))
                       path = try reader.value(for: Field(responseName: "path"))
                       diffHunk = try reader.value(for: Field(responseName: "diffHunk"))
 
+                      let reactionFields = try ReactionFields(reader: reader)
+                      let nodeFields = try NodeFields(reader: reader)
                       let commentFields = try CommentFields(reader: reader)
-                      fragments = Fragments(commentFields: commentFields)
+                      fragments = Fragments(reactionFields: reactionFields, nodeFields: nodeFields, commentFields: commentFields)
                     }
 
                     public struct Fragments {
+                      public let reactionFields: ReactionFields
+                      public let nodeFields: NodeFields
                       public let commentFields: CommentFields
                     }
                   }
