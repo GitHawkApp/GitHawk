@@ -86,6 +86,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
         contentView.addBorder(bottom: false)
 
+        authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.insertSubview(authorBackgroundView, at: 0)
         authorBackgroundView.snp.makeConstraints { make in
             make.top.left.right.equalTo(contentView)
@@ -116,7 +117,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
-        authorBackgroundView.backgroundColor = viewModel.didAuthor ? Styles.Colors.Blue.light.color : .white
+        authorBackgroundView.isHidden = !viewModel.didAuthor
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
