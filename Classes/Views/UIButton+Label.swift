@@ -10,6 +10,14 @@ import UIKit
 
 extension UIButton {
 
+    enum State {
+        case merged
+        case closed
+        case open
+        case locked
+        case unlocked
+    }
+
     func setupAsLabel() {
         accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
@@ -20,13 +28,14 @@ extension UIButton {
         contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
     }
 
-    func config(pullRequest: Bool, status: IssueStatus) {
+    func config(pullRequest: Bool, state: State) {
 
         let prName = "git-pull-request-small"
 
         let icon: String
         let color: UIColor
-        switch status {
+
+        switch state {
         case .closed:
             icon = pullRequest ? prName : "issue-closed-small"
             color = Styles.Colors.red.color
@@ -36,6 +45,12 @@ extension UIButton {
         case .merged:
             icon = "git-merge-small"
             color = Styles.Colors.purple.color
+        case .locked:
+            icon = "lock"
+            color = Styles.Colors.Gray.dark.color
+        case .unlocked:
+            icon = "key"
+            color = Styles.Colors.Gray.dark.color
         }
         setImage(UIImage(named: icon)?.withRenderingMode(.alwaysTemplate), for: .normal)
         backgroundColor = color

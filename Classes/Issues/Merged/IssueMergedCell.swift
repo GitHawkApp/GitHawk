@@ -30,7 +30,7 @@ final class IssueMergedCell: UICollectionViewCell {
 
         button.setTitle(Strings.merged, for: .normal)
         button.setupAsLabel()
-        button.config(pullRequest: false, status: .merged)
+        button.config(pullRequest: false, state: .merged)
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalTo(actorLabel.snp.right).offset(Styles.Sizes.inlineSpacing)

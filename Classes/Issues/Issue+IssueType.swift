@@ -91,7 +91,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
                     date: date,
-                    status: .open,
+                    status: .reopened,
                     pullRequest: false
                 )
                 results.append(model)
