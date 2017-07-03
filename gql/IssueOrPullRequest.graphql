@@ -156,6 +156,24 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
               createdAt
             }
+            ... on PullRequestReviewThread {
+              comments(first:$page_size) {
+                nodes {
+                  ...commentFields
+                  position
+                  path
+                  diffHunk
+                }
+              }
+            }
+            ... on PullRequestReview {
+              ...commentFields
+              state
+              submittedAt
+              author {
+                login
+              }
+            }
           }
         }
         ...reactionFields
