@@ -21,20 +21,20 @@ It is also test and proof that you can build fairly complicated apps with [IGLis
 Freetime will be released with (at least) a three-phased rollout:
 
 1. Basic, "read only" version.
-  - Read notifications for PRs and Issues
-  - React to comments
-  - Mark notifications as read
+    - Read notifications for PRs and Issues
+    - React to comments
+    - Mark notifications as read
 2. Add replies to PRs and Issues
-  - Close, lock, and re-open PRs and Issues
-  - Label PRs and Issues
+    - Close, lock, and re-open PRs and Issues
+    - Label PRs and Issues
 3. Repo management
-  - Browse & create Issues
-  - Browse PRs
-  - Create & delete labels
+    - Browse & create Issues
+    - Browse PRs
+    - Create & delete labels
 4. Northstar
-  - Browse PR content
-  - Accept, reject, and merge PRs
-  - :rocket:
+    - Browse PR content
+    - Accept, reject, and merge PRs
+    - :rocket:
 
 ## Contributing
 
