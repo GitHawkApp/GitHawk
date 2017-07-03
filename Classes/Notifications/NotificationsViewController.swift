@@ -14,16 +14,16 @@ class NotificationsViewController: UIViewController,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
     FeedDelegate,
-NotificationClientListener {
+NotificationClientListener,
+NotificationNextPageSectionControllerDelegate {
 
-    let client: NotificationClient
-    let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
-    var allNotifications = [NotificationViewModel]()
-    var filteredNotifications = [NotificationViewModel]()
-    let spinnerKey: ListDiffable = "spinnerKey" as ListDiffable
-    let emptyKey: ListDiffable = "emptyKey" as ListDiffable
-
-    lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    private let client: NotificationClient
+    private let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
+    private var allNotifications = [NotificationViewModel]()
+    private var filteredNotifications = [NotificationViewModel]()
+    private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
+    private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    private var page: NSNumber = 1
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
@@ -109,7 +109,7 @@ NotificationClientListener {
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
     }
 
-    private func handle(result: NotificationClient.Result, append: Bool, animated: Bool) {
+    private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
         // in case coming from "mark all" action
         self.resetRightBarItem()
 
@@ -124,6 +124,8 @@ NotificationClientListener {
                 } else {
                     self.allNotifications = models
                 }
+
+                self.page = NSNumber(integerLiteral: page)
                 self.update(dismissRefresh: !append, animated: animated)
             }
         case .failed:
@@ -133,14 +135,16 @@ NotificationClientListener {
     }
 
     private func reload() {
-        client.requestNotifications(all: true) { result in
-            self.handle(result: result, append: false, animated: true)
+        let first = 1
+        client.requestNotifications(all: true, page: first) { result in
+            self.handle(result: result, append: false, animated: true, page: first)
         }
     }
 
     private func nextPage() {
-        client.requestNotifications(all: true, nextPage: true) { result in
-            self.handle(result: result, append: true, animated: false)
+        let next = page.intValue + 1
+        client.requestNotifications(all: true, page: next) { result in
+            self.handle(result: result, append: true, animated: false, page: next)
         }
     }
 
@@ -156,9 +160,8 @@ NotificationClientListener {
             objects += filteredNotifications as [ListDiffable]
         }
 
-        if feed.status == .loadingNext {
-            objects.append(spinnerKey)
-        }
+        objects.append(page)
+
         return objects
     }
 
@@ -168,7 +171,7 @@ NotificationClientListener {
         // 28 is the default height of UISegmentedControl
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
         
-        if object === spinnerKey { return SpinnerSectionController() }
+        if object === page { return NotificationNextPageSectionController(delegate: self) }
         else if object === emptyKey { return NoNewNotificationSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
 
         switch object {
@@ -202,8 +205,7 @@ NotificationClientListener {
     }
 
     func loadNextPage(feed: Feed) -> Bool {
-        nextPage()
-        return true
+        return false
     }
 
     // MARK: NotificationClientListener
@@ -219,6 +221,12 @@ NotificationClientListener {
         if optimistic {
             update(dismissRefresh: false, animated: true)
         }
+    }
+
+    // MARK: NotificationNextPageSectionControllerDelegate
+
+    func didSelect(notificationSectionController: NotificationNextPageSectionController) {
+        nextPage()
     }
 
 }
