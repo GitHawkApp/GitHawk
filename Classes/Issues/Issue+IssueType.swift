@@ -53,7 +53,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
-                    width: width
+                    width: width,
+                    threadState: .none
                     ) {
                     results.append(model)
                 }

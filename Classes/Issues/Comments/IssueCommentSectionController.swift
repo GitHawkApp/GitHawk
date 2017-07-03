@@ -35,7 +35,19 @@ AttributedStringViewDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-        inset = Styles.Sizes.listInsetLarge
+    }
+
+    override func didUpdate(to object: Any) {
+        super.didUpdate(to: object)
+
+        // set the inset based on whether or not this is part of a comment thread
+        guard let object = self.object else { return }
+        switch object.threadState {
+        case .none, .tail:
+            inset = Styles.Sizes.listInsetLarge
+        case .inside:
+            inset = .zero
+        }
     }
 
     // MARK: Private API
