@@ -27,7 +27,7 @@ final class NotificationClient {
 
     let githubClient: GithubClient
 
-    private var currentPage: Int = 0
+    private var currentPage: Int = 1
 
     init(githubClient: GithubClient) {
         self.githubClient = githubClient
@@ -61,6 +61,7 @@ final class NotificationClient {
             "all": all ? "true" : "false",
             "participating": participating ? "true" : "false",
             "page": page,
+            "per_page": "100",
             ]
         if let since = since {
             parameters["since"] = GithubAPIDateFormatter().string(from: since)
