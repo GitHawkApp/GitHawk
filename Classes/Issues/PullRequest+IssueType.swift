@@ -44,6 +44,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
         for node in timeline.nodes ?? [] {
             guard let node = node else { continue }
+
             if let comment = node.asIssueComment {
                 if let model = createCommentModel(
                     id: comment.fragments.nodeFields.id,
@@ -123,9 +124,28 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     pullRequest: false
                 )
                 results.append(model)
+            } else if let thread = node.asPullRequestReviewThread {
+                results += commentModels(thread: thread, width: width)
             }
         }
 
+        return results
+    }
+
+    private func commentModels(thread: Timeline.Node.AsPullRequestReviewThread, width: CGFloat) -> [ListDiffable] {
+        var results = [ListDiffable]()
+        for node in thread.comments.nodes ?? [] {
+            guard let fragments = node?.fragments else { continue }
+
+            if let model = createCommentModel(
+                id: fragments.nodeFields.id,
+                commentFields: fragments.commentFields,
+                reactionFields: fragments.reactionFields,
+                width: width
+                ) {
+                results.append(model)
+            }
+        }
         return results
     }
 

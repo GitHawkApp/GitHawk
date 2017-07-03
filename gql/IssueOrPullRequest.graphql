@@ -173,14 +173,16 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             ... on PullRequestReviewThread {
               comments(first:$page_size) {
                 nodes {
+                  ...reactionFields
+                  ...nodeFields
                   ...commentFields
-                  position
                   path
                   diffHunk
                 }
               }
             }
             ... on PullRequestReview {
+              ...nodeFields
               ...commentFields
               state
               submittedAt
