@@ -27,8 +27,6 @@ final class NotificationClient {
 
     let githubClient: GithubClient
 
-    private var currentPage: Int = 1
-
     init(githubClient: GithubClient) {
         self.githubClient = githubClient
     }
@@ -51,12 +49,10 @@ final class NotificationClient {
         all: Bool = false,
         participating: Bool = false,
         since: Date? = nil,
-        nextPage: Bool = false,
+        page: Int = 1,
         before: Date? = nil,
         completion: @escaping (Result) -> ()
         ) {
-        let page = nextPage ? currentPage + 1 : currentPage
-
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
             "participating": participating ? "true" : "false",
@@ -73,9 +69,6 @@ final class NotificationClient {
         typealias NotificationsPayload = [[String: Any]]
 
         let success = { (jsonArr: NotificationsPayload) in
-            // update the current page only when request is succesful
-            self.currentPage = page
-
             var notifications = [Notification]()
             for json in jsonArr {
                 if let notification = Notification(json: json) {
