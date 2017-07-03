@@ -56,10 +56,10 @@ AttributedStringViewDelegate {
 
     private func react(content: ReactionContent, isAdd: Bool) {
         guard let id = object?.id else { return }
-        client.react(subjectID: id, content: content, isAdd: isAdd) { result in
+        client.react(subjectID: id, content: content, isAdd: isAdd) { [weak self] result in
             if let result = result {
-                self.reactionMutation = result
-                self.update(animated: true)
+                self?.reactionMutation = result
+                self?.update(animated: true)
             }
         }
     }
@@ -120,35 +120,28 @@ AttributedStringViewDelegate {
 
         // cell class based on view model type
         let cellClass: AnyClass
-        if viewModel is IssueCommentDetailsViewModel {
-            cellClass = IssueCommentDetailCell.self
-        } else if viewModel is IssueCommentImageModel {
-            cellClass = IssueCommentImageCell.self
-        } else if viewModel is IssueCommentCodeBlockModel {
-            cellClass = IssueCommentCodeBlockCell.self
-        } else if viewModel is IssueCommentSummaryModel {
-            cellClass = IssueCommentSummaryCell.self
-        } else if viewModel is IssueCommentReactionViewModel {
-            cellClass = IssueCommentReactionCell.self
-        } else if viewModel is IssueCommentQuoteModel {
-            cellClass = IssueCommentQuoteCell.self
-        } else if viewModel is IssueCommentUnsupportedModel {
-            cellClass = IssueCommentUnsupportedCell.self
-        } else if viewModel is IssueCommentHtmlModel {
-            cellClass = IssueCommentHtmlCell.self
-        } else if viewModel is IssueCommentHrModel {
-            cellClass = IssueCommentHrCell.self
-        } else {
-            cellClass = IssueCommentTextCell.self
+        switch viewModel {
+        case is IssueCommentDetailsViewModel: cellClass = IssueCommentDetailCell.self
+        case is IssueCommentImageModel: cellClass = IssueCommentImageCell.self
+        case is IssueCommentCodeBlockModel: cellClass = IssueCommentCodeBlockCell.self
+        case is IssueCommentSummaryModel: cellClass = IssueCommentSummaryCell.self
+        case is IssueCommentReactionViewModel: cellClass = IssueCommentReactionCell.self
+        case is IssueCommentQuoteModel: cellClass = IssueCommentQuoteCell.self
+        case is IssueCommentUnsupportedModel: cellClass = IssueCommentUnsupportedCell.self
+        case is IssueCommentHtmlModel: cellClass = IssueCommentHtmlCell.self
+        case is IssueCommentHrModel: cellClass = IssueCommentHrCell.self
+        case is NSAttributedStringSizing: cellClass = IssueCommentTextCell.self
+        default: fatalError("Unhandled view model: \(viewModel)")
         }
 
         let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
 
-        // extra config outside of bind API
+        // extra config outside of bind API. applies to multiple cell types.
         if let cell = cell as? CollapsibleCell {
             cell.setCollapse(visible: collapsed && (viewModel as AnyObject) === object?.collapse?.model)
         }
 
+        // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
