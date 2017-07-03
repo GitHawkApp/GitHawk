@@ -43,10 +43,14 @@ AttributedStringViewDelegate {
         // set the inset based on whether or not this is part of a comment thread
         guard let object = self.object else { return }
         switch object.threadState {
-        case .none, .tail:
+        case .none:
             inset = Styles.Sizes.listInsetLarge
-        case .inside:
+        case .head:
+            inset = Styles.Sizes.listInsetLargeHead
+        case .neck:
             inset = .zero
+        case .tail:
+            inset = Styles.Sizes.listInsetLargeTail
         }
     }
 

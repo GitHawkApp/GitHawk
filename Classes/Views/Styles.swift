@@ -23,6 +23,8 @@ struct Styles {
         static let avatar = CGSize(width: 30, height: 30)
         static let inlineSpacing: CGFloat = 4
         static let listInsetLarge = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        static let listInsetLargeHead = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         static let textCellInset = UIEdgeInsets(
             top: 0,
