@@ -39,6 +39,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return false
     }
 
+    var locked: Bool {
+        return fragments.lockableFields.locked
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 

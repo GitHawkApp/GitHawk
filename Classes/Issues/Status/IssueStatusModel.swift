@@ -13,10 +13,12 @@ final class IssueStatusModel: ListDiffable {
 
     let status: IssueStatus
     let pullRequest: Bool
+    let locked: Bool
 
-    init(status: IssueStatus, pullRequest: Bool) {
+    init(status: IssueStatus, pullRequest: Bool, locked: Bool) {
         self.status = status
         self.pullRequest = pullRequest
+        self.locked = locked
     }
 
     // MARK: ListDiffable
@@ -28,7 +30,10 @@ final class IssueStatusModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueStatusModel else { return false }
-        return status == object.status && pullRequest == object.pullRequest
+        return status == object.status
+            && pullRequest == object.pullRequest
+            && locked == object.locked
     }
 
 }
+

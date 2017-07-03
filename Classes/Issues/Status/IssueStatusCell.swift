@@ -13,6 +13,7 @@ import SnapKit
 final class IssueStatusCell: UICollectionViewCell, ListBindable {
 
     let button = UIButton()
+    let lockedButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,15 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         button.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
+        }
+
+        lockedButton.setTitle(Strings.locked, for: .normal)
+        lockedButton.config(pullRequest: false, state: .locked)
+        lockedButton.setupAsLabel()
+        contentView.addSubview(lockedButton)
+        lockedButton.snp.makeConstraints { make in
+            make.centerY.equalTo(button)
+            make.left.equalTo(button.snp.right).offset(Styles.Sizes.columnSpacing)
         }
     }
     
@@ -34,8 +44,6 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueStatusModel else { return }
 
-        button.config(pullRequest: viewModel.pullRequest, state: viewModel.status.buttonState)
-
         let title: String
         switch viewModel.status {
         case .closed: title = Strings.closed
@@ -43,6 +51,9 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         case .merged: title = Strings.merged
         }
         button.setTitle(title, for: .normal)
+        button.config(pullRequest: viewModel.pullRequest, state: viewModel.status.buttonState)
+
+        lockedButton.isHidden = !viewModel.locked
     }
 
 }

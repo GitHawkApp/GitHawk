@@ -20,5 +20,6 @@ struct Strings {
     static let reopened = NSLocalizedString("Reopened", comment: "")
     static let unknown = NSLocalizedString("Unknown", comment: "")
     static let merged = NSLocalizedString("Merged", comment: "")
+    static let locked = NSLocalizedString("Locked", comment: "")
 
 }
