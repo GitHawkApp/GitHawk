@@ -1,5 +1,5 @@
 //
-//  IssueClosedCell.swift
+//  IssueStatusEventCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/7/17.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueClosedCell: UICollectionViewCell {
+final class IssueStatusEventCell: UICollectionViewCell {
 
     private let label = UILabel()
     private let button = UIButton()
@@ -48,7 +48,7 @@ final class IssueClosedCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(_ model: IssueClosedModel) {
+    func configure(_ model: IssueStatusEventModel) {
         let actorAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             NSFontAttributeName: Styles.Fonts.bodyBold

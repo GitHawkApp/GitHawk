@@ -81,15 +81,15 @@
 		2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */; };
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
-		295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueClosedModel.swift */; };
-		295840671EE89FE4007723C6 /* IssueClosedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueClosedCell.swift */; };
-		295840691EE8A328007723C6 /* IssueClosedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueClosedSectionController.swift */; };
+		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
+		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
+		295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
 		2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */; };
 		2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406E1EE9F21E007723C6 /* UIButton+Label.swift */; };
 		295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */; };
-		295840721EEA00E1007723C6 /* IssueClosedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueClosedCell.swift */; };
-		295840731EEA00E1007723C6 /* IssueClosedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueClosedModel.swift */; };
-		295840741EEA00E1007723C6 /* IssueClosedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueClosedSectionController.swift */; };
+		295840721EEA00E1007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
+		295840731EEA00E1007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
+		295840741EEA00E1007723C6 /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
 		295840751EEA00E1007723C6 /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
 		295840761EEA00E1007723C6 /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
 		295840771EEA00E1007723C6 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
@@ -230,7 +230,7 @@
 		297171B01F069A38005E43AC /* IssueTitleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */; };
 		297171B11F069A38005E43AC /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
 		297171B21F069A38005E43AC /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
-		297171B31F069A38005E43AC /* IssueClosedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueClosedCell.swift */; };
+		297171B31F069A38005E43AC /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
 		297171B41F069A38005E43AC /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */; };
 		297171B51F069A38005E43AC /* IssueCommentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD11EDFCC510026635E /* IssueCommentImageCell.swift */; };
 		297171B71F069A38005E43AC /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
@@ -243,7 +243,7 @@
 		297171BF1F069A38005E43AC /* UIButton+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958406E1EE9F21E007723C6 /* UIButton+Label.swift */; };
 		297171C01F069A38005E43AC /* UIColor+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */; };
 		297171C11F069A38005E43AC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
-		297171C21F069A38005E43AC /* IssueClosedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueClosedModel.swift */; };
+		297171C21F069A38005E43AC /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		297171C31F069A38005E43AC /* IssueCommentDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACE1EDFCC510026635E /* IssueCommentDetailCell.swift */; };
 		297171C41F069A38005E43AC /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		297171C51F069A38005E43AC /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
@@ -261,7 +261,7 @@
 		297171D11F069A38005E43AC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
 		297171D21F069A38005E43AC /* ShowMoreDetailsLabel+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */; };
 		297171D31F069A38005E43AC /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
-		297171D41F069A38005E43AC /* IssueClosedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueClosedSectionController.swift */; };
+		297171D41F069A38005E43AC /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
 		297171D51F069A38005E43AC /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		297171D61F069A38005E43AC /* SettingsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB21ECC7DBF007CAE3F /* SettingsUserCell.swift */; };
 		297171D71F069A38005E43AC /* NotificationRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */; };
@@ -565,9 +565,9 @@
 		2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrCell.swift; sourceTree = "<group>"; };
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
 		294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlCell.swift; sourceTree = "<group>"; };
-		295840641EE89F28007723C6 /* IssueClosedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueClosedModel.swift; sourceTree = "<group>"; };
-		295840661EE89FE4007723C6 /* IssueClosedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueClosedCell.swift; sourceTree = "<group>"; };
-		295840681EE8A328007723C6 /* IssueClosedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueClosedSectionController.swift; sourceTree = "<group>"; };
+		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
+		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
+		295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventSectionController.swift; sourceTree = "<group>"; };
 		2958406C1EE8EBF3007723C6 /* IssueCommentPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentPhoto.swift; sourceTree = "<group>"; };
 		2958406E1EE9F21E007723C6 /* UIButton+Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Label.swift"; sourceTree = "<group>"; };
 		295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShowMoreDetailsLabel+Date.swift"; sourceTree = "<group>"; };
@@ -719,7 +719,7 @@
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				295840631EE89F19007723C6 /* Closed */,
+				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAC81EDFCC510026635E /* Comments */,
 				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
@@ -888,14 +888,14 @@
 			path = Html;
 			sourceTree = "<group>";
 		};
-		295840631EE89F19007723C6 /* Closed */ = {
+		295840631EE89F19007723C6 /* StatusEvent */ = {
 			isa = PBXGroup;
 			children = (
-				295840661EE89FE4007723C6 /* IssueClosedCell.swift */,
-				295840641EE89F28007723C6 /* IssueClosedModel.swift */,
-				295840681EE8A328007723C6 /* IssueClosedSectionController.swift */,
+				295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */,
+				295840641EE89F28007723C6 /* IssueStatusEventModel.swift */,
+				295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */,
 			);
-			path = Closed;
+			path = StatusEvent;
 			sourceTree = "<group>";
 		};
 		295840D61EEA05F2007723C6 /* Quotes */ = {
@@ -1554,7 +1554,7 @@
 				297171B01F069A38005E43AC /* IssueTitleSectionController.swift in Sources */,
 				297171B11F069A38005E43AC /* GithubAPIDateFormatter.swift in Sources */,
 				297171B21F069A38005E43AC /* SplitViewControllerDelegate.swift in Sources */,
-				297171B31F069A38005E43AC /* IssueClosedCell.swift in Sources */,
+				297171B31F069A38005E43AC /* IssueStatusEventCell.swift in Sources */,
 				297171B41F069A38005E43AC /* Permission.swift in Sources */,
 				297171B51F069A38005E43AC /* IssueCommentImageCell.swift in Sources */,
 				297171B71F069A38005E43AC /* ReactionViewModel.swift in Sources */,
@@ -1567,7 +1567,7 @@
 				297171BF1F069A38005E43AC /* UIButton+Label.swift in Sources */,
 				297171C01F069A38005E43AC /* UIColor+Overlay.swift in Sources */,
 				297171C11F069A38005E43AC /* UIViewController+SmartDeselection.swift in Sources */,
-				297171C21F069A38005E43AC /* IssueClosedModel.swift in Sources */,
+				297171C21F069A38005E43AC /* IssueStatusEventModel.swift in Sources */,
 				297171C31F069A38005E43AC /* IssueCommentDetailCell.swift in Sources */,
 				297171C41F069A38005E43AC /* ButtonCell.swift in Sources */,
 				297171C51F069A38005E43AC /* Samples.swift in Sources */,
@@ -1585,7 +1585,7 @@
 				297171D11F069A38005E43AC /* API.swift in Sources */,
 				297171D21F069A38005E43AC /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				297171D31F069A38005E43AC /* ReactionContent+ReactionType.swift in Sources */,
-				297171D41F069A38005E43AC /* IssueClosedSectionController.swift in Sources */,
+				297171D41F069A38005E43AC /* IssueStatusEventSectionController.swift in Sources */,
 				297171D51F069A38005E43AC /* GithubClient.swift in Sources */,
 				297171D61F069A38005E43AC /* SettingsUserCell.swift in Sources */,
 				297171D71F069A38005E43AC /* NotificationRepoCell.swift in Sources */,
@@ -1702,7 +1702,7 @@
 				292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
-				295840671EE89FE4007723C6 /* IssueClosedCell.swift in Sources */,
+				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
 				292FCAFB1EDFCC510026635E /* IssueCommentImageCell.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
@@ -1716,7 +1716,7 @@
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
-				295840651EE89F28007723C6 /* IssueClosedModel.swift in Sources */,
+				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
 				296CD8291F0141A6001190B9 /* Samples.swift in Sources */,
@@ -1734,7 +1734,7 @@
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
-				295840691EE8A328007723C6 /* IssueClosedSectionController.swift in Sources */,
+				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29316DB31ECC7DBF007CAE3F /* SettingsUserCell.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
@@ -1840,7 +1840,7 @@
 				295840B21EEA00E1007723C6 /* LabelableFields+IssueLabelModel.swift in Sources */,
 				295840C51EEA00E1007723C6 /* Feed.swift in Sources */,
 				295840A91EEA00E1007723C6 /* LoginViewController.swift in Sources */,
-				295840741EEA00E1007723C6 /* IssueClosedSectionController.swift in Sources */,
+				295840741EEA00E1007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				295840AA1EEA00E1007723C6 /* OnePassword.swift in Sources */,
 				295840C81EEA00E1007723C6 /* GithubUserSession.swift in Sources */,
 				29C2950B1EC7B16800D46CD2 /* Styles.swift in Sources */,
@@ -1879,7 +1879,7 @@
 				295840CA1EEA00E1007723C6 /* StatusBar.swift in Sources */,
 				295840971EEA00E1007723C6 /* IssueLabeledCell.swift in Sources */,
 				29C295101EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
-				295840731EEA00E1007723C6 /* IssueClosedModel.swift in Sources */,
+				295840731EEA00E1007723C6 /* IssueStatusEventModel.swift in Sources */,
 				2981A8B41EFF4A2200E25EF1 /* IssueCommentUnsupportedCell.swift in Sources */,
 				2981A8AB1EFF49EE00E25EF1 /* MMElement+Image.swift in Sources */,
 				297DD5F51F06949E006E7E63 /* AppDelegate.swift in Sources */,
@@ -1944,7 +1944,7 @@
 				295840B81EEA00E1007723C6 /* Secrets.swift in Sources */,
 				2981A8AA1EFF49EE00E25EF1 /* MMElement+CodeBlock.swift in Sources */,
 				297DD5ED1F06946C006E7E63 /* IssueMergedSectionController.swift in Sources */,
-				295840721EEA00E1007723C6 /* IssueClosedCell.swift in Sources */,
+				295840721EEA00E1007723C6 /* IssueStatusEventCell.swift in Sources */,
 				295840C61EEA00E1007723C6 /* GithubClient.swift in Sources */,
 				297DD5F21F069497006E7E63 /* SettingsAddAccountSectionController.swift in Sources */,
 				295840C31EEA00E1007723C6 /* Alamofire+GithubAPI.swift in Sources */,

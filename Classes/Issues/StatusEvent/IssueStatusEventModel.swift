@@ -1,5 +1,5 @@
 //
-//  IssueClosedModel.swift
+//  IssueStatusEventModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/7/17.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueClosedModel: ListDiffable {
+final class IssueStatusEventModel: ListDiffable {
 
     let id: String
     let actor: String

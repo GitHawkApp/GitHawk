@@ -1,5 +1,5 @@
 //
-//  IssueClosedSectionController.swift
+//  IssueStatusEventSectionController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/7/17.
@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueClosedSectionController: ListGenericSectionController<IssueClosedModel> {
+final class IssueStatusEventSectionController: ListGenericSectionController<IssueStatusEventModel> {
 
     override init() {
         super.init()
@@ -22,7 +22,7 @@ final class IssueClosedSectionController: ListGenericSectionController<IssueClos
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueClosedCell.self, for: self, at: index) as? IssueClosedCell,
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueStatusEventCell.self, for: self, at: index) as? IssueStatusEventCell,
             let object = self.object
             else { fatalError("Cell incorrect type or object does not exist") }
         cell.configure(object)
