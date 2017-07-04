@@ -21,6 +21,7 @@ final class AttributedStringView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
         isOpaque = true
 

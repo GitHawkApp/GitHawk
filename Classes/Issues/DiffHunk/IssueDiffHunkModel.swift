@@ -12,19 +12,17 @@ import IGListKit
 final class IssueDiffHunkModel: ListDiffable {
 
     let path: String
-    let diff: String
-    let hunk: NSAttributedStringSizing
+    let preview: NSAttributedStringSizing
 
-    init(path: String, diff: String, hunk: NSAttributedStringSizing) {
+    init(path: String, preview: NSAttributedStringSizing) {
         self.path = path
-        self.diff = diff
-        self.hunk = hunk
+        self.preview = preview
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return hunk.attributedText.string as NSObjectProtocol
+        return preview.attributedText.string as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
