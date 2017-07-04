@@ -130,6 +130,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         }
 
         let size = textSize(width)
+        textContainer.size = size
 
         UIGraphicsBeginImageContextWithOptions(size, true, screenScale)
         backgroundColor.setFill()
@@ -158,7 +159,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     @discardableResult
     func computeSize(_ width: CGFloat) -> CGSize {
-        let insetWidth = width - inset.left - inset.right
+        let insetWidth = max(width - inset.left - inset.right, 0)
         textContainer.size = CGSize(width: insetWidth, height: 0)
 
         // find the size of the text now that everything is configured

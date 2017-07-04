@@ -38,10 +38,10 @@ extension UIButton {
         switch state {
         case .closed:
             icon = pullRequest ? prName : "issue-closed-small"
-            color = Styles.Colors.red.color
+            color = Styles.Colors.Red.medium.color
         case .open:
             icon = pullRequest ? prName : "issue-opened-small"
-            color = Styles.Colors.green.color
+            color = Styles.Colors.Green.medium.color
         case .merged:
             icon = "git-merge-small"
             color = Styles.Colors.purple.color

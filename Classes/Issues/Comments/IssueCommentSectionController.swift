@@ -45,9 +45,7 @@ AttributedStringViewDelegate {
         switch object.threadState {
         case .single:
             inset = Styles.Sizes.listInsetLarge
-        case .head:
-            inset = Styles.Sizes.listInsetLargeHead
-        case .neck:
+        case .neck, .head:
             inset = .zero
         case .tail:
             inset = Styles.Sizes.listInsetLargeTail
@@ -159,9 +157,7 @@ AttributedStringViewDelegate {
 
         // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
-            let threadState = object?.threadState
-            let showBorder = threadState == .single || threadState == .head
-            cell.setBorderVisible(showBorder)
+            cell.setBorderVisible(object?.threadState == .single)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
             let threadState = object?.threadState

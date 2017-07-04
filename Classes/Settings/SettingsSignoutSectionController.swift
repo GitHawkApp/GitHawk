@@ -28,7 +28,7 @@ final class SettingsSignoutSectionController: ListSectionController {
         guard let cell = collectionContext?.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
             else { fatalError("Collection context must be set or cell incorrect type") }
         cell.label.text = Strings.signout
-        cell.label.textColor = Styles.Colors.red.color
+        cell.label.textColor = Styles.Colors.Red.medium.color
         cell.configure(topSeparatorHidden: false, bottomSeparatorHidden: false)
         return cell
     }

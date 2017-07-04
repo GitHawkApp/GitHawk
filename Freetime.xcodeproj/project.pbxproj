@@ -27,6 +27,9 @@
 		292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */; };
+		292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */; };
+		292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */; };
+		292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */; };
 		292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
 		292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
 		292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
@@ -509,6 +512,9 @@
 		291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsReportSectionController.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkModel.swift; sourceTree = "<group>"; };
+		292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkSectionController.swift; sourceTree = "<group>"; };
+		292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPathCell.swift; sourceTree = "<group>"; };
+		292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPreviewCell.swift; sourceTree = "<group>"; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
 		292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockModel.swift; sourceTree = "<group>"; };
 		292FCACC1EDFCC510026635E /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
@@ -720,6 +726,9 @@
 			isa = PBXGroup;
 			children = (
 				292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */,
+				292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */,
+				292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */,
+				292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */,
 			);
 			path = DiffHunk;
 			sourceTree = "<group>";
@@ -1686,6 +1695,7 @@
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
+				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
@@ -1701,6 +1711,7 @@
 				299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */,
 				2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
+				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
 				290D2A491F05B5B00082E6CC /* IssueMergedSectionController.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
@@ -1727,6 +1738,7 @@
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
+				292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
 				296CD8291F0141A6001190B9 /* Samples.swift in Sources */,
 				292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */,
