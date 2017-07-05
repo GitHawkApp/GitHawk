@@ -10,6 +10,7 @@ import UIKit
 
 protocol AttributedStringViewDelegate: class {
     func didTapURL(view: AttributedStringView, url: URL)
+    func didTapUsername(view: AttributedStringView, username: String)
 }
 
 final class AttributedStringView: UIView {
@@ -51,26 +52,15 @@ final class AttributedStringView: UIView {
         reposition(width: width)
     }
 
-//    override func draw(_ rect: CGRect) {
-//        guard let text = text,
-//            let image = text.contents(rect.width),
-//            let context = UIGraphicsGetCurrentContext()
-//            else { return }
-//        let textRect = text.rect(rect.width)
-//        context.saveGState()
-//        context.translateBy(x: 0, y: textRect.height)
-//        context.scaleBy(x: 1, y: -1)
-//        context.draw(image, in: textRect)
-//        context.restoreGState()
-//    }
-
     // MARK: Private API
 
     func onTap(recognizer: UITapGestureRecognizer) {
-        guard let urlString = text?.attributes(point: recognizer.location(in: self))?[MarkdownURLName] as? String,
-            let url = URL(string: urlString)
-            else { return }
-        delegate?.didTapURL(view: self, url: url)
+        guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
+        if let urlString = attributes[MarkdownURLName] as? String, let url = URL(string: urlString) {
+            delegate?.didTapURL(view: self, url: url)
+        } else if let usernameString = attributes[UsernameAttributeName] as? String {
+            delegate?.didTapUsername(view: self, username: usernameString)
+        }
     }
 
 }

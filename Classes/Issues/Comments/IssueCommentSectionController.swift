@@ -83,6 +83,10 @@ AttributedStringViewDelegate {
         viewController?.present(safari, animated: true)
     }
 
+    private func openProfile(login: String) {
+        viewController?.present(CreateProfileViewController(login: login), animated: true)
+    }
+
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
@@ -198,7 +202,7 @@ AttributedStringViewDelegate {
 
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else { return }
-        viewController?.present(CreateProfileViewController(login: login), animated: true)
+        openProfile(login: login)
     }
 
     // MARK: IssueCommentReactionCellDelegate
@@ -245,6 +249,10 @@ AttributedStringViewDelegate {
 
     func didTapURL(view: AttributedStringView, url: URL) {
         open(url: url)
+    }
+
+    func didTapUsername(view: AttributedStringView, username: String) {
+        openProfile(login: username)
     }
 
 }
