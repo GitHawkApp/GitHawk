@@ -243,7 +243,7 @@ let UsernameAttributeName = "UsernameAttributeName"
 
 let UsernameDisabledAttributeName = "UsernameDisabledAttributeName"
 
-private let usernameRegex = try! NSRegularExpression(pattern: "(@[a-zA-Z0-9_-]+)", options: [])
+private let usernameRegex = try! NSRegularExpression(pattern: "@([a-zA-Z0-9_-]+)", options: [])
 func createTextModelAddingUsernameAttributes(
     attributedString: NSAttributedString,
     width: CGFloat,
@@ -255,19 +255,20 @@ func createTextModelAddingUsernameAttributes(
     let matches = usernameRegex.matches(in: string, options: [], range: string.nsrange)
 
     for match in matches {
-        guard let substring = string.substring(with: match.range) else { continue }
+        let range = match.rangeAt(0)
+        guard let substring = string.substring(with: range) else { continue }
 
-        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
+        var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
 
         // manually disable username highlighting for some text (namely code)
         guard attributes[UsernameDisabledAttributeName] == nil else { continue }
 
         let font = attributes[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
         attributes[NSFontAttributeName] = font.addingTraits(traits: .traitBold)
-        attributes[UsernameAttributeName] = substring
+        attributes[UsernameAttributeName] = substring.replacingOccurrences(of: "@", with: "")
 
         let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
-        mutableAttributedString.replaceCharacters(in: match.range, with: usernameAttributedString)
+        mutableAttributedString.replaceCharacters(in: range, with: usernameAttributedString)
     }
 
     return NSAttributedStringSizing(
