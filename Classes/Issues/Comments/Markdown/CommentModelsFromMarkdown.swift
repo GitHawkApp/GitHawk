@@ -24,9 +24,27 @@ func createCommentAST(markdown: String) -> MMDocument? {
     return document
 }
 
+func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
+    let attributes = [
+        NSFontAttributeName: Styles.Fonts.body.addingTraits(traits: .traitItalic),
+        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
+        NSBackgroundColorAttributeName: UIColor.white
+    ]
+    let text = NSAttributedString(
+        string: NSLocalizedString("No description provided.", comment: ""),
+        attributes: attributes
+    )
+    return NSAttributedStringSizing(
+        containerWidth: width,
+        attributedText: text,
+        inset: IssueCommentTextCell.inset
+    )
+}
+
 func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
-    guard let document = createCommentAST(markdown: emojiMarkdown) else { return [] }
+    guard let document = createCommentAST(markdown: emojiMarkdown)
+        else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
 
