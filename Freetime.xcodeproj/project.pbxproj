@@ -30,6 +30,7 @@
 		292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */; };
 		292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */; };
 		292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */; };
+		292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */; };
 		292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
 		292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
 		292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
@@ -40,7 +41,6 @@
 		292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD31EDFCC510026635E /* IssueCollapsedBodies.swift */; };
 		292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD41EDFCC510026635E /* IssueCommentModel.swift */; };
 		292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */; };
-		292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */; };
 		292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */; };
 		292FCB081EDFCC510026635E /* IssueCommentSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE11EDFCC510026635E /* IssueCommentSummaryCell.swift */; };
 		292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */; };
@@ -103,7 +103,6 @@
 		2958407D1EEA00E1007723C6 /* IssueCollapsedBodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD31EDFCC510026635E /* IssueCollapsedBodies.swift */; };
 		2958407E1EEA00E1007723C6 /* IssueCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD41EDFCC510026635E /* IssueCommentModel.swift */; };
 		2958407F1EEA00E1007723C6 /* IssueCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */; };
-		295840801EEA00E1007723C6 /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */; };
 		295840871EEA00E1007723C6 /* IssueCommentReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */; };
 		295840881EEA00E1007723C6 /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		295840891EEA00E1007723C6 /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
@@ -210,7 +209,6 @@
 		2971719A1F069A38005E43AC /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		2971719B1F069A38005E43AC /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		2971719C1F069A38005E43AC /* MMElement+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */; };
-		2971719D1F069A38005E43AC /* IssueCommentViewModelHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */; };
 		2971719E1F069A38005E43AC /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		2971719F1F069A38005E43AC /* IssueTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAF41EDFCC510026635E /* IssueTitleCell.swift */; };
 		297171A01F069A38005E43AC /* IssueCommentReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */; };
@@ -515,6 +513,7 @@
 		292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkSectionController.swift; sourceTree = "<group>"; };
 		292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPathCell.swift; sourceTree = "<group>"; };
 		292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPreviewCell.swift; sourceTree = "<group>"; };
+		292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentModelHandling.swift; sourceTree = "<group>"; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
 		292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockModel.swift; sourceTree = "<group>"; };
 		292FCACC1EDFCC510026635E /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
@@ -525,7 +524,6 @@
 		292FCAD31EDFCC510026635E /* IssueCollapsedBodies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCollapsedBodies.swift; sourceTree = "<group>"; };
 		292FCAD41EDFCC510026635E /* IssueCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentModel.swift; sourceTree = "<group>"; };
 		292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSectionController.swift; sourceTree = "<group>"; };
-		292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentViewModelHeight.swift; sourceTree = "<group>"; };
 		292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionCell.swift; sourceTree = "<group>"; };
 		292FCAE11EDFCC510026635E /* IssueCommentSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryCell.swift; sourceTree = "<group>"; };
 		292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentSummaryModel.swift; sourceTree = "<group>"; };
@@ -736,6 +734,7 @@
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */,
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
 				292FCAC81EDFCC510026635E /* Comments */,
 				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
@@ -768,7 +767,6 @@
 				292FCAD31EDFCC510026635E /* IssueCollapsedBodies.swift */,
 				292FCAD41EDFCC510026635E /* IssueCommentModel.swift */,
 				292FCAD51EDFCC510026635E /* IssueCommentSectionController.swift */,
-				292FCAD61EDFCC510026635E /* IssueCommentViewModelHeight.swift */,
 				295F52AB1EF1BCF6000B53CF /* Markdown */,
 				295840D61EEA05F2007723C6 /* Quotes */,
 				292FCADE1EDFCC510026635E /* Reactions */,
@@ -1548,7 +1546,6 @@
 				2971719A1F069A38005E43AC /* UIViewController+Alerts.swift in Sources */,
 				2971719B1F069A38005E43AC /* NotificationCell.swift in Sources */,
 				2971719C1F069A38005E43AC /* MMElement+Attributes.swift in Sources */,
-				2971719D1F069A38005E43AC /* IssueCommentViewModelHeight.swift in Sources */,
 				2971719E1F069A38005E43AC /* UIFont+MutableTraits.swift in Sources */,
 				2971719F1F069A38005E43AC /* IssueTitleCell.swift in Sources */,
 				297171A01F069A38005E43AC /* IssueCommentReactionCell.swift in Sources */,
@@ -1697,7 +1694,6 @@
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
-				292FCB001EDFCC510026635E /* IssueCommentViewModelHeight.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
@@ -1762,6 +1758,7 @@
 				290D2A451F05ADDC0082E6CC /* IssueMergedModel.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
+				292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */,
 				297AE8761EC0D5C200B44A1F /* LoginViewController.swift in Sources */,
 				297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */,
 				290D2A471F05AE640082E6CC /* IssueMergedCell.swift in Sources */,
@@ -1957,7 +1954,6 @@
 				29C167701ECA0D7C00439D62 /* EmptyView.swift in Sources */,
 				2981A8B21EFF4A1500E25EF1 /* IssueCommentHtmlModel.swift in Sources */,
 				2981A8B01EFF4A1100E25EF1 /* IssueCommentHrModel.swift in Sources */,
-				295840801EEA00E1007723C6 /* IssueCommentViewModelHeight.swift in Sources */,
 				2958407D1EEA00E1007723C6 /* IssueCollapsedBodies.swift in Sources */,
 				297DD5E71F06945C006E7E63 /* IssueStatus.swift in Sources */,
 				29A476B21ED24D99005D0953 /* IssueTests.swift in Sources */,
