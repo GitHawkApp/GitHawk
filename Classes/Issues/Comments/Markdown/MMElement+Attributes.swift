@@ -42,6 +42,7 @@ extension MMElement {
             NSFontAttributeName: Styles.Fonts.code,
             NSBackgroundColorAttributeName: Styles.Colors.Gray.lighter.color,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
+            UsernameDisabledAttributeName: true,
             ]
         case .link: newAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Blue.medium.color,

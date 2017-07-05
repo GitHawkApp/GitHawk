@@ -90,9 +90,9 @@ func createTextModel(
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
     guard trimmedString.length > 0 else { return nil }
-    return NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: trimmedString,
+    return createTextModelAddingUsernameAttributes(
+        attributedString: trimmedString,
+        width: width,
         inset: IssueCommentTextCell.inset
     )
 }
@@ -105,9 +105,9 @@ func createQuoteModel(
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
-    let text = NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: trimmedString,
+    let text = createTextModelAddingUsernameAttributes(
+        attributedString: trimmedString,
+        width: width,
         inset: IssueCommentQuoteCell.inset(quoteLevel: level)
     )
     return IssueCommentQuoteModel(level: level, quote: text)
@@ -239,3 +239,40 @@ func travelAST(
     }
 }
 
+let UsernameAttributeName = "UsernameAttributeName"
+
+let UsernameDisabledAttributeName = "UsernameDisabledAttributeName"
+
+private let usernameRegex = try! NSRegularExpression(pattern: "(@[a-zA-Z0-9_-]+)", options: [])
+func createTextModelAddingUsernameAttributes(
+    attributedString: NSAttributedString,
+    width: CGFloat,
+    inset: UIEdgeInsets
+    ) -> NSAttributedStringSizing {
+
+    let string = attributedString.string
+    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+    let matches = usernameRegex.matches(in: string, options: [], range: string.nsrange)
+
+    for match in matches {
+        guard let substring = string.substring(with: match.range) else { continue }
+
+        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
+
+        // manually disable username highlighting for some text (namely code)
+        guard attributes[UsernameDisabledAttributeName] == nil else { continue }
+
+        let font = attributes[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
+        attributes[NSFontAttributeName] = font.addingTraits(traits: .traitBold)
+        attributes[UsernameAttributeName] = substring
+
+        let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
+        mutableAttributedString.replaceCharacters(in: match.range, with: usernameAttributedString)
+    }
+
+    return NSAttributedStringSizing(
+        containerWidth: width,
+        attributedText: mutableAttributedString,
+        inset: inset
+    )
+}
