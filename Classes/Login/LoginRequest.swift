@@ -27,7 +27,7 @@ extension GithubClient {
         completion: @escaping (GithubLogin) -> ()
         ) {
         let parameters: [String: Any] = [
-            "scopes": ["repo"],
+            "scopes": ["repo", "user"],
             "note": "Freetime project manager for iOS",
             "client_id": GithubAPI.clientID,
             "client_secret": GithubAPI.clientSecret
