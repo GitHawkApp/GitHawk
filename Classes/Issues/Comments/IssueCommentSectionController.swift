@@ -123,7 +123,7 @@ AttributedStringViewDelegate {
             let size = htmlSizes[viewModel.html] {
             height = size.height
         } else {
-            height = bodyHeight(viewModel: viewModel, width: width)
+            height = BodyHeightForComment(viewModel: viewModel, width: width)
         }
 
         return CGSize(width: width, height: height)
@@ -136,22 +136,7 @@ AttributedStringViewDelegate {
         ) -> UICollectionViewCell {
         guard let context = self.collectionContext else { fatalError("Collection context must be set") }
 
-        // cell class based on view model type
-        let cellClass: AnyClass
-        switch viewModel {
-        case is IssueCommentDetailsViewModel: cellClass = IssueCommentDetailCell.self
-        case is IssueCommentImageModel: cellClass = IssueCommentImageCell.self
-        case is IssueCommentCodeBlockModel: cellClass = IssueCommentCodeBlockCell.self
-        case is IssueCommentSummaryModel: cellClass = IssueCommentSummaryCell.self
-        case is IssueCommentReactionViewModel: cellClass = IssueCommentReactionCell.self
-        case is IssueCommentQuoteModel: cellClass = IssueCommentQuoteCell.self
-        case is IssueCommentUnsupportedModel: cellClass = IssueCommentUnsupportedCell.self
-        case is IssueCommentHtmlModel: cellClass = IssueCommentHtmlCell.self
-        case is IssueCommentHrModel: cellClass = IssueCommentHrCell.self
-        case is NSAttributedStringSizing: cellClass = IssueCommentTextCell.self
-        default: fatalError("Unhandled view model: \(viewModel)")
-        }
-
+        let cellClass: AnyClass = CellTypeForComment(viewModel: viewModel)
         let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
 
         // extra config outside of bind API. applies to multiple cell types.
@@ -168,15 +153,9 @@ AttributedStringViewDelegate {
             let showBorder = threadState == .single || threadState == .tail
             cell.setBorderVisible(showBorder)
             cell.delegate = self
-        } else if let cell = cell as? IssueCommentImageCell {
-            cell.delegate = self
-        } else if let cell = cell as? IssueCommentHtmlCell {
-            cell.delegate = self
-        } else if let cell = cell as? IssueCommentTextCell {
-            cell.textView.delegate = self
-        } else if let cell = cell as? IssueCommentQuoteCell {
-            cell.textView.delegate = self
         }
+
+        ExtraCommentCellConfigure(cell: cell, imageDelegate: self, htmlDelegate: self, attributedDelegate: self)
 
         return cell
     }

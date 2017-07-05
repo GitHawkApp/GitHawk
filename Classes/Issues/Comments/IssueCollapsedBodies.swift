@@ -24,7 +24,7 @@ func IssueCollapsedBodies(bodies: [AnyObject], width: CGFloat) -> (AnyObject, CG
 
     var totalHeight: CGFloat = 0
     for body in bodies {
-        let height = bodyHeight(viewModel: body, width: width)
+        let height = BodyHeightForComment(viewModel: body, width: width)
         totalHeight += height
         if bodyIsCollapsible(body: body),
             totalHeight > cap,
