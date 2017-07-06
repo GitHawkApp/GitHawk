@@ -13,7 +13,7 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
 
     override init() {
         super.init()
-        inset = Styles.Sizes.listInsetTight
+        self.inset = Styles.Sizes.listInsetTight
     }
 
     override func sizeForItem(at index: Int) -> CGSize {

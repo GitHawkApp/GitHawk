@@ -95,6 +95,10 @@ struct Styles {
 
             static let alphaLighter = UIColor(white: 0, alpha: 0.10)
         }
+
+        struct Yellow {
+            static let light = "fff5b1"
+        }
     }
 
 }

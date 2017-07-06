@@ -25,9 +25,12 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        contentView.backgroundColor = .white
+
         let iconSize = Styles.Sizes.icon
         icon.clipsToBounds = true
-        icon.layer.cornerRadius = iconSize.width
+        icon.layer.cornerRadius = iconSize.width/2
+        icon.contentMode = .center
         contentView.addSubview(icon)
         icon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
@@ -35,6 +38,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(Styles.Sizes.gutter)
         }
 
+        actorButton.addTarget(self, action: #selector(IssueReviewDetailsCell.onActorTapped), for: .touchUpInside)
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
             make.centerY.equalTo(icon)
@@ -42,10 +46,14 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         }
 
         contentView.addSubview(dateLabel)
+        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(actorButton)
-            make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.columnSpacing/2)
         }
+
+        contentView.addBorder(bottom: false)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -72,10 +80,10 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         switch viewModel.state {
         case .commented:
             action = NSLocalizedString("commented", comment: "")
-            iconBackgroundColor = Styles.Colors.Gray.light.color
+            iconBackgroundColor = Styles.Colors.Gray.lighter.color
             iconTintColor = Styles.Colors.Gray.medium.color
             iconName = "eye-small"
-        case .requestedChanges:
+        case .changesRequested:
             action = NSLocalizedString("requested changes", comment: "")
             iconBackgroundColor = Styles.Colors.Red.medium.color
             iconTintColor = .white
@@ -85,6 +93,16 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
             iconBackgroundColor = Styles.Colors.Green.medium.color
             iconTintColor = .white
             iconName = "check-small"
+        case .pending:
+            action = NSLocalizedString("pending review", comment: "")
+            iconBackgroundColor = Styles.Colors.Yellow.light.color
+            iconTintColor = Styles.Colors.Gray.medium.color
+            iconName = "eye-small"
+        case .dismissed:
+            action = NSLocalizedString("dismissed a review", comment: "")
+            iconBackgroundColor = Styles.Colors.Gray.light.color
+            iconTintColor = Styles.Colors.Gray.medium.color
+            iconName = "x-small"
         }
 
         icon.backgroundColor = iconBackgroundColor
@@ -92,12 +110,12 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         icon.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
 
         var attributes = [
-            NSFontAttributeName: Styles.Fonts.bodyBold,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSFontAttributeName: Styles.Fonts.title,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
         ]
         let mActorString = NSMutableAttributedString(string: viewModel.actor, attributes: attributes)
 
-        attributes[NSFontAttributeName] = Styles.Fonts.body
+        attributes[NSFontAttributeName] = Styles.Fonts.secondary
         mActorString.append(NSAttributedString(string: " \(action)", attributes: attributes))
         actorButton.setAttributedTitle(mActorString, for: .normal)
     }

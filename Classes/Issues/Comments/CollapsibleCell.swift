@@ -12,6 +12,7 @@ let CollapseCellMinHeight: CGFloat = 20
 
 func CreateCollapsibleOverlay() -> CALayer {
     let layer = CAGradientLayer()
+    layer.isHidden = true
     layer.colors = [
         UIColor(white: 1, alpha: 0).cgColor,
         UIColor(white: 0, alpha: 0.1).cgColor
