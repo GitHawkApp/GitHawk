@@ -105,7 +105,19 @@ final class NotificationCell: SwipeCollectionViewCell {
     }
 
     func configure(_ viewModel: NotificationViewModel) {
-        titleLabel.text = "\(viewModel.owner)/\(viewModel.repo)"
+        var titleAttributes = [
+            NSFontAttributeName: Styles.Fonts.title,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
+        ]
+        let title = NSMutableAttributedString(string: "\(viewModel.owner)/\(viewModel.repo) ", attributes: titleAttributes)
+
+        titleAttributes[NSFontAttributeName] = Styles.Fonts.secondary
+        switch viewModel.identifier {
+        case .number(let number): title.append(NSAttributedString(string: "\(number)", attributes: titleAttributes))
+        default: break
+        }
+        titleLabel.attributedText = title
+
         textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
