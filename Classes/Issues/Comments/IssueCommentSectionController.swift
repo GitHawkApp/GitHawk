@@ -113,7 +113,7 @@ IssueCommentReactionCellDelegate {
         } else if viewModel is IssueCommentDetailsViewModel {
             height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
         } else {
-            height = BodyHeightForComment(viewModel: viewModel, width: width)
+            height = BodyHeightForComment(viewModel: viewModel, width: width, webviewCache: webviewCache)
         }
 
         return CGSize(width: width, height: height)
