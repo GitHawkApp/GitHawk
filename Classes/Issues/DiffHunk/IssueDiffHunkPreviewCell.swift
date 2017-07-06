@@ -36,7 +36,6 @@ final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-//        scrollView.frame = contentView.bounds
         scrollView.frame = CGRect(
             x: 0,
             y: 0,
