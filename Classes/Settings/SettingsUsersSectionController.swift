@@ -62,9 +62,11 @@ ListBindingSectionControllerSelectionDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
-        guard let object = self.object else { return }
+        guard let viewModel = viewModel as? SettingsUserModel,
+            !viewModel.selected,
+            let object = self.object
+            else { return }
         object.focus(activeSessions[index])
     }
 
 }
-
