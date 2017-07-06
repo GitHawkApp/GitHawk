@@ -11,17 +11,11 @@ import IGListKit
 
 final class IssueReviewDetailsModel: ListDiffable {
 
-    enum State: Int {
-        case commented
-        case requestedChanges
-        case approved
-    }
-
     let actor: String
-    let state: State
+    let state: PullRequestReviewState
     let date: Date
 
-    init(actor: String, state: State, date: Date) {
+    init(actor: String, state: PullRequestReviewState, date: Date) {
         self.actor = actor
         self.state = state
         self.date = date

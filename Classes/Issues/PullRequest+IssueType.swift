@@ -131,6 +131,21 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 // on top of each other
                 results.append(hunk)
                 results += commentModels(thread: thread, width: width)
+            } else if let review = node.asPullRequestReview,
+                let dateString = review.submittedAt,
+                let date = GithubAPIDateFormatter().date(from: dateString) {
+                let details = IssueReviewDetailsModel(
+                    actor: review.author?.login ?? Strings.unknown,
+                    state: review.state,
+                    date: date
+                )
+                let bodies = Freetime.commentModels(markdown: review.fragments.commentFields.body, width: width)
+                let model = IssueReviewModel(
+                    id: review.fragments.nodeFields.id,
+                    details: details,
+                    bodyModels: bodies
+                )
+                results.append(model)
             }
         }
 

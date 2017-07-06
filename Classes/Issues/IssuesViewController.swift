@@ -105,6 +105,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         case is IssueStatusEventModel: return IssueStatusEventSectionController()
         case is IssueMergedModel: return IssueMergedSectionController()
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
+        case is IssueReviewModel: return IssueReviewSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }
