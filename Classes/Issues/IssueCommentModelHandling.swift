@@ -8,7 +8,7 @@
 
 import UIKit
 
-func BodyHeightForComment(viewModel: Any, width: CGFloat) -> CGFloat {
+func BodyHeightForComment(viewModel: Any, width: CGFloat, webviewCache: WebviewCellHeightCache? = nil) -> CGFloat {
     if let viewModel = viewModel as? NSAttributedStringSizing {
         return viewModel.textViewSize(width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
@@ -16,14 +16,12 @@ func BodyHeightForComment(viewModel: Any, width: CGFloat) -> CGFloat {
         return viewModel.contentSize.height + inset.top + inset.bottom
     } else if viewModel is IssueCommentImageModel {
         return 200.0
-    } else if viewModel is IssueCommentReactionViewModel {
-        return 40.0
-    } else if viewModel is IssueCommentDetailsViewModel {
-        return Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
         return viewModel.quote.textViewSize(width).height
     } else if viewModel is IssueCommentHrModel {
         return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
+    } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {
+        return cache.height(model: viewModel)
     } else {
         return Styles.Sizes.tableCellHeight
     }
@@ -31,8 +29,6 @@ func BodyHeightForComment(viewModel: Any, width: CGFloat) -> CGFloat {
 
 func CellTypeForComment(viewModel: Any) -> AnyClass {
     switch viewModel {
-    case is IssueCommentDetailsViewModel: return IssueCommentDetailCell.self
-    case is IssueCommentReactionViewModel: return IssueCommentReactionCell.self
     case is IssueCommentImageModel: return IssueCommentImageCell.self
     case is IssueCommentCodeBlockModel: return IssueCommentCodeBlockCell.self
     case is IssueCommentSummaryModel: return IssueCommentSummaryCell.self
@@ -47,14 +43,16 @@ func CellTypeForComment(viewModel: Any) -> AnyClass {
 
 func ExtraCommentCellConfigure(
     cell: UICollectionViewCell,
-    imageDelegate: IssueCommentImageCellDelegate,
-    htmlDelegate: IssueCommentHtmlCellDelegate,
-    attributedDelegate: AttributedStringViewDelegate
+    imageDelegate: IssueCommentImageCellDelegate?,
+    htmlDelegate: IssueCommentHtmlCellDelegate?,
+    htmlNavigationDelegate: IssueCommentHtmlCellNavigationDelegate?,
+    attributedDelegate: AttributedStringViewDelegate?
     ) {
     if let cell = cell as? IssueCommentImageCell {
         cell.delegate = imageDelegate
     } else if let cell = cell as? IssueCommentHtmlCell {
         cell.delegate = htmlDelegate
+        cell.navigationDelegate = htmlNavigationDelegate
     } else if let cell = cell as? IssueCommentTextCell {
         cell.textView.delegate = attributedDelegate
     } else if let cell = cell as? IssueCommentQuoteCell {
