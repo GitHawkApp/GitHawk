@@ -35,7 +35,7 @@ final class NotificationNextPageSectionController: ListGenericSectionController<
             let object = self.object
             else { fatalError("Missing context, object, or cell is wrong type") }
         // add one so reads as loading the NEXT page
-        cell.configure(page: object.intValue + 1)
+        cell.configure(page: object.intValue)
         return cell
     }
 
