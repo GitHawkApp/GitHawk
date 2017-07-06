@@ -189,7 +189,7 @@ func travelAST(
         attributedString.removeAll()
     }
 
-    if element.type == .none {
+    if element.type == .none || element.type == .entity {
         let substring = substringOrNewline(text: markdown, range: element.range)
         attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
     } else if element.type == .lineBreak {
