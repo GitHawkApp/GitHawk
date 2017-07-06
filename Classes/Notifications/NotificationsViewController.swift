@@ -160,10 +160,11 @@ NotificationNextPageSectionControllerDelegate {
             objects.append(emptyKey)
         } else {
             objects += filteredNotifications as [ListDiffable]
-        }
 
-        if let page = self.page {
-            objects.append(page)
+            // only append paging if there are visible notifications
+            if let page = self.page {
+                objects.append(page)
+            }
         }
 
         return objects
