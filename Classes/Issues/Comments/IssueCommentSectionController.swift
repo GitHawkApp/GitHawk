@@ -43,7 +43,7 @@ IssueCommentReactionCellDelegate {
         switch object.threadState {
         case .single:
             inset = Styles.Sizes.listInsetLarge
-        case .neck, .head:
+        case .neck:
             inset = .zero
         case .tail:
             inset = Styles.Sizes.listInsetLargeTail

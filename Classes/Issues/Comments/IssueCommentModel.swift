@@ -20,7 +20,6 @@ final class IssueCommentModel: ListDiffable {
 
     enum ThreadState {
         case single
-        case head
         case neck
         case tail
     }
