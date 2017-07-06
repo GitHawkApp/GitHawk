@@ -134,6 +134,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let review = node.asPullRequestReview,
                 let dateString = review.submittedAt,
                 let date = GithubAPIDateFormatter().date(from: dateString) {
+
+                // avoid displaying reviews that are empty comments (e.g. no actual content)
+                // the real content for these is likely a PR review thread comment instead
+                let markdown = review.fragments.commentFields.body.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                guard markdown.characters.count > 0 || review.state != .commented else { continue }
+
                 let details = IssueReviewDetailsModel(
                     actor: review.author?.login ?? Strings.unknown,
                     state: review.state,
