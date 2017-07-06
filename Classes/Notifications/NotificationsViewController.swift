@@ -18,7 +18,7 @@ NotificationClientListener,
 NotificationNextPageSectionControllerDelegate {
 
     private let client: NotificationClient
-    private let selection = SegmentedControlModel(items: [Strings.unread, Strings.all])
+    private let selection = SegmentedControlModel.forNotifications()
     private var allNotifications = [NotificationViewModel]()
     private var filteredNotifications = [NotificationViewModel]()
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
@@ -100,11 +100,10 @@ NotificationNextPageSectionControllerDelegate {
     }
 
     private func update(dismissRefresh: Bool, animated: Bool = true) {
-        let unread = selection.items[selection.selectedIndex] == Strings.unread
         filteredNotifications = filter(
             notifications: allNotifications,
             optimisticReadIDs: client.optimisticReadIDs,
-            unread: unread
+            unread: selection.unreadSelected
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
     }

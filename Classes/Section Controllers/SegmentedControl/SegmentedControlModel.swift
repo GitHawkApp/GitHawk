@@ -12,7 +12,7 @@ import IGListKit
 final class SegmentedControlModel: ListDiffable {
 
     let items: [String]
-    fileprivate let _diffIdentifier: String
+    private let _diffIdentifier: String
     var selectedIndex: Int = 0
 
     init(items: [String]) {
