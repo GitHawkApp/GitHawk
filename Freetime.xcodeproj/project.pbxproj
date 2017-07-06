@@ -31,6 +31,8 @@
 		292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */; };
 		292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */; };
 		292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */; };
+		292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C71F0DB32700D3D57B /* IssueReviewDetailsCell.swift */; };
+		292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C91F0DB36600D3D57B /* IssueReviewDetailsModel.swift */; };
 		292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
 		292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
 		292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
@@ -514,6 +516,8 @@
 		292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPathCell.swift; sourceTree = "<group>"; };
 		292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPreviewCell.swift; sourceTree = "<group>"; };
 		292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentModelHandling.swift; sourceTree = "<group>"; };
+		292CD3C71F0DB32700D3D57B /* IssueReviewDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewDetailsCell.swift; sourceTree = "<group>"; };
+		292CD3C91F0DB36600D3D57B /* IssueReviewDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewDetailsModel.swift; sourceTree = "<group>"; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
 		292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockModel.swift; sourceTree = "<group>"; };
 		292FCACC1EDFCC510026635E /* CollapsibleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
@@ -731,14 +735,23 @@
 			path = DiffHunk;
 			sourceTree = "<group>";
 		};
+		292CD3C61F0DB31200D3D57B /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				292CD3C71F0DB32700D3D57B /* IssueReviewDetailsCell.swift */,
+				292CD3C91F0DB36600D3D57B /* IssueReviewDetailsModel.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */,
-				292CD3B91F0AF26900D3D57B /* DiffHunk */,
 				292FCAC81EDFCC510026635E /* Comments */,
+				292CD3B91F0AF26900D3D57B /* DiffHunk */,
 				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
+				292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */,
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
 				295C31CE1F0AA67600521CED /* IssueStatus+ButtonState.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
@@ -748,6 +761,7 @@
 				292FCAEC1EDFCC510026635E /* Labels */,
 				290D2A431F05ADD00082E6CC /* Merged */,
 				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
+				292CD3C61F0DB31200D3D57B /* Review */,
 				294563E41EE4EE5B00DBCD35 /* Status */,
 				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAF31EDFCC510026635E /* Title */,
@@ -1777,6 +1791,7 @@
 				29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
+				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,
 				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */,
@@ -1807,6 +1822,7 @@
 				29316DB11ECC7D89007CAE3F /* SettingsUsersSectionController.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
+				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,
 				29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */,
