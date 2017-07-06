@@ -113,7 +113,7 @@ final class NotificationCell: SwipeCollectionViewCell {
 
         titleAttributes[NSFontAttributeName] = Styles.Fonts.secondary
         switch viewModel.identifier {
-        case .number(let number): title.append(NSAttributedString(string: "\(number)", attributes: titleAttributes))
+        case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break
         }
         titleLabel.attributedText = title
