@@ -30,9 +30,10 @@ SwipeCollectionViewCellDelegate {
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: NotificationCell.self, for: self, at: index) as? NotificationCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
+
         cell.delegate = self
         cell.configure(object)
-        cell.isRead = object.read || client.optimisticReadIDs.contains(object.id)
+        cell.isRead = considerObjectRead
 
         return cell
     }
@@ -44,6 +45,21 @@ SwipeCollectionViewCellDelegate {
         viewController?.showDetailViewController(controller, sender: nil)
     }
 
+    // MARK: Private API
+
+    func markRead() {
+        guard let object = object else { fatalError("Should have an object") }
+        client.markNotificationRead(id: object.id)
+        collectionContext?.performBatch(animated: true, updates: { context in
+            context.reload(self)
+        })
+    }
+
+    var considerObjectRead: Bool {
+        guard let object = object else { fatalError("Should have an object") }
+        return object.read || client.optimisticReadIDs.contains(object.id)
+    }
+
     // MARK: SwipeCollectionViewCellDelegate
 
     func collectionView(
@@ -51,16 +67,13 @@ SwipeCollectionViewCellDelegate {
         editActionsForRowAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
         ) -> [SwipeAction]? {
-        guard let object = object else { fatalError("Should have an object") }
-
-        guard orientation == .right,
-            object.read == false
-            else { return nil }
+        guard orientation == .right, !considerObjectRead else { return nil }
 
         let title = NSLocalizedString("Read", comment: "")
         let action = SwipeAction(style: .destructive, title: title) { [weak self] (action, _) in
-            self?.client.markNotificationRead(id: object.id)
+            self?.markRead()
         }
+
         action.backgroundColor = Styles.Colors.Blue.medium.color
         action.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
         action.textColor = .white
@@ -72,7 +85,7 @@ SwipeCollectionViewCellDelegate {
 
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .destructive(automaticallyDelete: true, timing: .with)
+        options.expansionStyle = .selection
         return options
     }
 

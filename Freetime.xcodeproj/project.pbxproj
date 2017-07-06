@@ -347,6 +347,7 @@
 		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
 		2971722E1F069E9B005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
 		2971722F1F069EA0005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
+		297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -616,6 +617,7 @@
 		297172261F069A38005E43AC /* Freetime copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Freetime copy-Info.plist"; path = "/Users/rnystrom/Development/iOS/Freetime/Freetime copy-Info.plist"; sourceTree = "<absolute>"; };
 		2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
 		2971722C1F069E96005E43AC /* SpinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerCell.swift; sourceTree = "<group>"; };
+		297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SegmentedControlModel+Notifications.swift"; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -1207,6 +1209,7 @@
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
+				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1846,6 +1849,7 @@
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */,
 				29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */,
