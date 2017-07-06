@@ -22,6 +22,8 @@ func BodyHeightForComment(viewModel: Any, width: CGFloat, webviewCache: WebviewC
         return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
     } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {
         return cache.height(model: viewModel)
+    } else if let viewModel = viewModel as? IssueCommentTableModel {
+        return viewModel.totalHeight
     } else {
         return Styles.Sizes.tableCellHeight
     }
@@ -37,6 +39,7 @@ func CellTypeForComment(viewModel: Any) -> AnyClass {
     case is IssueCommentHtmlModel: return IssueCommentHtmlCell.self
     case is IssueCommentHrModel: return IssueCommentHrCell.self
     case is NSAttributedStringSizing: return IssueCommentTextCell.self
+    case is IssueCommentTableModel: return IssueCommentTableCell.self
     default: fatalError("Unhandled model: \(viewModel)")
     }
 }
