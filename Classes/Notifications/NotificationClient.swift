@@ -22,7 +22,7 @@ final class NotificationClient {
 
     enum Result {
         case failed(Error?)
-        case success([Notification])
+        case success([Notification], Int?)
     }
 
     let githubClient: GithubClient
@@ -68,7 +68,7 @@ final class NotificationClient {
 
         typealias NotificationsPayload = [[String: Any]]
 
-        let success = { (jsonArr: NotificationsPayload) in
+        let success = { (jsonArr: NotificationsPayload, page: Int?) in
             var notifications = [Notification]()
             for json in jsonArr {
                 if let notification = Notification(json: json) {
@@ -76,20 +76,20 @@ final class NotificationClient {
                 }
             }
 
-            completion(.success(notifications))
+            completion(.success(notifications, page))
         }
 
         if let sampleJSON = loadSample(path: "notifications") as? NotificationsPayload {
-            success(sampleJSON)
+            success(sampleJSON, 0)
         } else {
             githubClient.request(GithubClient.Request(
                 path: "notifications",
                 method: .get,
                 parameters: parameters,
                 headers: nil
-            ) { response in
+            ) { (response, page) in
                 if let jsonArr = response.value as? NotificationsPayload {
-                    success(jsonArr)
+                    success(jsonArr, page?.next)
                 } else {
                     completion(.failed(response.error))
                 }
@@ -101,7 +101,7 @@ final class NotificationClient {
     func markAllNotifications(completion: MarkAllCompletion? = nil) {
         githubClient.request(GithubClient.Request(
             path: "notifications",
-            method: .put) { response in
+            method: .put) { (response, _) in
                 guard let completion = completion else { return }
                 // https://developer.github.com/v3/activity/notifications/#mark-as-read
                 let success = response.response?.statusCode == 205
@@ -122,7 +122,7 @@ final class NotificationClient {
 
         githubClient.request(GithubClient.Request(
             path: "notifications/threads/\(id)",
-            method: .patch) { response in
+            method: .patch) { (response, _) in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
                 let success = response.response?.statusCode == 205
                 if !success {

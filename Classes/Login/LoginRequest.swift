@@ -45,7 +45,7 @@ extension GithubClient {
             method: .post,
             parameters: parameters,
             headers: headers
-        ) { response in
+        ) { (response, _) in
             if let twoFactorHeader = response.response?.allHeaderFields["X-GitHub-OTP"] as? String,
                 twoFactorHeader.hasPrefix("required") {
                 completion(.twoFactor)

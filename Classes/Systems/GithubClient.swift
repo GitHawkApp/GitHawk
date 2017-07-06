@@ -13,19 +13,24 @@ import Apollo
 
 struct GithubClient {
 
+    struct Page {
+        let next: Int
+        let last: Int
+    }
+
     struct Request {
         let path: String
         let method: HTTPMethod
         let parameters: Parameters?
         let headers: HTTPHeaders?
-        let completion: (DataResponse<Any>) -> Void
+        let completion: (DataResponse<Any>, Page?) -> Void
 
         init(
             path: String,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
-            completion: @escaping (DataResponse<Any>) -> Void
+            completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) {
             self.path = path
             self.method = method
@@ -80,7 +85,8 @@ struct GithubClient {
                     StatusBar.showRevokeError()
                     self.sessionManager.remove([userSession])
                 } else {
-                    request.completion(response)
+                    let page = PagingData(link: response.response?.allHeaderFields["Link"] as? String)
+                    request.completion(response, page)
                 }
             })
     }
