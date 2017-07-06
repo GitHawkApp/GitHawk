@@ -8,33 +8,31 @@
 
 import UIKit
 import IGListKit
-import NYTPhotoViewer
-import SafariServices
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
-    IssueCommentReactionCellDelegate,
-    IssueCommentImageCellDelegate,
-    NYTPhotosViewControllerDelegate,
-    IssueCommentHtmlCellDelegate,
-AttributedStringViewDelegate {
+IssueCommentReactionCellDelegate {
 
     private var collapsed = true
     private let client: GithubClient
-    private var htmlSizes = [String: CGSize]()
+
+    private lazy var webviewCache: WebviewCellHeightCache = {
+        return WebviewCellHeightCache(sectionController: self)
+    }()
+    private lazy var photoHandler: PhotoViewHandler = {
+        return PhotoViewHandler(viewController: self.viewController)
+    }()
 
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
 
-    private weak var referenceImageView: UIImageView? = nil
-
     init(client: GithubClient) {
         self.client = client
         super.init()
-        dataSource = self
-        selectionDelegate = self
+        self.dataSource = self
+        self.selectionDelegate = self
     }
 
     override func didUpdate(to object: Any) {
@@ -78,15 +76,6 @@ AttributedStringViewDelegate {
         }
     }
 
-    private func open(url: URL) {
-        let safari = SFSafariViewController(url: url)
-        viewController?.present(safari, animated: true)
-    }
-
-    private func openProfile(login: String) {
-        viewController?.present(CreateProfileViewController(login: login), animated: true)
-    }
-
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
@@ -119,9 +108,10 @@ AttributedStringViewDelegate {
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
-        } else if let viewModel = viewModel as? IssueCommentHtmlModel,
-            let size = htmlSizes[viewModel.html] {
-            height = size.height
+        } else if viewModel is IssueCommentReactionViewModel {
+            height = 40.0
+        } else if viewModel is IssueCommentDetailsViewModel {
+            height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
         } else {
             height = BodyHeightForComment(viewModel: viewModel, width: width)
         }
@@ -136,7 +126,12 @@ AttributedStringViewDelegate {
         ) -> UICollectionViewCell {
         guard let context = self.collectionContext else { fatalError("Collection context must be set") }
 
-        let cellClass: AnyClass = CellTypeForComment(viewModel: viewModel)
+        let cellClass: AnyClass
+        switch viewModel {
+        case is IssueCommentDetailsViewModel: cellClass = IssueCommentDetailCell.self
+        case is IssueCommentReactionViewModel: cellClass = IssueCommentReactionCell.self
+        default: cellClass = CellTypeForComment(viewModel: viewModel)
+        }
         let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
 
         // extra config outside of bind API. applies to multiple cell types.
@@ -155,7 +150,13 @@ AttributedStringViewDelegate {
             cell.delegate = self
         }
 
-        ExtraCommentCellConfigure(cell: cell, imageDelegate: self, htmlDelegate: self, attributedDelegate: self)
+        ExtraCommentCellConfigure(
+            cell: cell,
+            imageDelegate: photoHandler,
+            htmlDelegate: webviewCache,
+            htmlNavigationDelegate: viewController,
+            attributedDelegate: viewController
+        )
 
         return cell
     }
@@ -181,7 +182,7 @@ AttributedStringViewDelegate {
 
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else { return }
-        openProfile(login: login)
+        viewController?.presentProfile(login: login)
     }
 
     // MARK: IssueCommentReactionCellDelegate
@@ -194,45 +195,7 @@ AttributedStringViewDelegate {
         react(content: reaction, isAdd: false)
     }
 
-    // MARK: IssueCommentImageCellDelegate
-
-    func didTapImage(cell: IssueCommentImageCell, image: UIImage) {
-        referenceImageView = cell.imageView
-        let photo = IssueCommentPhoto(image: image)
-        let photosViewController = NYTPhotosViewController(photos: [photo])
-        photosViewController.delegate = self
-        viewController?.present(photosViewController, animated: true)
-    }
-
-    // MARK: NYTPhotosViewControllerDelegate
-
-    func photosViewController(_ photosViewController: NYTPhotosViewController, referenceViewFor photo: NYTPhoto) -> UIView? {
-        return referenceImageView
-    }
-
-    // MARK: IssueCommentHtmlCellDelegate
-
-    func webViewDidLoad(cell: IssueCommentHtmlCell, html: String) {
-        guard htmlSizes[html] == nil else { return }
-        htmlSizes[html] = cell.webViewPreferredSize()
-        UIView.performWithoutAnimation {
-            self.collectionContext?.invalidateLayout(for: self)
-        }
-    }
-
-    func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL) {
-        open(url: url)
-    }
-
-    // MARK: AttributedStringViewDelegate
-
-    func didTapURL(view: AttributedStringView, url: URL) {
-        open(url: url)
-    }
-
-    func didTapUsername(view: AttributedStringView, username: String) {
-        openProfile(login: username)
-    }
-
 }
+
+
 

@@ -11,6 +11,9 @@ import IGListKit
 
 protocol IssueCommentHtmlCellDelegate: class {
     func webViewDidLoad(cell: IssueCommentHtmlCell, html: String)
+}
+
+protocol IssueCommentHtmlCellNavigationDelegate: class {
     func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL)
 }
 
@@ -47,6 +50,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     private static let htmlTail = "</body></html>"
 
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
+    weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate? = nil
 
     private let webView = UIWebView()
     private var body = ""
@@ -104,7 +108,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         guard let url = request.url else { return true }
         let htmlLoad = url.absoluteString == "about:blank"
         if !htmlLoad {
-            delegate?.webViewWantsNavigate(cell: self, url: url)
+            navigationDelegate?.webViewWantsNavigate(cell: self, url: url)
         }
         return htmlLoad
     }
