@@ -15,7 +15,10 @@ protocol IssueCommentImageCellDelegate: class {
     func didTapImage(cell: IssueCommentImageCell, image: UIImage)
 }
 
-final class IssueCommentImageCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentImageCell: UICollectionViewCell,
+ListBindable,
+CollapsibleCell,
+UIGestureRecognizerDelegate {
 
     static let preferredHeight: CGFloat = 200
 
@@ -24,6 +27,7 @@ final class IssueCommentImageCell: UICollectionViewCell, ListBindable, Collapsib
 
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let overlay = CreateCollapsibleOverlay()
+    private var tapGesture: UITapGestureRecognizer!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,8 +48,9 @@ final class IssueCommentImageCell: UICollectionViewCell, ListBindable, Collapsib
             make.center.equalTo(imageView)
         }
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(IssueCommentImageCell.onTap(recognizer:)))
-        contentView.addGestureRecognizer(tap)
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(IssueCommentImageCell.onTap(recognizer:)))
+        tapGesture.delegate = self
+        contentView.addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,10 +65,41 @@ final class IssueCommentImageCell: UICollectionViewCell, ListBindable, Collapsib
     // MARK: Private API
 
     func onTap(recognizer: UITapGestureRecognizer) {
+        // action will only trigger if shouldBegin returns true
+        guard let image = imageView.image else { return }
+        delegate?.didTapImage(cell: self, image: image)
+    }
+
+    // MARK: ListBindable
+
+    func bindViewModel(_ viewModel: Any) {
+        guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        imageView.backgroundColor = Styles.Colors.Gray.lighter.color
+        spinner.startAnimating()
+        imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
+            self.imageView.backgroundColor = .clear
+            self.spinner.stopAnimating()
+        }
+    }
+
+    // MARK: CollapsibleCell
+
+    func setCollapse(visible: Bool) {
+        overlay.isHidden = !visible
+    }
+
+    // MARK: UIGestureRecognizerDelegate
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer === tapGesture
+            else { return super.gestureRecognizerShouldBegin(gestureRecognizer) }
+
+        // only start the image tap gesture when an image exists
+        // and the tap is within the actual image's bounds
         guard let image = imageView.image,
-        overlay.isHidden
-            else { return }
-        
+            overlay.isHidden
+            else { return false }
+
         let imageSize = image.size
         let imageViewBounds = imageView.bounds
 
@@ -89,28 +125,8 @@ final class IssueCommentImageCell: UICollectionViewCell, ListBindable, Collapsib
             )
         }
 
-        let location = recognizer.location(in: imageView)
-        guard imageBounds.contains(location) else { return }
-
-        delegate?.didTapImage(cell: self, image: image)
-    }
-
-    // MARK: ListBindable
-
-    func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueCommentImageModel else { return }
-        imageView.backgroundColor = Styles.Colors.Gray.lighter.color
-        spinner.startAnimating()
-        imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
-            self.imageView.backgroundColor = .clear
-            self.spinner.stopAnimating()
-        }
-    }
-
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
+        let location = gestureRecognizer.location(in: imageView)
+        return imageBounds.contains(location)
     }
     
 }
