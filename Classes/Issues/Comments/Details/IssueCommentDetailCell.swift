@@ -85,7 +85,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
         }
 
-        border = contentView.addBorder(bottom: false)
+        border = contentView.addBorder(.top)
 
         authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.insertSubview(authorBackgroundView, at: 0)

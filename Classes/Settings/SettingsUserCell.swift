@@ -40,7 +40,7 @@ final class SettingsUserCell: UICollectionViewCell, ListBindable {
             make.centerY.equalTo(contentView)
         }
 
-        contentView.addBorder(bottom: true, left: Styles.Sizes.gutter)
+        contentView.addBorder(.bottom, left: Styles.Sizes.gutter)
     }
     
     required init?(coder aDecoder: NSCoder) {

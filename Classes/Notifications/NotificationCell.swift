@@ -66,7 +66,7 @@ final class NotificationCell: SwipeCollectionViewCell {
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
 
-        addBorder(left: NotificationCell.labelInset.left)
+        addBorder(.bottom, left: NotificationCell.labelInset.left)
 
         selectionOverlay.backgroundColor = Styles.Colors.Gray.alphaLighter.cgColor
         selectionOverlay.opacity = 0

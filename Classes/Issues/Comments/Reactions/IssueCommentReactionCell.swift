@@ -64,7 +64,7 @@ UICollectionViewDelegateFlowLayout {
             make.top.bottom.right.equalTo(contentView)
         }
 
-        border = contentView.addBorder()
+        border = contentView.addBorder(.bottom)
     }
     
     required init?(coder aDecoder: NSCoder) {
