@@ -28,7 +28,7 @@ final class IssueDiffHunkPathCell: UICollectionViewCell, ListBindable {
             make.width.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.gutter * 2)
         }
 
-        contentView.addBorder(bottom: false)
+        contentView.addBorder(.bottom)
     }
 
     required init?(coder aDecoder: NSCoder) {

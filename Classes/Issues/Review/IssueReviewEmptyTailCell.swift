@@ -14,7 +14,7 @@ final class IssueReviewEmptyTailCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
-        contentView.addBorder()
+        contentView.addBorder(.bottom)
     }
     
     required init?(coder aDecoder: NSCoder) {

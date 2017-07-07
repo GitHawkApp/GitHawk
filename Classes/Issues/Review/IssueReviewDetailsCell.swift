@@ -53,7 +53,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.columnSpacing/2)
         }
 
-        contentView.addBorder(bottom: false)
+        contentView.addBorder(.top)
     }
 
     required init?(coder aDecoder: NSCoder) {

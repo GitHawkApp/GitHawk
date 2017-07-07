@@ -22,8 +22,8 @@ final class ButtonCell: UICollectionViewCell {
         contentView.backgroundColor = .white
         accessibilityTraits |= UIAccessibilityTraitButton
 
-        topSeparator = contentView.addBorder(bottom: false, left: 0, right: 0)
-        bottomSeparator = contentView.addBorder(bottom: true, left: 0, right: 0)
+        topSeparator = contentView.addBorder(.top)
+        bottomSeparator = contentView.addBorder(.bottom)
 
         label.backgroundColor = .clear
         label.textAlignment = .center

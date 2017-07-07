@@ -27,7 +27,7 @@ final class NotificationRepoCell: UICollectionViewCell, ListBindable {
             make.centerY.equalTo(self.contentView)
         }
 
-        contentView.addBorder()
+        contentView.addBorder(.bottom)
     }
     
     required init?(coder aDecoder: NSCoder) {
