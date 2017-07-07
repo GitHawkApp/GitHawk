@@ -81,11 +81,17 @@ IssueCommentTableCollectionCellDelegate {
         ) -> UICollectionViewCell {
         guard let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueCommentTableCollectionCell,
-            let row = model?.columns[indexPath.section].rows[indexPath.item]
+            let columns = model?.columns
             else { fatalError("Cell is wrong type or missing model/item") }
+
+        let column = columns[indexPath.section]
+        let rows = column.rows
+        let row = rows[indexPath.item]
         cell.configure(row.text)
         cell.delegate = self
         cell.contentView.backgroundColor = row.fill ? Styles.Colors.Gray.lighter.color : .white
+        cell.setRightBorder(visible: columns.last === column)
+        cell.setBottomBorder(visible: rows.last === row)
 
         return cell
     }

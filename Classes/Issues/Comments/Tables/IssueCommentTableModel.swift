@@ -11,14 +11,24 @@ import IGListKit
 
 final class IssueCommentTableModel: NSObject, ListDiffable {
 
-    struct Row {
+    final class Row {
         let text: NSAttributedStringSizing
         let fill: Bool
+
+        init(text: NSAttributedStringSizing, fill: Bool) {
+            self.text = text
+            self.fill = fill
+        }
     }
 
-    struct Column {
+    final class Column {
         let width: CGFloat
         let rows: [Row]
+
+        init(width: CGFloat, rows: [Row]) {
+            self.width = width
+            self.rows = rows
+        }
     }
 
     let rowHeight = Styles.Sizes.labelEventHeight

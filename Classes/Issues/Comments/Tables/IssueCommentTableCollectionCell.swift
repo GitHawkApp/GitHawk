@@ -26,9 +26,17 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStr
 
     private let textView = AttributedStringView()
 
+    var bottomBorder: UIView?
+    var rightBorder: UIView?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(textView)
+        contentView.addBorder(.left)
+        contentView.addBorder(.top)
+
+        bottomBorder = contentView.addBorder(.bottom)
+        rightBorder = contentView.addBorder(.right)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +47,14 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStr
 
     func configure(_ model: NSAttributedStringSizing) {
         textView.configureAndSizeToFit(text: model, width: 0)
+    }
+
+    func setRightBorder(visible: Bool) {
+        rightBorder?.isHidden = !visible
+    }
+
+    func setBottomBorder(visible: Bool) {
+        bottomBorder?.isHidden = !visible
     }
 
     // MARK: AttributedStringViewDelegate
