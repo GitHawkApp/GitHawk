@@ -11,6 +11,14 @@ import UIKit
 // https://www.raizlabs.com/dev/2016/05/smarter-animated-row-deselection-ios/
 extension UIViewController {
     func rz_smoothlyDeselectRows(_ collectionView: UICollectionView?) {
+        // if part of a split VC and "full screen" in the primary spot, dont deselect
+        // also consider if embedded in nav VC
+        if let split = splitViewController,
+            let first = split.viewControllers.first,
+            (first === self || first === navigationController) && split.isCollapsed == false {
+            return
+        }
+
         // Get the initially selected index paths, if any
         let selectedIndexPaths = collectionView?.indexPathsForSelectedItems ?? []
 
