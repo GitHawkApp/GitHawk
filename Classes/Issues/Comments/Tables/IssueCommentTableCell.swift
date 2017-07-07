@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IGListKit
 
 protocol IssueCommentTableCellDelegate: class {
     func didTapURL(cell: IssueCommentTableCell, url: URL)
@@ -14,17 +15,21 @@ protocol IssueCommentTableCellDelegate: class {
 }
 
 final class IssueCommentTableCell: UICollectionViewCell,
+    ListBindable,
     UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout,
 IssueCommentTableCollectionCellDelegate {
 
-    static let inset = Styles.Sizes.textCellInset
+    static let inset = UIEdgeInsets(top: 0, left: 4, bottom: Styles.Sizes.rowSpacing, right: 4)
 
     weak var delegate: IssueCommentTableCellDelegate? = nil
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = .zero
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     private let identifier = "cell"
@@ -32,11 +37,14 @@ IssueCommentTableCollectionCellDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .white
+
         collectionView.register(IssueCommentTableCollectionCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.isPrefetchingEnabled = false
+        collectionView.contentInset = IssueCommentTableCell.inset
         contentView.addSubview(collectionView)
     }
 
@@ -46,13 +54,14 @@ IssueCommentTableCollectionCellDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = UIEdgeInsetsInsetRect(contentView.bounds, IssueCommentTableCell.inset)
+        collectionView.frame = contentView.bounds
     }
 
-    // MARK: Public API
+    // MARK: ListBindable
 
-    func configure(_ model: IssueCommentTableModel) {
-        self.model = model
+    func bindViewModel(_ viewModel: Any) {
+        guard let viewModel = viewModel as? IssueCommentTableModel else { return }
+        self.model = viewModel
         collectionView.reloadData()
     }
 
@@ -63,7 +72,7 @@ IssueCommentTableCollectionCellDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model?.columns[section].items.count ?? 0
+        return model?.columns[section].rows.count ?? 0
     }
 
     func collectionView(
@@ -72,10 +81,12 @@ IssueCommentTableCollectionCellDelegate {
         ) -> UICollectionViewCell {
         guard let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueCommentTableCollectionCell,
-            let item = model?.columns[indexPath.section].items[indexPath.item]
+            let row = model?.columns[indexPath.section].rows[indexPath.item]
             else { fatalError("Cell is wrong type or missing model/item") }
-        cell.configure(item)
+        cell.configure(row.text)
         cell.delegate = self
+        cell.contentView.backgroundColor = row.fill ? Styles.Colors.Gray.lighter.color : .white
+
         return cell
     }
 
@@ -86,8 +97,8 @@ IssueCommentTableCollectionCellDelegate {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
-        guard let column = model?.columns[indexPath.section] else { fatalError("Missing model") }
-        return CGSize(width: column.width, height: column.height)
+        guard let model = model else { fatalError("Missing model") }
+        return CGSize(width: model.columns[indexPath.section].width, height: model.rowHeight)
     }
 
     // MARK: IssueCommentTableCollectionCellDelegate
