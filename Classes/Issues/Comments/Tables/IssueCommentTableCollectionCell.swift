@@ -15,14 +15,19 @@ protocol IssueCommentTableCollectionCellDelegate: class {
 
 final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStringViewDelegate {
 
+    static let inset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.columnSpacing,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.columnSpacing
+    )
+
     weak var delegate: IssueCommentTableCollectionCellDelegate? = nil
 
     private let textView = AttributedStringView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        contentView.backgroundColor = .white
         contentView.addSubview(textView)
     }
     

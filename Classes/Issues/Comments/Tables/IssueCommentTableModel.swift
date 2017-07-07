@@ -11,18 +11,23 @@ import IGListKit
 
 final class IssueCommentTableModel: NSObject, ListDiffable {
 
-    struct Column {
-        let width: CGFloat
-        let height = Styles.Sizes.labelEventHeight
-        let items: [NSAttributedStringSizing]
+    struct Row {
+        let text: NSAttributedStringSizing
+        let fill: Bool
     }
 
+    struct Column {
+        let width: CGFloat
+        let rows: [Row]
+    }
+
+    let rowHeight = Styles.Sizes.labelEventHeight
     let columns: [Column]
     let totalHeight: CGFloat
 
     init(columns: [Column]) {
         self.columns = columns
-        self.totalHeight = columns.reduce(0, { $0 + $1.height })
+        self.totalHeight = CGFloat(columns.first?.rows.count ?? 0) * rowHeight
     }
 
     // MARK: ListDiffable

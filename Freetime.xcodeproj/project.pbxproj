@@ -351,6 +351,7 @@
 		2974069B1F0EDC7C003A6BFB /* IssueCommentTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069A1F0EDC7C003A6BFB /* IssueCommentTableModel.swift */; };
 		2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069C1F0EDEAD003A6BFB /* IssueCommentTableCell.swift */; };
 		2974069F1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */; };
+		297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297406A01F0EE51E003A6BFB /* MMElement+Table.swift */; };
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8741EC0D5C200B44A1F /* GithubLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8591EC0D5C100B44A1F /* GithubLogin.storyboard */; };
 		297AE8751EC0D5C200B44A1F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85A1EC0D5C100B44A1F /* LoginRequest.swift */; };
@@ -624,6 +625,7 @@
 		2974069A1F0EDC7C003A6BFB /* IssueCommentTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentTableModel.swift; sourceTree = "<group>"; };
 		2974069C1F0EDEAD003A6BFB /* IssueCommentTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentTableCell.swift; sourceTree = "<group>"; };
 		2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentTableCollectionCell.swift; sourceTree = "<group>"; };
+		297406A01F0EE51E003A6BFB /* MMElement+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MMElement+Table.swift"; sourceTree = "<group>"; };
 		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 				29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */,
 				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
+				297406A01F0EE51E003A6BFB /* MMElement+Table.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -1848,6 +1851,7 @@
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,
+				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
 				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29316DC91ECCA47E007CAE3F /* SettingsAddAccountSectionController.swift in Sources */,

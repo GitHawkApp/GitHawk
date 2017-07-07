@@ -56,7 +56,7 @@ func commentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
             para.paragraphSpacingBefore = 12;
             return para
         }(),
-        NSBackgroundColorAttributeName: UIColor.white
+        NSBackgroundColorAttributeName: UIColor.white,
     ]
 
     let seedString = NSMutableAttributedString()
@@ -138,7 +138,7 @@ func createModel(markdown: String, element: MMElement) -> ListDiffable? {
     case .image:
         return element.imageModel
     case .table:
-        return IssueCommentUnsupportedModel(name: "Table")
+        return element.table(markdown: markdown)
     case .HTML:
         guard let html = markdown.substring(with: element.range),
             html.characters.count > 0
