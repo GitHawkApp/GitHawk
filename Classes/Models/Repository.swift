@@ -101,7 +101,7 @@ final class Repository: NSObject, NSCoding {
   let issues_url: String?
   let full_name: String
   let fork: Bool
-  let description_: String
+  let description_: String?
   let notifications_url: String?
   let ssh_url: String?
   let stargazers_count: NSNumber?
@@ -177,7 +177,7 @@ final class Repository: NSObject, NSCoding {
     let issues_url = json?[Keys.issues_url] as? String
     guard let full_name = json?[Keys.full_name] as? String else { return nil }
     guard let fork = json?[Keys.fork] as? Bool else { return nil }
-    guard let description_ = json?[Keys.description_] as? String else { return nil }
+    let description_ = json?[Keys.description_] as? String
     let notifications_url = json?[Keys.notifications_url] as? String
     let ssh_url = json?[Keys.ssh_url] as? String
     let stargazers_count = json?[Keys.stargazers_count] as? NSNumber
@@ -336,7 +336,7 @@ final class Repository: NSObject, NSCoding {
     issues_url: String?,
     full_name: String,
     fork: Bool,
-    description_: String,
+    description_: String?,
     notifications_url: String?,
     ssh_url: String?,
     stargazers_count: NSNumber?,
@@ -489,7 +489,7 @@ final class Repository: NSObject, NSCoding {
     let issues_url = aDecoder.decodeObject(forKey: Keys.issues_url) as? String
     guard let full_name = aDecoder.decodeObject(forKey: Keys.full_name) as? String else { return nil }
     let fork = aDecoder.decodeBool(forKey: Keys.fork)
-    guard let description_ = aDecoder.decodeObject(forKey: Keys.description_) as? String else { return nil }
+    let description_ = aDecoder.decodeObject(forKey: Keys.description_) as? String
     let notifications_url = aDecoder.decodeObject(forKey: Keys.notifications_url) as? String
     let ssh_url = aDecoder.decodeObject(forKey: Keys.ssh_url) as? String
     let stargazers_count = aDecoder.decodeObject(forKey: Keys.stargazers_count) as? NSNumber
