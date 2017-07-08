@@ -50,7 +50,7 @@ final class SettingsSignoutSectionController: ListSectionController {
     }
 
     private func signout() {
-        sessionManager.remove(sessionManager.allUserSessions)
+        sessionManager.logout()
     }
 
 }
