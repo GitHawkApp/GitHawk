@@ -11,36 +11,29 @@ import Foundation
 final class GithubUserSession: NSObject, NSCoding {
 
     struct Keys {
-        static let authorization = "authorization"
-        static let login = "login"
+        static let token = "token"
     }
 
-    let authorization: Authorization
-    let login: String
+    let token: String
 
     init(
-        authorization: Authorization,
-        login: String
+        token: String
         ) {
-        self.authorization = authorization
-        self.login = login
+        self.token = token
     }
 
     // MARK: NSCoding
 
     convenience init?(coder aDecoder: NSCoder) {
-        guard let authorization = aDecoder.decodeObject(forKey: Keys.authorization) as? Authorization,
-            let login = aDecoder.decodeObject(forKey: Keys.login) as? String
+        guard let token = aDecoder.decodeObject(forKey: Keys.token) as? String
             else { return nil }
         self.init(
-            authorization: authorization,
-            login: login
+            token: token
         )
     }
 
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(authorization, forKey: Keys.authorization)
-        aCoder.encode(login, forKey: Keys.login)
+        aCoder.encode(token, forKey: Keys.token)
     }
 
 }

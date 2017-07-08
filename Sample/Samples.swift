@@ -14,9 +14,7 @@ func runningInSample() -> Bool {
 
 func sampleUserSession() -> GithubUserSession? {
     guard runningInSample() else { return nil }
-    let authJSON = loadSample(path: "authorizations") as! [String: Any]
-    let auth = Authorization(json: authJSON)!
-    return GithubUserSession(authorization: auth, login: "rnystrom")
+    return GithubUserSession(token: "1234")
 }
 
 func loadSample(path: String) -> Any? {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login Splash View Controller-->
+        <scene sceneID="yQn-wv-qWF">
+            <objects>
+                <viewController id="bA6-il-lQA" customClass="LoginSplashViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0F3-e6-Obo"/>
+                        <viewControllerLayoutGuide type="bottom" id="tge-zT-2RL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hgy-EE-Whp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="joJ-g2-qXR">
+                                <rect key="frame" x="0.0" y="612" width="375" height="55"/>
+                                <color key="backgroundColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="UN6-og-Emz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Sign in with GitHub">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSignInButton:" destination="bA6-il-lQA" eventType="touchUpInside" id="Sk4-NF-4Oh"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="ai9-fN-d9O">
+                                <rect key="frame" x="101" y="192" width="173" height="173"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Freetime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfb-Yp-akO">
+                                <rect key="frame" x="60.5" y="381" width="254" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An open source app for open source projects." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6P-rW-9YX">
+                                <rect key="frame" x="32" y="446.5" width="311" height="41"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="aQ2-N2-0DI">
+                                <rect key="frame" x="16" y="629" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Cfb-Yp-akO" firstAttribute="top" secondItem="ai9-fN-d9O" secondAttribute="bottom" constant="16" id="4wW-6U-JTs"/>
+                            <constraint firstItem="joJ-g2-qXR" firstAttribute="leading" secondItem="hgy-EE-Whp" secondAttribute="leading" id="7Wi-n0-mdX"/>
+                            <constraint firstItem="aQ2-N2-0DI" firstAttribute="centerY" secondItem="joJ-g2-qXR" secondAttribute="centerY" id="9cF-kc-dvN"/>
+                            <constraint firstItem="ai9-fN-d9O" firstAttribute="centerY" secondItem="hgy-EE-Whp" secondAttribute="centerY" constant="-55" id="AqW-dx-Q2p"/>
+                            <constraint firstItem="ai9-fN-d9O" firstAttribute="centerX" secondItem="hgy-EE-Whp" secondAttribute="centerX" id="G4h-6x-06I"/>
+                            <constraint firstItem="aQ2-N2-0DI" firstAttribute="leading" secondItem="hgy-EE-Whp" secondAttribute="leading" constant="16" id="Lhd-GD-T8D"/>
+                            <constraint firstAttribute="trailing" secondItem="N6P-rW-9YX" secondAttribute="trailing" constant="32" id="Mz7-1t-b2h"/>
+                            <constraint firstItem="N6P-rW-9YX" firstAttribute="leading" secondItem="hgy-EE-Whp" secondAttribute="leading" constant="32" id="Qmk-hr-wAd"/>
+                            <constraint firstItem="Cfb-Yp-akO" firstAttribute="centerX" secondItem="hgy-EE-Whp" secondAttribute="centerX" id="So4-Be-Mn4"/>
+                            <constraint firstItem="N6P-rW-9YX" firstAttribute="top" secondItem="Cfb-Yp-akO" secondAttribute="bottom" constant="32" id="T1X-l4-dG1"/>
+                            <constraint firstAttribute="trailing" secondItem="joJ-g2-qXR" secondAttribute="trailing" id="c3F-OZ-fRS"/>
+                            <constraint firstItem="tge-zT-2RL" firstAttribute="top" secondItem="joJ-g2-qXR" secondAttribute="bottom" id="t7W-9f-BhD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="aQ2-N2-0DI" id="aEQ-Lx-iG0"/>
+                        <outlet property="signInButton" destination="joJ-g2-qXR" id="l3F-no-8AX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HfT-GH-NEk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-116" y="137.18140929535232"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splash" width="173" height="173"/>
+    </resources>
+</document>

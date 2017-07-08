@@ -14,10 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var showingLogin = false
-    let flexController = FlexController()
+    private let flexController = FlexController()
+    private let sessionManager = GithubSessionManager()
 
-    let sessionManager = GithubSessionManager()
-    lazy var rootNavigationManager: RootNavigationManager = {
+    private lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
             sessionManager: self.sessionManager,
             rootViewController: self.window?.rootViewController as! UISplitViewController
@@ -28,15 +28,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // initialize a webview at the start so webview startup later on isn't so slow
         let _ = UIWebView()
         flexController.configureWindow(window)
-        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
+        rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
         return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if showingLogin == false && sessionManager.focusedUserSession == nil {
+        if showingLogin == false && sessionManager.userSession == nil {
             showingLogin = true
             rootNavigationManager.showLogin(animated: false)
         }
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let sourceApp = options[.sourceApplication],
+            String(describing: sourceApp) == "com.apple.SafariViewService" {
+            sessionManager.receivedCodeRedirect(url: url)
+            return true
+        }
+        return false
     }
     
 }

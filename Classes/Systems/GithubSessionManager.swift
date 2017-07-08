@@ -9,21 +9,10 @@
 import Foundation
 import IGListKit
 
-enum GithubSessionResult {
-    case unchanged
-    case changed(GithubUserSession)
-    case logout
-}
-
 protocol GithubSessionListener: class {
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession)
-    func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult)
-}
-
-extension GithubUserSession {
-    var collectionKey: String {
-        return login
-    }
+    func didReceiveRedirect(manager: GithubSessionManager, code: String)
+    func didAuthenticate(manager: GithubSessionManager, userSession: GithubUserSession)
+    func didLogout(manager: GithubSessionManager)
 }
 
 final class GithubSessionManager: NSObject, ListDiffable {
@@ -34,23 +23,19 @@ final class GithubSessionManager: NSObject, ListDiffable {
     private var listeners = [ListenerWrapper]()
 
     private struct Keys {
-        static let sessions = "com.github.sessionmanager.sessions"
-        static let focused = "com.github.sessionmanager.focused"
+        static let version = "1"
+        static let session = "com.github.sessionmanager.session.\(Keys.version)"
     }
 
-    typealias SessionCollection = [String: GithubUserSession]
-    private var _focusedKey: String? = nil
-    private var _userSessions = SessionCollection()
+    private(set) var userSession: GithubUserSession?
     private let defaults = UserDefaults.standard
 
     override init() {
         if let sample = sampleUserSession() {
-            _userSessions = [sample.collectionKey: sample]
-            _focusedKey = sample.collectionKey
-        } else if let data = defaults.object(forKey: Keys.sessions) as? Data,
-            let sessions = NSKeyedUnarchiver.unarchiveObject(with: data) as? SessionCollection {
-            _userSessions = sessions
-            _focusedKey = defaults.object(forKey: Keys.focused) as? String
+            userSession = sample
+        } else if let data = defaults.object(forKey: Keys.session) as? Data,
+            let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? GithubUserSession {
+            userSession = session
         }
         super.init()
     }
@@ -63,64 +48,36 @@ final class GithubSessionManager: NSObject, ListDiffable {
         listeners.append(wrapper)
     }
 
-    public var focusedLogin: String? {
-        return _focusedKey
-    }
-
-    public var focusedUserSession: GithubUserSession? {
-        guard let focusedKey = _focusedKey else { return nil }
-        return _userSessions[focusedKey]
-    }
-
-    public var allUserSessions: [GithubUserSession] {
-        return _userSessions.map { $0.1 }
-    }
-
-    public func focus(_ userSession: GithubUserSession) {
-        let key = userSession.collectionKey
-        _focusedKey = key
-        _userSessions[key] = userSession
+    public func authenticate(_ token: String) {
+        let userSession = GithubUserSession(token: token)
+        self.userSession = userSession
         save()
         for wrapper in listeners {
-            wrapper.listener?.didFocus(manager: self, userSession: userSession)
+            wrapper.listener?.didAuthenticate(manager: self, userSession: userSession)
         }
     }
 
-    func remove(_ userSessions: [GithubUserSession]) {
-        let keys = userSessions.map { $0.collectionKey }
-
-        var removed = [GithubUserSession]()
-        for key in keys {
-            if let session = _userSessions.removeValue(forKey: key) {
-                removed.append(session)
-            }
-            if _focusedKey == key {
-                _focusedKey = nil
-            }
-        }
-
+    public func logout() {
+        userSession = nil
         save()
-
-        let result: GithubSessionResult
-        if _userSessions.count == 0 {
-            result = .logout
-        } else if _focusedKey == nil,
-            let newFocus = allUserSessions.first?.collectionKey,
-        let newFocusedSession = _userSessions[newFocus] {
-            _focusedKey = newFocus
-            result = .changed(newFocusedSession)
-        } else {
-            result = .unchanged
-        }
-
         for wrapper in listeners {
-            wrapper.listener?.didRemove(manager: self, userSessions: removed, result: result)
+            wrapper.listener?.didLogout(manager: self)
         }
     }
 
     func save() {
-        defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.sessions)
-        defaults.set(_focusedKey, forKey: Keys.focused)
+        if let session = userSession {
+            defaults.set(NSKeyedArchiver.archivedData(withRootObject: session), forKey: Keys.session)
+        } else {
+            defaults.removeObject(forKey: Keys.session)
+        }
+    }
+
+    func receivedCodeRedirect(url: URL) {
+        guard let code = url.absoluteString.valueForQuery(key: "code") else { return }
+        for wrapper in listeners {
+            wrapper.listener?.didReceiveRedirect(manager: self, code: code)
+        }
     }
 
     // MARK: ListDiffable

@@ -31,11 +31,11 @@ final class RootNavigationManager: GithubSessionListener {
 
     public func showLogin(animated: Bool = false) {
         guard let root = rootViewController else { return }
-        
-        let nav = UINavigationController(rootViewController: newLoginViewController())
-        nav.modalPresentationStyle = .formSheet
 
-        let block: () -> () = { root.present(nav, animated: animated) }
+        let login = newLoginViewController()
+        login.modalPresentationStyle = .formSheet
+
+        let block: () -> () = { root.present(login, animated: animated) }
 
         if let presented = root.presentedViewController {
             presented.dismiss(animated: animated, completion: block)
@@ -69,22 +69,16 @@ final class RootNavigationManager: GithubSessionListener {
 
     // MARK: GithubSessionListener
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
+    func didAuthenticate(manager: GithubSessionManager, userSession: GithubUserSession) {
         resetRootViewController(userSession: userSession)
         rootViewController?.presentedViewController?.dismiss(animated: true)
     }
 
-    func didRemove(
-        manager: GithubSessionManager,
-        userSessions: [GithubUserSession],
-        result: GithubSessionResult
-        ) {
-        switch result {
-        case .changed(let userSession): resetRootViewController(userSession: userSession)
-        case .logout: showLogin(animated: true)
-        case .unchanged: break
-        }
+    func didLogout(manager: GithubSessionManager) {
+        showLogin(animated: true)
     }
+
+    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
 
     // MARK: Private API
 
@@ -94,9 +88,9 @@ final class RootNavigationManager: GithubSessionListener {
 
     private func newLoginViewController() -> UIViewController {
         let controller = UIStoryboard(
-            name: "GithubLogin",
+            name: "OauthLogin",
             bundle: Bundle(for: AppDelegate.self))
-            .instantiateInitialViewController() as! LoginViewController
+            .instantiateInitialViewController() as! LoginSplashViewController
         controller.client = newGithubClient(sessionManager: sessionManager)
         return controller
     }
@@ -106,5 +100,6 @@ final class RootNavigationManager: GithubSessionListener {
         settings.modalPresentationStyle = .formSheet
         rootViewController?.present(settings, animated: true)
     }
-    
+
 }
+

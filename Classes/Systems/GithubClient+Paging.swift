@@ -25,9 +25,9 @@ func PagingData(link: String?) -> GithubClient.Page? {
         guard let semicolonRange = l.range(of: ";") else { continue }
         let urlString = l.substring(to: semicolonRange.lowerBound)
             .trimmingCharacters(in: whitespaceAndBrackets)
-        guard let pageItem = URLComponents(string: urlString)?.queryItems?.filter({$0.name == "page"}).first,
-        let page = (pageItem.value as NSString?)?.integerValue
+        guard let pageItem = urlString.valueForQuery(key: "name")
             else { continue }
+        let page = (pageItem as NSString).integerValue
 
         guard let match = linkRegex.firstMatch(in: l, options: [], range: l.nsrange) else { continue }
         let substring = l.substring(with: match.rangeAt(1))

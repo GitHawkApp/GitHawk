@@ -10,17 +10,17 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class SettingsViewController: UIViewController, ListAdapterDataSource, GithubSessionListener {
+final class SettingsViewController: UIViewController, ListAdapterDataSource {
 
     // injected
-    fileprivate let sessionManager: GithubSessionManager
+    private let sessionManager: GithubSessionManager
     weak var rootNavigationManager: RootNavigationManager? = nil
 
-    fileprivate lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
+    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
 
-    private let addKey = "add" as ListDiffable
     private let signoutKey = "signout" as ListDiffable
     private let reportKey = "report" as ListDiffable
+
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
@@ -41,7 +41,6 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
         self.sessionManager = sessionManager
         self.rootNavigationManager = rootNavigationManager
         super.init(nibName: nil, bundle: nil)
-        sessionManager.addListener(listener: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,8 +81,6 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return [
-            addKey,
-            sessionManager,
             reportKey,
             signoutKey
         ]
@@ -91,28 +88,14 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource, Git
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
-        if object === addKey, let mgr = rootNavigationManager {
-            return SettingsAddAccountSectionController(rootNavigationManager: mgr)
-        } else if object === signoutKey {
+        if object === signoutKey {
             return SettingsSignoutSectionController(sessionManager: sessionManager)
         } else if object === reportKey {
             return SettingsReportSectionController()
-        } else if object is GithubSessionManager {
-            return SettingsUsersSectionController()
         }
         fatalError("Unhandled object: \(object)")
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
-
-    // MARK: GithubSessionListener
-
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {
-        adapter.performUpdates(animated: false)
-    }
-
-    func didRemove(manager: GithubSessionManager, userSessions: [GithubUserSession], result: GithubSessionResult) {
-        adapter.performUpdates(animated: false)
-    }
 
 }
