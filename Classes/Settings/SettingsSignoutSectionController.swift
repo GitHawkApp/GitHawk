@@ -41,7 +41,7 @@ final class SettingsSignoutSectionController: ListSectionController {
         }
 
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("All of your accounts will be logged out. Do you want to continue?", comment: "")
+        let message = NSLocalizedString("You will need to log in to keep using Freetime. Do you want to continue?", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)
