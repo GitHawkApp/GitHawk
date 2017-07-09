@@ -48,7 +48,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
             attributes: referenceAttributes
         )
         let hashAttributes = [
-            NSFontAttributeName: Styles.Fonts.code,
+            NSFontAttributeName: Styles.Fonts.code.addingTraits(traits: .traitBold),
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
         ]
         title.append(NSAttributedString(string: model.hash.hashDisplay, attributes: hashAttributes))
