@@ -76,6 +76,8 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     func didLogout(manager: GithubSessionManager) {
+        masterNavigationController?.viewControllers = [SplitPlaceholderViewController()]
+        detailNavigationController?.viewControllers = [SplitPlaceholderViewController()]
         showLogin(animated: true)
     }
 
@@ -85,6 +87,12 @@ final class RootNavigationManager: GithubSessionListener {
 
     private var masterNavigationController: UINavigationController? {
         return rootViewController?.viewControllers.first as? UINavigationController
+    }
+
+    private var detailNavigationController: UINavigationController? {
+        guard let controllers = rootViewController?.viewControllers, controllers.count > 1
+            else { return nil }
+        return controllers[1] as? UINavigationController
     }
 
     private func newLoginViewController() -> UIViewController {
