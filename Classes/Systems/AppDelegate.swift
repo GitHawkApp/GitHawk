@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // initialize a webview at the start so webview startup later on isn't so slow
         let _ = UIWebView()
         flexController.configureWindow(window)
+        window?.backgroundColor = Styles.Colors.background
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
         return true
     }

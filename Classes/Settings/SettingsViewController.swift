@@ -30,7 +30,7 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
             bottom: Styles.Sizes.tableSectionSpacing,
             right: 0
         )
-        view.backgroundColor = UIColor.groupTableViewBackground
+        view.backgroundColor = Styles.Colors.background
         return view
     }()
 
