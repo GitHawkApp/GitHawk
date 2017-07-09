@@ -26,6 +26,7 @@ final class SettingsReportSectionController: ListSectionController {
         guard let cell = collectionContext?.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
             else { fatalError("Collection context must be set or cell incorrect type") }
         cell.label.text = NSLocalizedString("Report a Bug", comment: "")
+        cell.configure(disclosureHidden: false)
         return cell
     }
 
