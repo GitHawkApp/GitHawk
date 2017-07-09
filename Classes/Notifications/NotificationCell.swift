@@ -8,9 +8,8 @@
 
 import UIKit
 import SnapKit
-import SwipeCellKit
 
-final class NotificationCell: SwipeCollectionViewCell {
+final class NotificationCell: SwipeSelectableCell {
 
     static let labelInset = UIEdgeInsets(
         top: Styles.Fonts.title.lineHeight + 2*Styles.Sizes.rowSpacing,
@@ -23,7 +22,6 @@ final class NotificationCell: SwipeCollectionViewCell {
     private let dateLabel = ShowMoreDetailsLabel()
     private let titleLabel = UILabel()
     private let textLabel = UILabel()
-    private let selectionOverlay = CALayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,31 +65,10 @@ final class NotificationCell: SwipeCollectionViewCell {
         }
 
         addBorder(.bottom, left: NotificationCell.labelInset.left)
-
-        selectionOverlay.backgroundColor = Styles.Colors.Gray.alphaLighter.cgColor
-        selectionOverlay.opacity = 0
-        contentView.layer.addSublayer(selectionOverlay)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        selectionOverlay.frame = contentView.bounds
-    }
-
-    override var isSelected: Bool {
-        didSet {
-            showOverlay(show: isSelected)
-        }
-    }
-
-    override var isHighlighted: Bool {
-        didSet {
-            showOverlay(show: isHighlighted)
-        }
     }
 
     // MARK: Public API
@@ -121,12 +98,6 @@ final class NotificationCell: SwipeCollectionViewCell {
         textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
-    }
-
-    // MARK: Private API
-
-    private func showOverlay(show: Bool) {
-        selectionOverlay.opacity = show ? 1 : 0
     }
 
 }

@@ -64,6 +64,11 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
             action: #selector(SettingsViewController.onDone)
         )
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(collectionView)
+    }
     
     // MARK: Accessibility
     
