@@ -11,7 +11,10 @@ import IGListKit
 
 final class IssueReferencedSectionController: ListGenericSectionController<IssueReferencedModel> {
 
-    override init() {
+    private let client: GithubClient
+
+    init(client: GithubClient) {
+        self.client = client
         super.init()
         self.inset = Styles.Sizes.listInsetTight
     }
@@ -30,7 +33,14 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     }
 
     override func didSelectItem(at index: Int) {
-
+        guard let object = self.object else { return }
+        let controller = IssuesViewController(
+            client: client,
+            owner: object.owner,
+            repo: object.repo,
+            number: object.number
+        )
+        viewController?.showDetailViewController(controller, sender: nil)
     }
 
 }

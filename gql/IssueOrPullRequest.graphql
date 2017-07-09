@@ -78,15 +78,16 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             ... on ReferencedEvent {
               ...nodeFields
               createdAt
+              commitRepository {
+                ...referencedRepositoryFields
+              }
               subject {
                 ... on Issue {
-                  ...referencedRepositoryFields
                   title
                   number
                   closed
                 }
                 ... on PullRequest {
-                  ...referencedRepositoryFields
                   title
                   number
                   closed
@@ -212,15 +213,16 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             ... on ReferencedEvent {
               ...nodeFields
               createdAt
+              commitRepository {
+                ...referencedRepositoryFields
+              }
               subject {
                 ... on Issue {
-                  ...referencedRepositoryFields
                   title
                   number
                   closed
                 }
                 ... on PullRequest {
-                  ...referencedRepositoryFields
                   title
                   number
                   closed
