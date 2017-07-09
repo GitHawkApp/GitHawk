@@ -22,10 +22,32 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </toolbar>
+                    <connections>
+                        <segue destination="icu-Mt-euN" kind="relationship" relationship="rootViewController" id="DU7-Bf-pgd"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V24-0g-MmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-670" y="537"/>
+        </scene>
+        <!--Split Placeholder View Controller-->
+        <scene sceneID="mEq-vE-g6O">
+            <objects>
+                <viewController id="icu-Mt-euN" customClass="SplitPlaceholderViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mSP-iM-qpV"/>
+                        <viewControllerLayoutGuide type="bottom" id="qjJ-aI-c1s"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dr8-6k-g8G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8o5-rU-Pt0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eQo-IY-kJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="166" y="537"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Rg3-YC-Cr2">
@@ -43,10 +65,10 @@
             </objects>
             <point key="canvasLocation" x="-671" y="1321"/>
         </scene>
-        <!--View Controller-->
+        <!--Split Placeholder View Controller-->
         <scene sceneID="6Um-PN-O7R">
             <objects>
-                <viewController id="koZ-WT-T3h" sceneMemberID="viewController">
+                <viewController id="koZ-WT-T3h" customClass="SplitPlaceholderViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qh9-St-NDe"/>
                         <viewControllerLayoutGuide type="bottom" id="T04-C0-L7D"/>
