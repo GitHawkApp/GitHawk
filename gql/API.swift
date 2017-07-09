@@ -191,6 +191,42 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "              }" +
     "              createdAt" +
     "            }" +
+    "            ... on ReferencedEvent {" +
+    "              __typename" +
+    "              createdAt" +
+    "              subject {" +
+    "                __typename" +
+    "                ... on Issue {" +
+    "                  __typename" +
+    "                  title" +
+    "                  number" +
+    "                  closed" +
+    "                  repository {" +
+    "                    __typename" +
+    "                    name" +
+    "                    owner {" +
+    "                      __typename" +
+    "                      login" +
+    "                    }" +
+    "                  }" +
+    "                }" +
+    "                ... on PullRequest {" +
+    "                  __typename" +
+    "                  title" +
+    "                  number" +
+    "                  closed" +
+    "                  merged" +
+    "                  repository {" +
+    "                    __typename" +
+    "                    name" +
+    "                    owner {" +
+    "                      __typename" +
+    "                      login" +
+    "                    }" +
+    "                  }" +
+    "                }" +
+    "              }" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -336,6 +372,42 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                login" +
     "              }" +
     "            }" +
+    "            ... on ReferencedEvent {" +
+    "              __typename" +
+    "              createdAt" +
+    "              subject {" +
+    "                __typename" +
+    "                ... on Issue {" +
+    "                  __typename" +
+    "                  title" +
+    "                  number" +
+    "                  closed" +
+    "                  repository {" +
+    "                    __typename" +
+    "                    name" +
+    "                    owner {" +
+    "                      __typename" +
+    "                      login" +
+    "                    }" +
+    "                  }" +
+    "                }" +
+    "                ... on PullRequest {" +
+    "                  __typename" +
+    "                  title" +
+    "                  number" +
+    "                  closed" +
+    "                  merged" +
+    "                  repository {" +
+    "                    __typename" +
+    "                    name" +
+    "                    owner {" +
+    "                      __typename" +
+    "                      login" +
+    "                    }" +
+    "                  }" +
+    "                }" +
+    "              }" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -464,6 +536,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asRenamedTitleEvent: AsRenamedTitleEvent?
               public let asLockedEvent: AsLockedEvent?
               public let asUnlockedEvent: AsUnlockedEvent?
+              public let asReferencedEvent: AsReferencedEvent?
               public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
@@ -477,6 +550,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asRenamedTitleEvent = try AsRenamedTitleEvent(reader: reader, ifTypeMatches: __typename)
                 asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
                 asUnlockedEvent = try AsUnlockedEvent(reader: reader, ifTypeMatches: __typename)
+                asReferencedEvent = try AsReferencedEvent(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
@@ -799,6 +873,133 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
+              public struct AsReferencedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReferencedEvent"]
+
+                public let __typename: String
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Object referenced by event.
+                public let subject: Subject
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  subject = try reader.value(for: Field(responseName: "subject"))
+                }
+
+                public struct Subject: GraphQLMappable {
+                  public let __typename: String
+
+                  public let asIssue: AsIssue?
+                  public let asPullRequest: AsPullRequest?
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+
+                    asIssue = try AsIssue(reader: reader, ifTypeMatches: __typename)
+                    asPullRequest = try AsPullRequest(reader: reader, ifTypeMatches: __typename)
+                  }
+
+                  public struct AsIssue: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["Issue"]
+
+                    public let __typename: String
+                    /// Identifies the issue title.
+                    public let title: String
+                    /// Identifies the issue number.
+                    public let number: Int
+                    /// true if the object is `closed` (definition of closed may depend on type)
+                    public let closed: Bool
+                    /// Identifies the repository associated with the issue.
+                    public let repository: Repository
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                      number = try reader.value(for: Field(responseName: "number"))
+                      closed = try reader.value(for: Field(responseName: "closed"))
+                      repository = try reader.value(for: Field(responseName: "repository"))
+                    }
+
+                    public struct Repository: GraphQLMappable {
+                      public let __typename: String
+                      /// The name of the repository.
+                      public let name: String
+                      /// The User owner of the repository.
+                      public let owner: Owner
+
+                      public init(reader: GraphQLResultReader) throws {
+                        __typename = try reader.value(for: Field(responseName: "__typename"))
+                        name = try reader.value(for: Field(responseName: "name"))
+                        owner = try reader.value(for: Field(responseName: "owner"))
+                      }
+
+                      public struct Owner: GraphQLMappable {
+                        public let __typename: String
+                        /// The username used to login.
+                        public let login: String
+
+                        public init(reader: GraphQLResultReader) throws {
+                          __typename = try reader.value(for: Field(responseName: "__typename"))
+                          login = try reader.value(for: Field(responseName: "login"))
+                        }
+                      }
+                    }
+                  }
+
+                  public struct AsPullRequest: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["PullRequest"]
+
+                    public let __typename: String
+                    /// Identifies the pull request title.
+                    public let title: String
+                    /// Identifies the pull request number.
+                    public let number: Int
+                    /// true if the object is `closed` (definition of closed may depend on type)
+                    public let closed: Bool
+                    /// The repository associated with this pull request.
+                    public let repository: Repository
+                    /// Whether or not the pull request was merged.
+                    public let merged: Bool
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                      number = try reader.value(for: Field(responseName: "number"))
+                      closed = try reader.value(for: Field(responseName: "closed"))
+                      repository = try reader.value(for: Field(responseName: "repository"))
+                      merged = try reader.value(for: Field(responseName: "merged"))
+                    }
+
+                    public struct Repository: GraphQLMappable {
+                      public let __typename: String
+                      /// The name of the repository.
+                      public let name: String
+                      /// The User owner of the repository.
+                      public let owner: Owner
+
+                      public init(reader: GraphQLResultReader) throws {
+                        __typename = try reader.value(for: Field(responseName: "__typename"))
+                        name = try reader.value(for: Field(responseName: "name"))
+                        owner = try reader.value(for: Field(responseName: "owner"))
+                      }
+
+                      public struct Owner: GraphQLMappable {
+                        public let __typename: String
+                        /// The username used to login.
+                        public let login: String
+
+                        public init(reader: GraphQLResultReader) throws {
+                          __typename = try reader.value(for: Field(responseName: "__typename"))
+                          login = try reader.value(for: Field(responseName: "login"))
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
               public struct AsIssueComment: GraphQLConditionalFragment {
                 public static let possibleTypes = ["IssueComment"]
 
@@ -890,6 +1091,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asLockedEvent: AsLockedEvent?
               public let asUnlockedEvent: AsUnlockedEvent?
               public let asMergedEvent: AsMergedEvent?
+              public let asReferencedEvent: AsReferencedEvent?
               public let asPullRequestReviewThread: AsPullRequestReviewThread?
               public let asIssueComment: AsIssueComment?
 
@@ -906,6 +1108,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
                 asUnlockedEvent = try AsUnlockedEvent(reader: reader, ifTypeMatches: __typename)
                 asMergedEvent = try AsMergedEvent(reader: reader, ifTypeMatches: __typename)
+                asReferencedEvent = try AsReferencedEvent(reader: reader, ifTypeMatches: __typename)
                 asPullRequestReviewThread = try AsPullRequestReviewThread(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
@@ -1316,6 +1519,133 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     oid = try reader.value(for: Field(responseName: "oid"))
+                  }
+                }
+              }
+
+              public struct AsReferencedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReferencedEvent"]
+
+                public let __typename: String
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Object referenced by event.
+                public let subject: Subject
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  subject = try reader.value(for: Field(responseName: "subject"))
+                }
+
+                public struct Subject: GraphQLMappable {
+                  public let __typename: String
+
+                  public let asIssue: AsIssue?
+                  public let asPullRequest: AsPullRequest?
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+
+                    asIssue = try AsIssue(reader: reader, ifTypeMatches: __typename)
+                    asPullRequest = try AsPullRequest(reader: reader, ifTypeMatches: __typename)
+                  }
+
+                  public struct AsIssue: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["Issue"]
+
+                    public let __typename: String
+                    /// Identifies the issue title.
+                    public let title: String
+                    /// Identifies the issue number.
+                    public let number: Int
+                    /// true if the object is `closed` (definition of closed may depend on type)
+                    public let closed: Bool
+                    /// Identifies the repository associated with the issue.
+                    public let repository: Repository
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                      number = try reader.value(for: Field(responseName: "number"))
+                      closed = try reader.value(for: Field(responseName: "closed"))
+                      repository = try reader.value(for: Field(responseName: "repository"))
+                    }
+
+                    public struct Repository: GraphQLMappable {
+                      public let __typename: String
+                      /// The name of the repository.
+                      public let name: String
+                      /// The User owner of the repository.
+                      public let owner: Owner
+
+                      public init(reader: GraphQLResultReader) throws {
+                        __typename = try reader.value(for: Field(responseName: "__typename"))
+                        name = try reader.value(for: Field(responseName: "name"))
+                        owner = try reader.value(for: Field(responseName: "owner"))
+                      }
+
+                      public struct Owner: GraphQLMappable {
+                        public let __typename: String
+                        /// The username used to login.
+                        public let login: String
+
+                        public init(reader: GraphQLResultReader) throws {
+                          __typename = try reader.value(for: Field(responseName: "__typename"))
+                          login = try reader.value(for: Field(responseName: "login"))
+                        }
+                      }
+                    }
+                  }
+
+                  public struct AsPullRequest: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["PullRequest"]
+
+                    public let __typename: String
+                    /// Identifies the pull request title.
+                    public let title: String
+                    /// Identifies the pull request number.
+                    public let number: Int
+                    /// true if the object is `closed` (definition of closed may depend on type)
+                    public let closed: Bool
+                    /// The repository associated with this pull request.
+                    public let repository: Repository
+                    /// Whether or not the pull request was merged.
+                    public let merged: Bool
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                      number = try reader.value(for: Field(responseName: "number"))
+                      closed = try reader.value(for: Field(responseName: "closed"))
+                      repository = try reader.value(for: Field(responseName: "repository"))
+                      merged = try reader.value(for: Field(responseName: "merged"))
+                    }
+
+                    public struct Repository: GraphQLMappable {
+                      public let __typename: String
+                      /// The name of the repository.
+                      public let name: String
+                      /// The User owner of the repository.
+                      public let owner: Owner
+
+                      public init(reader: GraphQLResultReader) throws {
+                        __typename = try reader.value(for: Field(responseName: "__typename"))
+                        name = try reader.value(for: Field(responseName: "name"))
+                        owner = try reader.value(for: Field(responseName: "owner"))
+                      }
+
+                      public struct Owner: GraphQLMappable {
+                        public let __typename: String
+                        /// The username used to login.
+                        public let login: String
+
+                        public init(reader: GraphQLResultReader) throws {
+                          __typename = try reader.value(for: Field(responseName: "__typename"))
+                          login = try reader.value(for: Field(responseName: "login"))
+                        }
+                      }
+                    }
                   }
                 }
               }

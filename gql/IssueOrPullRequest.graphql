@@ -75,6 +75,34 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
               createdAt
             }
+            ... on ReferencedEvent {
+              createdAt
+              subject {
+                ... on Issue {
+                  title
+                  number
+                  closed
+                  repository {
+                    name
+                    owner {
+                      login
+                    }
+                  }
+                }
+                ... on PullRequest {
+                  title
+                  number
+                  closed
+                  merged
+                  repository {
+                    name
+                    owner {
+                      login
+                    }
+                  }
+                }
+              }
+            }
           }
         }
         ...reactionFields
@@ -188,6 +216,34 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               submittedAt
               author {
                 login
+              }
+            }
+            ... on ReferencedEvent {
+              createdAt
+              subject {
+                ... on Issue {
+                  title
+                  number
+                  closed
+                  repository {
+                    name
+                    owner {
+                      login
+                    }
+                  }
+                }
+                ... on PullRequest {
+                  title
+                  number
+                  closed
+                  merged
+                  repository {
+                    name
+                    owner {
+                      login
+                    }
+                  }
+                }
               }
             }
           }
