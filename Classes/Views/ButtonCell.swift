@@ -13,6 +13,7 @@ final class ButtonCell: UICollectionViewCell {
 
     let label = UILabel()
 
+    private let disclosureImageView = UIImageView()
     private var topSeparator: UIView? = nil
     private var bottomSeparator: UIView? = nil
 
@@ -33,6 +34,14 @@ final class ButtonCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
         }
+
+        disclosureImageView.image = UIImage(named: "chevron-right")?.withRenderingMode(.alwaysTemplate)
+        disclosureImageView.tintColor = Styles.Colors.Gray.light.color
+        contentView.addSubview(disclosureImageView)
+        disclosureImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.right.equalTo(-Styles.Sizes.gutter)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +50,12 @@ final class ButtonCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(topSeparatorHidden: Bool = false, bottomSeparatorHidden: Bool = false) {
+    func configure(
+        disclosureHidden: Bool = true,
+        topSeparatorHidden: Bool = false,
+        bottomSeparatorHidden: Bool = false
+        ) {
+        disclosureImageView.isHidden = disclosureHidden
         topSeparator?.isHidden = topSeparatorHidden
         bottomSeparator?.isHidden = bottomSeparatorHidden
     }
