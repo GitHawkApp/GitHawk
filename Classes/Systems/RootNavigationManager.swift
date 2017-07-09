@@ -24,6 +24,7 @@ final class RootNavigationManager: GithubSessionListener {
         self.sessionManager = sessionManager
         self.rootViewController = rootViewController
         rootViewController.delegate = splitDelegate
+        rootViewController.preferredDisplayMode = .allVisible
         sessionManager.addListener(listener: self)
     }
 
