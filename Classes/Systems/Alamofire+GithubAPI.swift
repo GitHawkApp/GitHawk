@@ -23,9 +23,14 @@ func newGithubClient(
     }
 
     let config = URLSessionConfiguration.default
-    // disable URL caching for the v3 API
-    config.urlCache = nil
     config.httpAdditionalHeaders = additionalHeaders
+
+    if runningInSample() {
+        config.urlCache = SampleURLCache(memoryCapacity: 1024*5, diskCapacity: 1024*10, diskPath: "sample_cache")
+    } else {
+        // disable URL caching for the v3 API
+        config.urlCache = nil
+    }
 
     let networker = Alamofire.SessionManager(configuration: config)
 

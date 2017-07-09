@@ -23,3 +23,20 @@ func loadSample(path: String) -> Any? {
     let data = try! Data(contentsOf: url)
     return try! JSONSerialization.jsonObject(with: data, options: [])
 }
+
+final class SampleURLCache: URLCache {
+
+    override func cachedResponse(for request: URLRequest) -> CachedURLResponse? {
+        let resource = request.url!.path.replacingOccurrences(of: "/", with: "_")
+        if let fileURL = Bundle.main.url(forResource: resource, withExtension: "json") {
+            print("Loading sample data: \(resource).json")
+            let data = try! Data(contentsOf: fileURL)
+            let response = URLResponse(url: request.url!, mimeType: "application/json", expectedContentLength: data.count, textEncodingName: "utf-8")
+            return CachedURLResponse(response: response, data: data)
+        } else {
+            print("Missed cache: \(resource).json")
+            return super.cachedResponse(for: request)
+        }
+    }
+
+}
