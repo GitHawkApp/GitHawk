@@ -47,11 +47,9 @@ fragment nodeFields on Node {
   id
 }
 
-fragment referencedRepositoryFields on RepositoryNode {
-  repository {
-    name
-    owner {
-      login
-    }
+fragment referencedRepositoryFields on RepositoryInfo {
+  name
+  owner {
+    login
   }
 }

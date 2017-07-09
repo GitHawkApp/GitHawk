@@ -122,8 +122,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 results.append(model)
             } else if let referenced = node.asReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
+                let repo = referenced.commitRepository.fragments.referencedRepositoryFields
                 if let issueReference = referenced.subject.asIssue {
-                    let repo = issueReference.fragments.referencedRepositoryFields.repository
                     let model = IssueReferencedModel(
                         id: referenced.fragments.nodeFields.id,
                         owner: repo.owner.login,
@@ -136,7 +136,6 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     )
                     results.append(model)
                 } else if let prReference = referenced.subject.asPullRequest {
-                    let repo = prReference.fragments.referencedRepositoryFields.repository
                     let model = IssueReferencedModel(
                         id: referenced.fragments.nodeFields.id,
                         owner: repo.owner.login,
