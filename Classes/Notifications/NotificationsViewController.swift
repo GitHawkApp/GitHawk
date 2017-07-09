@@ -67,13 +67,7 @@ NotificationNextPageSectionControllerDelegate {
     }
     
     private func updateMarkAllEnabled() {
-        var allRead = true
-        for notification in filteredNotifications {
-            if !notification.read {
-                allRead = false
-                break
-            }
-        }
+        let allRead = !filteredNotifications.contains(where: { $0.read == false })
         navigationItem.rightBarButtonItem?.isEnabled = !allRead
     }
 
