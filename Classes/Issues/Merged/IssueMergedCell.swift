@@ -65,9 +65,6 @@ final class IssueMergedCell: UICollectionViewCell {
     func configure(viewModel: IssueMergedModel) {
         actorLabel.text = viewModel.actor
         dateLabel.setText(date: viewModel.date)
-
-        // trim to first <7 characters
-        let hash = viewModel.commitHash
-        hashLabel.text = hash.substring(with: NSRange(location: 0, length: min(hash.nsrange.length, 7)))
+        hashLabel.text = viewModel.commitHash.hashDisplay
     }
 }
