@@ -11,6 +11,11 @@ import IGListKit
 
 final class IssueReferencedSectionController: ListGenericSectionController<IssueReferencedModel> {
 
+    override init() {
+        super.init()
+        self.inset = Styles.Sizes.listInsetTight
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
         return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
