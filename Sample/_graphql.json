@@ -1,0 +1,665 @@
+{
+  "data": {
+    "repository": {
+      "__typename": "Repository",
+      "issueOrPullRequest": {
+        "__typename": "PullRequest",
+        "author": {
+          "__typename": "User",
+          "avatarUrl": "https://avatars1.githubusercontent.com/u/2466893?v=3",
+          "login": "Adlai-Holler"
+        },
+        "body": "Instead of pushing an `invalidate()` call onto display node layouts, and having a dirty flag on them, use an atomic counter that represents a node's layout data state.\r\n\r\nThis makes it easier to control checkpoints and avoid accidentally using stale layout data.",
+        "closed": false,
+        "createdAt": "2017-07-09T04:37:26Z",
+        "editor": null,
+        "id": "MDExOlB1bGxSZXF1ZXN0MTI5NTUxNDk5",
+        "labels": {
+          "__typename": "LabelConnection",
+          "nodes": [
+            {
+              "__typename": "Label",
+              "color": "ededed",
+              "name": "Layout"
+            }
+          ]
+        },
+        "locked": false,
+        "merged": false,
+        "number": 428,
+        "reactionGroups": [
+          {
+            "__typename": "ReactionGroup",
+            "content": "THUMBS_UP",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          },
+          {
+            "__typename": "ReactionGroup",
+            "content": "THUMBS_DOWN",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          },
+          {
+            "__typename": "ReactionGroup",
+            "content": "LAUGH",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          },
+          {
+            "__typename": "ReactionGroup",
+            "content": "HOORAY",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          },
+          {
+            "__typename": "ReactionGroup",
+            "content": "CONFUSED",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          },
+          {
+            "__typename": "ReactionGroup",
+            "content": "HEART",
+            "users": {
+              "__typename": "ReactingUserConnection",
+              "totalCount": 0
+            },
+            "viewerHasReacted": false
+          }
+        ],
+        "timeline": {
+          "__typename": "PullRequestTimelineConnection",
+          "nodes": [
+            {
+              "__typename": "Commit",
+              "author": {
+                "__typename": "GitActor",
+                "date": "2017-07-08T21:35:16-07:00",
+                "name": "Adlai Holler"
+              },
+              "messageHeadline": "Use a sentinel NSUInteger for node layout data"
+            },
+            {
+              "__typename": "LabeledEvent",
+              "actor": {
+                "__typename": "User",
+                "login": "Adlai-Holler"
+              },
+              "createdAt": "2017-07-09T04:37:26Z",
+              "id": "MDEyOkxhYmVsZWRFdmVudDExNTU2ODMwMzU=",
+              "label": {
+                "__typename": "Label",
+                "color": "ededed",
+                "name": "Layout"
+              }
+            },
+            {
+              "__typename": "ReviewRequestedEvent"
+            },
+            {
+              "__typename": "ReviewRequestedEvent"
+            },
+            {
+              "__typename": "ReviewRequestedEvent"
+            },
+            {
+              "__typename": "PullRequestReviewThread",
+              "comments": {
+                "__typename": "PullRequestReviewCommentConnection",
+                "nodes": [
+                  {
+                    "__typename": "PullRequestReviewComment",
+                    "author": {
+                      "__typename": "User",
+                      "avatarUrl": "https://avatars1.githubusercontent.com/u/2466893?v=3",
+                      "login": "Adlai-Holler"
+                    },
+                    "body": "This was just a leftover – the ASSentinel class was removed in favor of atomic integers.",
+                    "createdAt": "2017-07-09T04:38:10Z",
+                    "diffHunk": "@@ -34,7 +34,6 @@ NS_ASSUME_NONNULL_BEGIN\n @protocol _ASDisplayLayerDelegate;\n @class _ASDisplayLayer;\n @class _ASPendingState;\n-@class ASSentinel;",
+                    "editor": null,
+                    "id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEyNjI5NTY4Nw==",
+                    "path": "Source/Private/ASDisplayNodeInternal.h",
+                    "reactionGroups": [
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_UP",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_DOWN",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "LAUGH",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HOORAY",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "CONFUSED",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HEART",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      }
+                    ],
+                    "viewerCanReact": true,
+                    "viewerDidAuthor": false
+                  }
+                ]
+              }
+            },
+            {
+              "__typename": "PullRequestReview",
+              "author": {
+                "__typename": "User",
+                "avatarUrl": "https://avatars1.githubusercontent.com/u/2466893?v=3",
+                "login": "Adlai-Holler"
+              },
+              "body": "",
+              "createdAt": "2017-07-09T04:38:10Z",
+              "editor": null,
+              "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg3NjkwNzY=",
+              "state": "COMMENTED",
+              "submittedAt": "2017-07-09T04:38:10Z",
+              "viewerDidAuthor": false
+            },
+            {
+              "__typename": "Commit",
+              "author": {
+                "__typename": "GitActor",
+                "date": "2017-07-08T21:38:54-07:00",
+                "name": "Adlai Holler"
+              },
+              "messageHeadline": "Add a comment"
+            },
+            {
+              "__typename": "RenamedTitleEvent",
+              "actor": {
+                "__typename": "User",
+                "login": "Adlai-Holler"
+              },
+              "createdAt": "2017-07-09T04:39:01Z",
+              "currentTitle": "Use a sentinel NSUInteger for node layout data #trivial",
+              "id": "MDE3OlJlbmFtZWRUaXRsZUV2ZW50MTE1NTY4MzIzMg=="
+            },
+            {
+              "__typename": "IssueComment",
+              "author": {
+                "__typename": "User",
+                "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                "login": "appleguy"
+              },
+              "body": "@Adlai-Holler I feel like we're starting to overuse #trivial...@garrettmoon, what do you think about making the changelog a persistent warning rather than an error? Since #trivial disables it anyway, it might actually get more changelogs written if it couldn't be disabled as a warning.",
+              "createdAt": "2017-07-09T05:32:53Z",
+              "editor": null,
+              "id": "MDEyOklzc3VlQ29tbWVudDMxMzkwMDExMQ==",
+              "reactionGroups": [
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "THUMBS_UP",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                },
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "THUMBS_DOWN",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                },
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "LAUGH",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                },
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "HOORAY",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                },
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "CONFUSED",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                },
+                {
+                  "__typename": "ReactionGroup",
+                  "content": "HEART",
+                  "users": {
+                    "__typename": "ReactingUserConnection",
+                    "totalCount": 0
+                  },
+                  "viewerHasReacted": false
+                }
+              ],
+              "viewerCanReact": true,
+              "viewerDidAuthor": false
+            },
+            {
+              "__typename": "PullRequestReviewThread",
+              "comments": {
+                "__typename": "PullRequestReviewCommentConnection",
+                "nodes": [
+                  {
+                    "__typename": "PullRequestReviewComment",
+                    "author": {
+                      "__typename": "User",
+                      "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                      "login": "appleguy"
+                    },
+                    "body": "I'm fairly sure that _calculated is *never* nullptr, and thus we leave it out of all conditionals. If so let's leave it out here because it adds length.\r\n\r\nHopefully we refactor this soon. I think it would be much better to use a raw ASLayout with some special instance variables that only get set for the root (this would be very efficient but also very clean, e.g. specified in ASLayout+Root.h as a private header).",
+                    "createdAt": "2017-07-09T05:36:57Z",
+                    "diffHunk": "@@ -82,21 +82,19 @@ - (ASLayout *)layoutThatFits:(ASSizeRange)constrainedSize parentSize:(CGSize)par\n   }\n \n   ASLayout *layout = nil;\n-  if (_calculatedDisplayNodeLayout->isValidForConstrainedSizeParentSize(constrainedSize, parentSize)) {\n+  NSUInteger version = _layoutVersion;\n+  if (_calculatedDisplayNodeLayout != nullptr && _calculatedDisplayNodeLayout->isValid(constrainedSize, parentSize, version)) {",
+                    "editor": null,
+                    "id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEyNjI5NjM0OA==",
+                    "path": "Source/ASDisplayNode+Layout.mm",
+                    "reactionGroups": [
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_UP",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_DOWN",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "LAUGH",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HOORAY",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "CONFUSED",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HEART",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      }
+                    ],
+                    "viewerCanReact": true,
+                    "viewerDidAuthor": false
+                  }
+                ]
+              }
+            },
+            {
+              "__typename": "PullRequestReviewThread",
+              "comments": {
+                "__typename": "PullRequestReviewCommentConnection",
+                "nodes": [
+                  {
+                    "__typename": "PullRequestReviewComment",
+                    "author": {
+                      "__typename": "User",
+                      "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                      "login": "appleguy"
+                    },
+                    "body": "Can you set this immediately after the lock is taken so it is more clear why it is separate from its definition?",
+                    "createdAt": "2017-07-09T05:41:30Z",
+                    "diffHunk": "@@ -579,6 +579,7 @@ - (void)transitionLayoutWithSizeRange:(ASSizeRange)constrainedSize\n \n       BOOL automaticallyManagesSubnodesDisabled = (self.automaticallyManagesSubnodes == NO);\n       self.automaticallyManagesSubnodes = YES; // Temporary flag for 1.9.x\n+      newLayoutVersion = _layoutVersion;",
+                    "editor": null,
+                    "id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEyNjI5NjQxNA==",
+                    "path": "Source/ASDisplayNode+Layout.mm",
+                    "reactionGroups": [
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_UP",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_DOWN",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "LAUGH",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HOORAY",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "CONFUSED",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HEART",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      }
+                    ],
+                    "viewerCanReact": true,
+                    "viewerDidAuthor": false
+                  }
+                ]
+              }
+            },
+            {
+              "__typename": "PullRequestReviewThread",
+              "comments": {
+                "__typename": "PullRequestReviewCommentConnection",
+                "nodes": [
+                  {
+                    "__typename": "PullRequestReviewComment",
+                    "author": {
+                      "__typename": "User",
+                      "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                      "login": "appleguy"
+                    },
+                    "body": "Why is this removed? Although it may be valid, I think we should revert this change if it's not necessary, as it adds at least a touch of risk that would be better to do in a diff focused on the _pending layout storage.\r\n\r\nFor example, I'm not sure if there is ever a case where the _pending is not copied to _calculated, such as if the _calculated matches the current bounds but _pending does not. In this case it would change the behavior of other calls that would use _pending later, compared to before this change.",
+                    "createdAt": "2017-07-09T05:44:26Z",
+                    "diffHunk": "@@ -924,7 +920,6 @@ - (void)__layout\n     // This method will confirm that the layout is up to date (and update if needed).\n     // Importantly, it will also APPLY the layout to all of our subnodes if (unless parent is transitioning).\n     [self _locked_measureNodeWithBoundsIfNecessary:bounds];\n-    _pendingDisplayNodeLayout = nullptr;",
+                    "editor": null,
+                    "id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEyNjI5NjQ0OQ==",
+                    "path": "Source/ASDisplayNode.mm",
+                    "reactionGroups": [
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_UP",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_DOWN",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "LAUGH",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HOORAY",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "CONFUSED",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HEART",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      }
+                    ],
+                    "viewerCanReact": true,
+                    "viewerDidAuthor": false
+                  }
+                ]
+              }
+            },
+            {
+              "__typename": "PullRequestReviewThread",
+              "comments": {
+                "__typename": "PullRequestReviewCommentConnection",
+                "nodes": [
+                  {
+                    "__typename": "PullRequestReviewComment",
+                    "author": {
+                      "__typename": "User",
+                      "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                      "login": "appleguy"
+                    },
+                    "body": "In at least one of the comments we should describe what this means.. E.g. the layout is considered invalid when this version doesn't match the node's own state, which is guaranteed to occur after each call to invalidateCalculatedLayout (which is called by setNeedslayout).\r\n\r\nI saw you touched on this with the instance variable definition, but this is just my observation of where exposition would be useful.",
+                    "createdAt": "2017-07-09T05:47:42Z",
+                    "diffHunk": "@@ -30,35 +30,26 @@ struct ASDisplayNodeLayout {\n   ASSizeRange constrainedSize;\n   CGSize parentSize;\n   BOOL requestedLayoutFromAbove;\n-  BOOL _dirty;\n+  NSUInteger version;\n   \n   /*\n    * Create a new display node layout with\n    * @param layout The layout to associate, usually returned from a call to -layoutThatFits:parentSize:\n    * @param constrainedSize Constrained size used to create the layout\n    * @param parentSize Parent size used to create the layout\n+   * @param version The version of the layout data.",
+                    "editor": null,
+                    "id": "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEyNjI5NjQ5Mw==",
+                    "path": "Source/Private/ASDisplayNodeLayout.h",
+                    "reactionGroups": [
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_UP",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "THUMBS_DOWN",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "LAUGH",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HOORAY",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "CONFUSED",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      },
+                      {
+                        "__typename": "ReactionGroup",
+                        "content": "HEART",
+                        "users": {
+                          "__typename": "ReactingUserConnection",
+                          "totalCount": 0
+                        },
+                        "viewerHasReacted": false
+                      }
+                    ],
+                    "viewerCanReact": true,
+                    "viewerDidAuthor": false
+                  }
+                ]
+              }
+            },
+            {
+              "__typename": "PullRequestReview",
+              "author": {
+                "__typename": "User",
+                "avatarUrl": "https://avatars0.githubusercontent.com/u/565251?v=3",
+                "login": "appleguy"
+              },
+              "body": "Great work - this is a very well scoped improvement, which is tough to do considering the integrated nature of this system.",
+              "createdAt": "2017-07-09T05:36:57Z",
+              "editor": null,
+              "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg3Njk3MDU=",
+              "state": "APPROVED",
+              "submittedAt": "2017-07-09T05:51:11Z",
+              "viewerDidAuthor": false
+            },
+            {
+              "__typename": "PullRequestReview",
+              "author": {
+                "__typename": "User",
+                "avatarUrl": "https://avatars2.githubusercontent.com/u/25288?v=3",
+                "login": "maicki"
+              },
+              "body": "",
+              "createdAt": "2017-07-09T14:01:18Z",
+              "editor": null,
+              "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg3NzgwNzQ=",
+              "state": "APPROVED",
+              "submittedAt": "2017-07-09T14:01:18Z",
+              "viewerDidAuthor": false
+            }
+          ]
+        },
+        "title": "Use a sentinel NSUInteger for node layout data #trivial",
+        "viewerCanReact": true,
+        "viewerCanUpdate": false,
+        "viewerDidAuthor": false
+      },
+      "name": "Texture"
+    }
+  }
+}
