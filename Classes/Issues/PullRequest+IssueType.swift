@@ -145,7 +145,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     state: review.state,
                     date: date
                 )
-                let bodies = Freetime.commentModels(markdown: review.fragments.commentFields.body, width: width)
+                let bodies = CreateCommentModels(markdown: review.fragments.commentFields.body, width: width)
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,
                     details: details,

@@ -82,7 +82,7 @@ func createCommentModel(
         avatarURL: avatarURL,
         didAuthor: commentFields.viewerDidAuthor
     )
-    let bodies = commentModels(markdown: commentFields.body, width: width)
+    let bodies = CreateCommentModels(markdown: commentFields.body, width: width)
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)
     return IssueCommentModel(

@@ -80,16 +80,16 @@ final class NotificationClient {
         }
 
         if let sampleJSON = loadSample(path: "notifications") as? NotificationsPayload {
-            success(sampleJSON, 0)
+            success(sampleJSON, nil)
         } else {
             githubClient.request(GithubClient.Request(
                 path: "notifications",
                 method: .get,
                 parameters: parameters,
                 headers: nil
-            ) { (response, page) in
+            ) { (response, nextPage) in
                 if let jsonArr = response.value as? NotificationsPayload {
-                    success(jsonArr, page?.next)
+                    success(jsonArr, nextPage?.next)
                 } else {
                     completion(.failed(response.error))
                 }

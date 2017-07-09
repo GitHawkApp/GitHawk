@@ -466,6 +466,9 @@
 		29C3408F1F1295F200EC8D40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8711EC0D5C200B44A1F /* Main.storyboard */; };
 		29C340911F1295F200EC8D40 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		29C340921F1295F200EC8D40 /* MMMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		29C3409A1F12971100EC8D40 /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
+		29C3409B1F12971100EC8D40 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* issue.json */; };
+		29C3409C1F12971100EC8D40 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* notifications.json */; };
 		29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */; };
 		29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */; };
 		29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */; };
@@ -622,12 +625,10 @@
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
 		2963A9381EE258C20066509C /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
 		2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LabelableFields+IssueLabelModel.swift"; sourceTree = "<group>"; };
-		296CD8211F0140E3001190B9 /* FreetimeSamples-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FreetimeSamples-Info.plist"; sourceTree = "<group>"; };
 		296CD8241F014130001190B9 /* issue.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		296CD8251F014130001190B9 /* notifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		296CD8281F0141A6001190B9 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
 		296CD82C1F01476D001190B9 /* authorizations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = authorizations.json; sourceTree = "<group>"; };
-		297172261F069A38005E43AC /* Freetime copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Freetime copy-Info.plist"; path = "/Users/rnystrom/Development/iOS/Freetime/Freetime copy-Info.plist"; sourceTree = "<absolute>"; };
 		2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
 		2971722C1F069E96005E43AC /* SpinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerCell.swift; sourceTree = "<group>"; };
 		297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SegmentedControlModel+Notifications.swift"; sourceTree = "<group>"; };
@@ -695,7 +696,6 @@
 		29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAccessSectionController.swift; sourceTree = "<group>"; };
 		29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCell.swift; sourceTree = "<group>"; };
 		29C340981F1295F200EC8D40 /* Snapshots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snapshots.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		29C340991F1295F200EC8D40 /* Freetime copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Freetime copy2-Info.plist"; path = "/Users/rnystrom/Development/iOS/Freetime/Freetime copy2-Info.plist"; sourceTree = "<absolute>"; };
 		29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
@@ -1029,8 +1029,6 @@
 				297AE86D1EC0D5C200B44A1F /* Resources */,
 				296CD8231F014130001190B9 /* Sample */,
 				29F63FD11EC530E7007F55E4 /* TextViews.playground */,
-				297172261F069A38005E43AC /* Freetime copy-Info.plist */,
-				29C340991F1295F200EC8D40 /* Freetime copy2-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1189,7 +1187,6 @@
 			children = (
 				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
 				29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */,
-				296CD8211F0140E3001190B9 /* FreetimeSamples-Info.plist */,
 				297AE8731EC0D5C200B44A1F /* Info.plist */,
 				297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */,
 				29A195061EC7601000C3E289 /* Localizable.stringsdict */,
@@ -1420,7 +1417,10 @@
 				29C3408C1F1295F200EC8D40 /* LaunchScreen.storyboard in Resources */,
 				29C3408D1F1295F200EC8D40 /* Assets.xcassets in Resources */,
 				29C3408E1F1295F200EC8D40 /* Localizable.stringsdict in Resources */,
+				29C3409C1F12971100EC8D40 /* notifications.json in Resources */,
 				29C3408F1F1295F200EC8D40 /* Main.storyboard in Resources */,
+				29C3409A1F12971100EC8D40 /* authorizations.json in Resources */,
+				29C3409B1F12971100EC8D40 /* issue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
