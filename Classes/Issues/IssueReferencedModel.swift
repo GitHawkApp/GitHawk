@@ -18,18 +18,20 @@ final class IssueReferencedModel: ListDiffable {
     }
 
     let id: String
-    let number: Int
-    let repo: String
     let owner: String
+    let repo: String
+    let number: Int
+    let pullRequest: Bool
+    let state: State
     let date: Date
     let title: String
-    let state: State
 
     init(
         id: String,
         owner: String,
         repo: String,
         number: Int,
+        pullRequest: Bool,
         state: State,
         date: Date,
         title: String
@@ -38,6 +40,7 @@ final class IssueReferencedModel: ListDiffable {
         self.owner = owner
         self.repo = repo
         self.number = number
+        self.pullRequest = pullRequest
         self.state = state
         self.date = date
         self.title = title

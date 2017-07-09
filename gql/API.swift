@@ -193,37 +193,24 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on ReferencedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              subject {" +
     "                __typename" +
     "                ... on Issue {" +
     "                  __typename" +
+    "                  ...referencedRepositoryFields" +
     "                  title" +
     "                  number" +
     "                  closed" +
-    "                  repository {" +
-    "                    __typename" +
-    "                    name" +
-    "                    owner {" +
-    "                      __typename" +
-    "                      login" +
-    "                    }" +
-    "                  }" +
     "                }" +
     "                ... on PullRequest {" +
     "                  __typename" +
+    "                  ...referencedRepositoryFields" +
     "                  title" +
     "                  number" +
     "                  closed" +
     "                  merged" +
-    "                  repository {" +
-    "                    __typename" +
-    "                    name" +
-    "                    owner {" +
-    "                      __typename" +
-    "                      login" +
-    "                    }" +
-    "                  }" +
     "                }" +
     "              }" +
     "            }" +
@@ -374,37 +361,24 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on ReferencedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              subject {" +
     "                __typename" +
     "                ... on Issue {" +
     "                  __typename" +
+    "                  ...referencedRepositoryFields" +
     "                  title" +
     "                  number" +
     "                  closed" +
-    "                  repository {" +
-    "                    __typename" +
-    "                    name" +
-    "                    owner {" +
-    "                      __typename" +
-    "                      login" +
-    "                    }" +
-    "                  }" +
     "                }" +
     "                ... on PullRequest {" +
     "                  __typename" +
+    "                  ...referencedRepositoryFields" +
     "                  title" +
     "                  number" +
     "                  closed" +
     "                  merged" +
-    "                  repository {" +
-    "                    __typename" +
-    "                    name" +
-    "                    owner {" +
-    "                      __typename" +
-    "                      login" +
-    "                    }" +
-    "                  }" +
     "                }" +
     "              }" +
     "            }" +
@@ -424,7 +398,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
@@ -882,10 +856,19 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Object referenced by event.
                 public let subject: Subject
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   subject = try reader.value(for: Field(responseName: "subject"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Subject: GraphQLMappable {
@@ -911,40 +894,21 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let number: Int
                     /// true if the object is `closed` (definition of closed may depend on type)
                     public let closed: Bool
-                    /// Identifies the repository associated with the issue.
-                    public let repository: Repository
+
+                    public let fragments: Fragments
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       title = try reader.value(for: Field(responseName: "title"))
                       number = try reader.value(for: Field(responseName: "number"))
                       closed = try reader.value(for: Field(responseName: "closed"))
-                      repository = try reader.value(for: Field(responseName: "repository"))
+
+                      let referencedRepositoryFields = try ReferencedRepositoryFields(reader: reader)
+                      fragments = Fragments(referencedRepositoryFields: referencedRepositoryFields)
                     }
 
-                    public struct Repository: GraphQLMappable {
-                      public let __typename: String
-                      /// The name of the repository.
-                      public let name: String
-                      /// The User owner of the repository.
-                      public let owner: Owner
-
-                      public init(reader: GraphQLResultReader) throws {
-                        __typename = try reader.value(for: Field(responseName: "__typename"))
-                        name = try reader.value(for: Field(responseName: "name"))
-                        owner = try reader.value(for: Field(responseName: "owner"))
-                      }
-
-                      public struct Owner: GraphQLMappable {
-                        public let __typename: String
-                        /// The username used to login.
-                        public let login: String
-
-                        public init(reader: GraphQLResultReader) throws {
-                          __typename = try reader.value(for: Field(responseName: "__typename"))
-                          login = try reader.value(for: Field(responseName: "login"))
-                        }
-                      }
+                    public struct Fragments {
+                      public let referencedRepositoryFields: ReferencedRepositoryFields
                     }
                   }
 
@@ -958,43 +922,24 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let number: Int
                     /// true if the object is `closed` (definition of closed may depend on type)
                     public let closed: Bool
-                    /// The repository associated with this pull request.
-                    public let repository: Repository
                     /// Whether or not the pull request was merged.
                     public let merged: Bool
+
+                    public let fragments: Fragments
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       title = try reader.value(for: Field(responseName: "title"))
                       number = try reader.value(for: Field(responseName: "number"))
                       closed = try reader.value(for: Field(responseName: "closed"))
-                      repository = try reader.value(for: Field(responseName: "repository"))
                       merged = try reader.value(for: Field(responseName: "merged"))
+
+                      let referencedRepositoryFields = try ReferencedRepositoryFields(reader: reader)
+                      fragments = Fragments(referencedRepositoryFields: referencedRepositoryFields)
                     }
 
-                    public struct Repository: GraphQLMappable {
-                      public let __typename: String
-                      /// The name of the repository.
-                      public let name: String
-                      /// The User owner of the repository.
-                      public let owner: Owner
-
-                      public init(reader: GraphQLResultReader) throws {
-                        __typename = try reader.value(for: Field(responseName: "__typename"))
-                        name = try reader.value(for: Field(responseName: "name"))
-                        owner = try reader.value(for: Field(responseName: "owner"))
-                      }
-
-                      public struct Owner: GraphQLMappable {
-                        public let __typename: String
-                        /// The username used to login.
-                        public let login: String
-
-                        public init(reader: GraphQLResultReader) throws {
-                          __typename = try reader.value(for: Field(responseName: "__typename"))
-                          login = try reader.value(for: Field(responseName: "login"))
-                        }
-                      }
+                    public struct Fragments {
+                      public let referencedRepositoryFields: ReferencedRepositoryFields
                     }
                   }
                 }
@@ -1532,10 +1477,19 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Object referenced by event.
                 public let subject: Subject
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   subject = try reader.value(for: Field(responseName: "subject"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Subject: GraphQLMappable {
@@ -1561,40 +1515,21 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let number: Int
                     /// true if the object is `closed` (definition of closed may depend on type)
                     public let closed: Bool
-                    /// Identifies the repository associated with the issue.
-                    public let repository: Repository
+
+                    public let fragments: Fragments
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       title = try reader.value(for: Field(responseName: "title"))
                       number = try reader.value(for: Field(responseName: "number"))
                       closed = try reader.value(for: Field(responseName: "closed"))
-                      repository = try reader.value(for: Field(responseName: "repository"))
+
+                      let referencedRepositoryFields = try ReferencedRepositoryFields(reader: reader)
+                      fragments = Fragments(referencedRepositoryFields: referencedRepositoryFields)
                     }
 
-                    public struct Repository: GraphQLMappable {
-                      public let __typename: String
-                      /// The name of the repository.
-                      public let name: String
-                      /// The User owner of the repository.
-                      public let owner: Owner
-
-                      public init(reader: GraphQLResultReader) throws {
-                        __typename = try reader.value(for: Field(responseName: "__typename"))
-                        name = try reader.value(for: Field(responseName: "name"))
-                        owner = try reader.value(for: Field(responseName: "owner"))
-                      }
-
-                      public struct Owner: GraphQLMappable {
-                        public let __typename: String
-                        /// The username used to login.
-                        public let login: String
-
-                        public init(reader: GraphQLResultReader) throws {
-                          __typename = try reader.value(for: Field(responseName: "__typename"))
-                          login = try reader.value(for: Field(responseName: "login"))
-                        }
-                      }
+                    public struct Fragments {
+                      public let referencedRepositoryFields: ReferencedRepositoryFields
                     }
                   }
 
@@ -1608,43 +1543,24 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let number: Int
                     /// true if the object is `closed` (definition of closed may depend on type)
                     public let closed: Bool
-                    /// The repository associated with this pull request.
-                    public let repository: Repository
                     /// Whether or not the pull request was merged.
                     public let merged: Bool
+
+                    public let fragments: Fragments
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       title = try reader.value(for: Field(responseName: "title"))
                       number = try reader.value(for: Field(responseName: "number"))
                       closed = try reader.value(for: Field(responseName: "closed"))
-                      repository = try reader.value(for: Field(responseName: "repository"))
                       merged = try reader.value(for: Field(responseName: "merged"))
+
+                      let referencedRepositoryFields = try ReferencedRepositoryFields(reader: reader)
+                      fragments = Fragments(referencedRepositoryFields: referencedRepositoryFields)
                     }
 
-                    public struct Repository: GraphQLMappable {
-                      public let __typename: String
-                      /// The name of the repository.
-                      public let name: String
-                      /// The User owner of the repository.
-                      public let owner: Owner
-
-                      public init(reader: GraphQLResultReader) throws {
-                        __typename = try reader.value(for: Field(responseName: "__typename"))
-                        name = try reader.value(for: Field(responseName: "name"))
-                        owner = try reader.value(for: Field(responseName: "owner"))
-                      }
-
-                      public struct Owner: GraphQLMappable {
-                        public let __typename: String
-                        /// The username used to login.
-                        public let login: String
-
-                        public init(reader: GraphQLResultReader) throws {
-                          __typename = try reader.value(for: Field(responseName: "__typename"))
-                          login = try reader.value(for: Field(responseName: "login"))
-                        }
-                      }
+                    public struct Fragments {
+                      public let referencedRepositoryFields: ReferencedRepositoryFields
                     }
                   }
                 }
@@ -2044,5 +1960,56 @@ public struct NodeFields: GraphQLNamedFragment {
   public init(reader: GraphQLResultReader) throws {
     __typename = try reader.value(for: Field(responseName: "__typename"))
     id = try reader.value(for: Field(responseName: "id"))
+  }
+}
+
+public struct ReferencedRepositoryFields: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment referencedRepositoryFields on RepositoryNode {" +
+    "  __typename" +
+    "  repository {" +
+    "    __typename" +
+    "    name" +
+    "    owner {" +
+    "      __typename" +
+    "      login" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment"]
+
+  public let __typename: String
+  /// The repository associated with this node.
+  public let repository: Repository
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    repository = try reader.value(for: Field(responseName: "repository"))
+  }
+
+  public struct Repository: GraphQLMappable {
+    public let __typename: String
+    /// The name of the repository.
+    public let name: String
+    /// The User owner of the repository.
+    public let owner: Owner
+
+    public init(reader: GraphQLResultReader) throws {
+      __typename = try reader.value(for: Field(responseName: "__typename"))
+      name = try reader.value(for: Field(responseName: "name"))
+      owner = try reader.value(for: Field(responseName: "owner"))
+    }
+
+    public struct Owner: GraphQLMappable {
+      public let __typename: String
+      /// The username used to login.
+      public let login: String
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        login = try reader.value(for: Field(responseName: "login"))
+      }
+    }
   }
 }

@@ -72,6 +72,24 @@ final class IssueReferencedCell: UICollectionViewCell {
         title.append(NSAttributedString(string: " #\(model.number)", attributes: numberAttributes))
 
         dateLabel.setText(date: model.date)
+
+        let buttonState: UIButton.State
+        let buttonTitle: String
+
+        switch model.state {
+        case .closed:
+            buttonState = .closed
+            buttonTitle = Strings.closed
+        case .merged:
+            buttonState = .merged
+            buttonTitle = Strings.merged
+        case .open:
+            buttonState = .open
+            buttonTitle = Strings.open
+        }
+
+        statusButton.config(pullRequest: model.pullRequest, state: buttonState)
+        statusButton.setTitle(buttonTitle, for: .normal)
     }
 
 }

@@ -76,30 +76,21 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               createdAt
             }
             ... on ReferencedEvent {
+              ...nodeFields
               createdAt
               subject {
                 ... on Issue {
+                  ...referencedRepositoryFields
                   title
                   number
                   closed
-                  repository {
-                    name
-                    owner {
-                      login
-                    }
-                  }
                 }
                 ... on PullRequest {
+                  ...referencedRepositoryFields
                   title
                   number
                   closed
                   merged
-                  repository {
-                    name
-                    owner {
-                      login
-                    }
-                  }
                 }
               }
             }
@@ -219,30 +210,21 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
             }
             ... on ReferencedEvent {
+              ...nodeFields
               createdAt
               subject {
                 ... on Issue {
+                  ...referencedRepositoryFields
                   title
                   number
                   closed
-                  repository {
-                    name
-                    owner {
-                      login
-                    }
-                  }
                 }
                 ... on PullRequest {
+                  ...referencedRepositoryFields
                   title
                   number
                   closed
                   merged
-                  repository {
-                    name
-                    owner {
-                      login
-                    }
-                  }
                 }
               }
             }
