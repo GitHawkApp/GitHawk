@@ -120,6 +120,35 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     pullRequest: false
                 )
                 results.append(model)
+            } else if let referenced = node.asReferencedEvent,
+                let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
+                if let issueReference = referenced.subject.asIssue {
+                    let repo = issueReference.fragments.referencedRepositoryFields.repository
+                    let model = IssueReferencedModel(
+                        id: referenced.fragments.nodeFields.id,
+                        owner: repo.owner.login,
+                        repo: repo.name,
+                        number: issueReference.number,
+                        pullRequest: false,
+                        state: issueReference.closed ? .closed : .open,
+                        date: date,
+                        title: issueReference.title
+                    )
+                    results.append(model)
+                } else if let prReference = referenced.subject.asPullRequest {
+                    let repo = prReference.fragments.referencedRepositoryFields.repository
+                    let model = IssueReferencedModel(
+                        id: referenced.fragments.nodeFields.id,
+                        owner: repo.owner.login,
+                        repo: repo.name,
+                        number: prReference.number,
+                        pullRequest: false,
+                        state: prReference.merged ? .merged : prReference.closed ? .closed : .open,
+                        date: date,
+                        title: prReference.title
+                    )
+                    results.append(model)
+                }
             }
         }
 

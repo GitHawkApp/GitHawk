@@ -32,24 +32,27 @@ final class IssueReferencedCell: UICollectionViewCell {
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(referencedLabel.snp.right).offset(2)
+            make.left.equalTo(referencedLabel.snp.right)
             make.top.equalTo(referencedLabel)
         }
 
         statusButton.setupAsLabel()
+        // override default setup b/c there wont be a title
+        statusButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        statusButton.imageEdgeInsets = .zero
         contentView.addSubview(statusButton)
         statusButton.snp.makeConstraints { make in
-            make.right.equalTo(Styles.Sizes.gutter)
-            make.centerY.equalTo(referencedLabel)
+            make.right.equalTo(-Styles.Sizes.gutter)
+            make.top.equalTo(referencedLabel.snp.bottom).offset(2)
         }
 
-        titleLabel.font = Styles.Fonts.bodyBold
         titleLabel.numberOfLines = 1
-        titleLabel.textColor = Styles.Colors.Gray.dark.color
+        titleLabel.lineBreakMode = .byTruncatingMiddle
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(referencedLabel)
-            make.top.equalTo(referencedLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
+            make.right.lessThanOrEqualTo(statusButton.snp.left).offset(-Styles.Sizes.columnSpacing/2)
+            make.centerY.equalTo(statusButton)
         }
     }
     
@@ -70,26 +73,19 @@ final class IssueReferencedCell: UICollectionViewCell {
             NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
         ]
         title.append(NSAttributedString(string: " #\(model.number)", attributes: numberAttributes))
+        titleLabel.attributedText = title
 
         dateLabel.setText(date: model.date)
 
         let buttonState: UIButton.State
-        let buttonTitle: String
 
         switch model.state {
-        case .closed:
-            buttonState = .closed
-            buttonTitle = Strings.closed
-        case .merged:
-            buttonState = .merged
-            buttonTitle = Strings.merged
-        case .open:
-            buttonState = .open
-            buttonTitle = Strings.open
+        case .closed: buttonState = .closed
+        case .merged: buttonState = .merged
+        case .open: buttonState = .open
         }
 
         statusButton.config(pullRequest: model.pullRequest, state: buttonState)
-        statusButton.setTitle(buttonTitle, for: .normal)
     }
 
 }
