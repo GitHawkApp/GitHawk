@@ -25,6 +25,7 @@ final class RootNavigationManager: GithubSessionListener {
         self.rootViewController = rootViewController
         rootViewController.delegate = splitDelegate
         rootViewController.preferredDisplayMode = .allVisible
+        rootViewController.view.backgroundColor = Styles.Colors.background
         sessionManager.addListener(listener: self)
     }
 

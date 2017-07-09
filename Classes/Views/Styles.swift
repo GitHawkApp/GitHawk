@@ -68,7 +68,7 @@ struct Styles {
 
     struct Colors {
 
-        static let background = "ffffff"
+        static let background = UIColor.groupTableViewBackground
         static let purple = "6f42c1"
 
         struct Red {

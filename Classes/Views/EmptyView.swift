@@ -16,7 +16,7 @@ final class EmptyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = UIColor.groupTableViewBackground
+        backgroundColor = Styles.Colors.background
 
         label.backgroundColor = .clear
         label.textAlignment = .center
