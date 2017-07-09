@@ -11,10 +11,7 @@ import IGListKit
 
 final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel> {
 
-    private let client: GithubClient
-
-    init(client: GithubClient) {
-        self.client = client
+    override init() {
         super.init()
         self.inset = Styles.Sizes.listInsetTight
     }
@@ -30,10 +27,6 @@ final class IssueReferencedCommitSectionController: ListGenericSectionController
             else { fatalError("Missing context, model, or cell wrong type") }
         cell.configure(object)
         return cell
-    }
-
-    override func didSelectItem(at index: Int) {
-        
     }
 
 }
