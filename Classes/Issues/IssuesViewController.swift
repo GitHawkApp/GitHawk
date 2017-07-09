@@ -51,9 +51,6 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             action: #selector(IssuesViewController.onMore(sender:))
         )
         navigationItem.rightBarButtonItem = rightItem
-
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        navigationItem.leftItemsSupplementBackButton = true
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
