@@ -46,3 +46,12 @@ fragment updatableFields on Updatable {
 fragment nodeFields on Node {
   id
 }
+
+fragment referencedRepositoryFields on RepositoryNode {
+  repository {
+    name
+    owner {
+      login
+    }
+  }
+}
