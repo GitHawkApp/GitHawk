@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,12 +27,57 @@
             </objects>
             <point key="canvasLocation" x="-670" y="537"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Rg3-YC-Cr2">
+            <objects>
+                <navigationController id="D4E-Yy-PTN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="v0t-Sf-PfR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="koZ-WT-T3h" kind="relationship" relationship="rootViewController" id="cPt-EH-2rr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TyK-el-esm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-671" y="1321"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6Um-PN-O7R">
+            <objects>
+                <viewController id="koZ-WT-T3h" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qh9-St-NDe"/>
+                        <viewControllerLayoutGuide type="bottom" id="T04-C0-L7D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Bfp-cm-kdi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash-light" translatesAutoresizingMaskIntoConstraints="NO" id="NEt-Y3-0Rg">
+                                <rect key="frame" x="101" y="247" width="173" height="173"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NEt-Y3-0Rg" firstAttribute="centerY" secondItem="Bfp-cm-kdi" secondAttribute="centerY" id="KFp-4d-Ivb"/>
+                            <constraint firstItem="NEt-Y3-0Rg" firstAttribute="centerX" secondItem="Bfp-cm-kdi" secondAttribute="centerX" id="zLB-hf-GBA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="pRk-wG-gJw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UWQ-Dj-qeq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="1321"/>
+        </scene>
         <!--Split View Controller-->
         <scene sceneID="0c8-No-DSu">
             <objects>
                 <splitViewController id="EPN-4V-9Hj" sceneMemberID="viewController">
                     <connections>
                         <segue destination="AKn-8S-pzd" kind="relationship" relationship="masterViewController" id="aFN-Se-rpt"/>
+                        <segue destination="D4E-Yy-PTN" kind="relationship" relationship="detailViewController" id="gsk-8r-3gM"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jzo-Kg-YFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -40,5 +85,8 @@
             <point key="canvasLocation" x="-1622" y="865"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="splash-light" width="173" height="173"/>
+    </resources>
     <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
