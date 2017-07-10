@@ -9,18 +9,24 @@
 import UIKit
 import SnapKit
 
+protocol IssueStatusEventCellDelegate: class {
+    func didTapActor(cell: IssueStatusEventCell)
+}
+
 final class IssueStatusEventCell: UICollectionViewCell {
 
-    private let label = UILabel()
+    weak var delegate: IssueStatusEventCellDelegate? = nil
+
+    private let actorButton = UIButton()
     private let button = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.backgroundColor = .clear
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
+        actorButton.addTarget(self, action: #selector(IssueStatusEventCell.onActor), for: .touchUpInside)
+        contentView.addSubview(actorButton)
+        actorButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
@@ -28,7 +34,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         button.setupAsLabel()
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
-            make.left.equalTo(label.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
 
@@ -46,6 +52,12 @@ final class IssueStatusEventCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Private API
+
+    func onActor() {
+        delegate?.didTapActor(cell: self)
+    }
+
     // MARK: Public API
 
     func configure(_ model: IssueStatusEventModel) {
@@ -53,7 +65,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             NSFontAttributeName: Styles.Fonts.bodyBold
         ]
-        label.attributedText = NSAttributedString(string: model.actor, attributes: actorAttributes)
+        actorButton.setAttributedTitle(NSAttributedString(string: model.actor, attributes: actorAttributes), for: .normal)
 
         button.config(pullRequest: model.pullRequest, state: model.status.buttonState)
 
