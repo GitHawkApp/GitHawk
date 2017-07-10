@@ -63,6 +63,12 @@ NotificationNextPageSectionControllerDelegate {
             target: self,
             action: #selector(NotificationsViewController.onMarkAll(sender:))
         )
+        updateMarkAllEnabled()
+    }
+    
+    private func updateMarkAllEnabled() {
+        let allRead = !filteredNotifications.contains(where: { $0.read == false })
+        navigationItem.rightBarButtonItem?.isEnabled = !allRead
     }
 
     func setRightBarItemSpinning() {
@@ -106,6 +112,7 @@ NotificationNextPageSectionControllerDelegate {
             unread: selection.unreadSelected
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
+        updateMarkAllEnabled()
     }
 
     private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
