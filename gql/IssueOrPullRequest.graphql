@@ -76,11 +76,14 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               createdAt
             }
             ... on ReferencedEvent {
+              createdAt
               ...nodeFields
               refCommit: commit { 
                 oid 
               }
-              createdAt
+              actor {
+                login
+              }
               commitRepository {
                 ...referencedRepositoryFields
               }
@@ -214,11 +217,11 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               }
             }
             ... on ReferencedEvent {
-              ...nodeFields
-              refCommit: commit { 
-                oid 
-              }
               createdAt
+              ...nodeFields
+              actor {
+                login
+              }
               commitRepository {
                 ...referencedRepositoryFields
               }

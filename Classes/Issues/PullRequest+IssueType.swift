@@ -156,16 +156,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
                 let id = referenced.fragments.nodeFields.id
-                if let commitRef = referenced.refCommit {
-                    let model = IssueReferencedCommitModel(
-                        id: id,
-                        owner: repo.owner.login,
-                        repo: repo.name,
-                        hash: commitRef.oid,
-                        date: date
-                    )
-                    results.append(model)
-                } else if let issueReference = referenced.subject.asIssue {
+                if let issueReference = referenced.subject.asIssue {
                     let model = IssueReferencedModel(
                         id: id,
                         owner: repo.owner.login,
@@ -177,7 +168,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         title: issueReference.title
                     )
                     results.append(model)
-                } else if let prReference = referenced.subject.asPullRequest {
+                } else if let prReference = referenced.subject.asPullRequest,
+                    // do not ref the current PR
+                    prReference.number != number {
                     let model = IssueReferencedModel(
                         id: id,
                         owner: repo.owner.login,

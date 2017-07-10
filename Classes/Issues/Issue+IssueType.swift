@@ -130,10 +130,13 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         owner: repo.owner.login,
                         repo: repo.name,
                         hash: commitRef.oid,
+                        actor: referenced.actor?.login ?? Strings.unknown,
                         date: date
                     )
                     results.append(model)
-                } else if let issueReference = referenced.subject.asIssue {
+                } else if let issueReference = referenced.subject.asIssue,
+                    // do not ref the current issue
+                    issueReference.number != number {
                     let model = IssueReferencedModel(
                         id: id,
                         owner: repo.owner.login,
