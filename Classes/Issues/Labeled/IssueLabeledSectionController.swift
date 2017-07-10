@@ -9,7 +9,16 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, IssueLabeledCellDelegate {
+
+    private let owner: String
+    private let repo: String
+
+    init(owner: String, repo: String) {
+        self.owner = owner
+        self.repo = repo
+        super.init()
+    }
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
@@ -21,7 +30,20 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
             let object = self.object
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(object)
+        cell.delegate = self
         return cell
+    }
+
+    // MARK: IssueLabeledCellDelegate
+
+    func didTapActor(cell: IssueLabeledCell) {
+        guard let actor = object?.actor else { return }
+        viewController?.presentProfile(login: actor)
+    }
+
+    func didTapLabel(cell: IssueLabeledCell) {
+        guard let label = object?.title else { return }
+        viewController?.presentLabels(owner: owner, repo: repo, label: label)
     }
 
 }
