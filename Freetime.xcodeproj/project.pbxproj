@@ -146,7 +146,6 @@
 		295840B11EEA00E1007723C6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDC41EC65FEE00EE3A52 /* User.swift */; };
 		295840B21EEA00E1007723C6 /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		295840B41EEA00E1007723C6 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
-		295840B71EEA00E1007723C6 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
 		295840B81EEA00E1007723C6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		295840B91EEA00E1007723C6 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
 		295840BA1EEA00E1007723C6 /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0991EC947FC00B01946 /* SegmentedControlModel.swift */; };
@@ -198,7 +197,6 @@
 		297AE84D1EC0D58A00B44A1F /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		297AE8791EC0D5C200B44A1F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85F1EC0D5C100B44A1F /* App.swift */; };
 		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
-		297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
 		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
 		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
@@ -307,7 +305,6 @@
 		29C33FE91F1295F200EC8D40 /* WebviewCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */; };
 		29C33FEA1F1295F200EC8D40 /* IssueStatus+ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31CE1F0AA67600521CED /* IssueStatus+ButtonState.swift */; };
 		29C33FEB1F1295F200EC8D40 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
-		29C33FEC1F1295F200EC8D40 /* ErrorMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */; };
 		29C33FED1F1295F200EC8D40 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
 		29C33FEE1F1295F200EC8D40 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29C33FEF1F1295F200EC8D40 /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE91EDFCC510026635E /* IssuesViewController.swift */; };
@@ -649,7 +646,6 @@
 		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		297AE85F1EC0D5C100B44A1F /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
-		297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessages.swift; sourceTree = "<group>"; };
 		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
@@ -1119,7 +1115,6 @@
 		297AE8611EC0D5C100B44A1F /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				297AE8621EC0D5C100B44A1F /* ErrorMessages.swift */,
 				297AE8631EC0D5C100B44A1F /* Secrets.swift */,
 			);
 			path = Other;
@@ -1670,7 +1665,6 @@
 				292CD3D01F0DBB5C00D3D57B /* WebviewCellHeightCache.swift in Sources */,
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
-				297AE87B1EC0D5C200B44A1F /* ErrorMessages.swift in Sources */,
 				291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
@@ -1863,7 +1857,6 @@
 				29C2950E1EC7B43B00D46CD2 /* ListKitTestCase.swift in Sources */,
 				29C167721ECA0D7C00439D62 /* UIView+BottomBorder.swift in Sources */,
 				296CD82A1F0141A6001190B9 /* Samples.swift in Sources */,
-				295840B71EEA00E1007723C6 /* ErrorMessages.swift in Sources */,
 				2958407B1EEA00E1007723C6 /* IssueCommentImageModel.swift in Sources */,
 				295840B21EEA00E1007723C6 /* LabelableFields+IssueLabelModel.swift in Sources */,
 				295840C51EEA00E1007723C6 /* Feed.swift in Sources */,
@@ -1983,7 +1976,6 @@
 				29C33FE91F1295F200EC8D40 /* WebviewCellHeightCache.swift in Sources */,
 				29C33FEA1F1295F200EC8D40 /* IssueStatus+ButtonState.swift in Sources */,
 				29C33FEB1F1295F200EC8D40 /* CollapsibleCell.swift in Sources */,
-				29C33FEC1F1295F200EC8D40 /* ErrorMessages.swift in Sources */,
 				29C33FED1F1295F200EC8D40 /* SettingsReportSectionController.swift in Sources */,
 				29C33FEE1F1295F200EC8D40 /* NSAttributedString+Trim.swift in Sources */,
 				29C33FEF1F1295F200EC8D40 /* IssuesViewController.swift in Sources */,
