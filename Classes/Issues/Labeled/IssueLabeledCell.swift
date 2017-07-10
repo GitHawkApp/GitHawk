@@ -9,54 +9,58 @@
 import UIKit
 import SnapKit
 
+protocol IssueLabeledCellDelegate: class {
+    func didTapActor(cell: IssueLabeledCell)
+    func didTapLabel(cell: IssueLabeledCell)
+}
+
 final class IssueLabeledCell: UICollectionViewCell {
 
-    let descriptionLabel = UILabel()
-    let labelBackgroundView = UIView()
-    let titleLabel = UILabel()
-    let dateLabel = ShowMoreDetailsLabel()
+    weak var delegate: IssueLabeledCellDelegate? = nil
+
+    private let descriptionButton = UIButton()
+    private let labelButton = UIButton()
+    private let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        descriptionLabel.backgroundColor = .clear
-        contentView.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { make in
+        descriptionButton.addTarget(self, action: #selector(IssueLabeledCell.onActor), for: .touchUpInside)
+        contentView.addSubview(descriptionButton)
+        descriptionButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
 
-        titleLabel.font = Styles.Fonts.smallTitle
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(descriptionLabel.snp.right).offset(Styles.Sizes.inlineSpacing * 2)
-            make.centerY.equalTo(descriptionLabel)
+        labelButton.setupAsLabel()
+        labelButton.addTarget(self, action: #selector(IssueLabeledCell.onLabel), for: .touchUpInside)
+        contentView.addSubview(labelButton)
+        labelButton.snp.makeConstraints { make in
+            make.left.equalTo(descriptionButton.snp.right).offset(Styles.Sizes.inlineSpacing * 2)
+            make.centerY.equalTo(descriptionButton)
         }
-
-        // even though the background view is behind the title, add it second so that constraints can be setup
-        labelBackgroundView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        labelBackgroundView.clipsToBounds = true
-        contentView.addSubview(labelBackgroundView)
-        labelBackgroundView.snp.makeConstraints { make in
-            make.center.equalTo(titleLabel)
-            make.width.equalTo(titleLabel).offset(Styles.Sizes.inlineSpacing * 2)
-            make.height.equalTo(titleLabel).offset(Styles.Sizes.rowSpacing)
-        }
-
-        // then swap the z indexes of the label and background
-        contentView.bringSubview(toFront: titleLabel)
 
         dateLabel.font = Styles.Fonts.body
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(labelBackgroundView.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.left.equalTo(labelButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private API
+
+    func onActor() {
+        delegate?.didTapActor(cell: self)
+    }
+
+    func onLabel() {
+        delegate?.didTapLabel(cell: self)
     }
 
     // MARK: Public API
@@ -80,13 +84,13 @@ final class IssueLabeledCell: UICollectionViewCell {
         let action = NSAttributedString(string: actionString, attributes: actionAttributes)
         let descriptionText = NSMutableAttributedString(attributedString: actor)
         descriptionText.append(action)
-        descriptionLabel.attributedText = descriptionText
+        descriptionButton.setAttributedTitle(descriptionText, for: .normal)
 
         let color = UIColor.fromHex(model.color)
-        labelBackgroundView.backgroundColor = color
+        labelButton.backgroundColor = color
 
-        titleLabel.text = model.title
-        titleLabel.textColor = color.textOverlayColor
+        labelButton.setTitle(model.title, for: .normal)
+        labelButton.setTitleColor(color.textOverlayColor, for: .normal)
 
         dateLabel.setText(date: model.date)
     }
