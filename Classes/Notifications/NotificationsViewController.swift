@@ -91,7 +91,7 @@ NotificationNextPageSectionControllerDelegate {
             preferredStyle: .alert
         )
         let markAll = UIAlertAction(
-            title: NSLocalizedString("Mark all", comment: ""),
+            title: NSLocalizedString("OK", comment: ""),
             style: .default
         ) { _ in
             self.markAllRead()
