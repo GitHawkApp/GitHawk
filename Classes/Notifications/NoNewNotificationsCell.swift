@@ -41,6 +41,8 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.centerX.equalTo(emoji)
             make.top.equalTo(emoji.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
         }
+
+        resetAnimations()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,8 +60,13 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        resetAnimations()
+    }
 
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+    // MARK: Private API
+
+    private func resetAnimations() {
+        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         let duration: TimeInterval = 1
 
         let emojiBounce = CABasicAnimation(keyPath: "transform.translation.y")
