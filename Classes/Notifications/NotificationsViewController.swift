@@ -229,6 +229,7 @@ NotificationNextPageSectionControllerDelegate {
 
     func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
         StatusBar.showGenericError()
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
         if optimistic {
             update(dismissRefresh: false, animated: true)
         }
