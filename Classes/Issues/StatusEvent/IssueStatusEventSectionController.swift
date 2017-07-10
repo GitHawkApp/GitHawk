@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueStatusEventSectionController: ListGenericSectionController<IssueStatusEventModel> {
+final class IssueStatusEventSectionController: ListGenericSectionController<IssueStatusEventModel>, IssueStatusEventCellDelegate {
 
     override init() {
         super.init()
@@ -26,7 +26,15 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
             let object = self.object
             else { fatalError("Cell incorrect type or object does not exist") }
         cell.configure(object)
+        cell.delegate = self
         return cell
+    }
+
+    // MARK: IssueStatusEventCellDelegate
+
+    func didTapActor(cell: IssueStatusEventCell) {
+        guard let actor = object?.actor else { return }
+        viewController?.presentProfile(login: actor)
     }
 
 }
