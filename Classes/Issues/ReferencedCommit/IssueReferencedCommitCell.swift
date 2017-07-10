@@ -18,6 +18,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        nameButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         nameButton.titleLabel?.font = Styles.Fonts.bodyBold
         contentView.addSubview(nameButton)
         nameButton.snp.makeConstraints { make in
@@ -28,14 +29,14 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         contentView.addSubview(referencedLabel)
         referencedLabel.snp.makeConstraints { make in
             make.centerY.equalTo(nameButton)
-            make.left.equalTo(nameButton.snp.right).offset(2)
+            make.left.equalTo(nameButton.snp.right).offset(4)
         }
 
         dateLabel.font = Styles.Fonts.body
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(referencedLabel.snp.right).offset(2)
+            make.left.equalTo(referencedLabel.snp.right).offset(3)
             make.top.equalTo(referencedLabel)
         }
     }
@@ -54,7 +55,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
             NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
         ]
         let title = NSMutableAttributedString(
-            string: NSLocalizedString("referenced in ", comment: ""),
+            string: NSLocalizedString("referenced ", comment: ""),
             attributes: referenceAttributes
         )
         let hashAttributes = [
