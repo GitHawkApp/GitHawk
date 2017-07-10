@@ -79,7 +79,13 @@ NotificationNextPageSectionControllerDelegate {
 
     private func markAllRead() {
         self.setRightBarItemSpinning()
-        self.client.markAllNotifications { _ in
+        self.client.markAllNotifications { success in
+            let generator = UINotificationFeedbackGenerator()
+            if success {
+                generator.notificationOccurred(.success)
+            } else {
+                generator.notificationOccurred(.error)
+            }
             self.reload()
         }
     }
