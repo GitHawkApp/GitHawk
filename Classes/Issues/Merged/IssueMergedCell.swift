@@ -9,19 +9,25 @@
 import UIKit
 import SnapKit
 
+protocol IssueMergedCellDelegate: class {
+    func didTapActor(cell: IssueMergedCell)
+    func didTapHash(cell: IssueMergedCell)
+}
+
 final class IssueMergedCell: UICollectionViewCell {
 
-    let actorLabel = UILabel()
-    let hashLabel = UILabel()
-    let button = UIButton()
-    let dateLabel = ShowMoreDetailsLabel()
+    weak var delegate: IssueMergedCellDelegate? = nil
+
+    private let actorLabel = UIButton()
+    private let hashLabel = UIButton()
+    private let button = UIButton()
+    private let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        actorLabel.font = Styles.Fonts.bodyBold
-        actorLabel.textColor = Styles.Colors.Gray.dark.color
-        actorLabel.backgroundColor = .clear
+        actorLabel.titleLabel?.font = Styles.Fonts.bodyBold
+        actorLabel.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         contentView.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
@@ -37,9 +43,8 @@ final class IssueMergedCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        hashLabel.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
-        hashLabel.backgroundColor = .clear
-        hashLabel.textColor = Styles.Colors.Gray.dark.color
+        hashLabel.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
+        hashLabel.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         contentView.addSubview(hashLabel)
         hashLabel.snp.makeConstraints { make in
             make.left.equalTo(button.snp.right).offset(Styles.Sizes.inlineSpacing)
@@ -63,8 +68,8 @@ final class IssueMergedCell: UICollectionViewCell {
     // MARK: Public API
 
     func configure(viewModel: IssueMergedModel) {
-        actorLabel.text = viewModel.actor
+        actorLabel.setTitle(viewModel.actor, for: .normal)
         dateLabel.setText(date: viewModel.date)
-        hashLabel.text = viewModel.commitHash.hashDisplay
+        hashLabel.setTitle(viewModel.commitHash.hashDisplay, for: .normal)
     }
 }
