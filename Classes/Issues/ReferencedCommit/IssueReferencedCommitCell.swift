@@ -9,25 +9,34 @@
 import UIKit
 import SnapKit
 
+protocol IssueReferencedCommitCellDelegate: class {
+    func didTapActor(cell: IssueReferencedCommitCell)
+    func didTapHash(cell: IssueReferencedCommitCell)
+}
+
 final class IssueReferencedCommitCell: UICollectionViewCell {
 
-    let nameButton = UIButton()
-    let referencedLabel = UILabel()
-    let dateLabel = ShowMoreDetailsLabel()
+    weak var delegate: IssueReferencedCommitCellDelegate? = nil
+
+    private let nameButton = UIButton()
+    private let referencedButton = UIButton()
+    private let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         nameButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         nameButton.titleLabel?.font = Styles.Fonts.bodyBold
+        nameButton.addTarget(self, action: #selector(IssueReferencedCommitCell.onName), for: .touchUpInside)
         contentView.addSubview(nameButton)
         nameButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
         }
 
-        contentView.addSubview(referencedLabel)
-        referencedLabel.snp.makeConstraints { make in
+        referencedButton.addTarget(self, action: #selector(IssueReferencedCommitCell.onHash), for: .touchUpInside)
+        contentView.addSubview(referencedButton)
+        referencedButton.snp.makeConstraints { make in
             make.centerY.equalTo(nameButton)
             make.left.equalTo(nameButton.snp.right).offset(4)
         }
@@ -36,13 +45,23 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(referencedLabel.snp.right).offset(3)
-            make.top.equalTo(referencedLabel)
+            make.left.equalTo(referencedButton.snp.right).offset(3)
+            make.centerY.equalTo(referencedButton)
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Private API
+
+    func onName() {
+        delegate?.didTapActor(cell: self)
+    }
+
+    func onHash() {
+        delegate?.didTapHash(cell: self)
     }
 
     // MARK: Public API
@@ -63,7 +82,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
         ]
         title.append(NSAttributedString(string: model.hash.hashDisplay, attributes: hashAttributes))
-        referencedLabel.attributedText = title
+        referencedButton.setAttributedTitle(title, for: .normal)
 
         dateLabel.setText(date: model.date)
     }

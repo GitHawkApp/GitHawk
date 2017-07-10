@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel> {
+final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel>, IssueReferencedCommitCellDelegate {
 
     override init() {
         super.init()
@@ -26,7 +26,20 @@ final class IssueReferencedCommitSectionController: ListGenericSectionController
         let object = self.object
             else { fatalError("Missing context, model, or cell wrong type") }
         cell.configure(object)
+        cell.delegate = self
         return cell
+    }
+
+    // MARK: IssueReferencedCommitCellDelegate
+
+    func didTapHash(cell: IssueReferencedCommitCell) {
+        guard let object = self.object else { return }
+        viewController?.presentCommit(owner: object.owner, repo: object.repo, hash: object.hash)
+    }
+
+    func didTapActor(cell: IssueReferencedCommitCell) {
+        guard let actor = object?.actor else { return }
+        viewController?.presentProfile(login: actor)
     }
 
 }

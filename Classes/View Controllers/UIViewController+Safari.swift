@@ -19,4 +19,9 @@ extension UIViewController {
         present(CreateProfileViewController(login: login), animated: true)
     }
 
+    func presentCommit(owner: String, repo: String, hash: String) {
+        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/commit/\(hash)") else { return }
+        presentSafari(url: url)
+    }
+
 }
