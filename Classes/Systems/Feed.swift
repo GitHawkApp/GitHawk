@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 import IGListKit
 
 protocol FeedDelegate: class {
@@ -52,12 +51,17 @@ final class Feed: NSObject, UIScrollViewDelegate {
         adapter.collectionView = collectionView
 
         view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
-        }
 
         collectionView.refreshControl?.beginRefreshing()
         refresh()
+    }
+
+    func viewWillLayoutSubviews(view: UIView) {
+        let bounds = view.bounds
+        if collectionView.frame != bounds {
+            collectionView.frame = bounds
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
 
     func finishLoading(dismissRefresh: Bool, animated: Bool = true) {
@@ -77,14 +81,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
         } else {
             block()
         }
-    }
-
-    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        let layout = collectionView.collectionViewLayout
-        layout.invalidateLayout()
-        coordinator.animate(alongsideTransition: { _ in
-            layout.invalidateLayout()
-        })
     }
 
     // MARK: Private API
