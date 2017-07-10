@@ -9,9 +9,14 @@
 import UIKit
 import IGListKit
 
-final class IssueMergedSectionController: ListGenericSectionController<IssueMergedModel> {
+final class IssueMergedSectionController: ListGenericSectionController<IssueMergedModel>, IssueMergedCellDelegate {
 
-    override init() {
+    private let owner: String
+    private let repo: String
+
+    init(owner: String, repo: String) {
+        self.owner = owner
+        self.repo = repo
         super.init()
         inset = Styles.Sizes.listInsetTight
     }
@@ -26,7 +31,20 @@ final class IssueMergedSectionController: ListGenericSectionController<IssueMerg
             let object = self.object
             else { fatalError("Missing context, object, or cell wrong type") }
         cell.configure(viewModel: object)
+        cell.delegate = self
         return cell
+    }
+
+    // MARK: IssueMergedCellDelegate
+
+    func didTapActor(cell: IssueMergedCell) {
+        guard let actor = object?.actor else { return }
+        viewController?.presentProfile(login: actor)
+    }
+
+    func didTapHash(cell: IssueMergedCell) {
+        guard let hash = object?.commitHash else { return }
+        viewController?.presentCommit(owner: owner, repo: repo, hash: hash)
     }
 
 }

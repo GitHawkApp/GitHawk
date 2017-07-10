@@ -100,7 +100,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController()
         case is IssueStatusEventModel: return IssueStatusEventSectionController()
-        case is IssueMergedModel: return IssueMergedSectionController()
+        case is IssueMergedModel: return IssueMergedSectionController(owner: owner, repo: repo)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         case is IssueReviewModel: return IssueReviewSectionController()
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
