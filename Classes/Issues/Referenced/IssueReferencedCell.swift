@@ -36,10 +36,7 @@ final class IssueReferencedCell: UICollectionViewCell {
             make.top.equalTo(referencedLabel)
         }
 
-        statusButton.setupAsLabel()
-        // override default setup b/c there wont be a title
-        statusButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        statusButton.imageEdgeInsets = .zero
+        statusButton.setupAsLabel(icon: false)
         contentView.addSubview(statusButton)
         statusButton.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)

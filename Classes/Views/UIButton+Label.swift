@@ -18,14 +18,22 @@ extension UIButton {
         case unlocked
     }
 
-    func setupAsLabel() {
+    func setupAsLabel(icon: Bool = true) {
         accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
         titleLabel?.font = Styles.Fonts.smallTitle
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
         clipsToBounds = true
-        imageEdgeInsets = UIEdgeInsets(top: 0, left: -Styles.Sizes.columnSpacing, bottom: 0, right: 0)
-        contentEdgeInsets = UIEdgeInsets(top: 2, left: Styles.Sizes.columnSpacing + 2, bottom: 2, right: 4)
+
+        let magnitude: CGFloat = 2
+        if icon {
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: -Styles.Sizes.columnSpacing, bottom: 0, right: 0)
+            contentEdgeInsets = UIEdgeInsets(top: magnitude, left: Styles.Sizes.columnSpacing + magnitude, bottom: magnitude, right: magnitude * 2)
+        } else {
+            imageEdgeInsets = .zero
+            contentEdgeInsets = UIEdgeInsets(top: magnitude, left: magnitude, bottom: magnitude, right: magnitude)
+        }
+
     }
 
     func config(pullRequest: Bool, state: State) {
