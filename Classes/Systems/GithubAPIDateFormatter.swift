@@ -8,9 +8,8 @@
 
 import Foundation
 
-private let dateFormatter = DateFormatter()
-func GithubAPIDateFormatter() -> DateFormatter {
+private let dateFormatter = ISO8601DateFormatter()
+func GithubAPIDateFormatter() -> ISO8601DateFormatter {
     // https://developer.github.com/v3/#schema
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     return dateFormatter
 }
