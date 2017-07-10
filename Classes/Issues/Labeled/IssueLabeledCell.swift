@@ -32,7 +32,7 @@ final class IssueLabeledCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        labelButton.setupAsLabel()
+        labelButton.setupAsLabel(icon: false)
         labelButton.addTarget(self, action: #selector(IssueLabeledCell.onLabel), for: .touchUpInside)
         contentView.addSubview(labelButton)
         labelButton.snp.makeConstraints { make in
