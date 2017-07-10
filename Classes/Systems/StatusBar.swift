@@ -10,6 +10,10 @@ import Foundation
 import JDStatusBarNotification
 
 struct StatusBar {
+    
+    private static func provideHapticFeedback() {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    }
 
     static func showRevokeError() {
         JDStatusBarNotification.show(
@@ -17,6 +21,7 @@ struct StatusBar {
             dismissAfter: 3,
             styleName: JDStatusBarStyleError
         )
+        provideHapticFeedback()
     }
 
     static func showNetworkError() {
@@ -25,6 +30,7 @@ struct StatusBar {
             dismissAfter: 3,
             styleName: JDStatusBarStyleError
         )
+        provideHapticFeedback()
     }
 
     static func showGenericError() {
@@ -33,6 +39,7 @@ struct StatusBar {
             dismissAfter: 3,
             styleName: JDStatusBarStyleError
         )
+        provideHapticFeedback()
     }
 
 }
