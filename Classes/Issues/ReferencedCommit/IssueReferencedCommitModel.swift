@@ -15,6 +15,7 @@ final class IssueReferencedCommitModel: ListDiffable {
     let owner: String
     let repo: String
     let hash: String
+    let actor: String
     let date: Date
 
     init(
@@ -22,12 +23,14 @@ final class IssueReferencedCommitModel: ListDiffable {
         owner: String,
         repo: String,
         hash: String,
+        actor: String,
         date: Date
         ) {
         self.id = id
         self.owner = owner
         self.repo = repo
         self.hash = hash
+        self.actor = actor
         self.date = date
     }
 

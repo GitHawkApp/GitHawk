@@ -193,12 +193,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on ReferencedEvent {" +
     "              __typename" +
+    "              createdAt" +
     "              ...nodeFields" +
     "              refCommit: commit {" +
     "                __typename" +
     "                oid" +
     "              }" +
-    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
     "              commitRepository {" +
     "                __typename" +
     "                ...referencedRepositoryFields" +
@@ -367,12 +371,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on ReferencedEvent {" +
     "              __typename" +
-    "              ...nodeFields" +
-    "              refCommit: commit {" +
-    "                __typename" +
-    "                oid" +
-    "              }" +
     "              createdAt" +
+    "              ...nodeFields" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
     "              commitRepository {" +
     "                __typename" +
     "                ...referencedRepositoryFields" +
@@ -863,6 +867,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public let __typename: String
+                /// Identifies the actor who performed the 'label' event.
+                public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
                 /// Identifies the commit associated with the 'referenced' event.
@@ -876,6 +882,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   refCommit = try reader.optionalValue(for: Field(responseName: "refCommit", fieldName: "commit"))
                   commitRepository = try reader.value(for: Field(responseName: "commitRepository"))
@@ -887,6 +894,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                 public struct Fragments {
                   public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
                 }
 
                 public struct RefCommit: GraphQLMappable {
@@ -1500,10 +1518,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public let __typename: String
+                /// Identifies the actor who performed the 'label' event.
+                public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
-                /// Identifies the commit associated with the 'referenced' event.
-                public let refCommit: RefCommit?
                 /// Identifies the repository associated with the 'referenced' event.
                 public let commitRepository: CommitRepository
                 /// Object referenced by event.
@@ -1513,8 +1531,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                  refCommit = try reader.optionalValue(for: Field(responseName: "refCommit", fieldName: "commit"))
                   commitRepository = try reader.value(for: Field(responseName: "commitRepository"))
                   subject = try reader.value(for: Field(responseName: "subject"))
 
@@ -1526,14 +1544,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public let nodeFields: NodeFields
                 }
 
-                public struct RefCommit: GraphQLMappable {
+                public struct Actor: GraphQLMappable {
                   public let __typename: String
-                  /// The Git object ID
-                  public let oid: String
+                  /// The username of the actor.
+                  public let login: String
 
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
-                    oid = try reader.value(for: Field(responseName: "oid"))
+                    login = try reader.value(for: Field(responseName: "login"))
                   }
                 }
 
