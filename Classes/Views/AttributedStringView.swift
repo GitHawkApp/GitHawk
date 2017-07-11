@@ -15,7 +15,7 @@ protocol AttributedStringViewDelegate: class {
 
 final class AttributedStringView: UIView {
 
-    var delegate: AttributedStringViewDelegate? = nil
+    weak var delegate: AttributedStringViewDelegate? = nil
 
     private var text: NSAttributedStringSizing? = nil
 
