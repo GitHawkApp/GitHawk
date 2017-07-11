@@ -39,6 +39,11 @@ class SelectableCell: UICollectionViewCell {
     private lazy var overlay: UIView = {
         return self.contentView.addOverlay()
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+    }
 
     override func prepareForReuse() {
         super.prepareForReuse()
