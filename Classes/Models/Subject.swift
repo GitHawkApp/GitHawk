@@ -1,6 +1,6 @@
 import Foundation
 final class Subject: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let title = "title"
     static let type = "type"
     static let latest_comment_url = "latest_comment_url"

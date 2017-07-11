@@ -10,7 +10,7 @@ import Foundation
 
 final class GithubUserSession: NSObject, NSCoding {
 
-    struct Keys {
+    enum Keys {
         static let token = "token"
     }
 
