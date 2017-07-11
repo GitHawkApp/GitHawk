@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Strings {
+enum Strings {
 
     static let all = NSLocalizedString("All", comment: "")
     static let unread = NSLocalizedString("Unread", comment: "")

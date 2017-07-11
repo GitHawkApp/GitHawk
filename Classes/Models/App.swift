@@ -1,7 +1,7 @@
 import Foundation
 
 final class App: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let name = "name"
     static let client_id = "client_id"
     static let url = "url"
