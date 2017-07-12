@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct GithubAPI {
+public enum GithubAPI {
 
     static let clientID = "a8488ca1ed943b610815"
     static let clientSecret = "350e2e37014a507c0f0ecc915949a70da6afa220"

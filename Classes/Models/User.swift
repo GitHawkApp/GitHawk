@@ -1,6 +1,6 @@
 import Foundation
 final class User: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let public_repos = "public_repos"
     static let organizations_url = "organizations_url"
     static let repos_url = "repos_url"
