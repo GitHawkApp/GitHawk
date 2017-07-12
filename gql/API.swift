@@ -224,6 +224,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                }" +
     "              }" +
     "            }" +
+    "            ... on RenamedTitleEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              currentTitle" +
+    "              previousTitle" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -396,6 +407,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                  closed" +
     "                  merged" +
     "                }" +
+    "              }" +
+    "            }" +
+    "            ... on RenamedTitleEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              currentTitle" +
+    "              previousTitle" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
     "              }" +
     "            }" +
     "          }" +
@@ -762,6 +784,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let createdAt: String
                 /// Identifies the current title of the issue or pull request.
                 public let currentTitle: String
+                /// Identifies the previous title of the issue or pull request.
+                public let previousTitle: String
 
                 public let fragments: Fragments
 
@@ -770,6 +794,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
+                  previousTitle = try reader.value(for: Field(responseName: "previousTitle"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -1363,6 +1388,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let createdAt: String
                 /// Identifies the current title of the issue or pull request.
                 public let currentTitle: String
+                /// Identifies the previous title of the issue or pull request.
+                public let previousTitle: String
 
                 public let fragments: Fragments
 
@@ -1371,6 +1398,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   currentTitle = try reader.value(for: Field(responseName: "currentTitle"))
+                  previousTitle = try reader.value(for: Field(responseName: "previousTitle"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
