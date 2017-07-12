@@ -14,7 +14,7 @@ func IssueRenamedString(previous: String, current: String, width: CGFloat) -> NS
         NSFontAttributeName: Styles.Fonts.bodyBold
     ]
     let dividerAttributes = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.light.color,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
         NSFontAttributeName: Styles.Fonts.body
     ]
     let text = NSMutableAttributedString(string: previous, attributes: titleAttributes)
