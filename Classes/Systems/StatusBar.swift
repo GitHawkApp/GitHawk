@@ -9,7 +9,7 @@
 import Foundation
 import JDStatusBarNotification
 
-struct StatusBar {
+enum StatusBar {
     
     private static func provideHapticFeedback() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)

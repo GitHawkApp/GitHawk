@@ -1,6 +1,6 @@
 import Foundation
 final class Permission: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let push = "push"
     static let admin = "admin"
     static let pull = "pull"
