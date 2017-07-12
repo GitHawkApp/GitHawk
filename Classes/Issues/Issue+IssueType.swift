@@ -161,7 +161,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     )
                     results.append(model)
                 }
-            }  else if let rename = node.asRenamedTitleEvent,
+            } else if let rename = node.asRenamedTitleEvent,
                 let date = GithubAPIDateFormatter().date(from: rename.createdAt) {
                 let text = IssueRenamedString(
                     previous: rename.previousTitle,
