@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueRenamedSectionController: ListGenericSectionController<IssueRenamedModel> {
+final class IssueRenamedSectionController: ListGenericSectionController<IssueRenamedModel>, IssueRenamedCellDelegate {
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width,
@@ -23,7 +23,15 @@ final class IssueRenamedSectionController: ListGenericSectionController<IssueRen
             let object = self.object
             else { fatalError("Missing context, object, or cell wrong type") }
         cell.configure(object)
+        cell.delegate = self
         return cell
+    }
+
+    // MARK: IssueRenamedCellDelegate
+
+    func didTapActor(cell: IssueRenamedCell) {
+        guard let actor = object?.actor else { return }
+        viewController?.presentProfile(login: actor)
     }
     
 }
