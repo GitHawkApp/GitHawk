@@ -29,7 +29,7 @@ extension GithubClient {
         ) {
 
         let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
-        apollo.fetch(query: query, cachePolicy: .returnCacheDataElseFetch) { (result, error) in
+        apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             let issueOrPullRequest = result?.data?.repository?.issueOrPullRequest
             if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
