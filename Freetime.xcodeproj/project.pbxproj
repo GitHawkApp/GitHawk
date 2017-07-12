@@ -459,7 +459,6 @@
 		29C340841F1295F200EC8D40 /* PhotoViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */; };
 		29C340861F1295F200EC8D40 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		29C340871F1295F200EC8D40 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */; };
-		29C340881F1295F200EC8D40 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
 		29C3408B1F1295F200EC8D40 /* OauthLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29416BF81F1138B700D03E1A /* OauthLogin.storyboard */; };
 		29C3408C1F1295F200EC8D40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */; };
 		29C3408D1F1295F200EC8D40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86E1EC0D5C200B44A1F /* Assets.xcassets */; };
@@ -489,6 +488,8 @@
 		29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
+		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
+		DB71E2061B911E12D377AD8F /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,7 +530,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2161D42FE580EF8B85D6834C /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
@@ -724,9 +724,11 @@
 		29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freetime-Bridging-Header.h"; sourceTree = "<group>"; };
 		29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelModel.swift; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
-		5ABD13BC71AFE04F1732C101 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
+		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		FDDE84B781D3A44BF57394BE /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -738,6 +740,7 @@
 				292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */,
 				295F52DA1EF1C0C7000B53CF /* MMMarkdown.framework in Frameworks */,
 				4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */,
+				DB71E2061B911E12D377AD8F /* Pods_Freetime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,6 +748,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,7 +758,6 @@
 			files = (
 				29C340861F1295F200EC8D40 /* SwipeCellKit.framework in Frameworks */,
 				29C340871F1295F200EC8D40 /* MMMarkdown.framework in Frameworks */,
-				29C340881F1295F200EC8D40 /* Pods_Freetime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1284,10 +1287,10 @@
 		33A455DB21DE4BF7CF5B8C00 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2161D42FE580EF8B85D6834C /* Pods-Freetime.debug.xcconfig */,
-				5ABD13BC71AFE04F1732C101 /* Pods-Freetime.release.xcconfig */,
 				7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */,
 				FDDE84B781D3A44BF57394BE /* Pods-FreetimeTests.release.xcconfig */,
+				E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */,
+				2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1298,6 +1301,7 @@
 				292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */,
 				295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */,
 				665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */,
+				CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1353,15 +1357,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29C340951F1295F200EC8D40 /* Build configuration list for PBXNativeTarget "Snapshots" */;
 			buildPhases = (
-				29C33FE11F1295F200EC8D40 /* [CP] Check Pods Manifest.lock */,
 				29C33FE21F1295F200EC8D40 /* Generate Apollo GraphQL API */,
 				29C33FE31F1295F200EC8D40 /* Sources */,
 				29C340851F1295F200EC8D40 /* Frameworks */,
 				29C340891F1295F200EC8D40 /* Increment Build Number */,
 				29C3408A1F1295F200EC8D40 /* Resources */,
 				29C340901F1295F200EC8D40 /* Embed Frameworks */,
-				29C340931F1295F200EC8D40 /* [CP] Embed Pods Frameworks */,
-				29C340941F1295F200EC8D40 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1517,21 +1518,6 @@
 			shellPath = /bin/sh;
 			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
 		};
-		29C33FE11F1295F200EC8D40 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		29C33FE21F1295F200EC8D40 /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1559,36 +1545,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT START\"\necho \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT END\"";
-		};
-		29C340931F1295F200EC8D40 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		29C340941F1295F200EC8D40 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		2CC988A6FBEAF3F744A53C18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2258,7 +2214,7 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2161D42FE580EF8B85D6834C /* Pods-Freetime.debug.xcconfig */;
+			baseConfigurationReference = E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2283,7 +2239,7 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5ABD13BC71AFE04F1732C101 /* Pods-Freetime.release.xcconfig */;
+			baseConfigurationReference = 2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2339,7 +2295,6 @@
 		};
 		29C340961F1295F200EC8D40 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2161D42FE580EF8B85D6834C /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2364,7 +2319,6 @@
 		};
 		29C340971F1295F200EC8D40 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5ABD13BC71AFE04F1732C101 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
