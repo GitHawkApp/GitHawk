@@ -9,22 +9,30 @@
 import UIKit
 import SnapKit
 
+protocol IssueRenamedCellDelegate: class {
+    func didTapActor(cell: IssueRenamedCell)
+}
+
 final class IssueRenamedCell: UICollectionViewCell {
 
     static let titleInset = UIEdgeInsets(
-        top: 24,
+        top: 28,
         left: Styles.Sizes.gutter,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
 
-    let actorLabel = UILabel()
-    let dateLabel = ShowMoreDetailsLabel()
-    let titleView = AttributedStringView()
+    weak var delegate: IssueRenamedCellDelegate? = nil
+
+    private let actorLabel = UIButton()
+    private let dateLabel = ShowMoreDetailsLabel()
+    private let titleView = AttributedStringView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        actorLabel.contentEdgeInsets = .zero
+        actorLabel.addTarget(self, action: #selector(IssueRenamedCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
@@ -36,7 +44,7 @@ final class IssueRenamedCell: UICollectionViewCell {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.left.equalTo(actorLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.bottom.equalTo(actorLabel)
+            make.centerY.equalTo(actorLabel)
         }
 
         contentView.addSubview(titleView)
@@ -49,6 +57,12 @@ final class IssueRenamedCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         titleView.reposition(width: contentView.bounds.width)
+    }
+
+    // MARK: Private API
+
+    func onActor() {
+        delegate?.didTapActor(cell: self)
     }
 
     // MARK: Public API
@@ -67,7 +81,7 @@ final class IssueRenamedCell: UICollectionViewCell {
             string: NSLocalizedString(" renamed", comment: ""),
             attributes: referencedAttributes
             ))
-        actorLabel.attributedText = actor
+        actorLabel.setAttributedTitle(actor, for: .normal)
 
         dateLabel.setText(date: model.date)
 
