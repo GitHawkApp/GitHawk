@@ -25,6 +25,8 @@ final class NotificationCell: SwipeSelectableCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
 
         contentView.backgroundColor = .white
 
@@ -98,6 +100,10 @@ final class NotificationCell: SwipeSelectableCell {
         textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
+        accessibilityLabel = contentView.subviews
+            .flatMap { $0.accessibilityLabel }
+            .reduce("", { $0 + ".\n" + $1 })
+            .appending("\n\(viewModel.type.localizedString)")
     }
 
 }
