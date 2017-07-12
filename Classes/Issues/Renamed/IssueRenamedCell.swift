@@ -16,7 +16,7 @@ protocol IssueRenamedCellDelegate: class {
 final class IssueRenamedCell: UICollectionViewCell {
 
     static let titleInset = UIEdgeInsets(
-        top: 28,
+        top: Styles.Sizes.labelEventHeight,
         left: Styles.Sizes.gutter,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
