@@ -43,6 +43,11 @@ class SelectableCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
     override func prepareForReuse() {
@@ -52,6 +57,7 @@ class SelectableCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        accessibilityLabel = contentView.subviews.flatMap { $0.accessibilityLabel }.reduce("", { $0 + " " + $1 })
         overlay.layoutOverlay()
     }
 
