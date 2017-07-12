@@ -57,10 +57,16 @@ class SelectableCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        accessibilityLabel = contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("", { "\($0 ?? "").\n\($1)" })
         overlay.layoutOverlay()
+    }
+    
+    override var accessibilityLabel: String? {
+        get {
+            return contentView.subviews
+                .flatMap { $0.accessibilityLabel }
+                .reduce("", { "\($0 ?? "").\n\($1)" })
+        }
+        set { }
     }
 
     override var isSelected: Bool {
