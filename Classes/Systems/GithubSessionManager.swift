@@ -22,7 +22,7 @@ final class GithubSessionManager: NSObject, ListDiffable {
     }
     private var listeners = [ListenerWrapper]()
 
-    private struct Keys {
+    private enum Keys {
         static let version = "1"
         static let session = "com.github.sessionmanager.session.\(Keys.version)"
     }

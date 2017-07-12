@@ -1,7 +1,7 @@
 import Foundation
 
 final class Authorization: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let note = "note"
     static let updated_at = "updated_at"
     static let id = "id"

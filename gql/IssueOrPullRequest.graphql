@@ -101,6 +101,15 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                 }
               }
             }
+            ... on RenamedTitleEvent {
+              ...nodeFields
+              createdAt
+              currentTitle
+              previousTitle
+              actor {
+                login
+              }
+            }
           }
         }
         ...reactionFields
@@ -237,6 +246,15 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                   closed
                   merged
                 }
+              }
+            }
+            ... on RenamedTitleEvent {
+              ...nodeFields
+              createdAt
+              currentTitle
+              previousTitle
+              actor {
+                login
               }
             }
           }

@@ -1,6 +1,6 @@
 import Foundation
 final class Notification: NSObject, NSCoding {
-  struct Keys {
+  enum Keys {
     static let reason = "reason"
     static let updated_at = "updated_at"
     static let unread = "unread"
