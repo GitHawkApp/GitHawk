@@ -8,9 +8,9 @@
 
 import UIKit
 
-struct Styles {
+enum Styles {
 
-    struct Sizes {
+    enum Sizes {
         static let gutter: CGFloat = 15
         static let icon = CGSize(width: 20, height: 20)
         static let buttonIcon = CGSize(width: 25, height: 25)
@@ -34,7 +34,7 @@ struct Styles {
         )
         static let labelEventHeight: CGFloat = 30
 
-        struct Text {
+        enum Text {
             static let body: CGFloat = 16
             static let secondary: CGFloat = 13
             static let title: CGFloat = 14
@@ -49,13 +49,13 @@ struct Styles {
             static let h6: CGFloat = 16
         }
 
-        struct HTML {
+        enum HTML {
             static let boldWeight = 600
             static let spacing = 16
         }
     }
 
-    struct Fonts {
+    enum Fonts {
         static let body = UIFont.systemFont(ofSize: Styles.Sizes.Text.body)
         static let bodyBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.body)
         static let secondary = UIFont.systemFont(ofSize: Styles.Sizes.Text.secondary)
@@ -66,27 +66,27 @@ struct Styles {
         static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
     }
 
-    struct Colors {
+    enum Colors {
 
         static let background = UIColor.groupTableViewBackground
         static let purple = "6f42c1"
 
-        struct Red {
+        enum Red {
             static let medium = "cb2431"
             static let light = "ffeef0"
         }
 
-        struct Green {
+        enum Green {
             static let medium = "28a745"
             static let light = "e6ffed"
         }
 
-        struct Blue {
+        enum Blue {
             static let medium = "0366d6"
             static let light = "f1f8ff"
         }
 
-        struct Gray {
+        enum Gray {
             static let dark = "24292e"
             static let medium = "586069"
             static let light = "a3aab1"
@@ -96,7 +96,7 @@ struct Styles {
             static let alphaLighter = UIColor(white: 0, alpha: 0.10)
         }
 
-        struct Yellow {
+        enum Yellow {
             static let light = "fff5b1"
         }
     }
