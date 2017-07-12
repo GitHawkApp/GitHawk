@@ -43,6 +43,14 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         }
 
         resetAnimations()
+
+        // CAAnimations will be removed from layers on background. restore when foregrounding.
+        NotificationCenter.default
+            .addObserver(self,
+                selector: #selector(NoNewNotificationsCell.resetAnimations),
+                name: NSNotification.Name.UIApplicationWillEnterForeground,
+                object: nil
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +73,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    private func resetAnimations() {
+    @objc private func resetAnimations() {
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         let duration: TimeInterval = 1
 

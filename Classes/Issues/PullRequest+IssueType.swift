@@ -183,6 +183,20 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     )
                     results.append(model)
                 }
+            } else if let rename = node.asRenamedTitleEvent,
+                let date = GithubAPIDateFormatter().date(from: rename.createdAt) {
+                let text = IssueRenamedString(
+                    previous: rename.previousTitle,
+                    current: rename.currentTitle,
+                    width: width
+                )
+                let model = IssueRenamedModel(
+                    id: rename.fragments.nodeFields.id,
+                    actor: rename.actor?.login ?? Strings.unknown,
+                    date: date,
+                    titleChangeString: text
+                )
+                results.append(model)
             }
         }
 
