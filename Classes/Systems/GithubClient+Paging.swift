@@ -25,7 +25,7 @@ func PagingData(link: String?) -> GithubClient.Page? {
         guard let semicolonRange = l.range(of: ";") else { continue }
         let urlString = l.substring(to: semicolonRange.lowerBound)
             .trimmingCharacters(in: whitespaceAndBrackets)
-        guard let pageItem = urlString.valueForQuery(key: "name")
+        guard let pageItem = urlString.valueForQuery(key: "page")
             else { continue }
         let page = (pageItem as NSString).integerValue
 

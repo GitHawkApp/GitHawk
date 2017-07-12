@@ -79,22 +79,18 @@ final class NotificationClient {
             completion(.success(notifications, page))
         }
 
-//        if let sampleJSON = loadSample(path: "notifications") as? NotificationsPayload {
-//            success(sampleJSON, nil)
-//        } else {
-            githubClient.request(GithubClient.Request(
-                path: "notifications",
-                method: .get,
-                parameters: parameters,
-                headers: nil
-            ) { (response, nextPage) in
-                if let jsonArr = response.value as? NotificationsPayload {
-                    success(jsonArr, nextPage?.next)
-                } else {
-                    completion(.failed(response.error))
-                }
-            })
-//        }
+        githubClient.request(GithubClient.Request(
+            path: "notifications",
+            method: .get,
+            parameters: parameters,
+            headers: nil
+        ) { (response, nextPage) in
+            if let jsonArr = response.value as? NotificationsPayload {
+                success(jsonArr, nextPage?.next)
+            } else {
+                completion(.failed(response.error))
+            }
+        })
     }
 
     typealias MarkAllCompletion = (Bool) -> ()
