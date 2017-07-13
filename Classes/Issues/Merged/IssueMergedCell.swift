@@ -18,36 +18,38 @@ final class IssueMergedCell: UICollectionViewCell {
 
     weak var delegate: IssueMergedCellDelegate? = nil
 
-    private let actorLabel = UIButton()
-    private let hashLabel = UIButton()
-    private let button = UIButton()
+    private let actorButton = UIButton()
+    private let hashButton = UIButton()
+    private let mergedButton = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        actorLabel.titleLabel?.font = Styles.Fonts.bodyBold
-        actorLabel.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
-        contentView.addSubview(actorLabel)
-        actorLabel.snp.makeConstraints { make in
+        actorButton.titleLabel?.font = Styles.Fonts.bodyBold
+        actorButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
+        actorButton.addTarget(self, action: #selector(IssueMergedCell.onActor), for: .touchUpInside)
+        contentView.addSubview(actorButton)
+        actorButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
 
-        button.setTitle(Strings.merged, for: .normal)
-        button.setupAsLabel()
-        button.config(pullRequest: false, state: .merged)
-        contentView.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.left.equalTo(actorLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
+        mergedButton.setTitle(Strings.merged, for: .normal)
+        mergedButton.setupAsLabel()
+        mergedButton.config(pullRequest: false, state: .merged)
+        contentView.addSubview(mergedButton)
+        mergedButton.snp.makeConstraints { make in
+            make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
 
-        hashLabel.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
-        hashLabel.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
-        contentView.addSubview(hashLabel)
-        hashLabel.snp.makeConstraints { make in
-            make.left.equalTo(button.snp.right).offset(Styles.Sizes.inlineSpacing)
+        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
+        hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
+        hashButton.addTarget(self, action: #selector(IssueMergedCell.onHash), for: .touchUpInside)
+        contentView.addSubview(hashButton)
+        hashButton.snp.makeConstraints { make in
+            make.left.equalTo(mergedButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
 
@@ -56,7 +58,7 @@ final class IssueMergedCell: UICollectionViewCell {
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(hashLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.left.equalTo(hashButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
     }
@@ -65,11 +67,21 @@ final class IssueMergedCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Private API
+
+    func onActor() {
+        delegate?.didTapActor(cell: self)
+    }
+
+    func onHash() {
+        delegate?.didTapHash(cell: self)
+    }
+
     // MARK: Public API
 
     func configure(viewModel: IssueMergedModel) {
-        actorLabel.setTitle(viewModel.actor, for: .normal)
+        actorButton.setTitle(viewModel.actor, for: .normal)
         dateLabel.setText(date: viewModel.date)
-        hashLabel.setTitle(viewModel.commitHash.hashDisplay, for: .normal)
+        hashButton.setTitle(viewModel.commitHash.hashDisplay, for: .normal)
     }
 }
