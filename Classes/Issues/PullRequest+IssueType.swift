@@ -197,6 +197,46 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     titleChangeString: text
                 )
                 results.append(model)
+            } else if let assigned = node.asAssignedEvent,
+                let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: assigned.fragments.nodeFields.id,
+                    actor: assigned.actor?.login ?? Strings.unknown,
+                    user: assigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .assigned
+                )
+                results.append(model)
+            } else if let unassigned = node.asUnassignedEvent,
+                let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: unassigned.fragments.nodeFields.id,
+                    actor: unassigned.actor?.login ?? Strings.unknown,
+                    user: unassigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .unassigned
+                )
+                results.append(model)
+            } else if let reviewRequested = node.asReviewRequestedEvent,
+                let date = GithubAPIDateFormatter().date(from: reviewRequested.createdAt) {
+                let model = IssueRequestModel(
+                    id: reviewRequested.fragments.nodeFields.id,
+                    actor: reviewRequested.actor?.login ?? Strings.unknown,
+                    user: reviewRequested.subject.login,
+                    date: date,
+                    event: .reviewRequested
+                )
+                results.append(model)
+            } else if let reviewRequestRemoved = node.asReviewRequestRemovedEvent,
+                let date = GithubAPIDateFormatter().date(from: reviewRequestRemoved.createdAt) {
+                let model = IssueRequestModel(
+                    id: reviewRequestRemoved.fragments.nodeFields.id,
+                    actor: reviewRequestRemoved.actor?.login ?? Strings.unknown,
+                    user: reviewRequestRemoved.subject.login,
+                    date: date,
+                    event: .reviewRequestRemoved
+                )
+                results.append(model)
             }
         }
 

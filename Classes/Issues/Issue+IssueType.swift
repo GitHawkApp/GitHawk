@@ -175,6 +175,26 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     titleChangeString: text
                 )
                 results.append(model)
+            } else if let assigned = node.asAssignedEvent,
+                let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: assigned.fragments.nodeFields.id,
+                    actor: assigned.actor?.login ?? Strings.unknown,
+                    user: assigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .assigned
+                )
+                results.append(model)
+            } else if let unassigned = node.asUnassignedEvent,
+                let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: unassigned.fragments.nodeFields.id,
+                    actor: unassigned.actor?.login ?? Strings.unknown,
+                    user: unassigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .unassigned
+                )
+                results.append(model)
             }
         }
 
