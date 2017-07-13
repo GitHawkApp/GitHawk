@@ -106,6 +106,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
+        case is IssueRequestModel: return IssueRequestSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }
