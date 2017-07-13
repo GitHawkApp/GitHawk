@@ -19,9 +19,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on LabeledEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               label {
                 color
                 name
@@ -30,9 +28,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on UnlabeledEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               label {
                 color
                 name
@@ -41,38 +37,28 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on ClosedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on ReopenedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on RenamedTitleEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
               currentTitle
             }
             ... on LockedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on UnlockedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on ReferencedEvent {
@@ -81,9 +67,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               refCommit: commit { 
                 oid 
               }
-              actor {
-                login
-              }
+              actor {login}
               commitRepository {
                 ...referencedRepositoryFields
               }
@@ -106,9 +90,19 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               createdAt
               currentTitle
               previousTitle
-              actor {
-                login
-              }
+              actor {login}
+            }
+            ... on AssignedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              user{login}
+            }
+            ... on UnassignedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              user{login}
             }
           }
         }
@@ -139,9 +133,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on LabeledEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               label {
                 color
                 name
@@ -150,9 +142,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on UnlabeledEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               label {
                 color
                 name
@@ -161,38 +151,28 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on ClosedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on ReopenedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on RenamedTitleEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
               currentTitle
             }
             ... on LockedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on UnlockedEvent {
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on MergedEvent {
@@ -200,9 +180,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               commit {
                 oid
               }
-              actor {
-                login
-              }
+              actor {login}
               createdAt
             }
             ... on PullRequestReviewThread {
@@ -221,16 +199,12 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...commentFields
               state
               submittedAt
-              author {
-                login
-              }
+              author {login}
             }
             ... on ReferencedEvent {
               createdAt
               ...nodeFields
-              actor {
-                login
-              }
+              actor {login}
               commitRepository {
                 ...referencedRepositoryFields
               }
@@ -253,9 +227,31 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               createdAt
               currentTitle
               previousTitle
-              actor {
-                login
-              }
+              actor {login}
+            }
+            ... on AssignedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              user{login}
+            }
+            ... on UnassignedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              user{login}
+            }
+            ... on ReviewRequestedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              subject{login}
+            }
+            ... on ReviewRequestRemovedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              subject{login}
             }
           }
         }
