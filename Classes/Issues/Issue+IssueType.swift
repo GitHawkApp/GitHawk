@@ -43,6 +43,14 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return fragments.lockableFields.locked
     }
 
+    var assigneeFields: AssigneeFields {
+        return fragments.assigneeFields
+    }
+
+    var reviewRequestModel: IssueAssigneesModel? {
+        return nil
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 
@@ -85,6 +93,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id, 
                     actor: closed.actor?.login ?? Strings.unknown,
+                    commitHash: closed.closedCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: false
@@ -95,6 +104,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .reopened,
                     pullRequest: false
@@ -105,6 +115,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     let model = IssueStatusEventModel(
                         id: locked.fragments.nodeFields.id,
                         actor: locked.actor?.login ?? Strings.unknown,
+                        commitHash: nil,
                         date: date,
                         status: .locked,
                         pullRequest: false
@@ -115,6 +126,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: unlocked.fragments.nodeFields.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .unlocked,
                     pullRequest: false
@@ -173,6 +185,26 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: rename.actor?.login ?? Strings.unknown,
                     date: date,
                     titleChangeString: text
+                )
+                results.append(model)
+            } else if let assigned = node.asAssignedEvent,
+                let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: assigned.fragments.nodeFields.id,
+                    actor: assigned.actor?.login ?? Strings.unknown,
+                    user: assigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .assigned
+                )
+                results.append(model)
+            } else if let unassigned = node.asUnassignedEvent,
+                let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: unassigned.fragments.nodeFields.id,
+                    actor: unassigned.actor?.login ?? Strings.unknown,
+                    user: unassigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .unassigned
                 )
                 results.append(model)
             }

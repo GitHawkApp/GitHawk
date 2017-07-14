@@ -39,6 +39,22 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.lockableFields.locked
     }
 
+    var assigneeFields: AssigneeFields {
+        return fragments.assigneeFields
+    }
+
+    var reviewRequestModel: IssueAssigneesModel? {
+        var models = [IssueAssigneeViewModel]()
+        for node in reviewRequests?.nodes ?? [] {
+            guard let node = node,
+                let reviewer = node.reviewer,
+                let url = URL(string: reviewer.avatarUrl)
+                else { continue }
+            models.append(IssueAssigneeViewModel(login: reviewer.login, avatarURL: url))
+        }
+        return IssueAssigneesModel(users: models, type: .reviewRequested)
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 
@@ -82,6 +98,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id,
                     actor: closed.actor?.login ?? Strings.unknown,
+                    commitHash: closed.closedCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: true
@@ -92,6 +109,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .reopened,
                     pullRequest: true
@@ -99,10 +117,13 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 results.append(model)
             } else if let merged = node.asMergedEvent,
                 let date = GithubAPIDateFormatter().date(from: merged.createdAt) {
-                let model = IssueMergedModel(
+                let model = IssueStatusEventModel(
+                    id: merged.fragments.nodeFields.id,
+                    actor: merged.actor?.login ?? Strings.unknown,
+                    commitHash: merged.mergedCommit.oid,
                     date: date,
-                    commitHash: merged.commit.oid,
-                    actor: merged.actor?.login ?? Strings.unknown
+                    status: .merged,
+                    pullRequest: true
                 )
                 results.append(model)
             } else if let locked = node.asLockedEvent,
@@ -110,6 +131,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: locked.fragments.nodeFields.id,
                     actor: locked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .locked,
                     pullRequest: false
@@ -120,6 +142,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: unlocked.fragments.nodeFields.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .unlocked,
                     pullRequest: false
@@ -195,6 +218,46 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     actor: rename.actor?.login ?? Strings.unknown,
                     date: date,
                     titleChangeString: text
+                )
+                results.append(model)
+            } else if let assigned = node.asAssignedEvent,
+                let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: assigned.fragments.nodeFields.id,
+                    actor: assigned.actor?.login ?? Strings.unknown,
+                    user: assigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .assigned
+                )
+                results.append(model)
+            } else if let unassigned = node.asUnassignedEvent,
+                let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
+                let model = IssueRequestModel(
+                    id: unassigned.fragments.nodeFields.id,
+                    actor: unassigned.actor?.login ?? Strings.unknown,
+                    user: unassigned.user?.login ?? Strings.unknown,
+                    date: date,
+                    event: .unassigned
+                )
+                results.append(model)
+            } else if let reviewRequested = node.asReviewRequestedEvent,
+                let date = GithubAPIDateFormatter().date(from: reviewRequested.createdAt) {
+                let model = IssueRequestModel(
+                    id: reviewRequested.fragments.nodeFields.id,
+                    actor: reviewRequested.actor?.login ?? Strings.unknown,
+                    user: reviewRequested.subject.login,
+                    date: date,
+                    event: .reviewRequested
+                )
+                results.append(model)
+            } else if let reviewRequestRemoved = node.asReviewRequestRemovedEvent,
+                let date = GithubAPIDateFormatter().date(from: reviewRequestRemoved.createdAt) {
+                let model = IssueRequestModel(
+                    id: reviewRequestRemoved.fragments.nodeFields.id,
+                    actor: reviewRequestRemoved.actor?.login ?? Strings.unknown,
+                    user: reviewRequestRemoved.subject.login,
+                    date: date,
+                    event: .reviewRequestRemoved
                 )
                 results.append(model)
             }

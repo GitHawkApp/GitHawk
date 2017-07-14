@@ -148,6 +148,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on ClosedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
+    "              closedCommit: commit {" +
+    "                __typename" +
+    "                oid" +
+    "              }" +
     "              actor {" +
     "                __typename" +
     "                login" +
@@ -235,6 +239,32 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                login" +
     "              }" +
     "            }" +
+    "            ... on AssignedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              user {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
+    "            ... on UnassignedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              user {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -244,6 +274,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "        ...labelableFields" +
     "        ...updatableFields" +
     "        ...nodeFields" +
+    "        ...assigneeFields" +
     "        number" +
     "        title" +
     "      }" +
@@ -299,6 +330,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on ClosedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
+    "              closedCommit: commit {" +
+    "                __typename" +
+    "                oid" +
+    "              }" +
     "              actor {" +
     "                __typename" +
     "                login" +
@@ -345,7 +380,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on MergedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
-    "              commit {" +
+    "              mergedCommit: commit {" +
     "                __typename" +
     "                oid" +
     "              }" +
@@ -420,6 +455,69 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                login" +
     "              }" +
     "            }" +
+    "            ... on AssignedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              user {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
+    "            ... on UnassignedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              user {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
+    "            ... on ReviewRequestedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              subject {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
+    "            ... on ReviewRequestRemovedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              subject {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "            }" +
+    "          }" +
+    "        }" +
+    "        reviewRequests(first: $page_size) {" +
+    "          __typename" +
+    "          nodes {" +
+    "            __typename" +
+    "            reviewer {" +
+    "              __typename" +
+    "              login" +
+    "              avatarUrl" +
+    "            }" +
     "          }" +
     "        }" +
     "        ...reactionFields" +
@@ -429,6 +527,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "        ...labelableFields" +
     "        ...updatableFields" +
     "        ...nodeFields" +
+    "        ...assigneeFields" +
     "        number" +
     "        title" +
     "        merged" +
@@ -436,7 +535,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
@@ -514,7 +613,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             let labelableFields = try LabelableFields(reader: reader)
             let updatableFields = try UpdatableFields(reader: reader)
             let nodeFields = try NodeFields(reader: reader)
-            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields)
+            let assigneeFields = try AssigneeFields(reader: reader)
+            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields, assigneeFields: assigneeFields)
           }
 
           public struct Fragments {
@@ -525,6 +625,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             public let labelableFields: LabelableFields
             public let updatableFields: UpdatableFields
             public let nodeFields: NodeFields
+            public let assigneeFields: AssigneeFields
           }
 
           public struct Timeline: GraphQLMappable {
@@ -549,6 +650,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asLockedEvent: AsLockedEvent?
               public let asUnlockedEvent: AsUnlockedEvent?
               public let asReferencedEvent: AsReferencedEvent?
+              public let asAssignedEvent: AsAssignedEvent?
+              public let asUnassignedEvent: AsUnassignedEvent?
               public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
@@ -563,6 +666,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asLockedEvent = try AsLockedEvent(reader: reader, ifTypeMatches: __typename)
                 asUnlockedEvent = try AsUnlockedEvent(reader: reader, ifTypeMatches: __typename)
                 asReferencedEvent = try AsReferencedEvent(reader: reader, ifTypeMatches: __typename)
+                asAssignedEvent = try AsAssignedEvent(reader: reader, ifTypeMatches: __typename)
+                asUnassignedEvent = try AsUnassignedEvent(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
@@ -710,6 +815,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
+                /// Identifies the commit associated with the 'closed' event.
+                public let closedCommit: ClosedCommit?
 
                 public let fragments: Fragments
 
@@ -717,6 +824,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  closedCommit = try reader.optionalValue(for: Field(responseName: "closedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -734,6 +842,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct ClosedCommit: GraphQLMappable {
+                  public let __typename: String
+                  /// The Git object ID
+                  public let oid: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    oid = try reader.value(for: Field(responseName: "oid"))
                   }
                 }
               }
@@ -1016,6 +1135,106 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
+              public struct AsAssignedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["AssignedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'assigned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the user who was assigned.
+                public let user: User?
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  user = try reader.optionalValue(for: Field(responseName: "user"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct User: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsUnassignedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["UnassignedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'unassigned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the subject (user) who was unassigned.
+                public let user: User?
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  user = try reader.optionalValue(for: Field(responseName: "user"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct User: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
               public struct AsIssueComment: GraphQLConditionalFragment {
                 public static let possibleTypes = ["IssueComment"]
 
@@ -1052,6 +1271,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public let number: Int
           /// Identifies the pull request title.
           public let title: String
+          /// A list of review requests associated with the pull request.
+          public let reviewRequests: ReviewRequest?
           /// Whether or not the pull request was merged.
           public let merged: Bool
 
@@ -1062,6 +1283,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
+            reviewRequests = try reader.optionalValue(for: Field(responseName: "reviewRequests", arguments: ["first": reader.variables["page_size"]]))
             merged = try reader.value(for: Field(responseName: "merged"))
 
             let reactionFields = try ReactionFields(reader: reader)
@@ -1071,7 +1293,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             let labelableFields = try LabelableFields(reader: reader)
             let updatableFields = try UpdatableFields(reader: reader)
             let nodeFields = try NodeFields(reader: reader)
-            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields)
+            let assigneeFields = try AssigneeFields(reader: reader)
+            fragments = Fragments(reactionFields: reactionFields, commentFields: commentFields, lockableFields: lockableFields, closableFields: closableFields, labelableFields: labelableFields, updatableFields: updatableFields, nodeFields: nodeFields, assigneeFields: assigneeFields)
           }
 
           public struct Fragments {
@@ -1082,6 +1305,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             public let labelableFields: LabelableFields
             public let updatableFields: UpdatableFields
             public let nodeFields: NodeFields
+            public let assigneeFields: AssigneeFields
           }
 
           public struct Timeline: GraphQLMappable {
@@ -1108,6 +1332,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asUnlockedEvent: AsUnlockedEvent?
               public let asMergedEvent: AsMergedEvent?
               public let asReferencedEvent: AsReferencedEvent?
+              public let asAssignedEvent: AsAssignedEvent?
+              public let asUnassignedEvent: AsUnassignedEvent?
+              public let asReviewRequestedEvent: AsReviewRequestedEvent?
+              public let asReviewRequestRemovedEvent: AsReviewRequestRemovedEvent?
               public let asPullRequestReviewThread: AsPullRequestReviewThread?
               public let asIssueComment: AsIssueComment?
 
@@ -1125,6 +1353,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asUnlockedEvent = try AsUnlockedEvent(reader: reader, ifTypeMatches: __typename)
                 asMergedEvent = try AsMergedEvent(reader: reader, ifTypeMatches: __typename)
                 asReferencedEvent = try AsReferencedEvent(reader: reader, ifTypeMatches: __typename)
+                asAssignedEvent = try AsAssignedEvent(reader: reader, ifTypeMatches: __typename)
+                asUnassignedEvent = try AsUnassignedEvent(reader: reader, ifTypeMatches: __typename)
+                asReviewRequestedEvent = try AsReviewRequestedEvent(reader: reader, ifTypeMatches: __typename)
+                asReviewRequestRemovedEvent = try AsReviewRequestRemovedEvent(reader: reader, ifTypeMatches: __typename)
                 asPullRequestReviewThread = try AsPullRequestReviewThread(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
@@ -1314,6 +1546,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
+                /// Identifies the commit associated with the 'closed' event.
+                public let closedCommit: ClosedCommit?
 
                 public let fragments: Fragments
 
@@ -1321,6 +1555,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  closedCommit = try reader.optionalValue(for: Field(responseName: "closedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -1338,6 +1573,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct ClosedCommit: GraphQLMappable {
+                  public let __typename: String
+                  /// The Git object ID
+                  public let oid: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    oid = try reader.value(for: Field(responseName: "oid"))
                   }
                 }
               }
@@ -1501,7 +1747,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
                 /// Identifies the commit associated with the `merge` event.
-                public let commit: Commit
+                public let mergedCommit: MergedCommit
 
                 public let fragments: Fragments
 
@@ -1509,7 +1755,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                  commit = try reader.value(for: Field(responseName: "commit"))
+                  mergedCommit = try reader.value(for: Field(responseName: "mergedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -1530,7 +1776,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                public struct Commit: GraphQLMappable {
+                public struct MergedCommit: GraphQLMappable {
                   public let __typename: String
                   /// The Git object ID
                   public let oid: String
@@ -1656,6 +1902,206 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
+              public struct AsAssignedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["AssignedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'assigned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the user who was assigned.
+                public let user: User?
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  user = try reader.optionalValue(for: Field(responseName: "user"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct User: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsUnassignedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["UnassignedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'unassigned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the subject (user) who was unassigned.
+                public let user: User?
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  user = try reader.optionalValue(for: Field(responseName: "user"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct User: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsReviewRequestedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReviewRequestedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'base_ref_force_pushed' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the user whose review was requested.
+                public let subject: Subject
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  subject = try reader.value(for: Field(responseName: "subject"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Subject: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsReviewRequestRemovedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["ReviewRequestRemovedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'review_request_removed' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the user whose review request was removed.
+                public let subject: Subject
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  subject = try reader.value(for: Field(responseName: "subject"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct Subject: GraphQLMappable {
+                  public let __typename: String
+                  /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
               public struct AsPullRequestReviewThread: GraphQLConditionalFragment {
                 public static let possibleTypes = ["PullRequestReviewThread"]
 
@@ -1727,6 +2173,42 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public let nodeFields: NodeFields
                   public let reactionFields: ReactionFields
                   public let commentFields: CommentFields
+                }
+              }
+            }
+          }
+
+          public struct ReviewRequest: GraphQLMappable {
+            public let __typename: String
+            /// A list of nodes.
+            public let nodes: [Node?]?
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            }
+
+            public struct Node: GraphQLMappable {
+              public let __typename: String
+              /// Identifies the author associated with this review request.
+              public let reviewer: Reviewer?
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                reviewer = try reader.optionalValue(for: Field(responseName: "reviewer"))
+              }
+
+              public struct Reviewer: GraphQLMappable {
+                public let __typename: String
+                /// The username used to login.
+                public let login: String
+                /// A URL pointing to the user's public avatar.
+                public let avatarUrl: String
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  login = try reader.value(for: Field(responseName: "login"))
+                  avatarUrl = try reader.value(for: Field(responseName: "avatarUrl"))
                 }
               }
             }
@@ -2086,6 +2568,57 @@ public struct ReferencedRepositoryFields: GraphQLNamedFragment {
     public init(reader: GraphQLResultReader) throws {
       __typename = try reader.value(for: Field(responseName: "__typename"))
       login = try reader.value(for: Field(responseName: "login"))
+    }
+  }
+}
+
+public struct AssigneeFields: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment assigneeFields on Assignable {" +
+    "  __typename" +
+    "  assignees(first: $page_size) {" +
+    "    __typename" +
+    "    nodes {" +
+    "      __typename" +
+    "      login" +
+    "      avatarUrl" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public static let possibleTypes = ["Issue", "PullRequest"]
+
+  public let __typename: String
+  /// A list of Users assigned to this object.
+  public let assignees: Assignee
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    assignees = try reader.value(for: Field(responseName: "assignees", arguments: ["first": reader.variables["page_size"]]))
+  }
+
+  public struct Assignee: GraphQLMappable {
+    public let __typename: String
+    /// A list of nodes.
+    public let nodes: [Node?]?
+
+    public init(reader: GraphQLResultReader) throws {
+      __typename = try reader.value(for: Field(responseName: "__typename"))
+      nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+    }
+
+    public struct Node: GraphQLMappable {
+      public let __typename: String
+      /// The username used to login.
+      public let login: String
+      /// A URL pointing to the user's public avatar.
+      public let avatarUrl: String
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        login = try reader.value(for: Field(responseName: "login"))
+        avatarUrl = try reader.value(for: Field(responseName: "avatarUrl"))
+      }
     }
   }
 }
