@@ -494,6 +494,7 @@
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
+		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -742,6 +743,7 @@
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIDevice+Model.swift"; path = "Utility/UIDevice+Model.swift"; sourceTree = "<group>"; };
 		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		FDDE84B781D3A44BF57394BE /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1124,6 +1126,7 @@
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
 				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
+				98835BCC1F1965C5005BA24F /* Utility */,
 				297AE8681EC0D5C200B44A1F /* View Controllers */,
 				297AE86C1EC0D5C200B44A1F /* Views */,
 			);
@@ -1334,6 +1337,14 @@
 				2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		98835BCC1F1965C5005BA24F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
+			);
+			name = Utility;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -1767,6 +1778,7 @@
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */,
+				98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */,
 				290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */,
