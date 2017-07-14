@@ -13,13 +13,15 @@ final class IssueStatusEventModel: ListDiffable {
 
     let id: String
     let actor: String
+    let commitHash: String?
     let date: Date
     let status: IssueStatusEvent
     let pullRequest: Bool
 
-    init(id: String, actor: String, date: Date, status: IssueStatusEvent, pullRequest: Bool) {
+    init(id: String, actor: String, commitHash: String?, date: Date, status: IssueStatusEvent, pullRequest: Bool) {
         self.id = id
         self.actor = actor
+        self.commitHash = commitHash
         self.date = date
         self.status = status
         self.pullRequest = pullRequest

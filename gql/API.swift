@@ -148,6 +148,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on ClosedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
+    "              closedCommit: commit {" +
+    "                __typename" +
+    "                oid" +
+    "              }" +
     "              actor {" +
     "                __typename" +
     "                login" +
@@ -325,6 +329,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on ClosedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
+    "              closedCommit: commit {" +
+    "                __typename" +
+    "                oid" +
+    "              }" +
     "              actor {" +
     "                __typename" +
     "                login" +
@@ -371,7 +379,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            ... on MergedEvent {" +
     "              __typename" +
     "              ...nodeFields" +
-    "              commit {" +
+    "              mergedCommit: commit {" +
     "                __typename" +
     "                oid" +
     "              }" +
@@ -792,6 +800,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
+                /// Identifies the commit associated with the 'closed' event.
+                public let closedCommit: ClosedCommit?
 
                 public let fragments: Fragments
 
@@ -799,6 +809,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  closedCommit = try reader.optionalValue(for: Field(responseName: "closedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -816,6 +827,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct ClosedCommit: GraphQLMappable {
+                  public let __typename: String
+                  /// The Git object ID
+                  public let oid: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    oid = try reader.value(for: Field(responseName: "oid"))
                   }
                 }
               }
@@ -1504,6 +1526,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
+                /// Identifies the commit associated with the 'closed' event.
+                public let closedCommit: ClosedCommit?
 
                 public let fragments: Fragments
 
@@ -1511,6 +1535,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  closedCommit = try reader.optionalValue(for: Field(responseName: "closedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -1528,6 +1553,17 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
                     login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+
+                public struct ClosedCommit: GraphQLMappable {
+                  public let __typename: String
+                  /// The Git object ID
+                  public let oid: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    oid = try reader.value(for: Field(responseName: "oid"))
                   }
                 }
               }
@@ -1691,7 +1727,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
                 /// Identifies the commit associated with the `merge` event.
-                public let commit: Commit
+                public let mergedCommit: MergedCommit
 
                 public let fragments: Fragments
 
@@ -1699,7 +1735,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                  commit = try reader.value(for: Field(responseName: "commit"))
+                  mergedCommit = try reader.value(for: Field(responseName: "mergedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -1720,7 +1756,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                public struct Commit: GraphQLMappable {
+                public struct MergedCommit: GraphQLMappable {
                   public let __typename: String
                   /// The Git object ID
                   public let oid: String

@@ -85,6 +85,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id, 
                     actor: closed.actor?.login ?? Strings.unknown,
+                    commitHash: closed.closedCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: false
@@ -95,6 +96,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .reopened,
                     pullRequest: false
@@ -105,6 +107,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     let model = IssueStatusEventModel(
                         id: locked.fragments.nodeFields.id,
                         actor: locked.actor?.login ?? Strings.unknown,
+                        commitHash: nil,
                         date: date,
                         status: .locked,
                         pullRequest: false
@@ -115,6 +118,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let model = IssueStatusEventModel(
                     id: unlocked.fragments.nodeFields.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .unlocked,
                     pullRequest: false

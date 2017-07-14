@@ -82,6 +82,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id,
                     actor: closed.actor?.login ?? Strings.unknown,
+                    commitHash: closed.closedCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: true
@@ -92,6 +93,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: reopened.fragments.nodeFields.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .reopened,
                     pullRequest: true
@@ -99,10 +101,13 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 results.append(model)
             } else if let merged = node.asMergedEvent,
                 let date = GithubAPIDateFormatter().date(from: merged.createdAt) {
-                let model = IssueMergedModel(
+                let model = IssueStatusEventModel(
+                    id: merged.fragments.nodeFields.id,
+                    actor: merged.actor?.login ?? Strings.unknown,
+                    commitHash: merged.mergedCommit.oid,
                     date: date,
-                    commitHash: merged.commit.oid,
-                    actor: merged.actor?.login ?? Strings.unknown
+                    status: .merged,
+                    pullRequest: true
                 )
                 results.append(model)
             } else if let locked = node.asLockedEvent,
@@ -110,6 +115,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: locked.fragments.nodeFields.id,
                     actor: locked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .locked,
                     pullRequest: false
@@ -120,6 +126,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: unlocked.fragments.nodeFields.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
+                    commitHash: nil,
                     date: date,
                     status: .unlocked,
                     pullRequest: false

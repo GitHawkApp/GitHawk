@@ -11,6 +11,7 @@ import SnapKit
 
 protocol IssueStatusEventCellDelegate: class {
     func didTapActor(cell: IssueStatusEventCell)
+    func didTapHash(cell: IssueStatusEventCell)
 }
 
 final class IssueStatusEventCell: UICollectionViewCell {
@@ -18,8 +19,11 @@ final class IssueStatusEventCell: UICollectionViewCell {
     weak var delegate: IssueStatusEventCellDelegate? = nil
 
     private let actorButton = UIButton()
-    private let button = UIButton()
+    private let hashButton = UIButton()
+    private let statusButton = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
+
+    private var dateConstraint: Constraint? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,10 +35,19 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        button.setupAsLabel()
-        contentView.addSubview(button)
-        button.snp.makeConstraints { make in
+        statusButton.setupAsLabel()
+        contentView.addSubview(statusButton)
+        statusButton.snp.makeConstraints { make in
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.centerY.equalTo(contentView)
+        }
+
+        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
+        hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
+        hashButton.addTarget(self, action: #selector(IssueStatusEventCell.onHash), for: .touchUpInside)
+        contentView.addSubview(hashButton)
+        hashButton.snp.makeConstraints { make in
+            make.left.equalTo(statusButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(contentView)
         }
 
@@ -43,7 +56,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(button.snp.right).offset(Styles.Sizes.inlineSpacing)
+            self.dateConstraint = make.left.equalTo(hashButton.snp.right).offset(Styles.Sizes.inlineSpacing).constraint
             make.centerY.equalTo(contentView)
         }
     }
@@ -58,6 +71,10 @@ final class IssueStatusEventCell: UICollectionViewCell {
         delegate?.didTapActor(cell: self)
     }
 
+    func onHash() {
+        delegate?.didTapHash(cell: self)
+    }
+
     // MARK: Public API
 
     func configure(_ model: IssueStatusEventModel) {
@@ -67,18 +84,21 @@ final class IssueStatusEventCell: UICollectionViewCell {
         ]
         actorButton.setAttributedTitle(NSAttributedString(string: model.actor, attributes: actorAttributes), for: .normal)
 
-        button.config(pullRequest: model.pullRequest, state: model.status.buttonState)
-
         let title: String
         switch model.status {
         case .reopened: title = Strings.reopened // open event only happens when RE-opening
         case .closed: title = Strings.closed
         case .locked: title = Strings.locked
         case .unlocked: title = NSLocalizedString("Unlocked", comment: "")
-        case .merged: fatalError("Merge events handled in other model+cell")
+        case .merged: title = Strings.merged
         }
-        button.setTitle(title, for: .normal)
+        statusButton.setTitle(title, for: .normal)
+        statusButton.config(pullRequest: model.pullRequest, state: model.status.buttonState)
 
+        let hash = model.commitHash?.hashDisplay
+        hashButton.setTitle(hash, for: .normal)
+
+        dateConstraint?.update(offset: hash == nil ? -30 : Styles.Sizes.inlineSpacing)
         dateLabel.setText(date: model.date)
     }
 

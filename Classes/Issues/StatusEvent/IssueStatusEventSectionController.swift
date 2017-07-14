@@ -11,9 +11,14 @@ import IGListKit
 
 final class IssueStatusEventSectionController: ListGenericSectionController<IssueStatusEventModel>, IssueStatusEventCellDelegate {
 
-    override init() {
+    private let owner: String
+    private let repo: String
+
+    init(owner: String, repo: String) {
+        self.owner = owner
+        self.repo = repo
         super.init()
-        self.inset = Styles.Sizes.listInsetTight
+        inset = Styles.Sizes.listInsetTight
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
@@ -35,6 +40,11 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
     func didTapActor(cell: IssueStatusEventCell) {
         guard let actor = object?.actor else { return }
         viewController?.presentProfile(login: actor)
+    }
+
+    func didTapHash(cell: IssueStatusEventCell) {
+        guard let hash = object?.commitHash else { return }
+        viewController?.presentCommit(owner: owner, repo: repo, hash: hash)
     }
 
 }
