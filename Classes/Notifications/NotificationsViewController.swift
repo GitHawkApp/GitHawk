@@ -156,7 +156,7 @@ NotificationNextPageSectionControllerDelegate {
     }
 
     private func nextPage() {
-        let next = (page?.intValue ?? 0) + 1
+        let next = (page?.intValue ?? 0)
         client.requestNotifications(all: true, page: next) { result in
             self.handle(result: result, append: true, animated: false, page: next)
         }
