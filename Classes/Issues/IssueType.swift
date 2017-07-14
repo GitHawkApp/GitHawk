@@ -11,6 +11,7 @@ import IGListKit
 import UIKit
 
 protocol IssueType {
+
     var id: String { get }
     var pullRequest: Bool { get }
     var number: Int { get }
@@ -19,8 +20,12 @@ protocol IssueType {
     var commentFields: CommentFields { get }
     var reactionFields: ReactionFields { get }
     var closableFields: ClosableFields { get }
+    var assigneeFields: AssigneeFields { get }
     var merged: Bool { get }
     var locked: Bool { get }
 
+    var reviewRequestModel: IssueAssigneesModel? { get }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable]
+
 }

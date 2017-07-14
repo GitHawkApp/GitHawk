@@ -20,6 +20,11 @@ func createViewModels(
     result.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest, locked: issue.locked))
     result.append(titleStringSizing(title: issue.title, width: width))
     result.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
+    result.append(createAssigneeModel(assigneeFields: issue.assigneeFields))
+
+    if let reviewers = issue.reviewRequestModel {
+        result.append(reviewers)
+    }
 
     if let root = createCommentModel(
         id: issue.id,
@@ -93,4 +98,15 @@ func createCommentModel(
         collapse: collapse,
         threadState: threadState
     )
+}
+
+func createAssigneeModel(assigneeFields: AssigneeFields) -> IssueAssigneesModel {
+    var models = [IssueAssigneeViewModel]()
+    for node in assigneeFields.assignees.nodes ?? [] {
+        guard let node = node,
+            let url = URL(string: node.avatarUrl)
+            else { continue }
+        models.append(IssueAssigneeViewModel(login: node.login, avatarURL: url))
+    }
+    return IssueAssigneesModel(users: models, type: .assigned)
 }

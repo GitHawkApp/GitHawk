@@ -43,6 +43,14 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return fragments.lockableFields.locked
     }
 
+    var assigneeFields: AssigneeFields {
+        return fragments.assigneeFields
+    }
+
+    var reviewRequestModel: IssueAssigneesModel? {
+        return nil
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 
