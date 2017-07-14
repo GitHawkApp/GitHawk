@@ -37,6 +37,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on ClosedEvent {
               ...nodeFields
+              closedCommit: commit {oid}
               actor {login}
               createdAt
             }
@@ -64,9 +65,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             ... on ReferencedEvent {
               createdAt
               ...nodeFields
-              refCommit: commit { 
-                oid 
-              }
+              refCommit: commit {oid}
               actor {login}
               commitRepository {
                 ...referencedRepositoryFields
@@ -151,6 +150,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on ClosedEvent {
               ...nodeFields
+              closedCommit: commit {oid}
               actor {login}
               createdAt
             }
@@ -177,9 +177,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
             ... on MergedEvent {
               ...nodeFields
-              commit {
-                oid
-              }
+              mergedCommit: commit {oid}
               actor {login}
               createdAt
             }

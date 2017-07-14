@@ -10,9 +10,6 @@
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
-		290D2A451F05ADDC0082E6CC /* IssueMergedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */; };
-		290D2A471F05AE640082E6CC /* IssueMergedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A461F05AE640082E6CC /* IssueMergedCell.swift */; };
-		290D2A491F05B5B00082E6CC /* IssueMergedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */; };
 		290EF5661F06A797006A2160 /* Notifications+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5651F06A794006A2160 /* Notifications+Filter.swift */; };
 		290EF5671F06A798006A2160 /* Notifications+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5651F06A794006A2160 /* Notifications+Filter.swift */; };
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
@@ -214,9 +211,6 @@
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
 		297DD5E71F06945C006E7E63 /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
-		297DD5EB1F06946C006E7E63 /* IssueMergedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */; };
-		297DD5EC1F06946C006E7E63 /* IssueMergedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A461F05AE640082E6CC /* IssueMergedCell.swift */; };
-		297DD5ED1F06946C006E7E63 /* IssueMergedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */; };
 		297DD5F01F06948D006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
 		297DD5F11F06948D006E7E63 /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		297DD5F31F069497006E7E63 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
@@ -343,7 +337,6 @@
 		29C340091F1295F200EC8D40 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
 		29C3400A1F1295F200EC8D40 /* IssueDiffHunkPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C21F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift */; };
 		29C3400B1F1295F200EC8D40 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
-		29C3400C1F1295F200EC8D40 /* IssueMergedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */; };
 		29C3400D1F1295F200EC8D40 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
 		29C3400E1F1295F200EC8D40 /* DateDetailsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */; };
 		29C3400F1F1295F200EC8D40 /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
@@ -396,12 +389,10 @@
 		29C3403E1F1295F200EC8D40 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C3403F1F1295F200EC8D40 /* NotificationRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */; };
 		29C340401F1295F200EC8D40 /* GithubClient+AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */; };
-		29C340411F1295F200EC8D40 /* IssueMergedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */; };
 		29C340421F1295F200EC8D40 /* NotificationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */; };
 		29C340431F1295F200EC8D40 /* IssueCommentTableCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */; };
 		29C340441F1295F200EC8D40 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		29C340451F1295F200EC8D40 /* IssueCommentModelHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */; };
-		29C340461F1295F200EC8D40 /* IssueMergedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A461F05AE640082E6CC /* IssueMergedCell.swift */; };
 		29C340471F1295F200EC8D40 /* IssueLabelsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAEF1EDFCC510026635E /* IssueLabelsModel.swift */; };
 		29C340481F1295F200EC8D40 /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		29C340491F1295F200EC8D40 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
@@ -539,9 +530,6 @@
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
-		290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedModel.swift; sourceTree = "<group>"; };
-		290D2A461F05AE640082E6CC /* IssueMergedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedCell.swift; sourceTree = "<group>"; };
-		290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergedSectionController.swift; sourceTree = "<group>"; };
 		290EF5651F06A794006A2160 /* Notifications+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notifications+Filter.swift"; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
 		290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsCell.swift; sourceTree = "<group>"; };
@@ -776,16 +764,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		290D2A431F05ADD00082E6CC /* Merged */ = {
-			isa = PBXGroup;
-			children = (
-				290D2A441F05ADDC0082E6CC /* IssueMergedModel.swift */,
-				290D2A461F05AE640082E6CC /* IssueMergedCell.swift */,
-				290D2A481F05B5B00082E6CC /* IssueMergedSectionController.swift */,
-			);
-			path = Merged;
-			sourceTree = "<group>";
-		};
 		2928C7861F15D7A30000D06D /* Renamed */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,7 +813,6 @@
 				292FCAEA1EDFCC510026635E /* IssueViewModels.swift */,
 				29FB942A1EE750720016E6D4 /* Labeled */,
 				292FCAEC1EDFCC510026635E /* Labels */,
-				290D2A431F05ADD00082E6CC /* Merged */,
 				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
 				29C53FBD1F12EF4000A59ED5 /* Referenced */,
 				29C53FC11F12EF4000A59ED5 /* ReferencedCommit */,
@@ -1688,7 +1665,6 @@
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
-				290D2A491F05B5B00082E6CC /* IssueMergedSectionController.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
@@ -1748,12 +1724,10 @@
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */,
-				290D2A451F05ADDC0082E6CC /* IssueMergedModel.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				2974069F1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift in Sources */,
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
 				292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */,
-				290D2A471F05AE640082E6CC /* IssueMergedCell.swift in Sources */,
 				292FCB141EDFCC510026635E /* IssueLabelsModel.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
@@ -1835,7 +1809,6 @@
 				2958408F1EEA00E1007723C6 /* IssueCommentTextCell.swift in Sources */,
 				2958407A1EEA00E1007723C6 /* IssueCommentImageCell.swift in Sources */,
 				295840961EEA00E1007723C6 /* IssueViewModels.swift in Sources */,
-				297DD5EC1F06946C006E7E63 /* IssueMergedCell.swift in Sources */,
 				29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */,
 				295F52E11EF1C2C9000B53CF /* CommentModelsFromMarkdown.swift in Sources */,
 				29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */,
@@ -1902,7 +1875,6 @@
 				297DD5F51F06949E006E7E63 /* AppDelegate.swift in Sources */,
 				295840BB1EEA00E1007723C6 /* SegmentedControlSectionController.swift in Sources */,
 				297DD5F91F0694A3006E7E63 /* UIViewController+SmartDeselection.swift in Sources */,
-				297DD5EB1F06946C006E7E63 /* IssueMergedModel.swift in Sources */,
 				2980E0931F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				29A476A51ED23FA2005D0953 /* Authorization.swift in Sources */,
 				295840C71EEA00E1007723C6 /* GithubSessionManager.swift in Sources */,
@@ -1955,7 +1927,6 @@
 				29A476B21ED24D99005D0953 /* IssueTests.swift in Sources */,
 				295840B81EEA00E1007723C6 /* Secrets.swift in Sources */,
 				2981A8AA1EFF49EE00E25EF1 /* MMElement+CodeBlock.swift in Sources */,
-				297DD5ED1F06946C006E7E63 /* IssueMergedSectionController.swift in Sources */,
 				295840721EEA00E1007723C6 /* IssueStatusEventCell.swift in Sources */,
 				295840C61EEA00E1007723C6 /* GithubClient.swift in Sources */,
 				295840C31EEA00E1007723C6 /* Alamofire+GithubAPI.swift in Sources */,
@@ -2005,7 +1976,6 @@
 				29C340091F1295F200EC8D40 /* GithubSessionManager.swift in Sources */,
 				29C3400A1F1295F200EC8D40 /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29C3400B1F1295F200EC8D40 /* UIColor+Hex.swift in Sources */,
-				29C3400C1F1295F200EC8D40 /* IssueMergedSectionController.swift in Sources */,
 				29C3400D1F1295F200EC8D40 /* EmptyView.swift in Sources */,
 				29C3400E1F1295F200EC8D40 /* DateDetailsFormatter.swift in Sources */,
 				29C3400F1F1295F200EC8D40 /* IssueCommentCodeBlockModel.swift in Sources */,
@@ -2058,12 +2028,10 @@
 				29C3403E1F1295F200EC8D40 /* GithubClient.swift in Sources */,
 				29C3403F1F1295F200EC8D40 /* NotificationRepoCell.swift in Sources */,
 				29C340401F1295F200EC8D40 /* GithubClient+AccessToken.swift in Sources */,
-				29C340411F1295F200EC8D40 /* IssueMergedModel.swift in Sources */,
 				29C340421F1295F200EC8D40 /* NotificationSectionController.swift in Sources */,
 				29C340431F1295F200EC8D40 /* IssueCommentTableCollectionCell.swift in Sources */,
 				29C340441F1295F200EC8D40 /* UIView+BottomBorder.swift in Sources */,
 				29C340451F1295F200EC8D40 /* IssueCommentModelHandling.swift in Sources */,
-				29C340461F1295F200EC8D40 /* IssueMergedCell.swift in Sources */,
 				29C340471F1295F200EC8D40 /* IssueLabelsModel.swift in Sources */,
 				29C340481F1295F200EC8D40 /* LabelableFields+IssueLabelModel.swift in Sources */,
 				29C340491F1295F200EC8D40 /* NSAttributedStringSizing.swift in Sources */,
