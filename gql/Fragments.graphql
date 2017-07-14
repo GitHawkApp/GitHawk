@@ -53,3 +53,12 @@ fragment referencedRepositoryFields on RepositoryInfo {
     login
   }
 }
+
+fragment assigneeFields on Assignable {
+  assignees(first:$page_size) {
+    nodes {
+      login
+      avatarUrl
+    }
+  }
+}

@@ -59,6 +59,7 @@ enum Styles {
         static let body = UIFont.systemFont(ofSize: Styles.Sizes.Text.body)
         static let bodyBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.body)
         static let secondary = UIFont.systemFont(ofSize: Styles.Sizes.Text.secondary)
+        static let secondaryBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.secondary)
         static let title = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.title)
         static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
         static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)

@@ -112,6 +112,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         ...labelableFields
         ...updatableFields
         ...nodeFields
+        ...assigneeFields
         number
         title
       }
@@ -253,6 +254,14 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
           }
         }
+        reviewRequests(first: $page_size) {
+          nodes {
+            reviewer {
+              login
+              avatarUrl
+            }
+          }
+        }
         ...reactionFields
         ...commentFields
         ...lockableFields
@@ -260,6 +269,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         ...labelableFields
         ...updatableFields
         ...nodeFields
+        ...assigneeFields
         number
         title
         merged

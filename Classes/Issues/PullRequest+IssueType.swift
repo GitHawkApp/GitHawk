@@ -39,6 +39,22 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.lockableFields.locked
     }
 
+    var assigneeFields: AssigneeFields {
+        return fragments.assigneeFields
+    }
+
+    var reviewRequestModel: IssueAssigneesModel? {
+        var models = [IssueAssigneeViewModel]()
+        for node in reviewRequests?.nodes ?? [] {
+            guard let node = node,
+                let reviewer = node.reviewer,
+                let url = URL(string: reviewer.avatarUrl)
+                else { continue }
+            models.append(IssueAssigneeViewModel(login: reviewer.login, avatarURL: url))
+        }
+        return IssueAssigneesModel(users: models, type: .reviewRequested)
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         var results = [ListDiffable]()
 
