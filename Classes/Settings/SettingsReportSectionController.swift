@@ -50,6 +50,8 @@ final class SettingsReportSectionController: ListSectionController {
             builder += " (\(buildNumber))"
         }
         
+        builder += "\nDevice: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion))"
+        
         return builder + "\n"
     }
 
