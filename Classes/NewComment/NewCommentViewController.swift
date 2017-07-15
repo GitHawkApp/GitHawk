@@ -35,7 +35,7 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
         placeholderLabel.text = NSLocalizedString("Leave a comment", comment: "")
         placeholderLabel.sizeToFit()
         placeholderLabel.font = Styles.Fonts.body
-        view.addSubview(placeholderLabel)
+        textView.addSubview(placeholderLabel)
 
         textView.alwaysBounceVertical = true
         textView.delegate = self
@@ -56,9 +56,9 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
         textView.frame = view.bounds
 
         let inset = UIEdgeInsets(
-            top: topLayoutGuide.length + Styles.Sizes.gutter,
+            top: Styles.Sizes.gutter,
             left: Styles.Sizes.gutter,
-            bottom: bottomLayoutGuide.length,
+            bottom: 0,
             right: Styles.Sizes.gutter + Styles.Sizes.gutter
         )
         textView.textContainerInset = inset
