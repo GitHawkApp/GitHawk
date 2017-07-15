@@ -20,6 +20,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
 
     var client: GithubClient!
 
+    @IBOutlet weak var tokenTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var safariController: SFSafariViewController? = nil
@@ -50,15 +51,19 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     // MARK: Private API
 
     @IBAction func onSignInButton(_ sender: Any) {
-        let safari = SFSafariViewController(url: loginURL)
-        safariController = safari
-        present(safari, animated: true)
+        if let token = tokenTextField.text, !token.isEmpty {
+            finishLogin(token: token, authMethod: .pat)
+        } else {
+            let safari = SFSafariViewController(url: loginURL)
+            safariController = safari
+            present(safari, animated: true)
+        }
     }
 
     private func handle(result: GithubClient.AccessTokenResult) {
         switch result {
         case .failure: handleError()
-        case .success(let token): finishLogin(token: token)
+        case .success(let token): finishLogin(token: token, authMethod: .oauth)
         }
     }
 
@@ -74,8 +79,8 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: true)
     }
 
-    private func finishLogin(token: String) {
-        client.sessionManager.authenticate(token)
+    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod) {
+        client.sessionManager.authenticate(token, authMethod: authMethod)
     }
 
     // MARK: GithubSessionListener
