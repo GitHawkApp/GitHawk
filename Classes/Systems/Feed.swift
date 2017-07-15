@@ -14,6 +14,10 @@ protocol FeedDelegate: class {
     func loadNextPage(feed: Feed) -> Bool
 }
 
+private class DisableAutoScrollCollectionView: UICollectionView {
+    override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {}
+}
+
 final class Feed: NSObject, UIScrollViewDelegate {
 
     enum Status {
@@ -24,7 +28,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     let adapter: ListAdapter
     lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let view = DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         view.refreshControl = UIRefreshControl()

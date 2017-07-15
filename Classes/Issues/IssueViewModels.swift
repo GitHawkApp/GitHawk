@@ -27,7 +27,7 @@ func createViewModels(
     }
 
     if let root = createCommentModel(
-        id: issue.id,
+        id: "root" + issue.id,
         commentFields: issue.commentFields,
         reactionFields: issue.reactionFields,
         width: width,
