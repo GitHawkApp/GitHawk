@@ -13,5 +13,6 @@ struct ReactionViewModel {
     let content: ReactionContent
     let count: Int
     let viewerDidReact: Bool
+    let users: [String]
 
 }

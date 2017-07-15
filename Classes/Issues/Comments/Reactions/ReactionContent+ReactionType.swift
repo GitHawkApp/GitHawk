@@ -19,4 +19,16 @@ extension ReactionContent {
         case .thumbsDown: return "👎"
         }
     }
+    
+    /// User readable name of the current reaction type
+    var name: String {
+        switch self {
+        case .confused: return "confused"
+        case .heart: return "heart"
+        case .hooray: return "horray"
+        case .laugh: return "laugh"
+        case .thumbsUp: return "thumbs up"
+        case .thumbsDown: return "thumbs down"
+        }
+    }
 }
