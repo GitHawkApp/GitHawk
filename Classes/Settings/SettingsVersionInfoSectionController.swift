@@ -13,7 +13,7 @@ final class SettingsVersionInfoSectionController: ListSectionController {
     
     override init() {
         super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.tableSectionSpacing, right: 0)
+        inset = .zero
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
@@ -27,7 +27,5 @@ final class SettingsVersionInfoSectionController: ListSectionController {
         cell.label.text = Bundle.main.prettyVersionString
         return cell
     }
-    
-    override func didSelectItem(at index: Int) {}
     
 }
