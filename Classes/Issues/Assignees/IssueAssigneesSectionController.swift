@@ -17,7 +17,6 @@ ListBindingSectionControllerSelectionDelegate {
 
     override init() {
         super.init()
-        inset = Styles.Sizes.listInsetTight
         dataSource = self
         selectionDelegate = self
     }

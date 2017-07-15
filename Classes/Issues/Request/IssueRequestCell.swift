@@ -39,7 +39,7 @@ final class IssueRequestCell: UICollectionViewCell {
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.inlineSpacing)
         }
 
-        dateLabel.font = Styles.Fonts.body
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -66,11 +66,11 @@ final class IssueRequestCell: UICollectionViewCell {
 
     func configure(_ model: IssueRequestModel) {
         let actorAttributes = [
-            NSFontAttributeName: Styles.Fonts.bodyBold,
+            NSFontAttributeName: Styles.Fonts.secondaryBold,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
         ]
         let phraseAttributes = [
-            NSFontAttributeName: Styles.Fonts.body,
+            NSFontAttributeName: Styles.Fonts.secondary,
             NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
         ]
 
