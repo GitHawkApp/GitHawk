@@ -20,7 +20,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
 
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private let addCommentButton = UIButton()
+    private let addCommentButton = WriteButton()
 
     init(
         client: GithubClient,
@@ -46,8 +46,16 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
-        addCommentButton.setImage(UIImage(named: "")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        addCommentButton.tintColor = .white
+        var inset = feed.collectionView.contentInset
+        inset.bottom = addCommentButton.preferredSize.height + Styles.Sizes.gutter + Styles.Sizes.rowSpacing
+        feed.collectionView.contentInset = inset
+
+        view.addSubview(addCommentButton)
+        addCommentButton.snp.makeConstraints { make in
+            make.size.equalTo(addCommentButton.preferredSize)
+            make.right.equalTo(view).offset(-Styles.Sizes.gutter)
+            make.bottom.equalTo(view).offset(-Styles.Sizes.gutter)
+        }
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
