@@ -42,13 +42,14 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.secondary)
+        // courier has a little bit of a different kerning, manually adjust
+        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.secondary + 1)
         hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         hashButton.addTarget(self, action: #selector(IssueStatusEventCell.onHash), for: .touchUpInside)
         contentView.addSubview(hashButton)
         hashButton.snp.makeConstraints { make in
             make.left.equalTo(statusButton.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalTo(contentView).offset(1)
         }
 
         dateLabel.font = Styles.Fonts.secondary
