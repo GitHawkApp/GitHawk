@@ -58,6 +58,7 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate, AddC
 
         placeholderLabel.textColor = Styles.Colors.Gray.light.color
         placeholderLabel.text = NSLocalizedString("Leave a comment", comment: "")
+        placeholderLabel.accessibilityHint = NSLocalizedString("Placeholder text", comment: "")
         placeholderLabel.sizeToFit()
         placeholderLabel.font = Styles.Fonts.body
         textView.addSubview(placeholderLabel)
