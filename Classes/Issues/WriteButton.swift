@@ -20,6 +20,7 @@ final class WriteButton: UIView {
         backgroundColor = .clear
 
         button.setImage(UIImage(named: "write")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.accessibilityLabel = NSLocalizedString("Write a comment", comment: "")
         button.tintColor = .white
         button.clipsToBounds = true
         addSubview(button)
