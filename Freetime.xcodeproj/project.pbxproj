@@ -118,7 +118,6 @@
 		2958408D1EEA00E1007723C6 /* IssueCommentSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE11EDFCC510026635E /* IssueCommentSummaryCell.swift */; };
 		2958408E1EEA00E1007723C6 /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */; };
 		2958408F1EEA00E1007723C6 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE41EDFCC510026635E /* IssueCommentTextCell.swift */; };
-		295840901EEA00E1007723C6 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9381EE258C20066509C /* GithubClient+Issues.swift */; };
 		295840911EEA00E1007723C6 /* Issue+IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */; };
 		295840941EEA00E1007723C6 /* IssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE91EDFCC510026635E /* IssuesViewController.swift */; };
 		295840951EEA00E1007723C6 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EF1EE5036A00DBCD35 /* IssueType.swift */; };
@@ -184,7 +183,6 @@
 		295F52E11EF1C2C9000B53CF /* CommentModelsFromMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */; };
 		2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */; };
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
-		2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9381EE258C20066509C /* GithubClient+Issues.swift */; };
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		296CD8291F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
 		296CD82A1F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
@@ -320,6 +318,9 @@
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29EE443F1F19B2D300B05ED3 /* WriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE443E1F19B2D300B05ED3 /* WriteButton.swift */; };
 		29EE44421F19BAFF00B05ED3 /* NewCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */; };
+		29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */; };
+		29EE44481F19D5D100B05ED3 /* AddCommentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */; };
+		29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */; };
 		29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942B1EE750DB0016E6D4 /* IssueLabeledModel.swift */; };
 		29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */; };
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
@@ -454,7 +455,6 @@
 		295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MMMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIMenuController+Reactions.swift"; sourceTree = "<group>"; };
 		2963A9331EE2118E0066509C /* ResponderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponderButton.swift; sourceTree = "<group>"; };
-		2963A9381EE258C20066509C /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
 		2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LabelableFields+IssueLabelModel.swift"; sourceTree = "<group>"; };
 		296CD8241F014130001190B9 /* _graphql.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = _graphql.json; sourceTree = "<group>"; };
 		296CD8251F014130001190B9 /* _notifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = _notifications.json; sourceTree = "<group>"; };
@@ -554,6 +554,9 @@
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29EE443E1F19B2D300B05ED3 /* WriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteButton.swift; sourceTree = "<group>"; };
 		29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCommentViewController.swift; sourceTree = "<group>"; };
+		29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
+		29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentClient.swift; sourceTree = "<group>"; };
+		29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowErrorStatusBar.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
 		29FB942B1EE750DB0016E6D4 /* IssueLabeledModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabeledModel.swift; sourceTree = "<group>"; };
@@ -633,7 +636,7 @@
 				297403CF1F184F8400ABA95A /* Assignees */,
 				292FCAC81EDFCC510026635E /* Comments */,
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
-				2963A9381EE258C20066509C /* GithubClient+Issues.swift */,
+				29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
 				292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */,
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
@@ -1040,17 +1043,18 @@
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
+				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
+				29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */,
 				29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */,
 				295840701EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift */,
 				2971722C1F069E96005E43AC /* SpinnerCell.swift */,
+				29A08FC01F12F08100C5368E /* String+HashDisplay.swift */,
 				29C167661ECA005500439D62 /* Strings.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				2958406E1EE9F21E007723C6 /* UIButton+Label.swift */,
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
-				29A08FC01F12F08100C5368E /* String+HashDisplay.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1135,6 +1139,7 @@
 		29EE44401F19BAF000B05ED3 /* NewComment */ = {
 			isa = PBXGroup;
 			children = (
+				29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */,
 				29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */,
 			);
 			path = NewComment;
@@ -1457,7 +1462,6 @@
 				29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */,
-				2963A9391EE258C20066509C /* GithubClient+Issues.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
@@ -1521,6 +1525,7 @@
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
 				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
+				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */,
@@ -1549,12 +1554,14 @@
 				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,
 				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
 				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
+				29EE44481F19D5D100B05ED3 /* AddCommentClient.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
+				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				295F52AD1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift in Sources */,
 				2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
@@ -1617,7 +1624,6 @@
 				29C295021EC7AF8C00D46CD2 /* NotificationCell.swift in Sources */,
 				295F52E11EF1C2C9000B53CF /* CommentModelsFromMarkdown.swift in Sources */,
 				29C295041EC7AF8C00D46CD2 /* NotificationType+Icon.swift in Sources */,
-				295840901EEA00E1007723C6 /* GithubClient+Issues.swift in Sources */,
 				295840771EEA00E1007723C6 /* CollapsibleCell.swift in Sources */,
 				2958409C1EEA00E1007723C6 /* IssueLabelsModel.swift in Sources */,
 				295840871EEA00E1007723C6 /* IssueCommentReactionCell.swift in Sources */,

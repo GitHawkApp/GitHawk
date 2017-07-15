@@ -11,13 +11,14 @@ import IGListKit
 import TUSafariActivity
 import SafariServices
 
-final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate {
+final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate, AddCommentListener {
 
     private let client: GithubClient
     private let owner: String
     private let repo: String
     private let number: Int
 
+    private var subjectId: String? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private let addCommentButton = WriteButton()
@@ -101,7 +102,9 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     }
 
     func onAddComment() {
-        let controller = UINavigationController(rootViewController: NewCommentViewController())
+        guard let subjectId = subjectId else { return }
+        let addCommentClient = AddCommentClient(client: client, subjectId: subjectId)
+        let controller = UINavigationController(rootViewController: NewCommentViewController(client: addCommentClient))
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true)
     }
@@ -150,7 +153,8 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             repo: repo,
             number: number,
             width: view.bounds.width
-        ) { results in
+        ) { subjectId, results in
+            self.subjectId = subjectId
             self.models = results
             self.feed.finishLoading(dismissRefresh: true)
         }
@@ -159,5 +163,30 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     func loadNextPage(feed: Feed) -> Bool {
         return false
     }
+
+    // MARK: AddCommentListener
+
+    func didSendComment(client: AddCommentClient, id: String, commentFields: CommentFields, reactionFields: ReactionFields) {
+        guard let comment = createCommentModel(
+            id: id,
+            commentFields: commentFields,
+            reactionFields: reactionFields,
+            width: view.bounds.width,
+            threadState: .single
+            )
+            else { return }
+        models.append(comment)
+        feed.adapter.performUpdates(animated: false) { _ in
+            self.feed.adapter.scroll(
+                to: comment,
+                supplementaryKinds: nil,
+                scrollDirection: .vertical,
+                scrollPosition: .bottom,
+                animated: true
+            )
+        }
+    }
+    
+    func didFailSendingComment(client: AddCommentClient) {}
     
 }
