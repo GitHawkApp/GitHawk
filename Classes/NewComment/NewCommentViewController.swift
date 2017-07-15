@@ -13,6 +13,13 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
     private let placeholderLabel = UILabel()
     private let textView = UITextView()
 
+    private let textViewInsets = UIEdgeInsets(
+        top: Styles.Sizes.gutter,
+        left: Styles.Sizes.gutter,
+        bottom: 0,
+        right: Styles.Sizes.gutter + Styles.Sizes.gutter
+    )
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,12 +38,26 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
             action: #selector(NewCommentViewController.onSend)
         )
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(NewCommentViewController.onKeyboardDidShow(notification:)),
+            name: NSNotification.Name.UIKeyboardDidShow,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(NewCommentViewController.onKeyboardWillHide(notification:)),
+            name: NSNotification.Name.UIKeyboardWillHide,
+            object: nil
+        )
+
         placeholderLabel.textColor = Styles.Colors.Gray.light.color
         placeholderLabel.text = NSLocalizedString("Leave a comment", comment: "")
         placeholderLabel.sizeToFit()
         placeholderLabel.font = Styles.Fonts.body
         textView.addSubview(placeholderLabel)
 
+        textView.textContainerInset = textViewInsets
         textView.alwaysBounceVertical = true
         textView.delegate = self
         textView.font = Styles.Fonts.body
@@ -55,22 +76,19 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
         super.viewWillLayoutSubviews()
         textView.frame = view.bounds
 
-        let inset = UIEdgeInsets(
-            top: Styles.Sizes.gutter,
-            left: Styles.Sizes.gutter,
-            bottom: 0,
-            right: Styles.Sizes.gutter + Styles.Sizes.gutter
-        )
-        textView.textContainerInset = inset
-
         var placeholderFrame = placeholderLabel.frame
         // extra inset past the selected range indicator
-        placeholderFrame.origin.x = inset.left + 7
-        placeholderFrame.origin.y = inset.top - 1
+        placeholderFrame.origin.x = textViewInsets.left + 7
+        placeholderFrame.origin.y = textViewInsets.top - 1
         placeholderLabel.frame = placeholderFrame
     }
 
     // MARK: Private API
+
+    func restoreTextViewInsets() {
+        textView.textContainerInset = textViewInsets
+        textView.scrollIndicatorInsets = .zero
+    }
 
     var hasText: Bool {
         return textView.text.characters.count > 0
@@ -106,6 +124,21 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate {
 
     func onSend() {
 
+    }
+
+    func onKeyboardDidShow(notification: NSNotification) {
+        guard let size = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size else { return }
+        var inset = textView.textContainerInset
+        inset.bottom = size.height + Styles.Sizes.gutter
+        textView.textContainerInset = inset
+
+        var scrollInset = UIEdgeInsets.zero
+        scrollInset.bottom = size.height
+        textView.scrollIndicatorInsets = scrollInset
+    }
+
+    func onKeyboardWillHide(notification: NSNotification) {
+        textView.textContainerInset = textViewInsets
     }
 
     // MARK: UITextViewDelegate
