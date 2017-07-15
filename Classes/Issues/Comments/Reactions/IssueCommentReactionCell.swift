@@ -160,7 +160,13 @@ UICollectionViewDelegateFlowLayout {
         var users = model.users
         guard users.count > 0 else { return cell }
         
-        let lastUser = users.removeFirst()
+        let difference = model.count - users.count
+        if difference > 0 {
+            let plural = difference > 1 ? "s" : ""
+            users.append("\(difference) other\(plural)")
+        }
+        
+        let lastUser = users.removeLast()
         var message = users.joined(separator: ", ")
         message += users.count > 0 ? " and " + lastUser : lastUser
         message += " reacted with " + model.content.name + " emoji"
