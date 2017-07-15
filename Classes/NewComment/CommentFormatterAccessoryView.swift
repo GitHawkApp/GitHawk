@@ -40,16 +40,20 @@ private func skinnedButton(_ button: UIButton) -> UIButton {
     return button
 }
 
-class MDownFormattingController: UIViewController {
+class CommentFormatterAccessoryView: UIView {
     private let elements = baseElements
     private let scrollView = UIScrollView(frame: .zero)
     private let stackView = UIStackView(frame: .zero)
     private var hasInitialConstraints: Bool = false
 
-    weak var textView: UITextView? = nil
+    weak var textView: UITextView?
 
-    override func viewDidLoad() {
-        view.addSubview(scrollView)
+    init(textView: UITextView) {
+        super.init(frame: .zero)
+        self.textView = textView
+        textView.inputAccessoryView = self
+
+        addSubview(scrollView)
         scrollView.addSubview(stackView)
         elements.map { (elt) -> UIButton in
             let btn = UIButton(frame: .zero)
@@ -57,30 +61,31 @@ class MDownFormattingController: UIViewController {
             btn.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             return skinnedButton(btn)
         }.forEach(stackView.addArrangedSubview)
-        view.backgroundColor = Styles.Colors.background
+
+        backgroundColor = Styles.Colors.background
 
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
         stackView.spacing = 20.0
-        view.frame = CGRect(origin: .zero, size: CGSize(width: 0.0, height: 44.0))
+        frame = CGRect(origin: .zero, size: CGSize(width: 0.0, height: 44.0))
+        setupInitialConstraintsIfNeeded()
     }
 
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-        setupInitialConstraintsIfNeeded()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("not implemented")
     }
 
     private func setupInitialConstraintsIfNeeded() {
         if hasInitialConstraints { return }
         hasInitialConstraints = true
-        view.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 12).isActive = true
@@ -115,6 +120,10 @@ class MDownFormattingController: UIViewController {
                                              offset: before.lengthOfBytes(using: .utf8)) {
             textView.selectedTextRange = textView.textRange(from: position, to: position) // single cursor
         }
+    }
+
+    deinit {
+        print("DEINIT!!")
     }
 }
 

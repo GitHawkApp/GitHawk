@@ -19,7 +19,6 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate, AddC
         bottom: 0,
         right: Styles.Sizes.gutter + Styles.Sizes.gutter
     )
-    private let formattingController = MDownFormattingController()
 
     init(client: AddCommentClient) {
         self.client = client
@@ -69,8 +68,7 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate, AddC
         textView.delegate = self
         textView.font = Styles.Fonts.body
         textView.backgroundColor = .clear
-        textView.inputAccessoryView = formattingController.view
-        formattingController.textView = textView
+        textView.inputAccessoryView = CommentFormatterAccessoryView(textView: textView)
 
         view.addSubview(textView)
 
