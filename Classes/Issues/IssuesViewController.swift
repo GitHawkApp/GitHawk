@@ -104,6 +104,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     func onAddComment() {
         guard let subjectId = subjectId else { return }
         let addCommentClient = AddCommentClient(client: client, subjectId: subjectId)
+        addCommentClient.addListener(listener: self)
         let controller = UINavigationController(rootViewController: NewCommentViewController(client: addCommentClient))
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true)
