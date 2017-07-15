@@ -18,7 +18,6 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
         self.owner = owner
         self.repo = repo
         super.init()
-        inset = Styles.Sizes.listInsetTight
     }
 
     override func sizeForItem(at index: Int) -> CGSize {

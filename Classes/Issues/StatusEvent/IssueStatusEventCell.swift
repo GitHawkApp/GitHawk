@@ -42,7 +42,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.body)
+        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.secondary)
         hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         hashButton.addTarget(self, action: #selector(IssueStatusEventCell.onHash), for: .touchUpInside)
         contentView.addSubview(hashButton)
@@ -51,7 +51,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        dateLabel.font = Styles.Fonts.body
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
@@ -80,7 +80,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
     func configure(_ model: IssueStatusEventModel) {
         let actorAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.bodyBold
+            NSFontAttributeName: Styles.Fonts.secondaryBold
         ]
         actorButton.setAttributedTitle(NSAttributedString(string: model.actor, attributes: actorAttributes), for: .normal)
 
