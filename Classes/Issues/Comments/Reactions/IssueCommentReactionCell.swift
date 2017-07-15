@@ -169,7 +169,7 @@ UICollectionViewDelegateFlowLayout {
         let lastUser = users.removeLast()
         var message = users.joined(separator: ", ")
         message += users.count > 0 ? " and " + lastUser : lastUser
-        message += " reacted with " + model.content.name + " emoji"
+        message += " reacted with " + model.content.localizedString + " emoji"
         
         cell.label.detailText = message
         

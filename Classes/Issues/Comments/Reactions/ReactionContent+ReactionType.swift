@@ -21,14 +21,14 @@ extension ReactionContent {
     }
     
     /// User readable name of the current reaction type
-    var name: String {
+    var localizedString: String {
         switch self {
-        case .confused: return "confused"
-        case .heart: return "heart"
-        case .hooray: return "horray"
-        case .laugh: return "laugh"
-        case .thumbsUp: return "thumbs up"
-        case .thumbsDown: return "thumbs down"
+        case .confused: return NSLocalizedString("confused", comment: "")
+        case .heart: return NSLocalizedString("heart", comment: "")
+        case .hooray: return NSLocalizedString("hooray", comment: "")
+        case .laugh: return NSLocalizedString("laugh", comment: "")
+        case .thumbsUp: return NSLocalizedString("thumbs up", comment: "")
+        case .thumbsDown: return NSLocalizedString("thumbs down", comment: "")
         }
     }
 }

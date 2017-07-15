@@ -62,7 +62,6 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
         // do not display reactions for 0 count
         let count = group.users.totalCount
         guard count > 0 else { continue }
-        let users = group.users.nodes!.map({ $0?.login })
         
         let nodes: [String] = {
             guard let filtered = group.users.nodes?.filter({ $0?.login != nil }) as? [ReactionFields.ReactionGroup.User.Node] else {
