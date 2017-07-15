@@ -50,6 +50,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         inset.bottom = addCommentButton.preferredSize.height + Styles.Sizes.gutter + Styles.Sizes.rowSpacing
         feed.collectionView.contentInset = inset
 
+        addCommentButton.addTarget(self, action: #selector(IssuesViewController.onAddComment), for: .touchUpInside)
         view.addSubview(addCommentButton)
         addCommentButton.snp.makeConstraints { make in
             make.size.equalTo(addCommentButton.preferredSize)
@@ -100,7 +101,9 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     }
 
     func onAddComment() {
-
+        let controller = UINavigationController(rootViewController: NewCommentViewController())
+        controller.modalPresentationStyle = .formSheet
+        present(controller, animated: true)
     }
 
     // MARK: ListAdapterDataSource
