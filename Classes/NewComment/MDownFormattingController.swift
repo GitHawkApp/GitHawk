@@ -1,0 +1,94 @@
+import Foundation
+import UIKit
+
+struct MDownFormattingElement {
+    let name: String
+    let replacements: (String?, String?) // before / after
+}
+
+
+let baseElements = [
+    MDownFormattingElement(name: "Code Block", replacements: ("```\n", "\n```")),
+    MDownFormattingElement(name: "Code", replacements: ("`", "`")),
+    MDownFormattingElement(name: "H1", replacements: ("# ", nil)),
+    MDownFormattingElement(name: "H2", replacements: ("## ", nil)),
+    MDownFormattingElement(name: "H3", replacements: ("### ", nil)),
+    MDownFormattingElement(name: "H4", replacements: ("#### ", nil)),
+    MDownFormattingElement(name: "Bold", replacements: ("**", "**")),
+    MDownFormattingElement(name: "Emphasis", replacements: ("*", "*")),
+    MDownFormattingElement(name: "Strike", replacements: ("~~", "~~"))]
+
+func skinnedButton(_ button: UIButton) -> UIButton {
+    button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
+    button.backgroundColor = Styles.Colors.Blue.medium.color
+    button.layer.cornerRadius = 16.0 // just so we don't need recompute
+    button.layer.masksToBounds = true
+    button.setTitleColor(.white, for: .normal)
+    return button
+}
+
+
+class MDownFormattingController: UIViewController {
+    private let elements = baseElements
+    private let scrollView = UIScrollView(frame: .zero)
+    private let stackView = UIStackView(frame: .zero)
+    private var hasInitialConstraints: Bool = false
+
+    weak var textView: UITextView? = nil
+
+    override func viewDidLoad() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+        elements.map { (elt) -> UIButton in
+            let btn = UIButton(frame: .zero)
+            btn.setTitle(elt.name, for: .normal)
+            btn.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+            return skinnedButton(btn)
+        }.forEach(stackView.addArrangedSubview)
+        view.backgroundColor = Styles.Colors.background
+
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 20.0
+
+    }
+
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        setupInitialConstraintsIfNeeded()
+    }
+
+    private func setupInitialConstraintsIfNeeded() {
+        if hasInitialConstraints { return }
+        hasInitialConstraints = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 12).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -12).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 6).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+    }
+
+    @objc
+    private func buttonTapped(btn: UIButton) {
+        guard
+            let idx = stackView.subviews.index(of: btn),
+            let textView = textView,
+            let range = textView.selectedTextRange, // seems to be always set
+            let text = textView.text(in: range), // no selection = ""
+            idx >= 0, idx < elements.count else { return }
+
+        let elt = elements[idx]
+        let before = elt.replacements.0 ?? ""
+        let after = elt.replacements.1 ?? ""
+        textView.replace(range, withText: "\(before)\(text)\(after)")
+    }
+}
