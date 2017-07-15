@@ -10,9 +10,10 @@ import UIKit
 
 final class NewCommentViewController: UIViewController, UITextViewDelegate {
 
+    
+
     private let placeholderLabel = UILabel()
     private let textView = UITextView()
-
     private let textViewInsets = UIEdgeInsets(
         top: Styles.Sizes.gutter,
         left: Styles.Sizes.gutter,

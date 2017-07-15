@@ -30,9 +30,18 @@ public final class AddCommentMutation: GraphQLMutation {
     "mutation AddComment($subject_id: ID!, $body: String!) {" +
     "  addComment(input: {subjectId: $subject_id, body: $body}) {" +
     "    __typename" +
-    "    clientMutationId" +
+    "    commentEdge {" +
+    "      __typename" +
+    "      node {" +
+    "        __typename" +
+    "        ...nodeFields" +
+    "        ...reactionFields" +
+    "        ...commentFields" +
+    "      }" +
+    "    }" +
     "  }" +
     "}"
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition)
 
   public let subjectId: GraphQLID
   public let body: String
@@ -56,12 +65,44 @@ public final class AddCommentMutation: GraphQLMutation {
 
     public struct AddComment: GraphQLMappable {
       public let __typename: String
-      /// A unique identifier for the client performing the mutation.
-      public let clientMutationId: String?
+      /// The edge from the subject's comment connection.
+      public let commentEdge: CommentEdge
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        clientMutationId = try reader.optionalValue(for: Field(responseName: "clientMutationId"))
+        commentEdge = try reader.value(for: Field(responseName: "commentEdge"))
+      }
+
+      public struct CommentEdge: GraphQLMappable {
+        public let __typename: String
+        /// The item at the end of the edge.
+        public let node: Node?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          node = try reader.optionalValue(for: Field(responseName: "node"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+
+          public let fragments: Fragments
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+
+            let nodeFields = try NodeFields(reader: reader)
+            let reactionFields = try ReactionFields(reader: reader)
+            let commentFields = try CommentFields(reader: reader)
+            fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+          }
+
+          public struct Fragments {
+            public let nodeFields: NodeFields
+            public let reactionFields: ReactionFields
+            public let commentFields: CommentFields
+          }
+        }
       }
     }
   }
