@@ -90,5 +90,10 @@ class MDownFormattingController: UIViewController {
         let before = elt.replacements.0 ?? ""
         let after = elt.replacements.1 ?? ""
         textView.replace(range, withText: "\(before)\(text)\(after)")
+        if range.start == range.end, // single cursor (no selection)
+            let position = textView.position(from: range.start, // advance by the inserted before
+                                             offset: before.lengthOfBytes(using: .utf8)) {
+            textView.selectedTextRange = textView.textRange(from: position, to: position) // single cursor
+        }
     }
 }
