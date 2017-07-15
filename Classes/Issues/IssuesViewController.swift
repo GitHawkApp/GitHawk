@@ -177,14 +177,12 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             )
             else { return }
         models.append(comment)
+
+        let collectionView = feed.collectionView
         feed.adapter.performUpdates(animated: false) { _ in
-            self.feed.adapter.scroll(
-                to: comment,
-                supplementaryKinds: nil,
-                scrollDirection: .vertical,
-                scrollPosition: .bottom,
-                animated: true
-            )
+            var offset = collectionView.contentOffset
+            offset.y = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.bounds.height
+            collectionView.setContentOffset(offset, animated: true)
         }
     }
     
