@@ -17,8 +17,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     private let owner: String
     private let repo: String
     private let number: Int
+
     private var models = [ListDiffable]()
-    lazy fileprivate var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    private let addCommentButton = UIButton()
 
     init(
         client: GithubClient,
@@ -43,6 +45,9 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+
+        addCommentButton.setImage(UIImage(named: "")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        addCommentButton.tintColor = .white
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -84,6 +89,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         alert.popoverPresentationController?.barButtonItem = sender
 
         present(alert, animated: true)
+    }
+
+    func onAddComment() {
+
     }
 
     // MARK: ListAdapterDataSource
