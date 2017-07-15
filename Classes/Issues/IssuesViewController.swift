@@ -21,7 +21,6 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     private var subjectId: String? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private let addCommentButton = WriteButton()
 
     init(
         client: GithubClient,
@@ -47,17 +46,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
-        var inset = feed.collectionView.contentInset
-        inset.bottom = addCommentButton.preferredSize.height + Styles.Sizes.gutter + Styles.Sizes.rowSpacing
-        feed.collectionView.contentInset = inset
-
-        addCommentButton.addTarget(self, action: #selector(IssuesViewController.onAddComment), for: .touchUpInside)
-        view.addSubview(addCommentButton)
-        addCommentButton.snp.makeConstraints { make in
-            make.size.equalTo(addCommentButton.preferredSize)
-            make.right.equalTo(view).offset(-Styles.Sizes.gutter)
-            make.bottom.equalTo(view).offset(-Styles.Sizes.gutter)
-        }
+        resetContentInsets()
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -66,6 +55,19 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             action: #selector(IssuesViewController.onMore(sender:))
         )
         navigationItem.rightBarButtonItem = rightItem
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(IssuesViewController.onKeyboardDidShow(notification:)),
+            name: NSNotification.Name.UIKeyboardDidShow,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(IssuesViewController.onKeyboardWillHide(notification:)),
+            name: NSNotification.Name.UIKeyboardWillHide,
+            object: nil
+        )
     }
 
     override func viewWillLayoutSubviews() {
@@ -74,6 +76,12 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     }
 
     // MARK: Private API
+
+    func resetContentInsets() {
+        var inset = feed.collectionView.contentInset
+        inset.bottom = Styles.Sizes.rowSpacing
+        feed.collectionView.contentInset = inset
+    }
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
@@ -101,22 +109,23 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         present(alert, animated: true)
     }
 
-    func onAddComment() {
-        guard let subjectId = subjectId else { return }
-        let addCommentClient = AddCommentClient(client: client, subjectId: subjectId)
-        addCommentClient.addListener(listener: self)
-        let controller = UINavigationController(rootViewController: NewCommentViewController(client: addCommentClient))
-        controller.modalPresentationStyle = .formSheet
-        present(controller, animated: true)
-    }
-
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return models
+        var objects = models
+        if let subjectId = self.subjectId {
+            objects.append(subjectId as ListDiffable)
+        }
+        return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? String, object == subjectId {
+            let addCommentClient = AddCommentClient(client: client, subjectId: object)
+            addCommentClient.addListener(listener: self)
+            return IssueNewCommentSectionController(client: addCommentClient)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
@@ -177,15 +186,33 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             )
             else { return }
         models.append(comment)
-
-        let collectionView = feed.collectionView
-        feed.adapter.performUpdates(animated: false) { _ in
-            var offset = collectionView.contentOffset
-            offset.y = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.bounds.height
-            collectionView.setContentOffset(offset, animated: true)
-        }
+        feed.adapter.performUpdates(animated: true)
     }
     
     func didFailSendingComment(client: AddCommentClient) {}
+
+    // MARK: Notifications
+
+    func onKeyboardDidShow(notification: NSNotification) {
+        guard let size = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size else { return }
+        let collectionView = feed.collectionView
+
+        var inset = collectionView.contentInset
+        inset.bottom = size.height + Styles.Sizes.gutter
+        collectionView.contentInset = inset
+
+        var scrollInset = UIEdgeInsets.zero
+        scrollInset.bottom = size.height
+        collectionView.scrollIndicatorInsets = scrollInset
+
+        // knowing that the comment field is at the bottom, just scroll all the way down
+        var offset = collectionView.contentOffset
+        offset.y = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.bounds.height
+        collectionView.setContentOffset(offset, animated: true)
+    }
+
+    func onKeyboardWillHide(notification: NSNotification) {
+        resetContentInsets()
+    }
     
 }
