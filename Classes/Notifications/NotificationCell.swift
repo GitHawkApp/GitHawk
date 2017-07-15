@@ -103,7 +103,7 @@ final class NotificationCell: SwipeSelectableCell {
         accessibilityLabel = contentView.subviews
             .flatMap { $0.accessibilityLabel }
             .reduce("", { $0 + ".\n" + $1 })
-            .appending("\n\(viewModel.type.localizedString)")
+            .appending(".\n\(viewModel.type.localizedString)")
     }
 
 }
