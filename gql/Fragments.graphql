@@ -2,7 +2,7 @@ fragment reactionFields on Reactable {
   viewerCanReact
   reactionGroups {
     viewerHasReacted
-    users(first: 10) {
+    users(first: 3) {
       nodes {
         login
       }

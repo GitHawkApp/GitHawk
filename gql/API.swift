@@ -2373,7 +2373,7 @@ public struct ReactionFields: GraphQLNamedFragment {
     "  reactionGroups {" +
     "    __typename" +
     "    viewerHasReacted" +
-    "    users(first: 10) {" +
+    "    users(first: 3) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2411,7 +2411,7 @@ public struct ReactionFields: GraphQLNamedFragment {
     public init(reader: GraphQLResultReader) throws {
       __typename = try reader.value(for: Field(responseName: "__typename"))
       viewerHasReacted = try reader.value(for: Field(responseName: "viewerHasReacted"))
-      users = try reader.value(for: Field(responseName: "users", arguments: ["first": 10]))
+      users = try reader.value(for: Field(responseName: "users", arguments: ["first": 3]))
       content = try reader.value(for: Field(responseName: "content"))
     }
 

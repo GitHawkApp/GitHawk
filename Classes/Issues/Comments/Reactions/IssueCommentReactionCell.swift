@@ -162,14 +162,14 @@ UICollectionViewDelegateFlowLayout {
         
         let difference = model.count - users.count
         if difference > 0 {
-            let plural = difference > 1 ? "s" : ""
-            users.append("\(difference) other\(plural)")
+            let format = NSLocalizedString("%d other(s) reacted", comment: "")
+            users.append(String.localizedStringWithFormat(format, difference))
         }
         
         let lastUser = users.removeLast()
         var message = users.joined(separator: ", ")
         message += users.count > 0 ? " and " + lastUser : lastUser
-        message += " reacted with " + model.content.localizedString + " emoji"
+        message += " reacted"
         
         cell.label.detailText = message
         
