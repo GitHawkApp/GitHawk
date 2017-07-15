@@ -50,7 +50,7 @@ class MDownFormattingController: UIViewController {
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
         stackView.spacing = 20.0
-
+        view.frame = CGRect(origin: .zero, size: CGSize(width: 0.0, height: 44.0))
     }
 
     override func updateViewConstraints() {
