@@ -25,6 +25,48 @@ public enum PullRequestReviewState: String {
 
 extension PullRequestReviewState: JSONDecodable, JSONEncodable {}
 
+public final class AddCommentMutation: GraphQLMutation {
+  public static let operationDefinition =
+    "mutation AddComment($subject_id: ID!, $body: String!) {" +
+    "  addComment(input: {subjectId: $subject_id, body: $body}) {" +
+    "    __typename" +
+    "    clientMutationId" +
+    "  }" +
+    "}"
+
+  public let subjectId: GraphQLID
+  public let body: String
+
+  public init(subjectId: GraphQLID, body: String) {
+    self.subjectId = subjectId
+    self.body = body
+  }
+
+  public var variables: GraphQLMap? {
+    return ["subject_id": subjectId, "body": body]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Adds a comment to an Issue or Pull Request.
+    public let addComment: AddComment?
+
+    public init(reader: GraphQLResultReader) throws {
+      addComment = try reader.optionalValue(for: Field(responseName: "addComment", arguments: ["input": ["subjectId": reader.variables["subject_id"], "body": reader.variables["body"]]]))
+    }
+
+    public struct AddComment: GraphQLMappable {
+      public let __typename: String
+      /// A unique identifier for the client performing the mutation.
+      public let clientMutationId: String?
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        clientMutationId = try reader.optionalValue(for: Field(responseName: "clientMutationId"))
+      }
+    }
+  }
+}
+
 public final class AddReactionMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {" +
