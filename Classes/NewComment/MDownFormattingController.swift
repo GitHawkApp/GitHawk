@@ -1,24 +1,24 @@
 import Foundation
 import UIKit
 
-struct MDownFormattingElement {
+private struct MDownFormattingElement {
     let name: String
-    let replacements: (String?, String?) // before / after
+    let replacements: (String, String?) // before / after
 }
 
-
-let baseElements = [
-    MDownFormattingElement(name: "Code Block", replacements: ("```\n", "\n```")),
-    MDownFormattingElement(name: "Code", replacements: ("`", "`")),
+private let baseElements = [
+    MDownFormattingElement(name: "mdown.codeBlock", replacements: ("```\n", "\n```")),
+    MDownFormattingElement(name: "mdown.code", replacements: ("`", "`")),
     MDownFormattingElement(name: "H1", replacements: ("# ", nil)),
     MDownFormattingElement(name: "H2", replacements: ("## ", nil)),
     MDownFormattingElement(name: "H3", replacements: ("### ", nil)),
     MDownFormattingElement(name: "H4", replacements: ("#### ", nil)),
-    MDownFormattingElement(name: "Bold", replacements: ("**", "**")),
-    MDownFormattingElement(name: "Emphasis", replacements: ("*", "*")),
-    MDownFormattingElement(name: "Strike", replacements: ("~~", "~~"))]
+    MDownFormattingElement(name: "mdown.bold", replacements: ("**", "**")),
+    MDownFormattingElement(name: "mdown.emphasis", replacements: ("*", "*")),
+    MDownFormattingElement(name: "mdown.strike", replacements: ("~~", "~~"))
+]
 
-func skinnedButton(_ button: UIButton) -> UIButton {
+private func skinnedButton(_ button: UIButton) -> UIButton {
     button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
     button.backgroundColor = Styles.Colors.Blue.medium.color
     button.layer.cornerRadius = 16.0 // just so we don't need recompute
@@ -26,7 +26,6 @@ func skinnedButton(_ button: UIButton) -> UIButton {
     button.setTitleColor(.white, for: .normal)
     return button
 }
-
 
 class MDownFormattingController: UIViewController {
     private let elements = baseElements
@@ -41,7 +40,7 @@ class MDownFormattingController: UIViewController {
         scrollView.addSubview(stackView)
         elements.map { (elt) -> UIButton in
             let btn = UIButton(frame: .zero)
-            btn.setTitle(elt.name, for: .normal)
+            btn.setTitle(NSLocalizedString(elt.name, comment: ""), for: .normal)
             btn.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             return skinnedButton(btn)
         }.forEach(stackView.addArrangedSubview)
@@ -87,7 +86,7 @@ class MDownFormattingController: UIViewController {
             idx >= 0, idx < elements.count else { return }
 
         let elt = elements[idx]
-        let before = elt.replacements.0 ?? ""
+        let before = elt.replacements.0
         let after = elt.replacements.1 ?? ""
         textView.replace(range, withText: "\(before)\(text)\(after)")
         if range.start == range.end, // single cursor (no selection)
