@@ -19,7 +19,7 @@ enum Styles {
         static let rowSpacing: CGFloat = 8
         static let cellSpacing: CGFloat = 15
         static let tableCellHeight: CGFloat = 44
-        static let tableSectionSpacing: CGFloat = 35
+        static let tableSectionSpacing: CGFloat = 17
         static let avatar = CGSize(width: 30, height: 30)
         static let inlineSpacing: CGFloat = 4
         static let listInsetLarge = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
