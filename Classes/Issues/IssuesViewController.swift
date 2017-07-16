@@ -18,7 +18,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     private let repo: String
     private let number: Int
 
-    private var subjectId: String? = nil
+    private var newCommentToken: IssueNewCommentToken? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
@@ -113,15 +113,15 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var objects = models
-        if let subjectId = self.subjectId {
-            objects.append(subjectId as ListDiffable)
+        if let token = newCommentToken {
+            objects.append(token)
         }
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? String, object == subjectId {
-            let addCommentClient = AddCommentClient(client: client, subjectId: object)
+        if let object = object as? IssueNewCommentToken {
+            let addCommentClient = AddCommentClient(client: client, subjectId: object.subjectId)
             addCommentClient.addListener(listener: self)
             return IssueNewCommentSectionController(client: addCommentClient)
         }
@@ -164,7 +164,9 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             number: number,
             width: view.bounds.width
         ) { subjectId, results in
-            self.subjectId = subjectId
+            if let subjectId = subjectId {
+                self.newCommentToken = IssueNewCommentToken(subjectId)
+            }
             self.models = results
             self.feed.finishLoading(dismissRefresh: true)
         }
