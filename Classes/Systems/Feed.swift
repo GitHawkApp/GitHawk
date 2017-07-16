@@ -71,12 +71,15 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
     }
 
-    func finishLoading(dismissRefresh: Bool, animated: Bool = true) {
+    func finishLoading(dismissRefresh: Bool, scrollToLastItem: Bool = false, animated: Bool = true) {
         status = .idle
         let block = {
             self.adapter.performUpdates(animated: animated) { _ in
                 if dismissRefresh {
                     self.collectionView.refreshControl?.endRefreshing()
+                }
+                if scrollToLastItem {
+                    self.collectionView.scrollToBottom(animated: false)
                 }
             }
         }
