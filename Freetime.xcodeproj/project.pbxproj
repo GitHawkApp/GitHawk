@@ -89,6 +89,7 @@
 		2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */; };
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
+		294BCFAE1F1B18EA00469887 /* IssueNewCommentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCFAD1F1B18EA00469887 /* IssueNewCommentToken.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
 		295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
@@ -321,6 +322,8 @@
 		29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */; };
 		29EE44481F19D5D100B05ED3 /* AddCommentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */; };
 		29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */; };
+		29EE444D1F1A770300B05ED3 /* IssueNewCommentTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE444C1F1A770300B05ED3 /* IssueNewCommentTextViewCell.swift */; };
+		29EE444F1F1A770A00B05ED3 /* IssueNewCommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE444E1F1A770A00B05ED3 /* IssueNewCommentSectionController.swift */; };
 		29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942B1EE750DB0016E6D4 /* IssueLabeledModel.swift */; };
 		29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */; };
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
@@ -439,6 +442,7 @@
 		2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrCell.swift; sourceTree = "<group>"; };
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
 		294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlCell.swift; sourceTree = "<group>"; };
+		294BCFAD1F1B18EA00469887 /* IssueNewCommentToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueNewCommentToken.swift; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
 		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
 		295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventSectionController.swift; sourceTree = "<group>"; };
@@ -560,6 +564,8 @@
 		29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
 		29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentClient.swift; sourceTree = "<group>"; };
 		29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowErrorStatusBar.swift; sourceTree = "<group>"; };
+		29EE444C1F1A770300B05ED3 /* IssueNewCommentTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueNewCommentTextViewCell.swift; sourceTree = "<group>"; };
+		29EE444E1F1A770A00B05ED3 /* IssueNewCommentSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueNewCommentSectionController.swift; sourceTree = "<group>"; };
 		29F63FD01EC530BD007F55E4 /* Github API.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Github API.playground"; sourceTree = "<group>"; };
 		29F63FD11EC530E7007F55E4 /* TextViews.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TextViews.playground; sourceTree = "<group>"; };
 		29FB942B1EE750DB0016E6D4 /* IssueLabeledModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabeledModel.swift; sourceTree = "<group>"; };
@@ -639,6 +645,7 @@
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				29EE444B1F1A76F000B05ED3 /* NewComment */,
 				297403CF1F184F8400ABA95A /* Assignees */,
 				292FCAC81EDFCC510026635E /* Comments */,
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
@@ -1153,6 +1160,16 @@
 			path = NewComment;
 			sourceTree = "<group>";
 		};
+		29EE444B1F1A76F000B05ED3 /* NewComment */ = {
+			isa = PBXGroup;
+			children = (
+				29EE444E1F1A770A00B05ED3 /* IssueNewCommentSectionController.swift */,
+				29EE444C1F1A770300B05ED3 /* IssueNewCommentTextViewCell.swift */,
+				294BCFAD1F1B18EA00469887 /* IssueNewCommentToken.swift */,
+			);
+			path = NewComment;
+			sourceTree = "<group>";
+		};
 		29FB942A1EE750720016E6D4 /* Labeled */ = {
 			isa = PBXGroup;
 			children = (
@@ -1529,6 +1546,7 @@
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */,
+				294BCFAE1F1B18EA00469887 /* IssueNewCommentToken.swift in Sources */,
 				297403DD1F185A8700ABA95A /* IssueAssigneeUserCell.swift in Sources */,
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
 				292CD3CE1F0DB8E700D3D57B /* IssueReviewModel.swift in Sources */,
@@ -1537,6 +1555,7 @@
 				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
+				29EE444D1F1A770300B05ED3 /* IssueNewCommentTextViewCell.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
@@ -1591,6 +1610,7 @@
 				292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
 				297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */,
+				29EE444F1F1A770A00B05ED3 /* IssueNewCommentSectionController.swift in Sources */,
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */,
