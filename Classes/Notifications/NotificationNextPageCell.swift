@@ -16,6 +16,8 @@ final class NotificationNextPageCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
         label.font = Styles.Fonts.button
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
@@ -33,6 +35,15 @@ final class NotificationNextPageCell: UICollectionViewCell {
     func configure(page: Int) {
         let format = NSLocalizedString("Load page %i", comment: "")
         label.text = String(format: format, page)
+    }
+    
+    override var accessibilityLabel: String? {
+        get {
+            return contentView.subviews
+                .flatMap { $0.accessibilityLabel }
+                .reduce("", { $0 + ".\n" + $1 })
+        }
+        set { }
     }
 
 }
