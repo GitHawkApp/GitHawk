@@ -68,8 +68,8 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
 
         let action: String
         switch model.type {
-        case .milestoned: action = NSLocalizedString(" added milestone ", comment: "")
-        case .demilestoned: action = NSLocalizedString(" removed milestone ", comment: "")
+        case .milestoned: action = NSLocalizedString(" added to milestone ", comment: "")
+        case .demilestoned: action = NSLocalizedString(" removed from milestone ", comment: "")
         }
         let text = NSMutableAttributedString(string: action, attributes: separatorAttributes)
         text.append(NSAttributedString(string: model.milestone, attributes: boldAttributes))
