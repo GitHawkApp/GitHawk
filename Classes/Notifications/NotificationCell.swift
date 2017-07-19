@@ -46,6 +46,7 @@ final class NotificationCell: SwipeSelectableCell {
         dateLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
 
         reasonImageView.backgroundColor = .clear
