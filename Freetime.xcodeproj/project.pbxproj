@@ -335,6 +335,9 @@
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
+		98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */; };
+		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
+		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -580,7 +583,10 @@
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIDevice+Model.swift"; path = "Utility/UIDevice+Model.swift"; sourceTree = "<group>"; };
+		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
+		98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVersionInfoSectionController.swift; sourceTree = "<group>"; };
+		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		FDDE84B781D3A44BF57394BE /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1066,6 +1072,7 @@
 				29C167681ECA016500439D62 /* EmptyView.swift */,
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
+				98835BD11F1A158D005BA24F /* LabelCell.swift */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
 				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
 				29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */,
@@ -1112,6 +1119,7 @@
 				29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */,
 				291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */,
 				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
+				98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */,
 				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
 			);
 			path = Settings;
@@ -1203,9 +1211,10 @@
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				98835BD31F1A17EE005BA24F /* Bundle+Version.swift */,
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 			);
-			name = Utility;
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -1530,6 +1539,7 @@
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
+				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
@@ -1609,6 +1619,7 @@
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
+				98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */,
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
@@ -1623,6 +1634,7 @@
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				29C1677A1ECA14F700439D62 /* Feed.swift in Sources */,
 				292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */,
+				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
 				29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */,
 				295C31C71F09E62600521CED /* NotificationNextPageCell.swift in Sources */,
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
