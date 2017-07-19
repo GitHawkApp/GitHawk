@@ -61,12 +61,12 @@ final class IssueReferencedCell: UICollectionViewCell {
 
     func configure(_ model: IssueReferencedModel) {
         let titleAttributes = [
-            NSFontAttributeName: Styles.Fonts.bodyBold,
+            NSFontAttributeName: Styles.Fonts.secondaryBold,
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
         ]
         let title = NSMutableAttributedString(string: model.title, attributes: titleAttributes)
         let numberAttributes = [
-            NSFontAttributeName: Styles.Fonts.body,
+            NSFontAttributeName: Styles.Fonts.secondary,
             NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
         ]
         title.append(NSAttributedString(string: " #\(model.number)", attributes: numberAttributes))

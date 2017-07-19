@@ -103,6 +103,18 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               actor{login}
               user{login}
             }
+            ...on MilestonedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              milestoneTitle
+            }
+            ...on DemilestonedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              milestoneTitle
+            }
           }
         }
         ...reactionFields
@@ -251,6 +263,18 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               createdAt
               actor{login}
               subject{login}
+            }
+            ...on MilestonedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              milestoneTitle
+            }
+            ...on DemilestonedEvent {
+              ...nodeFields
+              createdAt
+              actor{login}
+              milestoneTitle
             }
           }
         }

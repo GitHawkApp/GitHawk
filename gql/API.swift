@@ -25,6 +25,89 @@ public enum PullRequestReviewState: String {
 
 extension PullRequestReviewState: JSONDecodable, JSONEncodable {}
 
+public final class AddCommentMutation: GraphQLMutation {
+  public static let operationDefinition =
+    "mutation AddComment($subject_id: ID!, $body: String!) {" +
+    "  addComment(input: {subjectId: $subject_id, body: $body}) {" +
+    "    __typename" +
+    "    commentEdge {" +
+    "      __typename" +
+    "      node {" +
+    "        __typename" +
+    "        ...nodeFields" +
+    "        ...reactionFields" +
+    "        ...commentFields" +
+    "      }" +
+    "    }" +
+    "  }" +
+    "}"
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition)
+
+  public let subjectId: GraphQLID
+  public let body: String
+
+  public init(subjectId: GraphQLID, body: String) {
+    self.subjectId = subjectId
+    self.body = body
+  }
+
+  public var variables: GraphQLMap? {
+    return ["subject_id": subjectId, "body": body]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Adds a comment to an Issue or Pull Request.
+    public let addComment: AddComment?
+
+    public init(reader: GraphQLResultReader) throws {
+      addComment = try reader.optionalValue(for: Field(responseName: "addComment", arguments: ["input": ["subjectId": reader.variables["subject_id"], "body": reader.variables["body"]]]))
+    }
+
+    public struct AddComment: GraphQLMappable {
+      public let __typename: String
+      /// The edge from the subject's comment connection.
+      public let commentEdge: CommentEdge
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        commentEdge = try reader.value(for: Field(responseName: "commentEdge"))
+      }
+
+      public struct CommentEdge: GraphQLMappable {
+        public let __typename: String
+        /// The item at the end of the edge.
+        public let node: Node?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          node = try reader.optionalValue(for: Field(responseName: "node"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+
+          public let fragments: Fragments
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+
+            let nodeFields = try NodeFields(reader: reader)
+            let reactionFields = try ReactionFields(reader: reader)
+            let commentFields = try CommentFields(reader: reader)
+            fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+          }
+
+          public struct Fragments {
+            public let nodeFields: NodeFields
+            public let reactionFields: ReactionFields
+            public let commentFields: CommentFields
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class AddReactionMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {" +
@@ -264,6 +347,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                __typename" +
     "                login" +
     "              }" +
+    "            }" +
+    "            ... on MilestonedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              milestoneTitle" +
+    "            }" +
+    "            ... on DemilestonedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              milestoneTitle" +
     "            }" +
     "          }" +
     "        }" +
@@ -507,6 +610,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "                login" +
     "              }" +
     "            }" +
+    "            ... on MilestonedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              milestoneTitle" +
+    "            }" +
+    "            ... on DemilestonedEvent {" +
+    "              __typename" +
+    "              ...nodeFields" +
+    "              createdAt" +
+    "              actor {" +
+    "                __typename" +
+    "                login" +
+    "              }" +
+    "              milestoneTitle" +
+    "            }" +
     "          }" +
     "        }" +
     "        reviewRequests(first: $page_size) {" +
@@ -652,6 +775,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asReferencedEvent: AsReferencedEvent?
               public let asAssignedEvent: AsAssignedEvent?
               public let asUnassignedEvent: AsUnassignedEvent?
+              public let asMilestonedEvent: AsMilestonedEvent?
+              public let asDemilestonedEvent: AsDemilestonedEvent?
               public let asIssueComment: AsIssueComment?
 
               public init(reader: GraphQLResultReader) throws {
@@ -668,6 +793,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asReferencedEvent = try AsReferencedEvent(reader: reader, ifTypeMatches: __typename)
                 asAssignedEvent = try AsAssignedEvent(reader: reader, ifTypeMatches: __typename)
                 asUnassignedEvent = try AsUnassignedEvent(reader: reader, ifTypeMatches: __typename)
+                asMilestonedEvent = try AsMilestonedEvent(reader: reader, ifTypeMatches: __typename)
+                asDemilestonedEvent = try AsDemilestonedEvent(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
 
@@ -1235,6 +1362,84 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
+              public struct AsMilestonedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["MilestonedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'milestoned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the milestone title associated with the 'milestoned' event.
+                public let milestoneTitle: String
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsDemilestonedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["DemilestonedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'demilestoned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the milestone title associated with the 'demilestoned' event.
+                public let milestoneTitle: String
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
               public struct AsIssueComment: GraphQLConditionalFragment {
                 public static let possibleTypes = ["IssueComment"]
 
@@ -1336,6 +1541,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public let asUnassignedEvent: AsUnassignedEvent?
               public let asReviewRequestedEvent: AsReviewRequestedEvent?
               public let asReviewRequestRemovedEvent: AsReviewRequestRemovedEvent?
+              public let asMilestonedEvent: AsMilestonedEvent?
+              public let asDemilestonedEvent: AsDemilestonedEvent?
               public let asPullRequestReviewThread: AsPullRequestReviewThread?
               public let asIssueComment: AsIssueComment?
 
@@ -1357,6 +1564,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 asUnassignedEvent = try AsUnassignedEvent(reader: reader, ifTypeMatches: __typename)
                 asReviewRequestedEvent = try AsReviewRequestedEvent(reader: reader, ifTypeMatches: __typename)
                 asReviewRequestRemovedEvent = try AsReviewRequestRemovedEvent(reader: reader, ifTypeMatches: __typename)
+                asMilestonedEvent = try AsMilestonedEvent(reader: reader, ifTypeMatches: __typename)
+                asDemilestonedEvent = try AsDemilestonedEvent(reader: reader, ifTypeMatches: __typename)
                 asPullRequestReviewThread = try AsPullRequestReviewThread(reader: reader, ifTypeMatches: __typename)
                 asIssueComment = try AsIssueComment(reader: reader, ifTypeMatches: __typename)
               }
@@ -2093,6 +2302,84 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public struct Subject: GraphQLMappable {
                   public let __typename: String
                   /// The username used to login.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsMilestonedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["MilestonedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'milestoned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the milestone title associated with the 'milestoned' event.
+                public let milestoneTitle: String
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                  }
+                }
+              }
+
+              public struct AsDemilestonedEvent: GraphQLConditionalFragment {
+                public static let possibleTypes = ["DemilestonedEvent"]
+
+                public let __typename: String
+                /// Identifies the actor who performed the 'demilestoned' event.
+                public let actor: Actor?
+                /// Identifies the date and time when the object was created.
+                public let createdAt: String
+                /// Identifies the milestone title associated with the 'demilestoned' event.
+                public let milestoneTitle: String
+
+                public let fragments: Fragments
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  actor = try reader.optionalValue(for: Field(responseName: "actor"))
+                  createdAt = try reader.value(for: Field(responseName: "createdAt"))
+                  milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
+                }
+
+                public struct Actor: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
                   public let login: String
 
                   public init(reader: GraphQLResultReader) throws {

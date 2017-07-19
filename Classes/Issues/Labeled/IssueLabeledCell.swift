@@ -40,7 +40,7 @@ final class IssueLabeledCell: UICollectionViewCell {
             make.centerY.equalTo(descriptionButton)
         }
 
-        dateLabel.font = Styles.Fonts.body
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -68,7 +68,7 @@ final class IssueLabeledCell: UICollectionViewCell {
     func configure(_ model: IssueLabeledModel) {
         let actorAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.bodyBold
+            NSFontAttributeName: Styles.Fonts.secondaryBold
         ]
         let actor = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
@@ -79,7 +79,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         }
         let actionAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
-            NSFontAttributeName: Styles.Fonts.body
+            NSFontAttributeName: Styles.Fonts.secondary
         ]
         let action = NSAttributedString(string: actionString, attributes: actionAttributes)
         let descriptionText = NSMutableAttributedString(attributedString: actor)
