@@ -26,7 +26,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         super.init(frame: frame)
 
         nameButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
-        nameButton.titleLabel?.font = Styles.Fonts.bodyBold
+        nameButton.titleLabel?.font = Styles.Fonts.secondaryBold
         nameButton.addTarget(self, action: #selector(IssueReferencedCommitCell.onName), for: .touchUpInside)
         contentView.addSubview(nameButton)
         nameButton.snp.makeConstraints { make in
@@ -41,7 +41,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
             make.left.equalTo(nameButton.snp.right).offset(4)
         }
 
-        dateLabel.font = Styles.Fonts.body
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -70,7 +70,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         nameButton.setTitle(model.actor, for: .normal)
 
         let referenceAttributes = [
-            NSFontAttributeName: Styles.Fonts.body,
+            NSFontAttributeName: Styles.Fonts.secondary,
             NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
         ]
         let title = NSMutableAttributedString(

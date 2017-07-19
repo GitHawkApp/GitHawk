@@ -14,6 +14,11 @@ protocol FeedDelegate: class {
     func loadNextPage(feed: Feed) -> Bool
 }
 
+// disables auto scrolling when text views are focused
+private class DisableAutoScrollCollectionView: UICollectionView {
+    override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {}
+}
+
 final class Feed: NSObject, UIScrollViewDelegate {
 
     enum Status {
@@ -24,7 +29,8 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     let adapter: ListAdapter
     lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let view = DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        view.keyboardDismissMode = .interactive
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         view.refreshControl = UIRefreshControl()

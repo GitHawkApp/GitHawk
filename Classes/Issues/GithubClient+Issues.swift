@@ -9,15 +9,6 @@
 import UIKit
 import IGListKit
 
-private func showErrors(graphQLErrors: [Error]?, networkError: Error?) {
-    if networkError != nil {
-        StatusBar.showNetworkError()
-    }
-    else if graphQLErrors != nil && graphQLErrors!.count > 0 {
-        StatusBar.showGenericError()
-    }
-}
-
 extension GithubClient {
 
     func fetch(
@@ -25,7 +16,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping ([ListDiffable]) -> ()
+        completion: @escaping (String?, [ListDiffable]) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
@@ -35,13 +26,13 @@ extension GithubClient {
                 DispatchQueue.global().async {
                     let result = createViewModels(issue: issueType, width: width)
                     DispatchQueue.main.async {
-                        completion(result)
+                        completion(issueType.id, result)
                     }
                 }
             } else {
-                completion([])
+                completion(nil, [])
             }
-            showErrors(graphQLErrors: result?.errors, networkError: error)
+            ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }
     }
 
@@ -58,7 +49,7 @@ extension GithubClient {
                 } else {
                     completion(nil)
                 }
-                showErrors(graphQLErrors: result?.errors, networkError: error)
+                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
             }
         } else {
             apollo.perform(mutation: RemoveReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
@@ -67,7 +58,7 @@ extension GithubClient {
                 } else {
                     completion(nil)
                 }
-                showErrors(graphQLErrors: result?.errors, networkError: error)
+                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
             }
         }
     }

@@ -31,10 +31,21 @@ final class SettingsReportSectionController: ListSectionController {
     }
 
     override func didSelectItem(at index: Int) {
-        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new")
+        let template = createMessageTemplate().addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        
+        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new?body=\(template)")
             else { fatalError("Should always create GitHub issue URL") }
         let safari = SFSafariViewController(url: url)
         viewController?.present(safari, animated: true)
+    }
+    
+    func createMessageTemplate() -> String {
+        var builder = ""
+        
+        builder += Bundle.main.prettyVersionString + "\n"
+        builder += "Device: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion)) \n"
+        
+        return builder
     }
 
 }

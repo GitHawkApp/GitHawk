@@ -69,7 +69,7 @@ enum Styles {
 
     enum Colors {
 
-        static let background = UIColor.groupTableViewBackground
+        static let background = Styles.Colors.Gray.lighter.color
         static let purple = "6f42c1"
 
         enum Red {
