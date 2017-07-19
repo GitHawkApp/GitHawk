@@ -1,5 +1,5 @@
 //
-//  MilestoneEventModel.swift
+//  IssueMilestoneEventModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/19/17.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class MilestoneEventModel: ListDiffable {
+final class IssueMilestoneEventModel: ListDiffable {
 
     enum MilestoneType {
         case milestoned

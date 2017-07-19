@@ -104,11 +104,13 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               user{login}
             }
             ...on MilestonedEvent {
+              ...nodeFields
               createdAt
               actor{login}
               milestoneTitle
             }
             ...on DemilestonedEvent {
+              ...nodeFields
               createdAt
               actor{login}
               milestoneTitle
@@ -263,11 +265,13 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               subject{login}
             }
             ...on MilestonedEvent {
+              ...nodeFields
               createdAt
               actor{login}
               milestoneTitle
             }
             ...on DemilestonedEvent {
+              ...nodeFields
               createdAt
               actor{login}
               milestoneTitle

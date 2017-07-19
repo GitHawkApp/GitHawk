@@ -350,6 +350,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on MilestonedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              actor {" +
     "                __typename" +
@@ -359,6 +360,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on DemilestonedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              actor {" +
     "                __typename" +
@@ -610,6 +612,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on MilestonedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              actor {" +
     "                __typename" +
@@ -619,6 +622,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "            ... on DemilestonedEvent {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              createdAt" +
     "              actor {" +
     "                __typename" +
@@ -1369,11 +1373,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the milestone title associated with the 'milestoned' event.
                 public let milestoneTitle: String
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Actor: GraphQLMappable {
@@ -1399,11 +1412,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the milestone title associated with the 'demilestoned' event.
                 public let milestoneTitle: String
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Actor: GraphQLMappable {
@@ -2300,11 +2322,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the milestone title associated with the 'milestoned' event.
                 public let milestoneTitle: String
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Actor: GraphQLMappable {
@@ -2330,11 +2361,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the milestone title associated with the 'demilestoned' event.
                 public let milestoneTitle: String
 
+                public let fragments: Fragments
+
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
                   milestoneTitle = try reader.value(for: Field(responseName: "milestoneTitle"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Actor: GraphQLMappable {

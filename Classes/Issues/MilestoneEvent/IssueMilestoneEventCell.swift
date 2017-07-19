@@ -1,5 +1,5 @@
 //
-//  MilestoneEventCell.swift
+//  IssueMilestoneEventCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/19/17.
@@ -9,11 +9,11 @@
 import Foundation
 import SnapKit
 
-protocol MilestoneEventCellDelegate: class {
-    func didTapActor(cell: MilestoneEventCell)
+protocol IssueMilestoneEventCellDelegate: class {
+    func didTapActor(cell: IssueMilestoneEventCell)
 }
 
-final class MilestoneEventCell: UICollectionViewCell {
+final class IssueMilestoneEventCell: UICollectionViewCell {
 
     weak var delegate: MilestoneEventCellDelegate? = nil
 
@@ -52,7 +52,7 @@ final class MilestoneEventCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(_ model: MilestoneEventModel) {
+    func configure(_ model: IssueMilestoneEventModel) {
         let boldAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
             NSFontAttributeName: Styles.Fonts.secondaryBold
