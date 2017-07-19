@@ -42,17 +42,10 @@ final class SettingsReportSectionController: ListSectionController {
     func createMessageTemplate() -> String {
         var builder = ""
         
-        if let versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            builder += "Version: \(versionNumber)"
-        }
+        builder += Bundle.main.prettyVersionString + "\n"
+        builder += "Device: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion)) \n"
         
-        if let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-            builder += " (\(buildNumber))"
-        }
-        
-        builder += "\nDevice: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion))"
-        
-        return builder + "\n"
+        return builder
     }
 
 }
