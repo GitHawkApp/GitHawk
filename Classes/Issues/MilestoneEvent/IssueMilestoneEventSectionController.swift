@@ -17,7 +17,7 @@ final class IssueMilestoneEventSectionController: ListGenericSectionController<I
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: MilestoneEventCell.self, for: self, at: index) as? MilestoneEventCell,
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueMilestoneEventCell.self, for: self, at: index) as? IssueMilestoneEventCell,
         let object = self.object
             else { fatalError("Missing context, object, or wrong cell type") }
         cell.configure(object)
@@ -28,7 +28,7 @@ final class IssueMilestoneEventSectionController: ListGenericSectionController<I
     // MARK: IssueMilestoneEventCellDelegate
 
     func didTapActor(cell: IssueMilestoneEventCell) {
-        guard let actor = object.actor else { return }
+        guard let actor = object?.actor else { return }
         viewController?.presentProfile(login: actor)
     }
 

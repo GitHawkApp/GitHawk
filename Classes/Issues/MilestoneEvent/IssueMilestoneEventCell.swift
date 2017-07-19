@@ -15,7 +15,7 @@ protocol IssueMilestoneEventCellDelegate: class {
 
 final class IssueMilestoneEventCell: UICollectionViewCell {
 
-    weak var delegate: MilestoneEventCellDelegate? = nil
+    weak var delegate: IssueMilestoneEventCellDelegate? = nil
 
     private let actorButton = UIButton()
     private let label = UILabel()
@@ -23,7 +23,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        actorButton.addTarget(self, action: #selector(MilestoneEventCell.onActor), for: .touchUpInside)
+        actorButton.addTarget(self, action: #selector(IssueMilestoneEventCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -35,7 +35,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(actorButton)
-            make.left.equalTo(actorButton).offset(Styles.Sizes.inlineSpacing)
+            make.left.equalTo(actorButton.snp.right)
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
     }
@@ -73,6 +73,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
         }
         let text = NSMutableAttributedString(string: action, attributes: separatorAttributes)
         text.append(NSAttributedString(string: model.milestone, attributes: boldAttributes))
+        label.attributedText = text
     }
 
 }
