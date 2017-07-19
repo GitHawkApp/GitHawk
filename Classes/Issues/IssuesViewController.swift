@@ -140,6 +140,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         case is IssueRenamedModel: return IssueRenamedSectionController()
         case is IssueRequestModel: return IssueRequestSectionController()
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
+        case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }

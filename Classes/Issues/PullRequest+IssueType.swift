@@ -260,6 +260,26 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     event: .reviewRequestRemoved
                 )
                 results.append(model)
+            } else if let milestone = node.asMilestonedEvent,
+                let date = GithubAPIDateFormatter().date(from: milestone.createdAt) {
+                let model = IssueMilestoneEventModel(
+                    id: milestone.fragments.nodeFields.id,
+                    actor: milestone.actor?.login ?? Strings.unknown,
+                    milestone: milestone.milestoneTitle,
+                    date: date,
+                    type: .milestoned
+                )
+                results.append(model)
+            } else if let demilestone = node.asDemilestonedEvent,
+                let date = GithubAPIDateFormatter().date(from: demilestone.createdAt) {
+                let model = IssueMilestoneEventModel(
+                    id: demilestone.fragments.nodeFields.id,
+                    actor: demilestone.actor?.login ?? Strings.unknown,
+                    milestone: demilestone.milestoneTitle,
+                    date: date,
+                    type: .demilestoned
+                )
+                results.append(model)
             }
         }
 
