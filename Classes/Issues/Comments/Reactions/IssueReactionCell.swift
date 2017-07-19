@@ -11,7 +11,7 @@ import SnapKit
 
 final class IssueReactionCell: UICollectionViewCell {
 
-    let label = UILabel()
+    let label = ShowMoreDetailsLabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
