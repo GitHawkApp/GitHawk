@@ -54,6 +54,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             target: self,
             action: #selector(IssuesViewController.onMore(sender:))
         )
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
 
         NotificationCenter.default.addObserver(

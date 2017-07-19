@@ -21,7 +21,6 @@ final class ButtonCell: SelectableCell {
         super.init(frame: frame)
 
         contentView.backgroundColor = .white
-        accessibilityTraits |= UIAccessibilityTraitButton
 
         topSeparator = contentView.addBorder(.top)
         bottomSeparator = contentView.addBorder(.bottom)
