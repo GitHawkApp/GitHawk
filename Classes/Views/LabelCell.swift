@@ -24,9 +24,7 @@ final class LabelCell: UICollectionViewCell {
         label.font = Styles.Fonts.button
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.right.equalTo(-Styles.Sizes.gutter)
+            make.center.equalTo(contentView)
         }
     }
     

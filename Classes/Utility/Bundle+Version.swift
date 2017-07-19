@@ -19,7 +19,10 @@ extension Bundle {
     }
     
     var prettyVersionString: String {
-        return NSLocalizedString("Version", comment: "") + " \(versionNumber ?? Strings.unknown) (\(buildNumber ?? "0"))"
+        let ver = versionNumber ?? Strings.unknown
+        let build = buildNumber ?? "0"
+        let format = NSLocalizedString("Version %@ (%@)", comment: "")
+        return  String.localizedStringWithFormat(format, ver, build)
     }
     
 }
