@@ -2577,8 +2577,12 @@ public struct ReactionFields: GraphQLNamedFragment {
     "  reactionGroups {" +
     "    __typename" +
     "    viewerHasReacted" +
-    "    users {" +
+    "    users(first: 3) {" +
     "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        login" +
+    "      }" +
     "      totalCount" +
     "    }" +
     "    content" +
@@ -2611,18 +2615,32 @@ public struct ReactionFields: GraphQLNamedFragment {
     public init(reader: GraphQLResultReader) throws {
       __typename = try reader.value(for: Field(responseName: "__typename"))
       viewerHasReacted = try reader.value(for: Field(responseName: "viewerHasReacted"))
-      users = try reader.value(for: Field(responseName: "users"))
+      users = try reader.value(for: Field(responseName: "users", arguments: ["first": 3]))
       content = try reader.value(for: Field(responseName: "content"))
     }
 
     public struct User: GraphQLMappable {
       public let __typename: String
+      /// A list of nodes.
+      public let nodes: [Node?]?
       /// Identifies the total count of items in the connection.
       public let totalCount: Int
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
+        nodes = try reader.optionalList(for: Field(responseName: "nodes"))
         totalCount = try reader.value(for: Field(responseName: "totalCount"))
+      }
+
+      public struct Node: GraphQLMappable {
+        public let __typename: String
+        /// The username used to login.
+        public let login: String
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          login = try reader.value(for: Field(responseName: "login"))
+        }
       }
     }
   }
