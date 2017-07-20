@@ -1,0 +1,67 @@
+name: Alamofire, nameSpecified: 
+body: Copyright (c) 2014-2…
+
+name: Apollo, nameSpecified: 
+body: The MIT License (MIT…
+
+name: FLAnimatedImage, nameSpecified: 
+body: The MIT License (MIT…
+
+name: FLEX, nameSpecified: 
+body: Copyright (c) 2014-2…
+
+name: IGListKit, nameSpecified: 
+body: BSD License
+
+For `IG…
+
+name: JDStatusBarNotification, nameSpecified: 
+body: Copyright © 2013 Mar…
+
+name: NYTPhotoViewer, nameSpecified: 
+body: Copyright (c) 2015-2…
+
+name: SDWebImage, nameSpecified: 
+body: Copyright (c) 2016 O…
+
+name: SnapKit, nameSpecified: 
+body: Copyright (c) 2011-P…
+
+name: TUSafariActivity, nameSpecified: 
+body: Copyright (c) 2012 T…
+
+name: Alamofire, nameSpecified: 
+body: Copyright (c) 2014-2…
+
+name: Apollo, nameSpecified: 
+body: The MIT License (MIT…
+
+name: FLAnimatedImage, nameSpecified: 
+body: The MIT License (MIT…
+
+name: FLEX, nameSpecified: 
+body: Copyright (c) 2014-2…
+
+name: IGListKit, nameSpecified: 
+body: BSD License
+
+For `IG…
+
+name: JDStatusBarNotification, nameSpecified: 
+body: Copyright © 2013 Mar…
+
+name: NYTPhotoViewer, nameSpecified: 
+body: Copyright (c) 2015-2…
+
+name: SDWebImage, nameSpecified: 
+body: Copyright (c) 2016 O…
+
+name: SnapKit, nameSpecified: 
+body: Copyright (c) 2011-P…
+
+name: TUSafariActivity, nameSpecified: 
+body: Copyright (c) 2012 T…
+
+add-version-numbers: true
+
+LicensePlist Version: 1.4.5
