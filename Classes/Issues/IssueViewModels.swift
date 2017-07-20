@@ -62,7 +62,16 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
         // do not display reactions for 0 count
         let count = group.users.totalCount
         guard count > 0 else { continue }
-        models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted))
+        
+        let nodes: [String] = {
+            guard let filtered = group.users.nodes?.filter({ $0?.login != nil }) as? [ReactionFields.ReactionGroup.User.Node] else {
+                return []
+            }
+            
+            return filtered.map({ $0.login })
+        }()
+        
+        models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted, users: nodes))
     }
 
     return IssueCommentReactionViewModel(models: models)
