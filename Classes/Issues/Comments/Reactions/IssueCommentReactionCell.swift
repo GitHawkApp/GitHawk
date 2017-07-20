@@ -156,6 +156,23 @@ UICollectionViewDelegateFlowLayout {
         let model = reactions[indexPath.item]
         cell.label.text = "\(model.content.emoji) \(model.count)"
         cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light.color : .clear
+        
+        var users = model.users
+        guard users.count > 0 else { return cell }
+        
+        let difference = model.count - users.count
+        if difference > 0 {
+            let format = NSLocalizedString("%d other(s) reacted", comment: "")
+            users.append(String.localizedStringWithFormat(format, difference))
+        }
+        
+        let lastUser = users.removeLast()
+        var message = users.joined(separator: ", ")
+        message += users.count > 0 ? " and " + lastUser : lastUser
+        message += " reacted"
+        
+        cell.label.detailText = message
+        
         return cell
     }
 
@@ -180,5 +197,5 @@ UICollectionViewDelegateFlowLayout {
             delegate?.didAdd(cell: self, reaction: model.content)
         }
     }
-
+    
 }
