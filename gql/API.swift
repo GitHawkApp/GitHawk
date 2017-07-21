@@ -2641,6 +2641,7 @@ public struct CommentFields: GraphQLNamedFragment {
     "    __typename" +
     "    login" +
     "  }" +
+    "  lastEditedAt" +
     "  body" +
     "  createdAt" +
     "  viewerDidAuthor" +
@@ -2653,6 +2654,8 @@ public struct CommentFields: GraphQLNamedFragment {
   public let author: Author?
   /// The actor who edited the comment.
   public let editor: Editor?
+  /// The moment the editor made the last edit
+  public let lastEditedAt: String?
   /// The comment body as Markdown.
   public let body: String
   /// Identifies the date and time when the object was created.
@@ -2664,6 +2667,7 @@ public struct CommentFields: GraphQLNamedFragment {
     __typename = try reader.value(for: Field(responseName: "__typename"))
     author = try reader.optionalValue(for: Field(responseName: "author"))
     editor = try reader.optionalValue(for: Field(responseName: "editor"))
+    lastEditedAt = try reader.optionalValue(for: Field(responseName: "lastEditedAt"))
     body = try reader.value(for: Field(responseName: "body"))
     createdAt = try reader.value(for: Field(responseName: "createdAt"))
     viewerDidAuthor = try reader.value(for: Field(responseName: "viewerDidAuthor"))

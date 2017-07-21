@@ -80,12 +80,18 @@ func createCommentModel(
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
+    let editedAt: Date? = {
+        guard let editedDate = commentFields.lastEditedAt else { return nil }
+        return GithubAPIDateFormatter().date(from: editedDate)
+    }()
+    
     let details = IssueCommentDetailsViewModel(
         date: date,
-        login:
-        author.login,
+        login: author.login,
         avatarURL: avatarURL,
-        didAuthor: commentFields.viewerDidAuthor
+        didAuthor: commentFields.viewerDidAuthor,
+        editedBy: commentFields.editor?.login,
+        editedAt: editedAt
     )
     let bodies = CreateCommentModels(markdown: commentFields.body, width: width)
     let reactions = createIssueReactions(reactions: reactionFields)
