@@ -334,6 +334,7 @@
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
+		984D9CAF1F235A8600ECEA7F /* SettingsSourceSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
@@ -583,6 +584,7 @@
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSourceSectionController.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVersionInfoSectionController.swift; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
@@ -1119,6 +1121,7 @@
 				29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */,
 				291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */,
 				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
+				984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */,
 				98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */,
 				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
 			);
@@ -1494,6 +1497,7 @@
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
+				984D9CAF1F235A8600ECEA7F /* SettingsSourceSectionController.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
