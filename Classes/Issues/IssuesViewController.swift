@@ -99,6 +99,7 @@ IssueCommentAutocompleteDelegate {
     }
 
     override func didPressRightButton(_ sender: Any?) {
+        super.didPressRightButton(sender)
         guard let addCommentClient = self.addCommentClient else { return }
         addCommentClient.addComment(body: textView.text)
     }
