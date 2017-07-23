@@ -248,6 +248,8 @@
 		2981A8B21EFF4A1500E25EF1 /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		2981A8B31EFF4A2200E25EF1 /* IssueCommentUnsupportedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */; };
 		2981A8B41EFF4A2200E25EF1 /* IssueCommentUnsupportedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */; };
+		298744CB1F24B75300D5DF30 /* SlackTextViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */; };
+		298744CC1F24B75300D5DF30 /* SlackTextViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
@@ -357,6 +359,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				298744CC1F24B75300D5DF30 /* SlackTextViewController.framework in Embed Frameworks */,
 				292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */,
 				295F52DB1EF1C0C7000B53CF /* MMMarkdown.framework in Embed Frameworks */,
 			);
@@ -509,6 +512,7 @@
 		2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSectionController.swift; sourceTree = "<group>"; };
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
+		298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SlackTextViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringSizing.swift; sourceTree = "<group>"; };
 		298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+BottomBorder.swift"; sourceTree = "<group>"; };
 		298BA0951EC947F100B01946 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
@@ -598,6 +602,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */,
+				298744CB1F24B75300D5DF30 /* SlackTextViewController.framework in Frameworks */,
 				295F52DA1EF1C0C7000B53CF /* MMMarkdown.framework in Frameworks */,
 				4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */,
 			);
@@ -1220,6 +1225,7 @@
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */,
 				292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */,
 				295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */,
 				665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */,
