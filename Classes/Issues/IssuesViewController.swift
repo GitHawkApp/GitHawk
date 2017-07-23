@@ -81,13 +81,16 @@ AddCommentListener {
         return "issue.\(owner).\(repo).\(number)"
     }
 
-    // MARK: Private API
-
-    func resetContentInsets() {
-        var inset = feed.collectionView.contentInset
-        inset.bottom = Styles.Sizes.rowSpacing
-        feed.collectionView.contentInset = inset
+    override func canPressRightButton() -> Bool {
+        return addCommentClient != nil && super.canPressRightButton()
     }
+
+    override func didPressRightButton(_ sender: Any?) {
+        guard let addCommentClient = self.addCommentClient else { return }
+        addCommentClient.addComment(body: textView.text)
+    }
+
+    // MARK: Private API
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
