@@ -2,6 +2,66 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>mdown.strike</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Strike</string>
+		<key>Variable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>mdown.bold</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Bold</string>
+		<key>Variable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>mdown.emphasis</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Emphasis</string>
+		<key>Variable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>mdown.code</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Code</string>
+		<key>Variable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>mdown.codeBlock</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Code Block</string>
+		<key>Variable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
 	<key>%d minute(s) ago</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

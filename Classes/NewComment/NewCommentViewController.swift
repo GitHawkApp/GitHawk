@@ -68,6 +68,8 @@ final class NewCommentViewController: UIViewController, UITextViewDelegate, AddC
         textView.delegate = self
         textView.font = Styles.Fonts.body
         textView.backgroundColor = .clear
+        textView.inputAccessoryView = CommentFormatterAccessoryView(textView: textView)
+
         view.addSubview(textView)
 
         updateTextState()

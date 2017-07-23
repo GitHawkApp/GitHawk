@@ -17,7 +17,6 @@ protocol IssueNewCommentTextViewCellDelegate: class {
 final class IssueNewCommentTextViewCell: UICollectionViewCell, UITextViewDelegate {
 
     static let bottomBarHeight: CGFloat = Styles.Sizes.tableCellHeight
-
     weak var delegate: IssueNewCommentTextViewCellDelegate? = nil
 
     private let textViewInsets = UIEdgeInsets(
@@ -51,6 +50,8 @@ final class IssueNewCommentTextViewCell: UICollectionViewCell, UITextViewDelegat
         textView.delegate = self
         textView.font = Styles.Fonts.body
         textView.backgroundColor = .clear
+        textView.inputAccessoryView = CommentFormatterAccessoryView(textView: textView)
+
         contentView.addSubview(textView)
 
         sendButton.setTitle(NSLocalizedString("Comment", comment: ""), for: .normal)
