@@ -10,8 +10,12 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import SafariServices
+import SlackTextViewController
 
-final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate, AddCommentListener {
+final class IssuesViewController: SLKTextViewController,
+ListAdapterDataSource,
+FeedDelegate,
+AddCommentListener {
 
     private let client: GithubClient
     private let owner: String
@@ -20,7 +24,7 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
 
     private var newCommentToken: IssueNewCommentToken? = nil
     private var models = [ListDiffable]()
-    lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
 
     init(
         client: GithubClient,
@@ -32,7 +36,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         self.owner = owner
         self.repo = repo
         self.number = number
-        super.init(nibName: nil, bundle: nil)
+
+        // force unwrap, this absolutely must work
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())!
+
         title = "\(owner)/\(repo)#\(number)"
     }
 
@@ -46,7 +53,12 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
-        resetContentInsets()
+        // override default SLKTextViewController values
+        self.isInverted = false
+        self.textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
+        self.textView.keyboardType = .emailAddress
+        self.rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        self.rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -56,24 +68,17 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(IssuesViewController.onKeyboardDidShow(notification:)),
-            name: NSNotification.Name.UIKeyboardDidShow,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(IssuesViewController.onKeyboardWillHide(notification:)),
-            name: NSNotification.Name.UIKeyboardWillHide,
-            object: nil
-        )
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
+    }
+
+    // MARK: SLKTextViewController overrides
+
+    override func keyForTextCaching() -> String? {
+        return "issue.\(owner).\(repo).\(number)"
     }
 
     // MARK: Private API
@@ -113,20 +118,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var objects = models
-        if let token = newCommentToken {
-            objects.append(token)
-        }
-        return objects
+        return models
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? IssueNewCommentToken {
-            let addCommentClient = AddCommentClient(client: client, subjectId: object.subjectId)
-            addCommentClient.addListener(listener: self)
-            return IssueNewCommentSectionController(client: addCommentClient)
-        }
-
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
@@ -195,28 +190,4 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     
     func didFailSendingComment(client: AddCommentClient) {}
 
-    // MARK: Notifications
-
-    func onKeyboardDidShow(notification: NSNotification) {
-        guard let size = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size else { return }
-        let collectionView = feed.collectionView
-
-        var inset = collectionView.contentInset
-        inset.bottom = size.height + Styles.Sizes.gutter
-        collectionView.contentInset = inset
-
-        var scrollInset = UIEdgeInsets.zero
-        scrollInset.bottom = size.height
-        collectionView.scrollIndicatorInsets = scrollInset
-
-        // knowing that the comment field is at the bottom, just scroll all the way down
-        var offset = collectionView.contentOffset
-        offset.y = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.bounds.height
-        collectionView.setContentOffset(offset, animated: true)
-    }
-
-    func onKeyboardWillHide(notification: NSNotification) {
-        resetContentInsets()
-    }
-    
 }
