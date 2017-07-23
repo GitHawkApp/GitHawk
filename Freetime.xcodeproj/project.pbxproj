@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		290744A91F24D2DA00FD9E48 /* AddCommentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744A81F24D2DA00FD9E48 /* AddCommentClient.swift */; };
+		290744AB1F24D74200FD9E48 /* EmojiAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744AA1F24D74200FD9E48 /* EmojiAutocomplete.swift */; };
+		290744AD1F24D90900FD9E48 /* AutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744AC1F24D90900FD9E48 /* AutocompleteCell.swift */; };
+		290744AF1F24F45D00FD9E48 /* IssueCommentAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744AE1F24F45D00FD9E48 /* IssueCommentAutocomplete.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
@@ -369,6 +372,9 @@
 
 /* Begin PBXFileReference section */
 		290744A81F24D2DA00FD9E48 /* AddCommentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentClient.swift; sourceTree = "<group>"; };
+		290744AA1F24D74200FD9E48 /* EmojiAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiAutocomplete.swift; sourceTree = "<group>"; };
+		290744AC1F24D90900FD9E48 /* AutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
+		290744AE1F24F45D00FD9E48 /* IssueCommentAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentAutocomplete.swift; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
@@ -667,6 +673,7 @@
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
 				29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
+				290744AE1F24F45D00FD9E48 /* IssueCommentAutocomplete.swift */,
 				292CD3C41F0C9EB200D3D57B /* IssueCommentModelHandling.swift */,
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
 				295C31CE1F0AA67600521CED /* IssueStatus+ButtonState.swift */,
@@ -1026,6 +1033,7 @@
 			children = (
 				29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */,
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
+				290744AA1F24D74200FD9E48 /* EmojiAutocomplete.swift */,
 				29C167791ECA14F700439D62 /* Feed.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
@@ -1085,6 +1093,7 @@
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				290744AC1F24D90900FD9E48 /* AutocompleteCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1472,6 +1481,7 @@
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
+				290744AD1F24D90900FD9E48 /* AutocompleteCell.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
@@ -1598,6 +1608,7 @@
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				292FCB0A1EDFCC510026635E /* IssueCommentTextCell.swift in Sources */,
+				290744AF1F24F45D00FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
@@ -1618,6 +1629,7 @@
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
 				29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */,
 				295C31C71F09E62600521CED /* NotificationNextPageCell.swift in Sources */,
+				290744AB1F24D74200FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,

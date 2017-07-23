@@ -15,13 +15,15 @@ import SlackTextViewController
 final class IssuesViewController: SLKTextViewController,
 ListAdapterDataSource,
 FeedDelegate,
-AddCommentListener {
+AddCommentListener,
+IssueCommentAutocompleteDelegate {
 
     private let client: GithubClient
     private let owner: String
     private let repo: String
     private let number: Int
 
+    private let autocomplete = IssueCommentAutocomplete()
     private var addCommentClient: AddCommentClient? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
@@ -41,6 +43,9 @@ AddCommentListener {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
         title = "\(owner)/\(repo)#\(number)"
+
+        autocomplete.configure(tableView: autoCompletionView, delegate: self)
+        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -88,6 +93,32 @@ AddCommentListener {
     override func didPressRightButton(_ sender: Any?) {
         guard let addCommentClient = self.addCommentClient else { return }
         addCommentClient.addComment(body: textView.text)
+    }
+
+    override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
+        autocomplete.didChange(tableView: autoCompletionView, prefix: prefix, word: word)
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocomplete.resultCount(prefix: foundPrefix)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return autocomplete.cell(tableView: tableView, prefix: foundPrefix, indexPath: indexPath)
+    }
+
+    override func heightForAutoCompletionView() -> CGFloat {
+        return autocomplete.resultHeight(prefix: foundPrefix)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
+            acceptAutoCompletion(with: accept, keepPrefix: false)
+        }
+    }
+
+    override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
+        return false
     }
 
     // MARK: Private API
@@ -195,5 +226,11 @@ AddCommentListener {
     }
     
     func didFailSendingComment(client: AddCommentClient) {}
+
+    // MARK: IssueCommentAutocompleteDelegate
+
+    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
+        showAutoCompletionView(hasResults)
+    }
 
 }
