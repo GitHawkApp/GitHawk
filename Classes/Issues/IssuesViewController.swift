@@ -22,7 +22,7 @@ AddCommentListener {
     private let repo: String
     private let number: Int
 
-    private var newCommentToken: IssueNewCommentToken? = nil
+    private var subjectId: String? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
 
@@ -161,9 +161,7 @@ AddCommentListener {
             number: number,
             width: view.bounds.width
         ) { subjectId, results in
-            if let subjectId = subjectId {
-                self.newCommentToken = IssueNewCommentToken(subjectId)
-            }
+            self.subjectId = subjectId
             self.models = results
             self.feed.finishLoading(dismissRefresh: true)
         }
