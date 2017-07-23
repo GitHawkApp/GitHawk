@@ -54,7 +54,6 @@ AddCommentListener {
         feed.adapter.dataSource = self
 
         // override default SLKTextViewController values
-        feed.collectionView.keyboardDismissMode = .interactive
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
         textView.keyboardType = .emailAddress
