@@ -11,7 +11,7 @@ import IGListKit
 import TUSafariActivity
 import SafariServices
 
-final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate, AddCommentListener {
+final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate, AddCommentListener, FeedSelectionProviding {
 
     private let client: GithubClient
     private let owner: String
@@ -21,6 +21,9 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     private var newCommentToken: IssueNewCommentToken? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    var feedContainsSelection: Bool {
+        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
 
     init(
         client: GithubClient,
