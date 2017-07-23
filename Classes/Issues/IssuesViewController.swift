@@ -23,8 +23,13 @@ IssueCommentAutocompleteDelegate {
     private let repo: String
     private let number: Int
 
+    private var addCommentClient: AddCommentClient? = nil {
+        didSet {
+            self.setTextInputbarHidden(addCommentClient == nil, animated: true)
+        }
+    }
+
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
-    private var addCommentClient: AddCommentClient? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
 
@@ -64,6 +69,9 @@ IssueCommentAutocompleteDelegate {
         textView.keyboardType = .emailAddress
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
         rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
+
+        // displayed once an add comment client is created (requires a gql subject id)
+        setTextInputbarHidden(true, animated: false)
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
