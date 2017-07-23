@@ -33,6 +33,7 @@ enum Styles {
             right: Styles.Sizes.gutter
         )
         static let labelEventHeight: CGFloat = 30
+        static let keyboardAccessoryButtonRadius: CGFloat = 16
 
         enum Text {
             static let body: CGFloat = 16

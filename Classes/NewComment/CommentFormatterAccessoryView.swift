@@ -1,5 +1,14 @@
+//
+//  AddCommentClient.swift
+//  Freetime
+//
+//  Created by Florent Vilmart on 17-07-16.
+//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//
+
 import Foundation
 import UIKit
+import SnapKit
 
 private struct MDownFormattingElement {
     let name: String
@@ -34,7 +43,7 @@ private let baseElements = [
 private func skinnedButton(_ button: UIButton) -> UIButton {
     button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
     button.backgroundColor = Styles.Colors.Blue.medium.color
-    button.layer.cornerRadius = 16.0 // just so we don't need recompute
+    button.layer.cornerRadius = Styles.Sizes.keyboardAccessoryButtonRadius
     button.layer.masksToBounds = true
     button.setTitleColor(.white, for: .normal)
     return button
@@ -79,19 +88,20 @@ class CommentFormatterAccessoryView: UIView {
     private func setupInitialConstraintsIfNeeded() {
         if hasInitialConstraints { return }
         hasInitialConstraints = true
-        translatesAutoresizingMaskIntoConstraints = false
 
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        scrollView.snp.makeConstraints { make in
+            make.leading.equalTo(self.snp.leading)
+            make.trailing.equalTo(self.snp.trailing)
+            make.top.equalTo(self.snp.top)
+            make.bottom.equalTo(self.snp.bottom)
+        }
 
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 12).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -12).isActive = true
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 6).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        stackView.snp.makeConstraints { make in
+            make.leading.equalTo(scrollView.snp.leading).offset(12)
+            make.trailing.equalTo(scrollView.snp.trailing).offset(-12)
+            make.top.equalTo(scrollView.snp.top).offset(6)
+            make.bottom.equalTo(scrollView.snp.bottom)
+        }
     }
 
     @objc
@@ -120,10 +130,6 @@ class CommentFormatterAccessoryView: UIView {
                                              offset: before.lengthOfBytes(using: .utf8)) {
             textView.selectedTextRange = textView.textRange(from: position, to: position) // single cursor
         }
-    }
-
-    deinit {
-        print("DEINIT!!")
     }
 }
 
