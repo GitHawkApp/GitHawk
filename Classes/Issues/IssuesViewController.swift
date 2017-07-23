@@ -54,11 +54,12 @@ AddCommentListener {
         feed.adapter.dataSource = self
 
         // override default SLKTextViewController values
-        self.isInverted = false
-        self.textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
-        self.textView.keyboardType = .emailAddress
-        self.rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
-        self.rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
+        feed.collectionView.keyboardDismissMode = .interactive
+        isInverted = false
+        textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
+        textView.keyboardType = .emailAddress
+        rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),

@@ -37,10 +37,13 @@ final class Feed: NSObject, UIScrollViewDelegate {
     init(viewController: UIViewController, delegate: FeedDelegate, collectionView: UICollectionView? = nil) {
         self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
         self.delegate = delegate
-        self.collectionView = collectionView ?? Feed.createCollectionView()
+        self.collectionView = collectionView
+            ?? DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         super.init()
         self.adapter.scrollViewDelegate = self
 
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.backgroundColor = Styles.Colors.background
         self.collectionView.refreshControl = UIRefreshControl()
         self.collectionView.refreshControl?.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
     }
@@ -88,14 +91,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
     // MARK: Private API
-
-    private static func createCollectionView() -> UICollectionView {
-        let view = DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.keyboardDismissMode = .interactive
-        view.alwaysBounceVertical = true
-        view.backgroundColor = Styles.Colors.background
-        return view
-    }
 
     private func refresh() {
         guard status == .idle else { return }
