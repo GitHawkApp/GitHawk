@@ -23,7 +23,7 @@ IssueCommentAutocompleteDelegate {
     private let repo: String
     private let number: Int
 
-    private let autocomplete = IssueCommentAutocomplete()
+    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var addCommentClient: AddCommentClient? = nil
     private var models = [ListDiffable]()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()

@@ -18,32 +18,31 @@ final class IssueCommentAutocomplete {
 
     private weak var delegate: IssueCommentAutocompleteDelegate? = nil
     private let identifier = "identifier"
-    private let emojiAutocomplete = EmojiAutocomplete()
-    private var emoji = [EmojiResult]()
 
-    enum Prefix: String {
-        case emoji = ":"
+    private let map: [String: AutocompleteType]
+
+    init(autocompletes: [AutocompleteType]) {
+        var map = [String: AutocompleteType]()
+        for autocomplete in autocompletes {
+            map[autocomplete.prefix] = autocomplete
+        }
+        self.map = map
     }
 
     // MARK: Public APIs
-
-    var prefixes: [String] {
-        return [
-            Prefix.emoji.rawValue
-        ]
-    }
 
     func configure(tableView: UITableView, delegate: IssueCommentAutocompleteDelegate) {
         self.delegate = delegate
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: identifier)
     }
 
+    var prefixes: [String] {
+        return map.map { $0.key }
+    }
+
     func resultCount(prefix: String?) -> Int {
-        guard let prefix = prefix, let type = Prefix(rawValue: prefix) else { return 0 }
-        switch type {
-        case .emoji:
-            return emoji.count
-        }
+        guard let prefix = prefix, let autocomplete = map[prefix] else { return 0 }
+        return autocomplete.resultsCount
     }
 
     func resultHeight(prefix: String?) -> CGFloat {
@@ -51,15 +50,13 @@ final class IssueCommentAutocomplete {
     }
 
     func didChange(tableView: UITableView, prefix: String?, word: String) {
-        guard let prefix = prefix, let type = Prefix(rawValue: prefix) else {
+        guard let prefix = prefix, let autocomplete = map[prefix] else {
             delegate?.didFinish(autocomplete: self, hasResults: false)
             return
         }
 
-        switch type {
-        case .emoji:
-            emoji = emojiAutocomplete.search(word)
-            delegate?.didFinish(autocomplete: self, hasResults: emoji.count > 0)
+        autocomplete.search(word: word) { hasResults in
+            self.delegate?.didFinish(autocomplete: self, hasResults: hasResults)
         }
     }
 
@@ -68,25 +65,18 @@ final class IssueCommentAutocomplete {
 
         if let cell = cell as? AutocompleteCell,
             let prefix = prefix,
-            let type = Prefix(rawValue: prefix) {
-            switch type {
-            case .emoji:
-                let result = emoji[indexPath.item]
-                cell.configure(state: .emoji(emoji: result.emoji, term: result.term))
-            }
+            let autocomplete = map[prefix] {
+            autocomplete.configure(cell: cell, index: indexPath.item)
         }
 
         return cell
     }
 
     func accept(prefix: String?, indexPath: IndexPath) -> String? {
-        guard let prefix = prefix, let type = Prefix(rawValue: prefix) else {
+        guard let prefix = prefix, let autocomplete = map[prefix] else {
             return nil
         }
-        switch type {
-        case .emoji:
-            return emoji[indexPath.item].emoji
-        }
+        return autocomplete.accept(index: indexPath.item)
     }
 
 }
