@@ -65,8 +65,9 @@ IssueCommentAutocompleteDelegate {
 
         // override default SLKTextViewController values
         isInverted = false
+        shouldScrollToBottomAfterKeyboardShows = true
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
-        textView.keyboardType = .emailAddress
+        textView.keyboardType = .default
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
         rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
 
