@@ -100,9 +100,15 @@ IssueCommentAutocompleteDelegate {
     }
 
     override func didPressRightButton(_ sender: Any?) {
+        // get text before calling super b/c it will clear it
+        let text = textView.text
+
         super.didPressRightButton(sender)
         guard let addCommentClient = self.addCommentClient else { return }
-        addCommentClient.addComment(body: textView.text)
+
+        if let text = text {
+            addCommentClient.addComment(body: text)
+        }
     }
 
     override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
