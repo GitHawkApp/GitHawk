@@ -65,7 +65,6 @@ IssueCommentAutocompleteDelegate {
 
         // override default SLKTextViewController values
         isInverted = false
-        shouldScrollToBottomAfterKeyboardShows = true
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
         textView.keyboardType = .default
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
@@ -238,7 +237,11 @@ IssueCommentAutocompleteDelegate {
             )
             else { return }
         models.append(comment)
-        feed.adapter.performUpdates(animated: true)
+
+        let collectionView = feed.collectionView
+        feed.adapter.performUpdates(animated: false, completion: { _ in
+            collectionView.slk_scrollToBottom(animated: true)
+        })
     }
     
     func didFailSendingComment(client: AddCommentClient) {}

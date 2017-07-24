@@ -12,6 +12,7 @@
 		290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B21F250A6800FD9E48 /* EmojiAutocomplete.swift */; };
 		290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B31F250A6800FD9E48 /* IssueCommentAutocomplete.swift */; };
 		290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B71F250A7200FD9E48 /* AutocompleteType.swift */; };
+		290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
@@ -377,6 +378,7 @@
 		290744B21F250A6800FD9E48 /* EmojiAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiAutocomplete.swift; sourceTree = "<group>"; };
 		290744B31F250A6800FD9E48 /* IssueCommentAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentAutocomplete.swift; sourceTree = "<group>"; };
 		290744B71F250A7200FD9E48 /* AutocompleteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteType.swift; sourceTree = "<group>"; };
+		290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToBottom.swift"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
@@ -1105,6 +1107,7 @@
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1482,6 +1485,7 @@
 				292CD3D01F0DBB5C00D3D57B /* WebviewCellHeightCache.swift in Sources */,
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
+				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
 				291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
