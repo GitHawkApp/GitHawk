@@ -244,7 +244,9 @@ IssueCommentAutocompleteDelegate {
         })
     }
     
-    func didFailSendingComment(client: AddCommentClient) {}
+    func didFailSendingComment(client: AddCommentClient, body: String) {
+        textView.text = body
+    }
 
     // MARK: IssueCommentAutocompleteDelegate
 

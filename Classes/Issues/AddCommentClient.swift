@@ -10,7 +10,7 @@ import Foundation
 
 protocol AddCommentListener: class {
     func didSendComment(client: AddCommentClient, id: String, commentFields: CommentFields, reactionFields: ReactionFields)
-    func didFailSendingComment(client: AddCommentClient)
+    func didFailSendingComment(client: AddCommentClient, body: String)
 }
 
 final class AddCommentClient {
@@ -50,7 +50,7 @@ final class AddCommentClient {
                 }
             } else {
                 for listener in self.listeners {
-                    listener.listener?.didFailSendingComment(client: self)
+                    listener.listener?.didFailSendingComment(client: self, body: body)
                 }
             }
 
