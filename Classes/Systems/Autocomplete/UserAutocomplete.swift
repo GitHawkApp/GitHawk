@@ -59,7 +59,7 @@ final class UserAutocomplete: AutocompleteType {
     }
 
     func accept(index: Int) -> String? {
-        return results[index].login
+        return prefix + results[index].login
     }
 
 }
