@@ -15,7 +15,7 @@ protocol IssueCommentAutocompleteDelegate: class {
 
 final class IssueCommentAutocomplete {
 
-    let cellHeight = Styles.Sizes.labelEventHeight
+    let cellHeight = Styles.Sizes.tableCellHeight
 
     private weak var delegate: IssueCommentAutocompleteDelegate? = nil
     private let identifier = "identifier"

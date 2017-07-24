@@ -133,6 +133,10 @@ IssueCommentAutocompleteDelegate {
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return autocomplete.cellHeight
+    }
+
     override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
         return false
     }
