@@ -321,7 +321,6 @@
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29EE443F1F19B2D300B05ED3 /* WriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE443E1F19B2D300B05ED3 /* WriteButton.swift */; };
-		29EE44421F19BAFF00B05ED3 /* NewCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */; };
 		29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */; };
 		29EE44481F19D5D100B05ED3 /* AddCommentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */; };
 		29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */; };
@@ -566,7 +565,6 @@
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29EE443E1F19B2D300B05ED3 /* WriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteButton.swift; sourceTree = "<group>"; };
-		29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCommentViewController.swift; sourceTree = "<group>"; };
 		29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
 		29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentClient.swift; sourceTree = "<group>"; };
 		29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowErrorStatusBar.swift; sourceTree = "<group>"; };
@@ -1172,7 +1170,6 @@
 			isa = PBXGroup;
 			children = (
 				29EE44471F19D5D100B05ED3 /* AddCommentClient.swift */,
-				29EE44411F19BAFF00B05ED3 /* NewCommentViewController.swift */,
 			);
 			path = NewComment;
 			sourceTree = "<group>";
@@ -1652,7 +1649,6 @@
 				297AE8791EC0D5C200B44A1F /* App.swift in Sources */,
 				290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */,
 				294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */,
-				29EE44421F19BAFF00B05ED3 /* NewCommentViewController.swift in Sources */,
 				29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
