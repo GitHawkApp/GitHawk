@@ -49,8 +49,9 @@ IssueCommentAutocompleteDelegate {
 
         title = "\(owner)/\(repo)#\(number)"
 
+        // not registered until request is finished and self.registerPrefixes(...) is called
+        // must have user autocompletes
         autocomplete.configure(tableView: autoCompletionView, delegate: self)
-        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -209,11 +210,13 @@ IssueCommentAutocompleteDelegate {
             repo: repo,
             number: number,
             width: view.bounds.width
-        ) { subjectId, results in
+        ) { subjectId, results, users in
             if let subjectId = subjectId {
                 let addCommentClient = AddCommentClient(client: self.client, subjectId: subjectId)
                 addCommentClient.addListener(listener: self)
                 self.addCommentClient = addCommentClient
+
+                self.autocomplete.add(UserAutocomplete(mentionableUsers: users))
             }
 
             self.models = results
@@ -252,6 +255,11 @@ IssueCommentAutocompleteDelegate {
 
     func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
         showAutoCompletionView(hasResults)
+    }
+
+    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
+        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
+        autoCompletionView.reloadData()
     }
 
 }

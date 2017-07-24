@@ -1,27 +1,32 @@
 //
-//  EmojiAutocomplete.swift
+//  UserAutocomplete.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 7/23/17.
+//  Created by Ryan Nystrom on 7/24/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
 
-final class EmojiAutocomplete: AutocompleteType {
+final class UserAutocomplete: AutocompleteType {
 
-    private struct Result {
-        let emoji: String
-        let term: String
+    struct User {
+        let avatarURL: URL
+        let login: String
     }
 
-    private var cachedResults = [String: [Result]]()
-    private var results = [Result]()
+    private var cachedResults = [String: [User]]()
+    private var results = [User]()
+    private let mentionableUsers: [User]
+
+    init(mentionableUsers: [User]) {
+        self.mentionableUsers = mentionableUsers
+    }
 
     // MARK: AutocompleteType
 
     var prefix: String {
-        return ":"
+        return "@"
     }
 
     var resultsCount: Int {
@@ -30,7 +35,7 @@ final class EmojiAutocomplete: AutocompleteType {
 
     func configure(cell: AutocompleteCell, index: Int) {
         let result = results[index]
-        cell.configure(state: .emoji(emoji: result.emoji, term: result.term))
+        cell.configure(state: .user(avatarURL: result.avatarURL, login: result.login))
     }
 
     func search(word: String, completion: @escaping (Bool) -> ()) {
@@ -39,22 +44,22 @@ final class EmojiAutocomplete: AutocompleteType {
             completion(cached.count > 0)
         }
 
-        var results = [Result]()
+        var results = [User]()
 
-        for (k, v) in GithubEmojiMap {
-            if k.hasPrefix(prefix + word) {
-                results.append(Result(emoji: v, term: k))
+        for u in mentionableUsers {
+            if u.login.hasPrefix(word) {
+                results.append(u)
             }
         }
 
         self.results = results
         cachedResults[word] = results
-        
+
         completion(results.count > 0)
     }
 
     func accept(index: Int) -> String? {
-        return results[index].emoji
+        return results[index].login
     }
 
 }

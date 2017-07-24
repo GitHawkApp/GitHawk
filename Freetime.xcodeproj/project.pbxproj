@@ -13,6 +13,8 @@
 		290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B31F250A6800FD9E48 /* IssueCommentAutocomplete.swift */; };
 		290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B71F250A7200FD9E48 /* AutocompleteType.swift */; };
 		290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */; };
+		290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744BB1F268D8300FD9E48 /* UserAutocomplete.swift */; };
+		290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
@@ -379,6 +381,8 @@
 		290744B31F250A6800FD9E48 /* IssueCommentAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentAutocomplete.swift; sourceTree = "<group>"; };
 		290744B71F250A7200FD9E48 /* AutocompleteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteType.swift; sourceTree = "<group>"; };
 		290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToBottom.swift"; sourceTree = "<group>"; };
+		290744BB1F268D8300FD9E48 /* UserAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAutocomplete.swift; sourceTree = "<group>"; };
+		290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserAutocomplete+GraphQL.swift"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
@@ -628,9 +632,10 @@
 			isa = PBXGroup;
 			children = (
 				290744B11F250A6800FD9E48 /* AutocompleteCell.swift */,
+				290744B71F250A7200FD9E48 /* AutocompleteType.swift */,
 				290744B21F250A6800FD9E48 /* EmojiAutocomplete.swift */,
 				290744B31F250A6800FD9E48 /* IssueCommentAutocomplete.swift */,
-				290744B71F250A7200FD9E48 /* AutocompleteType.swift */,
+				290744BB1F268D8300FD9E48 /* UserAutocomplete.swift */,
 			);
 			path = Autocomplete;
 			sourceTree = "<group>";
@@ -706,6 +711,7 @@
 				294563E41EE4EE5B00DBCD35 /* Status */,
 				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAF31EDFCC510026635E /* Title */,
+				290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */,
 				29EE443E1F19B2D300B05ED3 /* WriteButton.swift */,
 			);
 			path = Issues;
@@ -1500,6 +1506,7 @@
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
+				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
@@ -1607,6 +1614,7 @@
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
 				29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */,
+				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,

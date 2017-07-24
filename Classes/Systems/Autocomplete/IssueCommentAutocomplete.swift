@@ -9,6 +9,7 @@
 import UIKit
 
 protocol IssueCommentAutocompleteDelegate: class {
+    func didChangeStore(autocomplete: IssueCommentAutocomplete)
     func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool)
 }
 
@@ -19,7 +20,7 @@ final class IssueCommentAutocomplete {
     private weak var delegate: IssueCommentAutocompleteDelegate? = nil
     private let identifier = "identifier"
 
-    private let map: [String: AutocompleteType]
+    private var map: [String: AutocompleteType]
 
     init(autocompletes: [AutocompleteType]) {
         var map = [String: AutocompleteType]()
@@ -30,6 +31,11 @@ final class IssueCommentAutocomplete {
     }
 
     // MARK: Public APIs
+
+    func add(_ autocomplete: AutocompleteType) {
+        map[autocomplete.prefix] = autocomplete
+        delegate?.didChangeStore(autocomplete: self)
+    }
 
     func configure(tableView: UITableView, delegate: IssueCommentAutocompleteDelegate) {
         self.delegate = delegate
