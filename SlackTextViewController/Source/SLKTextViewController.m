@@ -229,7 +229,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 {
     [super viewWillLayoutSubviews];
     
-    [self slk_adjustContentConfigurationIfNeeded];
+//    [self slk_adjustContentConfigurationIfNeeded];
 }
 
 - (void)viewDidLayoutSubviews
@@ -1255,11 +1255,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)slk_adjustContentConfigurationIfNeeded
 {
-    UIRefreshControl *refreshControl = self.tableView.refreshControl ?: self.collectionView.refreshControl;
-    if (refreshControl.isRefreshing) {
-        return;
-    }
-
     UIEdgeInsets contentInset = self.scrollViewProxy.contentInset;
     
     // When inverted, we need to substract the top bars height (generally status bar + navigation bar's) to align the top of the
