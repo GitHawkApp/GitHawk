@@ -41,8 +41,9 @@ final class EmojiAutocomplete: AutocompleteType {
 
         var results = [Result]()
 
+        let lowerword = word.lowercased()
         for (k, v) in GithubEmojiMap {
-            if k.hasPrefix(prefix + word) {
+            if k.lowercased().hasPrefix(prefix + lowerword) {
                 results.append(Result(emoji: v, term: k))
             }
         }

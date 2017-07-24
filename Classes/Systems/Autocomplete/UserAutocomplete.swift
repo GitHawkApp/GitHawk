@@ -46,8 +46,9 @@ final class UserAutocomplete: AutocompleteType {
 
         var results = [User]()
 
+        let lowerword = word.lowercased()
         for u in mentionableUsers {
-            if u.login.hasPrefix(word) {
+            if u.login.lowercased().hasPrefix(lowerword) {
                 results.append(u)
             }
         }
