@@ -163,20 +163,20 @@ UICollectionViewDelegateFlowLayout {
         
         switch model.count {
         case 1:
-            let format = NSLocalizedString("%@ reacted", comment: "")
+            let format = NSLocalizedString("%@", comment: "")
             cell.label.detailText = String.localizedStringWithFormat(format, users[0])
             break
         case 2:
-            let format = NSLocalizedString("%@ and %@ reacted", comment: "")
+            let format = NSLocalizedString("%@ and %@", comment: "")
             cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1])
             break
         case 3:
-            let format = NSLocalizedString("%@, %@ and %@ reacted", comment: "")
+            let format = NSLocalizedString("%@, %@ and %@", comment: "")
             cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2])
             break
         default:
             let difference = model.count - users.count
-            let format = NSLocalizedString("%@, %@, %@ and %d other(s) reacted", comment: "")
+            let format = NSLocalizedString("%@, %@, %@ and %d other(s)", comment: "")
             cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2], difference)
             break
         }

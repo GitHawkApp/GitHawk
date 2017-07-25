@@ -197,9 +197,6 @@
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		296CD8291F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
 		296CD82A1F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
-		297106251F24C428009AA54A /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
-		297106261F24C428009AA54A /* _graphql.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* _graphql.json */; };
-		297106271F24C428009AA54A /* _notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* _notifications.json */; };
 		2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
 		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
 		297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297403D01F184F8D00ABA95A /* IssueAssigneesModel.swift */; };
@@ -1352,10 +1349,7 @@
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
 				984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */,
-				297106271F24C428009AA54A /* _notifications.json in Resources */,
-				297106261F24C428009AA54A /* _graphql.json in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
-				297106251F24C428009AA54A /* authorizations.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

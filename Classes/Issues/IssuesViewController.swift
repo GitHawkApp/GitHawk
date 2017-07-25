@@ -32,7 +32,7 @@ FeedSelectionProviding {
 
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var models = [ListDiffable]()
-    lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
+    lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView, managesLayout: false) }()
 
     init(
         client: GithubClient,
