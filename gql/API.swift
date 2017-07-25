@@ -868,7 +868,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["LabeledEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'label' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the label associated with the 'labeled' event.
                 public let label: Label
@@ -921,7 +921,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnlabeledEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unlabel' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the label associated with the 'unlabeled' event.
                 public let label: Label
@@ -974,7 +974,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ClosedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who closed the item.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1024,7 +1024,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReopenedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who reopened the item.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1060,7 +1060,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["RenamedTitleEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'renamed' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1102,7 +1102,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["LockedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'locked' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1138,7 +1138,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnlockedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unlocked' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1174,7 +1174,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'label' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1263,7 +1263,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let title: String
                     /// Identifies the issue number.
                     public let number: Int
-                    /// true if the object is `closed` (definition of closed may depend on type)
+                    /// `true` if the object is closed (definition of closed may depend on type)
                     public let closed: Bool
 
                     public init(reader: GraphQLResultReader) throws {
@@ -1282,7 +1282,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let title: String
                     /// Identifies the pull request number.
                     public let number: Int
-                    /// true if the object is `closed` (definition of closed may depend on type)
+                    /// `true` if the pull request is closed
                     public let closed: Bool
                     /// Whether or not the pull request was merged.
                     public let merged: Bool
@@ -1302,7 +1302,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["AssignedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'assigned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1352,7 +1352,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnassignedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unassigned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1402,7 +1402,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["MilestonedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'milestoned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1441,7 +1441,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["DemilestonedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'demilestoned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1681,7 +1681,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["LabeledEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'label' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the label associated with the 'labeled' event.
                 public let label: Label
@@ -1734,7 +1734,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnlabeledEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unlabel' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the label associated with the 'unlabeled' event.
                 public let label: Label
@@ -1787,7 +1787,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ClosedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who closed the item.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1837,7 +1837,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReopenedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who reopened the item.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1873,7 +1873,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["RenamedTitleEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'renamed' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1915,7 +1915,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["LockedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'locked' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1951,7 +1951,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnlockedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unlocked' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -1987,12 +1987,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["MergedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'merge' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
                 /// Identifies the commit associated with the `merge` event.
-                public let mergedCommit: MergedCommit
+                public let mergedCommit: MergedCommit?
 
                 public let fragments: Fragments
 
@@ -2000,7 +2000,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   actor = try reader.optionalValue(for: Field(responseName: "actor"))
                   createdAt = try reader.value(for: Field(responseName: "createdAt"))
-                  mergedCommit = try reader.value(for: Field(responseName: "mergedCommit", fieldName: "commit"))
+                  mergedCommit = try reader.optionalValue(for: Field(responseName: "mergedCommit", fieldName: "commit"))
 
                   let nodeFields = try NodeFields(reader: reader)
                   fragments = Fragments(nodeFields: nodeFields)
@@ -2037,7 +2037,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'label' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2112,7 +2112,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let title: String
                     /// Identifies the issue number.
                     public let number: Int
-                    /// true if the object is `closed` (definition of closed may depend on type)
+                    /// `true` if the object is closed (definition of closed may depend on type)
                     public let closed: Bool
 
                     public init(reader: GraphQLResultReader) throws {
@@ -2131,7 +2131,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     public let title: String
                     /// Identifies the pull request number.
                     public let number: Int
-                    /// true if the object is `closed` (definition of closed may depend on type)
+                    /// `true` if the pull request is closed
                     public let closed: Bool
                     /// Whether or not the pull request was merged.
                     public let merged: Bool
@@ -2151,7 +2151,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["AssignedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'assigned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2201,7 +2201,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["UnassignedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'unassigned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2251,7 +2251,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReviewRequestedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'base_ref_force_pushed' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2301,7 +2301,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["ReviewRequestRemovedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'review_request_removed' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2351,7 +2351,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["MilestonedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'milestoned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2390,7 +2390,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public static let possibleTypes = ["DemilestonedEvent"]
 
                 public let __typename: String
-                /// Identifies the actor who performed the 'demilestoned' event.
+                /// Identifies the actor who performed the event.
                 public let actor: Actor?
                 /// Identifies the date and time when the object was created.
                 public let createdAt: String
@@ -2782,7 +2782,7 @@ public struct ClosableFields: GraphQLNamedFragment {
   public static let possibleTypes = ["Issue", "PullRequest"]
 
   public let __typename: String
-  /// true if the object is `closed` (definition of closed may depend on type)
+  /// `true` if the object is closed (definition of closed may depend on type)
   public let closed: Bool
 
   public init(reader: GraphQLResultReader) throws {
@@ -2868,7 +2868,7 @@ public struct NodeFields: GraphQLNamedFragment {
     "  id" +
     "}"
 
-  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "Integration", "IssueComment", "PullRequestCommit", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "Milestone", "ProtectedBranch", "PushAllowance", "Team", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "GistComment", "RepositoryInvitation", "Tag"]
+  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "Milestone", "ProtectedBranch", "PushAllowance", "Team", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "RepositoryInvitation", "Tag", "AddedToProjectEvent", "BaseRefChangedEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent"]
 
   public let __typename: String
   /// ID of the object.

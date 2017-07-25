@@ -120,8 +120,6 @@ FeedSelectionProviding {
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
         updateMarkAllEnabled()
-
-        showDetailViewController(SplitPlaceholderViewController(), sender: self)
     }
 
     private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {

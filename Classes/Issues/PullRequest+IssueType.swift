@@ -120,7 +120,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueStatusEventModel(
                     id: merged.fragments.nodeFields.id,
                     actor: merged.actor?.login ?? Strings.unknown,
-                    commitHash: merged.mergedCommit.oid,
+                    commitHash: merged.mergedCommit?.oid ?? "",
                     date: date,
                     status: .merged,
                     pullRequest: true
