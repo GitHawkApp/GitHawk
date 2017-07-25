@@ -11,6 +11,8 @@ import SnapKit
 import IGListKit
 import SDWebImage
 
+private let bulletString = "\u{2022}"
+
 protocol IssueCommentDetailCellDelegate: class {
     func didTapMore(cell: IssueCommentDetailCell)
     func didTapProfile(cell: IssueCommentDetailCell)
@@ -24,6 +26,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     private let imageView = UIImageView()
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
+    private let editedLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
     private var login = ""
     private var border: UIView? = nil
@@ -93,6 +96,14 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.top.left.right.equalTo(contentView)
             make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
+        
+        editedLabel.font = Styles.Fonts.secondary
+        editedLabel.textColor = Styles.Colors.Gray.light.color
+        contentView.addSubview(editedLabel)
+        editedLabel.snp.makeConstraints { make in
+            make.left.equalTo(dateLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
+            make.centerY.equalTo(dateLabel)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -127,6 +138,20 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
+        
+        if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
+            editedLabel.isHidden = false
+            
+            let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
+            let editedByOwner = NSLocalizedString("Edited", comment: "")
+            let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
+            editedLabel.text = "\(bulletString) " + String.localizedStringWithFormat(format, editedLogin)
+            
+            let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
+            editedLabel.detailText = String.localizedStringWithFormat(detailFormat, editedLogin, editedDate.agoString)
+        } else {
+            editedLabel.isHidden = true
+        }
     }
 
 }

@@ -2,7 +2,10 @@ fragment reactionFields on Reactable {
   viewerCanReact
   reactionGroups {
     viewerHasReacted
-    users {
+    users(first: 3) {
+      nodes {
+        login
+      }
       totalCount
     }
     content
@@ -17,6 +20,7 @@ fragment commentFields on Comment {
   editor {
     login
   }
+  lastEditedAt
   body
   createdAt
   viewerDidAuthor

@@ -62,7 +62,16 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
         // do not display reactions for 0 count
         let count = group.users.totalCount
         guard count > 0 else { continue }
-        models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted))
+        
+        let nodes: [String] = {
+            guard let filtered = group.users.nodes?.filter({ $0?.login != nil }) as? [ReactionFields.ReactionGroup.User.Node] else {
+                return []
+            }
+            
+            return filtered.map({ $0.login })
+        }()
+        
+        models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted, users: nodes))
     }
 
     return IssueCommentReactionViewModel(models: models)
@@ -80,12 +89,18 @@ func createCommentModel(
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
+    let editedAt: Date? = {
+        guard let editedDate = commentFields.lastEditedAt else { return nil }
+        return GithubAPIDateFormatter().date(from: editedDate)
+    }()
+    
     let details = IssueCommentDetailsViewModel(
         date: date,
-        login:
-        author.login,
+        login: author.login,
         avatarURL: avatarURL,
-        didAuthor: commentFields.viewerDidAuthor
+        didAuthor: commentFields.viewerDidAuthor,
+        editedBy: commentFields.editor?.login,
+        editedAt: editedAt
     )
     let bodies = CreateCommentModels(markdown: commentFields.body, width: width)
     let reactions = createIssueReactions(reactions: reactionFields)

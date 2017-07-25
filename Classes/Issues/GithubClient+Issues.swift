@@ -16,21 +16,23 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (String?, [ListDiffable]) -> ()
+        completion: @escaping (String?, [ListDiffable], [UserAutocomplete.User]) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            let issueOrPullRequest = result?.data?.repository?.issueOrPullRequest
+            let repository = result?.data?.repository
+            let issueOrPullRequest = repository?.issueOrPullRequest
             if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
                     let result = createViewModels(issue: issueType, width: width)
+                    let users = repository?.mentionableUsers.userAutocompletes ?? []
                     DispatchQueue.main.async {
-                        completion(issueType.id, result)
+                        completion(issueType.id, result, users)
                     }
                 }
             } else {
-                completion(nil, [])
+                completion(nil, [], [])
             }
             ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }

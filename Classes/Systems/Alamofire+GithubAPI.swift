@@ -26,7 +26,7 @@ func newGithubClient(
     config.httpAdditionalHeaders = additionalHeaders
 
     if runningInSample() {
-        config.urlCache = SampleURLCache(memoryCapacity: 1024*5, diskCapacity: 1024*10, diskPath: "sample_cache")
+        config.urlCache = SampleURLCache(memoryCapacity: 1024*30, diskCapacity: 1024*50, diskPath: "sample_cache")
     } else {
         // disable URL caching for the v3 API
         config.urlCache = nil

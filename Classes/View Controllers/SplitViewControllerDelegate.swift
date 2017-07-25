@@ -9,18 +9,28 @@
 import UIKit
 
 final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
+    
+    private func containsSelection(in primaryViewController: UIViewController) -> Bool {
+        guard let nav = primaryViewController as? UINavigationController else { return false }
+        
+        if let provider = nav.topViewController as? FeedSelectionProviding {
+            return provider.feedContainsSelection
+        }
+        
+        if let nav = nav.topViewController as? UINavigationController,
+            let provider = nav.topViewController as? FeedSelectionProviding {
+            return provider.feedContainsSelection
+        }
+        
+        return false
+    }
 
     func splitViewController(
         _ splitViewController: UISplitViewController,
         collapseSecondary secondaryViewController: UIViewController,
         onto primaryViewController: UIViewController
         ) -> Bool {
-        // use an empty class to detect if displaying a placeholder VC as details
-        if let nav = secondaryViewController as? UINavigationController,
-            nav.viewControllers.first is SplitPlaceholderViewController {
-            return true
-        }
-        return false
+        return !containsSelection(in: primaryViewController)
     }
 
 }
