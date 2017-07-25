@@ -225,7 +225,7 @@ FeedSelectionProviding {
             }
 
             self.models = results
-            self.feed.finishLoading(dismissRefresh: true)
+            self.feed.finishLoading(dismissRefresh: true, scrollToLastItem: true)
         }
     }
 
