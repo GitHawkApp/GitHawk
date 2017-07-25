@@ -16,7 +16,8 @@ final class IssuesViewController: SLKTextViewController,
 ListAdapterDataSource,
 FeedDelegate,
 AddCommentListener,
-IssueCommentAutocompleteDelegate {
+IssueCommentAutocompleteDelegate,
+FeedSelectionProviding {
 
     private let client: GithubClient
     private let owner: String
@@ -31,7 +32,11 @@ IssueCommentAutocompleteDelegate {
 
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var models = [ListDiffable]()
+    lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
+    var feedContainsSelection: Bool {
+        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
 
     init(
         client: GithubClient,
