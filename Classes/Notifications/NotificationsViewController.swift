@@ -14,8 +14,8 @@ class NotificationsViewController: UIViewController,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
     FeedDelegate,
-NotificationClientListener,
-NotificationNextPageSectionControllerDelegate,
+    NotificationClientListener,
+    NotificationNextPageSectionControllerDelegate,
 FeedSelectionProviding {
 
     private let client: NotificationClient
@@ -25,9 +25,6 @@ FeedSelectionProviding {
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: NSNumber? = 1
-    var feedContainsSelection: Bool {
-        return feed.collectionView.indexPathsForSelectedItems?.count != 0
-    }
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
@@ -69,7 +66,7 @@ FeedSelectionProviding {
         )
         updateMarkAllEnabled()
     }
-    
+
     private func updateMarkAllEnabled() {
         let allRead = !filteredNotifications.contains(where: { $0.read == false })
         navigationItem.rightBarButtonItem?.isEnabled = !allRead
@@ -123,7 +120,7 @@ FeedSelectionProviding {
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
         updateMarkAllEnabled()
-        
+
         showDetailViewController(SplitPlaceholderViewController(), sender: self)
     }
 
@@ -193,7 +190,7 @@ FeedSelectionProviding {
 
         // 28 is the default height of UISegmentedControl
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
-        
+
         if object === page { return NotificationNextPageSectionController(delegate: self) }
         else if object === emptyKey { return NoNewNotificationSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
 
@@ -251,5 +248,11 @@ FeedSelectionProviding {
     func didSelect(notificationSectionController: NotificationNextPageSectionController) {
         nextPage()
     }
-
+    
+    // MARK: FeedSelectionProviding
+    
+    var feedContainsSelection: Bool {
+        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
+    
 }

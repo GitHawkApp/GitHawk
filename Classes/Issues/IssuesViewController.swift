@@ -13,10 +13,10 @@ import SafariServices
 import SlackTextViewController
 
 final class IssuesViewController: SLKTextViewController,
-ListAdapterDataSource,
-FeedDelegate,
-AddCommentListener,
-IssueCommentAutocompleteDelegate,
+    ListAdapterDataSource,
+    FeedDelegate,
+    AddCommentListener,
+    IssueCommentAutocompleteDelegate,
 FeedSelectionProviding {
 
     private let client: GithubClient
@@ -32,11 +32,7 @@ FeedSelectionProviding {
 
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var models = [ListDiffable]()
-    lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
     lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
-    var feedContainsSelection: Bool {
-        return feed.collectionView.indexPathsForSelectedItems?.count != 0
-    }
 
     init(
         client: GithubClient,
@@ -255,7 +251,7 @@ FeedSelectionProviding {
             collectionView.slk_scrollToBottom(animated: true)
         })
     }
-    
+
     func didFailSendingComment(client: AddCommentClient, body: String) {
         textView.text = body
     }
@@ -270,5 +266,11 @@ FeedSelectionProviding {
         registerPrefixes(forAutoCompletion: autocomplete.prefixes)
         autoCompletionView.reloadData()
     }
-
+    
+    // MARK: FeedSelectionProviding
+    
+    var feedContainsSelection: Bool {
+        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
+    
 }
