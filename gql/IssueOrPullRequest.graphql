@@ -1,6 +1,12 @@
 query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {
   repository(owner: $owner, name: $repo) {
     name
+    mentionableUsers(first: 100) {
+      nodes {
+        avatarUrl
+        login
+      }
+    }
     issueOrPullRequest(number: $number) {
       ... on Issue {
         timeline(first: $page_size) {
