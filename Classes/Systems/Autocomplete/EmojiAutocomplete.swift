@@ -40,15 +40,13 @@ final class EmojiAutocomplete: AutocompleteType {
         }
 
         let lowerword = word.lowercased()
-        let results: [Result] = GithubEmojis.flatMap({ emoji in
-            // Iterate through each of the names, and find the first one which is prefixed with the search term
-            guard let matchingName = emoji.names.first(where: { emojiName in
-                emojiName.lowercased().hasPrefix(lowerword)
-            }) else { return nil }
-            
-            return Result(emoji: emoji.emoji, term: ":\(matchingName):")
-        })
-        
+        let results: [Result] = GithubEmojis.search.reduce([Result]()) {
+            if $1.key.lowercased().hasPrefix(lowerword) {
+                return $0 + $1.value.map { Result(emoji: $0.emoji, term: $0.name) }
+            }
+            return $0
+        }
+
         self.results = results
         cachedResults[word] = results
         
