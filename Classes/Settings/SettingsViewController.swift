@@ -21,6 +21,7 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
     private let signoutKey = "signout" as ListDiffable
     private let reportKey = "report" as ListDiffable
     private let accessKey = "access" as ListDiffable
+    private let sourceKey = "source" as ListDiffable
     private let versionInfoKey = "versionInfo" as ListDiffable
 
     private lazy var collectionView: UICollectionView = {
@@ -90,6 +91,7 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
         return [
             accessKey,
             reportKey,
+            sourceKey,
             signoutKey,
             versionInfoKey
         ]
@@ -105,6 +107,8 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
             return SettingsAccessSectionController()
         } else if object === versionInfoKey {
             return SettingsVersionInfoSectionController()
+        } else if object === sourceKey {
+            return SettingsSourceSectionController()
         }
         fatalError("Unhandled object: \(object)")
     }

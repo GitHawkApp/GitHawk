@@ -18,3 +18,7 @@ end
 
 target 'FreetimeTests' do
 end
+
+post_install do |installer|
+  system("sh scripts/generateAcknowledgements.sh")
+end
