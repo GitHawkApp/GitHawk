@@ -156,6 +156,7 @@ UICollectionViewDelegateFlowLayout {
         let model = reactions[indexPath.item]
         cell.label.text = "\(model.content.emoji) \(model.count)"
         cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light.color : .clear
+        cell.accessibilityHint = model.viewerDidReact ? NSLocalizedString("Tap to remove your reaction", comment: "") : NSLocalizedString("Tap to react with this emoji", comment: "")
         
         var users = model.users
         guard users.count > 0 else { return cell }

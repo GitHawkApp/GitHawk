@@ -28,6 +28,8 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
 
         label.font = Styles.Fonts.secondary
         label.textColor = Styles.Colors.Gray.light.color
@@ -80,6 +82,16 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
         colors = viewModel.colors
         collectionView.reloadData()
         setNeedsLayout()
+    }
+    
+    // MARK: - Accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return contentView.subviews
+                .flatMap { $0.accessibilityLabel }
+                .reduce("", { "\($0 ?? "").\n\($1)" })
+        }
+        set { }
     }
 
 }

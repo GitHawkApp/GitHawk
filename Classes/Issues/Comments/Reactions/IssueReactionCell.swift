@@ -15,6 +15,8 @@ final class IssueReactionCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
 
         label.textAlignment = .center
         label.backgroundColor = .clear
@@ -28,6 +30,15 @@ final class IssueReactionCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var accessibilityLabel: String? {
+        get {
+            return contentView.subviews
+                .flatMap { $0.accessibilityLabel }
+                .reduce("", { $0 + ".\n" + $1 })
+        }
+        set { }
     }
     
 }
