@@ -25,7 +25,7 @@ final class SettingsSourceSectionController: ListSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: ButtonCell.self, for: self, at: index) as? ButtonCell
             else { fatalError("Collection context must be set or cell incorrect type") }
-        cell.label.text = NSLocalizedString("Source Code", comment: "")
+        cell.label.text = NSLocalizedString("Freetime Source Code", comment: "")
         cell.configure(disclosureHidden: false)
         return cell
     }
