@@ -33,10 +33,17 @@ final class Feed: NSObject, UIScrollViewDelegate {
     public private(set) var status: Status = .idle
     private weak var delegate: FeedDelegate? = nil
     private var refreshBegin: TimeInterval = -1
+    private let managesLayout: Bool
 
-    init(viewController: UIViewController, delegate: FeedDelegate, collectionView: UICollectionView? = nil) {
+    init(
+        viewController: UIViewController,
+        delegate: FeedDelegate,
+        collectionView: UICollectionView? = nil,
+        managesLayout: Bool = true
+        ) {
         self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
         self.delegate = delegate
+        self.managesLayout = managesLayout
         self.collectionView = collectionView
             ?? DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         super.init()
@@ -65,8 +72,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     func viewWillLayoutSubviews(view: UIView) {
         let bounds = view.bounds
-        if collectionView.frame != bounds {
+        if managesLayout && collectionView.frame != bounds {
             collectionView.frame = bounds
+        }
+        if bounds.width != collectionView.bounds.width {
             collectionView.collectionViewLayout.invalidateLayout()
         }
     }
