@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
+        loadGitHubEmojis()
         return true
     }
 
