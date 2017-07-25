@@ -15,17 +15,23 @@ final class IssueCommentDetailsViewModel: ListDiffable {
     let login: String
     let avatarURL: URL
     let didAuthor: Bool
+    let editedBy: String?
+    let editedAt: Date?
 
     init(
         date: Date,
         login: String,
         avatarURL: URL,
-        didAuthor: Bool
+        didAuthor: Bool,
+        editedBy: String?,
+        editedAt: Date?
         ) {
         self.date = date
         self.login = login
         self.avatarURL = avatarURL
         self.didAuthor = didAuthor
+        self.editedBy = editedBy
+        self.editedAt = editedAt
     }
 
     func diffIdentifier() -> NSObjectProtocol {

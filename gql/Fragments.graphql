@@ -17,6 +17,7 @@ fragment commentFields on Comment {
   editor {
     login
   }
+  lastEditedAt
   body
   createdAt
   viewerDidAuthor
