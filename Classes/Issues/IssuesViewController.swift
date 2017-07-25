@@ -248,7 +248,7 @@ FeedSelectionProviding {
 
         let collectionView = feed.collectionView
         feed.adapter.performUpdates(animated: false, completion: { _ in
-            collectionView.slk_scrollToBottom(animated: true)
+            collectionView.scrollToBottom(animated: true)
         })
     }
 
