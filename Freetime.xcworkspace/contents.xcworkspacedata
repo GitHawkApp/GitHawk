@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SlackTextViewController/SlackTextViewController/SlackTextViewController.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SwipeCellKit/SwipeCellKit.xcodeproj">
    </FileRef>
    <FileRef

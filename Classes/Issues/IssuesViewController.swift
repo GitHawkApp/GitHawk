@@ -10,17 +10,28 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import SafariServices
+import SlackTextViewController
 
-final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedDelegate, AddCommentListener {
+final class IssuesViewController: SLKTextViewController,
+ListAdapterDataSource,
+FeedDelegate,
+AddCommentListener,
+IssueCommentAutocompleteDelegate {
 
     private let client: GithubClient
     private let owner: String
     private let repo: String
     private let number: Int
 
-    private var newCommentToken: IssueNewCommentToken? = nil
+    private var addCommentClient: AddCommentClient? = nil {
+        didSet {
+            self.setTextInputbarHidden(addCommentClient == nil, animated: true)
+        }
+    }
+
+    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var models = [ListDiffable]()
-    lazy private var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView) }()
 
     init(
         client: GithubClient,
@@ -32,8 +43,15 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         self.owner = owner
         self.repo = repo
         self.number = number
-        super.init(nibName: nil, bundle: nil)
+
+        // force unwrap, this absolutely must work
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())!
+
         title = "\(owner)/\(repo)#\(number)"
+
+        // not registered until request is finished and self.registerPrefixes(...) is called
+        // must have user autocompletes
+        autocomplete.configure(tableView: autoCompletionView, delegate: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +64,15 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
-        resetContentInsets()
+        // override default SLKTextViewController values
+        isInverted = false
+        textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
+        textView.keyboardType = .default
+        rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
+
+        // displayed once an add comment client is created (requires a gql subject id)
+        setTextInputbarHidden(true, animated: false)
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -56,19 +82,6 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(IssuesViewController.onKeyboardDidShow(notification:)),
-            name: NSNotification.Name.UIKeyboardDidShow,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(IssuesViewController.onKeyboardWillHide(notification:)),
-            name: NSNotification.Name.UIKeyboardWillHide,
-            object: nil
-        )
     }
 
     override func viewWillLayoutSubviews() {
@@ -76,13 +89,59 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
         feed.viewWillLayoutSubviews(view: view)
     }
 
-    // MARK: Private API
+    // MARK: SLKTextViewController overrides
 
-    func resetContentInsets() {
-        var inset = feed.collectionView.contentInset
-        inset.bottom = Styles.Sizes.rowSpacing
-        feed.collectionView.contentInset = inset
+    override func keyForTextCaching() -> String? {
+        return "issue.\(owner).\(repo).\(number)"
     }
+
+    override func canPressRightButton() -> Bool {
+        return addCommentClient != nil && super.canPressRightButton()
+    }
+
+    override func didPressRightButton(_ sender: Any?) {
+        // get text before calling super b/c it will clear it
+        let text = textView.text
+
+        super.didPressRightButton(sender)
+        guard let addCommentClient = self.addCommentClient else { return }
+
+        if let text = text {
+            addCommentClient.addComment(body: text)
+        }
+    }
+
+    override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
+        autocomplete.didChange(tableView: autoCompletionView, prefix: prefix, word: word)
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocomplete.resultCount(prefix: foundPrefix)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return autocomplete.cell(tableView: tableView, prefix: foundPrefix, indexPath: indexPath)
+    }
+
+    override func heightForAutoCompletionView() -> CGFloat {
+        return autocomplete.resultHeight(prefix: foundPrefix)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
+            acceptAutoCompletion(with: accept, keepPrefix: false)
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return autocomplete.cellHeight
+    }
+
+    override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
+        return false
+    }
+
+    // MARK: Private API
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
@@ -113,20 +172,10 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var objects = models
-        if let token = newCommentToken {
-            objects.append(token)
-        }
-        return objects
+        return models
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? IssueNewCommentToken {
-            let addCommentClient = AddCommentClient(client: client, subjectId: object.subjectId)
-            addCommentClient.addListener(listener: self)
-            return IssueNewCommentSectionController(client: addCommentClient)
-        }
-
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
@@ -165,10 +214,15 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             repo: repo,
             number: number,
             width: view.bounds.width
-        ) { subjectId, results in
+        ) { subjectId, results, users in
             if let subjectId = subjectId {
-                self.newCommentToken = IssueNewCommentToken(subjectId)
+                let addCommentClient = AddCommentClient(client: self.client, subjectId: subjectId)
+                addCommentClient.addListener(listener: self)
+                self.addCommentClient = addCommentClient
+
+                self.autocomplete.add(UserAutocomplete(mentionableUsers: users))
             }
+
             self.models = results
             self.feed.finishLoading(dismissRefresh: true)
         }
@@ -190,33 +244,26 @@ final class IssuesViewController: UIViewController, ListAdapterDataSource, FeedD
             )
             else { return }
         models.append(comment)
-        feed.adapter.performUpdates(animated: true)
-    }
-    
-    func didFailSendingComment(client: AddCommentClient) {}
 
-    // MARK: Notifications
-
-    func onKeyboardDidShow(notification: NSNotification) {
-        guard let size = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size else { return }
         let collectionView = feed.collectionView
-
-        var inset = collectionView.contentInset
-        inset.bottom = size.height + Styles.Sizes.gutter
-        collectionView.contentInset = inset
-
-        var scrollInset = UIEdgeInsets.zero
-        scrollInset.bottom = size.height
-        collectionView.scrollIndicatorInsets = scrollInset
-
-        // knowing that the comment field is at the bottom, just scroll all the way down
-        var offset = collectionView.contentOffset
-        offset.y = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.bounds.height
-        collectionView.setContentOffset(offset, animated: true)
-    }
-
-    func onKeyboardWillHide(notification: NSNotification) {
-        resetContentInsets()
+        feed.adapter.performUpdates(animated: false, completion: { _ in
+            collectionView.slk_scrollToBottom(animated: true)
+        })
     }
     
+    func didFailSendingComment(client: AddCommentClient, body: String) {
+        textView.text = body
+    }
+
+    // MARK: IssueCommentAutocompleteDelegate
+
+    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
+        showAutoCompletionView(hasResults)
+    }
+
+    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
+        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
+        autoCompletionView.reloadData()
+    }
+
 }
