@@ -22,7 +22,7 @@ func replaceGithubEmojiRegex(string: String) -> String {
 }
 
 private let GithubEmojiRegex: NSRegularExpression = {
-    let pattern = "(" + GithubEmojis.alias.map({ ":" + $0.key + ":" }).joined(separator: "|") + ")"
+    let pattern = "(" + GithubEmojis.alias.map({ $0.key }).joined(separator: "|") + ")"
     return try! NSRegularExpression(pattern: pattern, options: [])
 }()
 
@@ -47,7 +47,9 @@ struct GitHubEmoji {
 
 }
 
+// alias = ":smiley:" (surrounded w/ colons), search = words
 typealias EmojiStore = (alias: [String: GitHubEmoji], search: [String: [GitHubEmoji]])
+
 let GithubEmojis: EmojiStore = {
     guard let url = Bundle.main.url(forResource: "emoji", withExtension: "json"),
         let data = try? Data(contentsOf: url),
@@ -61,7 +63,7 @@ let GithubEmojis: EmojiStore = {
 
     for emoji in emojis {
         for alias in emoji.aliases {
-            aliasMap[alias] = emoji
+            aliasMap[":" + alias + ":"] = emoji
 
             // aliases have to be unique
             searchMap[alias] = [emoji]
