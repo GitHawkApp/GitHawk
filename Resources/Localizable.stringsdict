@@ -2,13 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>%@ reacted</key>
-	<dict/>
-	<key>%@ and %@ reacted</key>
-	<dict/>
-	<key>%@, %@ and %@ reacted</key>
-	<dict/>
-	<key>%@, %@, %@ and %d other(s) reacted</key>
+	<key>%@, %@, %@ and %d other(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%@, %@, %@ and %#@others@</string>
@@ -21,7 +15,7 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>%d other reacted</string>
+			<string>%d other</string>
 			<key>two</key>
 			<string></string>
 			<key>few</key>
@@ -29,7 +23,7 @@
 			<key>many</key>
 			<string></string>
 			<key>other</key>
-			<string>%d others reacted</string>
+			<string>%d others</string>
 		</dict>
 	</dict>
 	<key>%d minute(s) ago</key>
