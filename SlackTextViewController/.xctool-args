@@ -1,0 +1,7 @@
+[
+  "-workspace", "SlackTextViewController/SlackTextViewController.xcworkspace",
+  "-scheme", "SnapshotTests",
+  "-sdk", "iphonesimulator",
+  "-configuration", "Debug",
+  "-destination", "name=iPhone 6s,OS=9.2",
+]
