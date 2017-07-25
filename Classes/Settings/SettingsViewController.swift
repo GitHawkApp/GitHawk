@@ -56,15 +56,21 @@ final class SettingsViewController: UIViewController, ListAdapterDataSource {
         adapter.collectionView = collectionView
 
         view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
-        }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done,
             target: self,
             action: #selector(SettingsViewController.onDone)
         )
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let bounds = view.bounds
+        if collectionView.frame != bounds {
+            collectionView.frame = bounds
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
