@@ -28,25 +28,24 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
     let adapter: ListAdapter
-    lazy var collectionView: UICollectionView = {
-        let view = DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.keyboardDismissMode = .interactive
-        view.alwaysBounceVertical = true
-        view.backgroundColor = Styles.Colors.background
-        view.refreshControl = UIRefreshControl()
-        view.refreshControl?.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
-        return view
-    }()
+    let collectionView: UICollectionView
 
     public private(set) var status: Status = .idle
     private weak var delegate: FeedDelegate? = nil
     private var refreshBegin: TimeInterval = -1
 
-    init(viewController: UIViewController, delegate: FeedDelegate) {
+    init(viewController: UIViewController, delegate: FeedDelegate, collectionView: UICollectionView? = nil) {
         self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
         self.delegate = delegate
+        self.collectionView = collectionView
+            ?? DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         super.init()
         self.adapter.scrollViewDelegate = self
+
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.backgroundColor = Styles.Colors.background
+        self.collectionView.refreshControl = UIRefreshControl()
+        self.collectionView.refreshControl?.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
     }
 
     // MARK: Public API
@@ -56,7 +55,9 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
         adapter.collectionView = collectionView
 
-        view.addSubview(collectionView)
+        if collectionView.superview == nil {
+            view.addSubview(collectionView)
+        }
 
         collectionView.refreshControl?.beginRefreshing()
         refresh()

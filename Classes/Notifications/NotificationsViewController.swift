@@ -15,7 +15,8 @@ class NotificationsViewController: UIViewController,
     SegmentedControlSectionControllerDelegate,
     FeedDelegate,
 NotificationClientListener,
-NotificationNextPageSectionControllerDelegate {
+NotificationNextPageSectionControllerDelegate,
+FeedSelectionProviding {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
@@ -24,6 +25,9 @@ NotificationNextPageSectionControllerDelegate {
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: NSNumber? = 1
+    var feedContainsSelection: Bool {
+        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
@@ -119,6 +123,8 @@ NotificationNextPageSectionControllerDelegate {
         )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
         updateMarkAllEnabled()
+        
+        showDetailViewController(SplitPlaceholderViewController(), sender: self)
     }
 
     private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
