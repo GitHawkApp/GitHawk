@@ -72,10 +72,11 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     func viewWillLayoutSubviews(view: UIView) {
         let bounds = view.bounds
-        if managesLayout && collectionView.frame != bounds {
+        let changed = bounds != collectionView.frame
+        if managesLayout && changed {
             collectionView.frame = bounds
         }
-        if bounds.width != collectionView.bounds.width {
+        if changed {
             collectionView.collectionViewLayout.invalidateLayout()
         }
     }
