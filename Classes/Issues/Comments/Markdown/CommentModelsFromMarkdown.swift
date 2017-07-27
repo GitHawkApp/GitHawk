@@ -11,7 +11,6 @@ import IGListKit
 import MMMarkdown
 
 private let newlineString = "\n"
-private let bulletString = "\u{2022}"
 
 func createCommentAST(markdown: String) -> MMDocument? {
     guard markdown.characters.count > 0 else { return nil }
@@ -199,7 +198,7 @@ func travelAST(
         let isInsideBulletedList = element.parent?.type == .bulletedList
         let modifier: String
         if isInsideBulletedList {
-            modifier = "\(bulletString) "
+            modifier = "\(Strings.bullet) "
         } else if element.numberedListPosition > 0 {
             modifier = "\(element.numberedListPosition). "
         } else {

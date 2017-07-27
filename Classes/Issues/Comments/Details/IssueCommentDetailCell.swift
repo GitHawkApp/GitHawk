@@ -11,8 +11,6 @@ import SnapKit
 import IGListKit
 import SDWebImage
 
-private let bulletString = "\u{2022}"
-
 protocol IssueCommentDetailCellDelegate: class {
     func didTapMore(cell: IssueCommentDetailCell)
     func didTapProfile(cell: IssueCommentDetailCell)
@@ -145,7 +143,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
             let editedByOwner = NSLocalizedString("Edited", comment: "")
             let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
-            editedLabel.text = "\(bulletString) " + String.localizedStringWithFormat(format, editedLogin)
+            editedLabel.text = "\(Strings.bullet) " + String.localizedStringWithFormat(format, editedLogin)
             
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
             editedLabel.detailText = String.localizedStringWithFormat(detailFormat, editedLogin, editedDate.agoString)
