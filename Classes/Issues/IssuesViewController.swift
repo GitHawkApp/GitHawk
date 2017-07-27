@@ -17,7 +17,8 @@ final class IssuesViewController: SLKTextViewController,
     FeedDelegate,
     AddCommentListener,
     IssueCommentAutocompleteDelegate,
-FeedSelectionProviding {
+FeedSelectionProviding,
+IssueNeckLoadSectionControllerDelegate {
 
     private let client: GithubClient
     private let owner: String
@@ -174,10 +175,39 @@ FeedSelectionProviding {
         present(alert, animated: true)
     }
 
+    func fetch(previous: Bool) {
+        client.fetch(
+            owner: owner,
+            repo: repo,
+            number: number,
+            width: view.bounds.width,
+            prependResult: previous ? current : nil
+        ) { resultType in
+
+            switch resultType {
+            case .success(let result):
+                // clear pending comments since they should now be part of the payload
+                // only clear when doing a refresh load
+                if previous {
+                    self.sentComments.removeAll()
+                }
+
+                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
+                self.current = result
+            default: break
+            }
+            self.feed.finishLoading(dismissRefresh: true)
+        }
+    }
+
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return (current?.allViewModels ?? []) + sentComments
+        guard let current = self.current else { return [] }
+        return current.viewModels
+            + (current.hasPreviousPage ? [IssueNeckLoadModel()] : [])
+            + current.timelineViewModels
+            + sentComments
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -197,6 +227,7 @@ FeedSelectionProviding {
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(owner: owner, repo: repo)
+        case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -215,26 +246,7 @@ FeedSelectionProviding {
     // MARK: FeedDelegate
 
     func loadFromNetwork(feed: Feed) {
-        client.fetch(
-            owner: owner,
-            repo: repo,
-            number: number,
-            width: view.bounds.width,
-            prependResult: nil
-        ) { resultType in
-
-            switch resultType {
-            case .success(let result):
-                // clear pending comments since they should now be part of the payload
-                // only clear when doing a refresh load
-                self.sentComments.removeAll()
-
-                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self.current = result
-            default: break
-            }
-            self.feed.finishLoading(dismissRefresh: true)
-        }
+        fetch(previous: false)
     }
 
     func loadNextPage(feed: Feed) -> Bool {
@@ -280,5 +292,11 @@ FeedSelectionProviding {
     var feedContainsSelection: Bool {
         return feed.collectionView.indexPathsForSelectedItems?.count != 0
     }
-    
+
+    // MARK: IssueNeckLoadSectionControllerDelegate
+
+    func didSelect(sectionController: IssueNeckLoadSectionController) {
+        fetch(previous: true)
+    }
+
 }
