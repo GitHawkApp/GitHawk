@@ -33,7 +33,12 @@ extension GithubClient {
 
                     let models = createViewModels(issue: issueType, width: width)
                     let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
-                    let newPage = IssueTimelinePage(startCursor: issueType.headPaging.startCursor, viewModels: models.timeline)
+
+                    let paging = issueType.headPaging
+                    let newPage = IssueTimelinePage(
+                        startCursor: paging.hasPreviousPage ? paging.startCursor : nil,
+                        viewModels: models.timeline
+                    )
 
                     let result = IssueResult(
                         subjectId: issueType.id,
