@@ -31,7 +31,7 @@ class IssueTests: XCTestCase {
             "![alt text](https://apple.com)",
             "then some more text",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -40,7 +40,7 @@ class IssueTests: XCTestCase {
 
     func test_whenStringHasNewlines() {
         let body = "foo\r\nbar"
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 1)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "foo\nbar")
     }
@@ -51,7 +51,7 @@ class IssueTests: XCTestCase {
             "this is the first line",
             "then some more text",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
         XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
@@ -63,7 +63,7 @@ class IssueTests: XCTestCase {
             "then some more text",
             "![alt text](https://apple.com)",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -73,7 +73,7 @@ class IssueTests: XCTestCase {
         let body = [
             "![alt text](https://apple.com)",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 1)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
@@ -86,7 +86,7 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -103,7 +103,7 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
         ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
@@ -119,7 +119,7 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
@@ -135,7 +135,7 @@ class IssueTests: XCTestCase {
             "</details>",
             "this is the end"
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
@@ -151,7 +151,7 @@ class IssueTests: XCTestCase {
             "</details>",
             "this is the end"
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
@@ -171,7 +171,7 @@ class IssueTests: XCTestCase {
             "</details>",
             "this is the end"
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
@@ -188,7 +188,7 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "lang")
@@ -212,7 +212,7 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz",
             ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentSummaryModel).summary, "sum")
@@ -222,7 +222,7 @@ class IssueTests: XCTestCase {
 
     func test_whenCodePartOfParagraph() {
         let body = "text with ````` inline with ````` more"
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 1)
     }
 
@@ -235,7 +235,7 @@ class IssueTests: XCTestCase {
             "> quote three",
             "line three"
         ].joined(separator: "\r\n")
-        let models = commentModels(markdown: body, width: 300)
+        let models = CreateCommentModels(markdown: body, width: 300)
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "line one")
         XCTAssertEqual((models[1] as! IssueCommentQuoteModel).quote.attributedText.string, "quote one")

@@ -134,11 +134,11 @@ func typeNeedsNewline(type: MMElementType) -> Bool {
 func createModel(markdown: String, element: MMElement) -> ListDiffable? {
     switch element.type {
     case .codeBlock:
-        return element.codeBlock(markdown: markdown)
+        return CreateCodeBlock(element: element, markdown: markdown)
     case .image:
-        return element.imageModel
+        return CreateImageModel(element: element)
     case .table:
-        return element.table(markdown: markdown)
+        return CreateTable(element: element, markdown: markdown)
     case .HTML:
         guard let html = markdown.substring(with: element.range),
             html.characters.count > 0
@@ -173,7 +173,7 @@ func travelAST(
     let nextQuoteLevel = quoteLevel + (isQuote ? 1 : 0)
 
     // push more text attributes on the stack the deeper we go
-    let pushedAttributes = element.attributes(currentAttributes: attributeStack, listLevel: nextListLevel)
+    let pushedAttributes = PushAttributes(element: element, current: attributeStack, listLevel: nextListLevel)
 
     if typeNeedsNewline(type: element.type) {
         attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))

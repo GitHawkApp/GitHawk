@@ -9,11 +9,7 @@
 import Foundation
 import MMMarkdown
 
-extension MMElement {
-
-    var imageModel: IssueCommentImageModel? {
-        guard let href = self.href, let url = URL(string: href) else { return nil }
-        return IssueCommentImageModel(url: url)
-    }
-
+func CreateImageModel(element: MMElement) -> IssueCommentImageModel? {
+    guard let href = element.href, let url = URL(string: href) else { return nil }
+    return IssueCommentImageModel(url: url)
 }

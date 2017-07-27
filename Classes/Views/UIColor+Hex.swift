@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
 
     // http://stackoverflow.com/a/27203691/940936
-    static func fromHex(_ hex: String) -> UIColor {
+    public static func fromHex(_ hex: String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
         if (cString.hasPrefix("#")) {

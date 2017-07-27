@@ -9,35 +9,31 @@
 import UIKit
 import MMMarkdown
 
-extension MMElement {
+func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBlockModel {
+    // create the text from all 1d "none" child elements
+    // code blocks should not have any other child element type aside from "entity", which is skipped
+    let text = element.children.reduce("") {
+        guard $1.type == .none else { return $0 }
+        return $0 + substringOrNewline(text: markdown, range: $1.range)
+        }.trimmingCharacters(in: .whitespacesAndNewlines)
 
-    func codeBlock(markdown: String) -> IssueCommentCodeBlockModel {
-        // create the text from all 1d "none" child elements
-        // code blocks should not have any other child element type aside from "entity", which is skipped
-        let text = children.reduce("") {
-            guard $1.type == .none else { return $0 }
-            return $0 + substringOrNewline(text: markdown, range: $1.range)
-            }.trimmingCharacters(in: .whitespacesAndNewlines)
+    var inset = IssueCommentCodeBlockCell.textViewInset
+    inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
+    inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
 
-        var inset = IssueCommentCodeBlockCell.textViewInset
-        inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
-        inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
+    let attributes: [String: Any] = [
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
+        NSFontAttributeName: Styles.Fonts.code
+    ]
 
-        let attributes: [String: Any] = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.code
-        ]
-
-        let stringSizing = NSAttributedStringSizing(
-            containerWidth: 0,
-            attributedText: NSAttributedString(string: text, attributes: attributes),
-            inset: inset,
-            backgroundColor: Styles.Colors.Gray.lighter.color
-        )
-        return IssueCommentCodeBlockModel(
-            code: stringSizing,
-            language: language
-        )
-    }
-
+    let stringSizing = NSAttributedStringSizing(
+        containerWidth: 0,
+        attributedText: NSAttributedString(string: text, attributes: attributes),
+        inset: inset,
+        backgroundColor: Styles.Colors.Gray.lighter.color
+    )
+    return IssueCommentCodeBlockModel(
+        code: stringSizing,
+        language: element.language
+    )
 }

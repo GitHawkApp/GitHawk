@@ -105,8 +105,10 @@ enum Styles {
 }
 
 extension String {
-    var color: UIColor {
+
+    public var color: UIColor {
         return UIColor.fromHex(self)
     }
+    
 }
 

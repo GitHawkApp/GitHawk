@@ -11,7 +11,7 @@ import SnapKit
 
 extension UIView {
 
-    enum Position {
+    public enum Position {
         case left
         case top
         case right
@@ -19,7 +19,7 @@ extension UIView {
     }
 
     @discardableResult
-    func addBorder(
+    public func addBorder(
         _ position: Position,
         left: CGFloat = 0,
         right: CGFloat = 0,
