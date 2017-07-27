@@ -10,10 +10,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     issueOrPullRequest(number: $number) {
       ... on Issue {
         timeline(last: $page_size, before: $before) {
-          pageInfo {
-            hasPreviousPage
-            startCursor
-          }
+          pageInfo{...headPaging}
           nodes {
             ... on Commit {
               ...nodeFields
@@ -144,10 +141,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
       }
       ... on PullRequest {
         timeline(last: $page_size, before: $before) {
-          pageInfo {
-            hasPreviousPage
-            startCursor
-          }
+          pageInfo{...headPaging}
           nodes {
             ... on Commit {
               ...nodeFields

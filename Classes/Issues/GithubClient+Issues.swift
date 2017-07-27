@@ -16,13 +16,6 @@ extension GithubClient {
         case success(IssueResult)
     }
 
-    struct IssueResult {
-        let subjectId: String
-        let viewModels: [ListDiffable]
-        let timelineViewModels: [ListDiffable]
-        let mentionableUsers: [AutocompleteUser]
-    }
-
     func fetch(
         owner: String,
         repo: String,
@@ -40,12 +33,13 @@ extension GithubClient {
 
                     let models = createViewModels(issue: issueType, width: width)
                     let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
+                    let newPage = IssueTimelinePage(startCursor: issueType.headPaging.startCursor, viewModels: models.timeline)
 
                     let result = IssueResult(
                         subjectId: issueType.id,
                         viewModels: models.viewModels,
-                        timelineViewModels: models.timeline,
-                        mentionableUsers: mentionableUsers
+                        mentionableUsers: mentionableUsers,
+                        timelinePages: [newPage]
                     )
 
                     DispatchQueue.main.async {

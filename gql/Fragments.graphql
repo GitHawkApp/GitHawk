@@ -66,3 +66,8 @@ fragment assigneeFields on Assignable {
     }
   }
 }
+
+fragment headPaging on PageInfo {
+  hasPreviousPage
+  startCursor
+}

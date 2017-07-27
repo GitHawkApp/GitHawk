@@ -225,7 +225,7 @@ FeedSelectionProviding {
                 self.addCommentClient = addCommentClient
                 self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
 
-                self.models = result.viewModels + result.timelineViewModels
+                self.models = result.allViewModels
             default: break
             }
             self.feed.finishLoading(dismissRefresh: true)

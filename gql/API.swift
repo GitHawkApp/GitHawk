@@ -193,8 +193,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "          __typename" +
     "          pageInfo {" +
     "            __typename" +
-    "            hasPreviousPage" +
-    "            startCursor" +
+    "            ...headPaging" +
     "          }" +
     "          nodes {" +
     "            __typename" +
@@ -405,8 +404,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "          __typename" +
     "          pageInfo {" +
     "            __typename" +
-    "            hasPreviousPage" +
-    "            startCursor" +
+    "            ...headPaging" +
     "          }" +
     "          nodes {" +
     "            __typename" +
@@ -686,7 +684,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(HeadPaging.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
@@ -824,15 +822,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public struct PageInfo: GraphQLMappable {
               public let __typename: String
-              /// When paginating backwards, are there more items?
-              public let hasPreviousPage: Bool
-              /// When paginating backwards, the cursor to continue.
-              public let startCursor: String?
+
+              public let fragments: Fragments
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
-                hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
-                startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+
+                let headPaging = try HeadPaging(reader: reader)
+                fragments = Fragments(headPaging: headPaging)
+              }
+
+              public struct Fragments {
+                public let headPaging: HeadPaging
               }
             }
 
@@ -1626,15 +1627,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public struct PageInfo: GraphQLMappable {
               public let __typename: String
-              /// When paginating backwards, are there more items?
-              public let hasPreviousPage: Bool
-              /// When paginating backwards, the cursor to continue.
-              public let startCursor: String?
+
+              public let fragments: Fragments
 
               public init(reader: GraphQLResultReader) throws {
                 __typename = try reader.value(for: Field(responseName: "__typename"))
-                hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
-                startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+
+                let headPaging = try HeadPaging(reader: reader)
+                fragments = Fragments(headPaging: headPaging)
+              }
+
+              public struct Fragments {
+                public let headPaging: HeadPaging
               }
             }
 
@@ -3067,5 +3071,28 @@ public struct AssigneeFields: GraphQLNamedFragment {
         avatarUrl = try reader.value(for: Field(responseName: "avatarUrl"))
       }
     }
+  }
+}
+
+public struct HeadPaging: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment headPaging on PageInfo {" +
+    "  __typename" +
+    "  hasPreviousPage" +
+    "  startCursor" +
+    "}"
+
+  public static let possibleTypes = ["PageInfo"]
+
+  public let __typename: String
+  /// When paginating backwards, are there more items?
+  public let hasPreviousPage: Bool
+  /// When paginating backwards, the cursor to continue.
+  public let startCursor: String?
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
+    startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
   }
 }

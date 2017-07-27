@@ -23,6 +23,7 @@ protocol IssueType {
     var assigneeFields: AssigneeFields { get }
     var merged: Bool { get }
     var locked: Bool { get }
+    var headPaging: HeadPaging { get }
 
     var reviewRequestModel: IssueAssigneesModel? { get }
 
