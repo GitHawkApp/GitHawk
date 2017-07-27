@@ -8,18 +8,18 @@
 
 import Foundation
 
+struct AutocompleteUser {
+    let avatarURL: URL
+    let login: String
+}
+
 final class UserAutocomplete: AutocompleteType {
 
-    struct User {
-        let avatarURL: URL
-        let login: String
-    }
+    private var cachedResults = [String: [AutocompleteUser]]()
+    private var results = [AutocompleteUser]()
+    private let mentionableUsers: [AutocompleteUser]
 
-    private var cachedResults = [String: [User]]()
-    private var results = [User]()
-    private let mentionableUsers: [User]
-
-    init(mentionableUsers: [User]) {
+    init(mentionableUsers: [AutocompleteUser]) {
         self.mentionableUsers = mentionableUsers
     }
 
@@ -44,7 +44,7 @@ final class UserAutocomplete: AutocompleteType {
             completion(cached.count > 0)
         }
 
-        var results = [User]()
+        var results = [AutocompleteUser]()
 
         let lowerword = word.lowercased()
         for u in mentionableUsers {

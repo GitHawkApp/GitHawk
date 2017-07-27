@@ -11,12 +11,23 @@ import IGListKit
 
 extension GithubClient {
 
+    enum IssueResultType {
+        case error
+        case success(IssueResult)
+    }
+
+    struct IssueResult {
+        let subjectId: String
+        let timelineViewModels: [ListDiffable]
+        let mentionableUsers: [AutocompleteUser]
+    }
+
     func fetch(
         owner: String,
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (String?, [ListDiffable], [UserAutocomplete.User]) -> ()
+        completion: @escaping (IssueResultType) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
@@ -25,14 +36,21 @@ extension GithubClient {
             let issueOrPullRequest = repository?.issueOrPullRequest
             if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
-                    let result = createViewModels(issue: issueType, width: width)
-                    let users = repository?.mentionableUsers.userAutocompletes ?? []
+
+                    let viewModels = createViewModels(issue: issueType, width: width)
+                    let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
+                    let result = IssueResult(
+                        subjectId: issueType.id,
+                        timelineViewModels: viewModels,
+                        mentionableUsers: mentionableUsers
+                    )
+
                     DispatchQueue.main.async {
-                        completion(issueType.id, result, users)
+                        completion(.success(result))
                     }
                 }
             } else {
-                completion(nil, [], [])
+                completion(.error)
             }
             ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }

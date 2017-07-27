@@ -216,16 +216,18 @@ FeedSelectionProviding {
             repo: repo,
             number: number,
             width: view.bounds.width
-        ) { subjectId, results, users in
-            if let subjectId = subjectId {
-                let addCommentClient = AddCommentClient(client: self.client, subjectId: subjectId)
+        ) { resultType in
+
+            switch resultType {
+            case .success(let result):
+                let addCommentClient = AddCommentClient(client: self.client, subjectId: result.subjectId)
                 addCommentClient.addListener(listener: self)
                 self.addCommentClient = addCommentClient
+                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
 
-                self.autocomplete.add(UserAutocomplete(mentionableUsers: users))
+                self.models = result.timelineViewModels
+            default: break
             }
-
-            self.models = results
             self.feed.finishLoading(dismissRefresh: true)
         }
     }
