@@ -21,10 +21,18 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
+        prependResult: IssueResult?,
         completion: @escaping (IssueResultType) -> ()
         ) {
 
-        let query = IssueOrPullRequestQuery(owner: owner, repo: repo, number: number, pageSize: 100)
+        let query = IssueOrPullRequestQuery(
+            owner: owner,
+            repo: repo,
+            number: number,
+            pageSize: 100,
+            before: prependResult?.minStartCursor
+        )
+
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             let repository = result?.data?.repository
             let issueOrPullRequest = repository?.issueOrPullRequest

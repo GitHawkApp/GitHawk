@@ -215,7 +215,8 @@ FeedSelectionProviding {
             owner: owner,
             repo: repo,
             number: number,
-            width: view.bounds.width
+            width: view.bounds.width,
+            prependResult: nil
         ) { resultType in
 
             switch resultType {
