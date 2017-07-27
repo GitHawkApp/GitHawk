@@ -52,7 +52,7 @@ extension GithubClient {
                         subjectId: issueType.id,
                         viewModels: models.viewModels,
                         mentionableUsers: mentionableUsers,
-                        timelinePages: [newPage]
+                        timelinePages: [newPage] + (prependResult?.timelinePages ?? [])
                     )
 
                     DispatchQueue.main.async {

@@ -24,7 +24,7 @@ struct IssueResult {
     }
 
     var minStartCursor: String? {
-        return timelinePages.last?.startCursor
+        return timelinePages.first?.startCursor
     }
 
     var hasPreviousPage: Bool {
