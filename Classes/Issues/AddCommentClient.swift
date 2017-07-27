@@ -10,7 +10,7 @@ import Foundation
 
 protocol AddCommentListener: class {
     func didSendComment(client: AddCommentClient, id: String, commentFields: CommentFields, reactionFields: ReactionFields)
-    func didFailSendingComment(client: AddCommentClient, body: String)
+    func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String)
 }
 
 final class AddCommentClient {
@@ -19,13 +19,10 @@ final class AddCommentClient {
         weak var listener: AddCommentListener? = nil
     }
     private var listeners = [ListenerWrapper]()
-
     private let client: GithubClient
-    private let subjectId: String
 
-    init(client: GithubClient, subjectId: String) {
+    init(client: GithubClient) {
         self.client = client
-        self.subjectId = subjectId
     }
 
     // MARK: Public API
@@ -36,7 +33,7 @@ final class AddCommentClient {
         listeners.append(wrapper)
     }
 
-    func addComment(body: String) {
+    func addComment(subjectId: String, body: String) {
         client.apollo.perform(mutation: AddCommentMutation(subjectId: subjectId, body: body)) { (result, error) in
             if let commentNode = result?.data?.addComment?.commentEdge.node {
                 let fragments = commentNode.fragments
@@ -50,7 +47,7 @@ final class AddCommentClient {
                 }
             } else {
                 for listener in self.listeners {
-                    listener.listener?.didFailSendingComment(client: self, body: body)
+                    listener.listener?.didFailSendingComment(client: self, subjectId: subjectId, body: body)
                 }
             }
 

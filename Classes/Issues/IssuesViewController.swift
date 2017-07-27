@@ -23,16 +23,22 @@ FeedSelectionProviding {
     private let owner: String
     private let repo: String
     private let number: Int
+    private let addCommentClient: AddCommentClient
+    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
 
-    private var addCommentClient: AddCommentClient? = nil {
+    lazy private var feed: Feed = { Feed(
+        viewController: self,
+        delegate: self,
+        collectionView: self.collectionView,
+        managesLayout: false
+        ) }()
+
+    private var current: IssueResult? = nil {
         didSet {
-            self.setTextInputbarHidden(addCommentClient == nil, animated: true)
+            self.setTextInputbarHidden(current == nil, animated: true)
         }
     }
-
-    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
-    private var models = [ListDiffable]()
-    lazy private var feed: Feed = { Feed(viewController: self, delegate: self, collectionView: self.collectionView, managesLayout: false) }()
+    private var sentComments = [ListDiffable]()
 
     init(
         client: GithubClient,
@@ -44,11 +50,14 @@ FeedSelectionProviding {
         self.owner = owner
         self.repo = repo
         self.number = number
+        self.addCommentClient = AddCommentClient(client: client)
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
         title = "\(owner)/\(repo)#\(number)"
+
+        self.addCommentClient.addListener(listener: self)
 
         // not registered until request is finished and self.registerPrefixes(...) is called
         // must have user autocompletes
@@ -96,19 +105,14 @@ FeedSelectionProviding {
         return "issue.\(owner).\(repo).\(number)"
     }
 
-    override func canPressRightButton() -> Bool {
-        return addCommentClient != nil && super.canPressRightButton()
-    }
-
     override func didPressRightButton(_ sender: Any?) {
         // get text before calling super b/c it will clear it
         let text = textView.text
 
         super.didPressRightButton(sender)
-        guard let addCommentClient = self.addCommentClient else { return }
 
-        if let text = text {
-            addCommentClient.addComment(body: text)
+        if let subjectId = current?.subjectId, let text = text {
+            addCommentClient.addComment(subjectId: subjectId, body: text)
         }
     }
 
@@ -173,7 +177,7 @@ FeedSelectionProviding {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return models
+        return (current?.allViewModels ?? []) + sentComments
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -221,12 +225,12 @@ FeedSelectionProviding {
 
             switch resultType {
             case .success(let result):
-                let addCommentClient = AddCommentClient(client: self.client, subjectId: result.subjectId)
-                addCommentClient.addListener(listener: self)
-                self.addCommentClient = addCommentClient
-                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
+                // clear pending comments since they should now be part of the payload
+                // only clear when doing a refresh load
+                self.sentComments.removeAll()
 
-                self.models = result.allViewModels
+                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
+                self.current = result
             default: break
             }
             self.feed.finishLoading(dismissRefresh: true)
@@ -248,7 +252,7 @@ FeedSelectionProviding {
             threadState: .single
             )
             else { return }
-        models.append(comment)
+        sentComments.append(comment)
 
         let collectionView = feed.collectionView
         feed.adapter.performUpdates(animated: false, completion: { _ in
@@ -256,7 +260,7 @@ FeedSelectionProviding {
         })
     }
 
-    func didFailSendingComment(client: AddCommentClient, body: String) {
+    func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
         textView.text = body
     }
 
