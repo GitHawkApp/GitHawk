@@ -18,6 +18,7 @@ extension GithubClient {
 
     struct IssueResult {
         let subjectId: String
+        let viewModels: [ListDiffable]
         let timelineViewModels: [ListDiffable]
         let mentionableUsers: [AutocompleteUser]
     }
@@ -37,11 +38,13 @@ extension GithubClient {
             if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
 
-                    let viewModels = createViewModels(issue: issueType, width: width)
+                    let models = createViewModels(issue: issueType, width: width)
                     let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
+
                     let result = IssueResult(
                         subjectId: issueType.id,
-                        timelineViewModels: viewModels,
+                        viewModels: models.viewModels,
+                        timelineViewModels: models.timeline,
                         mentionableUsers: mentionableUsers
                     )
 

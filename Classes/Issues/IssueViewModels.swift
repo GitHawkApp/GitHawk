@@ -12,18 +12,18 @@ import IGListKit
 func createViewModels(
     issue: IssueType,
     width: CGFloat
-    ) -> [ListDiffable] {
+    ) -> (viewModels: [ListDiffable], timeline: [ListDiffable]) {
 
-    var result = [ListDiffable]()
+    var viewModels = [ListDiffable]()
 
     let status: IssueStatus = issue.merged ? .merged : issue.closableFields.closed ? .closed : .open
-    result.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest, locked: issue.locked))
-    result.append(titleStringSizing(title: issue.title, width: width))
-    result.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
-    result.append(createAssigneeModel(assigneeFields: issue.assigneeFields))
+    viewModels.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest, locked: issue.locked))
+    viewModels.append(titleStringSizing(title: issue.title, width: width))
+    viewModels.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
+    viewModels.append(createAssigneeModel(assigneeFields: issue.assigneeFields))
 
     if let reviewers = issue.reviewRequestModel {
-        result.append(reviewers)
+        viewModels.append(reviewers)
     }
 
     if let root = createCommentModel(
@@ -33,12 +33,10 @@ func createViewModels(
         width: width,
         threadState: .single
         ) {
-        result.append(root)
+        viewModels.append(root)
     }
 
-    result += issue.timelineViewModels(width: width)
-
-    return result
+    return (viewModels, issue.timelineViewModels(width: width))
 }
 
 func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
