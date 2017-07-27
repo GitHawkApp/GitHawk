@@ -1,4 +1,4 @@
-query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {
+query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {
   repository(owner: $owner, name: $repo) {
     name
     mentionableUsers(first: 100) {
@@ -9,7 +9,11 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     }
     issueOrPullRequest(number: $number) {
       ... on Issue {
-        timeline(first: $page_size) {
+        timeline(last: $page_size, before: $before) {
+          pageInfo {
+            hasPreviousPage
+            startCursor
+          }
           nodes {
             ... on Commit {
               ...nodeFields
@@ -139,7 +143,11 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         title
       }
       ... on PullRequest {
-        timeline(first: $page_size) {
+        timeline(last: $page_size, before: $before) {
+          pageInfo {
+            hasPreviousPage
+            startCursor
+          }
           nodes {
             ... on Commit {
               ...nodeFields

@@ -173,7 +173,7 @@ public final class AddReactionMutation: GraphQLMutation {
 
 public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!) {" +
+    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {" +
     "  repository(owner: $owner, name: $repo) {" +
     "    __typename" +
     "    name" +
@@ -189,8 +189,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "      __typename" +
     "      ... on Issue {" +
     "        __typename" +
-    "        timeline(first: $page_size) {" +
+    "        timeline(last: $page_size, before: $before) {" +
     "          __typename" +
+    "          pageInfo {" +
+    "            __typename" +
+    "            hasPreviousPage" +
+    "            startCursor" +
+    "          }" +
     "          nodes {" +
     "            __typename" +
     "            ... on Commit {" +
@@ -396,8 +401,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "      }" +
     "      ... on PullRequest {" +
     "        __typename" +
-    "        timeline(first: $page_size) {" +
+    "        timeline(last: $page_size, before: $before) {" +
     "          __typename" +
+    "          pageInfo {" +
+    "            __typename" +
+    "            hasPreviousPage" +
+    "            startCursor" +
+    "          }" +
     "          nodes {" +
     "            __typename" +
     "            ... on Commit {" +
@@ -682,16 +692,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
   public let repo: String
   public let number: Int
   public let pageSize: Int
+  public let before: String?
 
-  public init(owner: String, repo: String, number: Int, pageSize: Int) {
+  public init(owner: String, repo: String, number: Int, pageSize: Int, before: String? = nil) {
     self.owner = owner
     self.repo = repo
     self.number = number
     self.pageSize = pageSize
+    self.before = before
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "repo": repo, "number": number, "page_size": pageSize]
+    return ["owner": owner, "repo": repo, "number": number, "page_size": pageSize, "before": before]
   }
 
   public struct Data: GraphQLMappable {
@@ -771,7 +783,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
+            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["last": reader.variables["page_size"], "before": reader.variables["before"]]))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
 
@@ -799,12 +811,29 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
           public struct Timeline: GraphQLMappable {
             public let __typename: String
+            /// Information to aid in pagination.
+            public let pageInfo: PageInfo
             /// A list of nodes.
             public let nodes: [Node?]?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
+              pageInfo = try reader.value(for: Field(responseName: "pageInfo"))
               nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            }
+
+            public struct PageInfo: GraphQLMappable {
+              public let __typename: String
+              /// When paginating backwards, are there more items?
+              public let hasPreviousPage: Bool
+              /// When paginating backwards, the cursor to continue.
+              public let startCursor: String?
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
+                startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+              }
             }
 
             public struct Node: GraphQLMappable {
@@ -1554,7 +1583,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["first": reader.variables["page_size"]]))
+            timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["last": reader.variables["page_size"], "before": reader.variables["before"]]))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
             reviewRequests = try reader.optionalValue(for: Field(responseName: "reviewRequests", arguments: ["first": reader.variables["page_size"]]))
@@ -1584,12 +1613,29 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
           public struct Timeline: GraphQLMappable {
             public let __typename: String
+            /// Information to aid in pagination.
+            public let pageInfo: PageInfo
             /// A list of nodes.
             public let nodes: [Node?]?
 
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
+              pageInfo = try reader.value(for: Field(responseName: "pageInfo"))
               nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            }
+
+            public struct PageInfo: GraphQLMappable {
+              public let __typename: String
+              /// When paginating backwards, are there more items?
+              public let hasPreviousPage: Bool
+              /// When paginating backwards, the cursor to continue.
+              public let startCursor: String?
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
+                startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+              }
             }
 
             public struct Node: GraphQLMappable {
