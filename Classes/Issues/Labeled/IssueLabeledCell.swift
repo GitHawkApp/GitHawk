@@ -28,7 +28,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         descriptionButton.addTarget(self, action: #selector(IssueLabeledCell.onActor), for: .touchUpInside)
         contentView.addSubview(descriptionButton)
         descriptionButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
             make.centerY.equalTo(contentView)
         }
 

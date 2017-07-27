@@ -25,7 +25,7 @@ final class IssueReferencedCell: UICollectionViewCell {
         contentView.addSubview(referencedLabel)
         referencedLabel.snp.makeConstraints { make in
             make.top.equalTo(0)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
         }
 
         dateLabel.font = Styles.Fonts.secondary
@@ -39,7 +39,7 @@ final class IssueReferencedCell: UICollectionViewCell {
         statusButton.setupAsLabel(icon: false)
         contentView.addSubview(statusButton)
         statusButton.snp.makeConstraints { make in
-            make.right.equalTo(-Styles.Sizes.gutter)
+            make.right.equalTo(-Styles.Sizes.eventGutter)
             make.top.equalTo(referencedLabel.snp.bottom).offset(2)
         }
 

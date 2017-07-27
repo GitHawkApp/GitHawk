@@ -29,7 +29,7 @@ final class IssueRequestCell: UICollectionViewCell {
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
         }
 
         userButton.addTarget(self, action: #selector(IssueRequestCell.onUser), for: .touchUpInside)

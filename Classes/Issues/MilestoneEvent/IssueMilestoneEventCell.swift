@@ -27,7 +27,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
         }
 
         label.adjustsFontSizeToFitWidth = true
@@ -36,7 +36,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
         label.snp.makeConstraints { make in
             make.centerY.equalTo(actorButton)
             make.left.equalTo(actorButton.snp.right)
-            make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
+            make.right.lessThanOrEqualTo(-Styles.Sizes.eventGutter)
         }
     }
 

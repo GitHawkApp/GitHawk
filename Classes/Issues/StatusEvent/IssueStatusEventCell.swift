@@ -31,7 +31,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         actorButton.addTarget(self, action: #selector(IssueStatusEventCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
             make.centerY.equalTo(contentView)
         }
 

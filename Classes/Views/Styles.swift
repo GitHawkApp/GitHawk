@@ -12,6 +12,7 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
+        static let eventGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonIcon = CGSize(width: 25, height: 25)
         static let avatarCornerRadius: CGFloat = 3

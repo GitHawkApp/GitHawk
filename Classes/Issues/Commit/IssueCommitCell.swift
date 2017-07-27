@@ -30,7 +30,7 @@ final class IssueCommitCell: UICollectionViewCell {
         contentView.addSubview(commitImageView)
         commitImageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.columnSpacing)
+            make.left.equalTo(Styles.Sizes.eventGutter)
             make.size.equalTo(Styles.Sizes.icon)
         }
 
@@ -60,7 +60,7 @@ final class IssueCommitCell: UICollectionViewCell {
         messageLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.right.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.columnSpacing)
+            make.right.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.eventGutter)
         }
     }
     

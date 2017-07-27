@@ -17,9 +17,9 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.labelEventHeight,
-        left: Styles.Sizes.gutter,
+        left: Styles.Sizes.eventGutter,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
+        right: Styles.Sizes.eventGutter
     )
 
     weak var delegate: IssueRenamedCellDelegate? = nil
@@ -35,7 +35,7 @@ final class IssueRenamedCell: UICollectionViewCell {
         actorLabel.addTarget(self, action: #selector(IssueRenamedCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.columnSpacing)
             make.top.equalTo(0)
         }
 

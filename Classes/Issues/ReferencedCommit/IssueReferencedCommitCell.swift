@@ -31,7 +31,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         contentView.addSubview(nameButton)
         nameButton.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.eventGutter)
         }
 
         referencedButton.addTarget(self, action: #selector(IssueReferencedCommitCell.onHash), for: .touchUpInside)
