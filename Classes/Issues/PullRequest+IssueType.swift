@@ -281,6 +281,17 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .demilestoned
                 )
                 results.append(model)
+            } else if let commit = node.asCommit,
+                let urlString = commit.author?.user?.avatarUrl,
+                let avatarURL = URL(string: urlString) {
+                let model = IssueCommitModel(
+                    id: commit.fragments.nodeFields.id,
+                    login: commit.author?.user?.login ?? Strings.unknown,
+                    avatarURL: avatarURL,
+                    message: commit.messageHeadline,
+                    hash: commit.oid
+                )
+                results.append(model)
             }
         }
 

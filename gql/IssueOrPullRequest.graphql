@@ -12,10 +12,14 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         timeline(first: $page_size) {
           nodes {
             ... on Commit {
+              ...nodeFields
               author {
-                name
-                date
+                user {
+                  login
+                  avatarUrl
+                }
               }
+              oid
               messageHeadline
             }
             ... on IssueComment {
@@ -138,10 +142,14 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         timeline(first: $page_size) {
           nodes {
             ... on Commit {
+              ...nodeFields
               author {
-                name
-                date
+                user {
+                  login
+                  avatarUrl
+                }
               }
+              oid
               messageHeadline
             }
             ... on IssueComment {

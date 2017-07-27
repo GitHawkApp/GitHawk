@@ -195,11 +195,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            __typename" +
     "            ... on Commit {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              author {" +
     "                __typename" +
-    "                name" +
-    "                date" +
+    "                user {" +
+    "                  __typename" +
+    "                  login" +
+    "                  avatarUrl" +
+    "                }" +
     "              }" +
+    "              oid" +
     "              messageHeadline" +
     "            }" +
     "            ... on IssueComment {" +
@@ -397,11 +402,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            __typename" +
     "            ... on Commit {" +
     "              __typename" +
+    "              ...nodeFields" +
     "              author {" +
     "                __typename" +
-    "                name" +
-    "                date" +
+    "                user {" +
+    "                  __typename" +
+    "                  login" +
+    "                  avatarUrl" +
+    "                }" +
     "              }" +
+    "              oid" +
     "              messageHeadline" +
     "            }" +
     "            ... on IssueComment {" +
@@ -840,26 +850,49 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let __typename: String
                 /// Authorship details of the commit.
                 public let author: Author?
+                /// The Git object ID
+                public let oid: String
                 /// The Git commit message headline
                 public let messageHeadline: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   author = try reader.optionalValue(for: Field(responseName: "author"))
+                  oid = try reader.value(for: Field(responseName: "oid"))
                   messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Author: GraphQLMappable {
                   public let __typename: String
-                  /// The name in the Git commit.
-                  public let name: String?
-                  /// The timestamp of the Git action (authoring or committing).
-                  public let date: String?
+                  /// The GitHub user corresponding to the email field. Null if no such user exists.
+                  public let user: User?
 
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
-                    name = try reader.optionalValue(for: Field(responseName: "name"))
-                    date = try reader.optionalValue(for: Field(responseName: "date"))
+                    user = try reader.optionalValue(for: Field(responseName: "user"))
+                  }
+
+                  public struct User: GraphQLMappable {
+                    public let __typename: String
+                    /// The username used to login.
+                    public let login: String
+                    /// A URL pointing to the user's public avatar.
+                    public let avatarUrl: String
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      login = try reader.value(for: Field(responseName: "login"))
+                      avatarUrl = try reader.value(for: Field(responseName: "avatarUrl"))
+                    }
                   }
                 }
               }
@@ -1612,26 +1645,49 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 public let __typename: String
                 /// Authorship details of the commit.
                 public let author: Author?
+                /// The Git object ID
+                public let oid: String
                 /// The Git commit message headline
                 public let messageHeadline: String
+
+                public let fragments: Fragments
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
                   author = try reader.optionalValue(for: Field(responseName: "author"))
+                  oid = try reader.value(for: Field(responseName: "oid"))
                   messageHeadline = try reader.value(for: Field(responseName: "messageHeadline"))
+
+                  let nodeFields = try NodeFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields)
+                }
+
+                public struct Fragments {
+                  public let nodeFields: NodeFields
                 }
 
                 public struct Author: GraphQLMappable {
                   public let __typename: String
-                  /// The name in the Git commit.
-                  public let name: String?
-                  /// The timestamp of the Git action (authoring or committing).
-                  public let date: String?
+                  /// The GitHub user corresponding to the email field. Null if no such user exists.
+                  public let user: User?
 
                   public init(reader: GraphQLResultReader) throws {
                     __typename = try reader.value(for: Field(responseName: "__typename"))
-                    name = try reader.optionalValue(for: Field(responseName: "name"))
-                    date = try reader.optionalValue(for: Field(responseName: "date"))
+                    user = try reader.optionalValue(for: Field(responseName: "user"))
+                  }
+
+                  public struct User: GraphQLMappable {
+                    public let __typename: String
+                    /// The username used to login.
+                    public let login: String
+                    /// A URL pointing to the user's public avatar.
+                    public let avatarUrl: String
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      login = try reader.value(for: Field(responseName: "login"))
+                      avatarUrl = try reader.value(for: Field(responseName: "avatarUrl"))
+                    }
                   }
                 }
               }
