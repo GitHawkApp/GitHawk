@@ -43,7 +43,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         }
 
         // courier has a little bit of a different kerning, manually adjust
-        hashButton.titleLabel?.font = UIFont(name: "Courier-Bold", size: Styles.Sizes.Text.secondary + 1)
+        hashButton.titleLabel?.font = Styles.Fonts.secondaryCode
         hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         hashButton.addTarget(self, action: #selector(IssueStatusEventCell.onHash), for: .touchUpInside)
         contentView.addSubview(hashButton)
