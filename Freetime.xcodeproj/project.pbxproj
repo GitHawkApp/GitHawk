@@ -1398,7 +1398,7 @@
 		};
 		5481D6BE1F2B896A00785F94 /* Generate XCConfig Files */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1408,7 +1408,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DEBUG_PATH=\"FREETIME-DEBUG.xcconfig\"\nRELEASE_PATH=\"FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"CLIENT_ID=\\\"YOUR_CLIENT_ID_HERE\\\"\" >> \"$1\"\n    echo \"CLIENT_SECRET=\\\"YOUR_CLIENT_SECRET_HERE\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = CLIENT_ID=\\$(CLIENT_ID) CLIENT_SECRET=\\$(CLIENT_SECRET)\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n  if [ ! -f \"$DEBUG_PATH\" ]; then\n    writeTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\n    exit 0\n  fi\nfi\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n  if [ ! -f \"$RELEASE_PATH\" ]; then\n    writeTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\n    exit 0\n  fi\nfi";
+			shellScript = "DEBUG_PATH=\"FREETIME-DEBUG.xcconfig\"\nRELEASE_PATH=\"FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"CLIENT_ID=\\\"YOUR_CLIENT_ID_HERE\\\"\" >> \"$1\"\n    echo \"CLIENT_SECRET=\\\"YOUR_CLIENT_SECRET_HERE\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = CLIENT_ID=\\$(CLIENT_ID) CLIENT_SECRET=\\$(CLIENT_SECRET)\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\nif [ ! -f \"$DEBUG_PATH\" ]; then\n  writeTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\nfi\n\nif [ ! -f \"$RELEASE_PATH\" ]; then\n  writeTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\nfi";
 		};
 		569FA08158547B98DF94DD42 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
