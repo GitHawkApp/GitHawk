@@ -32,12 +32,16 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1134</string>
+	<string>1145</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>org-appextension-feature-password-management</string>
+		<string>brave</string>
+		<string>dolphin</string>
+		<string>firefox</string>
+		<string>googlechrome</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

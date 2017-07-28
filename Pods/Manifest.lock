@@ -3,6 +3,7 @@ PODS:
   - Apollo (0.5.6)
   - FLAnimatedImage (1.0.12)
   - FLEX (2.4.0)
+  - Freedom (1.0.7)
   - IGListKit (3.0.0):
     - IGListKit/Default (= 3.0.0)
   - IGListKit/Default (3.0.0):
@@ -20,18 +21,17 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SnapKit (3.2.0)
-  - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
   - Apollo (~> 0.5.6)
   - FLEX (~> 2.0)
+  - Freedom (~> 1.0)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage (~> 4.0.0)
   - SnapKit (~> 3.2.0)
-  - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
   IGListKit:
@@ -48,13 +48,13 @@ SPEC CHECKSUMS:
   Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  Freedom: e31ef69b22249294592cb86f7dea368713c0d5a5
   IGListKit: 9eab6856a15fa25ad72018ff9d9eb2178c240fff
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 4d6ec65796d4a2995fae04796756ab34ffb2a3cb
+PODFILE CHECKSUM: 4d101cd0042a09215e1ab4a19fad7df318a4fcc1
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
