@@ -256,6 +256,8 @@
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
 		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
 		984D9CAF1F235A8600ECEA7F /* SettingsSourceSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */; };
+		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
+		986B871B1F2B87DD00AAB55C /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B871A1F2B87DD00AAB55C /* SearchResult.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
@@ -521,6 +523,8 @@
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		984D9CA81F212ADF00ECEA7F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSourceSectionController.swift; sourceTree = "<group>"; };
+		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
+		986B871A1F2B87DD00AAB55C /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVersionInfoSectionController.swift; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
@@ -936,6 +940,7 @@
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				297AE8611EC0D5C100B44A1F /* Other */,
+				986B87171F2B873200AAB55C /* Search */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
 				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
@@ -1168,6 +1173,15 @@
 				2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		986B87171F2B873200AAB55C /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				986B87181F2B875800AAB55C /* GithubClient+Search.swift */,
+				986B871A1F2B87DD00AAB55C /* SearchResult.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		98835BCC1F1965C5005BA24F /* Utility */ = {
@@ -1451,6 +1465,7 @@
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
+				986B871B1F2B87DD00AAB55C /* SearchResult.swift in Sources */,
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
@@ -1514,6 +1529,7 @@
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
+				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,

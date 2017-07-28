@@ -92,6 +92,17 @@ FeedSelectionProviding {
     }
 
     @objc private func onMarkAll(sender: UIBarButtonItem) {
+        client.githubClient.search(query: "IGListKit", before: nil) { response in
+            switch response {
+            case .error:
+                print("😞")
+                break
+            case .success(let nextPage, let results):
+                print(nextPage, results)
+                break
+            }
+        }
+        return
         let alert = UIAlertController(
             title: NSLocalizedString("Notifications", comment: ""),
             message: "Mark all notifications as read?",

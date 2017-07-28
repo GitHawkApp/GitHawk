@@ -2711,6 +2711,160 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
+public final class SearchReposQuery: GraphQLQuery {
+  public static let operationDefinition =
+    "query SearchRepos($search: String!, $before: String) {" +
+    "  search(first: 25, query: $search, type: REPOSITORY, before: $before) {" +
+    "    __typename" +
+    "    nodes {" +
+    "      __typename" +
+    "      ... on Repository {" +
+    "        __typename" +
+    "        id" +
+    "        name" +
+    "        description" +
+    "        primaryLanguage {" +
+    "          __typename" +
+    "          name" +
+    "          color" +
+    "        }" +
+    "        stargazers {" +
+    "          __typename" +
+    "          totalCount" +
+    "        }" +
+    "      }" +
+    "    }" +
+    "    pageInfo {" +
+    "      __typename" +
+    "      endCursor" +
+    "      hasNextPage" +
+    "      hasPreviousPage" +
+    "      startCursor" +
+    "    }" +
+    "    repositoryCount" +
+    "  }" +
+    "}"
+
+  public let search: String
+  public let before: String?
+
+  public init(search: String, before: String? = nil) {
+    self.search = search
+    self.before = before
+  }
+
+  public var variables: GraphQLMap? {
+    return ["search": search, "before": before]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Perform a search across resources.
+    public let search: Search
+
+    public init(reader: GraphQLResultReader) throws {
+      search = try reader.value(for: Field(responseName: "search", arguments: ["first": 25, "query": reader.variables["search"], "type": "REPOSITORY", "before": reader.variables["before"]]))
+    }
+
+    public struct Search: GraphQLMappable {
+      public let __typename: String
+      /// A list of nodes.
+      public let nodes: [Node?]?
+      /// Information to aid in pagination.
+      public let pageInfo: PageInfo
+      /// The number of repositories that matched the search query.
+      public let repositoryCount: Int
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+        pageInfo = try reader.value(for: Field(responseName: "pageInfo"))
+        repositoryCount = try reader.value(for: Field(responseName: "repositoryCount"))
+      }
+
+      public struct Node: GraphQLMappable {
+        public let __typename: String
+
+        public let asRepository: AsRepository?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+
+          asRepository = try AsRepository(reader: reader, ifTypeMatches: __typename)
+        }
+
+        public struct AsRepository: GraphQLConditionalFragment {
+          public static let possibleTypes = ["Repository"]
+
+          public let __typename: String
+          public let id: GraphQLID
+          /// The name of the repository.
+          public let name: String
+          /// The description of the repository.
+          public let description: String?
+          /// The primary language of the repository's code.
+          public let primaryLanguage: PrimaryLanguage?
+          /// A list of users who have starred this starrable.
+          public let stargazers: Stargazer
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            id = try reader.value(for: Field(responseName: "id"))
+            name = try reader.value(for: Field(responseName: "name"))
+            description = try reader.optionalValue(for: Field(responseName: "description"))
+            primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
+            stargazers = try reader.value(for: Field(responseName: "stargazers"))
+          }
+
+          public struct PrimaryLanguage: GraphQLMappable {
+            public let __typename: String
+            /// The name of the current language.
+            public let name: String
+            /// The color defined for the current language.
+            public let color: String?
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              name = try reader.value(for: Field(responseName: "name"))
+              color = try reader.optionalValue(for: Field(responseName: "color"))
+            }
+          }
+
+          public struct Stargazer: GraphQLMappable {
+            public let __typename: String
+            /// Identifies the total count of items in the connection.
+            public let totalCount: Int
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              totalCount = try reader.value(for: Field(responseName: "totalCount"))
+            }
+          }
+        }
+      }
+
+      public struct PageInfo: GraphQLMappable {
+        public let __typename: String
+        /// When paginating forwards, the cursor to continue.
+        public let endCursor: String?
+        /// When paginating forwards, are there more items?
+        public let hasNextPage: Bool
+        /// When paginating backwards, are there more items?
+        public let hasPreviousPage: Bool
+        /// When paginating backwards, the cursor to continue.
+        public let startCursor: String?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
+          hasNextPage = try reader.value(for: Field(responseName: "hasNextPage"))
+          hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
+          startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+        }
+      }
+    }
+  }
+}
+
 public struct ReactionFields: GraphQLNamedFragment {
   public static let fragmentDefinition =
     "fragment reactionFields on Reactable {" +

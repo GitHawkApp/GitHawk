@@ -1,0 +1,30 @@
+query SearchRepos($search: String!, $before: String) {
+  search(first: 25, query: $search, type: REPOSITORY, before: $before){
+    # Search Results
+    nodes {
+    	... on Repository {
+        id
+        name
+        description
+        primaryLanguage {
+          name
+          color
+        }
+        stargazers {
+          totalCount
+        }
+      }
+    }
+
+    # Information Needed for Paging
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+
+    # Total Amount of Search Results
+    repositoryCount
+  }
+}
