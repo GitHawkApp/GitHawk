@@ -13,25 +13,17 @@ class SearchViewController: UIViewController,
                             ListAdapterDataSource,
                             FeedDelegate,
                             SearchLoadMoreSectionControllerDelegate,
-                            UISearchBarDelegate {
+                            SearchBarSectionControllerDelegate {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var searchResults = [SearchResult]()
     private var nextPage: String?
-    private var searchTerm: String? = "IGListKit"
+    private var searchTerm: String?
     
-    private let emptyKey = "emptyKey" as ListDiffable
+    private let noResultsKey = "noResultsKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
-    
-    private lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.showsCancelButton = true
-        searchBar.placeholder = "Search"
-        
-        return searchBar
-    }()
+    private let searchKey = "searchKey" as ListDiffable
     
     init(client: GithubClient) {
         self.client = client
@@ -46,26 +38,14 @@ class SearchViewController: UIViewController,
         super.viewDidLoad()
 
         feed.viewDidLoad()
+        feed.collectionView.refreshControl?.endRefreshing()
         feed.adapter.dataSource = self
-        addSearchBar()
+        title = "Search"
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
-    }
-    
-    // MARK: Search Bar
-    
-    func addSearchBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let text = searchBar.text {
-            self.searchTerm = text
-            self.reload()
-        }
     }
     
     // MARK: Data Loading/Paging
@@ -119,10 +99,10 @@ class SearchViewController: UIViewController,
     // MARK: ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var builder = [ListDiffable]()
+        var builder = [searchKey]
         
-        if searchResults.count == 0 {
-            builder.append(emptyKey)
+        if searchResults.count == 0, searchTerm != nil {
+            builder.append(noResultsKey)
         } else {
             builder += searchResults as [ListDiffable]
             
@@ -137,8 +117,9 @@ class SearchViewController: UIViewController,
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError("Object does not conform to ListDiffable") }
         
-        if object === emptyKey { return NoNewNotificationSectionController(topInset: 0, topLayoutGuide: topLayoutGuide) }
+        if object === noResultsKey { fatalError("Unimplemented") }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
+        else if object === searchKey { return SearchBarSectionController(delegate: self) }
         else if object is SearchResult { return SearchResultSectionController() }
         
         fatalError("Could not find section controller for object")
@@ -152,5 +133,12 @@ class SearchViewController: UIViewController,
     
     func didSelect(sectionController: SearchLoadMoreSectionController) {
         loadNextPage()
+    }
+    
+    // MARK: SearchBarSectionControllerDelegate
+    
+    func didFinishSearching(term: String?) {
+        searchTerm = term
+        reload()
     }
 }

@@ -263,6 +263,8 @@
 		986B87211F2B979200AAB55C /* SearchLoadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */; };
 		986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */; };
 		986B87251F2B990A00AAB55C /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87241F2B990A00AAB55C /* SearchResultCell.swift */; };
+		986B87271F2BB5EE00AAB55C /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */; };
+		986B87291F2BB68300AAB55C /* SearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87281F2BB68300AAB55C /* SearchBarCell.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
@@ -535,6 +537,8 @@
 		986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLoadMoreCell.swift; sourceTree = "<group>"; };
 		986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultSectionController.swift; sourceTree = "<group>"; };
 		986B87241F2B990A00AAB55C /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
+		986B87281F2BB68300AAB55C /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVersionInfoSectionController.swift; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
@@ -1195,6 +1199,8 @@
 				986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */,
 				986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */,
 				986B87241F2B990A00AAB55C /* SearchResultCell.swift */,
+				986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */,
+				986B87281F2BB68300AAB55C /* SearchBarCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1540,6 +1546,7 @@
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
 				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
+				986B87271F2BB5EE00AAB55C /* SearchBarSectionController.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
@@ -1606,6 +1613,7 @@
 				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
+				986B87291F2BB68300AAB55C /* SearchBarCell.swift in Sources */,
 				29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
