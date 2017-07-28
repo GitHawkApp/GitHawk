@@ -1,0 +1,38 @@
+query RepoIssuesAndPullReuqests($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    issues(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
+      nodes {
+        title
+        number
+        createdAt
+        state
+        author {
+          login
+        }
+        labels(first: 5) {
+          nodes {
+            name
+            color
+          }
+        }
+      }
+    }
+    pullRequests(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
+      nodes {
+        title
+        number
+        createdAt
+        state
+        author {
+          login
+        }
+        labels(first: 5) {
+          nodes {
+            name
+            color
+          }
+        }
+      }
+    }
+  }
+}

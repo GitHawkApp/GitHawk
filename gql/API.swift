@@ -25,6 +25,23 @@ public enum PullRequestReviewState: String {
 
 extension PullRequestReviewState: JSONDecodable, JSONEncodable {}
 
+/// The possible states of an issue.
+public enum IssueState: String {
+  case `open` = "OPEN" /// An issue that is still open
+  case closed = "CLOSED" /// An issue that has been closed
+}
+
+extension IssueState: JSONDecodable, JSONEncodable {}
+
+/// The possible states of a pull request.
+public enum PullRequestState: String {
+  case `open` = "OPEN" /// A pull request that is still open.
+  case closed = "CLOSED" /// A pull request that has been closed without being merged.
+  case merged = "MERGED" /// A pull request that has been closed by being merged.
+}
+
+extension PullRequestState: JSONDecodable, JSONEncodable {}
+
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation AddComment($subject_id: ID!, $body: String!) {" +
@@ -2705,6 +2722,240 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
         public struct Fragments {
           public let reactionFields: ReactionFields
+        }
+      }
+    }
+  }
+}
+
+public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
+  public static let operationDefinition =
+    "query RepoIssuesAndPullReuqests($owner: String!, $name: String!) {" +
+    "  repository(owner: $owner, name: $name) {" +
+    "    __typename" +
+    "    issues(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
+    "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        title" +
+    "        number" +
+    "        createdAt" +
+    "        state" +
+    "        author {" +
+    "          __typename" +
+    "          login" +
+    "        }" +
+    "        labels(first: 5) {" +
+    "          __typename" +
+    "          nodes {" +
+    "            __typename" +
+    "            name" +
+    "            color" +
+    "          }" +
+    "        }" +
+    "      }" +
+    "    }" +
+    "    pullRequests(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
+    "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        title" +
+    "        number" +
+    "        createdAt" +
+    "        state" +
+    "        author {" +
+    "          __typename" +
+    "          login" +
+    "        }" +
+    "        labels(first: 5) {" +
+    "          __typename" +
+    "          nodes {" +
+    "            __typename" +
+    "            name" +
+    "            color" +
+    "          }" +
+    "        }" +
+    "      }" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public let owner: String
+  public let name: String
+
+  public init(owner: String, name: String) {
+    self.owner = owner
+    self.name = name
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "name": name]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Lookup a given repository by the owner and repository name.
+    public let repository: Repository?
+
+    public init(reader: GraphQLResultReader) throws {
+      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["name"]]))
+    }
+
+    public struct Repository: GraphQLMappable {
+      public let __typename: String
+      /// A list of issues that have been opened in the repository.
+      public let issues: Issue
+      /// A list of pull requests that have been opened in the repository.
+      public let pullRequests: PullRequest
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
+        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
+      }
+
+      public struct Issue: GraphQLMappable {
+        public let __typename: String
+        /// A list of nodes.
+        public let nodes: [Node?]?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+          /// Identifies the issue title.
+          public let title: String
+          /// Identifies the issue number.
+          public let number: Int
+          /// Identifies the date and time when the object was created.
+          public let createdAt: String
+          /// Identifies the state of the issue.
+          public let state: IssueState
+          /// The actor who authored the comment.
+          public let author: Author?
+          /// A list of labels associated with the object.
+          public let labels: Label?
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            title = try reader.value(for: Field(responseName: "title"))
+            number = try reader.value(for: Field(responseName: "number"))
+            createdAt = try reader.value(for: Field(responseName: "createdAt"))
+            state = try reader.value(for: Field(responseName: "state"))
+            author = try reader.optionalValue(for: Field(responseName: "author"))
+            labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 5]))
+          }
+
+          public struct Author: GraphQLMappable {
+            public let __typename: String
+            /// The username of the actor.
+            public let login: String
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              login = try reader.value(for: Field(responseName: "login"))
+            }
+          }
+
+          public struct Label: GraphQLMappable {
+            public let __typename: String
+            /// A list of nodes.
+            public let nodes: [Node?]?
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            }
+
+            public struct Node: GraphQLMappable {
+              public let __typename: String
+              /// Identifies the label name.
+              public let name: String
+              /// Identifies the label color.
+              public let color: String
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                name = try reader.value(for: Field(responseName: "name"))
+                color = try reader.value(for: Field(responseName: "color"))
+              }
+            }
+          }
+        }
+      }
+
+      public struct PullRequest: GraphQLMappable {
+        public let __typename: String
+        /// A list of nodes.
+        public let nodes: [Node?]?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+          /// Identifies the pull request title.
+          public let title: String
+          /// Identifies the pull request number.
+          public let number: Int
+          /// Identifies the date and time when the object was created.
+          public let createdAt: String
+          /// Identifies the state of the pull request.
+          public let state: PullRequestState
+          /// The actor who authored the comment.
+          public let author: Author?
+          /// A list of labels associated with the object.
+          public let labels: Label?
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            title = try reader.value(for: Field(responseName: "title"))
+            number = try reader.value(for: Field(responseName: "number"))
+            createdAt = try reader.value(for: Field(responseName: "createdAt"))
+            state = try reader.value(for: Field(responseName: "state"))
+            author = try reader.optionalValue(for: Field(responseName: "author"))
+            labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 5]))
+          }
+
+          public struct Author: GraphQLMappable {
+            public let __typename: String
+            /// The username of the actor.
+            public let login: String
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              login = try reader.value(for: Field(responseName: "login"))
+            }
+          }
+
+          public struct Label: GraphQLMappable {
+            public let __typename: String
+            /// A list of nodes.
+            public let nodes: [Node?]?
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+            }
+
+            public struct Node: GraphQLMappable {
+              public let __typename: String
+              /// Identifies the label name.
+              public let name: String
+              /// Identifies the label color.
+              public let color: String
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                name = try reader.value(for: Field(responseName: "name"))
+                color = try reader.value(for: Field(responseName: "color"))
+              }
+            }
+          }
         }
       }
     }
