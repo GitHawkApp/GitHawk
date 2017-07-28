@@ -2723,6 +2723,7 @@ public final class SearchReposQuery: GraphQLQuery {
     "        id" +
     "        nameWithOwner" +
     "        description" +
+    "        pushedAt" +
     "        primaryLanguage {" +
     "          __typename" +
     "          name" +
@@ -2801,6 +2802,8 @@ public final class SearchReposQuery: GraphQLQuery {
           public let nameWithOwner: String
           /// The description of the repository.
           public let description: String?
+          /// Identifies when the repository was last pushed to.
+          public let pushedAt: String?
           /// The primary language of the repository's code.
           public let primaryLanguage: PrimaryLanguage?
           /// A list of users who have starred this starrable.
@@ -2811,6 +2814,7 @@ public final class SearchReposQuery: GraphQLQuery {
             id = try reader.value(for: Field(responseName: "id"))
             nameWithOwner = try reader.value(for: Field(responseName: "nameWithOwner"))
             description = try reader.optionalValue(for: Field(responseName: "description"))
+            pushedAt = try reader.optionalValue(for: Field(responseName: "pushedAt"))
             primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
             stargazers = try reader.value(for: Field(responseName: "stargazers"))
           }

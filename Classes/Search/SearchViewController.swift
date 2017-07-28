@@ -9,15 +9,29 @@
 import UIKit
 import IGListKit
 
-class SearchViewController: UIViewController, ListAdapterDataSource, FeedDelegate, SearchLoadMoreSectionControllerDelegate {
+class SearchViewController: UIViewController,
+                            ListAdapterDataSource,
+                            FeedDelegate,
+                            SearchLoadMoreSectionControllerDelegate,
+                            UISearchBarDelegate {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var searchResults = [SearchResult]()
     private var nextPage: String?
+    private var searchTerm: String? = "IGListKit"
     
     private let emptyKey = "emptyKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Search"
+        
+        return searchBar
+    }()
     
     init(client: GithubClient) {
         self.client = client
@@ -33,13 +47,28 @@ class SearchViewController: UIViewController, ListAdapterDataSource, FeedDelegat
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
-        title = "Searching \"IGListKit\""
+        addSearchBar()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
     }
+    
+    // MARK: Search Bar
+    
+    func addSearchBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            self.searchTerm = text
+            self.reload()
+        }
+    }
+    
+    // MARK: Data Loading/Paging
     
     private func update(dismissRefresh: Bool, animated: Bool = true) {
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
@@ -64,14 +93,15 @@ class SearchViewController: UIViewController, ListAdapterDataSource, FeedDelegat
     }
     
     func reload() {
-        client.search(query: "IGListKit") { [weak self] resultType in
+        guard let searchTerm = searchTerm else { return }
+        client.search(query: searchTerm) { [weak self] resultType in
             self?.handle(resultType: resultType, append: false, animated: true)
         }
     }
     
     func loadNextPage() {
-        guard let nextPage = nextPage else { return }
-        client.search(query: "IGListKit", before: nextPage) { [weak self] resultType in
+        guard let nextPage = nextPage, let searchTerm = searchTerm else { return }
+        client.search(query: searchTerm, before: nextPage) { [weak self] resultType in
             self?.handle(resultType: resultType, append: true, animated: false)
         }
     }

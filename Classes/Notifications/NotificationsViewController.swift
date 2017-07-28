@@ -68,8 +68,9 @@ FeedSelectionProviding {
     }
 
     private func updateMarkAllEnabled() {
-        let allRead = !filteredNotifications.contains(where: { $0.read == false })
-        navigationItem.rightBarButtonItem?.isEnabled = !allRead
+//        let allRead = !filteredNotifications.contains(where: { $0.read == false })
+//        navigationItem.rightBarButtonItem?.isEnabled = !allRead
+        navigationItem.rightBarButtonItem?.isEnabled = true
     }
 
     func setRightBarItemSpinning() {

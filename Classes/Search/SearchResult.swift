@@ -15,6 +15,7 @@ class SearchResult: ListDiffable {
     let name: String
     let description: String?
     let stars: Int
+    let pushedAt: Date?
     let primaryLanguage: GithubLanguage?
     
     init(repo: SearchReposQuery.Data.Search.Node.AsRepository) {
@@ -22,6 +23,12 @@ class SearchResult: ListDiffable {
         self.name = repo.nameWithOwner
         self.description = repo.description
         self.stars = repo.stargazers.totalCount
+        
+        if let pushedAt = repo.pushedAt {
+            self.pushedAt = GithubAPIDateFormatter().date(from: pushedAt)
+        } else {
+            self.pushedAt = nil
+        }
         
         if let language = repo.primaryLanguage {
             self.primaryLanguage = GithubLanguage(name: language.name, color: language.color?.color)

@@ -6,6 +6,7 @@ query SearchRepos($search: String!, $before: String) {
         id
         nameWithOwner
         description
+        pushedAt
         primaryLanguage {
           name
           color
