@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -53,10 +54,18 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="aQ2-N2-0DI">
                                 <rect key="frame" x="16" y="629" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5X-Ud-TSJ">
+                                <rect key="frame" x="254" y="28" width="105" height="30"/>
+                                <state key="normal" title="Personal Token"/>
+                                <connections>
+                                    <action selector="onPersonalAccessTokenButton:" destination="bA6-il-lQA" eventType="touchUpInside" id="Gh6-L3-I1u"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Cfb-Yp-akO" firstAttribute="top" secondItem="ai9-fN-d9O" secondAttribute="bottom" constant="16" id="4wW-6U-JTs"/>
+                            <constraint firstItem="A5X-Ud-TSJ" firstAttribute="top" secondItem="0F3-e6-Obo" secondAttribute="bottom" constant="8" symbolic="YES" id="6EP-Ng-PYj"/>
                             <constraint firstItem="joJ-g2-qXR" firstAttribute="leading" secondItem="hgy-EE-Whp" secondAttribute="leading" id="7Wi-n0-mdX"/>
                             <constraint firstItem="aQ2-N2-0DI" firstAttribute="centerY" secondItem="joJ-g2-qXR" secondAttribute="centerY" id="9cF-kc-dvN"/>
                             <constraint firstItem="ai9-fN-d9O" firstAttribute="centerY" secondItem="hgy-EE-Whp" secondAttribute="centerY" constant="-55" id="AqW-dx-Q2p"/>
@@ -67,6 +76,7 @@
                             <constraint firstItem="Cfb-Yp-akO" firstAttribute="centerX" secondItem="hgy-EE-Whp" secondAttribute="centerX" id="So4-Be-Mn4"/>
                             <constraint firstItem="N6P-rW-9YX" firstAttribute="top" secondItem="Cfb-Yp-akO" secondAttribute="bottom" constant="32" id="T1X-l4-dG1"/>
                             <constraint firstAttribute="trailing" secondItem="joJ-g2-qXR" secondAttribute="trailing" id="c3F-OZ-fRS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="A5X-Ud-TSJ" secondAttribute="trailing" id="geW-JD-xI0"/>
                             <constraint firstItem="tge-zT-2RL" firstAttribute="top" secondItem="joJ-g2-qXR" secondAttribute="bottom" id="t7W-9f-BhD"/>
                         </constraints>
                     </view>

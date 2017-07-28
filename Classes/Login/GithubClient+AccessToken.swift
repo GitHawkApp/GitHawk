@@ -42,4 +42,26 @@ extension GithubClient {
         }))
     }
 
+    func verifyPersonalAccessToken(
+        token: String,
+        completion: @escaping (AccessTokenResult) -> ()
+        ) {
+        let headers = [
+            "Accept": "application/json",
+            "Authorization": "token \(token)"
+        ]
+        request(Request(
+            url: "https://api.github.com/user",
+            method: .get,
+            headers: headers,
+            completion: { (response, _) in
+                let json = response.value as? [String: Any]
+                let username = json?["login"] as? String
+                if username != nil {
+                    completion(.success(token))
+                } else {
+                    completion(.failure)
+                }
+        }))
+    }
 }
