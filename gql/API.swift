@@ -2721,7 +2721,7 @@ public final class SearchReposQuery: GraphQLQuery {
     "      ... on Repository {" +
     "        __typename" +
     "        id" +
-    "        name" +
+    "        nameWithOwner" +
     "        description" +
     "        primaryLanguage {" +
     "          __typename" +
@@ -2797,8 +2797,8 @@ public final class SearchReposQuery: GraphQLQuery {
 
           public let __typename: String
           public let id: GraphQLID
-          /// The name of the repository.
-          public let name: String
+          /// The repository's name with owner.
+          public let nameWithOwner: String
           /// The description of the repository.
           public let description: String?
           /// The primary language of the repository's code.
@@ -2809,7 +2809,7 @@ public final class SearchReposQuery: GraphQLQuery {
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             id = try reader.value(for: Field(responseName: "id"))
-            name = try reader.value(for: Field(responseName: "name"))
+            nameWithOwner = try reader.value(for: Field(responseName: "nameWithOwner"))
             description = try reader.optionalValue(for: Field(responseName: "description"))
             primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
             stargazers = try reader.value(for: Field(responseName: "stargazers"))

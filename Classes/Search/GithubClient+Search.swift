@@ -15,7 +15,7 @@ extension GithubClient {
         case success(String?, [SearchResult])
     }
     
-    func search(query: String, before: String?, completion: @escaping (SearchResultType) -> ()) {
+    func search(query: String, before: String? = nil, completion: @escaping (SearchResultType) -> ()) {
         let query = SearchReposQuery(search: query, before: before)
         
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in

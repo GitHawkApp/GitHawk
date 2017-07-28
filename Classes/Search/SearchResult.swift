@@ -19,7 +19,7 @@ class SearchResult: ListDiffable {
     
     init(repo: SearchReposQuery.Data.Search.Node.AsRepository) {
         self.id = repo.id
-        self.name = repo.name
+        self.name = repo.nameWithOwner
         self.description = repo.description
         self.stars = repo.stargazers.totalCount
         

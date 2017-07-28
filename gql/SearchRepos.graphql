@@ -4,7 +4,7 @@ query SearchRepos($search: String!, $before: String) {
     nodes {
     	... on Repository {
         id
-        name
+        nameWithOwner
         description
         primaryLanguage {
           name
