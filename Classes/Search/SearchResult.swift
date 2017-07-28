@@ -13,16 +13,30 @@ class SearchResult: ListDiffable {
     
     let id: String
     let name: String
-    let description: String?
+    let description: NSAttributedStringSizing?
     let stars: Int
     let pushedAt: Date?
     let primaryLanguage: GithubLanguage?
     
-    init(repo: SearchReposQuery.Data.Search.Node.AsRepository) {
+    init(repo: SearchReposQuery.Data.Search.Node.AsRepository, containerWidth: CGFloat) {
         self.id = repo.id
         self.name = repo.nameWithOwner
-        self.description = repo.description
         self.stars = repo.stargazers.totalCount
+        
+        if let description = repo.description {
+            let attributes = [
+                NSFontAttributeName: Styles.Fonts.secondary,
+                NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            ]
+            
+            self.description = NSAttributedStringSizing(
+                containerWidth: containerWidth,
+                attributedText: NSAttributedString(string: description, attributes: attributes),
+                inset: SearchResultCell.labelInset
+            )
+        } else {
+            self.description = nil
+        }
         
         if let pushedAt = repo.pushedAt {
             self.pushedAt = GithubAPIDateFormatter().date(from: pushedAt)

@@ -12,7 +12,8 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: 100)
+        let fallbackHeight = SearchResultCell.labelInset.top + SearchResultCell.labelInset.bottom
+        return CGSize(width: width, height: object?.description?.textViewSize(width).height ?? fallbackHeight)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {

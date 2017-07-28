@@ -74,14 +74,14 @@ class SearchViewController: UIViewController,
     
     func reload() {
         guard let searchTerm = searchTerm else { return }
-        client.search(query: searchTerm) { [weak self] resultType in
+        client.search(query: searchTerm, containerWidth: view.bounds.width) { [weak self] resultType in
             self?.handle(resultType: resultType, append: false, animated: true)
         }
     }
     
     func loadNextPage() {
         guard let nextPage = nextPage, let searchTerm = searchTerm else { return }
-        client.search(query: searchTerm, before: nextPage) { [weak self] resultType in
+        client.search(query: searchTerm, before: nextPage, containerWidth: view.bounds.width) { [weak self] resultType in
             self?.handle(resultType: resultType, append: true, animated: false)
         }
     }

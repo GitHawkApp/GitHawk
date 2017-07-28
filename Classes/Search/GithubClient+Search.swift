@@ -15,7 +15,7 @@ extension GithubClient {
         case success(String?, [SearchResult])
     }
     
-    func search(query: String, before: String? = nil, completion: @escaping (SearchResultType) -> ()) {
+    func search(query: String, before: String? = nil, containerWidth: CGFloat, completion: @escaping (SearchResultType) -> ()) {
         let query = SearchReposQuery(search: query, before: before)
         
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
@@ -29,7 +29,7 @@ extension GithubClient {
                 
                 result?.data?.search.nodes?.forEach {
                     guard let repo = $0?.asRepository else { return }
-                    builder.append(SearchResult(repo: repo))
+                    builder.append(SearchResult(repo: repo, containerWidth: containerWidth))
                 }
                 
                 DispatchQueue.main.async {

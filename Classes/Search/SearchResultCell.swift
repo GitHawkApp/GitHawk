@@ -12,7 +12,7 @@ import SnapKit
 final class SearchResultCell: UICollectionViewCell {
 
     static let labelInset = UIEdgeInsets(
-        top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
+        top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 3*Styles.Sizes.rowSpacing,
         left: Styles.Sizes.gutter,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
@@ -89,7 +89,7 @@ final class SearchResultCell: UICollectionViewCell {
     
     func configure(result: SearchResult) {
         titleLabel.text = result.name
-        descriptionLabel.text = result.description
+        descriptionLabel.attributedText = result.description?.attributedText
         
         if let primaryLanguage = result.primaryLanguage {
             languageLabel.isHidden = false
