@@ -174,7 +174,6 @@
 		297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */; };
 		297AE8791EC0D5C200B44A1F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85F1EC0D5C100B44A1F /* App.swift */; };
 		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
-		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
 		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
@@ -252,6 +251,7 @@
 		29FF85A31EE1CFF7007B8762 /* IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
+		5456E5181F2B98D60048C01C /* GithubAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5456E5171F2B98D60048C01C /* GithubAPI.m */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
 		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
@@ -430,7 +430,6 @@
 		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		297AE85F1EC0D5C100B44A1F /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
-		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingIndicator.swift"; sourceTree = "<group>"; };
@@ -516,6 +515,8 @@
 		29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelModel.swift; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
+		5456E5161F2B98D60048C01C /* GithubAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GithubAPI.h; sourceTree = "<group>"; };
+		5456E5171F2B98D60048C01C /* GithubAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GithubAPI.m; sourceTree = "<group>"; };
 		5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-DEBUG.xcconfig"; sourceTree = "<group>"; };
 		5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-RELEASE.xcconfig"; sourceTree = "<group>"; };
@@ -939,7 +940,6 @@
 				297AE8581EC0D5C100B44A1F /* Login */,
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
-				297AE8611EC0D5C100B44A1F /* Other */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
 				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
@@ -974,14 +974,6 @@
 				2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		297AE8611EC0D5C100B44A1F /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				297AE8631EC0D5C100B44A1F /* Secrets.swift */,
-			);
-			path = Other;
 			sourceTree = "<group>";
 		};
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
@@ -1177,9 +1169,11 @@
 		5481D6BF1F2B89A500785F94 /* CONTRIBUTORS */ = {
 			isa = PBXGroup;
 			children = (
+				5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */,
 				5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */,
 				5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */,
-				5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */,
+				5456E5161F2B98D60048C01C /* GithubAPI.h */,
+				5456E5171F2B98D60048C01C /* GithubAPI.m */,
 			);
 			name = CONTRIBUTORS;
 			sourceTree = "<group>";
@@ -1534,7 +1528,7 @@
 				292CD3D61F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
-				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				5456E5181F2B98D60048C01C /* GithubAPI.m in Sources */,
 				293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */,
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
