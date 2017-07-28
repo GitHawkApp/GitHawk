@@ -516,6 +516,9 @@
 		29FF85A21EE1CFF7007B8762 /* IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelModel.swift; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
+		5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
+		5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-DEBUG.xcconfig"; sourceTree = "<group>"; };
+		5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-RELEASE.xcconfig"; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -889,6 +892,7 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
+				5481D6BF1F2B89A500785F94 /* CONTRIBUTORS */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
@@ -1170,6 +1174,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5481D6BF1F2B89A500785F94 /* CONTRIBUTORS */ = {
+			isa = PBXGroup;
+			children = (
+				5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */,
+				5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */,
+				5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */,
+			);
+			name = CONTRIBUTORS;
+			sourceTree = "<group>";
+		};
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -1199,6 +1213,7 @@
 			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
 			buildPhases = (
 				A9F2E53A389930494E07E22A /* [CP] Check Pods Manifest.lock */,
+				5481D6BE1F2B896A00785F94 /* Generate XCConfig Files */,
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
@@ -1250,7 +1265,7 @@
 				TargetAttributes = {
 					297AE8331EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = V2CWYL9AN8;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -1354,7 +1369,7 @@
 		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1362,7 +1377,7 @@
 			name = "Generate Apollo GraphQL API";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
 		};
@@ -1378,8 +1393,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		5481D6BE1F2B896A00785F94 /* Generate XCConfig Files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate XCConfig Files";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "DEBUG_PATH=\"FREETIME-DEBUG.xcconfig\"\nRELEASE_PATH=\"FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"CLIENT_ID=\\\"YOUR_CLIENT_ID_HERE\\\"\" >> \"$1\"\n    echo \"CLIENT_SECRET=\\\"YOUR_CLIENT_SECRET_HERE\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = CLIENT_ID=\\$(CLIENT_ID) CLIENT_SECRET=\\$(CLIENT_SECRET)\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n  if [ ! -f \"$DEBUG_PATH\" ]; then\n    writeTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\n    exit 0\n  fi\nfi\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n  if [ ! -f \"$RELEASE_PATH\" ]; then\n    writeTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\n    exit 0\n  fi\nfi";
 		};
 		569FA08158547B98DF94DD42 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1408,7 +1437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E002D18DA7EA57D5E53A2BBE /* [CP] Copy Pods Resources */ = {
@@ -1807,12 +1836,12 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */;
+			baseConfigurationReference = 5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = V2CWYL9AN8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1833,12 +1862,12 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */;
+			baseConfigurationReference = 5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = V2CWYL9AN8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
