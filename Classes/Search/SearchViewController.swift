@@ -121,7 +121,7 @@ class SearchViewController: UIViewController,
         if object === noResultsKey { return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
         else if object === searchKey { return SearchBarSectionController(delegate: self) }
-        else if object is SearchResult { return SearchResultSectionController() }
+        else if object is SearchResult { return SearchResultSectionController(client: client) }
         
         fatalError("Could not find section controller for object")
     }

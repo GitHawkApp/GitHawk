@@ -94,7 +94,8 @@ FeedSelectionProviding {
 
     @objc private func onMarkAll(sender: UIBarButtonItem) {
         let vc = SearchViewController(client: client.githubClient)
-        showDetailViewController(vc, sender: nil)
+        let navController = UINavigationController(rootViewController: vc)
+        showDetailViewController(navController, sender: nil)
         return
         let alert = UIAlertController(
             title: NSLocalizedString("Notifications", comment: ""),

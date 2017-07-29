@@ -9,9 +9,10 @@
 import Foundation
 import IGListKit
 
-class SearchResult: ListDiffable {
+class SearchResult: ListDiffable, RepositoryLoadable {
     
     let id: String
+    let owner: String
     let name: String
     let description: NSAttributedStringSizing?
     let stars: Int
@@ -20,7 +21,8 @@ class SearchResult: ListDiffable {
     
     init(repo: SearchReposQuery.Data.Search.Node.AsRepository, containerWidth: CGFloat) {
         self.id = repo.id
-        self.name = repo.nameWithOwner
+        self.name = repo.name
+        self.owner = repo.owner.login
         self.stars = repo.stargazers.totalCount
         
         if let description = repo.description {

@@ -4,7 +4,10 @@ query SearchRepos($search: String!, $before: String) {
     nodes {
     	... on Repository {
         id
-        nameWithOwner
+        name
+        owner {
+          login
+        }
         description
         pushedAt
         primaryLanguage {
@@ -21,8 +24,6 @@ query SearchRepos($search: String!, $before: String) {
     pageInfo {
       endCursor
       hasNextPage
-      hasPreviousPage
-      startCursor
     }
 
     # Total Amount of Search Results

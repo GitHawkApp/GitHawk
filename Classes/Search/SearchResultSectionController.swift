@@ -10,6 +10,13 @@ import IGListKit
 
 final class SearchResultSectionController: ListGenericSectionController<SearchResult> {
 
+    private let client: GithubClient
+    
+    init(client: GithubClient) {
+        self.client = client
+        super.init()
+    }
+    
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
         let fallbackHeight = SearchResultCell.labelInset.top + SearchResultCell.labelInset.bottom
@@ -27,7 +34,10 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
     }
     
     override func didSelectItem(at index: Int) {
-        print("Load Repo")
+        guard let object = object else { return }
+        let repoViewController = RepositoryViewController(client: client, repo: object)
+        let navController = UINavigationController(rootViewController: repoViewController)
+        viewController?.showDetailViewController(navController, sender: nil)
     }
     
 }

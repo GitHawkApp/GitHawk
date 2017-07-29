@@ -1,7 +1,8 @@
-query RepoIssuesAndPullReuqests($owner: String!, $name: String!) {
+query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String) {
   repository(owner: $owner, name: $name) {
-    issues(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
+    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {
       nodes {
+        id
         title
         number
         createdAt
@@ -9,30 +10,30 @@ query RepoIssuesAndPullReuqests($owner: String!, $name: String!) {
         author {
           login
         }
-        labels(first: 5) {
-          nodes {
-            name
-            color
-          }
-        }
+      }
+
+      # Information Needed for Paging
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
-    pullRequests(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
-      nodes {
-        title
-        number
-        createdAt
-        state
-        author {
-          login
-        }
-        labels(first: 5) {
-          nodes {
-            name
-            color
-          }
-        }
-      }
-    }
+    # pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {
+    #   nodes {
+    #     title
+    #     number
+    #     createdAt
+    #     state
+    #     author {
+    #       login
+    #     }
+    #   }
+    #
+    #   # Information Needed for Paging
+    #   pageInfo {
+    #     hasNextPage
+    #     endCursor
+    #   }
+    # }
   }
 }

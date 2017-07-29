@@ -33,15 +33,6 @@ public enum IssueState: String {
 
 extension IssueState: JSONDecodable, JSONEncodable {}
 
-/// The possible states of a pull request.
-public enum PullRequestState: String {
-  case `open` = "OPEN" /// A pull request that is still open.
-  case closed = "CLOSED" /// A pull request that has been closed without being merged.
-  case merged = "MERGED" /// A pull request that has been closed by being merged.
-}
-
-extension PullRequestState: JSONDecodable, JSONEncodable {}
-
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation AddComment($subject_id: ID!, $body: String!) {" +
@@ -2728,15 +2719,16 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
-public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
+public final class RepoIssuesAndPullRequestsQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query RepoIssuesAndPullReuqests($owner: String!, $name: String!) {" +
+    "query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    issues(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
+    "    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
+    "        id" +
     "        title" +
     "        number" +
     "        createdAt" +
@@ -2744,37 +2736,12 @@ public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
     "        author {" +
     "          __typename" +
     "          login" +
-    "        }" +
-    "        labels(first: 5) {" +
-    "          __typename" +
-    "          nodes {" +
-    "            __typename" +
-    "            name" +
-    "            color" +
-    "          }" +
     "        }" +
     "      }" +
-    "    }" +
-    "    pullRequests(first: 25, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
-    "      __typename" +
-    "      nodes {" +
+    "      pageInfo {" +
     "        __typename" +
-    "        title" +
-    "        number" +
-    "        createdAt" +
-    "        state" +
-    "        author {" +
-    "          __typename" +
-    "          login" +
-    "        }" +
-    "        labels(first: 5) {" +
-    "          __typename" +
-    "          nodes {" +
-    "            __typename" +
-    "            name" +
-    "            color" +
-    "          }" +
-    "        }" +
+    "        hasNextPage" +
+    "        endCursor" +
     "      }" +
     "    }" +
     "  }" +
@@ -2782,14 +2749,16 @@ public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
 
   public let owner: String
   public let name: String
+  public let before: String?
 
-  public init(owner: String, name: String) {
+  public init(owner: String, name: String, before: String? = nil) {
     self.owner = owner
     self.name = name
+    self.before = before
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name]
+    return ["owner": owner, "name": name, "before": before]
   }
 
   public struct Data: GraphQLMappable {
@@ -2804,27 +2773,28 @@ public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
       public let __typename: String
       /// A list of issues that have been opened in the repository.
       public let issues: Issue
-      /// A list of pull requests that have been opened in the repository.
-      public let pullRequests: PullRequest
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
-        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "before": reader.variables["before"]]))
       }
 
       public struct Issue: GraphQLMappable {
         public let __typename: String
         /// A list of nodes.
         public let nodes: [Node?]?
+        /// Information to aid in pagination.
+        public let pageInfo: PageInfo
 
         public init(reader: GraphQLResultReader) throws {
           __typename = try reader.value(for: Field(responseName: "__typename"))
           nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+          pageInfo = try reader.value(for: Field(responseName: "pageInfo"))
         }
 
         public struct Node: GraphQLMappable {
           public let __typename: String
+          public let id: GraphQLID
           /// Identifies the issue title.
           public let title: String
           /// Identifies the issue number.
@@ -2835,17 +2805,15 @@ public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
           public let state: IssueState
           /// The actor who authored the comment.
           public let author: Author?
-          /// A list of labels associated with the object.
-          public let labels: Label?
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
+            id = try reader.value(for: Field(responseName: "id"))
             title = try reader.value(for: Field(responseName: "title"))
             number = try reader.value(for: Field(responseName: "number"))
             createdAt = try reader.value(for: Field(responseName: "createdAt"))
             state = try reader.value(for: Field(responseName: "state"))
             author = try reader.optionalValue(for: Field(responseName: "author"))
-            labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 5]))
           }
 
           public struct Author: GraphQLMappable {
@@ -2858,103 +2826,19 @@ public final class RepoIssuesAndPullReuqestsQuery: GraphQLQuery {
               login = try reader.value(for: Field(responseName: "login"))
             }
           }
-
-          public struct Label: GraphQLMappable {
-            public let __typename: String
-            /// A list of nodes.
-            public let nodes: [Node?]?
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
-            }
-
-            public struct Node: GraphQLMappable {
-              public let __typename: String
-              /// Identifies the label name.
-              public let name: String
-              /// Identifies the label color.
-              public let color: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                name = try reader.value(for: Field(responseName: "name"))
-                color = try reader.value(for: Field(responseName: "color"))
-              }
-            }
-          }
-        }
-      }
-
-      public struct PullRequest: GraphQLMappable {
-        public let __typename: String
-        /// A list of nodes.
-        public let nodes: [Node?]?
-
-        public init(reader: GraphQLResultReader) throws {
-          __typename = try reader.value(for: Field(responseName: "__typename"))
-          nodes = try reader.optionalList(for: Field(responseName: "nodes"))
         }
 
-        public struct Node: GraphQLMappable {
+        public struct PageInfo: GraphQLMappable {
           public let __typename: String
-          /// Identifies the pull request title.
-          public let title: String
-          /// Identifies the pull request number.
-          public let number: Int
-          /// Identifies the date and time when the object was created.
-          public let createdAt: String
-          /// Identifies the state of the pull request.
-          public let state: PullRequestState
-          /// The actor who authored the comment.
-          public let author: Author?
-          /// A list of labels associated with the object.
-          public let labels: Label?
+          /// When paginating forwards, are there more items?
+          public let hasNextPage: Bool
+          /// When paginating forwards, the cursor to continue.
+          public let endCursor: String?
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            title = try reader.value(for: Field(responseName: "title"))
-            number = try reader.value(for: Field(responseName: "number"))
-            createdAt = try reader.value(for: Field(responseName: "createdAt"))
-            state = try reader.value(for: Field(responseName: "state"))
-            author = try reader.optionalValue(for: Field(responseName: "author"))
-            labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 5]))
-          }
-
-          public struct Author: GraphQLMappable {
-            public let __typename: String
-            /// The username of the actor.
-            public let login: String
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              login = try reader.value(for: Field(responseName: "login"))
-            }
-          }
-
-          public struct Label: GraphQLMappable {
-            public let __typename: String
-            /// A list of nodes.
-            public let nodes: [Node?]?
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              nodes = try reader.optionalList(for: Field(responseName: "nodes"))
-            }
-
-            public struct Node: GraphQLMappable {
-              public let __typename: String
-              /// Identifies the label name.
-              public let name: String
-              /// Identifies the label color.
-              public let color: String
-
-              public init(reader: GraphQLResultReader) throws {
-                __typename = try reader.value(for: Field(responseName: "__typename"))
-                name = try reader.value(for: Field(responseName: "name"))
-                color = try reader.value(for: Field(responseName: "color"))
-              }
-            }
+            hasNextPage = try reader.value(for: Field(responseName: "hasNextPage"))
+            endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
           }
         }
       }
@@ -2972,7 +2856,11 @@ public final class SearchReposQuery: GraphQLQuery {
     "      ... on Repository {" +
     "        __typename" +
     "        id" +
-    "        nameWithOwner" +
+    "        name" +
+    "        owner {" +
+    "          __typename" +
+    "          login" +
+    "        }" +
     "        description" +
     "        pushedAt" +
     "        primaryLanguage {" +
@@ -2990,8 +2878,6 @@ public final class SearchReposQuery: GraphQLQuery {
     "      __typename" +
     "      endCursor" +
     "      hasNextPage" +
-    "      hasPreviousPage" +
-    "      startCursor" +
     "    }" +
     "    repositoryCount" +
     "  }" +
@@ -3049,8 +2935,10 @@ public final class SearchReposQuery: GraphQLQuery {
 
           public let __typename: String
           public let id: GraphQLID
-          /// The repository's name with owner.
-          public let nameWithOwner: String
+          /// The name of the repository.
+          public let name: String
+          /// The User owner of the repository.
+          public let owner: Owner
           /// The description of the repository.
           public let description: String?
           /// Identifies when the repository was last pushed to.
@@ -3063,11 +2951,23 @@ public final class SearchReposQuery: GraphQLQuery {
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             id = try reader.value(for: Field(responseName: "id"))
-            nameWithOwner = try reader.value(for: Field(responseName: "nameWithOwner"))
+            name = try reader.value(for: Field(responseName: "name"))
+            owner = try reader.value(for: Field(responseName: "owner"))
             description = try reader.optionalValue(for: Field(responseName: "description"))
             pushedAt = try reader.optionalValue(for: Field(responseName: "pushedAt"))
             primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
             stargazers = try reader.value(for: Field(responseName: "stargazers"))
+          }
+
+          public struct Owner: GraphQLMappable {
+            public let __typename: String
+            /// The username used to login.
+            public let login: String
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              login = try reader.value(for: Field(responseName: "login"))
+            }
           }
 
           public struct PrimaryLanguage: GraphQLMappable {
@@ -3103,17 +3003,11 @@ public final class SearchReposQuery: GraphQLQuery {
         public let endCursor: String?
         /// When paginating forwards, are there more items?
         public let hasNextPage: Bool
-        /// When paginating backwards, are there more items?
-        public let hasPreviousPage: Bool
-        /// When paginating backwards, the cursor to continue.
-        public let startCursor: String?
 
         public init(reader: GraphQLResultReader) throws {
           __typename = try reader.value(for: Field(responseName: "__typename"))
           endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
           hasNextPage = try reader.value(for: Field(responseName: "hasNextPage"))
-          hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
-          startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
         }
       }
     }

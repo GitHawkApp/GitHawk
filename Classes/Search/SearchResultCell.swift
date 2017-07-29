@@ -100,7 +100,7 @@ final class SearchResultCell: UICollectionViewCell {
     }
     
     func configure(result: SearchResult) {
-        titleLabel.text = result.name
+        titleLabel.text = result.nameWithOwner
         descriptionLabel.attributedText = result.description?.attributedText
         
         if let primaryLanguage = result.primaryLanguage {
