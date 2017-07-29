@@ -11,7 +11,7 @@ import IGListKit
 class IssueSummaryType: ListDiffable {
     
     let id: String
-    let title: String
+    let title: NSAttributedStringSizing
     let number: Int
     let createdAt: Date?
     let state: IssueState
@@ -19,7 +19,18 @@ class IssueSummaryType: ListDiffable {
     
     init(issue: RepoIssuesAndPullRequestsQuery.Data.Repository.Issue.Node, containerWidth: CGFloat) {
         self.id = issue.id
-        self.title = issue.title
+        
+        let attributes = [
+            NSFontAttributeName: Styles.Fonts.title,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        ]
+        
+        self.title = NSAttributedStringSizing(
+            containerWidth: containerWidth,
+            attributedText: NSAttributedString(string: issue.title, attributes: attributes),
+            inset: RepositorySummaryCell.labelInset
+        )
+        
         self.number = issue.number
         self.createdAt = GithubAPIDateFormatter().date(from: issue.createdAt)
         self.state = issue.state
@@ -33,6 +44,9 @@ class IssueSummaryType: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueSummaryType else { return false }
-        return id == object.id && title == object.title && number == object.number
+        return id == object.id &&
+               title == object.title &&
+               number == object.number &&
+               state.rawValue == object.state.rawValue
     }
 }

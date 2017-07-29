@@ -12,9 +12,9 @@ import SnapKit
 final class RepositorySummaryCell: UICollectionViewCell {
     
     static let labelInset = UIEdgeInsets(
-        top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 3*Styles.Sizes.rowSpacing,
+        top: Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Sizes.rowSpacing,
+        bottom: Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
     
@@ -29,13 +29,12 @@ final class RepositorySummaryCell: UICollectionViewCell {
         
         contentView.backgroundColor = .white
         
-        titleLabel.numberOfLines = 1
-        titleLabel.font = Styles.Fonts.title
-        titleLabel.textColor = Styles.Colors.Gray.dark.color
+        titleLabel.numberOfLines = 0
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(SearchResultCell.labelInset.left)
+            make.left.equalTo(RepositorySummaryCell.labelInset.left)
+            make.right.equalTo(RepositorySummaryCell.labelInset.right)
         }
         
         reasonImageView.backgroundColor = .clear
@@ -44,8 +43,8 @@ final class RepositorySummaryCell: UICollectionViewCell {
         contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
-            make.top.equalTo(RepositorySummaryCell.labelInset.top)
-            make.left.equalTo(Styles.Sizes.rowSpacing)
+            make.centerY.equalToSuperview()
+            make.left.equalTo(Styles.Sizes.columnSpacing)
         }
         
         secondaryLabel.numberOfLines = 1
@@ -55,9 +54,10 @@ final class RepositorySummaryCell: UICollectionViewCell {
         secondaryLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
             make.left.equalTo(RepositorySummaryCell.labelInset.left)
+            make.right.equalTo(RepositorySummaryCell.labelInset.right)
         }
                 
-        addBorder(.bottom, left: SearchResultCell.labelInset.left)
+        addBorder(.bottom, left: RepositorySummaryCell.labelInset.left)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,9 +65,10 @@ final class RepositorySummaryCell: UICollectionViewCell {
     }
     
     func configure(result: IssueSummaryType) {
-        titleLabel.text = result.title
+        titleLabel.attributedText = result.title.attributedText
         secondaryLabel.text = "#\(result.number) opened \(result.createdAt?.agoString ?? "") by \(result.author ?? Strings.unknown)"
-        reasonImageView.image = NotificationType.issue.icon
+        reasonImageView.image = NotificationType.issue.icon?.withRenderingMode(.alwaysTemplate)
+        reasonImageView.tintColor = result.state == .open ? "#28a745".color : "#cb2431".color
     }
     
     override var accessibilityLabel: String? {
