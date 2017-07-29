@@ -20,6 +20,38 @@ protocol IssueSummaryType {
     
 }
 
+extension IssueSummaryType {
+    var stateIcon: UIImage? {
+        var name: String?
+        
+        switch rawState {
+        case IssueState.open.rawValue where isIssue: name = "issue-opened"
+        case IssueState.closed.rawValue where isIssue: name = "issue-closed"
+        case PullRequestState.open.rawValue where !isIssue: name = "git-pull-request"
+        case PullRequestState.closed.rawValue where !isIssue: name = "git-pull-request"
+        case PullRequestState.merged.rawValue where !isIssue: name = "git-merge"
+        default: return nil
+        }
+        
+        return UIImage(named: name ?? "")?.withRenderingMode(.alwaysTemplate)
+    }
+    
+    var stateColor: UIColor? {
+        var hex: String?
+        
+        switch rawState {
+        case IssueState.open.rawValue where isIssue: hex = "#28a745"
+        case IssueState.closed.rawValue where isIssue: hex = "#cb2431"
+        case PullRequestState.open.rawValue where !isIssue: hex = "#28a745"
+        case PullRequestState.closed.rawValue where !isIssue: hex = "#cb2431"
+        case PullRequestState.merged.rawValue where !isIssue: hex = "#6f42c1"
+        default: return nil
+        }
+        
+        return hex?.color
+    }
+}
+
 class IssueSummaryModel: ListDiffable {
     let info: IssueSummaryType
     
