@@ -65,10 +65,26 @@ final class RepositorySummaryCell: UICollectionViewCell {
     }
     
     func configure(result: IssueSummaryType) {
-        titleLabel.attributedText = result.title.attributedText
-        secondaryLabel.text = "#\(result.number) opened \(result.createdAt?.agoString ?? "") by \(result.author ?? Strings.unknown)"
-        reasonImageView.image = NotificationType.issue.icon?.withRenderingMode(.alwaysTemplate)
-        reasonImageView.tintColor = result.state == .open ? "#28a745".color : "#cb2431".color
+        titleLabel.attributedText = result.attributedTitle.attributedText
+        secondaryLabel.text = "#\(result.number) opened \(result.createdAtDate?.agoString ?? "") by \(result.authorName ?? Strings.unknown)"
+        
+        // This all needs to be tidied up
+        if result.isIssue {
+            reasonImageView.image = NotificationType.issue.icon?.withRenderingMode(.alwaysTemplate)
+            reasonImageView.tintColor = result.rawState == IssueState.open.rawValue ? "#28a745".color : "#cb2431".color
+        } else {
+            reasonImageView.image = NotificationType.pullRequest.icon?.withRenderingMode(.alwaysTemplate)
+            switch result.rawState {
+            case PullRequestState.open.rawValue:
+                reasonImageView.tintColor = "#28a745".color
+            case PullRequestState.closed.rawValue:
+                reasonImageView.tintColor = "#cb2431".color
+            case PullRequestState.merged.rawValue:
+                reasonImageView.tintColor = "#6f42c1".color
+            default:
+                break
+            }
+        }
     }
     
     override var accessibilityLabel: String? {

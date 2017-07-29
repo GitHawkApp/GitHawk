@@ -1,6 +1,6 @@
-query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String) {
+query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String, $includeIssues: Boolean!, $includePullRequests: Boolean!) {
   repository(owner: $owner, name: $name) {
-    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {
+    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) @include(if: $includeIssues) {
       nodes {
         id
         title
@@ -18,22 +18,23 @@ query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String
         endCursor
       }
     }
-    # pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {
-    #   nodes {
-    #     title
-    #     number
-    #     createdAt
-    #     state
-    #     author {
-    #       login
-    #     }
-    #   }
-    #
-    #   # Information Needed for Paging
-    #   pageInfo {
-    #     hasNextPage
-    #     endCursor
-    #   }
-    # }
+    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) @include(if: $includePullRequests) {
+      nodes {
+        id
+        title
+        number
+        createdAt
+        state
+        author {
+          login
+        }
+      }
+
+      # Information Needed for Paging
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
   }
 }

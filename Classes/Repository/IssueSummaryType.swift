@@ -8,45 +8,35 @@
 
 import IGListKit
 
-class IssueSummaryType: ListDiffable {
+protocol IssueSummaryType {
     
-    let id: String
-    let title: NSAttributedStringSizing
-    let number: Int
-    let createdAt: Date?
-    let state: IssueState
-    let author: String?
+    var id: String { get }
+    var attributedTitle: NSAttributedStringSizing { get }
+    var number: Int { get }
+    var createdAtDate: Date? { get }
+    var rawState: String { get }
+    var authorName: String? { get }
+    var isIssue: Bool { get }
     
-    init(issue: RepoIssuesAndPullRequestsQuery.Data.Repository.Issue.Node, containerWidth: CGFloat) {
-        self.id = issue.id
-        
-        let attributes = [
-            NSFontAttributeName: Styles.Fonts.title,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
-        ]
-        
-        self.title = NSAttributedStringSizing(
-            containerWidth: containerWidth,
-            attributedText: NSAttributedString(string: issue.title, attributes: attributes),
-            inset: RepositorySummaryCell.labelInset
-        )
-        
-        self.number = issue.number
-        self.createdAt = GithubAPIDateFormatter().date(from: issue.createdAt)
-        self.state = issue.state
-        self.author = issue.author?.login
+}
+
+class IssueSummaryModel: ListDiffable {
+    let info: IssueSummaryType
+    
+    init(info: IssueSummaryType) {
+        self.info = info
     }
     
     func diffIdentifier() -> NSObjectProtocol {
-        return id as NSObjectProtocol
+        return info.id as NSObjectProtocol
     }
     
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueSummaryType else { return false }
-        return id == object.id &&
-               title == object.title &&
-               number == object.number &&
-               state.rawValue == object.state.rawValue
+        guard let object = object as? IssueSummaryModel else { return false }
+        return info.id == object.info.id &&
+               info.attributedTitle == object.info.attributedTitle &&
+               info.number == object.info.number &&
+               info.rawState == object.info.rawState
     }
 }

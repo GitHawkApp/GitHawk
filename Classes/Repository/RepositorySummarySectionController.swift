@@ -8,7 +8,7 @@
 
 import IGListKit
 
-final class RepositorySummarySectionController: ListGenericSectionController<IssueSummaryType> {
+final class RepositorySummarySectionController: ListGenericSectionController<IssueSummaryModel> {
     
     private let client: GithubClient
     private let repo: RepositoryLoadable
@@ -21,12 +21,12 @@ final class RepositorySummarySectionController: ListGenericSectionController<Iss
     
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: object?.title.textViewSize(width).height ?? 0)
+        return CGSize(width: width, height: object?.info.attributedTitle.textViewSize(width).height ?? 0)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: RepositorySummaryCell.self, for: self, at: index) as? RepositorySummaryCell,
-            let object = object else {
+            let object = object?.info else {
                 fatalError("Missing context, object, or cell is wrong type")
         }
         
@@ -35,7 +35,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Iss
     }
     
     override func didSelectItem(at index: Int) {
-        guard let object = object else { return }
+        guard let object = object?.info else { return }
         let issueViewController = IssuesViewController(client: client, owner: repo.owner, repo: repo.name, number: object.number)
         let navController = UINavigationController(rootViewController: issueViewController)
         viewController?.showDetailViewController(navController, sender: nil)

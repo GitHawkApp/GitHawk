@@ -21,13 +21,32 @@ extension RepositoryLoadable {
 
 extension GithubClient {
     
-    enum RepoLoadResultType {
-        case error
-        case success(String?, [IssueSummaryType])
+    struct RepositoryLoadSuccessPayload {
+        let issues: [IssueSummaryModel]?
+        let issuesNextPage: String?
+        let pullRequests: [IssueSummaryModel]?
+        let pullRequestsNextPage: String?
     }
     
-    func load(repo: RepositoryLoadable, before: String? = nil, containerWidth: CGFloat, completion: @escaping (RepoLoadResultType) -> ()) {
-        let query = RepoIssuesAndPullRequestsQuery(owner: repo.owner, name: repo.name, before: before)
+    enum RepoLoadResultType {
+        case error
+        case success(RepositoryLoadSuccessPayload)
+    }
+    
+    func load(repo: RepositoryLoadable,
+              before: String? = nil,
+              includeIssues: Bool = true,
+              includePullRequests: Bool = true,
+              containerWidth: CGFloat,
+              completion: @escaping (RepoLoadResultType) -> ()) {
+        
+        let query = RepoIssuesAndPullRequestsQuery(
+            owner: repo.owner,
+            name: repo.name,
+            before: before,
+            includeIssues: includeIssues,
+            includePullRequests: includePullRequests
+        )
         
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             guard error == nil, result?.errors == nil else {
@@ -36,23 +55,39 @@ extension GithubClient {
             }
             
             DispatchQueue.global().async {
-                var builder = [IssueSummaryType]()
-                
-                result?.data?.repository?.issues.nodes?.forEach {
-                    guard let issue = $0 else { return }
-                    builder.append(IssueSummaryType(issue: issue, containerWidth: containerWidth))
+                let issues: [IssueSummaryModel]? = result?.data?.repository?.issues?.nodes?.flatMap {
+                    guard let issue = $0 else { return nil }
+                    issue.attributedTitle.computeSize(containerWidth)
+                    return IssueSummaryModel(info: issue)
                 }
                 
-                DispatchQueue.main.async {
-                    let nextPage: String? = {
-                        guard let pageInfo = result?.data?.repository?.issues.pageInfo, pageInfo.hasNextPage else {
-                            return nil
-                        }
-                        
-                        return pageInfo.endCursor
-                    }()
+                let pullRequests: [IssueSummaryModel]? = result?.data?.repository?.pullRequests?.nodes?.flatMap {
+                    guard let pr = $0 else { return nil }
+                    pr.attributedTitle.computeSize(containerWidth)
+                    return IssueSummaryModel(info: pr)
+                }
+                
+                let issuesNextPage: String? = {
+                    guard let pageInfo = result?.data?.repository?.issues?.pageInfo, pageInfo.hasNextPage else {
+                        return nil
+                    }
                     
-                    completion(.success(nextPage, builder))
+                    return pageInfo.endCursor
+                }()
+                
+                let pullRequestNextPage: String? = {
+                    guard let pageInfo = result?.data?.repository?.pullRequests?.pageInfo, pageInfo.hasNextPage else {
+                        return nil
+                    }
+                    
+                    return pageInfo.endCursor
+                }()
+                
+                let payload = RepositoryLoadSuccessPayload(issues: issues, issuesNextPage: issuesNextPage,
+                                                           pullRequests: pullRequests, pullRequestsNextPage: pullRequestNextPage)
+                
+                DispatchQueue.main.async {
+                    completion(.success(payload))
                 }
             }
         }
