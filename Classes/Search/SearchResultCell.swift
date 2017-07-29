@@ -21,6 +21,7 @@ final class SearchResultCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let languageLabel = UILabel()
+    private let languageColorView = UIView()
     private let dateLabel = ShowMoreDetailsLabel()
     private let starsLabel = UILabel()
     
@@ -48,6 +49,17 @@ final class SearchResultCell: UICollectionViewCell {
         languageLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
+            make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
+        }
+        
+        let languageColorWidth: CGFloat = 8
+        languageColorView.layer.cornerRadius = languageColorWidth / 2
+        contentView.addSubview(languageColorView)
+        languageColorView.snp.makeConstraints { make in
+            make.right.equalTo(languageLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
+            make.centerY.equalTo(languageLabel)
+            make.height.equalTo(languageColorView.snp.width)
+            make.height.equalTo(languageColorWidth)
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
         
@@ -93,23 +105,17 @@ final class SearchResultCell: UICollectionViewCell {
         
         if let primaryLanguage = result.primaryLanguage {
             languageLabel.isHidden = false
-            
-            let languageName = NSMutableAttributedString(string: primaryLanguage.name, attributes: [
-                NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
-            ])
+            languageLabel.text = primaryLanguage.name
             
             if let color = result.primaryLanguage?.color {
-                let languageColor = NSAttributedString(string: Strings.bullet + " ", attributes: [
-                    NSFontAttributeName: Styles.Fonts.headline.withSize(Styles.Sizes.Text.h1),
-                    NSForegroundColorAttributeName: color
-                ])
-                
-                languageName.insert(languageColor, at: 0)
+                languageColorView.isHidden = false
+                languageColorView.backgroundColor = color
+            } else {
+                languageColorView.isHidden = true
             }
-            
-            languageLabel.attributedText = languageName
         } else {
             languageLabel.isHidden = true
+            languageColorView.isHidden = true
         }
         
         if let pushedAt = result.pushedAt {
