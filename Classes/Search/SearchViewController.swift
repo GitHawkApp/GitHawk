@@ -117,7 +117,8 @@ class SearchViewController: UIViewController,
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError("Object does not conform to ListDiffable") }
         
-        if object === noResultsKey { fatalError("Unimplemented") }
+        let controlHeight = Styles.Sizes.tableCellHeight
+        if object === noResultsKey { return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
         else if object === searchKey { return SearchBarSectionController(delegate: self) }
         else if object is SearchResult { return SearchResultSectionController() }

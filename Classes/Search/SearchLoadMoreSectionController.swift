@@ -27,7 +27,7 @@ final class SearchLoadMoreSectionController: ListSectionController {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: SearchLoadMoreCell.self, for: self, at: index) else {
-            fatalError("Missing context, object, or cell is wrong type")
+            fatalError("Missing context, or cell is wrong type")
         }
         
         return cell
