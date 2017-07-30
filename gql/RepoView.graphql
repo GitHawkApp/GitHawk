@@ -1,6 +1,6 @@
-query RepoIssues($owner: String!, $name: String!, $before: String) {
+query RepoIssues($owner: String!, $name: String!, $after: String) {
   repository(owner: $owner, name: $name) {
-    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {
+    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {
       nodes {
         id
         title
@@ -21,9 +21,9 @@ query RepoIssues($owner: String!, $name: String!, $before: String) {
   }
 }
 
-query RepoPullRequests($owner: String!, $name: String!, $before: String) {
+query RepoPullRequests($owner: String!, $name: String!, $after: String) {
   repository(owner: $owner, name: $name) {
-    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], before: $before) {
+    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {
       nodes {
         id
         title

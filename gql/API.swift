@@ -2730,10 +2730,10 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
 public final class RepoIssuesQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query RepoIssues($owner: String!, $name: String!, $before: String) {" +
+    "query RepoIssues($owner: String!, $name: String!, $after: String) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {" +
+    "    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2758,16 +2758,16 @@ public final class RepoIssuesQuery: GraphQLQuery {
 
   public let owner: String
   public let name: String
-  public let before: String?
+  public let after: String?
 
-  public init(owner: String, name: String, before: String? = nil) {
+  public init(owner: String, name: String, after: String? = nil) {
     self.owner = owner
     self.name = name
-    self.before = before
+    self.after = after
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name, "before": before]
+    return ["owner": owner, "name": name, "after": after]
   }
 
   public struct Data: GraphQLMappable {
@@ -2785,7 +2785,7 @@ public final class RepoIssuesQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "before": reader.variables["before"]]))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "after": reader.variables["after"]]))
       }
 
       public struct Issue: GraphQLMappable {
@@ -2857,10 +2857,10 @@ public final class RepoIssuesQuery: GraphQLQuery {
 
 public final class RepoPullRequestsQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query RepoPullRequests($owner: String!, $name: String!, $before: String) {" +
+    "query RepoPullRequests($owner: String!, $name: String!, $after: String) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], before: $before) {" +
+    "    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2885,16 +2885,16 @@ public final class RepoPullRequestsQuery: GraphQLQuery {
 
   public let owner: String
   public let name: String
-  public let before: String?
+  public let after: String?
 
-  public init(owner: String, name: String, before: String? = nil) {
+  public init(owner: String, name: String, after: String? = nil) {
     self.owner = owner
     self.name = name
-    self.before = before
+    self.after = after
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name, "before": before]
+    return ["owner": owner, "name": name, "after": after]
   }
 
   public struct Data: GraphQLMappable {
@@ -2912,7 +2912,7 @@ public final class RepoPullRequestsQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "before": reader.variables["before"]]))
+        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "after": reader.variables["after"]]))
       }
 
       public struct PullRequest: GraphQLMappable {

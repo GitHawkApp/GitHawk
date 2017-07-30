@@ -20,7 +20,7 @@ extension RepositoryLoadable {
 }
 
 protocol RepositoryQuery {
-    init(owner: String, name: String, before: String?)
+    init(owner: String, name: String, after: String?)
     func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]?
     func nextPageToken(from data: GraphQLMappable) -> String?
 }
@@ -79,10 +79,10 @@ final class RepositoryClient {
     
     private func load<T: GraphQLQuery>(queryType: T.Type,
                                        repo: RepositoryLoadable,
-                                       before: String? = nil,
+                                       after: String? = nil,
                                        containerWidth: CGFloat,
                                        completion: @escaping (RepoLoadResultType) -> ()) where T: RepositoryQuery {
-        let query = queryType.init(owner: repo.owner, name: repo.name, before: before)
+        let query = queryType.init(owner: repo.owner, name: repo.name, after: after)
         
         githubClient.apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             guard error == nil, result?.errors == nil, let data = result?.data else {
@@ -101,7 +101,7 @@ final class RepositoryClient {
     }
     
     func loadMoreIssues(containerWidth: CGFloat, completion: @escaping () -> ()) {
-        load(queryType: RepoIssuesQuery.self, repo: repo, before: issuesNextPage, containerWidth: containerWidth) { result in
+        load(queryType: RepoIssuesQuery.self, repo: repo, after: issuesNextPage, containerWidth: containerWidth) { result in
             switch result {
             case .error:
                 completion()
@@ -117,7 +117,7 @@ final class RepositoryClient {
     }
     
     func loadMorePullRequests(containerWidth: CGFloat, completion: @escaping () -> ()) {
-        load(queryType: RepoPullRequestsQuery.self, repo: repo, before: pullRequestsNextPage, containerWidth: containerWidth) { result in
+        load(queryType: RepoPullRequestsQuery.self, repo: repo, after: pullRequestsNextPage, containerWidth: containerWidth) { result in
             switch result {
             case .error:
                 completion()
