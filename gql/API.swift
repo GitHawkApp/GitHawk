@@ -2993,6 +2993,7 @@ public final class SearchReposQuery: GraphQLQuery {
     "        __typename" +
     "        id" +
     "        name" +
+    "        hasIssuesEnabled" +
     "        owner {" +
     "          __typename" +
     "          login" +
@@ -3073,6 +3074,8 @@ public final class SearchReposQuery: GraphQLQuery {
           public let id: GraphQLID
           /// The name of the repository.
           public let name: String
+          /// Indicates if the repository has issues feature enabled.
+          public let hasIssuesEnabled: Bool
           /// The User owner of the repository.
           public let owner: Owner
           /// The description of the repository.
@@ -3088,6 +3091,7 @@ public final class SearchReposQuery: GraphQLQuery {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             id = try reader.value(for: Field(responseName: "id"))
             name = try reader.value(for: Field(responseName: "name"))
+            hasIssuesEnabled = try reader.value(for: Field(responseName: "hasIssuesEnabled"))
             owner = try reader.value(for: Field(responseName: "owner"))
             description = try reader.optionalValue(for: Field(responseName: "description"))
             pushedAt = try reader.optionalValue(for: Field(responseName: "pushedAt"))

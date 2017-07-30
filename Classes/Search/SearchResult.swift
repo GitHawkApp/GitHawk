@@ -18,12 +18,14 @@ class SearchResult: ListDiffable, RepositoryLoadable {
     let stars: Int
     let pushedAt: Date?
     let primaryLanguage: GithubLanguage?
+    let hasIssuesEnabled: Bool
     
     init(repo: SearchReposQuery.Data.Search.Node.AsRepository, containerWidth: CGFloat) {
         self.id = repo.id
         self.name = repo.name
         self.owner = repo.owner.login
         self.stars = repo.stargazers.totalCount
+        self.hasIssuesEnabled = repo.hasIssuesEnabled
         
         if let description = repo.description {
             let attributes = [

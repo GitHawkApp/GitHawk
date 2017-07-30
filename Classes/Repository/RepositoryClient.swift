@@ -11,6 +11,7 @@ import Apollo
 protocol RepositoryLoadable {
     var owner: String { get }
     var name: String { get }
+    var hasIssuesEnabled: Bool { get }
 }
 
 extension RepositoryLoadable {
@@ -101,6 +102,8 @@ final class RepositoryClient {
     }
     
     func loadMoreIssues(containerWidth: CGFloat, completion: @escaping () -> ()) {
+        guard repo.hasIssuesEnabled else { return }
+        
         load(queryType: RepoIssuesQuery.self, repo: repo, after: issuesNextPage, containerWidth: containerWidth) { result in
             switch result {
             case .error:
@@ -133,13 +136,12 @@ final class RepositoryClient {
     }
     
     func load(containerWidth: CGFloat, completion: @escaping () -> ()) {
-        var responseCount = 0
-        
+        var expectedResponseCount = repo.hasIssuesEnabled ? 2 : 1
+    
         let checkResponses = {
-            responseCount += 1
+            expectedResponseCount -= 1
             
-            // Wait until we've had two responses (issues & pull requests)
-            guard responseCount == 2 else { return }
+            guard expectedResponseCount == 0 else { return }
             completion()
         }
         

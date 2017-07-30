@@ -5,6 +5,7 @@ query SearchRepos($search: String!, $before: String) {
     	... on Repository {
         id
         name
+        hasIssuesEnabled
         owner {
           login
         }

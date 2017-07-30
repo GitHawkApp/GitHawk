@@ -1212,16 +1212,16 @@
 			isa = PBXGroup;
 			children = (
 				986B87181F2B875800AAB55C /* GithubClient+Search.swift */,
-				986B871A1F2B87DD00AAB55C /* SearchResult.swift */,
-				986B871C1F2B8FCD00AAB55C /* SearchViewController.swift */,
-				986B871E1F2B96E300AAB55C /* SearchLoadMoreSectionController.swift */,
-				986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */,
-				986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */,
-				986B87241F2B990A00AAB55C /* SearchResultCell.swift */,
-				986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */,
 				986B87281F2BB68300AAB55C /* SearchBarCell.swift */,
-				986B872A1F2C842000AAB55C /* SearchNoResultsSectionController.swift */,
+				986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */,
+				986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */,
+				986B871E1F2B96E300AAB55C /* SearchLoadMoreSectionController.swift */,
 				986B872C1F2C846700AAB55C /* SearchNoResultsCell.swift */,
+				986B872A1F2C842000AAB55C /* SearchNoResultsSectionController.swift */,
+				986B871A1F2B87DD00AAB55C /* SearchResult.swift */,
+				986B87241F2B990A00AAB55C /* SearchResultCell.swift */,
+				986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */,
+				986B871C1F2B8FCD00AAB55C /* SearchViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1229,13 +1229,13 @@
 		986B872E1F2CA8E800AAB55C /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */,
-				986B87331F2CAE9800AAB55C /* IssueSummaryType.swift */,
-				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
-				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
-				986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */,
 				986B873B1F2CEB1500AAB55C /* GQL+IssueSummaryType.swift */,
+				986B87331F2CAE9800AAB55C /* IssueSummaryType.swift */,
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
+				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
+				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
+				986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */,
+				986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";

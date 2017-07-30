@@ -17,11 +17,12 @@ class RepositoryViewController: UIViewController,
 
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private let selection = SegmentedControlModel.forRepository()
+    private let selection: SegmentedControlModel
     private let loadMore = "loadMore" as ListDiffable
     
     init(client: GithubClient, repo: RepositoryLoadable) {
         self.client = RepositoryClient(githubClient: client, repo: repo)
+        self.selection = SegmentedControlModel.forRepository(repo)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -79,7 +80,11 @@ class RepositoryViewController: UIViewController,
     // MARK: ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var builder: [ListDiffable] = [selection]
+        var builder = [ListDiffable]()
+        
+        if client.repo.hasIssuesEnabled {
+            builder.append(selection)
+        }
         
         if client.issues.count > 0, selection.issuesSelected {
             builder += client.issues as [ListDiffable]
