@@ -34,7 +34,7 @@ final class RepositorySummaryCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(RepositorySummaryCell.labelInset.left)
-            make.right.equalTo(RepositorySummaryCell.labelInset.right)
+            make.right.equalTo(-RepositorySummaryCell.labelInset.right)
         }
         
         reasonImageView.backgroundColor = .clear
@@ -54,7 +54,7 @@ final class RepositorySummaryCell: UICollectionViewCell {
         secondaryLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
             make.left.equalTo(RepositorySummaryCell.labelInset.left)
-            make.right.equalTo(RepositorySummaryCell.labelInset.right)
+            make.right.equalTo(-RepositorySummaryCell.labelInset.right)
         }
                 
         addBorder(.bottom, left: RepositorySummaryCell.labelInset.left)

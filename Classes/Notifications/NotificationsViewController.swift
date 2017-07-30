@@ -68,9 +68,8 @@ FeedSelectionProviding {
     }
 
     private func updateMarkAllEnabled() {
-//        let allRead = !filteredNotifications.contains(where: { $0.read == false })
-//        navigationItem.rightBarButtonItem?.isEnabled = !allRead
-        navigationItem.rightBarButtonItem?.isEnabled = true
+        let allRead = !filteredNotifications.contains(where: { $0.read == false })
+        navigationItem.rightBarButtonItem?.isEnabled = !allRead
     }
 
     func setRightBarItemSpinning() {
@@ -93,10 +92,6 @@ FeedSelectionProviding {
     }
 
     @objc private func onMarkAll(sender: UIBarButtonItem) {
-        let vc = SearchViewController(client: client.githubClient)
-        let navController = UINavigationController(rootViewController: vc)
-        showDetailViewController(navController, sender: nil)
-        return
         let alert = UIAlertController(
             title: NSLocalizedString("Notifications", comment: ""),
             message: "Mark all notifications as read?",

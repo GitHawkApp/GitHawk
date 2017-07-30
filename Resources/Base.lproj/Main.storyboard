@@ -9,10 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Notifications-->
         <scene sceneID="5Pm-pl-ZQT">
             <objects>
                 <navigationController id="AKn-8S-pzd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="inbox" id="KQ4-AC-rKh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="crz-Uj-ajM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -28,7 +29,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V24-0g-MmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-670" y="537"/>
+            <point key="canvasLocation" x="268" y="536.58170914542734"/>
         </scene>
         <!--Split Placeholder View Controller-->
         <scene sceneID="mEq-vE-g6O">
@@ -47,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eQo-IY-kJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="166" y="537"/>
+            <point key="canvasLocation" x="1104.8" y="536.58170914542734"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Rg3-YC-Cr2">
@@ -98,7 +99,7 @@
             <objects>
                 <splitViewController id="EPN-4V-9Hj" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="AKn-8S-pzd" kind="relationship" relationship="masterViewController" id="aFN-Se-rpt"/>
+                        <segue destination="f5k-7G-hod" kind="relationship" relationship="masterViewController" id="aFN-Se-rpt"/>
                         <segue destination="D4E-Yy-PTN" kind="relationship" relationship="detailViewController" id="gsk-8r-3gM"/>
                     </connections>
                 </splitViewController>
@@ -106,8 +107,27 @@
             </objects>
             <point key="canvasLocation" x="-1622" y="865"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="gc3-YD-4oz">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="f5k-7G-hod" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="FXG-86-zX1">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.19215686269999999" green="0.3411764706" blue="0.63137254899999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="AKn-8S-pzd" kind="relationship" relationship="viewControllers" id="DSp-Eh-3Wn"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EGE-am-lhC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-671.20000000000005" y="536.58170914542734"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="inbox" width="16" height="16"/>
         <image name="splash-light" width="173" height="173"/>
     </resources>
     <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
