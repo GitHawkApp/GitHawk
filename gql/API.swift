@@ -2728,32 +2728,12 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
-public final class RepoIssuesAndPullRequestsQuery: GraphQLQuery {
+public final class RepoIssuesQuery: GraphQLQuery {
   public static let operationDefinition =
-    "query RepoIssuesAndPullRequests($owner: String!, $name: String!, $before: String, $includeIssues: Boolean!, $includePullRequests: Boolean!) {" +
+    "query RepoIssues($owner: String!, $name: String!, $before: String) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) @include(if: $includeIssues) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        id" +
-    "        title" +
-    "        number" +
-    "        createdAt" +
-    "        state" +
-    "        author {" +
-    "          __typename" +
-    "          login" +
-    "        }" +
-    "      }" +
-    "      pageInfo {" +
-    "        __typename" +
-    "        hasNextPage" +
-    "        endCursor" +
-    "      }" +
-    "    }" +
-    "    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) @include(if: $includePullRequests) {" +
+    "    issues(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], before: $before) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2779,19 +2759,15 @@ public final class RepoIssuesAndPullRequestsQuery: GraphQLQuery {
   public let owner: String
   public let name: String
   public let before: String?
-  public let includeIssues: Bool
-  public let includePullRequests: Bool
 
-  public init(owner: String, name: String, before: String? = nil, includeIssues: Bool, includePullRequests: Bool) {
+  public init(owner: String, name: String, before: String? = nil) {
     self.owner = owner
     self.name = name
     self.before = before
-    self.includeIssues = includeIssues
-    self.includePullRequests = includePullRequests
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name, "before": before, "includeIssues": includeIssues, "includePullRequests": includePullRequests]
+    return ["owner": owner, "name": name, "before": before]
   }
 
   public struct Data: GraphQLMappable {
@@ -2805,14 +2781,11 @@ public final class RepoIssuesAndPullRequestsQuery: GraphQLQuery {
     public struct Repository: GraphQLMappable {
       public let __typename: String
       /// A list of issues that have been opened in the repository.
-      public let issues: Issue?
-      /// A list of pull requests that have been opened in the repository.
-      public let pullRequests: PullRequest?
+      public let issues: Issue
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        issues = try reader.optionalValue(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "before": reader.variables["before"]]))
-        pullRequests = try reader.optionalValue(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"]]))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "before": reader.variables["before"]]))
       }
 
       public struct Issue: GraphQLMappable {
@@ -2877,6 +2850,69 @@ public final class RepoIssuesAndPullRequestsQuery: GraphQLQuery {
             endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
           }
         }
+      }
+    }
+  }
+}
+
+public final class RepoPullRequestsQuery: GraphQLQuery {
+  public static let operationDefinition =
+    "query RepoPullRequests($owner: String!, $name: String!, $before: String) {" +
+    "  repository(owner: $owner, name: $name) {" +
+    "    __typename" +
+    "    pullRequests(first: 25, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], before: $before) {" +
+    "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        id" +
+    "        title" +
+    "        number" +
+    "        createdAt" +
+    "        state" +
+    "        author {" +
+    "          __typename" +
+    "          login" +
+    "        }" +
+    "      }" +
+    "      pageInfo {" +
+    "        __typename" +
+    "        hasNextPage" +
+    "        endCursor" +
+    "      }" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public let owner: String
+  public let name: String
+  public let before: String?
+
+  public init(owner: String, name: String, before: String? = nil) {
+    self.owner = owner
+    self.name = name
+    self.before = before
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "name": name, "before": before]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Lookup a given repository by the owner and repository name.
+    public let repository: Repository?
+
+    public init(reader: GraphQLResultReader) throws {
+      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["name"]]))
+    }
+
+    public struct Repository: GraphQLMappable {
+      public let __typename: String
+      /// A list of pull requests that have been opened in the repository.
+      public let pullRequests: PullRequest
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": 25, "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "before": reader.variables["before"]]))
       }
 
       public struct PullRequest: GraphQLMappable {

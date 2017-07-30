@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension RepoIssuesAndPullRequestsQuery.Data.Repository.Issue.Node: IssueSummaryType {
+extension RepoIssuesQuery.Data.Repository.Issue.Node: IssueSummaryType {
     var createdAtDate: Date? {
         return GithubAPIDateFormatter().date(from: createdAt)
     }
@@ -39,7 +39,7 @@ extension RepoIssuesAndPullRequestsQuery.Data.Repository.Issue.Node: IssueSummar
     }
 }
 
-extension RepoIssuesAndPullRequestsQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
+extension RepoPullRequestsQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
     var createdAtDate: Date? {
         return GithubAPIDateFormatter().date(from: createdAt)
     }

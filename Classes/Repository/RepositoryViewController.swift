@@ -15,22 +15,13 @@ class RepositoryViewController: UIViewController,
                                 SegmentedControlSectionControllerDelegate,
                                 SearchLoadMoreSectionControllerDelegate {
 
-    private let repo: RepositoryLoadable
-    private let client: GithubClient
+    private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private let selection = SegmentedControlModel.forRepository()
     private let loadMore = "loadMore" as ListDiffable
-    private var firstLoad = true
-    
-    private var issues = [IssueSummaryModel]()
-    private var issuesNextPage: String?
-    
-    private var pullRequests = [IssueSummaryModel]()
-    private var pullRequestsNextPage: String?
     
     init(client: GithubClient, repo: RepositoryLoadable) {
-        self.repo = repo
-        self.client = client
+        self.client = RepositoryClient(githubClient: client, repo: repo)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,7 +34,7 @@ class RepositoryViewController: UIViewController,
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
-        title = repo.nameWithOwner
+        title = client.repo.nameWithOwner
     }
 
     override func viewWillLayoutSubviews() {
@@ -57,50 +48,20 @@ class RepositoryViewController: UIViewController,
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
     }
     
-    private func handle(resultType: GithubClient.RepoLoadResultType, append: Bool, animated: Bool) {
-        firstLoad = false
-        
-        switch resultType {
-        case .error:
-            print("😞 Something went wrong, here's some pizza 🍕")
-            break
-        case .success(let payload):
-            if append {
-                self.issues += payload.issues ?? []
-                self.pullRequests += payload.pullRequests ?? []
-            } else {
-                self.issues = payload.issues ?? []
-                self.pullRequests = payload.pullRequests ?? []
-            }
-            
-            self.issuesNextPage = payload.issuesNextPage
-            self.pullRequestsNextPage = payload.pullRequestsNextPage
-            self.update(dismissRefresh: !append, animated: animated)
-            break
-        }
-    }
-    
     func reload() {
-        client.load(
-            repo: repo,
-            includeIssues: firstLoad ? true : selection.issuesSelected,
-            includePullRequests: firstLoad ? true : !selection.issuesSelected,
-            containerWidth: view.bounds.width
-        ) { [weak self] resultType in
-            self?.handle(resultType: resultType, append: false, animated: true)
+        client.load(containerWidth: view.bounds.width) {
+            self.update(dismissRefresh: true, animated: true)
         }
     }
     
     func loadNextPage() {
-        if let nextPage = issuesNextPage, selection.issuesSelected {
-            client.load(repo: repo, before: nextPage, includePullRequests: false, containerWidth: view.bounds.width) {
-                [weak self] resultType in
-                self?.handle(resultType: resultType, append: true, animated: false)
+        if selection.issuesSelected {
+            client.loadMoreIssues(containerWidth: view.bounds.width) {
+                self.update(dismissRefresh: true, animated: false)
             }
-        } else if let nextPage = pullRequestsNextPage, !selection.issuesSelected {
-            client.load(repo: repo, before: nextPage, includeIssues: false, containerWidth: view.bounds.width) {
-                [weak self] resultType in
-                self?.handle(resultType: resultType, append: true, animated: false)
+        } else {
+            client.loadMorePullRequests(containerWidth: view.bounds.width) {
+                self.update(dismissRefresh: true, animated: false)
             }
         }
     }
@@ -120,16 +81,16 @@ class RepositoryViewController: UIViewController,
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var builder: [ListDiffable] = [selection]
         
-        if issues.count > 0, selection.issuesSelected {
-            builder += issues as [ListDiffable]
+        if client.issues.count > 0, selection.issuesSelected {
+            builder += client.issues as [ListDiffable]
             
-            if issuesNextPage != nil {
+            if client.issuesNextPage != nil {
                 builder.append(loadMore)
             }
-        } else if pullRequests.count > 0, !selection.issuesSelected {
-            builder += pullRequests as [ListDiffable]
+        } else if client.pullRequests.count > 0, !selection.issuesSelected {
+            builder += client.pullRequests as [ListDiffable]
             
-            if pullRequestsNextPage != nil {
+            if client.pullRequestsNextPage != nil {
                 builder.append(loadMore)
             }
         }
@@ -145,7 +106,7 @@ class RepositoryViewController: UIViewController,
         
         if object === selection { return SegmentedControlSectionController(delegate: self, height: controlHeight) }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
-        else if object is IssueSummaryModel { return RepositorySummarySectionController(client: client, repo: repo) }
+        else if object is IssueSummaryModel { return RepositorySummarySectionController(client: client.githubClient, repo: client.repo) }
         
         fatalError("Could not find section controller for object")
     }
