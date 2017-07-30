@@ -10,6 +10,7 @@ import IGListKit
 
 protocol SearchBarSectionControllerDelegate: class {
     func didFinishSearching(term: String?)
+    func didCancelSearching()
 }
 
 final class SearchBarSectionController: ListSectionController {

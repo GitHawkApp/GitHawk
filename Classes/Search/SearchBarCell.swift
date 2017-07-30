@@ -17,13 +17,15 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        searchBar.frame = frame
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         searchBar.placeholder = NSLocalizedString("Search Repositories", comment: "")
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         contentView.addSubview(searchBar)
+        searchBar.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,6 +38,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        delegate?.didCancelSearching()
         contentView.endEditing(true)
     }
 }

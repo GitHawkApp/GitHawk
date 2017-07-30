@@ -101,14 +101,14 @@ class SearchViewController: UIViewController,
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var builder = [searchKey]
         
-        if searchResults.count == 0, searchTerm != nil {
-            builder.append(noResultsKey)
-        } else {
+        if searchResults.count > 0 {
             builder += searchResults as [ListDiffable]
             
             if nextPage != nil {
                 builder.append(loadMore)
             }
+        } else if searchTerm != nil {
+            builder.append(noResultsKey)
         }
         
         return builder
@@ -141,5 +141,11 @@ class SearchViewController: UIViewController,
     func didFinishSearching(term: String?) {
         searchTerm = term
         reload()
+    }
+    
+    func didCancelSearching() {
+        searchTerm = nil
+        searchResults.removeAll()
+        update(dismissRefresh: false)
     }
 }
