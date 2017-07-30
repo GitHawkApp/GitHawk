@@ -10,7 +10,8 @@ import Foundation
 
 public enum GithubAPI {
 
-    static let clientID = "YOUR_CLIENT_ID"
-    static let clientSecret = "YOUR_CLIENT_SECRET"
+    // See https://github.com/rnystrom/Freetime/blob/master/Setup.md
+    static let clientID = <#YOUR CLIENT ID#>
+    static let clientSecret = <#YOUR CLIENT SECRET#>
 
 }
