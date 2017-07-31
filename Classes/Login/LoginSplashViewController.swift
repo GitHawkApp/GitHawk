@@ -55,10 +55,34 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(safari, animated: true)
     }
 
-    private func handle(result: GithubClient.AccessTokenResult) {
+    @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Personal Access Token", comment: ""),
+            message: NSLocalizedString("To log in using a Personal Access Token, enter it here:", comment: ""),
+            preferredStyle: .alert
+        )
+
+        alert.addTextField()
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+
+        let logInTitle = NSLocalizedString("Log In", comment: "")
+        alert.addAction(UIAlertAction(title: logInTitle, style: .default) { [weak alert, weak self] _ in
+            alert?.actions.forEach { $0.isEnabled = false }
+
+            self?.state = .fetchingToken
+
+            let token = alert?.textFields?.first?.text ?? ""
+            self?.client.verifyPersonalAccessToken(token: token) { result in
+                self?.handle(result: result, authMethod: .pat)
+            }
+        })
+        present(alert, animated: true)
+    }
+
+    private func handle(result: GithubClient.AccessTokenResult, authMethod: GithubUserSession.AuthMethod) {
         switch result {
         case .failure: handleError()
-        case .success(let token): finishLogin(token: token)
+        case .success(let token): finishLogin(token: token, authMethod: authMethod)
         }
     }
 
@@ -74,8 +98,8 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: true)
     }
 
-    private func finishLogin(token: String) {
-        client.sessionManager.authenticate(token)
+    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod) {
+        client.sessionManager.authenticate(token, authMethod: authMethod)
     }
 
     // MARK: GithubSessionListener
@@ -85,7 +109,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         state = .fetchingToken
 
         client.requestAccessToken(code: code) { result in
-            self.handle(result: result)
+            self.handle(result: result, authMethod: .oauth)
         }
     }
 
