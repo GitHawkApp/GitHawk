@@ -182,21 +182,23 @@ IssueNeckLoadSectionControllerDelegate {
             number: number,
             width: view.bounds.width,
             prependResult: previous ? current : nil
-        ) { resultType in
+        ) { [weak self] resultType in
 
             switch resultType {
             case .success(let result):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
                 if previous {
-                    self.sentComments.removeAll()
+                    self?.sentComments.removeAll()
                 }
 
-                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self.current = result
+                self?.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
+                self?.current = result
             default: break
             }
-            self.feed.finishLoading(dismissRefresh: true)
+            self?.feed.finishLoading(dismissRefresh: true) {
+                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+            }
         }
     }
 
