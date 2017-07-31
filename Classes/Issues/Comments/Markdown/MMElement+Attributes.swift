@@ -14,11 +14,11 @@ let MarkdownURLName = "MarkdownURLName"
 func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) -> [String: Any] {
     let currentFont: UIFont = current[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
 
-    let currentPara: NSMutableParagraphStyle
+    let paragraphStyleCopy: NSMutableParagraphStyle
     if let para = (current[NSParagraphStyleAttributeName] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle {
-        currentPara = para
+        paragraphStyleCopy = para
     } else {
-        currentPara = NSMutableParagraphStyle()
+        paragraphStyleCopy = NSMutableParagraphStyle()
     }
 
     var newAttributes: [String: Any]
@@ -67,9 +67,19 @@ func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) 
         }
     case .bulletedList, .numberedList:
         let indent: CGFloat = (CGFloat(listLevel) - 1) * 18
-        currentPara.firstLineHeadIndent = indent
-        currentPara.firstLineHeadIndent = indent
-        newAttributes = [NSParagraphStyleAttributeName: currentPara]
+        paragraphStyleCopy.firstLineHeadIndent = indent
+        paragraphStyleCopy.firstLineHeadIndent = indent
+        // nested lists dont have head spacing
+        if listLevel > 1 {
+            paragraphStyleCopy.paragraphSpacingBefore = 2
+        }
+        newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
+    case .listItem:
+        // if after the first element, tighten list spacing
+        if element.numberedListPosition > 1 {
+            paragraphStyleCopy.paragraphSpacingBefore = 2
+        }
+        newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
     case .blockquote: newAttributes = [
         NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
         ]
