@@ -69,14 +69,10 @@ func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) 
         let indent: CGFloat = (CGFloat(listLevel) - 1) * 18
         paragraphStyleCopy.firstLineHeadIndent = indent
         paragraphStyleCopy.firstLineHeadIndent = indent
-        // nested lists dont have head spacing
-        if listLevel > 1 {
-            paragraphStyleCopy.paragraphSpacingBefore = 2
-        }
         newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
     case .listItem:
         // if after the first element, tighten list spacing
-        if element.numberedListPosition > 1 {
+        if element.numberedListPosition > 1 || listLevel > 1 {
             paragraphStyleCopy.paragraphSpacingBefore = 2
         }
         newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]

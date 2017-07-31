@@ -190,7 +190,11 @@ func travelAST(
 
     if element.type == .none || element.type == .entity {
         let substring = substringOrNewline(text: markdown, range: element.range)
-        attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
+
+        // hack: dont allow newlines within lists
+        if substring != newlineString || listLevel == 0 {
+            attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
+        }
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
         let isInsideBulletedList = element.parent?.type == .bulletedList
