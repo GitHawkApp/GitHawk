@@ -918,7 +918,32 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     });
 }
 
-- (void)slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
+- (void)slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture {
+    UIView *kb = _textInputbar.inputAccessoryView.superview;
+
+    if (kb == nil) {
+        return;
+    }
+
+    switch (gesture.state) {
+        case UIGestureRecognizerStateChanged: {
+            [UIView performWithoutAnimation:^{
+                self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:kb.frame];
+                self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
+                [self.view layoutIfNeeded];
+            }];
+        }
+            break;
+        case UIGestureRecognizerStateBegan:
+        case UIGestureRecognizerStatePossible:
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateFailed:
+            break;
+    }
+}
+
+- (void)OLD_slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
 {
     // Local variables
     static CGPoint startPoint;
@@ -927,7 +952,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     static BOOL presenting = NO;
     
     __block UIView *keyboardView = [_textInputbar.inputAccessoryView keyboardViewProxy];
-    
+
     // When no keyboard view has been detecting, let's skip any handling.
     if (!keyboardView) {
         return;
@@ -984,7 +1009,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                 
                 // And move the keyboard to the bottom edge
                 // TODO: Fix an occasional layout glitch when the keyboard appears for the first time.
-                keyboardView.frame = originalFrame;
+//                keyboardView.frame = originalFrame;
             }
             
             break;
@@ -1020,8 +1045,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                     keyboardFrame.origin.y = keyboardMinY;
                 }
                 
-                keyboardView.frame = keyboardFrame;
-                
+//                keyboardView.frame = keyboardFrame;
+
                 
                 self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:keyboardFrame];
                 self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
@@ -1080,7 +1105,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                                 options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                              animations:^{
                                  [self.view layoutIfNeeded];
-                                 keyboardView.frame = keyboardFrame;
+//                                 keyboardView.frame = keyboardFrame;
                              }
                              completion:^(BOOL finished) {
                                  if (hide) {
