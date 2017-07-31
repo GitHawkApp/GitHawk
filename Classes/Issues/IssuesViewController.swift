@@ -78,7 +78,10 @@ IssueNeckLoadSectionControllerDelegate {
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
+        textView.placeholderColor = Styles.Colors.Gray.light.color
         textView.keyboardType = .default
+        textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
+        textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
         rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
 
