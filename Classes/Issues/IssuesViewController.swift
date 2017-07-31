@@ -118,8 +118,6 @@ IssueNeckLoadSectionControllerDelegate {
         if let subjectId = current?.subjectId, let text = text {
             addCommentClient.addComment(subjectId: subjectId, body: text)
         }
-
-        textView.resignFirstResponder()
     }
 
     override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
@@ -281,7 +279,6 @@ IssueNeckLoadSectionControllerDelegate {
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
         textView.text = body
-        textView.becomeFirstResponder()
     }
 
     // MARK: IssueCommentAutocompleteDelegate
