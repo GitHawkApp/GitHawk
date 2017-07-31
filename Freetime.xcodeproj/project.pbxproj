@@ -22,7 +22,6 @@
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
 		290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */; };
 		290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */; };
-		291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */; };
 		292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
@@ -85,7 +84,6 @@
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
 		29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */; };
 		29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */; };
-		29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */; };
 		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
 		293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
@@ -226,11 +224,9 @@
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
 		29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */; };
 		29C1677A1ECA14F700439D62 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167791ECA14F700439D62 /* Feed.swift */; };
-		29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */; };
 		29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */; };
 		29C295171EC7BCDA00D46CD2 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */; };
 		29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */; };
-		29C33FDD1F128B8F00EC8D40 /* SettingsAccessSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */; };
 		29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */; };
 		29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */; };
 		29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */; };
@@ -261,9 +257,7 @@
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
 		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
-		984D9CAF1F235A8600ECEA7F /* SettingsSourceSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
-		98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
 		98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F0A0421F27BC4B0062A2CA /* emoji.json */; };
@@ -311,7 +305,6 @@
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
 		290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsCell.swift; sourceTree = "<group>"; };
 		290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsSectionController.swift; sourceTree = "<group>"; };
-		291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsReportSectionController.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
@@ -369,7 +362,6 @@
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
 		29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationManager.swift; sourceTree = "<group>"; };
 		29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GithubAPI.swift"; sourceTree = "<group>"; };
-		29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSignoutSectionController.swift; sourceTree = "<group>"; };
 		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
@@ -487,13 +479,11 @@
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPIDateFormatter.swift; sourceTree = "<group>"; };
 		29C167791ECA14F700439D62 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		29C295091EC7AFA500D46CD2 /* ListTestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTestKit.swift; sourceTree = "<group>"; };
 		29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListKitTestCase.swift; sourceTree = "<group>"; };
 		29C2950F1EC7B7FF00D46CD2 /* ShowMoreDetailsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreDetailsLabel.swift; sourceTree = "<group>"; };
 		29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitPlaceholderViewController.swift; sourceTree = "<group>"; };
-		29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAccessSectionController.swift; sourceTree = "<group>"; };
 		29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCell.swift; sourceTree = "<group>"; };
 		29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCell.swift; sourceTree = "<group>"; };
 		29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedModel.swift; sourceTree = "<group>"; };
@@ -528,9 +518,7 @@
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		984D9CA81F212ADF00ECEA7F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSourceSectionController.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
-		98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVersionInfoSectionController.swift; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		98F0A0421F27BC4B0062A2CA /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
@@ -1095,12 +1083,6 @@
 			isa = PBXGroup;
 			children = (
 				292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */,
-				29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */,
-				291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */,
-				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
-				984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */,
-				98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */,
-				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
 				292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */,
 			);
 			path = Settings;
@@ -1458,7 +1440,6 @@
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
-				291F99D71EFFFA2600CFBF78 /* SettingsReportSectionController.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
@@ -1476,13 +1457,11 @@
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
-				984D9CAF1F235A8600ECEA7F /* SettingsSourceSectionController.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
-				29C33FDD1F128B8F00EC8D40 /* SettingsAccessSectionController.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */,
 				290EF5661F06A797006A2160 /* Notifications+Filter.swift in Sources */,
@@ -1523,7 +1502,6 @@
 				293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */,
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
-				29C1677F1ECA1D7300439D62 /* SettingsViewController.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
@@ -1593,7 +1571,6 @@
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,
 				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
-				29316DCB1ECCA581007CAE3F /* SettingsSignoutSectionController.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
@@ -1609,7 +1586,6 @@
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				29C167671ECA005500439D62 /* Strings.swift in Sources */,
-				98835BD01F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift in Sources */,
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
 				293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
