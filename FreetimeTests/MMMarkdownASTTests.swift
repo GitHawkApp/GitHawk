@@ -69,4 +69,11 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(text.attributedText.string, "\u{2022} 1.1 italic\n\u{2022} 1.2 bold\n\u{2022} 2.1\n\u{2022} 1.3")
     }
 
+    func test_listWithNewlinesBetween() {
+        let markdown = "1. line 1\n\n2. line 2"
+        let result = CreateCommentModels(markdown: markdown, width: 300)
+        let text = result.first as! NSAttributedStringSizing
+        XCTAssertEqual(text.attributedText.string, "1. line 1\n2. line 2")
+    }
+
 }
