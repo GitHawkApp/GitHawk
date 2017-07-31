@@ -16,23 +16,12 @@ func newSettingsRootViewController(
         else { fatalError("Could not unpack settings storyboard") }
 
     if let nav = controller as? UINavigationController,
-        let first = nav.viewControllers.first as? SettingsViewController2 {
+        let first = nav.viewControllers.first as? SettingsViewController {
         first.sessionManager = sessionManager
         first.rootNavigationManager = rootNavigationManager
     }
 
     return controller
-
-//    let controller = SettingsViewController(
-//        sessionManager: sessionManager,
-//        rootNavigationManager: rootNavigationManager
-//    )
-//    let nav = UINavigationController(rootViewController: controller)
-//    let title = NSLocalizedString("Settings", comment: "")
-//    controller.navigationItem.title = title
-//    nav.tabBarItem.title = title
-//    nav.tabBarItem.image = UIImage(named: "gear")
-//    return nav
 }
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {

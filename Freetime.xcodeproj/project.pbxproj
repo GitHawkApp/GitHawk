@@ -78,7 +78,7 @@
 		292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* _graphql.json */; };
 		292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* _notifications.json */; };
 		292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */; };
-		292FF8AE1F2FD4A8009E63F7 /* SettingsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */; };
+		292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */; };
 		29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */; };
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
@@ -356,7 +356,7 @@
 		292FCB201EDFCF870026635E /* IssueReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReactionCell.swift; sourceTree = "<group>"; };
 		292FCB2B1EE054900026635E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = gql/API.swift; sourceTree = "<group>"; };
 		292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController2.swift; sourceTree = "<group>"; };
+		292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubUserSession.swift; sourceTree = "<group>"; };
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
@@ -1083,7 +1083,7 @@
 			isa = PBXGroup;
 			children = (
 				292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */,
-				292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */,
+				292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1611,7 +1611,7 @@
 				29A08FC11F12F08100C5368E /* String+HashDisplay.swift in Sources */,
 				29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
-				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController2.swift in Sources */,
+				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
 				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,

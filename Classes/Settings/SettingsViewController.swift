@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-final class SettingsViewController2: UITableViewController {
+final class SettingsViewController: UITableViewController {
 
     var sessionManager: GithubSessionManager!
     weak var rootNavigationManager: RootNavigationManager? = nil
