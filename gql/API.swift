@@ -387,6 +387,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "          }" +
     "        }" +
+    "        milestone {" +
+    "          __typename" +
+    "          ...milestoneFields" +
+    "        }" +
     "        ...reactionFields" +
     "        ...commentFields" +
     "        ...lockableFields" +
@@ -684,7 +688,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(HeadPaging.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(HeadPaging.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(MilestoneFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
@@ -772,6 +776,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public let __typename: String
           /// A list of events associated with an Issue.
           public let timeline: Timeline
+          /// Identifies the milestone associated with the issue.
+          public let milestone: Milestone?
           /// Identifies the issue number.
           public let number: Int
           /// Identifies the issue title.
@@ -782,6 +788,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["last": reader.variables["page_size"], "before": reader.variables["before"]]))
+            milestone = try reader.optionalValue(for: Field(responseName: "milestone"))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
 
@@ -1561,6 +1568,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public let commentFields: CommentFields
                 }
               }
+            }
+          }
+
+          public struct Milestone: GraphQLMappable {
+            public let __typename: String
+
+            public let fragments: Fragments
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+
+              let milestoneFields = try MilestoneFields(reader: reader)
+              fragments = Fragments(milestoneFields: milestoneFields)
+            }
+
+            public struct Fragments {
+              public let milestoneFields: MilestoneFields
             }
           }
         }
@@ -3094,5 +3118,32 @@ public struct HeadPaging: GraphQLNamedFragment {
     __typename = try reader.value(for: Field(responseName: "__typename"))
     hasPreviousPage = try reader.value(for: Field(responseName: "hasPreviousPage"))
     startCursor = try reader.optionalValue(for: Field(responseName: "startCursor"))
+  }
+}
+
+public struct MilestoneFields: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment milestoneFields on Milestone {" +
+    "  __typename" +
+    "  number" +
+    "  title" +
+    "  url" +
+    "}"
+
+  public static let possibleTypes = ["Milestone"]
+
+  public let __typename: String
+  /// Identifies the number of the milestone.
+  public let number: Int
+  /// Identifies the title of the milestone.
+  public let title: String
+  /// The HTTP URL for this milestone
+  public let url: String
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    number = try reader.value(for: Field(responseName: "number"))
+    title = try reader.value(for: Field(responseName: "title"))
+    url = try reader.value(for: Field(responseName: "url"))
   }
 }
