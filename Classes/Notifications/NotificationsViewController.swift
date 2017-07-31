@@ -166,6 +166,7 @@ FeedSelectionProviding {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return [emptyKey]
         guard allNotifications.count > 0 else { return [] }
         var objects: [ListDiffable] = [selection]
 
