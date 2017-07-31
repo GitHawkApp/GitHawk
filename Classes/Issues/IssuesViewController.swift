@@ -87,10 +87,8 @@ IssueNeckLoadSectionControllerDelegate {
 
         collectionView?.keyboardDismissMode = .interactive
 
-        NotificationCenter.default.addObserver(self, selector: #selector(IssuesViewController.onKeyboardChange(notification:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
-
         // displayed once an add comment client is created (requires a gql subject id)
-        setTextInputbarHidden(true, animated: false)
+//        setTextInputbarHidden(true, animated: false)
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -100,10 +98,6 @@ IssueNeckLoadSectionControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-    }
-
-    func onKeyboardChange(notification: NSNotification) {
-        print(notification.userInfo)
     }
 
     override func viewWillLayoutSubviews() {

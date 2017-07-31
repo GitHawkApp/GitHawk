@@ -75,6 +75,9 @@
 		292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
 		292FCB2C1EE054900026635E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
 		292FF8A71F2EA860009E63F7 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
+		292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
+		292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* _graphql.json */; };
+		292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* _notifications.json */; };
 		29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */; };
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
@@ -1289,11 +1292,14 @@
 			files = (
 				29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */,
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
+				292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */,
 				98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */,
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
+				292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */,
 				984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
+				292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@ NSString * const SLKKeyboardDidHideNotification =       @"SLKKeyboardDidHideNoti
 CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 @interface SLKTextViewController ()
+<SLKInputAccessoryViewFrameDelegate>
 {
     CGPoint _scrollViewOffsetBeforeDragging;
     CGFloat _keyboardHeightBeforeDragging;
@@ -293,7 +294,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 #endif
         
         CGRect rect = CGRectZero;
-        rect.size = CGSizeMake(CGRectGetWidth(self.view.frame), 0.5);
+        rect.size = CGSizeMake(CGRectGetWidth(self.view.frame), 1.0 / [UIScreen mainScreen].scale);
         
         _autoCompletionHairline = [[UIView alloc] initWithFrame:rect];
         _autoCompletionHairline.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -307,6 +308,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 {
     if (!_textInputbar) {
         _textInputbar = [[SLKTextInputbar alloc] initWithTextViewClass:self.textViewClass];
+        _textInputbar.inputAccessoryView.frameDelegate = self;
         _textInputbar.translatesAutoresizingMaskIntoConstraints = NO;
         
         [_textInputbar.leftButton addTarget:self action:@selector(didPressLeftButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -919,6 +921,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 }
 
 - (void)slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture {
+    return;
+
     UIView *kb = _textInputbar.inputAccessoryView.superview;
 
     if (kb == nil) {
@@ -2440,6 +2444,14 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     [self slk_unregisterNotifications];
     
     [_typingIndicatorProxyView removeObserver:self forKeyPath:@"visible"];
+}
+
+#pragma mark - SLKInputAccessoryViewFrameDelegate
+
+- (void)accessoryView:(SLKInputAccessoryView *)accessoryView didChangeFrame:(CGRect)frame {
+    self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:frame];
+    self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
+    [self.view layoutIfNeeded];
 }
 
 @end
