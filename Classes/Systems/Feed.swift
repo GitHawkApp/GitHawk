@@ -60,6 +60,8 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 
+        refresh()
+
         adapter.collectionView = collectionView
 
         if collectionView.superview == nil {
@@ -67,7 +69,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
 
         collectionView.refreshControl?.beginRefreshing()
-        refresh()
     }
 
     func viewWillLayoutSubviews(view: UIView) {
