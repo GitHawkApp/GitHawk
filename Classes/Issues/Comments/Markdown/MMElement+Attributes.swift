@@ -72,7 +72,7 @@ func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) 
         newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
     case .listItem:
         // if after the first element, tighten list spacing
-        if element.numberedListPosition > 1 {
+        if element.numberedListPosition > 1 || listLevel > 0 {
             paragraphStyleCopy.paragraphSpacingBefore = 2
         }
         newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
