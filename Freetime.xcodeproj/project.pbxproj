@@ -78,6 +78,8 @@
 		292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
 		292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* _graphql.json */; };
 		292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* _notifications.json */; };
+		292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */; };
+		292FF8AE1F2FD4A8009E63F7 /* SettingsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */; };
 		29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */; };
 		29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */; };
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
@@ -360,6 +362,8 @@
 		292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentReactionViewModel.swift; sourceTree = "<group>"; };
 		292FCB201EDFCF870026635E /* IssueReactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReactionCell.swift; sourceTree = "<group>"; };
 		292FCB2B1EE054900026635E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = gql/API.swift; sourceTree = "<group>"; };
+		292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController2.swift; sourceTree = "<group>"; };
 		29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubUserSession.swift; sourceTree = "<group>"; };
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
@@ -1090,12 +1094,14 @@
 		29C1677B1ECA1CED00439D62 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */,
 				29C33FDC1F128B8F00EC8D40 /* SettingsAccessSectionController.swift */,
 				291F99D61EFFFA2600CFBF78 /* SettingsReportSectionController.swift */,
 				29316DCA1ECCA581007CAE3F /* SettingsSignoutSectionController.swift */,
 				984D9CAE1F235A8600ECEA7F /* SettingsSourceSectionController.swift */,
 				98835BCF1F1A14EC005BA24F /* SettingsVersionInfoSectionController.swift */,
 				29C1677E1ECA1D7300439D62 /* SettingsViewController.swift */,
+				292FF8AD1F2FD4A8009E63F7 /* SettingsViewController2.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1292,6 +1298,7 @@
 			files = (
 				29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */,
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
+				292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */,
 				292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */,
 				98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */,
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
@@ -1628,6 +1635,7 @@
 				29A08FC11F12F08100C5368E /* String+HashDisplay.swift in Sources */,
 				29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
+				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController2.swift in Sources */,
 				290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
 				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,

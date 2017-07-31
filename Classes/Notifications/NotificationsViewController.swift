@@ -48,7 +48,7 @@ FeedSelectionProviding {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(feed.collectionView)
+        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
     }
 
     override func viewWillLayoutSubviews() {
