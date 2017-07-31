@@ -200,7 +200,8 @@ func travelAST(
         let isInsideBulletedList = element.parent?.type == .bulletedList
         let modifier: String
         if isInsideBulletedList {
-            modifier = "\(Strings.bullet) "
+            let bullet = listLevel % 2 == 0 ? Strings.bulletHollow : Strings.bullet
+            modifier = "\(bullet) "
         } else if element.numberedListPosition > 0 {
             modifier = "\(element.numberedListPosition). "
         } else {
