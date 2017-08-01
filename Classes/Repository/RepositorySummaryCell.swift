@@ -66,7 +66,9 @@ final class RepositorySummaryCell: UICollectionViewCell {
     
     func configure(result: IssueSummaryType) {
         titleLabel.attributedText = result.attributedTitle.attributedText
-        secondaryLabel.text = "#\(result.number) opened \(result.createdAtDate?.agoString ?? "") by \(result.authorName ?? Strings.unknown)"
+        
+        let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
+        secondaryLabel.text = String.localizedStringWithFormat(format, result.number, result.createdAtDate?.agoString ?? "", result.authorName ?? Strings.unknown)
         
         reasonImageView.image = result.stateIcon
         reasonImageView.tintColor = result.stateColor

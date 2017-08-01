@@ -40,11 +40,11 @@ extension IssueSummaryType {
         var hex: String?
         
         switch rawState {
-        case IssueState.open.rawValue where isIssue: hex = "#28a745"
-        case IssueState.closed.rawValue where isIssue: hex = "#cb2431"
-        case PullRequestState.open.rawValue where !isIssue: hex = "#28a745"
-        case PullRequestState.closed.rawValue where !isIssue: hex = "#cb2431"
-        case PullRequestState.merged.rawValue where !isIssue: hex = "#6f42c1"
+        case IssueState.open.rawValue where isIssue: hex = Styles.Colors.Green.medium
+        case IssueState.closed.rawValue where isIssue: hex = Styles.Colors.Red.medium
+        case PullRequestState.open.rawValue where !isIssue: hex = Styles.Colors.Green.medium
+        case PullRequestState.closed.rawValue where !isIssue: hex = Styles.Colors.Red.medium
+        case PullRequestState.merged.rawValue where !isIssue: hex = Styles.Colors.purple
         default: return nil
         }
         

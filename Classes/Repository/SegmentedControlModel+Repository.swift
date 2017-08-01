@@ -21,7 +21,7 @@ extension SegmentedControlModel {
     }
     
     var issuesSelected: Bool {
-        return items[selectedIndex] == "Issues"
+        return items[selectedIndex] == NSLocalizedString("Issues", comment: "")
     }
     
 }

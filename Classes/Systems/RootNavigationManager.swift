@@ -68,7 +68,7 @@ final class RootNavigationManager: GithubSessionListener {
         let searchViewController = SearchViewController(client: client)
         let searchNavigationController = UINavigationController(rootViewController: searchViewController)
         searchNavigationController.tabBarItem.image = UIImage(named: "search")
-        searchNavigationController.tabBarItem.title = "Search"
+        searchNavigationController.tabBarItem.title = NSLocalizedString("Search", comment: "")
         tabBarController?.viewControllers?.append(searchNavigationController)
     }
 
