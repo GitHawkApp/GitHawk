@@ -2449,6 +2449,10 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 #pragma mark - SLKInputAccessoryViewFrameDelegate
 
 - (void)accessoryView:(SLKInputAccessoryView *)accessoryView didChangeFrame:(CGRect)frame {
+    if (self.keyboardStatus != SLKKeyboardStatusDidShow) {
+        return;
+    }
+
     self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:frame];
     self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
     [self.view layoutIfNeeded];
