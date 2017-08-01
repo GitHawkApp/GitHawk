@@ -49,7 +49,12 @@ extension UITextView {
             let text = text(in: range) // no selection = ""
         else { return }
 
-        let replacementText = "\(left)\(text)\(right ?? "")"
+        let replacementText: String
+        if atLineStart {
+            replacementText = left
+        } else {
+            replacementText = "\(left)\(text)\(right ?? "")"
+        }
 
         var insertionRange = range
         if atLineStart {

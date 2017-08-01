@@ -18,7 +18,7 @@ final class IssueTextActionsCell: UICollectionViewCell {
 
         let color = Styles.Colors.Gray.dark.color
 
-        label.font = Styles.Fonts.button
+        label.textAlignment = .center
         label.textColor = color
         label.backgroundColor = .clear
         contentView.addSubview(label)
