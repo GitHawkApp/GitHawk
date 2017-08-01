@@ -8,7 +8,7 @@
 
 import UIKit
 import IGListKit
-import TUSafariActivity
+import Freedom
 import SafariServices
 import SlackTextViewController
 
@@ -161,8 +161,8 @@ IssueNeckLoadSectionControllerDelegate {
         let externalURL = URL(string: path)!
 
         let share = UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [externalURL], applicationActivities: [safariActivity])
+            let freedomActivities = Freedom.browsers()
+            let controller = UIActivityViewController(activityItems: [externalURL], applicationActivities: freedomActivities)
             controller.popoverPresentationController?.barButtonItem = sender
             self.present(controller, animated: true)
         }
