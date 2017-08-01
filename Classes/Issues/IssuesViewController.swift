@@ -104,6 +104,8 @@ IssueTextActionsViewDelegate {
             IssueTextActionOperation(icon: .text(NSAttributedString(string: "`c`", attributes: [NSFontAttributeName: Styles.Fonts.code])), operation: .wrap("`", "`")),
             IssueTextActionOperation(icon: .text(NSAttributedString(string: "```", attributes: [NSFontAttributeName: Styles.Fonts.code])), operation: .wrap("```\n", "\n```")),
             IssueTextActionOperation(icon: .text(NSAttributedString(string: "St", attributes: [NSFontAttributeName: Styles.Fonts.body, NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: .text(NSAttributedString(string: "#", attributes: [NSFontAttributeName: Styles.Fonts.body])), operation: .line("#")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "link-small")), operation: .wrap("[", "](\(UITextView.cursorToken))")),
         ]
         let actions = IssueTextActionsView(operations: operations)
         actions.delegate = self

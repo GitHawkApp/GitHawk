@@ -42,6 +42,8 @@ extension UITextView {
         return beginningOfDocument // not found? Go to the beginning
     }
 
+    static let cursorToken = ">|<"
+
     func replace(left: String, right: String?, atLineStart: Bool) {
         guard let range = selectedTextRange, // seems to be always set
             let text = text(in: range) // no selection = ""
@@ -55,11 +57,17 @@ extension UITextView {
             insertionRange = textRange(from: startLinePosition, to: startLinePosition) ?? range
         }
 
-        replace(insertionRange, withText: replacementText)
+        let cursorPosition = (replacementText as NSString).range(of: UITextView.cursorToken)
+        replace(insertionRange, withText: replacementText.replacingOccurrences(of: UITextView.cursorToken, with: ""))
+
         if range.start == range.end, // single cursor (no selection)
             let position = position(from: range.start, // advance by the inserted before
                 offset: left.lengthOfBytes(using: .utf8)) {
             selectedTextRange = textRange(from: position, to: position) // single cursor
+        } else if cursorPosition.location != NSNotFound,
+            let position = position(from: range.start, // advance by the inserted before
+            offset: cursorPosition.location) {
+            selectedTextRange = textRange(from: position, to: position) // single cursor {
         }
     }
 
