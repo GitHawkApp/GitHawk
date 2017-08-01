@@ -18,6 +18,9 @@ class RepositoryViewController: UIViewController,
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private let selection: SegmentedControlModel
+    
+    private let noIssuesResultsKey = "noIssuesResultsKey" as ListDiffable
+    private let noPullRequestsResultsKey = "noPullRequestsResultsKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
     
     init(client: GithubClient, repo: RepositoryLoadable) {
@@ -98,6 +101,12 @@ class RepositoryViewController: UIViewController,
             if client.pullRequestsNextPage != nil {
                 builder.append(loadMore)
             }
+        } else {
+            if selection.issuesSelected {
+                builder.append(noIssuesResultsKey)
+            } else {
+                builder.append(noPullRequestsResultsKey)
+            }
         }
         
         return builder
@@ -107,9 +116,11 @@ class RepositoryViewController: UIViewController,
         guard let object = object as? ListDiffable else { fatalError("Object does not conform to ListDiffable") }
         
         // 28 is the default height of UISegmentedControl
-        let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
+        let controlHeight = client.repo.hasIssuesEnabled ? 28 + 2*Styles.Sizes.rowSpacing : 0
         
-        if object === selection { return SegmentedControlSectionController(delegate: self, height: controlHeight) }
+        if object === noIssuesResultsKey { return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .issues) }
+        else if object === noPullRequestsResultsKey { return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .pullRequests) }
+        else if object === selection { return SegmentedControlSectionController(delegate: self, height: controlHeight) }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
         else if object is IssueSummaryModel { return RepositorySummarySectionController(client: client.githubClient, repo: client.repo) }
         
