@@ -247,7 +247,8 @@ IssueTextActionsViewDelegate {
     }
 
     func onPreview() {
-        print("preview")
+        let controller = IssuePreviewViewController(markdown: textView.text)
+        showDetailViewController(controller, sender: nil)
     }
 
     // MARK: ListAdapterDataSource
