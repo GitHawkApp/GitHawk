@@ -93,7 +93,7 @@ IssueTextActionsViewDelegate {
         collectionView?.keyboardDismissMode = .interactive
 
         // displayed once an add comment client is created (requires a gql subject id)
-//        setTextInputbarHidden(true, animated: false)
+        setTextInputbarHidden(true, animated: false)
 
         let operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(icon: .image(UIImage(named: "eye-small")), operation: .execute({ [weak self] in
