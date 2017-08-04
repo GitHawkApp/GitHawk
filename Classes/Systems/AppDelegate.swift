@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireNetworkActivityIndicator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
+        NetworkActivityIndicatorManager.shared.isEnabled = true
         return true
     }
 
