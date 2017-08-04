@@ -12,7 +12,7 @@
         <!--Settings-->
         <scene sceneID="wq2-Zo-yTn">
             <objects>
-                <tableViewController id="NnB-TU-bkW" customClass="SettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="NnB-TU-bkW" customClass="SettingsViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="W1i-GH-bg7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

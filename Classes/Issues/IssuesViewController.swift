@@ -99,13 +99,13 @@ IssueTextActionsViewDelegate {
             IssueTextActionOperation(icon: .image(UIImage(named: "eye-small")), operation: .execute({ [weak self] in
                 self?.onPreview()
             })),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "*b*", attributes: [NSFontAttributeName: Styles.Fonts.bodyBold])), operation: .wrap("**", "**")),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "_i_", attributes: [NSFontAttributeName: Styles.Fonts.bodyItalic])), operation: .wrap("_", "_")),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "`c`", attributes: [NSFontAttributeName: Styles.Fonts.code])), operation: .wrap("`", "`")),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "```", attributes: [NSFontAttributeName: Styles.Fonts.code])), operation: .wrap("```\n", "\n```")),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "St", attributes: [NSFontAttributeName: Styles.Fonts.body, NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])), operation: .wrap("~~", "~~")),
-            IssueTextActionOperation(icon: .text(NSAttributedString(string: "#", attributes: [NSFontAttributeName: Styles.Fonts.body])), operation: .line("#")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "link-small")), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-bold")), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-italic")), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code")), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code-block")), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-strikethrough")), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-header")), operation: .line("#")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-link")), operation: .wrap("[", "](\(UITextView.cursorToken))")),
         ]
         let actions = IssueTextActionsView(operations: operations)
         actions.delegate = self
@@ -116,7 +116,7 @@ IssueTextActionsViewDelegate {
         contentView.addSubview(actions)
         let views = ["actions": actions]
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]|",
+            withVisualFormat: "V:|[actions(30)]-4-|",
             options: [],
             metrics: nil,
             views: views
