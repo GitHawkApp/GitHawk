@@ -13,7 +13,7 @@ struct SizableAttributedString {
 
     // NSTextContainer
     let exclusionPaths: [UIBezierPath]
-    let maximumNumberOfLines: UInt
+    let maximumNumberOfLines: Int
     let lineFragmentPadding: CGFloat
 
     // NSLayoutManager
@@ -28,7 +28,7 @@ struct SizableAttributedString {
         attributedText: NSAttributedString,
         inset: UIEdgeInsets = .zero,
         exclusionPaths: [UIBezierPath] = [],
-        maximumNumberOfLines: UInt = 0,
+        maximumNumberOfLines: Int = 0,
         lineFragmentPadding: CGFloat = 0.0,
         allowsNonContiguousLayout: Bool = false,
         hyphenationFactor: CGFloat = 0.0,
