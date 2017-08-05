@@ -14,6 +14,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/AlamofireNetworkActivityIndicator</string>
+			<key>Title</key>
+			<string>AlamofireNetworkActivityIndicator</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/Apollo</string>
 			<key>Title</key>
 			<string>Apollo (0.5.6)</string>
