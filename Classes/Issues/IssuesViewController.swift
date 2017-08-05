@@ -11,6 +11,7 @@ import IGListKit
 import TUSafariActivity
 import SafariServices
 import SlackTextViewController
+import SnapKit
 
 final class IssuesViewController: SLKTextViewController,
     ListAdapterDataSource,
@@ -18,7 +19,8 @@ final class IssuesViewController: SLKTextViewController,
     AddCommentListener,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
-IssueNeckLoadSectionControllerDelegate {
+IssueNeckLoadSectionControllerDelegate,
+IssueTextActionsViewDelegate {
 
     private let client: GithubClient
     private let owner: String
@@ -37,6 +39,9 @@ IssueNeckLoadSectionControllerDelegate {
     private var current: IssueResult? = nil {
         didSet {
             self.setTextInputbarHidden(current == nil, animated: true)
+
+            // hack required to get textInputBar.contentView + textView laid out correctly
+            self.textInputbar.layoutIfNeeded()
         }
     }
     private var sentComments = [ListDiffable]()
@@ -88,7 +93,41 @@ IssueNeckLoadSectionControllerDelegate {
         collectionView?.keyboardDismissMode = .interactive
 
         // displayed once an add comment client is created (requires a gql subject id)
-//        setTextInputbarHidden(true, animated: false)
+        setTextInputbarHidden(true, animated: false)
+
+        let operations: [IssueTextActionOperation] = [
+            IssueTextActionOperation(icon: .image(UIImage(named: "eye-small")), operation: .execute({ [weak self] in
+                self?.onPreview()
+            })),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-bold")), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-italic")), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code")), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code-block")), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-strikethrough")), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-header")), operation: .line("#")),
+            IssueTextActionOperation(icon: .image(UIImage(named: "bar-link")), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+        ]
+        let actions = IssueTextActionsView(operations: operations)
+        actions.delegate = self
+
+        // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
+        // i'm not sure exactly what these would be in SnapKit (would pref SK tho)
+        let contentView = textInputbar.contentView
+        contentView.addSubview(actions)
+        let views = ["actions": actions]
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[actions(30)]-4-|",
+            options: [],
+            metrics: nil,
+            views: views
+        ))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[actions]|",
+            options: [],
+            metrics: nil,
+            views: views
+        ))
+        self.textInputbar.layoutIfNeeded()
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -207,6 +246,11 @@ IssueNeckLoadSectionControllerDelegate {
         }
     }
 
+    func onPreview() {
+        let controller = IssuePreviewViewController(markdown: textView.text)
+        showDetailViewController(controller, sender: nil)
+    }
+
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
@@ -304,6 +348,16 @@ IssueNeckLoadSectionControllerDelegate {
 
     func didSelect(sectionController: IssueNeckLoadSectionController) {
         fetch(previous: true)
+    }
+
+    // MARK: IssueTextActionsViewDelegate
+
+    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
+        switch operation.operation {
+        case .execute(let block): block()
+        case .wrap(let left, let right): textView.replace(left: left, right: right, atLineStart: false)
+        case .line(let left): textView.replace(left: left, right: nil, atLineStart: true)
+        }
     }
 
 }

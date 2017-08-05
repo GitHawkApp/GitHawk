@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireNetworkActivityIndicator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = Styles.Colors.background
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
         configureNavAppearance()
+        NetworkActivityIndicatorManager.shared.isEnabled = true
         return true
     }
 
