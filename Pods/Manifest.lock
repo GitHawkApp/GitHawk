@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.4.0)
+  - AlamofireNetworkActivityIndicator (2.1.0):
+    - Alamofire (~> 4.1)
   - Apollo (0.5.6)
   - FLAnimatedImage (1.0.12)
   - FLEX (2.4.0)
@@ -24,6 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.4.0)
+  - AlamofireNetworkActivityIndicator (~> 2.1)
   - Apollo (~> 0.5.6)
   - FLEX (~> 2.0)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
@@ -45,6 +48,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
@@ -55,6 +59,6 @@ SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 4d6ec65796d4a2995fae04796756ab34ffb2a3cb
+PODFILE CHECKSUM: 8845ed64908db1fa0a9c7ac1e2064e8738b28220
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
