@@ -123,9 +123,10 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = collectionView.bounds.height
         return CGSize(
-            width: operations[indexPath.item].icon?.size.width ?? 0,
-            height: collectionView.bounds.height
+            width: min(operations[indexPath.item].icon?.size.width ?? 0, height),
+            height: height
         )
     }
     
