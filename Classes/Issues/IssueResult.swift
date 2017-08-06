@@ -12,14 +12,15 @@ import IGListKit
 struct IssueResult {
 
     let subjectId: String
-    let viewerCanUpdate: Bool
-    let viewModels: [ListDiffable]
+
+    let status: IssueStatusModel
+    let title: NSAttributedStringSizing
+    let labels: IssueLabelsModel
+    let assignee: IssueAssigneesModel
+    let rootComment: IssueCommentModel?
+    let reviewers: IssueAssigneesModel?
     let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
-
-    var allViewModels: [ListDiffable] {
-        return viewModels + timelineViewModels
-    }
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })

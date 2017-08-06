@@ -39,25 +39,37 @@ extension GithubClient {
             if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
                 DispatchQueue.global().async {
 
-                    let models = createViewModels(issue: issueType, width: width)
+                    let status: IssueStatus = issueType.merged ? .merged : issueType.closableFields.closed ? .closed : .open
                     let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
+
+                    let rootComment = createCommentModel(
+                        id: issueType.id,
+                        commentFields: issueType.commentFields,
+                        reactionFields: issueType.reactionFields,
+                        width: width,
+                        threadState: .single
+                        )
 
                     let paging = issueType.headPaging
                     let newPage = IssueTimelinePage(
                         startCursor: paging.hasPreviousPage ? paging.startCursor : nil,
-                        viewModels: models.timeline
+                        viewModels: issueType.timelineViewModels(width: width)
                     )
 
-                    let result = IssueResult(
+                    let issueResult = IssueResult(
                         subjectId: issueType.id,
-                        viewerCanUpdate: issueType.viewerCanUpdate,
-                        viewModels: models.viewModels,
+                        status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
+                        title: titleStringSizing(title: issueType.title, width: width),
+                        labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
+                        assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
+                        rootComment: rootComment,
+                        reviewers: issueType.reviewRequestModel,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? [])
                     )
 
                     DispatchQueue.main.async {
-                        completion(.success(result))
+                        completion(.success(issueResult))
                     }
                 }
             } else {

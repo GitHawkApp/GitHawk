@@ -257,10 +257,26 @@ IssueTextActionsViewDelegate {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.current else { return [] }
-        return current.viewModels
-            + (current.hasPreviousPage ? [IssueNeckLoadModel()] : [])
-            + current.timelineViewModels
-            + sentComments
+
+        var objects: [ListDiffable] = [
+            current.status,
+            current.title,
+            current.labels,
+            current.assignee
+        ]
+
+        if let reviewers = current.reviewers {
+            objects.append(reviewers)
+        }
+
+        if current.hasPreviousPage {
+            objects.append(IssueNeckLoadModel())
+        }
+
+        objects += current.timelineViewModels
+        objects += sentComments
+
+        return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
