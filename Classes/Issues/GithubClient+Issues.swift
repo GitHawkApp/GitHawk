@@ -50,6 +50,7 @@ extension GithubClient {
 
                     let result = IssueResult(
                         subjectId: issueType.id,
+                        viewerCanUpdate: issueType.viewerCanUpdate,
                         viewModels: models.viewModels,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? [])

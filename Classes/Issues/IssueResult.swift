@@ -10,7 +10,9 @@ import Foundation
 import IGListKit
 
 struct IssueResult {
+
     let subjectId: String
+    let viewerCanUpdate: Bool
     let viewModels: [ListDiffable]
     let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
@@ -30,6 +32,7 @@ struct IssueResult {
     var hasPreviousPage: Bool {
         return minStartCursor != nil
     }
+
 }
 
 struct IssueTimelinePage {
