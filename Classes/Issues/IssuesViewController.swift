@@ -96,16 +96,18 @@ IssueTextActionsViewDelegate {
         setTextInputbarHidden(true, animated: false)
 
         let operations: [IssueTextActionOperation] = [
-            IssueTextActionOperation(icon: .image(UIImage(named: "eye-small")), operation: .execute({ [weak self] in
+            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
                 self?.onPreview()
             })),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-bold")), operation: .wrap("**", "**")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-italic")), operation: .wrap("_", "_")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code")), operation: .wrap("`", "`")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-code-block")), operation: .wrap("```\n", "\n```")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-strikethrough")), operation: .wrap("~~", "~~")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-header")), operation: .line("#")),
-            IssueTextActionOperation(icon: .image(UIImage(named: "bar-link")), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
         ]
         let actions = IssueTextActionsView(operations: operations)
         actions.delegate = self

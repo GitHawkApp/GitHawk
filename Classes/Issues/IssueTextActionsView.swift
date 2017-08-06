@@ -52,18 +52,13 @@ protocol IssueTextActionsViewDelegate: class {
 
 struct IssueTextActionOperation {
 
-    enum Icon {
-        case text(NSAttributedString)
-        case image(UIImage?)
-    }
-
     enum Operation {
         case line(String)
         case wrap(String, String)
         case execute(() -> ())
     }
 
-    let icon: Icon
+    let icon: UIImage?
     let operation: Operation
 
 }
@@ -77,11 +72,12 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 24
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
         c.backgroundColor = .clear
         c.alwaysBounceVertical = false
         c.alwaysBounceHorizontal = true
-        c.contentInset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
+        c.contentInset = UIEdgeInsets(top: 0, left: Styles.Sizes.eventGutter, bottom: 0, right: Styles.Sizes.eventGutter)
         return c
     }()
 
@@ -116,13 +112,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueTextActionsCell
             else { fatalError("Wrong cell type") }
-
-        let operation = operations[indexPath.item]
-        switch operation.icon {
-        case .image(let image): cell.imageView.image = image
-        case .text(let text): cell.label.attributedText = text
-        }
-
+        cell.imageView.image = operations[indexPath.item].icon
         return cell
     }
 
@@ -133,8 +123,10 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.bounds.height
-        return CGSize(width: height, height: height)
+        return CGSize(
+            width: operations[indexPath.item].icon?.size.width ?? 0,
+            height: collectionView.bounds.height
+        )
     }
     
 }
