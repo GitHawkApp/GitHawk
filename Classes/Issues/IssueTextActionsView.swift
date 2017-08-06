@@ -72,7 +72,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 24
+        layout.minimumInteritemSpacing = 30
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
         c.backgroundColor = .clear
         c.alwaysBounceVertical = false
