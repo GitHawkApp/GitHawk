@@ -181,7 +181,7 @@ IssueTextActionsViewDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
-            acceptAutoCompletion(with: accept, keepPrefix: false)
+            acceptAutoCompletion(with: accept + " ", keepPrefix: false)
         }
     }
 
