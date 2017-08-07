@@ -273,6 +273,10 @@ IssueTextActionsViewDelegate {
             objects.append(IssueNeckLoadModel())
         }
 
+        if let rootComment = current.rootComment {
+            objects.append(rootComment)
+        }
+        
         objects += current.timelineViewModels
         objects += sentComments
 
