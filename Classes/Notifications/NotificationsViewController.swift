@@ -24,7 +24,8 @@ FeedSelectionProviding {
     private var filteredNotifications = [NotificationViewModel]()
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var page: NSNumber? = 1
+    private var page: NSNumber? = nil
+    private var hasError = false
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
@@ -47,7 +48,7 @@ FeedSelectionProviding {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(feed.collectionView)
+        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
     }
 
     override func viewWillLayoutSubviews() {
@@ -140,11 +141,13 @@ FeedSelectionProviding {
 
                 // disable the page model if there is no next
                 self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
+                self.hasError = false
 
                 self.update(dismissRefresh: !append, animated: animated)
             }
         case .failed:
             StatusBar.showNetworkError()
+            self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)
         }
     }
@@ -166,10 +169,11 @@ FeedSelectionProviding {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        guard allNotifications.count > 0 else { return [] }
+        guard hasError == false else { return [] }
+
         var objects: [ListDiffable] = [selection]
 
-        if filteredNotifications.count == 0 {
+        if filteredNotifications.count == 0 && feed.status == .idle {
             objects.append(emptyKey)
         } else {
             objects += filteredNotifications as [ListDiffable]

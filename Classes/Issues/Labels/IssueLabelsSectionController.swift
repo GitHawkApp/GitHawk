@@ -28,8 +28,16 @@ ListBindingSectionControllerSelectionDelegate {
             object.labels.count > 0
             else { return [] }
         let colors = object.labels.map { UIColor.fromHex($0.color) }
-        return [ IssueLabelSummaryModel(colors: colors) ]
-            + (expanded ? object.labels : [])
+
+        var viewModels: [ListDiffable] = [IssueLabelSummaryModel(colors: colors)]
+        if expanded {
+            viewModels += object.labels as [ListDiffable]
+        }
+        if object.viewerCanUpdate {
+            viewModels.append("edit" as ListDiffable)
+        }
+
+        return viewModels
     }
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
@@ -43,19 +51,26 @@ ListBindingSectionControllerSelectionDelegate {
             else { fatalError("Collection context must be set") }
 
         let cellClass: AnyClass
-        if viewModel is IssueLabelSummaryModel {
-            cellClass = IssueLabelSummaryCell.self
-        } else {
-            cellClass = IssueLabelCell.self
+        switch viewModel {
+        case is IssueLabelSummaryModel: cellClass = IssueLabelSummaryCell.self
+        case is IssueLabelModel: cellClass = IssueLabelCell.self
+        default: cellClass = IssueLabelEditCell.self
         }
+        
         return context.dequeueReusableCell(of: cellClass, for: self, at: index)
     }
 
     // MARK: ListBindingSectionControllerSelectionDelegate
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
-        expanded = !expanded
-        update(animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+
+        if collectionContext?.cellForItem(at: index, sectionController: self) is IssueLabelEditCell {
+            // TODO
+        } else {
+            expanded = !expanded
+            update(animated: true)
+        }
     }
 
 }

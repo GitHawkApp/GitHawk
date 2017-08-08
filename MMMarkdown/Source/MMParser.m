@@ -973,9 +973,7 @@ static NSString * __HTMLEntityForCharacter(unichar character)
         [scanner commitTransaction:YES];
 
         numberedListPosition++;
-        if (listType == MMListTypeNumbered) {
-            item.numberedListPosition = numberedListPosition;
-        }
+        item.numberedListPosition = numberedListPosition;
 
         [element addChild:item];
     }

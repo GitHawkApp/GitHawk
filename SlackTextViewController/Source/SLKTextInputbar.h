@@ -146,6 +146,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** The color used for character counter label when it has exceeded the limit. Default is redColor. */
 @property (nonatomic, strong, readwrite) UIColor *charCountLabelWarningColor;
 
+- (void)slk_updateConstraintConstants;
+
 @end
 
 NS_ASSUME_NONNULL_END

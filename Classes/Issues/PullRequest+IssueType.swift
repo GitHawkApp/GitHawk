@@ -43,6 +43,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.assigneeFields
     }
 
+    var viewerCanUpdate: Bool {
+        return fragments.updatableFields.viewerCanUpdate
+    }
+
     var reviewRequestModel: IssueAssigneesModel? {
         var models = [IssueAssigneeViewModel]()
         for node in reviewRequests?.nodes ?? [] {

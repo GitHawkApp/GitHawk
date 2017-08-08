@@ -1,124 +1,101 @@
 //
-//  SettingsViewController.swift
+//  SettingsViewController2.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/15/17.
+//  Created by Ryan Nystrom on 7/31/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
-import SnapKit
-import IGListKit
+import SafariServices
 
-final class SettingsViewController: UIViewController, ListAdapterDataSource {
+final class SettingsViewController: UITableViewController {
 
-    // injected
-    private let sessionManager: GithubSessionManager
+    var sessionManager: GithubSessionManager!
     weak var rootNavigationManager: RootNavigationManager? = nil
 
-    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
-
-    private let signoutKey = "signout" as ListDiffable
-    private let reportKey = "report" as ListDiffable
-    private let accessKey = "access" as ListDiffable
-    private let sourceKey = "source" as ListDiffable
-    private let versionInfoKey = "versionInfo" as ListDiffable
-
-    private lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        view.alwaysBounceVertical = true
-        view.contentInset = UIEdgeInsets(
-            top: Styles.Sizes.tableSectionSpacing,
-            left: 0,
-            bottom: Styles.Sizes.tableSectionSpacing,
-            right: 0
-        )
-        view.backgroundColor = Styles.Colors.background
-        return view
-    }()
-
-    init(
-        sessionManager: GithubSessionManager,
-        rootNavigationManager: RootNavigationManager
-        ) {
-        self.sessionManager = sessionManager
-        self.rootNavigationManager = rootNavigationManager
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var reviewAccessCell: UITableViewCell!
+    @IBOutlet weak var reportBugCell: UITableViewCell!
+    @IBOutlet weak var viewSourceCell: UITableViewCell!
+    @IBOutlet weak var signOutCell: UITableViewCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        adapter.dataSource = self
-        adapter.collectionView = collectionView
 
-        view.addSubview(collectionView)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(SettingsViewController.onDone)
-        )
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        let bounds = view.bounds
-        if collectionView.frame != bounds {
-            collectionView.frame = bounds
-            collectionView.collectionViewLayout.invalidateLayout()
-        }
+        versionLabel.text = Bundle.main.prettyVersionString
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(collectionView)
+        rz_smoothlyDeselectRows(tableView: tableView)
     }
-    
-    // MARK: Accessibility
-    
-    override func accessibilityPerformEscape() -> Bool {
-        onDone()
-        return true
+
+    // MARK: UITableViewDelegate
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+
+        if cell === reviewAccessCell {
+            onReviewAccess()
+        } else if cell === reportBugCell {
+            onReportBug()
+        } else if cell === viewSourceCell {
+            onViewSource()
+        } else if cell === signOutCell {
+            tableView.deselectRow(at: indexPath, animated: true)
+            onSignOut()
+        }
     }
 
     // MARK: Private API
 
-    @objc private func onDone() {
+    @IBAction func onDone(_ sender: Any) {
         dismiss(animated: true)
     }
 
-    // MARK: ListAdapterDataSource
-
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return [
-            accessKey,
-            reportKey,
-            sourceKey,
-            signoutKey,
-            versionInfoKey
-        ]
+    func onReviewAccess() {
+        guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
+            else { fatalError("Should always create GitHub issue URL") }
+        let safari = SFSafariViewController(url: url)
+        present(safari, animated: true)
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
-        if object === signoutKey {
-            return SettingsSignoutSectionController(sessionManager: sessionManager)
-        } else if object === reportKey {
-            return SettingsReportSectionController()
-        } else if object === accessKey {
-            return SettingsAccessSectionController()
-        } else if object === versionInfoKey {
-            return SettingsVersionInfoSectionController()
-        } else if object === sourceKey {
-            return SettingsSourceSectionController()
+    func onReportBug() {
+        let template = "\(Bundle.main.prettyVersionString)\nDevice: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion)) \n"
+            .addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+
+        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new?body=\(template)")
+            else { fatalError("Should always create GitHub issue URL") }
+        let safari = SFSafariViewController(url: url)
+        present(safari, animated: true)
+    }
+
+    func onViewSource() {
+        guard let url = URL(string: "https://github.com/rnystrom/Freetime/")
+            else { fatalError("Should always create GitHub URL") }
+        let safari = SFSafariViewController(url: url)
+        present(safari, animated: true)
+    }
+
+    func onSignOut() {
+        let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
+
+        let signoutAction = UIAlertAction(title: Strings.signout, style: .destructive) { _ in
+            self.signout()
         }
-        fatalError("Unhandled object: \(object)")
+
+        let title = NSLocalizedString("Are you sure?", comment: "")
+        let message = NSLocalizedString("You will need to log in to keep using Freetime. Do you want to continue?", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(cancelAction)
+        alert.addAction(signoutAction)
+
+        present(alert, animated: true)
     }
 
-    func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
+    func signout() {
+        sessionManager.logout()
+    }
 
 }

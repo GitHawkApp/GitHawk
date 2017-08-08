@@ -24,6 +24,7 @@ protocol IssueType {
     var merged: Bool { get }
     var locked: Bool { get }
     var headPaging: HeadPaging { get }
+    var viewerCanUpdate: Bool { get }
 
     var reviewRequestModel: IssueAssigneesModel? { get }
 

@@ -11,6 +11,7 @@ import IGListKit
 import TUSafariActivity
 import SafariServices
 import SlackTextViewController
+import SnapKit
 
 final class IssuesViewController: SLKTextViewController,
     ListAdapterDataSource,
@@ -18,7 +19,8 @@ final class IssuesViewController: SLKTextViewController,
     AddCommentListener,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
-IssueNeckLoadSectionControllerDelegate {
+IssueNeckLoadSectionControllerDelegate,
+IssueTextActionsViewDelegate {
 
     private let client: GithubClient
     private let owner: String
@@ -37,6 +39,9 @@ IssueNeckLoadSectionControllerDelegate {
     private var current: IssueResult? = nil {
         didSet {
             self.setTextInputbarHidden(current == nil, animated: true)
+
+            // hack required to get textInputBar.contentView + textView laid out correctly
+            self.textInputbar.layoutIfNeeded()
         }
     }
     private var sentComments = [ListDiffable]()
@@ -78,12 +83,53 @@ IssueNeckLoadSectionControllerDelegate {
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
+        textView.placeholderColor = Styles.Colors.Gray.light.color
         textView.keyboardType = .default
+        textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
+        textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
         rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
 
+        collectionView?.keyboardDismissMode = .interactive
+
         // displayed once an add comment client is created (requires a gql subject id)
         setTextInputbarHidden(true, animated: false)
+
+        let operations: [IssueTextActionOperation] = [
+            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
+                self?.onPreview()
+            })),
+            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+        ]
+        let actions = IssueTextActionsView(operations: operations)
+        actions.delegate = self
+
+        // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
+        // i'm not sure exactly what these would be in SnapKit (would pref SK tho)
+        let contentView = textInputbar.contentView
+        contentView.addSubview(actions)
+        let views = ["actions": actions]
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[actions(30)]-4-|",
+            options: [],
+            metrics: nil,
+            views: views
+        ))
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[actions]|",
+            options: [],
+            metrics: nil,
+            views: views
+        ))
+        self.textInputbar.layoutIfNeeded()
 
         let rightItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -135,7 +181,7 @@ IssueNeckLoadSectionControllerDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
-            acceptAutoCompletion(with: accept, keepPrefix: false)
+            acceptAutoCompletion(with: accept + " ", keepPrefix: false)
         }
     }
 
@@ -182,32 +228,55 @@ IssueNeckLoadSectionControllerDelegate {
             number: number,
             width: view.bounds.width,
             prependResult: previous ? current : nil
-        ) { resultType in
+        ) { [weak self] resultType in
 
             switch resultType {
             case .success(let result):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
                 if previous {
-                    self.sentComments.removeAll()
+                    self?.sentComments.removeAll()
                 }
 
-                self.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self.current = result
+                self?.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
+                self?.current = result
             default: break
             }
-            self.feed.finishLoading(dismissRefresh: true)
+            self?.feed.finishLoading(dismissRefresh: true) {
+                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+            }
         }
+    }
+
+    func onPreview() {
+        let controller = IssuePreviewViewController(markdown: textView.text)
+        showDetailViewController(controller, sender: nil)
     }
 
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.current else { return [] }
-        return current.viewModels
-            + (current.hasPreviousPage ? [IssueNeckLoadModel()] : [])
-            + current.timelineViewModels
-            + sentComments
+
+        var objects: [ListDiffable] = [
+            current.status,
+            current.title,
+            current.labels,
+            current.assignee
+        ]
+
+        if let reviewers = current.reviewers {
+            objects.append(reviewers)
+        }
+
+        if current.hasPreviousPage {
+            objects.append(IssueNeckLoadModel())
+        }
+
+        objects += current.timelineViewModels
+        objects += sentComments
+
+        return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -297,6 +366,16 @@ IssueNeckLoadSectionControllerDelegate {
 
     func didSelect(sectionController: IssueNeckLoadSectionController) {
         fetch(previous: true)
+    }
+
+    // MARK: IssueTextActionsViewDelegate
+
+    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
+        switch operation.operation {
+        case .execute(let block): block()
+        case .wrap(let left, let right): textView.replace(left: left, right: right, atLineStart: false)
+        case .line(let left): textView.replace(left: left, right: nil, atLineStart: true)
+        }
     }
 
 }

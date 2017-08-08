@@ -14,8 +14,8 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
 
     static let reuse = "cell"
 
-    let label = UILabel()
-    let collectionView: UICollectionView = {
+    private let label = UILabel()
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 15, height: 15)
@@ -24,7 +24,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
         view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueLabelSummaryCell.reuse)
         return view
     }()
-    var colors = [UIColor]()
+    private var colors = [UIColor]()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

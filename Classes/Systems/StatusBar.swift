@@ -26,7 +26,7 @@ enum StatusBar {
 
     static func showNetworkError() {
         JDStatusBarNotification.show(
-            withStatus: NSLocalizedString("Network connection lost.", comment: ""),
+            withStatus: NSLocalizedString("Cannot connect to GitHub.", comment: ""),
             dismissAfter: 3,
             styleName: JDStatusBarStyleError
         )

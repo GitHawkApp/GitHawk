@@ -71,6 +71,11 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         resetAnimations()
     }
 
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        resetAnimations()
+    }
+
     // MARK: Private API
 
     @objc private func resetAnimations() {
@@ -84,8 +89,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         emojiBounce.duration = duration
         emojiBounce.timingFunction = timingFunction
 
-        emoji.layer.removeAllAnimations()
-        emoji.layer.add(emojiBounce, forKey: nil)
+        emoji.layer.add(emojiBounce, forKey: "nonewnotificationscell.emoji")
 
         let shadowScale = CABasicAnimation(keyPath: "transform.scale")
         shadowScale.toValue = 0.9
@@ -94,8 +98,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         shadowScale.duration = duration
         shadowScale.timingFunction = timingFunction
 
-        shadow.removeAllAnimations()
-        shadow.add(shadowScale, forKey: nil)
+        shadow.add(shadowScale, forKey: "nonewnotificationscell.shadow")
     }
 
 }

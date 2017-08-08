@@ -71,3 +71,9 @@ fragment headPaging on PageInfo {
   hasPreviousPage
   startCursor
 }
+
+fragment milestoneFields on Milestone {
+  number
+  title
+  url
+}

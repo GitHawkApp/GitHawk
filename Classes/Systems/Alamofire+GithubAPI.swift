@@ -18,8 +18,9 @@ func newGithubClient(
 
     // for apollo + github gql endpoint
     // http://dev.apollodata.com/ios/initialization.html
-    if let token = userSession?.token {
-        additionalHeaders["Authorization"] = "Bearer \(token)"
+    if let token = userSession?.token, let authMethod = userSession?.authMethod {
+        let header = authMethod == .oauth ? "Bearer \(token)" : "token \(token)"
+        additionalHeaders["Authorization"] = header
     }
 
     let config = URLSessionConfiguration.default

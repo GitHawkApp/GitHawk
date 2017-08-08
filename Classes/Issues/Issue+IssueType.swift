@@ -55,6 +55,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return timeline.pageInfo.fragments.headPaging
     }
 
+    var viewerCanUpdate: Bool {
+        return fragments.updatableFields.viewerCanUpdate
+    }
+
     func timelineViewModels(width: CGFloat) -> [ListDiffable] {
         guard let nodes = timeline.nodes else { return [] }
         let cleanNodes = nodes.flatMap { $0 }

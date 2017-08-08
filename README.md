@@ -8,6 +8,8 @@ Freetime is a small iOS app that makes managing GitHub accounts and projects a l
 
 It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
 
+Download Freetime on the [App Store](https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249).
+
 ## Why
 
 - Push `IGListKit` + Swift to its limits

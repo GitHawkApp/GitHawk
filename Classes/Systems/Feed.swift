@@ -60,6 +60,8 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 
+        refresh()
+
         adapter.collectionView = collectionView
 
         if collectionView.superview == nil {
@@ -67,7 +69,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
 
         collectionView.refreshControl?.beginRefreshing()
-        refresh()
     }
 
     func viewWillLayoutSubviews(view: UIView) {
@@ -81,12 +82,18 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
     }
 
-    func finishLoading(dismissRefresh: Bool, animated: Bool = true) {
+    func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> ())? = nil) {
         status = .idle
         let block = {
             self.adapter.performUpdates(animated: animated) { _ in
                 if dismissRefresh {
+                    // execute the completion block after the refresh control is gone
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock(completion)
                     self.collectionView.refreshControl?.endRefreshing()
+                    CATransaction.commit()
+                } else {
+                    completion?()
                 }
             }
         }

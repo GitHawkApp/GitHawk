@@ -9,36 +9,6 @@
 import UIKit
 import IGListKit
 
-func createViewModels(
-    issue: IssueType,
-    width: CGFloat
-    ) -> (viewModels: [ListDiffable], timeline: [ListDiffable]) {
-
-    var viewModels = [ListDiffable]()
-
-    let status: IssueStatus = issue.merged ? .merged : issue.closableFields.closed ? .closed : .open
-    viewModels.append(IssueStatusModel(status: status, pullRequest: issue.pullRequest, locked: issue.locked))
-    viewModels.append(titleStringSizing(title: issue.title, width: width))
-    viewModels.append(IssueLabelsModel(labels: issue.labelableFields.issueLabelModels))
-    viewModels.append(createAssigneeModel(assigneeFields: issue.assigneeFields))
-
-    if let reviewers = issue.reviewRequestModel {
-        viewModels.append(reviewers)
-    }
-
-    if let root = createCommentModel(
-        id: issue.id,
-        commentFields: issue.commentFields,
-        reactionFields: issue.reactionFields,
-        width: width,
-        threadState: .single
-        ) {
-        viewModels.append(root)
-    }
-
-    return (viewModels, issue.timelineViewModels(width: width))
-}
-
 func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
     let attributedString = NSAttributedString(
         string: title,

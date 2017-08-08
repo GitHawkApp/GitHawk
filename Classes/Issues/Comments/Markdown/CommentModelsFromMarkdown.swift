@@ -121,9 +121,9 @@ func substringOrNewline(text: String, range: NSRange) -> String {
     }
 }
 
-func typeNeedsNewline(type: MMElementType) -> Bool {
-    switch type {
-    case .paragraph: return true
+func needsNewline(element: MMElement) -> Bool {
+    switch element.type {
+    case .paragraph: return element.parent?.type != .listItem
     case .listItem: return true
     case .header: return true
     default: return false
@@ -174,7 +174,7 @@ func travelAST(
     // push more text attributes on the stack the deeper we go
     let pushedAttributes = PushAttributes(element: element, current: attributeStack, listLevel: nextListLevel)
 
-    if typeNeedsNewline(type: element.type) {
+    if needsNewline(element: element) {
         attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))
     }
 
@@ -190,15 +190,18 @@ func travelAST(
 
     if element.type == .none || element.type == .entity {
         let substring = substringOrNewline(text: markdown, range: element.range)
-        attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
-    } else if element.type == .lineBreak {
-        attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))
+
+        // hack: dont allow newlines within lists
+        if substring != newlineString || listLevel == 0 {
+            attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
+        }
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
         let isInsideBulletedList = element.parent?.type == .bulletedList
         let modifier: String
         if isInsideBulletedList {
-            modifier = "\(Strings.bullet) "
+            let bullet = listLevel % 2 == 0 ? Strings.bulletHollow : Strings.bullet
+            modifier = "\(bullet) "
         } else if element.numberedListPosition > 0 {
             modifier = "\(element.numberedListPosition). "
         } else {
