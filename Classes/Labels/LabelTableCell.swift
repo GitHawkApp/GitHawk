@@ -18,6 +18,7 @@ final class LabelTableCell: UITableViewCell {
         button.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
         button.layer.borderWidth = 1 / UIScreen.main.scale
         button.clipsToBounds = true
+        button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(
             top: Styles.Sizes.inlineSpacing,
             left: Styles.Sizes.columnSpacing,

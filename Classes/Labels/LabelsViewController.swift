@@ -17,7 +17,6 @@ final class LabelsViewController: UITableViewController {
     private weak var delegate: LabelsViewControllerDelegate? = nil
     private var labels = [RepositoryLabel]()
     private var selectedLabels = Set<String>()
-    private var performedInitialLoad = false
     private var client: GithubClient!
     private var request: RepositoryLabelsQuery!
 
@@ -26,15 +25,9 @@ final class LabelsViewController: UITableViewController {
 
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if !performedInitialLoad {
-            tableView.refreshControl?.beginRefreshing()
-            fetch()
-        }
+        tableView.refreshControl?.beginRefreshing()
+        fetch()
     }
 
     // MARK: Private API
@@ -44,7 +37,6 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        performedInitialLoad = true
         client.apollo.fetch(query: request, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             self.tableView.refreshControl?.endRefreshing()
             if let nodes = result?.data?.repository?.labels?.nodes {
