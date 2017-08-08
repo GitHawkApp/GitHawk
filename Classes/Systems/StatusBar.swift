@@ -42,4 +42,13 @@ enum StatusBar {
         provideHapticFeedback()
     }
 
+    static func showPermissionsError() {
+        JDStatusBarNotification.show(
+            withStatus: NSLocalizedString("You must request access.", comment: ""),
+            dismissAfter: 3,
+            styleName: JDStatusBarStyleError
+        )
+        provideHapticFeedback()
+    }
+
 }

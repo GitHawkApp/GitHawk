@@ -107,9 +107,12 @@ LabelsViewControllerDelegate {
             method: .patch,
             parameters: ["labels": selectedLabels.map { $0.name }]
         ) { [weak self] (response, _) in
-            if response.response?.statusCode != 200 {
+            if let statusCode = response.response?.statusCode, statusCode != 200 {
                 self?.labelsOverride = nil
                 self?.update(animated: true)
+                if statusCode == 403 {
+                    StatusBar.showPermissionsError()
+                }
             }
         }
         client.request(request)
