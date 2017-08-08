@@ -2735,6 +2735,80 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
+public final class RepositoryLabelsQuery: GraphQLQuery {
+  public static let operationDefinition =
+    "query RepositoryLabels($owner: String!, $repo: String!) {" +
+    "  repository(owner: $owner, name: $repo) {" +
+    "    __typename" +
+    "    labels(first: 100) {" +
+    "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        name" +
+    "        color" +
+    "      }" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public let owner: String
+  public let repo: String
+
+  public init(owner: String, repo: String) {
+    self.owner = owner
+    self.repo = repo
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "repo": repo]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Lookup a given repository by the owner and repository name.
+    public let repository: Repository?
+
+    public init(reader: GraphQLResultReader) throws {
+      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["repo"]]))
+    }
+
+    public struct Repository: GraphQLMappable {
+      public let __typename: String
+      /// A list of labels associated with the repository.
+      public let labels: Label?
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        labels = try reader.optionalValue(for: Field(responseName: "labels", arguments: ["first": 100]))
+      }
+
+      public struct Label: GraphQLMappable {
+        public let __typename: String
+        /// A list of nodes.
+        public let nodes: [Node?]?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+          /// Identifies the label name.
+          public let name: String
+          /// Identifies the label color.
+          public let color: String
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            name = try reader.value(for: Field(responseName: "name"))
+            color = try reader.value(for: Field(responseName: "color"))
+          }
+        }
+      }
+    }
+  }
+}
+
 public struct ReactionFields: GraphQLNamedFragment {
   public static let fragmentDefinition =
     "fragment reactionFields on Reactable {" +

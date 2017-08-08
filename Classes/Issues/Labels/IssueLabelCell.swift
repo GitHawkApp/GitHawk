@@ -42,7 +42,7 @@ final class IssueLabelCell: UICollectionViewCell, ListBindable {
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueLabelModel else { return }
+        guard let viewModel = viewModel as? RepositoryLabel else { return }
         let color = UIColor.fromHex(viewModel.color)
         background.backgroundColor = color
         label.text = viewModel.name

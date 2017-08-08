@@ -1,5 +1,5 @@
 //
-//  IssueLabelModel.swift
+//  Label.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/2/17.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabelModel: ListDiffable {
+final class RepositoryLabel: ListDiffable {
 
     let color: String
     let name: String
@@ -27,7 +27,7 @@ final class IssueLabelModel: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueLabelModel else { return false }
+        guard let object = object as? RepositoryLabel else { return false }
         return color == object.color
     }
 

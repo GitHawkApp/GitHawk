@@ -287,7 +287,7 @@ IssueTextActionsViewDelegate {
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
-        case is IssueLabelsModel: return IssueLabelsSectionController()
+        case is IssueLabelsModel: return IssueLabelsSectionController(owner: owner, repo: repo, number: number, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(owner: owner, repo: repo)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(owner: owner, repo: repo)

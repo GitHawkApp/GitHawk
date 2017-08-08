@@ -10,11 +10,11 @@ import Foundation
 
 extension LabelableFields {
 
-    var issueLabelModels: [IssueLabelModel] {
-        var models = [IssueLabelModel]()
+    var issueLabelModels: [RepositoryLabel] {
+        var models = [RepositoryLabel]()
         for node in labels?.nodes ?? [] {
             guard let node = node else { continue }
-            models.append(IssueLabelModel(color: node.color, name: node.name))
+            models.append(RepositoryLabel(color: node.color, name: node.name))
         }
         return models
     }
