@@ -28,7 +28,7 @@ final class RepositoryEmptyResultsSectionController: ListSectionController {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: RepositoryEmptyResultsCell.self, for: self, at: index) as? RepositoryEmptyResultsCell else {
-                fatalError("Missing context, object, or cell is wrong type")
+            fatalError("Missing context, object, or cell is wrong type")
         }
         
         cell.type = type

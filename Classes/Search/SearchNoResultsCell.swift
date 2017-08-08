@@ -18,7 +18,7 @@ final class SearchNoResultsCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        accessibilityTraits = UIAccessibilityTraitStaticText
+        accessibilityTraits |= UIAccessibilityTraitStaticText
         isAccessibilityElement = true
         
         emoji.text = "😞"

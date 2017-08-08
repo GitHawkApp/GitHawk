@@ -22,14 +22,14 @@ extension RepositoryLoadable {
 
 protocol RepositoryQuery {
     init(owner: String, name: String, after: String?)
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]?
+    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]
     func nextPageToken(from data: GraphQLMappable) -> String?
 }
 
 extension RepoIssuesQuery: RepositoryQuery {
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]? {
-        guard let issues = data as? RepoIssuesQuery.Data else { return nil }
-        return issues.repository?.issues.nodes?.flatMap { $0 }
+    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType] {
+        guard let issues = data as? RepoIssuesQuery.Data else { return [] }
+        return issues.repository?.issues.nodes?.flatMap { $0 } ?? []
     }
     
     func nextPageToken(from data: GraphQLMappable) -> String? {
@@ -40,9 +40,9 @@ extension RepoIssuesQuery: RepositoryQuery {
 }
 
 extension RepoPullRequestsQuery: RepositoryQuery {
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]? {
-        guard let prs = data as? RepoPullRequestsQuery.Data else { return nil }
-        return prs.repository?.pullRequests.nodes?.flatMap { $0 }
+    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType] {
+        guard let prs = data as? RepoPullRequestsQuery.Data else { return [] }
+        return prs.repository?.pullRequests.nodes?.flatMap { $0 } ?? []
     }
     
     func nextPageToken(from data: GraphQLMappable) -> String? {
@@ -92,7 +92,7 @@ final class RepositoryClient {
                 return
             }
             
-            let summaries: [IssueSummaryModel]? = query.summaryTypes(from: data)?.map { summaryType in
+            let summaries: [IssueSummaryModel] = query.summaryTypes(from: data).map { summaryType in
                 summaryType.attributedTitle.computeSize(containerWidth)
                 return IssueSummaryModel(info: summaryType)
             }
@@ -109,7 +109,7 @@ final class RepositoryClient {
             case .error:
                 completion()
             case .success(let payload):
-                if let models = payload.models {
+                if let models = payload.models, models.count > 0 {
                     self.issues += models
                 }
                 
@@ -125,7 +125,7 @@ final class RepositoryClient {
             case .error:
                 completion()
             case .success(let payload):
-                if let models = payload.models {
+                if let models = payload.models, models.count > 0 {
                     self.pullRequests += models
                 }
                 

@@ -22,7 +22,7 @@ protocol IssueSummaryType {
 
 extension IssueSummaryType {
     var stateIcon: UIImage? {
-        var name: String?
+        var name: String
         
         switch rawState {
         case IssueState.open.rawValue where isIssue: name = "issue-opened"
@@ -33,22 +33,18 @@ extension IssueSummaryType {
         default: return nil
         }
         
-        return UIImage(named: name ?? "")?.withRenderingMode(.alwaysTemplate)
+        return UIImage(named: name)?.withRenderingMode(.alwaysTemplate)
     }
     
     var stateColor: UIColor? {
-        var hex: String?
-        
         switch rawState {
-        case IssueState.open.rawValue where isIssue: hex = Styles.Colors.Green.medium
-        case IssueState.closed.rawValue where isIssue: hex = Styles.Colors.Red.medium
-        case PullRequestState.open.rawValue where !isIssue: hex = Styles.Colors.Green.medium
-        case PullRequestState.closed.rawValue where !isIssue: hex = Styles.Colors.Red.medium
-        case PullRequestState.merged.rawValue where !isIssue: hex = Styles.Colors.purple
+        case IssueState.open.rawValue where isIssue: return Styles.Colors.Green.medium.color
+        case IssueState.closed.rawValue where isIssue: return Styles.Colors.Red.medium.color
+        case PullRequestState.open.rawValue where !isIssue: return Styles.Colors.Green.medium.color
+        case PullRequestState.closed.rawValue where !isIssue: return Styles.Colors.Red.medium.color
+        case PullRequestState.merged.rawValue where !isIssue: return Styles.Colors.purple.color
         default: return nil
         }
-        
-        return hex?.color
     }
 }
 

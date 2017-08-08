@@ -9,6 +9,11 @@
 import Foundation
 import IGListKit
 
+struct GithubLanguage {
+    let name: String
+    let color: UIColor?
+}
+
 class SearchResult: ListDiffable, RepositoryLoadable {
     
     let id: String
@@ -64,9 +69,4 @@ class SearchResult: ListDiffable, RepositoryLoadable {
         guard let object = object as? SearchResult else { return false }
         return id == object.id && name == object.name
     }
-}
-
-struct GithubLanguage {
-    let name: String
-    let color: UIColor?
 }
