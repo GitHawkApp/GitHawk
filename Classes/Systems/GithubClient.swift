@@ -96,8 +96,7 @@ struct GithubClient {
                                  headers: request.headers)
             .responseJSON(completionHandler: { response in
                 // remove the github session if requesting with a session
-                if let statusCode = response.response?.statusCode,
-                    (statusCode == 401 || statusCode == 403) {
+                if let statusCode = response.response?.statusCode, statusCode == 401 {
                     StatusBar.showRevokeError()
                     self.sessionManager.logout()
                 } else {
