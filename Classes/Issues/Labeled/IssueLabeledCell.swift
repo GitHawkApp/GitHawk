@@ -36,7 +36,7 @@ final class IssueLabeledCell: UICollectionViewCell {
         labelButton.addTarget(self, action: #selector(IssueLabeledCell.onLabel), for: .touchUpInside)
         contentView.addSubview(labelButton)
         labelButton.snp.makeConstraints { make in
-            make.left.equalTo(descriptionButton.snp.right).offset(Styles.Sizes.inlineSpacing * 2)
+            make.left.equalTo(descriptionButton.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(descriptionButton)
         }
 
