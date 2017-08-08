@@ -28,6 +28,7 @@ IssueTextActionsViewDelegate {
     private let number: Int
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
+    private var hasScrolledToBottom = false
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -243,7 +244,10 @@ IssueTextActionsViewDelegate {
             default: break
             }
             self?.feed.finishLoading(dismissRefresh: true) {
-                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                if self?.hasScrolledToBottom != true {
+                    self?.hasScrolledToBottom = true
+                    self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                }
             }
         }
     }
