@@ -14,6 +14,7 @@ protocol LabelsViewControllerDelegate: class {
 
 final class LabelsViewController: UITableViewController {
 
+    private let minContentHeight: CGFloat = 200
     private weak var delegate: LabelsViewControllerDelegate? = nil
     private var labels = [RepositoryLabel]()
     private var selectedLabels = Set<String>()
@@ -37,20 +38,29 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        client.apollo.fetch(query: request, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
-            self.tableView.refreshControl?.endRefreshing()
+        client.apollo.fetch(query: request, cachePolicy: .fetchIgnoringCacheData) { [weak self] (result, error) in
+            self?.tableView.refreshControl?.endRefreshing()
             if let nodes = result?.data?.repository?.labels?.nodes {
                 var labels = [RepositoryLabel]()
                 for node in nodes {
                     guard let node = node else { continue }
                     labels.append(RepositoryLabel(color: node.color, name: node.name))
                 }
-                self.labels = labels
-                self.tableView.reloadData()
+                self?.update(labels: labels)
             } else {
                 StatusBar.showGenericError()
             }
         }
+    }
+
+    func update(labels: [RepositoryLabel]) {
+        self.labels = labels
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+
+        var contentSize = tableView.contentSize
+        contentSize.height = max(minContentHeight, contentSize.height)
+        navigationController?.preferredContentSize = contentSize
     }
 
     @IBAction func onDone() {

@@ -79,7 +79,7 @@ LabelsViewControllerDelegate {
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
-        if collectionContext?.cellForItem(at: index, sectionController: self) is IssueLabelEditCell {
+        if let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? IssueLabelEditCell {
             guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
                 else { fatalError("Missing labels view controller") }
             controller.configure(
@@ -89,7 +89,11 @@ LabelsViewControllerDelegate {
                 repo: repo,
                 delegate: self
             )
-            viewController?.present(UINavigationController(rootViewController: controller), animated: true)
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .popover
+            nav.popoverPresentationController?.sourceView = cell.label
+            nav.popoverPresentationController?.sourceRect = cell.label.frame
+            viewController?.present(nav, animated: true)
         } else {
             expanded = !expanded
             update(animated: true)
@@ -100,7 +104,7 @@ LabelsViewControllerDelegate {
 
     func didDismiss(controller: LabelsViewController, selectedLabels: [RepositoryLabel]) {
         labelsOverride = selectedLabels
-        update(animated: false)
+        update(animated: true)
 
         let request = GithubClient.Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
