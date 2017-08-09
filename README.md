@@ -1,6 +1,6 @@
 # Freetime
 
-_A GitHub manager app to use in your freetime._
+The simplest way to **read** and **respond** to your GitHub notifications on iOS.
 
 <a href=https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249><img src=app-store-badge.png width=250></a>
 
