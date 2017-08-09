@@ -8,7 +8,6 @@
 ## Build generated
 build/
 DerivedData/
-*.xcconfig
 
 ## Various settings
 *.pbxuser

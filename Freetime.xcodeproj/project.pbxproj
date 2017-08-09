@@ -183,6 +183,7 @@
 		297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */; };
 		297AE8791EC0D5C200B44A1F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85F1EC0D5C100B44A1F /* App.swift */; };
 		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
+		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
 		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
@@ -262,7 +263,6 @@
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		4C733A0B57F91680B08D3CEC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */; };
-		5456E5181F2B98D60048C01C /* GithubAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5456E5171F2B98D60048C01C /* GithubAPI.m */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		6224B05BDD260B22C7D6684F /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */; };
 		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
@@ -444,6 +444,7 @@
 		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		297AE85F1EC0D5C100B44A1F /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingIndicator.swift"; sourceTree = "<group>"; };
@@ -531,11 +532,6 @@
 		29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freetime-Bridging-Header.h"; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
-		5456E5161F2B98D60048C01C /* GithubAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GithubAPI.h; sourceTree = "<group>"; };
-		5456E5171F2B98D60048C01C /* GithubAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GithubAPI.m; sourceTree = "<group>"; };
-		5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
-		5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-DEBUG.xcconfig"; sourceTree = "<group>"; };
-		5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "FREETIME-RELEASE.xcconfig"; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		665D835932698FC1ED93ABE3 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ADC39F0C328AE48CFFA207E /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -919,7 +915,6 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
-				5481D6BF1F2B89A500785F94 /* CONTRIBUTORS */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
@@ -967,6 +962,7 @@
 				297AE8581EC0D5C100B44A1F /* Login */,
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
+				297AE8611EC0D5C100B44A1F /* Other */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
 				29C1677B1ECA1CED00439D62 /* Settings */,
 				297AE8651EC0D5C100B44A1F /* Systems */,
@@ -1002,6 +998,14 @@
 				29C9FDC41EC65FEE00EE3A52 /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		297AE8611EC0D5C100B44A1F /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				297AE8631EC0D5C100B44A1F /* Secrets.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
@@ -1201,18 +1205,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		5481D6BF1F2B89A500785F94 /* CONTRIBUTORS */ = {
-			isa = PBXGroup;
-			children = (
-				5481D6C11F2B89EF00785F94 /* CONTRIBUTING.md */,
-				5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */,
-				5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */,
-				5456E5161F2B98D60048C01C /* GithubAPI.h */,
-				5456E5171F2B98D60048C01C /* GithubAPI.m */,
-			);
-			name = CONTRIBUTORS;
-			sourceTree = "<group>";
-		};
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -1242,7 +1234,6 @@
 			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
 			buildPhases = (
 				A9F2E53A389930494E07E22A /* [CP] Check Pods Manifest.lock */,
-				5481D6BE1F2B896A00785F94 /* Generate XCConfig Files */,
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
@@ -1294,7 +1285,7 @@
 				TargetAttributes = {
 					297AE8331EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = V2CWYL9AN8;
+						DevelopmentTeam = 523C4DWBTH;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -1403,7 +1394,7 @@
 		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
@@ -1411,7 +1402,7 @@
 			name = "Generate Apollo GraphQL API";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output API.swift";
 		};
@@ -1429,20 +1420,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		5481D6BE1F2B896A00785F94 /* Generate XCConfig Files */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate XCConfig Files";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "DEBUG_PATH=\"FREETIME-DEBUG.xcconfig\"\nRELEASE_PATH=\"FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"CLIENT_ID=\\\"YOUR_CLIENT_ID_HERE\\\"\" >> \"$1\"\n    echo \"CLIENT_SECRET=\\\"YOUR_CLIENT_SECRET_HERE\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = CLIENT_ID=\\$(CLIENT_ID) CLIENT_SECRET=\\$(CLIENT_SECRET)\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\nif [ ! -f \"$DEBUG_PATH\" ]; then\n  writeTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\nfi\n\nif [ ! -f \"$RELEASE_PATH\" ]; then\n  writeTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\nfi";
 		};
 		569FA08158547B98DF94DD42 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1567,7 +1544,7 @@
 				292FF8B21F302FE7009E63F7 /* UITextView+SelectedRange.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
-				5456E5181F2B98D60048C01C /* GithubAPI.m in Sources */,
+				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */,
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
@@ -1874,12 +1851,12 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5481D6C21F2B8A5200785F94 /* FREETIME-DEBUG.xcconfig */;
+			baseConfigurationReference = E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = V2CWYL9AN8;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1900,12 +1877,12 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5481D6C31F2B8ABA00785F94 /* FREETIME-RELEASE.xcconfig */;
+			baseConfigurationReference = 2DFFA8FCC50B686D7424BC06 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = V2CWYL9AN8;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
