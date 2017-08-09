@@ -44,6 +44,6 @@ Freetime will be released with (at least) a three-phased rollout:
 
 I'm happy to take PRs, but I'm working off of `master` at the moment, and your PR might go stale quick. Be warned!
 
-You'll also need a [Client ID and Client Secret](Setup.md).
+To get started, please read the [Contributors Guide](CONTRIBUTING.md)
 
 Once this is released and development slows down I might get more formal about our work. Until then, its the wild, wild west.
