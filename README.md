@@ -2,13 +2,13 @@
 
 _A GitHub manager app to use in your freetime._
 
+<a href=https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249><img src=app-store-badge.png width=250></a>
+
 ## What
 
 Freetime is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
 
 It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
-
-Download Freetime on the [App Store](https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249).
 
 ## Why
 
