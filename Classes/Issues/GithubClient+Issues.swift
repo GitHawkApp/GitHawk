@@ -58,6 +58,7 @@ extension GithubClient {
 
                     let issueResult = IssueResult(
                         subjectId: issueType.id,
+                        pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
                         labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),

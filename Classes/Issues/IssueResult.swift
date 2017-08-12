@@ -12,6 +12,7 @@ import IGListKit
 struct IssueResult {
 
     let subjectId: String
+    let pullRequest: Bool
 
     let status: IssueStatusModel
     let title: NSAttributedStringSizing

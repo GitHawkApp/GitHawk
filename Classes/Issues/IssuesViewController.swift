@@ -27,6 +27,7 @@ IssueTextActionsViewDelegate {
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var hasScrolledToBottom = false
+    private let viewFilesModel = "view_files" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -267,6 +268,10 @@ IssueTextActionsViewDelegate {
             objects.append(reviewers)
         }
 
+        if current.pullRequest {
+            objects.append(viewFilesModel)
+        }
+
         if current.hasPreviousPage {
             objects.append(IssueNeckLoadModel())
         }
@@ -282,6 +287,10 @@ IssueTextActionsViewDelegate {
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? ListDiffable, object === viewFilesModel {
+            return IssueViewFilesSectionController(issueModel: model)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
