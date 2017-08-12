@@ -13,15 +13,15 @@ final class IssueFilesViewController: UITableViewController {
     private var model: IssueDetailsModel!
     private var client: GithubClient!
     private var result: GithubClient.FileResult? = nil
+    private let feedRefresh = FeedRefresh()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(IssueFilesViewController.onRefresh), for: .valueChanged)
-        tableView.refreshControl = refreshControl
+        feedRefresh.refreshControl.addTarget(self, action: #selector(IssueFilesViewController.onRefresh), for: .valueChanged)
+        tableView.refreshControl = feedRefresh.refreshControl
 
-        refreshControl.beginRefreshing()
+        feedRefresh.beginRefreshing()
         fetch()
     }
 
@@ -50,7 +50,7 @@ final class IssueFilesViewController: UITableViewController {
     func handle(result: GithubClient.FileResult) {
         self.result = result
         tableView.reloadData()
-        tableView.refreshControl?.endRefreshing()
+        feedRefresh.endRefreshing()
 
         switch result {
         case .success(let files):

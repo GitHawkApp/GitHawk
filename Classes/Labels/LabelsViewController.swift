@@ -20,14 +20,15 @@ final class LabelsViewController: UITableViewController {
     private var selectedLabels = Set<String>()
     private var client: GithubClient!
     private var request: RepositoryLabelsQuery!
+    private let feedRefresh = FeedRefresh()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
+        tableView.refreshControl = feedRefresh.refreshControl
+        feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
 
-        tableView.refreshControl?.beginRefreshing()
+        feedRefresh.beginRefreshing()
         fetch()
     }
 
@@ -39,7 +40,7 @@ final class LabelsViewController: UITableViewController {
 
     func fetch() {
         client.apollo.fetch(query: request, cachePolicy: .fetchIgnoringCacheData) { [weak self] (result, error) in
-            self?.tableView.refreshControl?.endRefreshing()
+            self?.feedRefresh.endRefreshing()
             if let nodes = result?.data?.repository?.labels?.nodes {
                 var labels = [RepositoryLabel]()
                 for node in nodes {
