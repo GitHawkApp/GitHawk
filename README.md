@@ -4,16 +4,10 @@ The simplest way to **read** and **respond** to your GitHub notifications on iOS
 
 <a href=https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249><img src=app-store-badge.png width=250></a>
 
-## What
-
-Freetime is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
-
-It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
-
 ## Why
 
 - Push `IGListKit` + Swift to its limits
-- Enable project management on mobile
+- Enable project management on mobile new word
 - Explore [GitHub's GraphQL API](https://developer.github.com/v4/)
 - Scratch my Swift itch
 - Create a real, complex app in the open
@@ -47,3 +41,15 @@ I'm happy to take PRs, but I'm working off of `master` at the moment, and your P
 You'll also need a [Client ID and Client Secret](Setup.md).
 
 Once this is released and development slows down I might get more formal about our work. Until then, its the wild, wild west.
+
++ list one
++ list two
++ list three
+
+- list one
+- list two
+- list three
+
+* list one
+* list two
+* list three
