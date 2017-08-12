@@ -15,16 +15,12 @@ ListBindingSectionControllerSelectionDelegate,
 LabelsViewControllerDelegate {
 
     private var expanded = false
-    private var owner: String
-    private var repo: String
-    private var number: Int
-    private var client: GithubClient
+    private let issueModel: IssueDetailsModel
+    private let client: GithubClient
     private var labelsOverride: [RepositoryLabel]? = nil
 
-    init(owner: String, repo: String, number: Int, client: GithubClient) {
-        self.owner = owner
-        self.repo = repo
-        self.number = number
+    init(issueModel: IssueDetailsModel, client: GithubClient) {
+        self.issueModel = issueModel
         self.client = client
         super.init()
         selectionDelegate = self
@@ -85,8 +81,8 @@ LabelsViewControllerDelegate {
             controller.configure(
                 selected: labelsOverride ?? self.object?.labels ?? [],
                 client: client,
-                owner: owner,
-                repo: repo,
+                owner: issueModel.owner,
+                repo: issueModel.repo,
                 delegate: self
             )
             let nav = UINavigationController(rootViewController: controller)
@@ -107,7 +103,7 @@ LabelsViewControllerDelegate {
         update(animated: true)
 
         let request = GithubClient.Request(
-            path: "repos/\(owner)/\(repo)/issues/\(number)",
+            path: "repos/\(issueModel.owner)/\(issueModel.repo)/issues/\(issueModel.number)",
             method: .patch,
             parameters: ["labels": selectedLabels.map { $0.name }]
         ) { [weak self] (response, _) in

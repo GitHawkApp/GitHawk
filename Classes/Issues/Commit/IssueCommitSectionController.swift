@@ -11,12 +11,11 @@ import IGListKit
 
 final class IssueCommitSectionController: ListGenericSectionController<IssueCommitModel>, IssueCommitCellDelegate {
 
-    let owner: String
-    let repo: String
+    private let issueModel: IssueDetailsModel
 
-    init(owner: String, repo: String) {
-        self.owner = owner
-        self.repo = repo
+    init(issueModel: IssueDetailsModel) {
+        self.issueModel = issueModel
+        super.init()
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
@@ -35,7 +34,7 @@ final class IssueCommitSectionController: ListGenericSectionController<IssueComm
 
     override func didSelectItem(at index: Int) {
         guard let hash = object?.hash else { return }
-        viewController?.presentCommit(owner: owner, repo: repo, hash: hash)
+        viewController?.presentCommit(owner: issueModel.owner, repo: issueModel.repo, hash: hash)
     }
 
     // MARK: IssueCommitCellDelegate

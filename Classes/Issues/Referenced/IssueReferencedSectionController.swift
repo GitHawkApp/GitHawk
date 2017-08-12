@@ -34,11 +34,10 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
+        let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: object.number)
         let controller = IssuesViewController(
             client: client,
-            owner: object.owner,
-            repo: object.repo,
-            number: object.number
+            model: model
         )
         viewController?.showDetailViewController(controller, sender: nil)
     }

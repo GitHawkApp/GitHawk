@@ -23,9 +23,7 @@ IssueNeckLoadSectionControllerDelegate,
 IssueTextActionsViewDelegate {
 
     private let client: GithubClient
-    private let owner: String
-    private let repo: String
-    private let number: Int
+    private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var hasScrolledToBottom = false
@@ -49,20 +47,16 @@ IssueTextActionsViewDelegate {
 
     init(
         client: GithubClient,
-        owner: String,
-        repo: String,
-        number: Int
+        model: IssueDetailsModel
         ) {
         self.client = client
-        self.owner = owner
-        self.repo = repo
-        self.number = number
+        self.model = model
         self.addCommentClient = AddCommentClient(client: client)
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        title = "\(owner)/\(repo)#\(number)"
+        title = "\(model.owner)/\(model.repo)#\(model.number)"
 
         self.addCommentClient.addListener(listener: self)
 
@@ -150,7 +144,7 @@ IssueTextActionsViewDelegate {
     // MARK: SLKTextViewController overrides
 
     override func keyForTextCaching() -> String? {
-        return "issue.\(owner).\(repo).\(number)"
+        return "issue.\(model.owner).\(model.repo).\(model.number)"
     }
 
     override func didPressRightButton(_ sender: Any?) {
@@ -199,7 +193,7 @@ IssueTextActionsViewDelegate {
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
 
-        let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
+        let path = "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)"
         let externalURL = URL(string: path)!
 
         let share = UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
@@ -224,9 +218,9 @@ IssueTextActionsViewDelegate {
 
     func fetch(previous: Bool) {
         client.fetch(
-            owner: owner,
-            repo: repo,
-            number: number,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
             width: view.bounds.width,
             prependResult: previous ? current : nil
         ) { [weak self] resultType in
@@ -291,10 +285,10 @@ IssueTextActionsViewDelegate {
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
-        case is IssueLabelsModel: return IssueLabelsSectionController(owner: owner, repo: repo, number: number, client: client)
+        case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
-        case is IssueLabeledModel: return IssueLabeledSectionController(owner: owner, repo: repo)
-        case is IssueStatusEventModel: return IssueStatusEventSectionController(owner: owner, repo: repo)
+        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
+        case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         case is IssueReviewModel: return IssueReviewSectionController()
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
@@ -303,7 +297,7 @@ IssueTextActionsViewDelegate {
         case is IssueRequestModel: return IssueRequestSectionController()
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
-        case is IssueCommitModel: return IssueCommitSectionController(owner: owner, repo: repo)
+        case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }

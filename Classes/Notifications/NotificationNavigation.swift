@@ -15,11 +15,10 @@ func NavigateToNotificationContent(object: NotificationViewModel, client: Github
         let url = URL(string: "https://github.com/\(object.owner)/\(object.repo)/commit/\(hash)")!
         return SFSafariViewController(url: url)
     case .number(let number):
+        let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
         let controller = IssuesViewController(
             client: client,
-            owner: object.owner,
-            repo: object.repo,
-            number: number
+            model: model
         )
         return UINavigationController(rootViewController: controller)
     }

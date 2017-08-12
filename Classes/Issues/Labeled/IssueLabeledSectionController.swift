@@ -11,12 +11,10 @@ import IGListKit
 
 final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, IssueLabeledCellDelegate {
 
-    private let owner: String
-    private let repo: String
+    private let issueModel: IssueDetailsModel
 
-    init(owner: String, repo: String) {
-        self.owner = owner
-        self.repo = repo
+    init(issueModel: IssueDetailsModel) {
+        self.issueModel = issueModel
         super.init()
     }
 
@@ -43,7 +41,7 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
 
     func didTapLabel(cell: IssueLabeledCell) {
         guard let label = object?.title else { return }
-        viewController?.presentLabels(owner: owner, repo: repo, label: label)
+        viewController?.presentLabels(owner: issueModel.owner, repo: issueModel.repo, label: label)
     }
 
 }

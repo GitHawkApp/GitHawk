@@ -11,12 +11,10 @@ import IGListKit
 
 final class IssueStatusEventSectionController: ListGenericSectionController<IssueStatusEventModel>, IssueStatusEventCellDelegate {
 
-    private let owner: String
-    private let repo: String
+    private let issueModel: IssueDetailsModel
 
-    init(owner: String, repo: String) {
-        self.owner = owner
-        self.repo = repo
+    init(issueModel: IssueDetailsModel) {
+        self.issueModel = issueModel
         super.init()
     }
 
@@ -43,7 +41,7 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
 
     func didTapHash(cell: IssueStatusEventCell) {
         guard let hash = object?.commitHash else { return }
-        viewController?.presentCommit(owner: owner, repo: repo, hash: hash)
+        viewController?.presentCommit(owner: issueModel.owner, repo: issueModel.repo, hash: hash)
     }
 
 }
