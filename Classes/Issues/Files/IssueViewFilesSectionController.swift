@@ -12,9 +12,11 @@ import IGListKit
 final class IssueViewFilesSectionController: ListSectionController {
 
     private let issueModel: IssueDetailsModel
+    private let client: GithubClient
 
-    init(issueModel: IssueDetailsModel) {
+    init(issueModel: IssueDetailsModel, client: GithubClient) {
         self.issueModel = issueModel
+        self.client = client
         super.init()
     }
 
@@ -31,6 +33,12 @@ final class IssueViewFilesSectionController: ListSectionController {
 
     override func didSelectItem(at index: Int) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+
+        guard let controller = UIStoryboard(name: "Files", bundle: Bundle.main)
+            .instantiateInitialViewController() as? IssueFilesViewController
+            else { return }
+        controller.configure(model: issueModel, client: client)
+        viewController?.showDetailViewController(controller, sender: nil)
     }
 
 }

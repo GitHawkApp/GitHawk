@@ -288,7 +288,7 @@ IssueTextActionsViewDelegate {
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         if let object = object as? ListDiffable, object === viewFilesModel {
-            return IssueViewFilesSectionController(issueModel: model)
+            return IssueViewFilesSectionController(issueModel: model, client: client)
         }
 
         switch object {
