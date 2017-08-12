@@ -3,6 +3,8 @@
 To be able to log in during development, you'll need a Client ID and Client Secret.
 To get these, [register](https://github.com/settings/applications/new) a new OAuth application on GitHub.
 
+Another test change
+
 ## Registering
 
 Here, you will need to fill in an Application name, Homepage URL and Authorization callback URL.
