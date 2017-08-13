@@ -31,6 +31,11 @@
 		291929511F3F76B10012067B /* IssueFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929501F3F76B10012067B /* IssueFilesViewController.swift */; };
 		291929531F3F9E490012067B /* IssueFilesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929521F3F9E490012067B /* IssueFilesTableCell.swift */; };
 		291929551F3FAADF0012067B /* FeedRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929541F3FAADF0012067B /* FeedRefresh.swift */; };
+		291929571F3FAFB00012067B /* IssueFileContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929561F3FAFB00012067B /* IssueFileContentViewController.swift */; };
+		2919295A1F3FB1D20012067B /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929581F3FB1D20012067B /* Content.swift */; };
+		2919295B1F3FB1D20012067B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929591F3FB1D20012067B /* Link.swift */; };
+		2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2919295E1F3FD1F40012067B /* IssuePatchContentViewController.swift */; };
+		291929611F3FD2960012067B /* DiffString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929601F3FD2960012067B /* DiffString.swift */; };
 		292484B81F01CB5C0054FE20 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; };
 		292484B91F01CB5C0054FE20 /* SwipeCellKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
@@ -332,6 +337,11 @@
 		291929501F3F76B10012067B /* IssueFilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilesViewController.swift; sourceTree = "<group>"; };
 		291929521F3F9E490012067B /* IssueFilesTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilesTableCell.swift; sourceTree = "<group>"; };
 		291929541F3FAADF0012067B /* FeedRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRefresh.swift; sourceTree = "<group>"; };
+		291929561F3FAFB00012067B /* IssueFileContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFileContentViewController.swift; sourceTree = "<group>"; };
+		291929581F3FB1D20012067B /* Content.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		291929591F3FB1D20012067B /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		2919295E1F3FD1F40012067B /* IssuePatchContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuePatchContentViewController.swift; sourceTree = "<group>"; };
+		291929601F3FD2960012067B /* DiffString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffString.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
@@ -603,6 +613,8 @@
 			children = (
 				2919294E1F3F76A20012067B /* Files.storyboard */,
 				2919294C1F3F746B0012067B /* GithubClient+PullRequestFiles.swift */,
+				291929561F3FAFB00012067B /* IssueFileContentViewController.swift */,
+				2919295E1F3FD1F40012067B /* IssuePatchContentViewController.swift */,
 				291929521F3F9E490012067B /* IssueFilesTableCell.swift */,
 				291929501F3F76B10012067B /* IssueFilesViewController.swift */,
 				2919294A1F3EAD890012067B /* IssueViewFilesCell.swift */,
@@ -1021,8 +1033,10 @@
 			children = (
 				297AE85F1EC0D5C100B44A1F /* App.swift */,
 				297AE8601EC0D5C100B44A1F /* Authorization.swift */,
+				291929581F3FB1D20012067B /* Content.swift */,
 				291929411F3EA8CD0012067B /* File.swift */,
 				2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */,
+				291929591F3FB1D20012067B /* Link.swift */,
 				29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */,
 				29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */,
 				29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */,
@@ -1119,6 +1133,7 @@
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				291929601F3FD2960012067B /* DiffString.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1512,6 +1527,7 @@
 				297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */,
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
 				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
+				2919295B1F3FB1D20012067B /* Link.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFilesTableCell.swift in Sources */,
 				297403D91F18545A00ABA95A /* IssueAssigneesSectionController.swift in Sources */,
@@ -1588,6 +1604,7 @@
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
+				2919295A1F3FB1D20012067B /* Content.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
@@ -1618,6 +1635,7 @@
 				292FCB081EDFCC510026635E /* IssueCommentSummaryCell.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				2974069B1F0EDC7C003A6BFB /* IssueCommentTableModel.swift in Sources */,
+				291929611F3FD2960012067B /* DiffString.swift in Sources */,
 				294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */,
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
@@ -1683,6 +1701,7 @@
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
+				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
@@ -1711,6 +1730,7 @@
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
 				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
+				291929571F3FAFB00012067B /* IssueFileContentViewController.swift in Sources */,
 				29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				29C9FDCE1EC65FEE00EE3A52 /* Notification.swift in Sources */,

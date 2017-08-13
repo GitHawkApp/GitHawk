@@ -38,7 +38,7 @@ final class IssueViewFilesSectionController: ListSectionController {
             .instantiateInitialViewController() as? IssueFilesViewController
             else { return }
         controller.configure(model: issueModel, client: client)
-        viewController?.showDetailViewController(controller, sender: nil)
+        viewController?.show(controller, sender: nil)
     }
 
 }

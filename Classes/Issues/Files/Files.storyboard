@@ -36,7 +36,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classes/Issues/Files/Files.storyboard" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJx-UB-1Ql">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classes/Issues/Files/Files.storyboardClasses/Issues/Files/Files.storyboard" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJx-UB-1Ql">
                                             <rect key="frame" x="16" y="26" width="326" height="20"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,7 +44,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="fJx-UB-1Ql" secondAttribute="trailing" id="ACt-N8-x8n"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fJx-UB-1Ql" secondAttribute="trailing" id="ACt-N8-x8n"/>
                                         <constraint firstItem="bJP-Ct-HaV" firstAttribute="bottom" secondItem="fJx-UB-1Ql" secondAttribute="top" id="C2M-42-Mqh"/>
                                         <constraint firstItem="fJx-UB-1Ql" firstAttribute="leading" secondItem="ztL-p0-l2R" secondAttribute="leading" constant="16" id="WX3-Hy-XLn"/>
                                         <constraint firstItem="fJx-UB-1Ql" firstAttribute="centerY" secondItem="ztL-p0-l2R" secondAttribute="centerY" constant="8" id="Z8b-qg-1Gp"/>
@@ -79,7 +79,9 @@
                             <outlet property="delegate" destination="PPj-lB-M7i" id="AQM-qF-Rf2"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Files" id="eB1-Tv-RSI"/>
+                    <navigationItem key="navigationItem" title="Files" id="eB1-Tv-RSI">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="0Fi-Pp-QnA"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sGJ-KI-JZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

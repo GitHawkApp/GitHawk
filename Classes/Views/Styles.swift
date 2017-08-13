@@ -33,6 +33,12 @@ enum Styles {
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.gutter
         )
+        static let textViewInset = UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing,
+            left: Styles.Sizes.gutter,
+            bottom: Styles.Sizes.rowSpacing,
+            right: Styles.Sizes.gutter
+        )
         static let labelEventHeight: CGFloat = 30
 
         enum Text {

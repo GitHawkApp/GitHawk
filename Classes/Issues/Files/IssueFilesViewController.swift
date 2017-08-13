@@ -18,6 +18,8 @@ final class IssueFilesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+
         feedRefresh.refreshControl.addTarget(self, action: #selector(IssueFilesViewController.onRefresh), for: .valueChanged)
         tableView.refreshControl = feedRefresh.refreshControl
 
@@ -95,6 +97,15 @@ final class IssueFilesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        guard let result = result else { return }
+
+        switch result {
+        case .success(let files):
+            let controller = IssuePatchContentViewController(file: files[indexPath.row], client: client)
+            show(controller, sender: nil)
+        default: break
+        }
     }
 
 }
