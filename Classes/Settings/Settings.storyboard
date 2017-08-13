@@ -18,6 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="jkq-3p-p02">
                             <rect key="frame" x="0.0" y="385.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,8 +104,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcA-wE-SAS">
-                                                    <rect key="frame" x="15" y="12" width="142.5" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badge Unread" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcA-wE-SAS">
+                                                    <rect key="frame" x="15" y="12" width="104" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -116,10 +117,10 @@
                                                     </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36B-Ge-m5V">
-                                                    <rect key="frame" x="268" y="5" width="92" height="32"/>
+                                                    <rect key="frame" x="315" y="5" width="60" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <state key="normal" title="Settings.app">
-                                                        <color key="titleColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="Settings">
+                                                        <color key="titleColor" red="0.63921568627450975" green="0.66666666666666663" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="onSettings:" destination="NnB-TU-bkW" eventType="touchUpInside" id="aSG-sV-bwO"/>
@@ -127,7 +128,7 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="36B-Ge-m5V" secondAttribute="trailing" constant="15" id="UZo-aW-Fbw"/>
+                                                <constraint firstAttribute="trailing" secondItem="36B-Ge-m5V" secondAttribute="trailing" id="UZo-aW-Fbw"/>
                                                 <constraint firstItem="TcA-wE-SAS" firstAttribute="leading" secondItem="Cu2-kJ-7ah" secondAttribute="leading" constant="15" id="beT-Zt-s70"/>
                                                 <constraint firstItem="TcA-wE-SAS" firstAttribute="centerY" secondItem="Cu2-kJ-7ah" secondAttribute="centerY" id="p4D-Tf-34Z"/>
                                                 <constraint firstItem="36B-Ge-m5V" firstAttribute="centerY" secondItem="Cu2-kJ-7ah" secondAttribute="centerY" id="s7x-Y4-2g9"/>
@@ -176,6 +177,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backgroundFetchSwitch" destination="FvK-93-raA" id="Huy-vc-MoM"/>
+                        <outlet property="badgeCell" destination="pnm-5p-yC5" id="hdC-aO-QSy"/>
                         <outlet property="openSettingsButton" destination="36B-Ge-m5V" id="tsc-wS-3vb"/>
                         <outlet property="reportBugCell" destination="WwO-m1-s3q" id="nCb-BL-DRJ"/>
                         <outlet property="reviewAccessCell" destination="TXs-sw-hO1" id="10W-u8-ofC"/>

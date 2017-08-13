@@ -21,6 +21,7 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
+    @IBOutlet weak var badgeCell: UITableViewCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +129,7 @@ final class SettingsViewController: UITableViewController {
                 authorized = true
                 enabled = true
             }
+            self.badgeCell.accessoryType = authorized ? .none : .disclosureIndicator
             self.openSettingsButton.isHidden = authorized
             self.backgroundFetchSwitch.isHidden = !authorized
             self.backgroundFetchSwitch.isOn = enabled
