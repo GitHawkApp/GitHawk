@@ -54,6 +54,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -75,6 +76,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="LOz-Oo-yFl" style="IBUITableViewCellStyleDefault" id="SAx-6B-29G" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="199.5" width="375" height="44"/>
@@ -92,6 +94,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pnm-5p-yC5" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="243.5" width="375" height="44"/>
@@ -112,14 +115,27 @@
                                                         <action selector="onBackgroundFetchChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="gPu-bQ-K9r"/>
                                                     </connections>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36B-Ge-m5V">
+                                                    <rect key="frame" x="268" y="5" width="92" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <state key="normal" title="Settings.app">
+                                                        <color key="titleColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onSettings:" destination="NnB-TU-bkW" eventType="touchUpInside" id="aSG-sV-bwO"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="36B-Ge-m5V" secondAttribute="trailing" constant="15" id="UZo-aW-Fbw"/>
                                                 <constraint firstItem="TcA-wE-SAS" firstAttribute="leading" secondItem="Cu2-kJ-7ah" secondAttribute="leading" constant="15" id="beT-Zt-s70"/>
                                                 <constraint firstItem="TcA-wE-SAS" firstAttribute="centerY" secondItem="Cu2-kJ-7ah" secondAttribute="centerY" id="p4D-Tf-34Z"/>
+                                                <constraint firstItem="36B-Ge-m5V" firstAttribute="centerY" secondItem="Cu2-kJ-7ah" secondAttribute="centerY" id="s7x-Y4-2g9"/>
                                                 <constraint firstItem="FvK-93-raA" firstAttribute="centerY" secondItem="Cu2-kJ-7ah" secondAttribute="centerY" id="tId-g2-a85"/>
                                                 <constraint firstAttribute="trailing" secondItem="FvK-93-raA" secondAttribute="trailing" constant="15" id="up9-yA-JOz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -141,6 +157,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -159,6 +176,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backgroundFetchSwitch" destination="FvK-93-raA" id="Huy-vc-MoM"/>
+                        <outlet property="openSettingsButton" destination="36B-Ge-m5V" id="tsc-wS-3vb"/>
                         <outlet property="reportBugCell" destination="WwO-m1-s3q" id="nCb-BL-DRJ"/>
                         <outlet property="reviewAccessCell" destination="TXs-sw-hO1" id="10W-u8-ofC"/>
                         <outlet property="signOutCell" destination="Y2k-Zq-AUW" id="QIk-J0-zqg"/>

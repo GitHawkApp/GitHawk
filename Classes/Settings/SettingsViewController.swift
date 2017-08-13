@@ -20,12 +20,21 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
+    @IBOutlet weak var openSettingsButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
-        backgroundFetchSwitch.isOn = BadgeNotifications.isEnabled
+
+        updateBadge()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(SettingsViewController.updateBadge),
+            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            object: nil
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -100,9 +109,42 @@ final class SettingsViewController: UITableViewController {
         sessionManager.logout()
     }
 
+    func updateBadge() {
+        BadgeNotifications.check { state in
+            let authorized: Bool
+            let enabled: Bool
+            switch state {
+            case .initial:
+                // throwing switch will prompt
+                authorized = true
+                enabled = false
+            case .denied:
+                authorized = false
+                enabled = false
+            case .disabled:
+                authorized = true
+                enabled = false
+            case .enabled:
+                authorized = true
+                enabled = true
+            }
+            self.openSettingsButton.isHidden = authorized
+            self.backgroundFetchSwitch.isHidden = !authorized
+            self.backgroundFetchSwitch.isOn = enabled
+        }
+        backgroundFetchSwitch.isOn = BadgeNotifications.isEnabled
+    }
+
     @IBAction func onBackgroundFetchChanged() {
         BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
-        BadgeNotifications.configure(application: UIApplication.shared)
+        BadgeNotifications.configure(application: UIApplication.shared) { granted in
+            self.updateBadge()
+        }
+    }
+
+    @IBAction func onSettings(_ sender: Any) {
+        guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
 }

@@ -23,11 +23,32 @@ final class BadgeNotifications {
         }
     }
 
-    static func configure(application: UIApplication) {
+    enum State {
+        case initial
+        case denied
+        case disabled
+        case enabled
+    }
+
+    static func check(callback: @escaping (State) -> ()) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .notDetermined:
+                callback(.initial)
+            case .denied:
+                callback(.denied)
+            case .authorized:
+                callback(isEnabled ? .enabled : .disabled)
+            }
+        }
+    }
+
+    static func configure(application: UIApplication, permissionHandler: ((Bool) -> ())? = nil) {
         if isEnabled {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge], completionHandler: { (granted, _) in
-                application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+                permissionHandler?(granted)
             })
+            application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         } else {
             application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
         }

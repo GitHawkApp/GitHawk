@@ -236,7 +236,7 @@ FeedSelectionProviding {
     // MARK: NotificationClientListener
 
     func willMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
-        BadgeNotifications.increase(application: UIApplication.shared)
+        BadgeNotifications.decrease(application: UIApplication.shared)
 
         if optimistic {
             update(dismissRefresh: false, animated: true)
@@ -244,7 +244,7 @@ FeedSelectionProviding {
     }
 
     func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
-        BadgeNotifications.decrease(application: UIApplication.shared)
+        BadgeNotifications.increase(application: UIApplication.shared)
 
         StatusBar.showGenericError()
         if optimistic {
