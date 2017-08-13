@@ -12,14 +12,23 @@ import UserNotifications
 final class BadgeNotifications {
 
     private static let userKey = "com.freetime.BadgeNotifications.user-enabled"
+    private static let countWhenDisabledKey = "com.freetime.BadgeNotifications.count-when-disabled"
 
     static var isEnabled: Bool {
         get {
             let defaults = UserDefaults.standard
-            return defaults.bool(forKey: BadgeNotifications.userKey)
+            return defaults.bool(forKey: userKey)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: BadgeNotifications.userKey)
+            let defaults = UserDefaults.standard
+            let application = UIApplication.shared
+            if newValue == false {
+                defaults.set(application.applicationIconBadgeNumber, forKey: countWhenDisabledKey)
+                application.applicationIconBadgeNumber = 0
+            } else {
+                application.applicationIconBadgeNumber = defaults.integer(forKey: countWhenDisabledKey)
+            }
+            defaults.set(newValue, forKey: BadgeNotifications.userKey)
         }
     }
 
@@ -45,7 +54,7 @@ final class BadgeNotifications {
         }
     }
 
-    static func configure(application: UIApplication, permissionHandler: ((Bool) -> ())? = nil) {
+    static func configure(application: UIApplication = UIApplication.shared, permissionHandler: ((Bool) -> ())? = nil) {
         if isEnabled {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge], completionHandler: { (granted, _) in
                 permissionHandler?(granted)
@@ -56,7 +65,7 @@ final class BadgeNotifications {
         }
     }
 
-    static func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
+    static func fetch(application: UIApplication = UIApplication.shared, handler: @escaping (UIBackgroundFetchResult) -> Void) {
         let manager = GithubSessionManager()
         guard let session = manager.userSession,
             isEnabled
@@ -77,7 +86,7 @@ final class BadgeNotifications {
     }
 
     @discardableResult
-    static func update(application: UIApplication, count: Int) -> Bool {
+    static func update(application: UIApplication = UIApplication.shared, count: Int) -> Bool {
         let changed = application.applicationIconBadgeNumber != count
         application.applicationIconBadgeNumber = count
         return changed

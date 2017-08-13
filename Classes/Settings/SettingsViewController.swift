@@ -136,7 +136,7 @@ final class SettingsViewController: UITableViewController {
 
     @IBAction func onBackgroundFetchChanged() {
         BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
-        BadgeNotifications.configure(application: UIApplication.shared) { granted in
+        BadgeNotifications.configure() { granted in
             self.updateBadge()
         }
     }

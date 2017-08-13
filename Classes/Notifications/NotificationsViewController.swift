@@ -70,7 +70,7 @@ FeedSelectionProviding {
     private func updateUnreadState() {
         let unreadCount = dataSource.unreadNotifications.count
         navigationItem.rightBarButtonItem?.isEnabled = unreadCount > 0
-        BadgeNotifications.update(application: UIApplication.shared, count: unreadCount)
+        BadgeNotifications.update(count: unreadCount)
     }
 
     func setRightBarItemSpinning() {
@@ -87,7 +87,7 @@ FeedSelectionProviding {
                 generator.notificationOccurred(.success)
 
                 // clear all badges
-                BadgeNotifications.update(application: UIApplication.shared, count: 0)
+                BadgeNotifications.update(count: 0)
             } else {
                 generator.notificationOccurred(.error)
             }
