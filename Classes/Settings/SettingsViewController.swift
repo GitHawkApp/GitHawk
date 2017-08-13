@@ -25,7 +25,7 @@ final class SettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
-        backgroundFetchSwitch.isOn = BackgroundNotificationFetch.isEnabled
+        backgroundFetchSwitch.isOn = BadgeNotifications.isEnabled
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -101,8 +101,8 @@ final class SettingsViewController: UITableViewController {
     }
 
     @IBAction func onBackgroundFetchChanged() {
-        BackgroundNotificationFetch.isEnabled = backgroundFetchSwitch.isOn
-        BackgroundNotificationFetch.configure(application: UIApplication.shared)
+        BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
+        BadgeNotifications.configure(application: UIApplication.shared)
     }
 
 }

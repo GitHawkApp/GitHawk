@@ -85,6 +85,9 @@ FeedSelectionProviding {
             let generator = UINotificationFeedbackGenerator()
             if success {
                 generator.notificationOccurred(.success)
+
+                // clear all badges
+                BadgeNotifications.update(application: UIApplication.shared, count: 0)
             } else {
                 generator.notificationOccurred(.error)
             }
@@ -233,12 +236,16 @@ FeedSelectionProviding {
     // MARK: NotificationClientListener
 
     func willMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
+        BadgeNotifications.increase(application: UIApplication.shared)
+
         if optimistic {
             update(dismissRefresh: false, animated: true)
         }
     }
 
     func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
+        BadgeNotifications.decrease(application: UIApplication.shared)
+
         StatusBar.showGenericError()
         if optimistic {
             update(dismissRefresh: false, animated: true)
