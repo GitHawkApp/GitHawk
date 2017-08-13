@@ -64,11 +64,13 @@ FeedSelectionProviding {
             target: self,
             action: #selector(NotificationsViewController.onMarkAll(sender:))
         )
-        updateMarkAllEnabled()
+        updateUnreadState()
     }
 
-    private func updateMarkAllEnabled() {
-        navigationItem.rightBarButtonItem?.isEnabled = dataSource.hasReadItems
+    private func updateUnreadState() {
+        let unreadCount = dataSource.unreadNotifications.count
+        navigationItem.rightBarButtonItem?.isEnabled = unreadCount > 0
+        BadgeNotifications.update(application: UIApplication.shared, count: unreadCount)
     }
 
     func setRightBarItemSpinning() {
@@ -116,7 +118,7 @@ FeedSelectionProviding {
 
     private func update(dismissRefresh: Bool, animated: Bool = true) {
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
-        updateMarkAllEnabled()
+        updateUnreadState()
     }
 
     private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
@@ -232,15 +234,11 @@ FeedSelectionProviding {
 
     func willMarkRead(client: NotificationClient, id: String) {
         dataSource.setOptimisticRead(id: id)
-        BadgeNotifications.update(application: UIApplication.shared, count: dataSource.unreadNotifications.count)
-
         update(dismissRefresh: false, animated: true)
     }
 
     func didFailToMarkRead(client: NotificationClient, id: String) {
         dataSource.removeOptimisticRead(id: id)
-        BadgeNotifications.update(application: UIApplication.shared, count: dataSource.unreadNotifications.count)
-
         StatusBar.showGenericError()
         update(dismissRefresh: false, animated: true)
     }

@@ -1209,13 +1209,13 @@
 				295C31C61F09E62600521CED /* NotificationNextPageCell.swift */,
 				295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */,
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
+				291929681F40EEBD0012067B /* NotificationsDataSource.swift */,
 				2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */,
 				29C295151EC7BCCD00D46CD2 /* NotificationsViewController.swift */,
 				29A1950B1EC7901400C3E289 /* NotificationType.swift */,
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
-				291929681F40EEBD0012067B /* NotificationsDataSource.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
