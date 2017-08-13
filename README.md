@@ -42,6 +42,8 @@ Freetime will be released with (at least) a three-phased rollout:
 
 :warning: This repo is moving _fast_! :warning:
 
+If you would like to test the latest changes, you can join the TestFlight by sending your e-mail address to [@_ryannystrom](https://twitter.com/_ryannystrom) in a DM on Twitter.
+
 I'm happy to take PRs, but I'm working off of `master` at the moment, and your PR might go stale quick. Be warned!
 
 You'll also need a [Client ID and Client Secret](Setup.md).
