@@ -9,8 +9,8 @@
 import Foundation
 
 protocol NotificationClientListener: class {
-    func willMarkRead(client: NotificationClient, id: String, optimistic: Bool)
-    func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool)
+    func willMarkRead(client: NotificationClient, id: String)
+    func didFailToMarkRead(client: NotificationClient, id: String)
 }
 
 final class NotificationClient {
@@ -32,11 +32,6 @@ final class NotificationClient {
     }
 
     // Public API
-
-    private var _optimisticReadIDs = Set<String>()
-    var optimisticReadIDs: Set<String> {
-        return _optimisticReadIDs
-    }
 
     func add(listener: NotificationClientListener) {
         let wrapper = ListenerWrapper()
@@ -105,14 +100,10 @@ final class NotificationClient {
         })
     }
 
-    func markNotificationRead(id: String, optimistic: Bool = true) {
-        if optimistic {
-            _optimisticReadIDs.insert(id)
-        }
-
+    func markNotificationRead(id: String) {
         for wrapper in listeners {
             if let listener = wrapper.listener {
-                listener.willMarkRead(client: self, id: id, optimistic: optimistic)
+                listener.willMarkRead(client: self, id: id)
             }
         }
 
@@ -122,13 +113,9 @@ final class NotificationClient {
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
                 let success = response.response?.statusCode == 205
                 if !success {
-                    // remove so lists can re-show the notification
-                    // skip optimistic check, should no-op if wasn't previously added
-                    self._optimisticReadIDs.remove(id)
-
                     for wrapper in self.listeners {
                         if let listener = wrapper.listener {
-                            listener.didFailToMarkRead(client: self, id: id, optimistic: optimistic)
+                            listener.didFailToMarkRead(client: self, id: id)
                         }
                     }
                 }

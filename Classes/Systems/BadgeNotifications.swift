@@ -83,12 +83,4 @@ final class BadgeNotifications {
         return changed
     }
 
-    static func decrease(application: UIApplication) {
-        update(application: application, count: application.applicationIconBadgeNumber - 1)
-    }
-
-    static func increase(application: UIApplication) {
-        update(application: application, count: application.applicationIconBadgeNumber + 1)
-    }
-
 }
