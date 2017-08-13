@@ -69,6 +69,7 @@ final class NotificationViewModel: ListDiffable {
             && date == object.date
             && repo == object.repo
             && owner == object.owner
+            && title == object.title
     }
 
 }
