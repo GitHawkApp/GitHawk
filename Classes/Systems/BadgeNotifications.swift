@@ -7,22 +7,30 @@
 //
 
 import UIKit
+import UserNotifications
 
 final class BadgeNotifications {
 
-    private static let key = "com.freetime.BadgeNotifications.enabled"
+    private static let userKey = "com.freetime.BadgeNotifications.user-enabled"
+
     static var isEnabled: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: BadgeNotifications.key)
+            let defaults = UserDefaults.standard
+            return defaults.bool(forKey: BadgeNotifications.userKey)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: BadgeNotifications.key)
+            UserDefaults.standard.set(newValue, forKey: BadgeNotifications.userKey)
         }
     }
 
     static func configure(application: UIApplication) {
-        let interval = isEnabled ? 60 * 60 : UIApplicationBackgroundFetchIntervalNever
-        application.setMinimumBackgroundFetchInterval(interval)
+        if isEnabled {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge], completionHandler: { (granted, _) in
+                application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+            })
+        } else {
+            application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
+        }
     }
 
     static func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
