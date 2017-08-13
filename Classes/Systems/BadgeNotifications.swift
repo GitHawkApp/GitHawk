@@ -32,13 +32,15 @@ final class BadgeNotifications {
 
     static func check(callback: @escaping (State) -> ()) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            switch settings.authorizationStatus {
-            case .notDetermined:
-                callback(.initial)
-            case .denied:
-                callback(.denied)
-            case .authorized:
-                callback(isEnabled ? .enabled : .disabled)
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .notDetermined:
+                    callback(.initial)
+                case .denied:
+                    callback(.denied)
+                case .authorized:
+                    callback(isEnabled ? .enabled : .disabled)
+                }
             }
         }
     }
