@@ -21,7 +21,8 @@ final class BackgroundNotificationFetch {
     }
 
     static func configure(application: UIApplication) {
-        application.setMinimumBackgroundFetchInterval(isEnabled ? 30 * 60: UIApplicationBackgroundFetchIntervalNever)
+        let interval = isEnabled ? 60 * 60 : UIApplicationBackgroundFetchIntervalNever
+        application.setMinimumBackgroundFetchInterval(interval)
     }
 
     static func fetch(application: UIApplication, handler: (UIBackgroundFetchResult) -> Void) {

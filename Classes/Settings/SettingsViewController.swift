@@ -19,11 +19,13 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
+    @IBOutlet weak var backgroundFetchSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
+        backgroundFetchSwitch.isOn = BackgroundNotificationFetch.isEnabled
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +98,11 @@ final class SettingsViewController: UITableViewController {
 
     func signout() {
         sessionManager.logout()
+    }
+
+    @IBAction func onBackgroundFetchChanged() {
+        BackgroundNotificationFetch.isEnabled = backgroundFetchSwitch.isOn
+        BackgroundNotificationFetch.configure(application: UIApplication.shared)
     }
 
 }
