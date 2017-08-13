@@ -31,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
-        configureNavAppearance()
         NetworkActivityIndicatorManager.shared.isEnabled = true
+        Styles.setupAppearance()
         return true
     }
 
@@ -51,10 +51,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return false
     }
-
-    private func configureNavAppearance() {
-        UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
-        UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color]
-    }
+    
 }
