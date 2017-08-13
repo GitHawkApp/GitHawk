@@ -15,10 +15,10 @@ final class SettingsViewController: UITableViewController {
     weak var rootNavigationManager: RootNavigationManager? = nil
 
     @IBOutlet weak var versionLabel: UILabel!
-    @IBOutlet weak var reviewAccessCell: UITableViewCell!
-    @IBOutlet weak var reportBugCell: UITableViewCell!
-    @IBOutlet weak var viewSourceCell: UITableViewCell!
-    @IBOutlet weak var signOutCell: UITableViewCell!
+    @IBOutlet weak var reviewAccessCell: StyledTableCell!
+    @IBOutlet weak var reportBugCell: StyledTableCell!
+    @IBOutlet weak var viewSourceCell: StyledTableCell!
+    @IBOutlet weak var signOutCell: StyledTableCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()

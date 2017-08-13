@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class LabelTableCell: UITableViewCell {
+final class LabelTableCell: StyledTableCell {
 
     @IBOutlet weak var button: UIButton!
 

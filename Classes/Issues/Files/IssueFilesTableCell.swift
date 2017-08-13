@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class IssueFilesTableCell: UITableViewCell {
+final class IssueFilesTableCell: StyledTableCell {
 
     @IBOutlet weak var changeLabel: UILabel!
     @IBOutlet weak var pathLabel: UILabel!

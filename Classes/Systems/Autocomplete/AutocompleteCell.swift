@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-final class AutocompleteCell: UITableViewCell {
+final class AutocompleteCell: StyledTableCell {
 
     enum State {
         case emoji(emoji: String, term: String)
