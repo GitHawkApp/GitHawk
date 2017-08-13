@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
         NetworkActivityIndicatorManager.shared.isEnabled = true
         Styles.setupAppearance()
+        BackgroundNotificationFetch.configure(application: application)
         return true
     }
 
@@ -50,6 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         return false
+    }
+
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        BackgroundNotificationFetch.fetch(application: application, handler: completionHandler)
     }
     
 }
