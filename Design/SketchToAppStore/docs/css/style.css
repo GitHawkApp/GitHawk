@@ -1,0 +1,412 @@
+/* ==========================================================================
+Template Name 	: Cleany
+Author				: Simplesphere - Anoop Jeewoolall
+Theme Url 			: http://websites.simplesphere.net/cleany/
+Description		: Cleany - Landing Page
+Website				: http://www.simplesphere.net
+========================================================================== */
+
+/* ==========================================================================
+Basic Styling
+========================================================================== */
+body { width: 100%; min-height: 100%; font-family: "Open Sans", "Raleway", Lucida Sans Unicode, Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 23px; color: #7a7a7a; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 300; font-family: "Raleway", Lucida Sans Unicode, "Helvetica Neue", Helvetica,Arial,sans-serif; color: #1a1a1a; transition: all .50s ease-in-out; -moz-transition: all .50s ease-in-out; -webkit-transition: all .50s ease-in-out;}
+h1, h2, h3, h4, h5, h6 { margin-top: 0;  margin-bottom: 10px;}
+
+h1 {font-size: 44px;}
+h2 {font-weight: 700; margin-bottom: 20px; }
+h3 {}
+h4 {font-size: 17px; font-weight: 700; color: #2d2d2d;}
+
+p { margin-bottom: 20px; line-height: 24px;}
+
+a {-webkit-transition: all 150ms ease-in; -moz-transition: all 150ms ease-in; -o-transition: all 150ms ease-in; transition: all 150ms ease-in; color: #00a8d6;}
+a:hover, a:focus { text-decoration: none; color: #007DA0; outline: none; }
+
+ul { margin: 0; padding: 0; list-style: none;}
+
+::-moz-selection { text-shadow: none; background: #08b4da; color: #FFF;}
+::selection { text-shadow: none; background: #08b4da; color: #FFF; }
+
+img::selection { background: 0 0;}
+img::-moz-selection { background: 0 0;}
+
+hr {margin-top: 30px; margin-bottom: 40px; border-top: 1px solid #EFEFEF;}
+body { webkit-tap-highlight-color: rgba(255,255,255,.2);}
+
+form {margin-bottom: 0;}
+
+/* ==========================================================================
+Classes
+========================================================================== */
+.cover {-webkit-background-size: cover; -moz-background-size: cover;-o-background-size: cover; background-size: cover; background-attachment: fixed; }
+
+.thin {font-weight: 300;}
+.strong {font-weight: 700;}
+
+.subline {font-size: 24px;}
+
+.section {padding: 90px 0;}
+.section20 {padding:20px 0;}
+.section30 {padding:30px 0;}
+
+.padding40 {padding:40px 0;}
+.padding50 {padding:50px 0;}
+.padding60 {padding: 60px 0;}
+.paddingtop-70 {padding-top: 70px;}
+.paddingtop-40 {padding-top: 40px;}
+
+.nopadding-bottom {padding-bottom: 0;}
+
+.bordered {border:1px solid #EFEFEF;}
+.border-left {border-left: 1px solid #EFEFEF;}
+.border-right {border-right: 1px solid #EFEFEF;}
+.border-top {border-top: 1px solid #EFEFEF;}
+.border-bottom {border-bottom: 1px solid #EFEFEF;}
+
+.separator30 {margin:30px 0;}
+.separator60 {margin:60px 0;}
+
+.margintop-30 {margin-top: 30px;}
+.margintop-40 {margin-top: 40px;}
+.margintop-70 {margin-top: 70px;}
+
+.marginbottom-10 {margin-bottom: 10px;}
+
+.nomargin-top {margin-top: 0;}
+.nomargin-bottom {margin-bottom: 0;}
+
+.divider70 {clear: both; height: 70px;}
+.divider50 {clear: both; height: 50px;}
+.divider20 {clear: both; height: 20px;}
+.divider35 {clear: both; height: 35px;}
+
+.margin50 {margin: 50px 0;}
+.margin20 {margin: 20px 0;}
+
+.tick-list {margin: 15px 0;}
+.tick-list li {list-style: none; margin-bottom: 10px;}
+.tick-list li i {margin-right: 10px; color: #00a8d6;}
+
+.normal-list {list-style-type: disc; margin-bottom: 30px; margin-left: 20px;}
+.normal-list li {margin-bottom: 5px;}
+
+.green-arrow {list-style: none; margin-bottom: 15px;}
+.green-arrow li {position: relative; padding-left: 25px; margin-bottom: 5px;}
+.green-arrow li:before {display:inline-block; text-align:center; font-family: FontAwesome; content:"\f00c"; position:absolute; left:0; transition:all 0.3s ease-in; transition:all 0.3s ease-in;  transition:all 0.3s ease-in; color: #72B569;}
+
+.font-icon-list li {}
+.font-icon-list i {color: rgba(0,0,0,0.6); margin-right: 10px;}
+
+.text-center {text-align: center;}
+.text-center img {display: block; margin: 0 auto;}
+
+.btn {-webkit-transition: all .3s ease-in-out; -moz-transition: all .3s ease-in-out; transition: all .3s ease-in-out; border-radius: 0; padding: 15px 35px; font-weight: bold;}
+.btn:hover, .btn:focus { background-color:#08b4da; color: #FFF;}
+
+.btn-transparent {background-color: transparent; border: 2px solid #FFF;  color: #fff; }
+.btn-transparent:hover {background-color: #2a2a2a; border-color: #2a2a2a;}
+
+.btn-price {color: #FFF;}
+.btn-price:hover {background-color: #FFF; border-color: #FFF; color: #2a2a2a;}
+
+.arrow-bottom { position: relative; }
+.arrow-bottom:after { left: 50%; bottom: -50px; position: absolute; content: ""; border: 25px solid; border-color: #FAFAFA transparent transparent transparent; display: block; margin-left: -13.5px;}
+
+/* ==========================================================================
+Color Customizations
+========================================================================== */
+.bg-white {background-color: #FFF;}
+.bg-grey {background-color: #FAF7F8;}
+.bg-grey {background-color: #FAFAFA;}
+.bg-grey2 {background-color: #F5F5F5;}
+.bg-blue {background-color: #08b4da;}
+.bg-dark {background-color: #333;}
+
+.bg-blue-pattern {background-color: #08b4da; background:url(http://sketchtoappstore.com/img/blue-square.png);}
+.bg-testimonial {background:url(http://sketchtoappstore.com/img/headshot-bg.jpg);}
+
+.blue {color: #08b4da;}
+
+.white-text {color: #FFF;}
+.white-text p {color: #FFF;}
+.white-text h3 {color: #FFF;}
+.white-text h2 {color: #FFF;}
+.white-text li {color: #FFF;}
+
+/* ==========================================================================
+Line Font
+========================================================================== */
+.line-font {font-size: 48px;}
+.line-font-small {font-size: 20px;}
+
+/* ==========================================================================
+Headline
+========================================================================== */
+.headline {text-align: center; position:relative; border-bottom:1px solid rgba(0,0,0,0.03); margin-bottom: 50px;}
+.headline h1 {color: #31373a; padding-bottom: 15px; border-bottom: 2px solid #DDD; display: inline-block; font-size: 44px;}
+.headline h2 {font-size: 36px;}
+.headline p {margin-bottom: 40px; font-weight: 100; font-size: 16px; color: #2b2b2b;}
+
+/* ==========================================================================
+ Navigation
+========================================================================== */
+.menu-right {float: right;}
+.navbar-inverse { margin-bottom: 0; -webkit-border-radius: 0; -moz-border-radius: 0;border-radius: 0; -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out; -moz-transition: background .5s ease-in-out,padding .5s ease-in-out; transition: background .5s ease-in-out,padding .5s ease-in-out; border: none; background-color: rgba(0,0,0,0.4); padding: 15px 0; }
+.navbar-inverse .navbar-nav > li > a { color: #fff; display: block; -webkit-transition: all 100ms ease-in-out; -moz-transition: all 100ms ease-in-out; -o-transition: all 100ms ease-in-out; -ms-transition: all 100ms ease-in-out; transition: all 100ms ease-in-out; }
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > li {-webkit-transition: all 400ms linear; -moz-transition: all 400ms linear; -o-transition: all 400ms linear; -ms-transition: all 400ms linear; transition: all 400ms linear;}
+
+.navbar-toggle { padding: 4px 6px; font-size: 16px; color: #fff;}
+.navbar-toggle:focus,
+.navbar-toggle:active { outline: 0;}
+
+.navbar-inverse .navbar-toggle { background: #08b4da; border: none;}
+.navbar-nav {margin: 0;}
+.scroll-fixed-navbar {padding-bottom:0;}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {background-color: transparent;}
+.navbar > .container .navbar-brand {margin-left: 0;}
+.navbar-brand { height:auto;}
+
+.scroll-fixed-navbar { padding: 10px 0; background-color: #FFF; -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1); box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);}
+.scroll-fixed-navbar .navbar-nav > li > a {color: #333;}
+.scroll-fixed-navbar .navbar-nav > li > a:hover,
+.scroll-fixed-navbar .navbar-nav > li.active > a,
+.scroll-fixed-navbar .navbar-nav > li.active > a:hover {color: #00a8d6; }
+
+.navbar-toggle { position: relative; float: right; background-color: transparent; padding: 10px; margin: 13px 30px 13px 0; border: none; color: #fff; border: 2px solid #fff;}
+.navbar-toggle .icon-bar { background-color: #fff;}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {border-color: rgba(0,0,0,0.1);}
+
+/* ==========================================================================
+Logo
+======================================================.==================== */
+.navbar-inverse .navbar-brand  {color: #FFF; font-size: 30px; font-weight: 700; padding: 0;}
+.scroll-fixed-navbar.navbar-inverse .navbar-brand  {color: #1a1a1a; font-size: 30px; font-weight: 700; padding: 0;}
+.text-logo {margin-top: 5px}
+.text-logo i {margin-right: 10px;}
+
+/* ==========================================================================
+Banner
+========================================================================== */
+#banner {padding-top: 90px; padding-bottom: 70px; background: #1a1a1a; background-image: url(/web/20160308012836/http://sketchtoappstore.com/img/blur.jpg); -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; height:100%; position: relative; background-attachment: fixed;}
+
+.banner-content { clear: both; padding-top: 40px;}
+.banner-content h1 {font-size: 50px; color: #FFF;  border-bottom:1px solid rgba(0,0,0,0.1); padding-bottom: 10px;}
+.banner-content h2 {color: #FFF;}
+.banner-content h5 {font-weight: bold; font-size: 16px; color: #FFF;}
+.banner-content p { color: rgba(255,255,255,0.7); }
+
+.banner-list {margin-bottom: 20px;}
+.banner-list li {color: rgba(255,255,255, 0.8); margin-bottom: 5px;}
+.banner-list li i { margin-right: 10px; color:#08b4da; }
+
+/* ==========================================================================
+Clients Logo
+========================================================================== */
+.clients-logo li {padding: 0 20px;}
+.clients-logo li img {opacity: 0.4; filter: alpha(opacity=40); /* For IE8 and earlier */}
+
+/* ==========================================================================
+Process Steps
+========================================================================== */
+ul.steps-list li {margin-bottom: 25px; border-bottom:1px solid rgba(0,0,0,0.03);}
+ul.steps-list li:last-child {border-bottom: none;}
+ul.steps-list li span{ float:left; border-radius: 50%; width: 55px; height: 55px; line-height: 55px; display:block; font-size:22px; font-weight:bold; text-align:center; background: #1a1a1a; }
+ul.steps-list li h4,
+ul.steps-list li p { margin-left: 80px; }
+ul.steps-list li h5 { font-weight:600;}
+
+/* ==========================================================================
+Main Point
+========================================================================== */
+.main-point {margin-bottom: 20px; }
+.main-point i { display: block; font-size: 56px; color: #1a1a1a;}
+.main-point h3 {font-size: 22px; font-weight: 300; margin-top: 20px; }
+
+/* ==========================================================================
+Features
+========================================================================== */
+.features {margin-bottom: 40px; text-align: left;}
+.features i {float: left; margin-right: 20px;}
+.features h3 {font-size: 18px; font-weight: bold; padding-top: 15px; }
+.features p { clear: both; padding-top: 10px;}
+
+/* ==========================================================================
+Forms
+========================================================================== */
+.banner-form { -webkit-box-shadow:0 0 10px rgba(0,0,0,.3); -moz-box-shadow: 0 0 10px rgba(0,0,0,.3); box-shadow: 0 0 10px rgba(0,0,0,.3); background: rgba(0,0,0,0.4);}
+.form-title {background-color: rgba(0,0,0,0.5); color: #FFF; text-align: center; padding: 25px 0;}
+.form-title h2 {margin-bottom: 0; font-size: 22px;}
+.form-body {padding: 30px;}
+.form-body p {color: rgba(255,255,255,0.6);}
+
+.banner-form .form-control { color: #08b4da; border: none; outline: none; box-shadow: none; padding: 13px 15px; transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; -o-transition: all 0.2s ease-in-out; border-radius: 0; height: auto; background-color: rgba(0,0,0,0.4); margin-bottom: 15px;}
+
+.btn-submit { display: block; margin:0 auto; background-color: #08b4da; color: #FFF; border-color:rgba(0,0,0,0.01); width:100%; padding: 11px; border:2px solid #08b4da;}
+.btn-submit:hover {background: #08b4da; border-color: #08b4da;}
+
+/* ==========================================================================
+Stats
+ ========================================================================== */
+ .stats i {float: left; margin-right: 20px;}
+ .stats h3 {font-weight: bold; font-size: 29px; color: #1a1a1a; margin-bottom: 0;}
+ .stats span {display: block; font-weight: normal; font-size: 14px; margin-top: 10px;}
+
+/* ==========================================================================
+Portfolio
+ ========================================================================== */
+.hover-details {width: 100%; height: auto; overflow: hidden; position: relative; -moz-transition: all ease 400ms ease-in-out; -webkit-transition: all ease 400ms ease-in-out; -o-transition: all ease 400ms ease-in-out; transition: all ease 400ms ease-in-out; margin-bottom: 40px; }
+.hover-details .img-cover { width: 100%; height: 100%; opacity: 0; position: absolute; top: 0; left: 0; background: rgba(8, 180, 218, 0.9); -moz-transition: all ease 400ms ease-in-out; -webkit-transition: all ease 400ms ease-in-out; -o-transition: all ease 400ms ease-in-out; transition: all ease 400ms ease-in-out;}
+.hover-details > img { width: 100%; height: auto; -moz-transition: all ease 400ms ease-in-out; -webkit-transition: all ease 400ms ease-in-out; -o-transition: all ease 400ms ease-in-out; transition: all ease 400ms ease-in-out; }
+
+.img-zoom { width: 45px; height: 45px; background-color: #1a1a1a; line-height: 45px; position: absolute; top: -45%; left: 50%; border-radius: 3px; margin-top: -35px; margin-left:  -25px; -webkit-transition: all ease 400ms ease-in-out; -moz-transition: all ease 400ms ease-in-out; -ms-transition: all ease 400ms ease-in-out; -o-transition: all ease 400ms ease-in-out; transition: all ease 400ms ease-in-out; text-align: center;}
+.img-zoom i {color: #FFF; font-size: 18px;}
+
+.img-cover h3 { width: 100%; position: absolute; bottom: -28%; color: #f8f8f8; font-size: 16px; text-align: center;  padding: 0 10px; -webkit-transition: all 300ms ease-in-out; -moz-transition: all 300ms ease-in-out; -o-transition: all 300ms ease-in-out; -ms-transition: all 300ms ease-in-out; transition: all 300ms ease-in-out;}
+
+.hover-details:hover {cursor: pointer;}
+.hover-details:hover > img { transform: scale(1.2); -ms-transform: scale(1.2); -webkit-transform: scale(1.2); -o-transform: scale(1.2); -moz-transform: scale(1.2);}
+.hover-details:hover .img-zoom { top: 45%;}
+.hover-details:hover .img-cover h3 { bottom: 28%;}
+.hover-details:hover .img-cover { opacity: 1;}
+.img-zoom:hover { background-color: #333;}
+
+/* ==========================================================================
+Video Container
+============================================================================ */
+.video-container { position:relative;}
+.video-container iframe{ width:100%; height: 430px; border:none;}
+
+/* ==========================================================================
+Testimonials
+========================================================================== */
+.testimonial-inner {}
+.testimonial-inner img {margin-right: 30px; border-radius:4px; border:3px solid #FFF; -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1); box-shadow: 0 0 7px rgba(0, 0, 0, 0.1); float: left;}
+.testimonial-inner p { }
+.testimonial-inner small {display: inline-block; border-top: 2px solid #333; padding-top: 10px; font-size: 15px; font-weight: bold; color: #333;}
+
+/* ==========================================================================
+Pricing
+============================================================================ */
+.price-plan {background: #FFF; border: 1px solid rgba(0,0,0,0.05); border-radius: 0; box-shadow: none;}
+.price-plan h4 { color: #FFF; font-size: 17px; text-align: center; margin-bottom: 0;}
+.price-plan h3 { color: #fff; text-align: center; font-size: 38px; font-weight: bold; margin-bottom: 0;}
+.price-plan h3 span { font-weight: 300; font-size: 18px; }
+.price-plan h3 sup {font-size: 18px;}
+
+.price-plan .panel-heading {background:#333; text-align: center; padding: 25px 0; border-radius: 0;}
+.price-plan .panel-body {background: #444; padding: 30px 0; margin-bottom: 0; }
+.price-plan .panel-footer {background: #333; padding: 25px 0; border-radius: 0;}
+.price-plan .list-group-item {padding: 15px 20px; border: 1px dotted #E5E5E5; text-align: center;}
+.price-plan .list-group-item:last-child {border-bottom: none;}
+.price-plan .list-group-item i {float: right; font-size: 18px; margin-top: 5px;}
+
+.popular .panel-heading {background:#08b4da; }
+.popular .panel-body {background: #0AA9CC; }
+.popular .panel-footer {background: #08b4da; }
+
+/* ==========================================================================
+faq-bodys
+============================================================================ */
+.faq-body {margin-bottom: 40px;}
+.faq-body i {float: left; font-size: 40px; margin-right:15px; margin-bottom: 15px;}
+.faq-body h4 {padding-top: 10px; font-size: 18px;}
+.faq-body p {clear: both;}
+
+.answer {position: relative;border: 1px solid #E5E5E5; background-color: #FFF; padding: 20px; margin-top: 30px; border-radius: 3px;}
+.answer:after { content: ''; position: absolute; border-style: solid; border-width: 0 15px 15px; border-color: #FFFFFF transparent; display: block; width: 0; z-index: 1; margin-left: -15px; top: -15px; left: 10%;}
+.answer:before { content: ''; position: absolute; border-style: solid; border-width: 0 15px 15px; border-color: #E5E5E5 transparent; display: block; width: 0; z-index: 0; margin-left: -15px; top: -16px; left: 10%;}
+
+/* ==========================================================================
+Footer
+ ========================================================================== */
+.footer-top {background-color: #2b2b2b; padding: 70px 0;}
+.footer-sub {background-color: #242424; padding: 30px 0;}
+
+.footer h3 {color: #FFF; font-weight: bold; font-size: 19px; margin-bottom:15px;}
+.footer p,
+.footer a {color: #ADADAD; margin-bottom: 10px;}
+.footer li {padding: 3px 0; font-size: 14px;}
+.footer i {color: #f8f8f8;}
+
+.copyright {float: right;}
+.copyright i {color: #FF3D7F; margin:0 5px;}
+
+.contact-list li {color: #ADADAD; margin-bottom: 5px;}
+.contact-list i {margin-right: 15px;}
+
+.quick-links li { padding-left:15px; position:relative; }
+.quick-links li:before {display:inline-block; text-align:center; font-family: FontAwesome; content:"\f105"; position:absolute; left:0px; top:4px; transition:all 0.3s ease-in; transition:all 0.3s ease-in;  transition:all 0.3s ease-in; color: #f8f8f8;}
+
+/* ==========================================================================
+Carousel Settings
+ ========================================================================== */
+.carousel-mod .carousel-indicators {position: static; display: block; width: auto; margin: 15px auto;}
+.carousel-mod .carousel-indicators li {background-color: #A3A3A3; border: none; margin:0;}
+.carousel-mod .carousel-indicators .active {background-color: #31373a; width: 10px; height: 10px;}
+.carousel-mod .carousel-control.left, .carousel-mod .carousel-control.right {background: none; background-color: transparent; filter:none;}
+.carousel-mod .carousel-control {top: 45%;}
+
+/* ==========================================================================
+Social Links
+ ========================================================================== */
+.social {}
+.social li {padding:0; display: inline-block; width: 35px; height: 35px; border-radius: 3px; text-align: center; line-height: 35px; webkit-transition: background-color 400ms ease-out 0.2s; -moz-transition: background-color 400ms ease-out 0.2s; -o-transition: background-color 400ms ease-out 0.2s; transition: background-color 400ms ease-out 0.2s; margin-bottom: 5px;}
+.social li a { color: #fff; }
+.social li.facebook { background: #204385; }
+.social li.twitter { background: #2aa9e0; }
+.social li.google-plus { background: #d3492c; }
+.social li.linkedin { background: #0073b2; }
+.social li.skype { background: #00b0f6; }
+.social li.youtube { background: #e22d24; }
+.social li:hover {background:#31373a; cursor: pointer; }
+
+/* ==========================================================================
+Media Queries
+ ========================================================================== */
+/* ------ Tablet Portrait size to standard 960 (devices and browsers) ------*/
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  img {margin: 20px auto;}
+  .img-thumbnail {margin: 0;}
+}
+
+/* ------ Mobile Landscape Size to Tablet Portrait (devices and browsers) ------*/
+@media only screen and (max-width: 767px) {
+  .navbar-inverse {background-color: #FFF; padding:0;}
+  .navbar > .container .navbar-brand {margin-left: 15px; color: #1a1a1a; margin-top: 15px;}
+  .menu-right {float: none;}
+  .navbar-inverse .navbar-nav > li > a {color: #1a1a1a;}
+  .navbar-inverse .navbar-nav > .active > a,
+  .navbar-inverse .navbar-nav > .active > a:hover,
+  .navbar-inverse .navbar-nav > .active > a:focus,
+  .navbar-inverse .navbar-nav > li > a:hover { color: #00A8D6;}
+  img {display: block; margin: 20px auto;}
+  .section {padding: 70px 0;}
+  .main-point {margin-bottom: 40px;}
+  .video-container {margin-bottom: 40px;}
+  .img-thumbnail {margin: 0;}
+}
+
+/* ------ Mobile Portrait Size to Mobile Landscape Size (devices and browsers) ------*/
+@media only screen and (max-width: 479px) {
+  h2 {font-size: 28px;}
+  h4 {font-size: 16px;}
+  img {float: none; display: block; margin: 20px auto;}
+  iframe {max-height: 200px;}
+  .banner-content h1 {font-size: 34px;}
+  .headline h1 {font-size: 30px;}
+  .headline h2 {font-size: 28px;}
+  .section {padding: 50px 0;}
+  .separator60 {margin: 30px 0;}
+  .steps-list {margin-bottom: 30px;}
+  .main-point h3 {font-size: 20px;}
+  .video-container {margin-bottom: 40px;}
+  .img-thumbnail {margin: 0;}
+  .testimonial-inner img {float: none; margin:0 auto; margin-bottom: 20px;}
+  .contact-list, .quick-links {margin-bottom: 30px;}
+  .copyright {float: none;}
+}
