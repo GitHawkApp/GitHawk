@@ -39,6 +39,8 @@ FeedSelectionProviding {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        dataSource.warm(width: view.bounds.width)
+
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
@@ -127,21 +129,20 @@ FeedSelectionProviding {
 
         switch result {
         case .success(let notifications, let next):
-            createNotificationViewModels(
-                containerWidth: self.view.bounds.width,
-                notifications: notifications
-            ) { models in
-                if append {
-                    self.dataSource.append(notifications: models)
-                } else {
-                    self.dataSource.update(notifications: models)
-                }
-
+            let block = {
                 // disable the page model if there is no next
                 self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
                 self.hasError = false
 
                 self.update(dismissRefresh: !append, animated: animated)
+            }
+
+            let width = self.view.bounds.width
+
+            if append {
+                self.dataSource.append(width: width, notifications: notifications, completion: block)
+            } else {
+                self.dataSource.update(width: width, notifications: notifications, completion: block)
             }
         case .failed:
             StatusBar.showNetworkError()
