@@ -57,6 +57,11 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     // MARK: Public API
 
+    func refreshHead() {
+        refresh()
+        feedRefresh.beginRefreshing()
+    }
+
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 

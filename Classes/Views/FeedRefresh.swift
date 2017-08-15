@@ -22,6 +22,12 @@ final class FeedRefresh {
 
     func beginRefreshing() {
         refreshControl.beginRefreshing()
+        if let scrollView = refreshControl.superview as? UIScrollView {
+            scrollView.setContentOffset(
+                CGPoint(x: 0, y: scrollView.contentOffset.y - refreshControl.bounds.height),
+                animated: true
+            )
+        }
         setRefreshing()
     }
 

@@ -16,7 +16,8 @@ class NotificationsViewController: UIViewController,
     FeedDelegate,
     NotificationClientListener,
     NotificationNextPageSectionControllerDelegate,
-FeedSelectionProviding {
+FeedSelectionProviding,
+ForegroundHandlerDelegate {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
@@ -25,11 +26,13 @@ FeedSelectionProviding {
     private var page: NSNumber? = nil
     private var hasError = false
     private let dataSource = NotificationsDataSource()
+    private let foreground = ForegroundHandler(threshold: 5 * 60)
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
         super.init(nibName: nil, bundle: nil)
         self.client.add(listener: self)
+        self.foreground.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -254,6 +257,12 @@ FeedSelectionProviding {
     
     var feedContainsSelection: Bool {
         return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
+
+    // MARK: ForegroundHandlerDelegate
+
+    func didForeground(handler: ForegroundHandler) {
+        feed.refreshHead()
     }
     
 }

@@ -262,6 +262,7 @@
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
+		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
 		29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EE1C161F3A2E7A0046A54D /* Labels.storyboard */; };
 		29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */; };
@@ -544,6 +545,7 @@
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
+		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelEditCell.swift; sourceTree = "<group>"; };
 		29EE1C161F3A2E7A0046A54D /* Labels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Labels.storyboard; sourceTree = "<group>"; };
 		29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelTableCell.swift; sourceTree = "<group>"; };
@@ -1077,6 +1079,7 @@
 				291929661F3FF9C50012067B /* BadgeNotifications.swift */,
 				29C167791ECA14F700439D62 /* Feed.swift */,
 				54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */,
+				29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
 				299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */,
@@ -1693,6 +1696,7 @@
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				292CD3CA1F0DB36600D3D57B /* IssueReviewDetailsModel.swift in Sources */,
 				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
+				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				29EE1C1D1F3A33890046A54D /* RepositoryLabel.swift in Sources */,
