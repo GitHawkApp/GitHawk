@@ -87,8 +87,9 @@ final class BadgeNotifications {
 
     @discardableResult
     static func update(application: UIApplication = UIApplication.shared, count: Int) -> Bool {
-        let changed = application.applicationIconBadgeNumber != count
-        application.applicationIconBadgeNumber = count
+        let enabledCount = isEnabled ? count : 0
+        let changed = application.applicationIconBadgeNumber != enabledCount
+        application.applicationIconBadgeNumber = enabledCount
         return changed
     }
 
