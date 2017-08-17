@@ -2,11 +2,11 @@
 
 The simplest way to **read** and **respond** to your GitHub notifications on iOS.
 
-<a href=https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249><img src=app-store-badge.png width=250></a>
+<a href=https://itunes.apple.com/app/githawk-for-github/id1252320249><img src=app-store-badge.png width=250></a>
 
 ## What
 
-Freetime is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
+GitHawk is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
 
 It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
 
@@ -20,7 +20,7 @@ It is also test and proof that you can build fairly complicated apps with [IGLis
 
 ## How
 
-Freetime will be released with (at least) a three-phased rollout:
+GitHawk will be released with (at least) a three-phased rollout:
 
 1. Basic, "read only" version.
     - Read notifications for PRs and Issues
