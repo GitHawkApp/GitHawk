@@ -1,4 +1,4 @@
-# Freetime
+# GitHawk
 
 The simplest way to **read** and **respond** to your GitHub notifications on iOS.
 
