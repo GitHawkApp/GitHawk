@@ -12,7 +12,16 @@ import SafariServices
 extension UIViewController {
 
     func presentSafari(url: URL) {
-        present(SFSafariViewController(url: url), animated: true)
+        let http = "http"
+        let schemedURL: URL
+        // handles http and https
+        if url.scheme?.hasPrefix(http) == true {
+            schemedURL = url
+        } else {
+            guard let u = URL(string: http + "://" + url.absoluteString) else { return }
+            schemedURL = u
+        }
+        present(SFSafariViewController(url: schemedURL), animated: true)
     }
 
     func presentProfile(login: String) {
