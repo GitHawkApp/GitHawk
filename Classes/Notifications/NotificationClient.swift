@@ -9,8 +9,8 @@
 import Foundation
 
 protocol NotificationClientListener: class {
-    func willMarkRead(client: NotificationClient, id: String)
-    func didFailToMarkRead(client: NotificationClient, id: String)
+    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool)
+    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool)
 }
 
 final class NotificationClient {
@@ -32,6 +32,16 @@ final class NotificationClient {
     }
 
     // Public API
+
+    static private let openOnReadKey = "com.freetime.NotificationClient.read-on-open"
+
+    static func readOnOpen() -> Bool {
+        return UserDefaults.standard.bool(forKey: openOnReadKey)
+    }
+
+    static func setReadOnOpen(open: Bool) {
+        UserDefaults.standard.set(open, forKey: openOnReadKey)
+    }
 
     func add(listener: NotificationClientListener) {
         let wrapper = ListenerWrapper()
@@ -100,10 +110,10 @@ final class NotificationClient {
         })
     }
 
-    func markNotificationRead(id: String) {
+    func markNotificationRead(id: String, isOpen: Bool) {
         for wrapper in listeners {
             if let listener = wrapper.listener {
-                listener.willMarkRead(client: self, id: id)
+                listener.willMarkRead(client: self, id: id, isOpen: isOpen)
             }
         }
 
@@ -115,7 +125,7 @@ final class NotificationClient {
                 if !success {
                     for wrapper in self.listeners {
                         if let listener = wrapper.listener {
-                            listener.didFailToMarkRead(client: self, id: id)
+                            listener.didFailToMarkRead(client: self, id: id, isOpen: isOpen)
                         }
                     }
                 }

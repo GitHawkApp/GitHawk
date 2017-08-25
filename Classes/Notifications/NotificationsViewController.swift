@@ -236,15 +236,21 @@ ForegroundHandlerDelegate {
 
     // MARK: NotificationClientListener
 
-    func willMarkRead(client: NotificationClient, id: String) {
+    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
         dataSource.setOptimisticRead(id: id)
-        update(dismissRefresh: false, animated: true)
+
+        if !isOpen {
+            update(dismissRefresh: false, animated: true)
+        }
     }
 
-    func didFailToMarkRead(client: NotificationClient, id: String) {
+    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
         dataSource.removeOptimisticRead(id: id)
         StatusBar.showGenericError()
-        update(dismissRefresh: false, animated: true)
+
+        if !isOpen {
+            update(dismissRefresh: false, animated: true)
+        }
     }
 
     // MARK: NotificationNextPageSectionControllerDelegate

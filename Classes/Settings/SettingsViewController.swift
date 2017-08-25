@@ -22,11 +22,13 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
     @IBOutlet weak var badgeCell: UITableViewCell!
+    @IBOutlet weak var markReadSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
+        markReadSwitch.isOn = NotificationClient.readOnOpen()
 
         updateBadge()
 
@@ -148,4 +150,7 @@ final class SettingsViewController: UITableViewController {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
+    @IBAction func onMarkRead(_ sender: Any) {
+        NotificationClient.setReadOnOpen(open: markReadSwitch.isOn)
+    }
 }

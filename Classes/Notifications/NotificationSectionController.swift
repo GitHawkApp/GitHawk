@@ -41,7 +41,14 @@ SwipeCollectionViewCellDelegate {
     }
 
     override func didSelectItem(at index: Int) {
-        guard let object = self.object else { fatalError("Should have an object") }
+        guard let object = self.object,
+            let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
+            else { fatalError("Missing object, cell missing, or incorrect type") }
+
+        if NotificationClient.readOnOpen() {
+            cell.isRead = true
+            client.markNotificationRead(id: object.id, isOpen: true)
+        }
 
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
@@ -51,7 +58,7 @@ SwipeCollectionViewCellDelegate {
 
     func markRead() {
         guard let object = object else { fatalError("Should have an object") }
-        client.markNotificationRead(id: object.id)
+        client.markNotificationRead(id: object.id, isOpen: false)
         collectionContext?.performBatch(animated: true, updates: { context in
             context.reload(self)
         })
