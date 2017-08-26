@@ -101,7 +101,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
-        client.sessionManager.authenticate(token, authMethod: authMethod, username: username)
+        client.sessionManager.focus(GithubUserSession(token: token, authMethod: authMethod, username: username))
     }
 
     // MARK: GithubSessionListener
@@ -115,7 +115,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         }
     }
 
-    func didAuthenticate(manager: GithubSessionManager, userSession: GithubUserSession) {}
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession) {}
     func didLogout(manager: GithubSessionManager) {}
 
 }

@@ -57,7 +57,7 @@ final class SettingsAccountsViewController: UITableViewController {
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
-        sessionManager.authenticate(token, authMethod: authMethod, username: username)
+        sessionManager.focus(GithubUserSession(token: token, authMethod: authMethod, username: username))
     }
     
     // MARK: UITableViewDataSource
