@@ -111,7 +111,7 @@ final class SettingsViewController: UITableViewController {
         }
 
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("You will need to log in to keep using Freetime. Do you want to continue?", comment: "")
+        let message = NSLocalizedString("All accounts will be signed out. Do you want to continue?", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)
