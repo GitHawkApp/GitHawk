@@ -14,11 +14,15 @@ private func uniqueAutocompleteUsers(
     right: [AutocompleteUser]
     ) -> [AutocompleteUser] {
     var uniqueUsers = Set<String>()
+    var mentionableUsers = [AutocompleteUser]()
+
     for user in left {
-        uniqueUsers.insert(user.login)
+        if !uniqueUsers.contains(user.login) {
+            uniqueUsers.insert(user.login)
+            mentionableUsers.append(user)
+        }
     }
 
-    var mentionableUsers = left
     for user in right {
         if !uniqueUsers.contains(user.login) {
             uniqueUsers.insert(user.login)
