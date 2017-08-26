@@ -28,6 +28,6 @@ protocol IssueType {
 
     var reviewRequestModel: IssueAssigneesModel? { get }
 
-    func timelineViewModels(width: CGFloat) -> [ListDiffable]
+    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser])
 
 }

@@ -63,11 +63,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
-    func timelineViewModels(width: CGFloat) -> [ListDiffable] {
-        guard let nodes = timeline.nodes else { return [] }
+    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
+        guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }
 
         var results = [ListDiffable]()
+        var mentionedUsers = [AutocompleteUser]()
 
         for node in cleanNodes {
             if let comment = node.asIssueComment {
@@ -79,6 +80,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     threadState: .single
                     ) {
                     results.append(model)
+
+                    mentionedUsers.append(AutocompleteUser(
+                        avatarURL: model.details.avatarURL,
+                        login: model.details.login
+                    ))
                 }
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
@@ -303,7 +309,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             }
         }
 
-        return results
+        return (results, mentionedUsers)
     }
 
     private func diffHunkModel(thread: Timeline.Node.AsPullRequestReviewThread) -> ListDiffable? {

@@ -59,11 +59,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return fragments.updatableFields.viewerCanUpdate
     }
 
-    func timelineViewModels(width: CGFloat) -> [ListDiffable] {
-        guard let nodes = timeline.nodes else { return [] }
+    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
+        guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }
 
         var results = [ListDiffable]()
+        var mentionedUsers = [AutocompleteUser]()
 
         for node in cleanNodes {
             if let comment = node.asIssueComment {
@@ -75,6 +76,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     threadState: .single
                     ) {
                     results.append(model)
+
+                    mentionedUsers.append(AutocompleteUser(
+                        avatarURL: model.details.avatarURL,
+                        login: model.details.login
+                    ))
                 }
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
@@ -251,7 +257,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             }
         }
 
-        return results
+        return (results, mentionedUsers)
     }
 
 }

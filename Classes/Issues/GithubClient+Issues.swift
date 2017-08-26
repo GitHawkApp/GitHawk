@@ -9,6 +9,26 @@
 import UIKit
 import IGListKit
 
+private func uniqueAutocompleteUsers(
+    left: [AutocompleteUser],
+    right: [AutocompleteUser]
+    ) -> [AutocompleteUser] {
+    var uniqueUsers = Set<String>()
+    for user in left {
+        uniqueUsers.insert(user.login)
+    }
+
+    var mentionableUsers = left
+    for user in right {
+        if !uniqueUsers.contains(user.login) {
+            uniqueUsers.insert(user.login)
+            mentionableUsers.append(user)
+        }
+    }
+
+    return mentionableUsers
+}
+
 extension GithubClient {
 
     enum IssueResultType {
@@ -40,7 +60,6 @@ extension GithubClient {
                 DispatchQueue.global().async {
 
                     let status: IssueStatus = issueType.merged ? .merged : issueType.closableFields.closed ? .closed : .open
-                    let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
 
                     let rootComment = createCommentModel(
                         id: issueType.id,
@@ -50,10 +69,26 @@ extension GithubClient {
                         threadState: .single
                         )
 
+                    let timeline = issueType.timelineViewModels(width: width)
+
+                    // append the issue author for autocomplete
+                    var mentionedUsers = timeline.mentionedUsers
+                    if let details = rootComment?.details {
+                        mentionedUsers.append(AutocompleteUser(
+                            avatarURL: details.avatarURL,
+                            login: details.login
+                        ))
+                    }
+
+                    let mentionableUsers = uniqueAutocompleteUsers(
+                        left: repository?.mentionableUsers.autocompleteUsers ?? [],
+                        right: mentionedUsers
+                    )
+
                     let paging = issueType.headPaging
                     let newPage = IssueTimelinePage(
                         startCursor: paging.hasPreviousPage ? paging.startCursor : nil,
-                        viewModels: issueType.timelineViewModels(width: width)
+                        viewModels: timeline.models
                     )
 
                     let issueResult = IssueResult(
