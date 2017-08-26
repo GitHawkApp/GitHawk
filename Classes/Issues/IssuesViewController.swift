@@ -82,7 +82,7 @@ IssueTextActionsViewDelegate {
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
         textView.placeholderColor = Styles.Colors.Gray.light.color
-        textView.keyboardType = .default
+        textView.keyboardType = .twitter
         textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
         textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
