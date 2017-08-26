@@ -24,7 +24,7 @@ final class RatingCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = Styles.Colors.Blue.light.color
+        contentView.backgroundColor = Styles.Colors.Blue.medium.color
 
         let tint = UIColor.white
 

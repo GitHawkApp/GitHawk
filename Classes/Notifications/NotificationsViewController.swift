@@ -30,7 +30,7 @@ RatingSectionControllerDelegate {
     private let foreground = ForegroundHandler(threshold: 5 * 60)
 
     // set to nil and update to dismiss the rating control
-    private var ratingToken = RatingController.token()
+    private var ratingToken: RatingToken? = RatingController.inFeedToken()
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
@@ -101,6 +101,9 @@ RatingSectionControllerDelegate {
                 generator.notificationOccurred(.error)
             }
             self.reload()
+
+            // "mark all" is an engaging action, system prompt on it
+            RatingController.prompt(.system)
         }
     }
 
@@ -282,8 +285,9 @@ RatingSectionControllerDelegate {
 
     // MARK: RatingSectionControllerDelegate
 
-    func didTapDismiss(sectionController: RatingSectionController) {
-
+    func ratingNeedsDismiss(sectionController: RatingSectionController) {
+        ratingToken = nil
+        feed.adapter.performUpdates(animated: true)
     }
     
 }

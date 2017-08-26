@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 
 protocol RatingSectionControllerDelegate: class {
-    func didTapDismiss(sectionController: RatingSectionController)
+    func ratingNeedsDismiss(sectionController: RatingSectionController)
 }
 
 final class RatingSectionController: ListSectionController, RatingCellDelegate {
@@ -35,10 +35,16 @@ final class RatingSectionController: ListSectionController, RatingCellDelegate {
         return cell
     }
 
+    override func didSelectItem(at index: Int) {
+        RatingController.prompt(.inFeed)
+        delegate?.ratingNeedsDismiss(sectionController: self)
+    }
+
     // MARK: RatingCellDelegate
 
     func didTapDismiss(cell: RatingCell) {
-        delegate?.didTapDismiss(sectionController: self)
+        RatingController.prompted()
+        delegate?.ratingNeedsDismiss(sectionController: self)
     }
 
 }
