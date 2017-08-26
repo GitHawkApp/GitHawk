@@ -210,6 +210,8 @@
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
 		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
+		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
+		298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033F1F51E93B00BE90F4 /* RatingCell.swift */; };
 		2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */; };
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
 		298744CB1F24B75300D5DF30 /* SlackTextViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */; };
@@ -491,6 +493,8 @@
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
 		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
+		2980033D1F51E93500BE90F4 /* RatingSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingSectionController.swift; sourceTree = "<group>"; };
+		2980033F1F51E93B00BE90F4 /* RatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingCell.swift; sourceTree = "<group>"; };
 		2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSectionController.swift; sourceTree = "<group>"; };
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
@@ -1169,7 +1173,9 @@
 		2980033A1F51E82400BE90F4 /* Rating */ = {
 			isa = PBXGroup;
 			children = (
+				2980033F1F51E93B00BE90F4 /* RatingCell.swift */,
 				2980033B1F51E82400BE90F4 /* RatingController.swift */,
+				2980033D1F51E93500BE90F4 /* RatingSectionController.swift */,
 			);
 			path = Rating;
 			sourceTree = "<group>";
@@ -1618,6 +1624,7 @@
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
+				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				292CD3CC1F0DB89600D3D57B /* IssueReviewSectionController.swift in Sources */,
@@ -1740,6 +1747,7 @@
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
 				297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */,
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,

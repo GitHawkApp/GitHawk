@@ -17,7 +17,8 @@ class NotificationsViewController: UIViewController,
     NotificationClientListener,
     NotificationNextPageSectionControllerDelegate,
 FeedSelectionProviding,
-ForegroundHandlerDelegate {
+ForegroundHandlerDelegate,
+RatingSectionControllerDelegate {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
@@ -178,6 +179,10 @@ ForegroundHandlerDelegate {
 
         var objects: [ListDiffable] = [selection]
 
+        if let token = ratingToken {
+            objects.append(token)
+        }
+
         let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
 
         if viewModels.count == 0 && feed.status == .idle {
@@ -206,6 +211,7 @@ ForegroundHandlerDelegate {
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
         case is NotificationViewModel: return NotificationSectionController(client: client, dataSource: dataSource)
+        case is RatingToken: return RatingSectionController(delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -272,6 +278,12 @@ ForegroundHandlerDelegate {
 
     func didForeground(handler: ForegroundHandler) {
         feed.refreshHead()
+    }
+
+    // MARK: RatingSectionControllerDelegate
+
+    func didTapDismiss(sectionController: RatingSectionController) {
+
     }
     
 }
