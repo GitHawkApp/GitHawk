@@ -12,6 +12,7 @@ import SafariServices
 final class SettingsViewController: UITableViewController {
 
     var sessionManager: GithubSessionManager!
+    var client: GithubClient!
     weak var rootNavigationManager: RootNavigationManager? = nil
 
     @IBOutlet weak var versionLabel: UILabel!
@@ -50,6 +51,7 @@ final class SettingsViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? SettingsAccountsViewController {
+            controller.client = client
             controller.sessionManager = sessionManager
         }
     }

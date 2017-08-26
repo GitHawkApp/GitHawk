@@ -284,7 +284,13 @@
                             <outlet property="delegate" destination="Pin-sZ-TSO" id="wQZ-LB-ZNX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Accounts" id="56A-2S-vCm"/>
+                    <navigationItem key="navigationItem" title="Accounts" id="56A-2S-vCm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Pr-sR-RZb">
+                            <connections>
+                                <action selector="onAdd:" destination="Pin-sZ-TSO" id="Y9Z-Jo-9Ee"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHM-PS-ThT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

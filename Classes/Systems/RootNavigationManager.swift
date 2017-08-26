@@ -17,6 +17,8 @@ final class RootNavigationManager: GithubSessionListener {
     // weak refs to avoid cycles
     weak private var rootViewController: UISplitViewController?
 
+    private var lastClient: GithubClient? = nil
+
     init(
         sessionManager: GithubSessionManager,
         rootViewController: UISplitViewController
@@ -49,6 +51,7 @@ final class RootNavigationManager: GithubSessionListener {
         guard let userSession = userSession else { return }
 
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
+        lastClient = client
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 
@@ -128,7 +131,13 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     @objc private func onSettings() {
-        let settings = newSettingsRootViewController(sessionManager: sessionManager, rootNavigationManager: self)
+        guard let client = lastClient else { return }
+
+        let settings = newSettingsRootViewController(
+            sessionManager: sessionManager,
+            rootNavigationManager: self,
+            client: client
+        )
         settings.modalPresentationStyle = .formSheet
         rootViewController?.present(settings, animated: true)
     }
