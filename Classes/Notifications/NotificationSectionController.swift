@@ -80,6 +80,7 @@ SwipeCollectionViewCellDelegate {
 
         let title = NSLocalizedString("Read", comment: "")
         let action = SwipeAction(style: .destructive, title: title) { [weak self] (action, _) in
+            RatingController.requestSystem()
             self?.markRead()
         }
 

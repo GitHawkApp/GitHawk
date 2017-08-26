@@ -28,6 +28,9 @@ ForegroundHandlerDelegate {
     private let dataSource = NotificationsDataSource()
     private let foreground = ForegroundHandler(threshold: 5 * 60)
 
+    // set to nil and update to dismiss the rating control
+    private var ratingToken = RatingController.token()
+
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
         super.init(nibName: nil, bundle: nil)

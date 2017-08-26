@@ -209,6 +209,7 @@
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
+		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
 		2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */; };
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
 		298744CB1F24B75300D5DF30 /* SlackTextViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */; };
@@ -489,6 +490,7 @@
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
+		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSectionController.swift; sourceTree = "<group>"; };
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
@@ -1090,6 +1092,7 @@
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
+				2980033A1F51E82400BE90F4 /* Rating */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
@@ -1161,6 +1164,14 @@
 				297AE8711EC0D5C200B44A1F /* Main.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2980033A1F51E82400BE90F4 /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				2980033B1F51E82400BE90F4 /* RatingController.swift */,
+			);
+			path = Rating;
 			sourceTree = "<group>";
 		};
 		298BA0941EC947F100B01946 /* SegmentedControl */ = {
@@ -1569,6 +1580,7 @@
 				293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */,
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
+				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
