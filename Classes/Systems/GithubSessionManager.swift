@@ -11,7 +11,7 @@ import IGListKit
 
 protocol GithubSessionListener: class {
     func didReceiveRedirect(manager: GithubSessionManager, code: String)
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession)
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool)
     func didLogout(manager: GithubSessionManager)
 }
 
@@ -76,12 +76,14 @@ final class GithubSessionManager: NSObject, ListDiffable {
     }
 
     public func focus(
-        _ userSession: GithubUserSession
+        _ userSession: GithubUserSession,
+        dismiss: Bool
         ) {
+        _userSessions.remove(userSession)
         _userSessions.insert(userSession, at: 0)
         save()
         for wrapper in listeners {
-            wrapper.listener?.didFocus(manager: self, userSession: userSession)
+            wrapper.listener?.didFocus(manager: self, userSession: userSession, dismiss: dismiss)
         }
     }
 

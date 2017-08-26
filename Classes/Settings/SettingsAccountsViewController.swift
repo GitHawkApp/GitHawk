@@ -8,10 +8,16 @@
 
 import UIKit
 
-final class SettingsAccountsViewController: UITableViewController {
+final class SettingsAccountsViewController: UITableViewController, GithubSessionListener {
 
-    var sessionManager: GithubSessionManager!
     var client: GithubClient!
+    var sessionManager: GithubSessionManager! {
+        didSet {
+            sessionManager.addListener(listener: self)
+            updateUserSessions()
+        }
+    }
+    private var userSessions = [GithubUserSession]()
 
     // MARK: Private API
 
@@ -57,7 +63,16 @@ final class SettingsAccountsViewController: UITableViewController {
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
-        sessionManager.focus(GithubUserSession(token: token, authMethod: authMethod, username: username))
+        sessionManager.focus(
+            GithubUserSession(token: token, authMethod: authMethod, username: username),
+            dismiss: false
+        )
+    }
+
+    private func updateUserSessions() {
+        userSessions = sessionManager.userSessions.sorted(by: { (left, right) -> Bool in
+            return (left.username ?? "") < (right.username ?? "")
+        })
     }
     
     // MARK: UITableViewDataSource
@@ -68,7 +83,7 @@ final class SettingsAccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "account", for: indexPath)
-        let session = sessionManager.userSessions[indexPath.row]
+        let session = userSessions[indexPath.row]
         cell.textLabel?.text = session.username ?? session.token
         cell.accessoryType = sessionManager.focusedUserSession == session ? .checkmark : .none
         return cell
@@ -78,6 +93,20 @@ final class SettingsAccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let selectedSession = userSessions[indexPath.row]
+        guard selectedSession != sessionManager.focusedUserSession else { return }
+        sessionManager.focus(selectedSession, dismiss: false)
     }
+
+    // MARK: GithubSessionListener
+
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
+        updateUserSessions()
+        tableView.reloadData()
+    }
+
+    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
+    func didLogout(manager: GithubSessionManager) {}
 
 }
