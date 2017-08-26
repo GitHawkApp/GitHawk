@@ -89,14 +89,13 @@ final class RatingController {
         let day: TimeInterval = -1 * 60 * 60 * 24
         let minInstall: TimeInterval
 
-        // since the system prompt is a much nicer experience, lower the threshold so should expose first
+        // system prompt is a much nicer experience, lower the threshold so should occur before in-feed
         switch type {
         case .system: minInstall = day * 7
         case .inFeed: minInstall = day * 14
         }
 
         guard let install = storage.object(forKey: Keys.install) as? Date,
-            // wait until 1w after install before prompting
             install.timeIntervalSinceNow < minInstall
             else { return false }
 
