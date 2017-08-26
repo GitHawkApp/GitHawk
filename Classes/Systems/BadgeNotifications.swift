@@ -67,7 +67,7 @@ final class BadgeNotifications {
 
     static func fetch(application: UIApplication = UIApplication.shared, handler: @escaping (UIBackgroundFetchResult) -> Void) {
         let manager = GithubSessionManager()
-        guard let session = manager.userSession,
+        guard let session = manager.focusedUserSession,
             isEnabled
             else { return }
 

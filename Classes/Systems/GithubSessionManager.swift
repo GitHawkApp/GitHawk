@@ -23,24 +23,51 @@ final class GithubSessionManager: NSObject, ListDiffable {
     private var listeners = [ListenerWrapper]()
 
     private enum Keys {
-        static let version = "1"
-        static let session = "com.github.sessionmanager.session.\(Keys.version)"
+        enum v1 {
+            static let session = "com.github.sessionmanager.session.1"
+        }
+        enum v2 {
+            static let session = "com.github.sessionmanager.session.2"
+        }
     }
 
-    private(set) var userSession: GithubUserSession?
+    private let _userSessions = NSMutableOrderedSet()
     private let defaults = UserDefaults.standard
 
     override init() {
+        // if a migration occurs, immediately save to disk
+        var migrated = false
+
         if let sample = sampleUserSession() {
-            userSession = sample
-        } else if let data = defaults.object(forKey: Keys.session) as? Data,
-            let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? GithubUserSession {
-            userSession = session
+            _userSessions.add(sample)
+        } else if let v1data = defaults.object(forKey: Keys.v1.session) as? Data,
+            let session = NSKeyedUnarchiver.unarchiveObject(with: v1data) as? GithubUserSession {
+            _userSessions.add(session)
+
+            // clear the outdated session format
+            defaults.removeObject(forKey: Keys.v1.session)
+            migrated = true
+        } else if let v2data = defaults.object(forKey: Keys.v2.session) as? Data,
+            let session = NSKeyedUnarchiver.unarchiveObject(with: v2data) as? NSOrderedSet {
+            _userSessions.union(session)
         }
+
         super.init()
+
+        if migrated {
+            save()
+        }
     }
 
     // MARK: Public API
+
+    var focusedUserSession: GithubUserSession? {
+        return _userSessions.firstObject as? GithubUserSession
+    }
+
+    var userSessions: [GithubUserSession] {
+        return _userSessions.array as? [GithubUserSession] ?? []
+    }
 
     func addListener(listener: GithubSessionListener) {
         let wrapper = ListenerWrapper()
@@ -50,7 +77,7 @@ final class GithubSessionManager: NSObject, ListDiffable {
 
     public func authenticate(_ token: String, authMethod: GithubUserSession.AuthMethod) {
         let userSession = GithubUserSession(token: token, authMethod: authMethod)
-        self.userSession = userSession
+        _userSessions.insert(GithubUserSession(token: token, authMethod: authMethod), at: 0)
         save()
         for wrapper in listeners {
             wrapper.listener?.didAuthenticate(manager: self, userSession: userSession)
@@ -58,7 +85,7 @@ final class GithubSessionManager: NSObject, ListDiffable {
     }
 
     public func logout() {
-        userSession = nil
+        _userSessions.removeAllObjects()
         save()
         for wrapper in listeners {
             wrapper.listener?.didLogout(manager: self)
@@ -66,10 +93,10 @@ final class GithubSessionManager: NSObject, ListDiffable {
     }
 
     func save() {
-        if let session = userSession {
-            defaults.set(NSKeyedArchiver.archivedData(withRootObject: session), forKey: Keys.session)
+        if _userSessions.count > 0 {
+            defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.v2.session)
         } else {
-            defaults.removeObject(forKey: Keys.session)
+            defaults.removeObject(forKey: Keys.v2.session)
         }
     }
 

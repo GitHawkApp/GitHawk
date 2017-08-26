@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let _ = UIWebView()
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
-        rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
+        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
         NetworkActivityIndicatorManager.shared.isEnabled = true
         Styles.setupAppearance()
         BadgeNotifications.configure(application: application)
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if showingLogin == false && sessionManager.userSession == nil {
+        if showingLogin == false && sessionManager.focusedUserSession == nil {
             showingLogin = true
             rootNavigationManager.showLogin(animated: false)
         }
