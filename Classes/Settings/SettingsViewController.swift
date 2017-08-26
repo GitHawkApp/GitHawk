@@ -90,14 +90,14 @@ final class SettingsViewController: UITableViewController {
         let template = "\(Bundle.main.prettyVersionString)\nDevice: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion)) \n"
             .addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
 
-        guard let url = URL(string: "https://github.com/rnystrom/Freetime/issues/new?body=\(template)")
+        guard let url = URL(string: "https://github.com/rnystrom/GitHawk/issues/new?body=\(template)")
             else { fatalError("Should always create GitHub issue URL") }
         let safari = SFSafariViewController(url: url)
         present(safari, animated: true)
     }
 
     func onViewSource() {
-        guard let url = URL(string: "https://github.com/rnystrom/Freetime/")
+        guard let url = URL(string: "https://github.com/rnystrom/GitHawk/")
             else { fatalError("Should always create GitHub URL") }
         let safari = SFSafariViewController(url: url)
         present(safari, animated: true)
