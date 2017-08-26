@@ -26,7 +26,7 @@ final class RatingCell: UICollectionViewCell {
 
         contentView.backgroundColor = Styles.Colors.Blue.light.color
 
-        let tint = .white
+        let tint = UIColor.white
 
         titleLabel.textAlignment = .center
         titleLabel.font = Styles.Fonts.bodyBold

@@ -81,8 +81,8 @@ extension GithubClient {
                     }
 
                     let mentionableUsers = uniqueAutocompleteUsers(
-                        left: repository?.mentionableUsers.autocompleteUsers ?? [],
-                        right: mentionedUsers
+                        left: mentionedUsers,
+                        right: repository?.mentionableUsers.autocompleteUsers ?? []
                     )
 
                     let paging = issueType.headPaging
