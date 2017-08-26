@@ -10,9 +10,14 @@ import Foundation
 
 extension GithubClient {
 
+    struct AccessTokenUser {
+        let token: String
+        let username: String
+    }
+
     enum AccessTokenResult {
         case failure
-        case success(String)
+        case success(AccessTokenUser)
     }
 
     func requestAccessToken(
@@ -35,7 +40,12 @@ extension GithubClient {
             completion: { (response, _) in
             if let json = response.value as? [String: Any],
                 let token = json["access_token"] as? String {
-                completion(.success(token))
+                self.verifyPersonalAccessToken(token: token, completion: { result in
+                    switch result {
+                    case .success(let user): completion(.success(user))
+                    case .failure: completion(.failure)
+                    }
+                })
             } else {
                 completion(.failure)
             }
@@ -55,10 +65,9 @@ extension GithubClient {
             method: .get,
             headers: headers,
             completion: { (response, _) in
-                let json = response.value as? [String: Any]
-                let username = json?["login"] as? String
-                if username != nil {
-                    completion(.success(token))
+                if let json = response.value as? [String: Any],
+                    let username = json["login"] as? String {
+                    completion(.success(AccessTokenUser(token: token, username: username)))
                 } else {
                     completion(.failure)
                 }

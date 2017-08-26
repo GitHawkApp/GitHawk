@@ -50,6 +50,8 @@ final class RootNavigationManager: GithubSessionListener {
 
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
 
+        fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
+
         let notifications = newNotificationsRootViewController(client: client)
         let settingsBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "bullets-hollow"),
@@ -84,6 +86,27 @@ final class RootNavigationManager: GithubSessionListener {
     func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
 
     // MARK: Private API
+
+    private func fetchUsernameForMigrationIfNecessary(
+        client: GithubClient,
+        userSession: GithubUserSession,
+        sessionManager: GithubSessionManager
+        ) {
+        // only required when there is no username
+        guard userSession.username == nil else { return }
+
+        client.verifyPersonalAccessToken(token: userSession.token) { result in
+            switch result {
+            case .success(let user):
+                userSession.username = user.username
+
+                // user session ref is same session that manager should be using
+                // update w/ mutated session
+                sessionManager.save()
+            default: break
+            }
+        }
+    }
 
     private var masterNavigationController: UINavigationController? {
         return rootViewController?.viewControllers.first as? UINavigationController

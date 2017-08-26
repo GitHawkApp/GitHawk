@@ -82,7 +82,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     private func handle(result: GithubClient.AccessTokenResult, authMethod: GithubUserSession.AuthMethod) {
         switch result {
         case .failure: handleError()
-        case .success(let token): finishLogin(token: token, authMethod: authMethod)
+        case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
         }
     }
 
@@ -98,8 +98,8 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: true)
     }
 
-    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod) {
-        client.sessionManager.authenticate(token, authMethod: authMethod)
+    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
+        client.sessionManager.authenticate(token, authMethod: authMethod, username: username)
     }
 
     // MARK: GithubSessionListener

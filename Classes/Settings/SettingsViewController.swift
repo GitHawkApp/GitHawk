@@ -23,6 +23,7 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var openSettingsButton: UIButton!
     @IBOutlet weak var badgeCell: UITableViewCell!
     @IBOutlet weak var markReadSwitch: UISwitch!
+    @IBOutlet weak var accountsCell: StyledTableCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,14 @@ final class SettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
+
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Strings.unknown
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? SettingsAccountsViewController {
+            controller.sessionManager = sessionManager
+        }
     }
 
     // MARK: UITableViewDelegate

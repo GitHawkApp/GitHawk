@@ -75,9 +75,13 @@ final class GithubSessionManager: NSObject, ListDiffable {
         listeners.append(wrapper)
     }
 
-    public func authenticate(_ token: String, authMethod: GithubUserSession.AuthMethod) {
-        let userSession = GithubUserSession(token: token, authMethod: authMethod)
-        _userSessions.insert(GithubUserSession(token: token, authMethod: authMethod), at: 0)
+    public func authenticate(
+        _ token: String,
+        authMethod: GithubUserSession.AuthMethod,
+        username: String
+        ) {
+        let userSession = GithubUserSession(token: token, authMethod: authMethod, username: username)
+        _userSessions.insert(userSession, at: 0)
         save()
         for wrapper in listeners {
             wrapper.listener?.didAuthenticate(manager: self, userSession: userSession)
