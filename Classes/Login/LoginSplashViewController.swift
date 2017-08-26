@@ -58,7 +58,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
         let alert = UIAlertController(
             title: NSLocalizedString("Personal Access Token", comment: ""),
-            message: NSLocalizedString("To sign in using a Personal Access Token, enter it here:", comment: ""),
+            message: NSLocalizedString("Sign in with a Personal Access Token with both repo and user scopes.", comment: ""),
             preferredStyle: .alert
         )
 
