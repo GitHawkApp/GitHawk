@@ -23,8 +23,8 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
 
     @IBAction func onAdd(_ sender: Any) {
         let alert = UIAlertController(
-            title: NSLocalizedString("Add Another Account", comment: ""),
-            message: NSLocalizedString("To sign in with another account, please add a new Personal Access Token.", comment: ""),
+            title: NSLocalizedString("Add Account", comment: ""),
+            message: NSLocalizedString("To sign in with another account, please add a new Personal Access Token with user and repo scopes.", comment: ""),
             preferredStyle: .alert
         )
 
