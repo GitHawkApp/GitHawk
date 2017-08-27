@@ -146,4 +146,19 @@ extension GithubClient {
         }
     }
 
+    enum CloseStatus: String {
+        case closed = "closed"
+        case open = "open"
+    }
+
+    func setStatus(
+        owner: String,
+        repo: String,
+        number: Int,
+        status: CloseStatus,
+        completion: @escaping () -> ()
+        ) {
+        
+    }
+
 }
