@@ -59,6 +59,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return fragments.updatableFields.viewerCanUpdate
     }
 
+    var milestoneFields: MilestoneFields? {
+        return milestone?.fragments.milestoneFields
+    }
+
     func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }

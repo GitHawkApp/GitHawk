@@ -303,6 +303,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
           }
         }
+        milestone{...milestoneFields}
         ...reactionFields
         ...commentFields
         ...lockableFields

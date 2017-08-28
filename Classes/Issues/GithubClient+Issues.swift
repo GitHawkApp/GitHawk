@@ -90,6 +90,13 @@ extension GithubClient {
                         viewModels: timeline.models
                     )
 
+                    let milestoneModel: IssueMilestoneModel?
+                    if let milestone = issueType.milestoneFields {
+                        milestoneModel = IssueMilestoneModel(number: milestone.number, title: milestone.title)
+                    } else {
+                        milestoneModel = nil
+                    }
+
                     let issueResult = IssueResult(
                         subjectId: issueType.id,
                         pullRequest: issueType.pullRequest,
@@ -99,6 +106,7 @@ extension GithubClient {
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
+                        milestone: milestoneModel,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate

@@ -47,6 +47,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.updatableFields.viewerCanUpdate
     }
 
+    var milestoneFields: MilestoneFields? {
+        return milestone?.fragments.milestoneFields
+    }
+
     var reviewRequestModel: IssueAssigneesModel? {
         var models = [IssueAssigneeViewModel]()
         for node in reviewRequests?.nodes ?? [] {

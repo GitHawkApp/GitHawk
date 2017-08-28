@@ -21,6 +21,7 @@ protocol IssueType {
     var reactionFields: ReactionFields { get }
     var closableFields: ClosableFields { get }
     var assigneeFields: AssigneeFields { get }
+    var milestoneFields: MilestoneFields? { get }
     var merged: Bool { get }
     var locked: Bool { get }
     var headPaging: HeadPaging { get }

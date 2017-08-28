@@ -13,14 +13,14 @@ final class IssueMilestoneSectionController: ListGenericSectionController<IssueM
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: IssueMilestoneCell.self, for: self, at: index) as? IssueMilestoneCell,
         let object = self.object
             else { fatalError("Missing context, cell wrong type, or missing object") }
-        cell.configure(title: object.title, completed: object.completed, total: object.total)
+        cell.configure(title: object.title)
         return cell
     }
 

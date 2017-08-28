@@ -13,14 +13,10 @@ final class IssueMilestoneModel: ListDiffable {
 
     let number: Int
     let title: String
-    let completed: Int
-    let total: Int
 
-    init(number: Int, title: String, completed: Int, total: Int) {
+    init(number: Int, title: String) {
         self.number = number
         self.title = title
-        self.completed = completed
-        self.total = total
     }
 
     // MARK: ListDiffable
@@ -33,8 +29,6 @@ final class IssueMilestoneModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         guard let object = object as? IssueMilestoneModel else { return false }
         return number == object.number
-            && completed == object.completed
-            && total == object.total
             && title == object.title
     }
     

@@ -20,6 +20,7 @@ struct IssueResult {
     let assignee: IssueAssigneesModel
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
+    let milestone: IssueMilestoneModel?
     let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool

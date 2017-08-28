@@ -673,6 +673,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "            }" +
     "          }" +
     "        }" +
+    "        milestone {" +
+    "          __typename" +
+    "          ...milestoneFields" +
+    "        }" +
     "        ...reactionFields" +
     "        ...commentFields" +
     "        ...lockableFields" +
@@ -1595,6 +1599,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public let __typename: String
           /// A list of events associated with a PullRequest.
           public let timeline: Timeline
+          /// Identifies the milestone associated with the pull request.
+          public let milestone: Milestone?
           /// Identifies the pull request number.
           public let number: Int
           /// Identifies the pull request title.
@@ -1609,6 +1615,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             timeline = try reader.value(for: Field(responseName: "timeline", arguments: ["last": reader.variables["page_size"], "before": reader.variables["before"]]))
+            milestone = try reader.optionalValue(for: Field(responseName: "milestone"))
             number = try reader.value(for: Field(responseName: "number"))
             title = try reader.value(for: Field(responseName: "title"))
             reviewRequests = try reader.optionalValue(for: Field(responseName: "reviewRequests", arguments: ["first": reader.variables["page_size"]]))
@@ -2631,6 +2638,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
+          public struct Milestone: GraphQLMappable {
+            public let __typename: String
+
+            public let fragments: Fragments
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+
+              let milestoneFields = try MilestoneFields(reader: reader)
+              fragments = Fragments(milestoneFields: milestoneFields)
+            }
+
+            public struct Fragments {
+              public let milestoneFields: MilestoneFields
+            }
+          }
+
           public struct ReviewRequest: GraphQLMappable {
             public let __typename: String
             /// A list of nodes.
@@ -3072,7 +3096,7 @@ public struct NodeFields: GraphQLNamedFragment {
     "  id" +
     "}"
 
-  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "Milestone", "ProtectedBranch", "PushAllowance", "Team", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "RepositoryInvitation", "Tag", "AddedToProjectEvent", "BaseRefChangedEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent"]
+  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "Milestone", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "CrossReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "ProtectedBranch", "PushAllowance", "Team", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "RepositoryInvitation", "Tag", "AddedToProjectEvent", "BaseRefChangedEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent"]
 
   public let __typename: String
   /// ID of the object.

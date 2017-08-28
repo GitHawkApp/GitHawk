@@ -326,8 +326,13 @@ IssueTextActionsViewDelegate {
             localStatusChange?.model ?? current.status,
             current.title,
             current.labels,
-            current.assignee
         ]
+
+        if let milestone = current.milestone {
+            objects.append(milestone)
+        }
+
+        objects.append(current.assignee)
 
         if let reviewers = current.reviewers {
             objects.append(reviewers)
