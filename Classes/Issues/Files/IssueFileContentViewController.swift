@@ -15,7 +15,7 @@ final class IssueFileContentViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let attributeView = AttributedStringView()
     private let feedRefresh = FeedRefresh()
-    private var result: GithubClient.ContentResult? = nil
+    private var result: Result<(NSAttributedStringSizing, Content)>? = nil
 
     init(fullPath: String, client: GithubClient) {
         self.fullPath = fullPath
@@ -61,7 +61,7 @@ final class IssueFileContentViewController: UIViewController {
         }
     }
 
-    func handle(result: GithubClient.ContentResult) {
+    func handle(result: Result<(NSAttributedStringSizing, Content)>) {
         feedRefresh.endRefreshing()
 
         self.result = result

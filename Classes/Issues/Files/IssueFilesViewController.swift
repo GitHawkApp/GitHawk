@@ -12,7 +12,7 @@ final class IssueFilesViewController: UITableViewController {
 
     private var model: IssueDetailsModel!
     private var client: GithubClient!
-    private var result: GithubClient.FileResult? = nil
+    private var result: Result<[File]>? = nil
     private let feedRefresh = FeedRefresh()
 
     override func viewDidLoad() {
@@ -49,7 +49,7 @@ final class IssueFilesViewController: UITableViewController {
         }
     }
 
-    func handle(result: GithubClient.FileResult) {
+    func handle(result: Result<[File]>) {
         self.result = result
         tableView.reloadData()
         feedRefresh.endRefreshing()

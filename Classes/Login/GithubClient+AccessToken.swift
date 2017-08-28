@@ -15,14 +15,9 @@ extension GithubClient {
         let username: String
     }
 
-    enum AccessTokenResult {
-        case failure
-        case success(AccessTokenUser)
-    }
-
     func requestAccessToken(
         code: String,
-        completion: @escaping (AccessTokenResult) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> ()
         ) {
         let parameters = [
             "code": code,
@@ -40,21 +35,23 @@ extension GithubClient {
             completion: { (response, _) in
             if let json = response.value as? [String: Any],
                 let token = json["access_token"] as? String {
+
+                // after acquiring token, fetch the username so a complete user session can be stored
                 self.verifyPersonalAccessToken(token: token, completion: { result in
                     switch result {
                     case .success(let user): completion(.success(user))
-                    case .failure: completion(.failure)
+                    case .error: completion(.error(nil))
                     }
                 })
             } else {
-                completion(.failure)
+                completion(.error(nil))
             }
         }))
     }
 
     func verifyPersonalAccessToken(
         token: String,
-        completion: @escaping (AccessTokenResult) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> ()
         ) {
         let headers = [
             "Accept": "application/json",
@@ -69,7 +66,7 @@ extension GithubClient {
                     let username = json["login"] as? String {
                     completion(.success(AccessTokenUser(token: token, username: username)))
                 } else {
-                    completion(.failure)
+                    completion(.error(nil))
                 }
         }))
     }

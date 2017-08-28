@@ -35,18 +35,13 @@ private func uniqueAutocompleteUsers(
 
 extension GithubClient {
 
-    enum IssueResultType {
-        case error
-        case success(IssueResult)
-    }
-
     func fetch(
         owner: String,
         repo: String,
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (IssueResultType) -> ()
+        completion: @escaping (Result<IssueResult>) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -114,7 +109,7 @@ extension GithubClient {
                     }
                 }
             } else {
-                completion(.error)
+                completion(.error(nil))
             }
             ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }
@@ -167,7 +162,7 @@ extension GithubClient {
                 if response.value != nil {
                     completion(.success(status))
                 } else {
-                    completion(.error)
+                    completion(.error(nil))
                 }
         }))
     }

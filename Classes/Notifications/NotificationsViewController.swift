@@ -133,7 +133,7 @@ RatingSectionControllerDelegate {
         updateUnreadState()
     }
 
-    private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
+    private func handle(result: Result<([Notification], Int?)>, append: Bool, animated: Bool, page: Int) {
         // in case coming from "mark all" action
         self.resetRightBarItem()
 
@@ -154,7 +154,7 @@ RatingSectionControllerDelegate {
             } else {
                 self.dataSource.update(width: width, notifications: notifications, completion: block)
             }
-        case .failed:
+        case .error:
             StatusBar.showNetworkError()
             self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)

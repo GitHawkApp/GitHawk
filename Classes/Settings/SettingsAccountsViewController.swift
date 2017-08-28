@@ -45,9 +45,9 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         present(alert, animated: true)
     }
 
-    private func handle(result: GithubClient.AccessTokenResult, authMethod: GithubUserSession.AuthMethod) {
+    private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
         switch result {
-        case .failure: handleError()
+        case .error: handleError()
         case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
         }
     }

@@ -377,6 +377,7 @@ IssueTextActionsViewDelegate {
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
+        case is IssueMilestoneModel: return IssueMilestoneSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }

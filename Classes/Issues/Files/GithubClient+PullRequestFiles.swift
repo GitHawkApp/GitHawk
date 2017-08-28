@@ -10,16 +10,11 @@ import UIKit
 
 extension GithubClient {
 
-    enum FileResult {
-        case success([File])
-        case error
-    }
-
     func fetchFiles(
         owner: String,
         repo: String,
         number: Int,
-        completion: @escaping (FileResult) -> ()
+        completion: @escaping (Result<[File]>) -> ()
         ) {
         request(Request(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/files",
@@ -33,19 +28,14 @@ extension GithubClient {
                     }
                     completion(.success(files))
                 } else {
-                    completion(.error)
+                    completion(.error(nil))
                 }
         }))
     }
 
-    enum ContentResult {
-        case success(NSAttributedStringSizing, Content)
-        case error
-    }
-
     func fetchContents(
         contentsURLString: String,
-        completion: @escaping (ContentResult) -> ()
+        completion: @escaping (Result<(NSAttributedStringSizing, Content)>) -> ()
         ) {
         request(Request(url: contentsURLString, completion: { (response, _) in
             if let json = response.value as? [String: Any] {
@@ -68,12 +58,12 @@ extension GithubClient {
                         }
                     } else {
                         DispatchQueue.main.async {
-                            completion(.error)
+                            completion(.error(nil))
                         }
                     }
                 }
             } else {
-                completion(.error)
+                completion(.error(nil))
             }
         }))
     }

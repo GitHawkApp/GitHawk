@@ -20,10 +20,10 @@ final class NotificationClient {
     }
     private var listeners = [ListenerWrapper]()
 
-    enum Result {
-        case failed(Error?)
-        case success([Notification], Int?)
-    }
+//    enum Result {
+//        case failed(Error?)
+//        case success([Notification], Int?)
+//    }
 
     let githubClient: GithubClient
 
@@ -56,7 +56,7 @@ final class NotificationClient {
         since: Date? = nil,
         page: Int = 1,
         before: Date? = nil,
-        completion: @escaping (Result) -> ()
+        completion: @escaping (Result<([Notification], Int?)>) -> ()
         ) {
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
@@ -93,7 +93,7 @@ final class NotificationClient {
             if let jsonArr = response.value as? NotificationsPayload {
                 success(jsonArr, nextPage?.next)
             } else {
-                completion(.failed(response.error))
+                completion(.error(response.error))
             }
         })
     }
