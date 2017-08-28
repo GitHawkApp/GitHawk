@@ -107,6 +107,7 @@ enum Styles {
         }
 
         enum Yellow {
+            static let medium = "f29d50"
             static let light = "fff5b1"
         }
     }
