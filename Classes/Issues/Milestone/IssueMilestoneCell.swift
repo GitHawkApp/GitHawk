@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueMilestoneCell: UICollectionViewCell {
+final class IssueMilestoneCell: SelectableCell {
 
     private let titleLabel = UILabel()
 

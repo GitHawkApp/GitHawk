@@ -11,6 +11,13 @@ import IGListKit
 
 final class IssueMilestoneSectionController: ListGenericSectionController<IssueMilestoneModel> {
 
+    private let issueModel: IssueDetailsModel
+
+    init(issueModel: IssueDetailsModel) {
+        self.issueModel = issueModel
+        super.init()
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
         return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
@@ -25,7 +32,9 @@ final class IssueMilestoneSectionController: ListGenericSectionController<IssueM
     }
 
     override func didSelectItem(at index: Int) {
-        // push milestone safari VC
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        guard let number = object?.number else { return }
+        viewController?.presentMilestone(owner: issueModel.owner, repo: issueModel.repo, milestone: number)
     }
 
 }

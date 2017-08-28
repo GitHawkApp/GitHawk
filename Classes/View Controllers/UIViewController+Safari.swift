@@ -38,4 +38,9 @@ extension UIViewController {
         presentSafari(url: url)
     }
 
+    func presentMilestone(owner: String, repo: String, milestone: Int) {
+        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/milestone/\(milestone)") else { return }
+        presentSafari(url: url)
+    }
+
 }
