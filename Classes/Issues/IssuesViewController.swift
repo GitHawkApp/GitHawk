@@ -202,7 +202,7 @@ IssueTextActionsViewDelegate {
     }
 
     func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
             let safariActivity = TUSafariActivity()
             let controller = UIActivityViewController(activityItems: [strongSelf.externalURL], applicationActivities: [safariActivity])
@@ -221,11 +221,11 @@ IssueTextActionsViewDelegate {
 
     func closeAction() -> UIAlertAction? {
         guard current?.viewerCanUpdate == true,
-            let status = current?.status.status,
+            let status = localStatusChange?.model.status ?? current?.status.status,
             status != .merged
             else { return nil }
 
-        let close = status == .closed
+        let close = status == .open
         let title = close ? NSLocalizedString("Close", comment: "") : NSLocalizedString("Reopen", comment: "")
         return UIAlertAction(title: title, style: .default, handler: { [weak self] _ in
             self?.setStatus(close: close)
@@ -234,6 +234,11 @@ IssueTextActionsViewDelegate {
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
+
+        if let close = closeAction() {
+            alert.addAction(close)
+        }
+
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil))
@@ -291,7 +296,7 @@ IssueTextActionsViewDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: "TODO",
+            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,

@@ -163,9 +163,9 @@ extension GithubClient {
         completion: @escaping (Result<CloseStatus>) -> ()
         ) {
         request(Request(
-            path: "repos/\(owner)/\(repo)/issue/\(number)",
-            method: .post,
-            parameters: [ "status": status.rawValue ],
+            path: "repos/\(owner)/\(repo)/issues/\(number)",
+            method: .patch,
+            parameters: [ "state": status.rawValue ],
             completion: { (response, _) in
                 if response.value != nil {
                     completion(.success(status))
