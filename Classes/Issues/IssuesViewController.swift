@@ -46,6 +46,10 @@ IssueTextActionsViewDelegate {
     }
     private var sentComments = [ListDiffable]()
 
+    // set to optimistically change the open/closed status
+    // clear when refreshing or on request failure
+    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
+
     init(
         client: GithubClient,
         model: IssueDetailsModel
@@ -215,6 +219,19 @@ IssueTextActionsViewDelegate {
         }
     }
 
+    func closeAction() -> UIAlertAction? {
+        guard current?.viewerCanUpdate == true,
+            let status = current?.status.status,
+            status != .merged
+            else { return nil }
+
+        let close = status == .closed
+        let title = close ? NSLocalizedString("Close", comment: "") : NSLocalizedString("Reopen", comment: "")
+        return UIAlertAction(title: title, style: .default, handler: { [weak self] _ in
+            self?.setStatus(close: close)
+        })
+    }
+
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
         alert.addAction(shareAction(sender: sender))
@@ -225,6 +242,11 @@ IssueTextActionsViewDelegate {
     }
 
     func fetch(previous: Bool) {
+        // on head load, reset all optimistic state
+        if !previous {
+            localStatusChange = nil
+        }
+
         client.fetch(
             owner: model.owner,
             repo: model.repo,
@@ -259,13 +281,49 @@ IssueTextActionsViewDelegate {
         showDetailViewController(controller, sender: nil)
     }
 
+    func setStatus(close: Bool) {
+        guard let currentStatus = current?.status else { return }
+
+        let localModel = IssueStatusModel(
+            status: close ? .closed : .open,
+            pullRequest: currentStatus.pullRequest,
+            locked: currentStatus.locked
+        )
+        let localEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: "TODO",
+            commitHash: nil,
+            date: Date(),
+            status: close ? .closed : .reopened,
+            pullRequest: currentStatus.pullRequest
+        )
+
+        localStatusChange = (localModel, localEvent)
+        feed.adapter.performUpdates(animated: true)
+
+        client.setStatus(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            status: close ? .closed : .open
+        ) { [weak self] result in
+            switch result {
+            case .error:
+                self?.localStatusChange = nil
+                self?.feed.adapter.performUpdates(animated: true)
+                StatusBar.showGenericError()
+            default: break // dont need to handle success since updated optimistically
+            }
+        }
+    }
+
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.current else { return [] }
 
         var objects: [ListDiffable] = [
-            current.status,
+            localStatusChange?.model ?? current.status,
             current.title,
             current.labels,
             current.assignee
@@ -289,6 +347,10 @@ IssueTextActionsViewDelegate {
         
         objects += current.timelineViewModels
         objects += sentComments
+
+        if let event = localStatusChange?.event {
+            objects.append(event)
+        }
 
         return objects
     }

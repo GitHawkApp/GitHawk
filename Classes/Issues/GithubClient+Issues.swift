@@ -71,7 +71,7 @@ extension GithubClient {
                         reactionFields: issueType.reactionFields,
                         width: width,
                         threadState: .single
-                        )
+                    )
 
                     let timeline = issueType.timelineViewModels(width: width)
 
@@ -105,7 +105,8 @@ extension GithubClient {
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         mentionableUsers: mentionableUsers,
-                        timelinePages: [newPage] + (prependResult?.timelinePages ?? [])
+                        timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
+                        viewerCanUpdate: issueType.viewerCanUpdate
                     )
 
                     DispatchQueue.main.async {
@@ -156,9 +157,19 @@ extension GithubClient {
         repo: String,
         number: Int,
         status: CloseStatus,
-        completion: @escaping () -> ()
+        completion: @escaping (Result<CloseStatus>) -> ()
         ) {
-        
+        request(Request(
+            path: "repos/\(owner)/\(repo)/issue/\(number)",
+            method: .post,
+            parameters: [ "status": status.rawValue ],
+            completion: { (response, _) in
+                if response.value != nil {
+                    completion(.success(status))
+                } else {
+                    completion(.error)
+                }
+        }))
     }
-
+    
 }
