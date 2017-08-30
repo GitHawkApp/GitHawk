@@ -88,9 +88,9 @@ Keep doing this as more ideas come up. You should end up with dozens of options,
 
 For me, there were a few pairs that I really liked:
 
-- Gitbox
-- Gitmark
-- Boltbox
+- "Gitbox"
+- "Gitmark"
+- "Boltbox"
 
 However, most of them were either taken or too weird.
 
@@ -136,7 +136,7 @@ What about the domain? What. The. Fuck. `githawk.com` is available and for only 
 
 ### End to End
 
-All said and done, it took me about X DAYS to create a new name. That is, I did **not** come up with GitHawk overnight, nor did the name just "come to me". I sludged through tons of _terrible_ names, mining for that one gem.
+All said and done, it took me almost a week to create a new name. I did **not** come up with "GitHawk" overnight, nor did the name just "come to me". I sludged through tons of _terrible_ names, mining for that one gem.
 
 Having a way to seed ideas, branch new words, and setting ground rules gave me a framework to work towards a new app name. Without it, I could have gotten distracted, stressed out, or settled on a stupid name (_again_, "Freetime").
 
