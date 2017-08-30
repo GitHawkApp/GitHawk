@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Generating App Names and Icons
+title: Finding Your App Name
 ---
 
 Coming up with app names is _hard_. I spent the last two weeks completely rebranding my app, [GitHawk](https://itunes.apple.com/us/app/githawk-for-github/id1252320249?mt=8). This post is a reflection on my process for generating ideas, iterating, and validating them.
