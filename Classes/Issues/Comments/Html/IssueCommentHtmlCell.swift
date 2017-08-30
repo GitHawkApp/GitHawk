@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 
 protocol IssueCommentHtmlCellDelegate: class {
-    func webViewDidLoad(cell: IssueCommentHtmlCell, html: String)
+    func webViewDidResize(cell: IssueCommentHtmlCell, html: String, size: CGSize)
 }
 
 protocol IssueCommentHtmlCellNavigationDelegate: class {
@@ -52,7 +52,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
     weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate? = nil
 
-    private let webView = UIWebView()
+    @objc private let webView = UIWebView()
     private var body = ""
 
     override init(frame: CGRect) {
@@ -62,6 +62,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .white
         webView.delegate = self
+        addObserver(self, forKeyPath: #keyPath(webView.scrollView.contentSize), options: [.new], context: nil)
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -72,6 +73,10 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        removeObserver(self, forKeyPath: #keyPath(webView.scrollView.contentSize))
     }
 
     override func layoutSubviews() {
@@ -100,10 +105,6 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     // MARK: UIWebViewDelegate
 
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        delegate?.webViewDidLoad(cell: self, html: body)
-    }
-
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         guard let url = request.url else { return true }
         let htmlLoad = url.absoluteString == "about:blank"
@@ -111,6 +112,14 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
             navigationDelegate?.webViewWantsNavigate(cell: self, url: url)
         }
         return htmlLoad
+    }
+
+    // MARK: KVO
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(webView.scrollView.contentSize) {
+            delegate?.webViewDidResize(cell: self, html: body, size: webView.scrollView.contentSize)
+        }
     }
 
 }
