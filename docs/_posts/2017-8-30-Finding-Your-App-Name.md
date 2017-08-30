@@ -13,7 +13,7 @@ But if you have even the slightest experience with App Store marketing, you prob
 
 That's why I recently [rebranded](http://blog.githawk.com/2017/08/16/Rebranding.html) to the name **GitHawk**, which I wont lie, is an _awesome_ name. In one word it:
 
-- Expresses that it does stuff with git
+- It expresses that the app does stuff with git
 - A hawk is a fast, efficient, and beautiful animal that watches the world from above. Much like GitHawk helps you watch your GitHub projects!
 - The capital "G" and "H" in **G**it**H**awk compliments **G**it**H**ub really well, especially when read as "GitHawk for GitHub"
 - There are **zero** App Store search results when searching for "githawk"
@@ -31,7 +31,7 @@ _Don't give up!_ Finding the right app name is hard, but not impossible.
 
 ### Ground Rules
 
-First, let's set some **ground rules** for picking a good name:
+First, let's set some ground rules for picking a good name:
 
 - There should be almost no results when searching the App Store
     + Results also shouldn't contain any competition!
@@ -106,7 +106,7 @@ However I couldn't get a good Twitter handle or domain, even though the App Stor
 
 Continue to go back over all the brainstorming you've done. Sometimes new ideas will pop out.
 
-### Breath
+### Take a breather
 
 Now you might have some names that you're starting to gravitate towards. Maybe they sound cool. Or they're really expressive. Or maybe the name is totally unique, and the Twitter and domain are available.
 
