@@ -23,7 +23,7 @@ That's why I recently [rebranded](http://blog.githawk.com/2017/08/16/Rebranding.
 
 Creating the perfect app name feels impossible. There are names that work in your head but nobody else understands (_ahem_, "Freetime"). There are names which are _perfect_, only to discover they're taken for something totally unrelated.
 
-After a while it feels pointless. Every good name is taken. Every other idea you have is shit.
+After a while it feels pointless. Every good name is taken. Every other idea you have is awful.
 
 Are there even any good app names left? Maybe I should just remove a bunch of vowels and slap a "ly" on the end.
 
@@ -132,7 +132,7 @@ Let's go back to my keywords and mash some together, does anything stick? I imme
 
 Next up was Twitter: holy cow [@githawk](https://twitter.com/githawk) is available. Nabbed.
 
-What about the domain? What. The. Fuck. `githawk.com` is available and for only **$10/mo**?! Boom, done.
+What about the domain? Somehow `githawk.com` is available and for only **$10/mo**?! Boom, done.
 
 ### End to End
 
