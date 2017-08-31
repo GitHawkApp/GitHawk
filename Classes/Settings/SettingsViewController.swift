@@ -79,6 +79,12 @@ final class SettingsViewController: UITableViewController {
             onSignOut()
         }
     }
+    
+    // MARK: Accessibility
+    override func accessibilityPerformEscape() -> Bool {
+        onDone(self)
+        return true
+    }
 
     // MARK: Private API
 
