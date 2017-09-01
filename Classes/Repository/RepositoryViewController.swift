@@ -13,7 +13,8 @@ class RepositoryViewController: UIViewController,
                                 FeedDelegate,
                                 ListAdapterDataSource,
                                 SegmentedControlSectionControllerDelegate,
-                                SearchLoadMoreSectionControllerDelegate {
+                                SearchLoadMoreSectionControllerDelegate,
+PrimaryViewController {
 
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()

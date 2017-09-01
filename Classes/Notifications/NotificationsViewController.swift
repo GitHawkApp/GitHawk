@@ -18,7 +18,8 @@ class NotificationsViewController: UIViewController,
     NotificationNextPageSectionControllerDelegate,
 FeedSelectionProviding,
 ForegroundHandlerDelegate,
-RatingSectionControllerDelegate {
+RatingSectionControllerDelegate,
+PrimaryViewController {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()

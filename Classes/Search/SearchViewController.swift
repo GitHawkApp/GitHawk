@@ -13,7 +13,8 @@ class SearchViewController: UIViewController,
                             ListAdapterDataSource,
                             FeedDelegate,
                             SearchLoadMoreSectionControllerDelegate,
-                            SearchBarSectionControllerDelegate {
+                            SearchBarSectionControllerDelegate,
+PrimaryViewController {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
