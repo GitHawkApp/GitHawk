@@ -16,21 +16,27 @@ class NotificationsViewController: UIViewController,
     FeedDelegate,
     NotificationClientListener,
     NotificationNextPageSectionControllerDelegate,
-FeedSelectionProviding {
+FeedSelectionProviding,
+ForegroundHandlerDelegate,
+RatingSectionControllerDelegate {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
-    private var allNotifications = [NotificationViewModel]()
-    private var filteredNotifications = [NotificationViewModel]()
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: NSNumber? = nil
     private var hasError = false
+    private let dataSource = NotificationsDataSource()
+    private let foreground = ForegroundHandler(threshold: 5 * 60)
+
+    // set to nil and update to dismiss the rating control
+    private var ratingToken: RatingToken? = RatingController.inFeedToken()
 
     init(client: GithubClient) {
         self.client = NotificationClient(githubClient: client)
         super.init(nibName: nil, bundle: nil)
         self.client.add(listener: self)
+        self.foreground.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +45,8 @@ FeedSelectionProviding {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        dataSource.warm(width: view.bounds.width)
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -65,12 +73,13 @@ FeedSelectionProviding {
             target: self,
             action: #selector(NotificationsViewController.onMarkAll(sender:))
         )
-        updateMarkAllEnabled()
+        updateUnreadState()
     }
 
-    private func updateMarkAllEnabled() {
-        let allRead = !filteredNotifications.contains(where: { $0.read == false })
-        navigationItem.rightBarButtonItem?.isEnabled = !allRead
+    private func updateUnreadState() {
+        let unreadCount = dataSource.unreadNotifications.count
+        navigationItem.rightBarButtonItem?.isEnabled = unreadCount > 0
+        BadgeNotifications.update(count: unreadCount)
     }
 
     func setRightBarItemSpinning() {
@@ -85,10 +94,16 @@ FeedSelectionProviding {
             let generator = UINotificationFeedbackGenerator()
             if success {
                 generator.notificationOccurred(.success)
+
+                // clear all badges
+                BadgeNotifications.update(count: 0)
             } else {
                 generator.notificationOccurred(.error)
             }
             self.reload()
+
+            // "mark all" is an engaging action, system prompt on it
+            RatingController.prompt(.system)
         }
     }
 
@@ -114,38 +129,32 @@ FeedSelectionProviding {
     }
 
     private func update(dismissRefresh: Bool, animated: Bool = true) {
-        filteredNotifications = filter(
-            notifications: allNotifications,
-            optimisticReadIDs: client.optimisticReadIDs,
-            unread: selection.unreadSelected
-        )
         feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
-        updateMarkAllEnabled()
+        updateUnreadState()
     }
 
-    private func handle(result: NotificationClient.Result, append: Bool, animated: Bool, page: Int) {
+    private func handle(result: Result<([Notification], Int?)>, append: Bool, animated: Bool, page: Int) {
         // in case coming from "mark all" action
         self.resetRightBarItem()
 
         switch result {
         case .success(let notifications, let next):
-            createNotificationViewModels(
-                containerWidth: self.view.bounds.width,
-                notifications: notifications
-            ) { models in
-                if append {
-                    self.allNotifications += models
-                } else {
-                    self.allNotifications = models
-                }
-
+            let block = {
                 // disable the page model if there is no next
                 self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
                 self.hasError = false
 
                 self.update(dismissRefresh: !append, animated: animated)
             }
-        case .failed:
+
+            let width = self.view.bounds.width
+
+            if append {
+                self.dataSource.append(width: width, notifications: notifications, completion: block)
+            } else {
+                self.dataSource.update(width: width, notifications: notifications, completion: block)
+            }
+        case .error:
             StatusBar.showNetworkError()
             self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)
@@ -173,10 +182,16 @@ FeedSelectionProviding {
 
         var objects: [ListDiffable] = [selection]
 
-        if filteredNotifications.count == 0 && feed.status == .idle {
+        if let token = ratingToken {
+            objects.append(token)
+        }
+
+        let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
+
+        if viewModels.count == 0 && feed.status == .idle {
             objects.append(emptyKey)
         } else {
-            objects += filteredNotifications as [ListDiffable]
+            objects += viewModels as [ListDiffable]
 
             // only append paging if there are visible notifications
             if let page = self.page {
@@ -198,7 +213,8 @@ FeedSelectionProviding {
 
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
-        case is NotificationViewModel: return NotificationSectionController(client: client)
+        case is NotificationViewModel: return NotificationSectionController(client: client, dataSource: dataSource)
+        case is RatingToken: return RatingSectionController(delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -232,15 +248,19 @@ FeedSelectionProviding {
 
     // MARK: NotificationClientListener
 
-    func willMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
-        if optimistic {
+    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
+        dataSource.setOptimisticRead(id: id)
+
+        if !isOpen {
             update(dismissRefresh: false, animated: true)
         }
     }
 
-    func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool) {
+    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
+        dataSource.removeOptimisticRead(id: id)
         StatusBar.showGenericError()
-        if optimistic {
+
+        if !isOpen {
             update(dismissRefresh: false, animated: true)
         }
     }
@@ -255,6 +275,19 @@ FeedSelectionProviding {
     
     var feedContainsSelection: Bool {
         return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    }
+
+    // MARK: ForegroundHandlerDelegate
+
+    func didForeground(handler: ForegroundHandler) {
+        feed.refreshHead()
+    }
+
+    // MARK: RatingSectionControllerDelegate
+
+    func ratingNeedsDismiss(sectionController: RatingSectionController) {
+        ratingToken = nil
+        feed.adapter.performUpdates(animated: true)
     }
     
 }

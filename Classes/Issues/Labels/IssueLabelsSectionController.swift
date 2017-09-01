@@ -11,11 +11,17 @@ import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
     ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate {
+ListBindingSectionControllerSelectionDelegate,
+LabelsViewControllerDelegate {
 
-    var expanded = false
+    private var expanded = false
+    private let issueModel: IssueDetailsModel
+    private let client: GithubClient
+    private var labelsOverride: [RepositoryLabel]? = nil
 
-    override init() {
+    init(issueModel: IssueDetailsModel, client: GithubClient) {
+        self.issueModel = issueModel
+        self.client = client
         super.init()
         selectionDelegate = self
         dataSource = self
@@ -24,16 +30,20 @@ ListBindingSectionControllerSelectionDelegate {
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, viewModelsFor object: Any) -> [ListDiffable] {
-        guard let object = self.object,
-            object.labels.count > 0
-            else { return [] }
-        let colors = object.labels.map { UIColor.fromHex($0.color) }
+        var viewModels = [ListDiffable]()
 
-        var viewModels: [ListDiffable] = [IssueLabelSummaryModel(colors: colors)]
-        if expanded {
-            viewModels += object.labels as [ListDiffable]
+        // use override labels when available
+        let labels = (labelsOverride ?? self.object?.labels ?? [])
+        let colors = labels.map { UIColor.fromHex($0.color) }
+
+        // avoid an empty summary cell
+        if labels.count > 0 {
+            viewModels.append(IssueLabelSummaryModel(colors: colors))
         }
-        if object.viewerCanUpdate {
+        if expanded {
+            viewModels += labels as [ListDiffable]
+        }
+        if self.object?.viewerCanUpdate == true {
             viewModels.append("edit" as ListDiffable)
         }
 
@@ -53,7 +63,7 @@ ListBindingSectionControllerSelectionDelegate {
         let cellClass: AnyClass
         switch viewModel {
         case is IssueLabelSummaryModel: cellClass = IssueLabelSummaryCell.self
-        case is IssueLabelModel: cellClass = IssueLabelCell.self
+        case is RepositoryLabel: cellClass = IssueLabelCell.self
         default: cellClass = IssueLabelEditCell.self
         }
         
@@ -65,13 +75,47 @@ ListBindingSectionControllerSelectionDelegate {
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
-        if collectionContext?.cellForItem(at: index, sectionController: self) is IssueLabelEditCell {
-            // TODO
+        if let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? IssueLabelEditCell {
+            guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
+                else { fatalError("Missing labels view controller") }
+            controller.configure(
+                selected: labelsOverride ?? self.object?.labels ?? [],
+                client: client,
+                owner: issueModel.owner,
+                repo: issueModel.repo,
+                delegate: self
+            )
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .popover
+            nav.popoverPresentationController?.sourceView = cell.label
+            nav.popoverPresentationController?.sourceRect = cell.label.frame
+            viewController?.present(nav, animated: true)
         } else {
             expanded = !expanded
             update(animated: true)
         }
     }
 
-}
+    // MARK: LabelsViewControllerDelegate
 
+    func didDismiss(controller: LabelsViewController, selectedLabels: [RepositoryLabel]) {
+        labelsOverride = selectedLabels
+        update(animated: true)
+
+        let request = GithubClient.Request(
+            path: "repos/\(issueModel.owner)/\(issueModel.repo)/issues/\(issueModel.number)",
+            method: .patch,
+            parameters: ["labels": selectedLabels.map { $0.name }]
+        ) { [weak self] (response, _) in
+            if let statusCode = response.response?.statusCode, statusCode != 200 {
+                self?.labelsOverride = nil
+                self?.update(animated: true)
+                if statusCode == 403 {
+                    StatusBar.showPermissionsError()
+                }
+            }
+        }
+        client.request(request)
+    }
+
+}

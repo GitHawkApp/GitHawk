@@ -28,16 +28,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // initialize a webview at the start so webview startup later on isn't so slow
         let _ = UIWebView()
+        RatingController.applicationDidLaunch()
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
-        rootNavigationManager.resetRootViewController(userSession: sessionManager.userSession)
-        configureNavAppearance()
+        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
         NetworkActivityIndicatorManager.shared.isEnabled = true
+        Styles.setupAppearance()
+        BadgeNotifications.configure(application: application)
         return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if showingLogin == false && sessionManager.userSession == nil {
+        if showingLogin == false && sessionManager.focusedUserSession == nil {
             showingLogin = true
             rootNavigationManager.showLogin(animated: false)
         }
@@ -52,9 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
-    private func configureNavAppearance() {
-        UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
-        UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color]
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        BadgeNotifications.fetch(application: application, handler: completionHandler)
     }
+    
 }

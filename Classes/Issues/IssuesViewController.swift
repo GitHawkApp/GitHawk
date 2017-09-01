@@ -23,11 +23,11 @@ IssueNeckLoadSectionControllerDelegate,
 IssueTextActionsViewDelegate {
 
     private let client: GithubClient
-    private let owner: String
-    private let repo: String
-    private let number: Int
+    private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
+    private var hasScrolledToBottom = false
+    private let viewFilesModel = "view_files" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -46,22 +46,22 @@ IssueTextActionsViewDelegate {
     }
     private var sentComments = [ListDiffable]()
 
+    // set to optimistically change the open/closed status
+    // clear when refreshing or on request failure
+    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
+
     init(
         client: GithubClient,
-        owner: String,
-        repo: String,
-        number: Int
+        model: IssueDetailsModel
         ) {
         self.client = client
-        self.owner = owner
-        self.repo = repo
-        self.number = number
+        self.model = model
         self.addCommentClient = AddCommentClient(client: client)
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        title = "\(owner)/\(repo)#\(number)"
+        title = "\(model.owner)/\(model.repo)#\(model.number)"
 
         self.addCommentClient.addListener(listener: self)
 
@@ -77,6 +77,8 @@ IssueTextActionsViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
@@ -84,7 +86,7 @@ IssueTextActionsViewDelegate {
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
         textView.placeholderColor = Styles.Colors.Gray.light.color
-        textView.keyboardType = .default
+        textView.keyboardType = .twitter
         textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
         textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
         rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
@@ -149,7 +151,7 @@ IssueTextActionsViewDelegate {
     // MARK: SLKTextViewController overrides
 
     override func keyForTextCaching() -> String? {
-        return "issue.\(owner).\(repo).\(number)"
+        return "issue.\(model.owner).\(model.repo).\(model.number)"
     }
 
     override func didPressRightButton(_ sender: Any?) {
@@ -195,37 +197,65 @@ IssueTextActionsViewDelegate {
 
     // MARK: Private API
 
+    var externalURL: URL {
+        return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
+    }
+
+    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let safariActivity = TUSafariActivity()
+            let controller = UIActivityViewController(activityItems: [strongSelf.externalURL], applicationActivities: [safariActivity])
+            controller.popoverPresentationController?.barButtonItem = sender
+            strongSelf.present(controller, animated: true)
+        }
+    }
+
+    func safariAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = SFSafariViewController(url: strongSelf.externalURL)
+            strongSelf.present(controller, animated: true)
+        }
+    }
+
+    func closeAction() -> UIAlertAction? {
+        guard current?.viewerCanUpdate == true,
+            let status = localStatusChange?.model.status ?? current?.status.status,
+            status != .merged
+            else { return nil }
+
+        let close = status == .open
+        let title = close ? NSLocalizedString("Close", comment: "") : NSLocalizedString("Reopen", comment: "")
+        return UIAlertAction(title: title, style: .default, handler: { [weak self] _ in
+            self?.setStatus(close: close)
+        })
+    }
+
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController()
 
-        let path = "https://github.com/\(owner)/\(repo)/issues/\(number)"
-        let externalURL = URL(string: path)!
-
-        let share = UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [externalURL], applicationActivities: [safariActivity])
-            controller.popoverPresentationController?.barButtonItem = sender
-            self.present(controller, animated: true)
+        if let close = closeAction() {
+            alert.addAction(close)
         }
-        let safari = UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { _ in
-            let controller = SFSafariViewController(url: externalURL)
-            self.present(controller, animated: true)
-        }
-        let cancel = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
-        alert.addAction(share)
-        alert.addAction(safari)
-        alert.addAction(cancel)
 
+        alert.addAction(shareAction(sender: sender))
+        alert.addAction(safariAction())
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil))
         alert.popoverPresentationController?.barButtonItem = sender
-
         present(alert, animated: true)
     }
 
     func fetch(previous: Bool) {
+        // on head load, reset all optimistic state
+        if !previous {
+            localStatusChange = nil
+        }
+
         client.fetch(
-            owner: owner,
-            repo: repo,
-            number: number,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
             width: view.bounds.width,
             prependResult: previous ? current : nil
         ) { [weak self] resultType in
@@ -243,7 +273,10 @@ IssueTextActionsViewDelegate {
             default: break
             }
             self?.feed.finishLoading(dismissRefresh: true) {
-                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                if self?.hasScrolledToBottom != true {
+                    self?.hasScrolledToBottom = true
+                    self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                }
             }
         }
     }
@@ -253,40 +286,97 @@ IssueTextActionsViewDelegate {
         showDetailViewController(controller, sender: nil)
     }
 
+    func setStatus(close: Bool) {
+        guard let currentStatus = current?.status else { return }
+
+        let localModel = IssueStatusModel(
+            status: close ? .closed : .open,
+            pullRequest: currentStatus.pullRequest,
+            locked: currentStatus.locked
+        )
+        let localEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: close ? .closed : .reopened,
+            pullRequest: currentStatus.pullRequest
+        )
+
+        localStatusChange = (localModel, localEvent)
+        feed.adapter.performUpdates(animated: true)
+
+        client.setStatus(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            status: close ? .closed : .open
+        ) { [weak self] result in
+            switch result {
+            case .error:
+                self?.localStatusChange = nil
+                self?.feed.adapter.performUpdates(animated: true)
+                StatusBar.showGenericError()
+            default: break // dont need to handle success since updated optimistically
+            }
+        }
+    }
+
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.current else { return [] }
 
         var objects: [ListDiffable] = [
-            current.status,
+            localStatusChange?.model ?? current.status,
             current.title,
             current.labels,
-            current.assignee
         ]
+
+        if let milestone = current.milestone {
+            objects.append(milestone)
+        }
+
+        objects.append(current.assignee)
 
         if let reviewers = current.reviewers {
             objects.append(reviewers)
+        }
+
+        if current.pullRequest {
+            objects.append(viewFilesModel)
         }
 
         if current.hasPreviousPage {
             objects.append(IssueNeckLoadModel())
         }
 
+        if let rootComment = current.rootComment {
+            objects.append(rootComment)
+        }
+        
         objects += current.timelineViewModels
         objects += sentComments
+
+        if let event = localStatusChange?.event {
+            objects.append(event)
+        }
 
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? ListDiffable, object === viewFilesModel {
+            return IssueViewFilesSectionController(issueModel: model, client: client)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(client: client)
-        case is IssueLabelsModel: return IssueLabelsSectionController()
+        case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
-        case is IssueLabeledModel: return IssueLabeledSectionController(owner: owner, repo: repo)
-        case is IssueStatusEventModel: return IssueStatusEventSectionController(owner: owner, repo: repo)
+        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
+        case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         case is IssueReviewModel: return IssueReviewSectionController()
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
@@ -295,8 +385,9 @@ IssueTextActionsViewDelegate {
         case is IssueRequestModel: return IssueRequestSectionController()
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
-        case is IssueCommitModel: return IssueCommitSectionController(owner: owner, repo: repo)
+        case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
+        case is IssueMilestoneModel: return IssueMilestoneSectionController(issueModel: model)
         default: fatalError("Unhandled object: \(object)")
         }
     }

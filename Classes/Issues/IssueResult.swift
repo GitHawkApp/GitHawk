@@ -12,6 +12,7 @@ import IGListKit
 struct IssueResult {
 
     let subjectId: String
+    let pullRequest: Bool
 
     let status: IssueStatusModel
     let title: NSAttributedStringSizing
@@ -19,8 +20,10 @@ struct IssueResult {
     let assignee: IssueAssigneesModel
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
+    let milestone: IssueMilestoneModel?
     let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
+    let viewerCanUpdate: Bool
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })

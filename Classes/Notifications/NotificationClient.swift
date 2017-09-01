@@ -9,8 +9,8 @@
 import Foundation
 
 protocol NotificationClientListener: class {
-    func willMarkRead(client: NotificationClient, id: String, optimistic: Bool)
-    func didFailToMarkRead(client: NotificationClient, id: String, optimistic: Bool)
+    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool)
+    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool)
 }
 
 final class NotificationClient {
@@ -20,10 +20,10 @@ final class NotificationClient {
     }
     private var listeners = [ListenerWrapper]()
 
-    enum Result {
-        case failed(Error?)
-        case success([Notification], Int?)
-    }
+//    enum Result {
+//        case failed(Error?)
+//        case success([Notification], Int?)
+//    }
 
     let githubClient: GithubClient
 
@@ -33,9 +33,14 @@ final class NotificationClient {
 
     // Public API
 
-    private var _optimisticReadIDs = Set<String>()
-    var optimisticReadIDs: Set<String> {
-        return _optimisticReadIDs
+    static private let openOnReadKey = "com.freetime.NotificationClient.read-on-open"
+
+    static func readOnOpen() -> Bool {
+        return UserDefaults.standard.bool(forKey: openOnReadKey)
+    }
+
+    static func setReadOnOpen(open: Bool) {
+        UserDefaults.standard.set(open, forKey: openOnReadKey)
     }
 
     func add(listener: NotificationClientListener) {
@@ -51,7 +56,7 @@ final class NotificationClient {
         since: Date? = nil,
         page: Int = 1,
         before: Date? = nil,
-        completion: @escaping (Result) -> ()
+        completion: @escaping (Result<([Notification], Int?)>) -> ()
         ) {
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
@@ -88,7 +93,7 @@ final class NotificationClient {
             if let jsonArr = response.value as? NotificationsPayload {
                 success(jsonArr, nextPage?.next)
             } else {
-                completion(.failed(response.error))
+                completion(.error(response.error))
             }
         })
     }
@@ -105,14 +110,10 @@ final class NotificationClient {
         })
     }
 
-    func markNotificationRead(id: String, optimistic: Bool = true) {
-        if optimistic {
-            _optimisticReadIDs.insert(id)
-        }
-
+    func markNotificationRead(id: String, isOpen: Bool) {
         for wrapper in listeners {
             if let listener = wrapper.listener {
-                listener.willMarkRead(client: self, id: id, optimistic: optimistic)
+                listener.willMarkRead(client: self, id: id, isOpen: isOpen)
             }
         }
 
@@ -122,13 +123,9 @@ final class NotificationClient {
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
                 let success = response.response?.statusCode == 205
                 if !success {
-                    // remove so lists can re-show the notification
-                    // skip optimistic check, should no-op if wasn't previously added
-                    self._optimisticReadIDs.remove(id)
-
                     for wrapper in self.listeners {
                         if let listener = wrapper.listener {
-                            listener.didFailToMarkRead(client: self, id: id, optimistic: optimistic)
+                            listener.didFailToMarkRead(client: self, id: id, isOpen: isOpen)
                         }
                     }
                 }

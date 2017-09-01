@@ -9,12 +9,31 @@
 import UIKit
 import IGListKit
 
-extension GithubClient {
+private func uniqueAutocompleteUsers(
+    left: [AutocompleteUser],
+    right: [AutocompleteUser]
+    ) -> [AutocompleteUser] {
+    var uniqueUsers = Set<String>()
+    var mentionableUsers = [AutocompleteUser]()
 
-    enum IssueResultType {
-        case error
-        case success(IssueResult)
+    for user in left {
+        if !uniqueUsers.contains(user.login) {
+            uniqueUsers.insert(user.login)
+            mentionableUsers.append(user)
+        }
     }
+
+    for user in right {
+        if !uniqueUsers.contains(user.login) {
+            uniqueUsers.insert(user.login)
+            mentionableUsers.append(user)
+        }
+    }
+
+    return mentionableUsers
+}
+
+extension GithubClient {
 
     func fetch(
         owner: String,
@@ -22,7 +41,7 @@ extension GithubClient {
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (IssueResultType) -> ()
+        completion: @escaping (Result<IssueResult>) -> ()
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -40,7 +59,6 @@ extension GithubClient {
                 DispatchQueue.global().async {
 
                     let status: IssueStatus = issueType.merged ? .merged : issueType.closableFields.closed ? .closed : .open
-                    let mentionableUsers = repository?.mentionableUsers.autocompleteUsers ?? []
 
                     let rootComment = createCommentModel(
                         id: issueType.id,
@@ -48,24 +66,50 @@ extension GithubClient {
                         reactionFields: issueType.reactionFields,
                         width: width,
                         threadState: .single
-                        )
+                    )
+
+                    let timeline = issueType.timelineViewModels(width: width)
+
+                    // append the issue author for autocomplete
+                    var mentionedUsers = timeline.mentionedUsers
+                    if let details = rootComment?.details {
+                        mentionedUsers.append(AutocompleteUser(
+                            avatarURL: details.avatarURL,
+                            login: details.login
+                        ))
+                    }
+
+                    let mentionableUsers = uniqueAutocompleteUsers(
+                        left: mentionedUsers,
+                        right: repository?.mentionableUsers.autocompleteUsers ?? []
+                    )
 
                     let paging = issueType.headPaging
                     let newPage = IssueTimelinePage(
                         startCursor: paging.hasPreviousPage ? paging.startCursor : nil,
-                        viewModels: issueType.timelineViewModels(width: width)
+                        viewModels: timeline.models
                     )
+
+                    let milestoneModel: IssueMilestoneModel?
+                    if let milestone = issueType.milestoneFields {
+                        milestoneModel = IssueMilestoneModel(number: milestone.number, title: milestone.title)
+                    } else {
+                        milestoneModel = nil
+                    }
 
                     let issueResult = IssueResult(
                         subjectId: issueType.id,
+                        pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
                         labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
+                        milestone: milestoneModel,
                         mentionableUsers: mentionableUsers,
-                        timelinePages: [newPage] + (prependResult?.timelinePages ?? [])
+                        timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
+                        viewerCanUpdate: issueType.viewerCanUpdate
                     )
 
                     DispatchQueue.main.async {
@@ -73,7 +117,7 @@ extension GithubClient {
                     }
                 }
             } else {
-                completion(.error)
+                completion(.error(nil))
             }
             ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }
@@ -106,4 +150,29 @@ extension GithubClient {
         }
     }
 
+    enum CloseStatus: String {
+        case closed = "closed"
+        case open = "open"
+    }
+
+    func setStatus(
+        owner: String,
+        repo: String,
+        number: Int,
+        status: CloseStatus,
+        completion: @escaping (Result<CloseStatus>) -> ()
+        ) {
+        request(Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)",
+            method: .patch,
+            parameters: [ "state": status.rawValue ],
+            completion: { (response, _) in
+                if response.value != nil {
+                    completion(.success(status))
+                } else {
+                    completion(.error(nil))
+                }
+        }))
+    }
+    
 }

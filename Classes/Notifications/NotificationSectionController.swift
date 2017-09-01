@@ -14,9 +14,11 @@ final class NotificationSectionController: ListGenericSectionController<Notifica
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
+    private let dataSource: NotificationsDataSource
 
-    init(client: NotificationClient) {
+    init(client: NotificationClient, dataSource: NotificationsDataSource) {
         self.client = client
+        self.dataSource = dataSource
         super.init()
     }
 
@@ -39,7 +41,14 @@ SwipeCollectionViewCellDelegate {
     }
 
     override func didSelectItem(at index: Int) {
-        guard let object = self.object else { fatalError("Should have an object") }
+        guard let object = self.object,
+            let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
+            else { fatalError("Missing object, cell missing, or incorrect type") }
+
+        if NotificationClient.readOnOpen() {
+            cell.isRead = true
+            client.markNotificationRead(id: object.id, isOpen: true)
+        }
 
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
@@ -49,7 +58,7 @@ SwipeCollectionViewCellDelegate {
 
     func markRead() {
         guard let object = object else { fatalError("Should have an object") }
-        client.markNotificationRead(id: object.id)
+        client.markNotificationRead(id: object.id, isOpen: false)
         collectionContext?.performBatch(animated: true, updates: { context in
             context.reload(self)
         })
@@ -57,7 +66,7 @@ SwipeCollectionViewCellDelegate {
 
     var considerObjectRead: Bool {
         guard let object = object else { fatalError("Should have an object") }
-        return object.read || client.optimisticReadIDs.contains(object.id)
+        return dataSource.isRead(notification: object)
     }
 
     // MARK: SwipeCollectionViewCellDelegate
@@ -71,6 +80,9 @@ SwipeCollectionViewCellDelegate {
 
         let title = NSLocalizedString("Read", comment: "")
         let action = SwipeAction(style: .destructive, title: title) { [weak self] (action, _) in
+            // swiping-read is an engaging action, system prompt on it
+            RatingController.prompt(.system)
+
             self?.markRead()
         }
 

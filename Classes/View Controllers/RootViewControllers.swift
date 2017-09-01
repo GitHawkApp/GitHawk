@@ -10,7 +10,8 @@ import UIKit
 
 func newSettingsRootViewController(
     sessionManager: GithubSessionManager,
-    rootNavigationManager: RootNavigationManager
+    rootNavigationManager: RootNavigationManager,
+    client: GithubClient
     ) -> UIViewController {
     guard let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()
         else { fatalError("Could not unpack settings storyboard") }
@@ -18,6 +19,7 @@ func newSettingsRootViewController(
     if let nav = controller as? UINavigationController,
         let first = nav.viewControllers.first as? SettingsViewController {
         first.sessionManager = sessionManager
+        first.client = client
         first.rootNavigationManager = rootNavigationManager
     }
 

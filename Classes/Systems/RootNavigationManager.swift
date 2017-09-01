@@ -17,6 +17,8 @@ final class RootNavigationManager: GithubSessionListener {
     // weak refs to avoid cycles
     weak private var rootViewController: UISplitViewController?
 
+    private var lastClient: GithubClient? = nil
+
     init(
         sessionManager: GithubSessionManager,
         rootViewController: UISplitViewController
@@ -52,6 +54,9 @@ final class RootNavigationManager: GithubSessionListener {
         guard let userSession = userSession else { return }
 
         let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
+        lastClient = client
+
+        fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 
         let notifications = newNotificationsRootViewController(client: client)
         let settingsBarButtonItem = UIBarButtonItem(
@@ -79,9 +84,12 @@ final class RootNavigationManager: GithubSessionListener {
 
     // MARK: GithubSessionListener
 
-    func didAuthenticate(manager: GithubSessionManager, userSession: GithubUserSession) {
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
         resetRootViewController(userSession: userSession)
-        rootViewController?.presentedViewController?.dismiss(animated: true)
+
+        if dismiss {
+            rootViewController?.presentedViewController?.dismiss(animated: true)
+        }
     }
 
     func didLogout(manager: GithubSessionManager) {
@@ -93,6 +101,27 @@ final class RootNavigationManager: GithubSessionListener {
     func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
 
     // MARK: Private API
+
+    private func fetchUsernameForMigrationIfNecessary(
+        client: GithubClient,
+        userSession: GithubUserSession,
+        sessionManager: GithubSessionManager
+        ) {
+        // only required when there is no username
+        guard userSession.username == nil else { return }
+
+        client.verifyPersonalAccessToken(token: userSession.token) { result in
+            switch result {
+            case .success(let user):
+                userSession.username = user.username
+
+                // user session ref is same session that manager should be using
+                // update w/ mutated session
+                sessionManager.save()
+            default: break
+            }
+        }
+    }
 
     private var masterNavigationController: UINavigationController? {
         return tabBarController?.viewControllers?.first as? UINavigationController
@@ -118,7 +147,13 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     @objc private func onSettings() {
-        let settings = newSettingsRootViewController(sessionManager: sessionManager, rootNavigationManager: self)
+        guard let client = lastClient else { return }
+
+        let settings = newSettingsRootViewController(
+            sessionManager: sessionManager,
+            rootNavigationManager: self,
+            client: client
+        )
         settings.modalPresentationStyle = .formSheet
         rootViewController?.present(settings, animated: true)
     }

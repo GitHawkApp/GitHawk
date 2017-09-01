@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PPj-lB-M7i">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Files-->
+        <scene sceneID="tKg-iT-yYb">
+            <objects>
+                <tableViewController id="PPj-lB-M7i" customClass="IssueFilesViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" id="KNl-L9-JZB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="r6V-ei-wRF">
+                            <rect key="frame" x="0.0" y="283" width="375" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="file" rowHeight="55" id="JPL-MS-99q" customClass="IssueFilesTableCell" customModule="Freetime" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JPL-MS-99q" id="ztL-p0-l2R">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="54.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+10 -30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Ct-HaV">
+                                            <rect key="frame" x="16" y="10" width="51.5" height="16"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classes/Issues/Files/Files.storyboardClasses/Issues/Files/Files.storyboard" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJx-UB-1Ql">
+                                            <rect key="frame" x="16" y="26" width="326" height="20"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fJx-UB-1Ql" secondAttribute="trailing" id="ACt-N8-x8n"/>
+                                        <constraint firstItem="bJP-Ct-HaV" firstAttribute="bottom" secondItem="fJx-UB-1Ql" secondAttribute="top" id="C2M-42-Mqh"/>
+                                        <constraint firstItem="fJx-UB-1Ql" firstAttribute="leading" secondItem="ztL-p0-l2R" secondAttribute="leading" constant="16" id="WX3-Hy-XLn"/>
+                                        <constraint firstItem="fJx-UB-1Ql" firstAttribute="centerY" secondItem="ztL-p0-l2R" secondAttribute="centerY" constant="8" id="Z8b-qg-1Gp"/>
+                                        <constraint firstItem="bJP-Ct-HaV" firstAttribute="leading" secondItem="ztL-p0-l2R" secondAttribute="leading" constant="16" id="yWZ-tO-BiL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="changeLabel" destination="bJP-Ct-HaV" id="wiF-o8-2qN"/>
+                                    <outlet property="pathLabel" destination="fJx-UB-1Ql" id="tYK-dW-GXZ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="error" textLabel="tab-0u-kgf" rowHeight="200" style="IBUITableViewCellStyleDefault" id="gPQ-gF-Wvz">
+                                <rect key="frame" x="0.0" y="83" width="375" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gPQ-gF-Wvz" id="gKa-d5-BG1">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Error loading files." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tab-0u-kgf">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="199.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.63921568627450975" green="0.66666666666666663" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="PPj-lB-M7i" id="NAL-uh-icg"/>
+                            <outlet property="delegate" destination="PPj-lB-M7i" id="AQM-qF-Rf2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Files" id="eB1-Tv-RSI">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="0Fi-Pp-QnA"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sGJ-KI-JZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-418.39999999999998" y="151.57421289355324"/>
+        </scene>
+    </scenes>
+</document>

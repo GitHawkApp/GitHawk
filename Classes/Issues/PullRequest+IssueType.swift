@@ -47,6 +47,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.updatableFields.viewerCanUpdate
     }
 
+    var milestoneFields: MilestoneFields? {
+        return milestone?.fragments.milestoneFields
+    }
+
     var reviewRequestModel: IssueAssigneesModel? {
         var models = [IssueAssigneeViewModel]()
         for node in reviewRequests?.nodes ?? [] {
@@ -63,11 +67,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
-    func timelineViewModels(width: CGFloat) -> [ListDiffable] {
-        guard let nodes = timeline.nodes else { return [] }
+    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
+        guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }
 
         var results = [ListDiffable]()
+        var mentionedUsers = [AutocompleteUser]()
 
         for node in cleanNodes {
             if let comment = node.asIssueComment {
@@ -79,6 +84,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     threadState: .single
                     ) {
                     results.append(model)
+
+                    mentionedUsers.append(AutocompleteUser(
+                        avatarURL: model.details.avatarURL,
+                        login: model.details.login
+                    ))
                 }
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
@@ -303,38 +313,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             }
         }
 
-        return results
-    }
-
-    private func diffHunkCodePreview(code: String) -> NSAttributedString {
-        let split = code.components(separatedBy: CharacterSet.newlines)
-        let count = split.count
-        let cutLines = min(count, 4)
-        let lastLines = split[(count-cutLines)..<count]
-
-        let attributedString = NSMutableAttributedString()
-
-        for line in lastLines {
-            var attributes = [
-                NSFontAttributeName: Styles.Fonts.code,
-                NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
-            ]
-            if line.hasPrefix("+") {
-                attributes[NSBackgroundColorAttributeName] = Styles.Colors.Green.light.color
-            } else if line.hasPrefix("-") {
-                attributes[NSBackgroundColorAttributeName] = Styles.Colors.Red.light.color
-            }
-
-            let newlinedLine = line != lastLines.last ? line + "\n" : line
-            attributedString.append(NSAttributedString(string: newlinedLine, attributes: attributes))
-        }
-
-        return attributedString
+        return (results, mentionedUsers)
     }
 
     private func diffHunkModel(thread: Timeline.Node.AsPullRequestReviewThread) -> ListDiffable? {
         guard let node = thread.comments.nodes?.first, let firstComment = node else { return nil }
-        let code = diffHunkCodePreview(code: firstComment.diffHunk)
+        let code = CreateDiffString(code: firstComment.diffHunk, limit: true)
         let text = NSAttributedStringSizing(containerWidth: 0, attributedText: code, inset: IssueDiffHunkPreviewCell.textViewInset)
         return IssueDiffHunkModel(path: firstComment.path, preview: text)
     }

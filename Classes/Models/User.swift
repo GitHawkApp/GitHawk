@@ -219,7 +219,7 @@ final class User: NSObject, NSCoding {
     guard let following_url = aDecoder.decodeObject(forKey: Keys.following_url) as? String else { return nil }
     guard let received_events_url = aDecoder.decodeObject(forKey: Keys.received_events_url) as? String else { return nil }
     guard let events_url = aDecoder.decodeObject(forKey: Keys.events_url) as? String else { return nil }
-    let hireable = aDecoder.decodeBool(forKey: Keys.hireable)
+    let hireable = aDecoder.decodeObject(forKey: Keys.hireable) as? Bool
     self.init(
       public_repos: public_repos,
       organizations_url: organizations_url,

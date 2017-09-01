@@ -12,9 +12,9 @@ import IGListKit
 final class IssueLabelsModel: ListDiffable {
 
     let viewerCanUpdate: Bool
-    let labels: [IssueLabelModel]
+    let labels: [RepositoryLabel]
 
-    init(viewerCanUpdate: Bool, labels: [IssueLabelModel]) {
+    init(viewerCanUpdate: Bool, labels: [RepositoryLabel]) {
         self.viewerCanUpdate = viewerCanUpdate
         self.labels = labels
     }

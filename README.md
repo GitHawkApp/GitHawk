@@ -1,14 +1,14 @@
-# Freetime
+# GitHawk
 
-_A GitHub manager app to use in your freetime._
+The simplest way to **read** and **respond** to your GitHub notifications on iOS.
+
+<a href=https://itunes.apple.com/app/githawk-for-github/id1252320249><img src=app-store-badge.png width=250></a>
 
 ## What
 
-Freetime is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
+GitHawk is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
 
 It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
-
-Download Freetime on the [App Store](https://itunes.apple.com/app/freetime-github-open-source-project-manager/id1252320249).
 
 ## Why
 
@@ -20,7 +20,7 @@ Download Freetime on the [App Store](https://itunes.apple.com/app/freetime-githu
 
 ## How
 
-Freetime will be released with (at least) a three-phased rollout:
+GitHawk will be released with (at least) a three-phased rollout:
 
 1. Basic, "read only" version.
     - Read notifications for PRs and Issues
@@ -41,6 +41,8 @@ Freetime will be released with (at least) a three-phased rollout:
 ## Contributing
 
 :warning: This repo is moving _fast_! :warning:
+
+If you would like to test the latest changes, you can join the TestFlight by sending your e-mail address to [@_ryannystrom](https://twitter.com/_ryannystrom) in a DM on Twitter.
 
 I'm happy to take PRs, but I'm working off of `master` at the moment, and your PR might go stale quick. Be warned!
 

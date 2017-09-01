@@ -10,14 +10,14 @@ import Foundation
 
 extension GithubClient {
 
-    enum AccessTokenResult {
-        case failure
-        case success(String)
+    struct AccessTokenUser {
+        let token: String
+        let username: String
     }
 
     func requestAccessToken(
         code: String,
-        completion: @escaping (AccessTokenResult) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> ()
         ) {
         let parameters = [
             "code": code,
@@ -35,16 +35,23 @@ extension GithubClient {
             completion: { (response, _) in
             if let json = response.value as? [String: Any],
                 let token = json["access_token"] as? String {
-                completion(.success(token))
+
+                // after acquiring token, fetch the username so a complete user session can be stored
+                self.verifyPersonalAccessToken(token: token, completion: { result in
+                    switch result {
+                    case .success(let user): completion(.success(user))
+                    case .error: completion(.error(nil))
+                    }
+                })
             } else {
-                completion(.failure)
+                completion(.error(nil))
             }
         }))
     }
 
     func verifyPersonalAccessToken(
         token: String,
-        completion: @escaping (AccessTokenResult) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> ()
         ) {
         let headers = [
             "Accept": "application/json",
@@ -55,12 +62,11 @@ extension GithubClient {
             method: .get,
             headers: headers,
             completion: { (response, _) in
-                let json = response.value as? [String: Any]
-                let username = json?["login"] as? String
-                if username != nil {
-                    completion(.success(token))
+                if let json = response.value as? [String: Any],
+                    let username = json["login"] as? String {
+                    completion(.success(AccessTokenUser(token: token, username: username)))
                 } else {
-                    completion(.failure)
+                    completion(.error(nil))
                 }
         }))
     }

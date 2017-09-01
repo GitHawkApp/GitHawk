@@ -33,6 +33,12 @@ enum Styles {
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.gutter
         )
+        static let textViewInset = UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing,
+            left: Styles.Sizes.gutter,
+            bottom: Styles.Sizes.rowSpacing,
+            right: Styles.Sizes.gutter
+        )
         static let labelEventHeight: CGFloat = 30
 
         enum Text {
@@ -101,8 +107,15 @@ enum Styles {
         }
 
         enum Yellow {
+            static let medium = "f29d50"
             static let light = "fff5b1"
         }
+    }
+
+    static func setupAppearance() {
+        UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
+        UINavigationBar.appearance().titleTextAttributes =
+            [NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color]
     }
 
 }

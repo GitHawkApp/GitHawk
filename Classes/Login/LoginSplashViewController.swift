@@ -58,14 +58,16 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
         let alert = UIAlertController(
             title: NSLocalizedString("Personal Access Token", comment: ""),
-            message: NSLocalizedString("To log in using a Personal Access Token, enter it here:", comment: ""),
+            message: NSLocalizedString("Sign in with a Personal Access Token with both repo and user scopes.", comment: ""),
             preferredStyle: .alert
         )
 
-        alert.addTextField()
+        alert.addTextField { (textField) in
+            textField.placeholder = NSLocalizedString("Personal Access Token", comment: "")
+        }
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
 
-        let logInTitle = NSLocalizedString("Log In", comment: "")
+        let logInTitle = NSLocalizedString("Sign In", comment: "")
         alert.addAction(UIAlertAction(title: logInTitle, style: .default) { [weak alert, weak self] _ in
             alert?.actions.forEach { $0.isEnabled = false }
 
@@ -79,10 +81,10 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: true)
     }
 
-    private func handle(result: GithubClient.AccessTokenResult, authMethod: GithubUserSession.AuthMethod) {
+    private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
         switch result {
-        case .failure: handleError()
-        case .success(let token): finishLogin(token: token, authMethod: authMethod)
+        case .error: handleError()
+        case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
         }
     }
 
@@ -98,8 +100,11 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: true)
     }
 
-    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod) {
-        client.sessionManager.authenticate(token, authMethod: authMethod)
+    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
+        client.sessionManager.focus(
+            GithubUserSession(token: token, authMethod: authMethod, username: username),
+            dismiss: true
+        )
     }
 
     // MARK: GithubSessionListener
@@ -113,7 +118,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         }
     }
 
-    func didAuthenticate(manager: GithubSessionManager, userSession: GithubUserSession) {}
+    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {}
     func didLogout(manager: GithubSessionManager) {}
 
 }

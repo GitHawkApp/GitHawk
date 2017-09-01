@@ -14,7 +14,7 @@ func runningInSample() -> Bool {
 
 func sampleUserSession() -> GithubUserSession? {
     guard runningInSample() else { return nil }
-    return GithubUserSession(token: "1234", authMethod: .oauth)
+    return GithubUserSession(token: "1234", authMethod: .oauth, username: "tester")
 }
 
 func loadSample(path: String) -> Any? {

@@ -32,7 +32,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     public private(set) var status: Status = .idle
     private weak var delegate: FeedDelegate? = nil
-    private var refreshBegin: TimeInterval = -1
+    private let feedRefresh = FeedRefresh()
     private let managesLayout: Bool
 
     init(
@@ -51,11 +51,16 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.backgroundColor = Styles.Colors.background
-        self.collectionView.refreshControl = UIRefreshControl()
-        self.collectionView.refreshControl?.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
+        self.collectionView.refreshControl = feedRefresh.refreshControl
+        feedRefresh.refreshControl.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
     }
 
     // MARK: Public API
+
+    func refreshHead() {
+        refresh()
+        feedRefresh.beginRefreshing()
+    }
 
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
@@ -68,7 +73,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
             view.addSubview(collectionView)
         }
 
-        collectionView.refreshControl?.beginRefreshing()
+        feedRefresh.beginRefreshing()
     }
 
     func viewWillLayoutSubviews(view: UIView) {
@@ -84,26 +89,15 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> ())? = nil) {
         status = .idle
-        let block = {
-            self.adapter.performUpdates(animated: animated) { _ in
-                if dismissRefresh {
-                    // execute the completion block after the refresh control is gone
-                    CATransaction.begin()
-                    CATransaction.setCompletionBlock(completion)
-                    self.collectionView.refreshControl?.endRefreshing()
-                    CATransaction.commit()
-                } else {
-                    completion?()
-                }
-            }
-        }
 
-        // delay the refresh control dismissal so the UI isn't too spazzy on fast or non-existent connections
-        let remaining = 0.5 - (CFAbsoluteTimeGetCurrent() - refreshBegin)
-        if remaining > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + remaining, execute: block)
-        } else {
-            block()
+        adapter.performUpdates(animated: true) { _ in
+            if dismissRefresh {
+                self.feedRefresh.endRefreshing(completion: {
+                    completion?()
+                })
+            } else {
+                completion?()
+            }
         }
     }
 
@@ -112,7 +106,6 @@ final class Feed: NSObject, UIScrollViewDelegate {
     private func refresh() {
         guard status == .idle else { return }
         status = .loading
-        refreshBegin = CFAbsoluteTimeGetCurrent()
         delegate?.loadFromNetwork(feed: self)
     }
 
