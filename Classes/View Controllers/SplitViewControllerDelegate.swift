@@ -33,11 +33,11 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         collapseSecondary secondaryViewController: UIViewController,
         onto primaryViewController: UIViewController
         ) -> Bool {
-//        return !containsSelection(in: primaryViewController)
-
         if let tab = primaryViewController as? UITabBarController,
             let primaryNav = tab.selectedViewController as? UINavigationController,
             let secondaryNav = secondaryViewController as? UINavigationController {
+
+            // remove any placeholder VCs from the stack
             primaryNav.viewControllers += secondaryNav.viewControllers.filter {
                 return ($0 is SplitPlaceholderViewController) == false
             }
@@ -51,18 +51,25 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
             let primaryNav = tab.selectedViewController as? UINavigationController
             else { return nil }
 
-        var primaryVCs = [UIViewController]()
         var detailVCs = [UIViewController]()
 
-        for vc in primaryNav.viewControllers {
-            if vc is PrimaryViewController {
-                primaryVCs.append(vc)
-            } else {
-                detailVCs.append(vc)
-            }
-        }
+        // for each tab VC that is a nav controller, pluck everything that isn't marked as a primary VC off of
+        // the nav stack. if the nav is the currently selected tab VC, then move all non-primary VCs to
+        for tabVC in tab.viewControllers ?? [] {
+            // they should all be navs, but just in case
+            guard let nav = tabVC as? UINavigationController else { continue }
 
-        primaryNav.viewControllers = primaryVCs
+            var primaryVCs = [UIViewController]()
+            for vc in nav.viewControllers {
+                if vc is PrimaryViewController {
+                    primaryVCs.append(vc)
+                } else if nav === primaryNav {
+                    // collect selected tab, non-primary VCs
+                    detailVCs.append(vc)
+                }
+            }
+            nav.viewControllers = primaryVCs
+        }
 
         if detailVCs.count > 0 {
             // if there are active VCs, push them onto the new nav stack
@@ -81,6 +88,7 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
 
         if splitViewController.isCollapsed {
             if let nav = vc as? UINavigationController, let first = nav.viewControllers.first {
+                // always remove the tab bar when pushing VCs
                 first.hidesBottomBarWhenPushed = true
                 tab.selectedViewController?.show(first, sender: sender)
             } else {
