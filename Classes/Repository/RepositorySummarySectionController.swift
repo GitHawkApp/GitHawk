@@ -36,8 +36,9 @@ final class RepositorySummarySectionController: ListGenericSectionController<Iss
     
     override func didSelectItem(at index: Int) {
         guard let object = object?.info else { return }
-        let issueViewController = IssuesViewController(client: client, owner: repo.owner, repo: repo.name, number: object.number)
-        let navController = UINavigationController(rootViewController: issueViewController)
+        let issueModel = IssueDetailsModel(owner: repo.owner, repo: repo.name, number: object.number)
+        let controller = IssuesViewController(client: client, model: issueModel)
+        let navController = UINavigationController(rootViewController: controller)
         viewController?.showDetailViewController(navController, sender: nil)
     }
     
