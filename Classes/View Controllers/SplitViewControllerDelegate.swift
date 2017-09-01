@@ -8,6 +8,8 @@
 
 import UIKit
 
+// add this shell protocol onto a view controller that should remain part of a tab's root nav VC when splitting out
+// detail VCs from primary on split VC expansion
 protocol PrimaryViewController {}
 
 final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
@@ -59,16 +61,13 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
             // they should all be navs, but just in case
             guard let nav = tabVC as? UINavigationController else { continue }
 
-            var primaryVCs = [UIViewController]()
-            for vc in nav.viewControllers {
-                if vc is PrimaryViewController {
-                    primaryVCs.append(vc)
-                } else if nav === primaryNav {
-                    // collect selected tab, non-primary VCs
-                    detailVCs.append(vc)
+            // pop until hitting a VC marked as "primary"
+            while let top = nav.topViewController, (top is PrimaryViewController) == false {
+                if nav === primaryNav {
+                    detailVCs.append(top)
                 }
+                nav.popViewController(animated: true)
             }
-            nav.viewControllers = primaryVCs
         }
 
         if detailVCs.count > 0 {
