@@ -28,6 +28,9 @@ final class RootNavigationManager: GithubSessionListener {
         rootViewController.delegate = splitDelegate
         rootViewController.preferredDisplayMode = .allVisible
         sessionManager.addListener(listener: self)
+        
+        tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
+        tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
     }
 
     // MARK: Public API
@@ -66,6 +69,12 @@ final class RootNavigationManager: GithubSessionListener {
         notifications.navigationItem.leftBarButtonItem = settingsBarButtonItem
 
         masterNavigationController?.viewControllers = [notifications]
+        
+        let searchViewController = SearchViewController(client: client)
+        let searchNavigationController = UINavigationController(rootViewController: searchViewController)
+        searchNavigationController.tabBarItem.image = UIImage(named: "search")
+        searchNavigationController.tabBarItem.title = NSLocalizedString("Search", comment: "")
+        tabBarController?.viewControllers?.append(searchNavigationController)
     }
 
     public func pushLoginViewController(nav: UINavigationController) {
@@ -115,13 +124,17 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     private var masterNavigationController: UINavigationController? {
-        return rootViewController?.viewControllers.first as? UINavigationController
+        return tabBarController?.viewControllers?.first as? UINavigationController
     }
 
     private var detailNavigationController: UINavigationController? {
         guard let controllers = rootViewController?.viewControllers, controllers.count > 1
             else { return nil }
         return controllers[1] as? UINavigationController
+    }
+    
+    private var tabBarController: UITabBarController? {
+        return rootViewController?.viewControllers.first as? UITabBarController
     }
 
     private func newLoginViewController() -> UIViewController {
