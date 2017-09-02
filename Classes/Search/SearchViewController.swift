@@ -9,12 +9,12 @@
 import UIKit
 import IGListKit
 
-class SearchViewController: UIViewController,
-                            ListAdapterDataSource,
-                            FeedDelegate,
-                            SearchLoadMoreSectionControllerDelegate,
-                            SearchBarSectionControllerDelegate,
-PrimaryViewController {
+final class SearchViewController: UIViewController,
+                                  ListAdapterDataSource,
+                                  FeedDelegate,
+                                  SearchLoadMoreSectionControllerDelegate,
+                                  SearchBarSectionControllerDelegate,
+                                  PrimaryViewController {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
@@ -41,7 +41,7 @@ PrimaryViewController {
         feed.viewDidLoad()
         feed.collectionView.refreshControl?.endRefreshing()
         feed.adapter.dataSource = self
-        title = "Search"
+        title = NSLocalizedString("Search", comment: "")
     }
     
     override func viewWillLayoutSubviews() {

@@ -48,7 +48,7 @@ extension IssueSummaryType {
     }
 }
 
-class IssueSummaryModel: ListDiffable {
+final class IssueSummaryModel: ListDiffable {
     let info: IssueSummaryType
     
     init(info: IssueSummaryType) {

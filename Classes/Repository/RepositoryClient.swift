@@ -104,32 +104,32 @@ final class RepositoryClient {
     func loadMoreIssues(containerWidth: CGFloat, completion: @escaping () -> ()) {
         guard repo.hasIssuesEnabled else { return }
         
-        load(queryType: RepoIssuesQuery.self, repo: repo, after: issuesNextPage, containerWidth: containerWidth) { result in
+        load(queryType: RepoIssuesQuery.self, repo: repo, after: issuesNextPage, containerWidth: containerWidth) { [weak self] result in
             switch result {
             case .error:
                 completion()
             case .success(let payload):
                 if let models = payload.models, models.count > 0 {
-                    self.issues += models
+                    self?.issues += models
                 }
                 
-                self.issuesNextPage = payload.nextPage
+                self?.issuesNextPage = payload.nextPage
                 completion()
             }
         }
     }
     
     func loadMorePullRequests(containerWidth: CGFloat, completion: @escaping () -> ()) {
-        load(queryType: RepoPullRequestsQuery.self, repo: repo, after: pullRequestsNextPage, containerWidth: containerWidth) { result in
+        load(queryType: RepoPullRequestsQuery.self, repo: repo, after: pullRequestsNextPage, containerWidth: containerWidth) { [weak self] result in
             switch result {
             case .error:
                 completion()
             case .success(let payload):
                 if let models = payload.models, models.count > 0 {
-                    self.pullRequests += models
+                    self?.pullRequests += models
                 }
                 
-                self.pullRequestsNextPage = payload.nextPage
+                self?.pullRequestsNextPage = payload.nextPage
                 completion()
             }
         }

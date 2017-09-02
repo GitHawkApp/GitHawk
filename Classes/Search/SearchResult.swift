@@ -14,7 +14,7 @@ struct GithubLanguage {
     let color: UIColor?
 }
 
-class SearchResult: ListDiffable, RepositoryLoadable {
+final class SearchResult: ListDiffable, RepositoryLoadable {
     
     let id: String
     let owner: String

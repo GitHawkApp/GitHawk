@@ -15,7 +15,7 @@ protocol SearchBarSectionControllerDelegate: class {
 
 final class SearchBarSectionController: ListSectionController {
 
-    weak var delegate: SearchBarSectionControllerDelegate? = nil
+    weak var delegate: SearchBarSectionControllerDelegate?
     
     init(delegate: SearchBarSectionControllerDelegate) {
         self.delegate = delegate
