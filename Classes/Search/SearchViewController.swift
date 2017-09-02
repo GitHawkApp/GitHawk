@@ -50,6 +50,11 @@ UISearchBarDelegate {
         navigationItem.titleView = searchBar
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)

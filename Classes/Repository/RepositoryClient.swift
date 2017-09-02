@@ -14,12 +14,6 @@ protocol RepositoryLoadable {
     var hasIssuesEnabled: Bool { get }
 }
 
-extension RepositoryLoadable {
-    var nameWithOwner: String {
-        return owner + "/" + name
-    }
-}
-
 protocol RepositoryQuery {
     init(owner: String, name: String, after: String?)
     func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]

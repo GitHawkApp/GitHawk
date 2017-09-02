@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class SearchRepoResultCell: UICollectionViewCell {
+final class SearchRepoResultCell: SelectableCell {
 
     static let labelInset = UIEdgeInsets(
         top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 3*Styles.Sizes.rowSpacing,
@@ -31,7 +31,6 @@ final class SearchRepoResultCell: UICollectionViewCell {
         
         contentView.backgroundColor = .white
 
-        titleLabel.font = Styles.Fonts.bodyBold
         titleLabel.textColor = Styles.Colors.Gray.dark.color
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -85,7 +84,18 @@ final class SearchRepoResultCell: UICollectionViewCell {
     }
     
     func configure(result: SearchRepoResult) {
-        titleLabel.text = result.nameWithOwner
+        let ownerAttributes = [
+            NSFontAttributeName: Styles.Fonts.body,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        ]
+        let title = NSMutableAttributedString(string: result.owner + "/", attributes: ownerAttributes)
+        let nameAttributes = [
+            NSFontAttributeName: Styles.Fonts.bodyBold,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        ]
+        title.append(NSAttributedString(string: result.name, attributes: nameAttributes))
+        titleLabel.attributedText = title
+
         descriptionLabel.text = result.description
         
         if let primaryLanguage = result.primaryLanguage {
