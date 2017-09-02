@@ -17,6 +17,9 @@ final class RootNavigationManager: GithubSessionListener {
     // weak refs to avoid cycles
     weak private var rootViewController: UISplitViewController?
 
+    // keep alive between switching accounts
+    private var settingsRootViewController: UIViewController? = nil
+
     private var lastClient: GithubClient? = nil
 
     init(
@@ -28,9 +31,14 @@ final class RootNavigationManager: GithubSessionListener {
         rootViewController.delegate = splitDelegate
         rootViewController.preferredDisplayMode = .allVisible
         sessionManager.addListener(listener: self)
+
+        self.settingsRootViewController = newSettingsRootViewController(
+            sessionManager: sessionManager,
+            rootNavigationManager: self
+        )
         
-        tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
-        tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
+        self.tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
+        self.tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
     }
 
     // MARK: Public API
@@ -58,23 +66,11 @@ final class RootNavigationManager: GithubSessionListener {
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 
-        let notifications = newNotificationsRootViewController(client: client)
-        let settingsBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(RootNavigationManager.onSettings)
-        )
-        settingsBarButtonItem.accessibilityLabel = NSLocalizedString("Settings", comment: "")
-        notifications.navigationItem.leftBarButtonItem = settingsBarButtonItem
-
-        masterNavigationController?.viewControllers = [notifications]
-        
-        let searchViewController = SearchViewController(client: client)
-        let searchNavigationController = UINavigationController(rootViewController: searchViewController)
-        searchNavigationController.tabBarItem.image = UIImage(named: "search")
-        searchNavigationController.tabBarItem.title = NSLocalizedString("Search", comment: "")
-        tabBarController?.viewControllers?.append(searchNavigationController)
+        tabBarController?.viewControllers = [
+            newNotificationsRootViewController(client: client),
+            newSearchRootViewController(client: client),
+            settingsRootViewController ?? UIViewController(), // simply satisfying compiler
+        ]
     }
 
     public func pushLoginViewController(nav: UINavigationController) {
@@ -93,7 +89,12 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     func didLogout(manager: GithubSessionManager) {
-        masterNavigationController?.viewControllers = [SplitPlaceholderViewController()]
+        for vc in tabBarController?.viewControllers ?? [] {
+            if let nav = vc as? UINavigationController {
+                nav.viewControllers = [SplitPlaceholderViewController()]
+            }
+        }
+
         detailNavigationController?.viewControllers = [SplitPlaceholderViewController()]
         showLogin(animated: true)
     }
@@ -123,14 +124,8 @@ final class RootNavigationManager: GithubSessionListener {
         }
     }
 
-    private var masterNavigationController: UINavigationController? {
-        return tabBarController?.viewControllers?.first as? UINavigationController
-    }
-
     private var detailNavigationController: UINavigationController? {
-        guard let controllers = rootViewController?.viewControllers, controllers.count > 1
-            else { return nil }
-        return controllers[1] as? UINavigationController
+        return rootViewController?.viewControllers.last as? UINavigationController
     }
     
     private var tabBarController: UITabBarController? {
@@ -144,18 +139,6 @@ final class RootNavigationManager: GithubSessionListener {
             .instantiateInitialViewController() as! LoginSplashViewController
         controller.client = newGithubClient(sessionManager: sessionManager)
         return controller
-    }
-
-    @objc private func onSettings() {
-        guard let client = lastClient else { return }
-
-        let settings = newSettingsRootViewController(
-            sessionManager: sessionManager,
-            rootNavigationManager: self,
-            client: client
-        )
-        settings.modalPresentationStyle = .formSheet
-        rootViewController?.present(settings, animated: true)
     }
 
 }

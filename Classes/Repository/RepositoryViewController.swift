@@ -39,7 +39,7 @@ final class RepositoryViewController: UIViewController,
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
-        title = client.repo.nameWithOwner
+        title = "\(client.repo.owner)/\(client.repo.name)"
     }
 
     override func viewWillLayoutSubviews() {

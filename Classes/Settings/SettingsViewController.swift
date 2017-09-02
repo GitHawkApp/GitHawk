@@ -11,9 +11,11 @@ import SafariServices
 
 final class SettingsViewController: UITableViewController {
 
+    // must be injected
     var sessionManager: GithubSessionManager!
-    var client: GithubClient!
     weak var rootNavigationManager: RootNavigationManager? = nil
+
+    private var client: GithubClient?
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
@@ -31,6 +33,8 @@ final class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        client = newGithubClient(sessionManager: sessionManager)
+
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationClient.readOnOpen()
         apiStatusView.layer.cornerRadius = 7
@@ -43,21 +47,20 @@ final class SettingsViewController: UITableViewController {
             name: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil
         )
-
-        client.fetchAPIStatus { [weak self] result in
-            self?.update(statusResult: result)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
-
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Strings.unknown
+        client?.fetchAPIStatus { [weak self] result in
+            self?.update(statusResult: result)
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? SettingsAccountsViewController {
+        if let controller = segue.destination as? SettingsAccountsViewController,
+            let client = self.client {
             controller.client = client
             controller.sessionManager = sessionManager
         }
@@ -81,10 +84,6 @@ final class SettingsViewController: UITableViewController {
     }
 
     // MARK: Private API
-
-    @IBAction func onDone(_ sender: Any) {
-        dismiss(animated: true)
-    }
 
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
@@ -118,7 +117,7 @@ final class SettingsViewController: UITableViewController {
         }
 
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("All accounts will be signed out. Do you want to continue?", comment: "")
+        let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)

@@ -265,13 +265,7 @@
                             <outlet property="delegate" destination="NnB-TU-bkW" id="DUO-qe-cG8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="fVs-Zg-aE3">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="BOz-8g-dJ0">
-                            <connections>
-                                <action selector="onDone:" destination="NnB-TU-bkW" id="bZz-ca-3AM"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Settings" id="fVs-Zg-aE3"/>
                     <connections>
                         <outlet property="accountsCell" destination="64O-sw-wTx" id="Erb-Qs-t0m"/>
                         <outlet property="apiStatusLabel" destination="rIC-a2-0GF" id="ceC-Ij-CrY"/>

@@ -10,8 +10,7 @@ import UIKit
 
 func newSettingsRootViewController(
     sessionManager: GithubSessionManager,
-    rootNavigationManager: RootNavigationManager,
-    client: GithubClient
+    rootNavigationManager: RootNavigationManager
     ) -> UIViewController {
     guard let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()
         else { fatalError("Could not unpack settings storyboard") }
@@ -19,8 +18,9 @@ func newSettingsRootViewController(
     if let nav = controller as? UINavigationController,
         let first = nav.viewControllers.first as? SettingsViewController {
         first.sessionManager = sessionManager
-        first.client = client
         first.rootNavigationManager = rootNavigationManager
+        nav.tabBarItem.title = NSLocalizedString("Settings", comment: "")
+        nav.tabBarItem.image = UIImage(named: "gear")
     }
 
     return controller
@@ -31,9 +31,16 @@ func newNotificationsRootViewController(client: GithubClient) -> UIViewControlle
     let title = NSLocalizedString("Notifications", comment: "")
     controller.navigationItem.title = title
     controller.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-    return controller
-//    let nav = UINavigationController(rootViewController: controller)
-//    nav.tabBarItem.title = title
-//    nav.tabBarItem.image = UIImage(named: "inbox")
-//    return nav
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem.title = title
+    nav.tabBarItem.image = UIImage(named: "inbox")
+    return nav
+}
+
+func newSearchRootViewController(client: GithubClient) -> UIViewController {
+    let controller = SearchViewController(client: client)
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem.image = UIImage(named: "search")
+    nav.tabBarItem.title = NSLocalizedString("Search", comment: "")
+    return nav
 }

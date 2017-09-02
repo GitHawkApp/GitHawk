@@ -1,5 +1,5 @@
 //
-//  SearchResultCell.swift
+//  SearchRepoResultCell.swift
 //  Freetime
 //
 //  Created by Sherlock, James on 28/07/2017.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class SearchResultCell: UICollectionViewCell {
+final class SearchRepoResultCell: SelectableCell {
 
     static let labelInset = UIEdgeInsets(
         top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 3*Styles.Sizes.rowSpacing,
@@ -22,7 +22,6 @@ final class SearchResultCell: UICollectionViewCell {
     private let descriptionLabel = UILabel()
     private let languageLabel = UILabel()
     private let languageColorView = UIView()
-    private let dateLabel = ShowMoreDetailsLabel()
     private let starsLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -31,20 +30,16 @@ final class SearchResultCell: UICollectionViewCell {
         isAccessibilityElement = true
         
         contentView.backgroundColor = .white
-        
-        titleLabel.numberOfLines = 1
-        titleLabel.font = Styles.Fonts.title
+
         titleLabel.textColor = Styles.Colors.Gray.dark.color
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(SearchResultCell.labelInset.left)
+            make.left.equalTo(SearchRepoResultCell.labelInset.left)
         }
-        
-        languageLabel.numberOfLines = 1
+
         languageLabel.font = Styles.Fonts.secondary
         languageLabel.textColor = Styles.Colors.Gray.light.color
-        languageLabel.textAlignment = .right
         contentView.addSubview(languageLabel)
         languageLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
@@ -56,52 +51,52 @@ final class SearchResultCell: UICollectionViewCell {
         languageColorView.layer.cornerRadius = languageColorWidth / 2
         contentView.addSubview(languageColorView)
         languageColorView.snp.makeConstraints { make in
-            make.right.equalTo(languageLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
+            make.right.equalTo(languageLabel.snp.left).offset(-Styles.Sizes.columnSpacing/2)
             make.centerY.equalTo(languageLabel)
             make.height.equalTo(languageColorView.snp.width)
             make.height.equalTo(languageColorWidth)
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
-        
-        dateLabel.numberOfLines = 1
-        dateLabel.font = Styles.Fonts.secondary
-        dateLabel.textColor = Styles.Colors.Gray.light.color
-        dateLabel.textAlignment = .left
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
-            make.left.equalTo(SearchResultCell.labelInset.left)
-        }
-        
-        starsLabel.numberOfLines = 1
+
         starsLabel.font = Styles.Fonts.secondary
         starsLabel.textColor = Styles.Colors.Gray.light.color
-        starsLabel.textAlignment = .right
         contentView.addSubview(starsLabel)
         starsLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
-            make.centerY.equalTo(dateLabel)
-            make.left.greaterThanOrEqualTo(dateLabel.snp.right).offset(Styles.Sizes.gutter)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
+            make.right.equalTo(languageLabel)
         }
-        
-        descriptionLabel.numberOfLines = 0
+
         descriptionLabel.font = Styles.Fonts.secondary
-        descriptionLabel.textColor = Styles.Colors.Gray.dark.color
+        descriptionLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(SearchResultCell.labelInset)
+            make.top.equalTo(starsLabel)
+            make.right.lessThanOrEqualTo(starsLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
+            make.left.equalTo(titleLabel)
         }
         
-        addBorder(.bottom, left: SearchResultCell.labelInset.left)
+        addBorder(.bottom, left: SearchRepoResultCell.labelInset.left)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(result: SearchResult) {
-        titleLabel.text = result.nameWithOwner
-        descriptionLabel.attributedText = result.description?.attributedText
+    func configure(result: SearchRepoResult) {
+        let ownerAttributes = [
+            NSFontAttributeName: Styles.Fonts.body,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        ]
+        let title = NSMutableAttributedString(string: result.owner + "/", attributes: ownerAttributes)
+        let nameAttributes = [
+            NSFontAttributeName: Styles.Fonts.bodyBold,
+            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        ]
+        title.append(NSAttributedString(string: result.name, attributes: nameAttributes))
+        titleLabel.attributedText = title
+
+        descriptionLabel.text = result.description
         
         if let primaryLanguage = result.primaryLanguage {
             languageLabel.isHidden = false
@@ -116,16 +111,6 @@ final class SearchResultCell: UICollectionViewCell {
         } else {
             languageLabel.isHidden = true
             languageColorView.isHidden = true
-        }
-        
-        if let pushedAt = result.pushedAt {
-            dateLabel.isHidden = false
-            
-            let format = NSLocalizedString("Updated %@", comment: "")
-            dateLabel.text = String.localizedStringWithFormat(format, pushedAt.agoString)
-            dateLabel.detailText = DateDetailsFormatter().string(from: pushedAt)
-        } else {
-            dateLabel.isHidden = true
         }
         
         let starsCount = NumberFormatter.localizedString(from: NSNumber(value: result.stars), number: .decimal)
