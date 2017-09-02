@@ -9,12 +9,12 @@
 import UIKit
 import IGListKit
 
-class SearchViewController: UIViewController,
-    ListAdapterDataSource,
-    FeedDelegate,
-    SearchLoadMoreSectionControllerDelegate,
-    PrimaryViewController,
-UISearchBarDelegate {
+final class SearchViewController: UIViewController,
+                                  ListAdapterDataSource,
+                                  FeedDelegate,
+                                  SearchLoadMoreSectionControllerDelegate,
+                                  PrimaryViewController,
+                                  UISearchBarDelegate {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()

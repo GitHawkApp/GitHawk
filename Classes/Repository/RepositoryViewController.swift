@@ -9,12 +9,12 @@
 import UIKit
 import IGListKit
 
-class RepositoryViewController: UIViewController,
-                                FeedDelegate,
-                                ListAdapterDataSource,
-                                SegmentedControlSectionControllerDelegate,
-                                SearchLoadMoreSectionControllerDelegate,
-PrimaryViewController {
+final class RepositoryViewController: UIViewController,
+                                      FeedDelegate,
+                                      ListAdapterDataSource,
+                                      SegmentedControlSectionControllerDelegate,
+                                      SearchLoadMoreSectionControllerDelegate,
+                                      PrimaryViewController {
 
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
@@ -54,19 +54,19 @@ PrimaryViewController {
     }
     
     func reload() {
-        client.load(containerWidth: view.bounds.width) {
-            self.update(dismissRefresh: true, animated: true)
+        client.load(containerWidth: view.bounds.width) { [weak self] in
+            self?.update(dismissRefresh: true, animated: true)
         }
     }
     
     func loadNextPage() {
         if selection.issuesSelected {
-            client.loadMoreIssues(containerWidth: view.bounds.width) {
-                self.update(dismissRefresh: true, animated: false)
+            client.loadMoreIssues(containerWidth: view.bounds.width) { [weak self] in
+                self?.update(dismissRefresh: true, animated: false)
             }
         } else {
-            client.loadMorePullRequests(containerWidth: view.bounds.width) {
-                self.update(dismissRefresh: true, animated: false)
+            client.loadMorePullRequests(containerWidth: view.bounds.width) { [weak self] in
+                self?.update(dismissRefresh: true, animated: false)
             }
         }
     }
