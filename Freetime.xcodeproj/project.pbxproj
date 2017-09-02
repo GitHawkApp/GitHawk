@@ -299,8 +299,6 @@
 		986B87211F2B979200AAB55C /* SearchLoadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */; };
 		986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */; };
 		986B87251F2B990A00AAB55C /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87241F2B990A00AAB55C /* SearchResultCell.swift */; };
-		986B87271F2BB5EE00AAB55C /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */; };
-		986B87291F2BB68300AAB55C /* SearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87281F2BB68300AAB55C /* SearchBarCell.swift */; };
 		986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B872A1F2C842000AAB55C /* SearchNoResultsSectionController.swift */; };
 		986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B872C1F2C846700AAB55C /* SearchNoResultsCell.swift */; };
 		986B87301F2CA90400AAB55C /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */; };
@@ -615,8 +613,6 @@
 		986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLoadMoreCell.swift; sourceTree = "<group>"; };
 		986B87221F2B98AD00AAB55C /* SearchResultSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultSectionController.swift; sourceTree = "<group>"; };
 		986B87241F2B990A00AAB55C /* SearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
-		986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
-		986B87281F2BB68300AAB55C /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
 		986B872A1F2C842000AAB55C /* SearchNoResultsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNoResultsSectionController.swift; sourceTree = "<group>"; };
 		986B872C1F2C846700AAB55C /* SearchNoResultsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNoResultsCell.swift; sourceTree = "<group>"; };
 		986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -1353,8 +1349,6 @@
 			isa = PBXGroup;
 			children = (
 				986B87181F2B875800AAB55C /* GithubClient+Search.swift */,
-				986B87281F2BB68300AAB55C /* SearchBarCell.swift */,
-				986B87261F2BB5EE00AAB55C /* SearchBarSectionController.swift */,
 				986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */,
 				986B871E1F2B96E300AAB55C /* SearchLoadMoreSectionController.swift */,
 				986B872C1F2C846700AAB55C /* SearchNoResultsCell.swift */,
@@ -1744,7 +1738,6 @@
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* IssueSummaryType.swift in Sources */,
-				986B87271F2BB5EE00AAB55C /* SearchBarSectionController.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,
@@ -1831,7 +1824,6 @@
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
-				986B87291F2BB68300AAB55C /* SearchBarCell.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
