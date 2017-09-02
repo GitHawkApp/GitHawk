@@ -18,7 +18,7 @@ UISearchBarDelegate {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var searchResults = [SearchResult]()
+    private var searchResults = [ListDiffable]()
     private var nextPage: String?
     private var searchTerm: String?
 
@@ -64,11 +64,10 @@ UISearchBarDelegate {
     private func handle(resultType: GithubClient.SearchResultType, append: Bool, animated: Bool) {
         switch resultType {
         case .error:
-            print("😞 Something went wrong, here's some pizza 🍕")
             break
         case .success(let nextPage, let results):
             if append {
-                self.searchResults += results
+                self.searchResults += results as [ListDiffable]
             } else {
                 self.searchResults = results
             }
@@ -79,7 +78,7 @@ UISearchBarDelegate {
         }
     }
 
-    func reload() {
+    func search() {
         guard let searchTerm = searchTerm else { return }
         client.search(query: searchTerm, containerWidth: view.bounds.width) { [weak self] resultType in
             self?.handle(resultType: resultType, append: false, animated: true)
@@ -96,7 +95,7 @@ UISearchBarDelegate {
     // MARK: FeedDelegate
 
     func loadFromNetwork(feed: Feed) {
-        reload()
+        search()
     }
 
     func loadNextPage(feed: Feed) -> Bool {
@@ -127,7 +126,7 @@ UISearchBarDelegate {
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey { return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
         else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
-        else if object is SearchResult { return SearchResultSectionController(client: client) }
+        else if object is SearchRepoResult { return SearchResultSectionController(client: client) }
 
         fatalError("Could not find section controller for object")
     }
@@ -152,7 +151,7 @@ UISearchBarDelegate {
         searchBar.resignFirstResponder()
         
         searchTerm = searchBar.text
-        reload()
+        search()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

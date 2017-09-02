@@ -8,7 +8,7 @@
 
 import IGListKit
 
-final class SearchResultSectionController: ListGenericSectionController<SearchResult> {
+final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
 
     private let client: GithubClient
     
@@ -19,12 +19,11 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
     
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        let fallbackHeight = SearchResultCell.labelInset.top + SearchResultCell.labelInset.bottom
-        return CGSize(width: width, height: object?.description?.textViewSize(width).height ?? fallbackHeight)
+        return CGSize(width: width, height: Styles.Sizes.tableCellHeight + Styles.Sizes.rowSpacing * 2)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: SearchResultCell.self, for: self, at: index) as? SearchResultCell,
+        guard let cell = collectionContext?.dequeueReusableCell(of: SearchRepoResultCell.self, for: self, at: index) as? SearchRepoResultCell,
               let object = object else {
             fatalError("Missing context, object, or cell is wrong type")
         }
