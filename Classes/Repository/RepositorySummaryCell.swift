@@ -59,6 +59,13 @@ final class RepositorySummaryCell: SelectableCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        titleView.reposition(width: contentView.bounds.width)
+    }
+
+    // MARK: Public API
     
     func configure(_ model: RepositoryIssueSummaryModel) {
         titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
