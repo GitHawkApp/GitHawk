@@ -37,7 +37,7 @@
                             </constraints>
                         </view>
                         <sections>
-                            <tableViewSection headerTitle="GitHub" id="n5G-D4-CjA">
+                            <tableViewSection headerTitle="🐙 GitHub" id="n5G-D4-CjA">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="TXN-Kx-ri1" style="IBUITableViewCellStyleDefault" id="TXs-sw-hO1" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
@@ -126,7 +126,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Githawk" id="3QH-oa-l2C">
+                            <tableViewSection headerTitle="🦅 Githawk" id="3QH-oa-l2C">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="kdx-s1-NXl" style="IBUITableViewCellStyleDefault" id="WwO-m1-s3q" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="243.5" width="375" height="44"/>
