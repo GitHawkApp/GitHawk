@@ -71,7 +71,7 @@ final class RepositorySummaryCell: SelectableCell {
         switch model.status {
         case .closed:
             imageName = model.pullRequest ? "git-pull-request" : "issue-closed"
-            tint = Styles.Colors.Green.medium.color
+            tint = Styles.Colors.Red.medium.color
         case .open:
             imageName = model.pullRequest ? "git-pull-request" : "issue-opened"
             tint = Styles.Colors.Green.medium.color
