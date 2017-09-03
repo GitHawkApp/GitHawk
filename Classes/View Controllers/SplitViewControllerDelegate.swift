@@ -62,7 +62,9 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
             guard let nav = tabVC as? UINavigationController else { continue }
 
             // pop until hitting a VC marked as "primary"
-            while let top = nav.topViewController, (top is PrimaryViewController) == false {
+            while let top = nav.topViewController,
+                top !== nav.viewControllers.first,
+                (top is PrimaryViewController) == false {
                 if nav === primaryNav {
                     detailVCs.append(top)
                 }
