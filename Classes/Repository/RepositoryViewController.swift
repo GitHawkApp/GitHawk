@@ -131,7 +131,7 @@ PrimaryViewController {
                 if issuesNextPage != nil {
                     builder.append(loadMore)
                 }
-            } else {
+            } else if feed.status == .idle {
                 builder.append(noIssuesResultsKey)
             }
         } else if !selection.issuesSelected {
@@ -140,7 +140,7 @@ PrimaryViewController {
                 if pullRequestsNextPage != nil {
                     builder.append(loadMore)
                 }
-            } else {
+            } else if feed.status == .idle {
                 builder.append(noPullRequestsResultsKey)
             }
         }
@@ -176,7 +176,7 @@ PrimaryViewController {
     // MARK: SegmentedControlSectionControllerDelegate
 
     func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
-        update(dismissRefresh: false)
+        update(dismissRefresh: false, animated: false)
     }
 
     // MARK: SearchLoadMoreSectionControllerDelegate

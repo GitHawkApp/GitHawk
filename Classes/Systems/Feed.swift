@@ -90,7 +90,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> ())? = nil) {
         status = .idle
 
-        adapter.performUpdates(animated: true) { _ in
+        adapter.performUpdates(animated: animated) { _ in
             if dismissRefresh {
                 self.feedRefresh.endRefreshing(completion: {
                     completion?()
