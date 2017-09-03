@@ -12,9 +12,9 @@ final class RepositoryEmptyResultsSectionController: ListSectionController {
     
     let topInset: CGFloat
     let topLayoutGuide: UILayoutSupport
-    let type: EmptyResultsType
+    let type: RepositoryEmptyResultsType
     
-    init(topInset: CGFloat, topLayoutGuide: UILayoutSupport, type: EmptyResultsType) {
+    init(topInset: CGFloat, topLayoutGuide: UILayoutSupport, type: RepositoryEmptyResultsType) {
         self.topInset = topInset
         self.topLayoutGuide = topLayoutGuide
         self.type = type
@@ -31,7 +31,7 @@ final class RepositoryEmptyResultsSectionController: ListSectionController {
             fatalError("Missing context, object, or cell is wrong type")
         }
         
-        cell.type = type
+        cell.configure(type)
         return cell
     }
     
