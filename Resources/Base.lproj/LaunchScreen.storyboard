@@ -45,11 +45,22 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash-light" translatesAutoresizingMaskIntoConstraints="NO" id="rkf-Aa-bAc">
                                 <rect key="frame" x="100" y="246" width="174" height="174"/>
                             </imageView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1W-E8-gNR">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="YuD-2q-wjd"/>
+                                </constraints>
+                                <items/>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="E1W-E8-gNR" firstAttribute="leading" secondItem="OAG-Uu-ADj" secondAttribute="leading" id="1eZ-pg-by3"/>
                             <constraint firstItem="rkf-Aa-bAc" firstAttribute="centerY" secondItem="OAG-Uu-ADj" secondAttribute="centerY" id="Lv7-c5-Ik6"/>
                             <constraint firstItem="rkf-Aa-bAc" firstAttribute="centerX" secondItem="OAG-Uu-ADj" secondAttribute="centerX" id="QAR-lv-x9T"/>
+                            <constraint firstItem="Zhg-gx-CHR" firstAttribute="top" secondItem="E1W-E8-gNR" secondAttribute="bottom" id="oRu-M2-nPG"/>
+                            <constraint firstAttribute="trailing" secondItem="E1W-E8-gNR" secondAttribute="trailing" id="osj-Om-2jl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1Uc-CR-q5T"/>
