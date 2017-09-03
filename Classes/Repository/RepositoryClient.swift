@@ -49,7 +49,7 @@ func createSummaryModel(_ node: IssueSummaryType, containerWidth: CGFloat) -> Is
         else { return nil }
 
     let attributes = [
-        NSFontAttributeName: Styles.Fonts.title,
+        NSFontAttributeName: Styles.Fonts.body,
         NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
     ]
     let title = NSAttributedStringSizing(
