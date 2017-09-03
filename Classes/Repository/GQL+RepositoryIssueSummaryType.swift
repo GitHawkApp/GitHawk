@@ -1,5 +1,5 @@
 //
-//  GQL+IssueSummaryType.swift
+//  GQL+RepositoryIssueSummaryType.swift
 //  Freetime
 //
 //  Created by Sherlock, James on 29/07/2017.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension RepoIssuePagesQuery.Data.Repository.Issue.Node: IssueSummaryType {
+extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
 
     var id: String {
         return fragments.nodeFields.id
@@ -31,7 +31,7 @@ extension RepoIssuePagesQuery.Data.Repository.Issue.Node: IssueSummaryType {
 
 }
 
-extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
+extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
 
     var id: String {
         return fragments.nodeFields.id
@@ -55,7 +55,7 @@ extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: IssueSumma
     
 }
 
-extension RepoDetailsQuery.Data.Repository.Issue.Node: IssueSummaryType {
+extension RepoDetailsQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
 
     var id: String {
         return fragments.nodeFields.id
@@ -78,7 +78,7 @@ extension RepoDetailsQuery.Data.Repository.Issue.Node: IssueSummaryType {
     
 }
 
-extension RepoDetailsQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
+extension RepoDetailsQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
 
     var id: String {
         return fragments.nodeFields.id

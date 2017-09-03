@@ -1,5 +1,5 @@
 //
-//  IssueSummaryType.swift
+//  RepositoryIssueSummaryType.swift
 //  Freetime
 //
 //  Created by Sherlock, James on 29/07/2017.
@@ -8,7 +8,7 @@
 
 import IGListKit
 
-protocol IssueSummaryType {
+protocol RepositoryIssueSummaryType {
 
     var number: Int { get }
     var id: String { get }

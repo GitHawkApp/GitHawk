@@ -1,5 +1,5 @@
 //
-//  IssueSummaryModel.swift
+//  RepositoryIssueSummaryModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 9/3/17.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-class IssueSummaryModel: ListDiffable {
+class RepositoryIssueSummaryModel: ListDiffable {
 
     let id: String
     let title: NSAttributedStringSizing
@@ -45,7 +45,7 @@ class IssueSummaryModel: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueSummaryModel else { return false }
+        guard let object = object as? RepositoryIssueSummaryModel else { return false }
         return id == object.id
             && number == object.number
             && pullRequest == object.pullRequest

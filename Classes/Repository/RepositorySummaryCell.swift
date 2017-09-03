@@ -60,7 +60,7 @@ final class RepositorySummaryCell: SelectableCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ model: IssueSummaryModel) {
+    func configure(_ model: RepositoryIssueSummaryModel) {
         titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
         
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")

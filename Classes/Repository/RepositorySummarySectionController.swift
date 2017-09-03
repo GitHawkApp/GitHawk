@@ -8,7 +8,7 @@
 
 import IGListKit
 
-final class RepositorySummarySectionController: ListGenericSectionController<IssueSummaryModel> {
+final class RepositorySummarySectionController: ListGenericSectionController<RepositoryIssueSummaryModel> {
     
     private let client: GithubClient
     private let repo: RepositoryDetails

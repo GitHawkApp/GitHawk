@@ -31,9 +31,9 @@ PrimaryViewController {
     private let noPullRequestsResultsKey = "noPullRequestsResultsKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
 
-    private var issues = [IssueSummaryModel]()
+    private var issues = [RepositoryIssueSummaryModel]()
     private var issuesNextPage: String?
-    private var pullRequests = [IssueSummaryModel]()
+    private var pullRequests = [RepositoryIssueSummaryModel]()
     private var pullRequestsNextPage: String?
 
     init(client: GithubClient, repo: RepositoryDetails) {
@@ -167,7 +167,7 @@ PrimaryViewController {
             return SegmentedControlSectionController(delegate: self, height: controlHeight)
         } else if object === loadMore {
             return SearchLoadMoreSectionController(delegate: self)
-        } else if object is IssueSummaryModel {
+        } else if object is RepositoryIssueSummaryModel {
             return RepositorySummarySectionController(client: client.githubClient, repo: repo)
         }
 

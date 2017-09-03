@@ -10,13 +10,13 @@ import Apollo
 
 protocol RepositoryQuery {
     // generated queries should share the same init
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType]
+    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType]
     func nextPageToken(from data: GraphQLMappable) -> String?
 }
 
 extension RepoIssuePagesQuery: RepositoryQuery {
 
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType] {
+    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType] {
         guard let issues = data as? Data else { return [] }
         return issues.repository?.issues.nodes?.flatMap { $0 } ?? []
     }
@@ -31,7 +31,7 @@ extension RepoIssuePagesQuery: RepositoryQuery {
 
 extension RepoPullRequestPagesQuery: RepositoryQuery {
 
-    func summaryTypes(from data: GraphQLMappable) -> [IssueSummaryType] {
+    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType] {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return [] }
         return prs.repository?.pullRequests.nodes?.flatMap { $0 } ?? []
     }
@@ -44,7 +44,7 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 
 }
 
-func createSummaryModel(_ node: IssueSummaryType, containerWidth: CGFloat) -> IssueSummaryModel? {
+func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFloat) -> RepositoryIssueSummaryModel? {
     guard let date = GithubAPIDateFormatter().date(from: node.repoEventFields.createdAt)
         else { return nil }
 
@@ -57,7 +57,7 @@ func createSummaryModel(_ node: IssueSummaryType, containerWidth: CGFloat) -> Is
         attributedText: NSAttributedString(string: node.title, attributes: attributes),
         inset: RepositorySummaryCell.titleInset
     )
-    return IssueSummaryModel(
+    return RepositoryIssueSummaryModel(
         id: node.id,
         title: title,
         number: node.number,
@@ -72,9 +72,9 @@ func createSummaryModel(
     query: RepositoryQuery,
     data: GraphQLMappable,
     containerWidth: CGFloat
-    ) -> (models: [IssueSummaryModel], nextPage: String?) {
+    ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
-    let models: [IssueSummaryModel] = query.summaryTypes(from: data).flatMap { (node: IssueSummaryType) in
+    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).flatMap { (node: RepositoryIssueSummaryType) in
         return createSummaryModel(node, containerWidth: containerWidth)
     }
     return (models, nextPage)
@@ -94,7 +94,7 @@ final class RepositoryClient {
     }
 
     struct RepositoryPayload {
-        let models: [IssueSummaryModel]
+        let models: [RepositoryIssueSummaryModel]
         let nextPage: String?
     }
 
@@ -171,7 +171,7 @@ final class RepositoryClient {
             }
 
             let issueNodes = (data.repository?.issues.nodes ?? []).flatMap { $0 }
-            let issues = issueNodes.flatMap { (node: IssueSummaryType) in
+            let issues = issueNodes.flatMap { (node: RepositoryIssueSummaryType) in
                 return createSummaryModel(node, containerWidth: containerWidth)
             }
             let issueNextPage: String?
@@ -182,7 +182,7 @@ final class RepositoryClient {
             }
 
             let prNodes = (data.repository?.pullRequests.nodes ?? []).flatMap { $0 }
-            let prs = prNodes.flatMap { (node: IssueSummaryType) in
+            let prs = prNodes.flatMap { (node: RepositoryIssueSummaryType) in
                 return createSummaryModel(node, containerWidth: containerWidth)
             }
             let prNextPage: String?
