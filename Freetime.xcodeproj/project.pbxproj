@@ -44,6 +44,7 @@
 		2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */; };
 		2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */; };
 		2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78D1F15DF1B0000D06D /* IssueRenamedString.swift */; };
+		292ACE181F5C945B00C9A02C /* IssueSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292ACE171F5C945B00C9A02C /* IssueSummaryModel.swift */; };
 		292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */; };
 		292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */; };
 		292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */; };
@@ -379,6 +380,7 @@
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
 		2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedSectionController.swift; sourceTree = "<group>"; };
 		2928C78D1F15DF1B0000D06D /* IssueRenamedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedString.swift; sourceTree = "<group>"; };
+		292ACE171F5C945B00C9A02C /* IssueSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueSummaryModel.swift; sourceTree = "<group>"; };
 		292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkModel.swift; sourceTree = "<group>"; };
 		292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkSectionController.swift; sourceTree = "<group>"; };
 		292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPathCell.swift; sourceTree = "<group>"; };
@@ -1365,14 +1367,15 @@
 			isa = PBXGroup;
 			children = (
 				986B873B1F2CEB1500AAB55C /* GQL+IssueSummaryType.swift */,
+				292ACE171F5C945B00C9A02C /* IssueSummaryModel.swift */,
 				986B87331F2CAE9800AAB55C /* IssueSummaryType.swift */,
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
+				986B87431F30E88100AAB55C /* RepositoryEmptyResultsCell.swift */,
+				986B87451F30E9E700AAB55C /* RepositoryEmptyResultsSectionController.swift */,
 				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
 				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
 				986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */,
 				986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */,
-				986B87431F30E88100AAB55C /* RepositoryEmptyResultsCell.swift */,
-				986B87451F30E9E700AAB55C /* RepositoryEmptyResultsSectionController.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1883,6 +1886,7 @@
 				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
 				290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
+				292ACE181F5C945B00C9A02C /* IssueSummaryModel.swift in Sources */,
 				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
 				291929571F3FAFB00012067B /* IssueFileContentViewController.swift in Sources */,

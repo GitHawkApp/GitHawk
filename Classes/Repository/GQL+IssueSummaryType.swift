@@ -8,64 +8,96 @@
 
 import Foundation
 
-extension RepoIssuesQuery.Data.Repository.Issue.Node: IssueSummaryType {
-    var createdAtDate: Date? {
-        return GithubAPIDateFormatter().date(from: createdAt)
-    }
-    
-    var attributedTitle: NSAttributedStringSizing {
-        let attributes = [
-            NSFontAttributeName: Styles.Fonts.title,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
-        ]
-        
-        return NSAttributedStringSizing(
-            containerWidth: 0,
-            attributedText: NSAttributedString(string: title, attributes: attributes),
-            inset: RepositorySummaryCell.labelInset
-        )
-    }
-    
-    var rawState: String {
-        return state.rawValue
-    }
-    
-    var authorName: String? {
-        return author?.login
-    }
-    
-    var isIssue: Bool {
-        return true
-    }
-}
+extension RepoIssuePagesQuery.Data.Repository.Issue.Node: IssueSummaryType {
 
-extension RepoPullRequestsQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
-    var createdAtDate: Date? {
-        return GithubAPIDateFormatter().date(from: createdAt)
+    var id: String {
+        return fragments.nodeFields.id
     }
 
-    var attributedTitle: NSAttributedStringSizing {
-        let attributes = [
-            NSFontAttributeName: Styles.Fonts.title,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
-        ]
-        
-        return NSAttributedStringSizing(
-            containerWidth: 0,
-            attributedText: NSAttributedString(string: title, attributes: attributes),
-            inset: RepositorySummaryCell.labelInset
-        )
+    var repoEventFields: RepoEventFields {
+        return fragments.repoEventFields
     }
-    
-    var rawState: String {
-        return state.rawValue
-    }
-    
-    var authorName: String? {
-        return author?.login
-    }
-    
-    var isIssue: Bool {
+
+    var pullRequest: Bool {
         return false
     }
+
+    var status: IssueStatus {
+        switch state {
+        case .closed: return .closed
+        case .open: return .open
+        }
+    }
+
+}
+
+extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
+
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
+    var repoEventFields: RepoEventFields {
+        return fragments.repoEventFields
+    }
+
+    var pullRequest: Bool {
+        return true
+    }
+
+    var status: IssueStatus {
+        switch state {
+        case .closed: return .closed
+        case .open: return .open
+        case .merged: return .merged
+        }
+    }
+    
+}
+
+extension RepoDetailsQuery.Data.Repository.Issue.Node: IssueSummaryType {
+
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
+    var repoEventFields: RepoEventFields {
+        return fragments.repoEventFields
+    }
+
+    var pullRequest: Bool {
+        return false
+    }
+
+    var status: IssueStatus {
+        switch state {
+        case .closed: return .closed
+        case .open: return .open
+        }
+    }
+    
+}
+
+extension RepoDetailsQuery.Data.Repository.PullRequest.Node: IssueSummaryType {
+
+    var id: String {
+        return fragments.nodeFields.id
+    }
+
+    var repoEventFields: RepoEventFields {
+        return fragments.repoEventFields
+    }
+
+    var pullRequest: Bool {
+        return true
+    }
+
+    var status: IssueStatus {
+        switch state {
+        case .closed: return .closed
+        case .open: return .open
+        case .merged: return .merged
+        }
+    }
+    
 }

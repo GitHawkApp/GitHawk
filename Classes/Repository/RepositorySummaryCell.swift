@@ -9,9 +9,9 @@
 import UIKit
 import SnapKit
 
-final class RepositorySummaryCell: UICollectionViewCell {
+final class RepositorySummaryCell: SelectableCell {
     
-    static let labelInset = UIEdgeInsets(
+    static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
         bottom: Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
@@ -19,7 +19,7 @@ final class RepositorySummaryCell: UICollectionViewCell {
     )
     
     private let reasonImageView = UIImageView()
-    private let titleLabel = UILabel()
+    private let titleView = AttributedStringView()
     private let secondaryLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -28,14 +28,8 @@ final class RepositorySummaryCell: UICollectionViewCell {
         isAccessibilityElement = true
         
         contentView.backgroundColor = .white
-        
-        titleLabel.numberOfLines = 0
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(RepositorySummaryCell.labelInset.left)
-            make.right.equalTo(-RepositorySummaryCell.labelInset.right)
-        }
+
+        contentView.addSubview(titleView)
         
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
@@ -46,32 +40,48 @@ final class RepositorySummaryCell: UICollectionViewCell {
             make.centerY.equalToSuperview()
             make.left.equalTo(Styles.Sizes.columnSpacing)
         }
+
+        let inset = RepositorySummaryCell.titleInset
         
         secondaryLabel.numberOfLines = 1
         secondaryLabel.font = Styles.Fonts.secondary
         secondaryLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(secondaryLabel)
         secondaryLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
-            make.left.equalTo(RepositorySummaryCell.labelInset.left)
-            make.right.equalTo(-RepositorySummaryCell.labelInset.right)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalTo(inset.left)
+            make.right.equalTo(-inset.right)
         }
                 
-        addBorder(.bottom, left: RepositorySummaryCell.labelInset.left)
+        addBorder(.bottom, left: inset.left)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(result: IssueSummaryType) {
-        titleLabel.attributedText = result.attributedTitle.attributedText
+    func configure(_ model: IssueSummaryModel) {
+        titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
         
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
-        secondaryLabel.text = String.localizedStringWithFormat(format, result.number, result.createdAtDate?.agoString ?? "", result.authorName ?? Strings.unknown)
-        
-        reasonImageView.image = result.stateIcon
-        reasonImageView.tintColor = result.stateColor
+        secondaryLabel.text = String.localizedStringWithFormat(format, model.number, model.created.agoString, model.author)
+
+        let imageName: String
+        let tint: UIColor
+        switch model.status {
+        case .closed:
+            imageName = model.pullRequest ? "git-pull-request" : "issue-closed"
+            tint = Styles.Colors.Green.medium.color
+        case .open:
+            imageName = model.pullRequest ? "git-pull-request" : "issue-opened"
+            tint = Styles.Colors.Green.medium.color
+        case .merged:
+            imageName = "git-merge"
+            tint = Styles.Colors.purple.color
+        }
+
+        reasonImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        reasonImageView.tintColor = tint
     }
     
     override var accessibilityLabel: String? {

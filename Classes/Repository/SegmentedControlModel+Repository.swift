@@ -10,10 +10,10 @@ import Foundation
 
 extension SegmentedControlModel {
     
-    static func forRepository(_ repo: RepositoryLoadable) -> SegmentedControlModel {
+    static func forRepository(_ hasIssuesEnabled: Bool) -> SegmentedControlModel {
         var items = [NSLocalizedString("Pull Requests", comment: "")]
         
-        if repo.hasIssuesEnabled {
+        if hasIssuesEnabled {
             items.insert(NSLocalizedString("Issues", comment: ""), at: 0)
         }
         

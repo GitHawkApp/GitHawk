@@ -77,3 +77,10 @@ fragment milestoneFields on Milestone {
   title
   url
 }
+
+fragment repoEventFields on Comment {
+  createdAt
+  author {
+    login
+  }
+}
