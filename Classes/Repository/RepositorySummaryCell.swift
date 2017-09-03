@@ -53,7 +53,7 @@ final class RepositorySummaryCell: SelectableCell {
             make.right.equalTo(-inset.right)
         }
                 
-        addBorder(.bottom, left: inset.left)
+        contentView.addBorder(.bottom, left: inset.left)
     }
     
     required init?(coder aDecoder: NSCoder) {

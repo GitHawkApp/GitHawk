@@ -67,7 +67,7 @@ final class NotificationCell: SwipeSelectableCell {
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
 
-        addBorder(.bottom, left: NotificationCell.labelInset.left)
+        contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
     }
 
     required init?(coder aDecoder: NSCoder) {

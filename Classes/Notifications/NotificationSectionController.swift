@@ -25,7 +25,7 @@ SwipeCollectionViewCellDelegate {
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: object?.title.textViewSize(width).height ?? 0)
+        return CGSize(width: width, height: ceil(object?.title.textViewSize(width).height ?? 0))
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
