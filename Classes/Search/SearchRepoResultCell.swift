@@ -32,10 +32,12 @@ final class SearchRepoResultCell: SelectableCell {
         contentView.backgroundColor = .white
 
         titleLabel.textColor = Styles.Colors.Gray.dark.color
+        titleLabel.lineBreakMode = .byTruncatingMiddle
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(SearchRepoResultCell.labelInset.left)
+            make.right.lessThanOrEqualTo(languageColorView.snp.left).offset(-Styles.Sizes.rowSpacing)
         }
 
         languageLabel.font = Styles.Fonts.secondary
