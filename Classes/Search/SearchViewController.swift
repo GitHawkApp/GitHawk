@@ -106,7 +106,7 @@ SearchEmptyViewDelegate {
         case .error, .idle, .loading:
             return []
         case .results(let models):
-            return models
+            return models.count > 0 ? models : [noResultsKey]
         }
     }
 
