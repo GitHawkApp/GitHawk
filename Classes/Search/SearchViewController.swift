@@ -14,13 +14,15 @@ class SearchViewController: UIViewController,
     FeedDelegate,
     SearchLoadMoreSectionControllerDelegate,
     PrimaryViewController,
-UISearchBarDelegate {
+    UISearchBarDelegate,
+SearchEmptyViewDelegate {
 
     private let client: GithubClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var searchResults = [ListDiffable]()
     private var nextPage: String?
     private var searchTerm: String?
+    private let searchBar = UISearchBar()
 
     private let noResultsKey = "noResultsKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
@@ -41,7 +43,6 @@ UISearchBarDelegate {
         feed.collectionView.refreshControl?.endRefreshing()
         feed.adapter.dataSource = self
 
-        let searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.placeholder = NSLocalizedString("Search", comment: "")
         searchBar.tintColor = Styles.Colors.Blue.medium.color
@@ -137,7 +138,9 @@ UISearchBarDelegate {
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+        let view = SearchEmptyView()
+        view.delegate = self
+        return view
     }
 
     // MARK: SearchLoadMoreSectionControllerDelegate
@@ -154,7 +157,7 @@ UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
+
         searchTerm = searchBar.text
         search()
     }
@@ -162,10 +165,16 @@ UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
-
+        
         searchTerm = nil
         searchResults.removeAll()
         update(dismissRefresh: false)
     }
+    
+    // MARK: SearchEmptyViewDelegate
 
+    func didTap(emptyView: SearchEmptyView) {
+        searchBar.resignFirstResponder()
+    }
+    
 }

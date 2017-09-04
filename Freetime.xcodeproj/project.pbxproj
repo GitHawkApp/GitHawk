@@ -275,6 +275,7 @@
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
+		29DA1E771F5DA27D0050C64B /* SearchEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E761F5DA27D0050C64B /* SearchEmptyView.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
 		29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EE1C161F3A2E7A0046A54D /* Labels.storyboard */; };
@@ -587,6 +588,7 @@
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
+		29DA1E761F5DA27D0050C64B /* SearchEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEmptyView.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelEditCell.swift; sourceTree = "<group>"; };
 		29EE1C161F3A2E7A0046A54D /* Labels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Labels.storyboard; sourceTree = "<group>"; };
@@ -1363,6 +1365,7 @@
 			isa = PBXGroup;
 			children = (
 				986B87181F2B875800AAB55C /* GithubClient+Search.swift */,
+				29DA1E761F5DA27D0050C64B /* SearchEmptyView.swift */,
 				986B87201F2B979200AAB55C /* SearchLoadMoreCell.swift */,
 				986B871E1F2B96E300AAB55C /* SearchLoadMoreSectionController.swift */,
 				986B872C1F2C846700AAB55C /* SearchNoResultsCell.swift */,
@@ -1679,6 +1682,7 @@
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
+				29DA1E771F5DA27D0050C64B /* SearchEmptyView.swift in Sources */,
 				292FCB0F1EDFCC510026635E /* IssuesViewController.swift in Sources */,
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
