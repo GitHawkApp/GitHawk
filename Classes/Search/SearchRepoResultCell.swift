@@ -37,7 +37,6 @@ final class SearchRepoResultCell: SelectableCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(SearchRepoResultCell.labelInset.left)
-            make.right.lessThanOrEqualTo(languageColorView.snp.left).offset(-Styles.Sizes.rowSpacing)
         }
 
         languageLabel.font = Styles.Fonts.secondary

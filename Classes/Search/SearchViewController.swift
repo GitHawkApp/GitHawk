@@ -11,18 +11,23 @@ import IGListKit
 
 class SearchViewController: UIViewController,
     ListAdapterDataSource,
-    FeedDelegate,
     SearchLoadMoreSectionControllerDelegate,
     PrimaryViewController,
     UISearchBarDelegate,
 SearchEmptyViewDelegate {
 
     private let client: GithubClient
-    private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private var searchResults = [ListDiffable]()
     private var nextPage: String?
     private var searchTerm: String?
     private let searchBar = UISearchBar()
+    private let collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        view.alwaysBounceVertical = true
+        view.backgroundColor = Styles.Colors.background
+        return view
+    }()
 
     private let noResultsKey = "noResultsKey" as ListDiffable
     private let loadMore = "loadMore" as ListDiffable
@@ -39,9 +44,9 @@ SearchEmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        feed.viewDidLoad()
-        feed.collectionView.refreshControl?.endRefreshing()
-        feed.adapter.dataSource = self
+        view.addSubview(collectionView)
+        adapter.collectionView = collectionView
+        adapter.dataSource = self
 
         searchBar.delegate = self
         searchBar.placeholder = NSLocalizedString("Search", comment: "")
@@ -53,18 +58,23 @@ SearchEmptyViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
+        rz_smoothlyDeselectRows(collectionView: collectionView)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        feed.viewWillLayoutSubviews(view: view)
+
+        let bounds = view.bounds
+        if bounds != collectionView.frame {
+            collectionView.frame = bounds
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
 
     // MARK: Data Loading/Paging
 
-    private func update(dismissRefresh: Bool, animated: Bool = true) {
-        feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
+    private func update(animated: Bool) {
+        adapter.performUpdates(animated: animated)
     }
 
     private func handle(resultType: GithubClient.SearchResultType, append: Bool, animated: Bool) {
@@ -79,7 +89,7 @@ SearchEmptyViewDelegate {
             }
 
             self.nextPage = nextPage
-            self.update(dismissRefresh: !append, animated: animated)
+            self.update(animated: animated)
             break
         }
     }
@@ -96,16 +106,6 @@ SearchEmptyViewDelegate {
         client.search(query: searchTerm, before: nextPage, containerWidth: view.bounds.width) { [weak self] resultType in
             self?.handle(resultType: resultType, append: true, animated: false)
         }
-    }
-
-    // MARK: FeedDelegate
-
-    func loadFromNetwork(feed: Feed) {
-        search()
-    }
-
-    func loadNextPage(feed: Feed) -> Bool {
-        return false
     }
 
     // MARK: ListAdapterDataSource
@@ -164,17 +164,19 @@ SearchEmptyViewDelegate {
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
         searchBar.resignFirstResponder()
         
         searchTerm = nil
         searchResults.removeAll()
-        update(dismissRefresh: false)
+        update(animated: false)
     }
     
     // MARK: SearchEmptyViewDelegate
 
     func didTap(emptyView: SearchEmptyView) {
         searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
     
 }
