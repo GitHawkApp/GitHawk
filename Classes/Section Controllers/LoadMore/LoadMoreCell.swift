@@ -1,5 +1,5 @@
 //
-//  SearchLoadMoreCell.swift
+//  LoadMoreCell.swift
 //  Freetime
 //
 //  Created by Sherlock, James on 28/07/2017.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class SearchLoadMoreCell: UICollectionViewCell {
+final class LoadMoreCell: UICollectionViewCell {
     
     private let label = UILabel()
     
@@ -32,7 +32,7 @@ final class SearchLoadMoreCell: UICollectionViewCell {
     }
     
     override var accessibilityLabel: String? {
-        get { return NSLocalizedString("Load More Search Results", comment: "") }
+        get { return NSLocalizedString("Load More", comment: "") }
         set { }
     }
     

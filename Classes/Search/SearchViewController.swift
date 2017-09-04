@@ -11,26 +11,29 @@ import IGListKit
 
 class SearchViewController: UIViewController,
     ListAdapterDataSource,
-    SearchLoadMoreSectionControllerDelegate,
     PrimaryViewController,
     UISearchBarDelegate,
 SearchEmptyViewDelegate {
 
     private let client: GithubClient
-    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
-    private var searchResults = [ListDiffable]()
-    private var nextPage: String?
-    private var searchTerm: String?
+    private let noResultsKey = "noResultsKey" as ListDiffable
+
+    enum State {
+        case idle
+        case loading
+        case results([ListDiffable])
+        case error
+    }
+    private var state: State = .idle
+
     private let searchBar = UISearchBar()
+    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
     }()
-
-    private let noResultsKey = "noResultsKey" as ListDiffable
-    private let loadMore = "loadMore" as ListDiffable
 
     init(client: GithubClient) {
         self.client = client
@@ -77,53 +80,34 @@ SearchEmptyViewDelegate {
         adapter.performUpdates(animated: animated)
     }
 
-    private func handle(resultType: GithubClient.SearchResultType, append: Bool, animated: Bool) {
+    private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
         case .error:
-            break
-        case .success(let nextPage, let results):
-            if append {
-                self.searchResults += results as [ListDiffable]
-            } else {
-                self.searchResults = results
-            }
-
-            self.nextPage = nextPage
-            self.update(animated: animated)
-            break
+            self.state = .error
+        case .success(_, let results):
+            self.state = .results(results)
         }
+        self.update(animated: animated)
     }
 
-    func search() {
-        guard let searchTerm = searchTerm else { return }
-        client.search(query: searchTerm, containerWidth: view.bounds.width) { [weak self] resultType in
-            self?.handle(resultType: resultType, append: false, animated: true)
-        }
-    }
+    func search(term: String) {
+        state = .loading
+        update(animated: false)
 
-    func loadNextPage() {
-        guard let nextPage = nextPage, let searchTerm = searchTerm else { return }
-        client.search(query: searchTerm, before: nextPage, containerWidth: view.bounds.width) { [weak self] resultType in
-            self?.handle(resultType: resultType, append: true, animated: false)
+        client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+            self?.handle(resultType: resultType, animated: true)
         }
     }
 
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var builder = [ListDiffable]()
-
-        if searchResults.count > 0 {
-            builder += searchResults as [ListDiffable]
-
-            if nextPage != nil {
-                builder.append(loadMore)
-            }
-        } else if searchTerm != nil {
-            builder.append(noResultsKey)
+        switch state {
+        case .error, .idle, .loading:
+            return []
+        case .results(let models):
+            return models
         }
-
-        return builder
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -131,22 +115,22 @@ SearchEmptyViewDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey { return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
-        else if object === loadMore { return SearchLoadMoreSectionController(delegate: self) }
         else if object is SearchRepoResult { return SearchResultSectionController(client: client) }
 
         fatalError("Could not find section controller for object")
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        let view = SearchEmptyView()
-        view.delegate = self
-        return view
-    }
-
-    // MARK: SearchLoadMoreSectionControllerDelegate
-
-    func didSelect(sectionController: SearchLoadMoreSectionController) {
-        loadNextPage()
+        switch state {
+        case .idle:
+            let view = SearchEmptyView()
+            view.delegate = self
+            return view
+        case .loading:
+            return SearchLoadingView()
+        case .error, .results:
+            return nil
+        }
     }
 
     // MARK: UISearchBarDelegate
@@ -157,9 +141,10 @@ SearchEmptyViewDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
-        searchTerm = searchBar.text
-        search()
+        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            term.characters.count > 0
+            else { return }
+        search(term: term)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -167,8 +152,7 @@ SearchEmptyViewDelegate {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         
-        searchTerm = nil
-        searchResults.removeAll()
+        state = .idle
         update(animated: false)
     }
     

@@ -19,7 +19,7 @@ class RepositoryViewController: UIViewController,
     FeedDelegate,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
-    SearchLoadMoreSectionControllerDelegate,
+    LoadMoreSectionControllerDelegate,
 PrimaryViewController {
 
     private let repo: RepositoryDetails
@@ -166,7 +166,7 @@ PrimaryViewController {
         } else if object === selection {
             return SegmentedControlSectionController(delegate: self, height: controlHeight)
         } else if object === loadMore {
-            return SearchLoadMoreSectionController(delegate: self)
+            return LoadMoreSectionController(delegate: self)
         } else if object is RepositoryIssueSummaryModel {
             return RepositorySummarySectionController(client: client.githubClient, repo: repo)
         }
@@ -184,9 +184,9 @@ PrimaryViewController {
         update(dismissRefresh: false, animated: false)
     }
 
-    // MARK: SearchLoadMoreSectionControllerDelegate
+    // MARK: LoadMoreSectionControllerDelegate
 
-    func didSelect(sectionController: SearchLoadMoreSectionController) {
+    func didSelect(sectionController: LoadMoreSectionController) {
         loadNextPage()
     }
 }

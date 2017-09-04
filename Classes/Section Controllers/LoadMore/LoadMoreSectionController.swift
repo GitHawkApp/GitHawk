@@ -1,5 +1,5 @@
 //
-//  SearchLoadMoreSectionController.swift
+//  LoadMoreSectionController.swift
 //  Freetime
 //
 //  Created by Sherlock, James on 28/07/2017.
@@ -8,15 +8,15 @@
 
 import IGListKit
 
-protocol SearchLoadMoreSectionControllerDelegate: class {
-    func didSelect(sectionController: SearchLoadMoreSectionController)
+protocol LoadMoreSectionControllerDelegate: class {
+    func didSelect(sectionController: LoadMoreSectionController)
 }
 
-final class SearchLoadMoreSectionController: ListSectionController {
+final class LoadMoreSectionController: ListSectionController {
 
-    weak var delegate: SearchLoadMoreSectionControllerDelegate? = nil
+    private weak var delegate: LoadMoreSectionControllerDelegate? = nil
     
-    init(delegate: SearchLoadMoreSectionControllerDelegate) {
+    init(delegate: LoadMoreSectionControllerDelegate) {
         self.delegate = delegate
     }
     
@@ -26,7 +26,7 @@ final class SearchLoadMoreSectionController: ListSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: SearchLoadMoreCell.self, for: self, at: index) else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: LoadMoreCell.self, for: self, at: index) else {
             fatalError("Missing context, or cell is wrong type")
         }
         
@@ -36,4 +36,5 @@ final class SearchLoadMoreSectionController: ListSectionController {
     override func didSelectItem(at index: Int) {
         delegate?.didSelect(sectionController: self)
     }
+
 }

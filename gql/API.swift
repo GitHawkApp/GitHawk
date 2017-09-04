@@ -3280,7 +3280,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
 public final class SearchReposQuery: GraphQLQuery {
   public static let operationDefinition =
     "query SearchRepos($search: String!, $before: String) {" +
-    "  search(first: 25, query: $search, type: REPOSITORY, before: $before) {" +
+    "  search(first: 100, query: $search, type: REPOSITORY, before: $before) {" +
     "    __typename" +
     "    nodes {" +
     "      __typename" +
@@ -3332,7 +3332,7 @@ public final class SearchReposQuery: GraphQLQuery {
     public let search: Search
 
     public init(reader: GraphQLResultReader) throws {
-      search = try reader.value(for: Field(responseName: "search", arguments: ["first": 25, "query": reader.variables["search"], "type": "REPOSITORY", "before": reader.variables["before"]]))
+      search = try reader.value(for: Field(responseName: "search", arguments: ["first": 100, "query": reader.variables["search"], "type": "REPOSITORY", "before": reader.variables["before"]]))
     }
 
     public struct Search: GraphQLMappable {

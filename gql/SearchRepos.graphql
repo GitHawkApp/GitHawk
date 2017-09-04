@@ -1,5 +1,5 @@
 query SearchRepos($search: String!, $before: String) {
-  search(first: 25, query: $search, type: REPOSITORY, before: $before){
+  search(first: 100, query: $search, type: REPOSITORY, before: $before){
     # Search Results
     nodes {
     	... on Repository {
