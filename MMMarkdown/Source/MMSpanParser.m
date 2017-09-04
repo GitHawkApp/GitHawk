@@ -295,12 +295,12 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     if (element)
         return element;
     
-    [scanner beginTransaction];
-    element = [self.htmlParser parseCommentWithScanner:scanner];
-    [scanner commitTransaction:element != nil];
-    if (element)
-        return element;
-    
+//    [scanner beginTransaction];
+//    element = [self.htmlParser parseCommentWithScanner:scanner];
+//    [scanner commitTransaction:element != nil];
+//    if (element)
+//        return element;
+
     [scanner beginTransaction];
     element = [self _parseAmpersandWithScanner:scanner];
     [scanner commitTransaction:element != nil];

@@ -139,7 +139,7 @@ func createModel(markdown: String, element: MMElement) -> ListDiffable? {
     case .table:
         return CreateTable(element: element, markdown: markdown)
     case .HTML:
-        guard let html = markdown.substring(with: element.range),
+        guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
             html.characters.count > 0
             else { return nil }
         return IssueCommentHtmlModel(html: html)
