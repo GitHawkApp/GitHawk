@@ -27,7 +27,8 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
     // MARK: IssueCommentHtmlCellDelegate
 
     func webViewDidResize(cell: IssueCommentHtmlCell, html: String, size: CGSize) {
-        guard let sectionController = self.sectionController
+        guard let sectionController = self.sectionController,
+            size != htmlSizes[html]
             else { return }
         htmlSizes[html] = size
         UIView.performWithoutAnimation {
