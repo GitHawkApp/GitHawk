@@ -62,7 +62,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .white
         webView.delegate = self
-        addObserver(self, forKeyPath: #keyPath(webView.scrollView.contentSize), options: [.new], context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(UIWebView.scrollView.contentSize), options: [.new], context: nil)
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -76,22 +76,12 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     }
 
     deinit {
-        removeObserver(self, forKeyPath: #keyPath(webView.scrollView.contentSize))
+        webView.removeObserver(self, forKeyPath: #keyPath(UIWebView.scrollView.contentSize))
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         webView.frame = contentView.bounds
-    }
-
-    // MARK: Public API
-
-    func webViewPreferredSize() -> CGSize {
-        // https://stackoverflow.com/a/28746407/940936
-        var frame = webView.frame
-        frame.size.height = 1
-        webView.frame = frame
-        return webView.sizeThatFits(.zero)
     }
 
     // MARK: ListBindable
