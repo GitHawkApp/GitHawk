@@ -21,6 +21,7 @@ extension GithubClient {
         apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
             guard error == nil, result?.errors == nil else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
+                completion(.error)
                 return
             }
             
