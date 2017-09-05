@@ -13,10 +13,14 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-SearchEmptyViewDelegate {
+SearchEmptyViewDelegate,
+SearchRecentSectionControllerDelegate,
+SearchRecentHeaderSectionControllerDelegate {
 
     private let client: GithubClient
-    private let noResultsKey = "noResultsKey" as ListDiffable
+    private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
+    private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
+    private let recentStore = SearchRecentStore()
 
     enum State {
         case idle
@@ -91,6 +95,8 @@ SearchEmptyViewDelegate {
     }
 
     func search(term: String) {
+        recentStore.add(recent: term)
+
         state = .loading
         update(animated: false)
 
@@ -103,7 +109,13 @@ SearchEmptyViewDelegate {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
-        case .error, .idle, .loading:
+        case .idle:
+            var recents = recentStore.recents as [ListDiffable]
+            if recents.count > 0 {
+                recents.insert(recentHeaderKey, at: 0)
+            }
+            return recents
+        case .error, .loading:
             return []
         case .results(let models):
             return models.count > 0 ? models : [noResultsKey]
@@ -114,8 +126,15 @@ SearchEmptyViewDelegate {
         guard let object = object as? ListDiffable else { fatalError("Object does not conform to ListDiffable") }
 
         let controlHeight = Styles.Sizes.tableCellHeight
-        if object === noResultsKey { return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
-        else if object is SearchRepoResult { return SearchResultSectionController(client: client) }
+        if object === noResultsKey {
+            return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide)
+        } else if object === recentHeaderKey {
+            return SearchRecentHeaderSectionController(delegate: self)
+        } else if object is SearchRepoResult {
+            return SearchResultSectionController(client: client)
+        } else if object is String {
+            return SearchRecentSectionController(delegate: self)
+        }
 
         fatalError("Could not find section controller for object")
     }
@@ -161,6 +180,21 @@ SearchEmptyViewDelegate {
     func didTap(emptyView: SearchEmptyView) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+    // MARK: SearchRecentSectionControllerDelegate
+
+    func didSelect(recentSectionController: SearchRecentSectionController, text: String) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.text = text
+        search(term: text)
+    }
+
+    // MARK: SearchRecentHeaderSectionControllerDelegate
+
+    func didTapClear(sectionController: SearchRecentHeaderSectionController) {
+        recentStore.clear()
+        adapter.performUpdates(animated: true)
     }
     
 }
