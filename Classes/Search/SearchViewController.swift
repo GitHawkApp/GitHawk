@@ -147,7 +147,11 @@ SearchRecentHeaderSectionControllerDelegate {
             return view
         case .loading:
             return SearchLoadingView()
-        case .error, .results:
+        case .error:
+            let view = EmptyView()
+            view.label.text = NSLocalizedString("Error finding results", comment: "")
+            return view
+         case .results:
             return nil
         }
     }
