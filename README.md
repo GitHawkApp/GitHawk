@@ -8,14 +8,14 @@ The simplest way to **read** and **respond** to your GitHub notifications on iOS
 
 GitHawk is a small iOS app that makes managing GitHub accounts and projects a little easier. It exists because GitHub's mobile interface is missing features and is slow.
 
-It is also test and proof that you can build fairly complicated apps with [IGListKit](https://github.com/Instagram/IGListKit) in Swift.
+It is also proof that you can build rather complicated Swift apps with [IGListKit](https://github.com/Instagram/IGListKit).
 
 ## Why
 
 - Push `IGListKit` + Swift to its limits
 - Enable project management on mobile
 - Explore [GitHub's GraphQL API](https://developer.github.com/v4/)
-- Scratch my Swift itch
+- Scratch my Swift-itch
 - Create a real, complex app in the open
 
 ## How
@@ -37,6 +37,12 @@ GitHawk will be released with (at least) a three-phased rollout:
     - Browse PR content
     - Accept, reject, and merge PRs
     - :rocket:
+
+## Open Source & Copying
+
+I ship GitHawk on the App Store for free and provide its entire source code for free as well. In the spirit of openness, I have licensed my work under MIT so that you can use my code in your app, if you choose.
+
+However, I ask that you **please do not ship this app** under your own account. Paid or free.
 
 ## Contributing
 
