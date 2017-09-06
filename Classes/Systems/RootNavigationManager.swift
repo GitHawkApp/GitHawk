@@ -31,11 +31,6 @@ final class RootNavigationManager: GithubSessionListener {
         rootViewController.delegate = splitDelegate
         rootViewController.preferredDisplayMode = .allVisible
         sessionManager.addListener(listener: self)
-
-        self.settingsRootViewController = newSettingsRootViewController(
-            sessionManager: sessionManager,
-            rootNavigationManager: self
-        )
         
         self.tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
         self.tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
@@ -66,6 +61,12 @@ final class RootNavigationManager: GithubSessionListener {
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 
+        // rebuild the settings VC if it doesn't exist
+        settingsRootViewController = settingsRootViewController ?? newSettingsRootViewController(
+            sessionManager: sessionManager,
+            rootNavigationManager: self
+        )
+
         tabBarController?.viewControllers = [
             newNotificationsRootViewController(client: client),
             newSearchRootViewController(client: client),
@@ -89,6 +90,8 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
     func didLogout(manager: GithubSessionManager) {
+        settingsRootViewController = nil
+
         for vc in tabBarController?.viewControllers ?? [] {
             if let nav = vc as? UINavigationController {
                 nav.viewControllers = [SplitPlaceholderViewController()]
