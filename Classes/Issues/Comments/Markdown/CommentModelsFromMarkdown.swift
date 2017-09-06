@@ -172,7 +172,11 @@ func travelAST(
     let nextQuoteLevel = quoteLevel + (isQuote ? 1 : 0)
 
     // push more text attributes on the stack the deeper we go
-    let pushedAttributes = PushAttributes(element: element, current: attributeStack, listLevel: nextListLevel)
+    let pushedAttributes = PushAttributes(
+        element: element,
+        current: attributeStack,
+        listLevel: nextListLevel
+    )
 
     if needsNewline(element: element) {
         attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))
@@ -188,7 +192,7 @@ func travelAST(
         attributedString.removeAll()
     }
 
-    if element.type == .none || element.type == .entity {
+    if element.type == .none || element.type == .entity || element.type == .mailTo {
         let substring = substringOrNewline(text: markdown, range: element.range)
 
         // hack: dont allow newlines within lists
@@ -241,11 +245,7 @@ func travelAST(
     }
 }
 
-let UsernameAttributeName = "UsernameAttributeName"
-
-let UsernameDisabledAttributeName = "UsernameDisabledAttributeName"
-
-private let usernameRegex = try! NSRegularExpression(pattern: "@([a-zA-Z0-9_-]+)", options: [])
+private let usernameRegex = try! NSRegularExpression(pattern: "\\B@([a-zA-Z0-9_-]+)", options: [])
 func createTextModelAddingUsernameAttributes(
     attributedString: NSAttributedString,
     width: CGFloat,
@@ -263,11 +263,11 @@ func createTextModelAddingUsernameAttributes(
         var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
 
         // manually disable username highlighting for some text (namely code)
-        guard attributes[UsernameDisabledAttributeName] == nil else { continue }
+        guard attributes[MarkdownAttribute.usernameDisabled] == nil else { continue }
 
         let font = attributes[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
         attributes[NSFontAttributeName] = font.addingTraits(traits: .traitBold)
-        attributes[UsernameAttributeName] = substring.replacingOccurrences(of: "@", with: "")
+        attributes[MarkdownAttribute.username] = substring.replacingOccurrences(of: "@", with: "")
 
         let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
         mutableAttributedString.replaceCharacters(in: range, with: usernameAttributedString)

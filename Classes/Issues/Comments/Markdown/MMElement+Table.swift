@@ -27,7 +27,11 @@ private func buildAttributedString(
             attributedString.append(NSAttributedString(string: substr, attributes: attributes))
         }
     default:
-        let childAttributes = PushAttributes(element: element, current: attributes, listLevel: 0)
+        let childAttributes = PushAttributes(
+            element: element,
+            current: attributes,
+            listLevel: 0
+        )
         for child in element.children {
             buildAttributedString(
                 markdown: markdown,

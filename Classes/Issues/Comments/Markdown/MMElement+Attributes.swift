@@ -9,8 +9,6 @@
 import UIKit
 import MMMarkdown
 
-let MarkdownURLName = "MarkdownURLName"
-
 func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) -> [String: Any] {
     let currentFont: UIFont = current[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
 
@@ -37,11 +35,11 @@ func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) 
         NSFontAttributeName: Styles.Fonts.code,
         NSBackgroundColorAttributeName: Styles.Colors.Gray.lighter.color,
         NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-        UsernameDisabledAttributeName: true,
+        MarkdownAttribute.usernameDisabled: true,
         ]
     case .link: newAttributes = [
         NSForegroundColorAttributeName: Styles.Colors.Blue.medium.color,
-        MarkdownURLName: element.href ?? "",
+        MarkdownAttribute.url: element.href ?? "",
         ]
     case .header:
         switch element.level {
@@ -77,7 +75,11 @@ func PushAttributes(element: MMElement, current: [String: Any], listLevel: Int) 
         }
         newAttributes = [NSParagraphStyleAttributeName: paragraphStyleCopy]
     case .blockquote: newAttributes = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
+        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
+        ]
+    case .mailTo: newAttributes = [
+        NSForegroundColorAttributeName: Styles.Colors.Blue.medium.color,
+        MarkdownAttribute.email: element.href ?? ""
         ]
     default: newAttributes = [:]
     }

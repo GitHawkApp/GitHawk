@@ -76,4 +76,19 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(text.attributedText.string, "1. line 1\n2. line 2")
     }
 
+    func test_usernames() {
+        let markdown = "@user not @user\n@user user@gmail.com and @user"
+        let result = CreateCommentModels(markdown: markdown, width: 300)
+        XCTAssertEqual(result.count, 1)
+        let text = result.first as! NSAttributedStringSizing
+        XCTAssertNotNil(text.attributedText.attributes(at: 0, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNotNil(text.attributedText.attributes(at: 3, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNil(text.attributedText.attributes(at: 8, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNotNil(text.attributedText.attributes(at: 13, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNotNil(text.attributedText.attributes(at: 18, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNil(text.attributedText.attributes(at: 23, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNil(text.attributedText.attributes(at: 30, effectiveRange: nil)[MarkdownAttribute.username])
+        XCTAssertNotNil(text.attributedText.attributes(at: 45, effectiveRange: nil)[MarkdownAttribute.username])
+    }
+
 }

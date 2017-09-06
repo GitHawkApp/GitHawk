@@ -56,9 +56,9 @@ final class AttributedStringView: UIView {
 
     func onTap(recognizer: UITapGestureRecognizer) {
         guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
-        if let urlString = attributes[MarkdownURLName] as? String, let url = URL(string: urlString) {
+        if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
             delegate?.didTapURL(view: self, url: url)
-        } else if let usernameString = attributes[UsernameAttributeName] as? String {
+        } else if let usernameString = attributes[MarkdownAttribute.username] as? String {
             delegate?.didTapUsername(view: self, username: usernameString)
         }
     }
