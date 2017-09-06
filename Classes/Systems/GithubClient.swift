@@ -24,6 +24,7 @@ struct GithubClient {
         let method: HTTPMethod
         let parameters: Parameters?
         let headers: HTTPHeaders?
+        let logoutOnAuthFailure: Bool
         let completion: (DataResponse<Any>, Page?) -> Void
 
         init(
@@ -31,6 +32,7 @@ struct GithubClient {
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
+            logoutOnAuthFailure: Bool = true,
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) {
             self.init(
@@ -38,6 +40,7 @@ struct GithubClient {
                 method: method,
                 parameters: parameters,
                 headers: headers,
+                logoutOnAuthFailure: logoutOnAuthFailure,
                 completion: completion
             )
         }
@@ -47,12 +50,14 @@ struct GithubClient {
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
+            logoutOnAuthFailure: Bool = true,
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) {
             self.url = url
             self.method = method
             self.parameters = parameters
             self.headers = headers
+            self.logoutOnAuthFailure = logoutOnAuthFailure
             self.completion = completion
         }
     }
@@ -96,7 +101,9 @@ struct GithubClient {
                                  headers: request.headers)
             .responseJSON(completionHandler: { response in
                 // remove the github session if requesting with a session
-                if let statusCode = response.response?.statusCode, statusCode == 401 {
+                if request.logoutOnAuthFailure,
+                    let statusCode = response.response?.statusCode,
+                    statusCode == 401 {
                     StatusBar.showRevokeError()
                     self.sessionManager.logout()
                 } else {
