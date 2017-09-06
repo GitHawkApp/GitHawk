@@ -118,7 +118,7 @@ final class SearchRepoResultCell: SelectableCell {
         }
         
         let starsCount = NumberFormatter.localizedString(from: NSNumber(value: result.stars), number: .decimal)
-        starsLabel.text = "\u{2605} \(starsCount)"
+        starsLabel.text = "\u{2605}\(starsCount)"
     }
     
     override var accessibilityLabel: String? {
