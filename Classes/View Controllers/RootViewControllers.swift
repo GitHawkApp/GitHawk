@@ -29,7 +29,7 @@ func newSettingsRootViewController(
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {
     let controller = NotificationsViewController(client: client)
-    let title = NSLocalizedString("Notifications", comment: "")
+    let title = NSLocalizedString("Inbox", comment: "")
     controller.navigationItem.title = title
     controller.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     let nav = UINavigationController(rootViewController: controller)

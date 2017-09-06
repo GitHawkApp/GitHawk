@@ -224,7 +224,7 @@ PrimaryViewController {
         switch feed.status {
         case .idle:
             let emptyView = EmptyView()
-            emptyView.label.text = NSLocalizedString("Cannot load notifications", comment: "")
+            emptyView.label.text = NSLocalizedString("Cannot load your inbox", comment: "")
             return emptyView
         case .loading, .loadingNext:
             return nil

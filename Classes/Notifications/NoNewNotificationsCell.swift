@@ -31,7 +31,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         shadow.fillColor = UIColor(white: 0, alpha: 0.05).cgColor
         contentView.layer.addSublayer(shadow)
 
-        label.text = NSLocalizedString("No new notifications", comment: "")
+        label.text = NSLocalizedString("Inbox zero!", comment: "")
         label.textAlignment = .center
         label.backgroundColor = .clear
         label.font = Styles.Fonts.body
