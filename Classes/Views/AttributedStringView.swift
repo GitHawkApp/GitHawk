@@ -11,6 +11,7 @@ import UIKit
 protocol AttributedStringViewDelegate: class {
     func didTapURL(view: AttributedStringView, url: URL)
     func didTapUsername(view: AttributedStringView, username: String)
+    func didTapEmail(view: AttributedStringView, email: String)
 }
 
 final class AttributedStringView: UIView {
@@ -60,6 +61,8 @@ final class AttributedStringView: UIView {
             delegate?.didTapURL(view: self, url: url)
         } else if let usernameString = attributes[MarkdownAttribute.username] as? String {
             delegate?.didTapUsername(view: self, username: usernameString)
+        } else if let emailString = attributes[MarkdownAttribute.email] as? String {
+            delegate?.didTapEmail(view: self, email: emailString)
         }
     }
 

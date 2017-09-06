@@ -9,20 +9,14 @@
 import UIKit
 import IGListKit
 
-protocol IssueCommentTableCellDelegate: class {
-    func didTapURL(cell: IssueCommentTableCell, url: URL)
-    func didTapUsername(cell: IssueCommentTableCell, username: String)
-}
-
 final class IssueCommentTableCell: UICollectionViewCell,
     ListBindable,
     UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout,
-IssueCommentTableCollectionCellDelegate {
+UICollectionViewDelegateFlowLayout {
 
     static let inset = UIEdgeInsets(top: 0, left: 4, bottom: Styles.Sizes.rowSpacing, right: 4)
 
-    weak var delegate: IssueCommentTableCellDelegate? = nil
+    weak var delegate: AttributedStringViewDelegate? = nil
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -88,7 +82,7 @@ IssueCommentTableCollectionCellDelegate {
         let rows = column.rows
         let row = rows[indexPath.item]
         cell.configure(row.text)
-        cell.delegate = self
+        cell.textView.delegate = delegate
         cell.contentView.backgroundColor = row.fill ? Styles.Colors.Gray.lighter.color : .white
         cell.setRightBorder(visible: columns.last === column)
         cell.setBottomBorder(visible: rows.last === row)
@@ -105,16 +99,6 @@ IssueCommentTableCollectionCellDelegate {
         ) -> CGSize {
         guard let model = model else { fatalError("Missing model") }
         return CGSize(width: model.columns[indexPath.section].width, height: model.rowHeight)
-    }
-
-    // MARK: IssueCommentTableCollectionCellDelegate
-
-    func didTapURL(cell: IssueCommentTableCollectionCell, url: URL) {
-        delegate?.didTapURL(cell: self, url: url)
-    }
-
-    func didTapUsername(cell: IssueCommentTableCollectionCell, username: String) {
-        delegate?.didTapUsername(cell: self, username: username)
     }
 
 }

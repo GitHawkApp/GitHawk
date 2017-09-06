@@ -8,12 +8,7 @@
 
 import UIKit
 
-protocol IssueCommentTableCollectionCellDelegate: class {
-    func didTapURL(cell: IssueCommentTableCollectionCell, url: URL)
-    func didTapUsername(cell: IssueCommentTableCollectionCell, username: String)
-}
-
-final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStringViewDelegate {
+final class IssueCommentTableCollectionCell: UICollectionViewCell {
 
     static let inset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -22,9 +17,7 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStr
         right: Styles.Sizes.columnSpacing
     )
 
-    weak var delegate: IssueCommentTableCollectionCellDelegate? = nil
-
-    private let textView = AttributedStringView()
+    let textView = AttributedStringView()
 
     var bottomBorder: UIView?
     var rightBorder: UIView?
@@ -55,16 +48,6 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell, AttributedStr
 
     func setBottomBorder(visible: Bool) {
         bottomBorder?.isHidden = !visible
-    }
-
-    // MARK: AttributedStringViewDelegate
-
-    func didTapURL(view: AttributedStringView, url: URL) {
-        delegate?.didTapURL(cell: self, url: url)
-    }
-
-    func didTapUsername(view: AttributedStringView, username: String) {
-        delegate?.didTapUsername(cell: self, username: username)
     }
 
 }

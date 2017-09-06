@@ -61,6 +61,8 @@ func ExtraCommentCellConfigure(
         cell.textView.delegate = attributedDelegate
     } else if let cell = cell as? IssueCommentQuoteCell {
         cell.textView.delegate = attributedDelegate
+    } else if let cell = cell as? IssueCommentTableCell {
+        cell.delegate = attributedDelegate
     }
 }
 

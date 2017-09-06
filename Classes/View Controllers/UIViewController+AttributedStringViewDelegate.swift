@@ -18,4 +18,9 @@ extension UIViewController: AttributedStringViewDelegate {
         presentProfile(login: username)
     }
 
+    func didTapEmail(view: AttributedStringView, email: String) {
+        guard let url = URL(string: "mailTo:\(email)") else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
 }
