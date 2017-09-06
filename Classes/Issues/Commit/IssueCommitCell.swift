@@ -55,13 +55,16 @@ final class IssueCommitCell: UICollectionViewCell {
         messageLabel.backgroundColor = .clear
         messageLabel.font = Styles.Fonts.secondaryCode
         messageLabel.textColor = Styles.Colors.Gray.medium.color
-        messageLabel.lineBreakMode = .byTruncatingMiddle
         contentView.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.right.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.eventGutter)
         }
+
+        // always collapse and truncate
+        messageLabel.lineBreakMode = .byTruncatingMiddle
+        messageLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {

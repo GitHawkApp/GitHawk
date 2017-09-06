@@ -31,37 +31,41 @@ final class SearchRepoResultCell: SelectableCell {
         
         contentView.backgroundColor = .white
 
-        titleLabel.textColor = Styles.Colors.Gray.dark.color
-        titleLabel.lineBreakMode = .byTruncatingMiddle
         contentView.addSubview(titleLabel)
+        contentView.addSubview(languageLabel)
+        contentView.addSubview(languageColorView)
+        contentView.addSubview(starsLabel)
+        contentView.addSubview(descriptionLabel)
+
+        titleLabel.textColor = Styles.Colors.Gray.dark.color
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(SearchRepoResultCell.labelInset.left)
+            make.right.lessThanOrEqualTo(languageColorView.snp.left).offset(-Styles.Sizes.rowSpacing)
         }
+
+        // always collapse and truncate the title
+        titleLabel.lineBreakMode = .byTruncatingMiddle
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
 
         languageLabel.font = Styles.Fonts.secondary
         languageLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(languageLabel)
         languageLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
-            make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
         
         let languageColorWidth: CGFloat = 8
         languageColorView.layer.cornerRadius = languageColorWidth / 2
-        contentView.addSubview(languageColorView)
         languageColorView.snp.makeConstraints { make in
             make.right.equalTo(languageLabel.snp.left).offset(-Styles.Sizes.columnSpacing/2)
             make.centerY.equalTo(languageLabel)
-            make.height.equalTo(languageColorView.snp.width)
+            make.width.equalTo(languageColorWidth)
             make.height.equalTo(languageColorWidth)
-            make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
 
         starsLabel.font = Styles.Fonts.secondary
         starsLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(starsLabel)
         starsLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
@@ -70,7 +74,6 @@ final class SearchRepoResultCell: SelectableCell {
 
         descriptionLabel.font = Styles.Fonts.secondary
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(starsLabel)
             make.right.lessThanOrEqualTo(starsLabel.snp.left).offset(-Styles.Sizes.columnSpacing)

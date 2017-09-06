@@ -44,13 +44,16 @@ final class IssueReferencedCell: UICollectionViewCell {
         }
 
         titleLabel.numberOfLines = 1
-        titleLabel.lineBreakMode = .byTruncatingMiddle
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(referencedLabel)
             make.right.lessThanOrEqualTo(statusButton.snp.left).offset(-Styles.Sizes.columnSpacing/2)
             make.centerY.equalTo(statusButton)
         }
+
+        // always collapse and truncate
+        titleLabel.lineBreakMode = .byTruncatingMiddle
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
