@@ -19,6 +19,8 @@ protocol IssueCommentHtmlCellNavigationDelegate: class {
 
 final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
 
+    private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
+
     private static let htmlHead = [
         "<!DOCTYPE html><html><head><style>",
         "body{",
@@ -62,7 +64,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .white
         webView.delegate = self
-        webView.addObserver(self, forKeyPath: #keyPath(UIWebView.scrollView.contentSize), options: [.new], context: nil)
+        webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -76,7 +78,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     }
 
     deinit {
-        webView.removeObserver(self, forKeyPath: #keyPath(UIWebView.scrollView.contentSize))
+        webView.removeObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath)
     }
 
     override func layoutSubviews() {
@@ -107,7 +109,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     // MARK: KVO
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(webView.scrollView.contentSize) {
+        if keyPath == IssueCommentHtmlCell.WebviewKeyPath {
             delegate?.webViewDidResize(cell: self, html: body, size: webView.scrollView.contentSize)
         }
     }
