@@ -2781,7 +2781,7 @@ public final class RepoDetailsQuery: GraphQLQuery {
     "query RepoDetails($owner: String!, $name: String!, $page_size: Int!) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    issues(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
+    "    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2797,7 +2797,7 @@ public final class RepoDetailsQuery: GraphQLQuery {
     "        endCursor" +
     "      }" +
     "    }" +
-    "    pullRequests(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {" +
+    "    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2848,8 +2848,8 @@ public final class RepoDetailsQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
-        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"]]))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
+        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"]]))
       }
 
       public struct Issue: GraphQLMappable {
@@ -2972,7 +2972,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
     "query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    issues(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {" +
+    "    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -3023,7 +3023,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "after": reader.variables["after"]]))
+        issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "after": reader.variables["after"]]))
       }
 
       public struct Issue: GraphQLMappable {
@@ -3090,7 +3090,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
     "query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {" +
     "  repository(owner: $owner, name: $name) {" +
     "    __typename" +
-    "    pullRequests(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {" +
+    "    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -3141,7 +3141,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "UPDATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "after": reader.variables["after"]]))
+        pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "after": reader.variables["after"]]))
       }
 
       public struct PullRequest: GraphQLMappable {

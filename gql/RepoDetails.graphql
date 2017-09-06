@@ -1,6 +1,6 @@
 query RepoDetails($owner: String!, $name: String!, $page_size: Int!) {
   repository(owner: $owner, name: $name) {
-    issues(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
+    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED]) {
       nodes {
         ...repoEventFields
         ...nodeFields
@@ -13,7 +13,7 @@ query RepoDetails($owner: String!, $name: String!, $page_size: Int!) {
         endCursor
       }
     }
-    pullRequests(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {
+    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED]) {
       nodes {
         ...repoEventFields
         ...nodeFields

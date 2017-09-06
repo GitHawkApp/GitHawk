@@ -1,6 +1,6 @@
 query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {
   repository(owner: $owner, name: $name) {
-    issues(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {
+    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {
       nodes {
         ...repoEventFields
         ...nodeFields
@@ -18,7 +18,7 @@ query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size
 
 query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {
   repository(owner: $owner, name: $name) {
-    pullRequests(first: $page_size, orderBy: {field: UPDATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {
+    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {
       nodes {
         ...repoEventFields
         ...nodeFields
