@@ -1099,12 +1099,16 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
         return nil;
     
     // Skip optional whitespace
-    if (scanner.nextCharacter == ' ')
-        [scanner advance];
-    // or possible newline
-    else if (scanner.atEndOfLine)
+//    if (scanner.nextCharacter == ' ')
+//        [scanner advance];
+//    // or possible newline
+//    else if (scanner.atEndOfLine)
+//        [scanner advanceToNextLine];
+
+    // skip possible newline
+    if (scanner.atEndOfLine)
         [scanner advanceToNextLine];
-    
+
     // Look for the second []
     NSArray *idRanges = [self _parseLinkTextBodyWithScanner:scanner];
     if (!idRanges)

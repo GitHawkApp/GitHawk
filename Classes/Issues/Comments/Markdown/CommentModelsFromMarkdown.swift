@@ -42,6 +42,7 @@ func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
 
 func CreateCommentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
+
     guard let document = createCommentAST(markdown: emojiMarkdown)
         else { return [emptyDescriptionModel(width: width)] }
 
