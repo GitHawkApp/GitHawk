@@ -13,22 +13,6 @@ import UIKit
 protocol PrimaryViewController {}
 
 final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
-    
-    private func containsSelection(in primaryViewController: UIViewController) -> Bool {
-        guard let tab = primaryViewController as? UITabBarController,
-            let nav = tab.selectedViewController as? UINavigationController else { return false }
-        
-        if let provider = nav.topViewController as? FeedSelectionProviding {
-            return provider.feedContainsSelection
-        }
-        
-        if let nav = nav.topViewController as? UINavigationController,
-            let provider = nav.topViewController as? FeedSelectionProviding {
-            return provider.feedContainsSelection
-        }
-        
-        return false
-    }
 
     func splitViewController(
         _ splitViewController: UISplitViewController,
@@ -48,7 +32,10 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         return true
     }
 
-    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
+    func splitViewController(
+        _ splitViewController: UISplitViewController,
+        separateSecondaryFrom primaryViewController: UIViewController
+        ) -> UIViewController? {
         guard let tab = primaryViewController as? UITabBarController,
             let primaryNav = tab.selectedViewController as? UINavigationController
             else { return nil }
@@ -66,9 +53,9 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
                 top !== nav.viewControllers.first,
                 (top is PrimaryViewController) == false {
                 if nav === primaryNav {
-                    detailVCs.append(top)
+                    detailVCs.insert(top, at: 0)
                 }
-                nav.popViewController(animated: true)
+                nav.popViewController(animated: false)
             }
         }
 
@@ -83,7 +70,11 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         }
     }
 
-    func splitViewController(_ splitViewController: UISplitViewController, showDetail vc: UIViewController, sender: Any?) -> Bool {
+    func splitViewController(
+        _ splitViewController: UISplitViewController,
+        showDetail vc: UIViewController,
+        sender: Any?
+        ) -> Bool {
         guard let tab = splitViewController.viewControllers.first as? UITabBarController
             else { return false }
 

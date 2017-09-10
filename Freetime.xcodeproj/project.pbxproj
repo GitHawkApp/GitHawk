@@ -287,6 +287,9 @@
 		29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */; };
 		29DA1E8D1F5F8DCF0050C64B /* MarkdownAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
+		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
+		29EDFE7D1F65C583005BCCEB /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
+		29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
 		29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EE1C161F3A2E7A0046A54D /* Labels.storyboard */; };
 		29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */; };
@@ -607,6 +610,7 @@
 		29DA1E891F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRecentHeaderSectionController.swift; sourceTree = "<group>"; };
 		29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAttribute.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
+		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
 		29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelEditCell.swift; sourceTree = "<group>"; };
 		29EE1C161F3A2E7A0046A54D /* Labels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Labels.storyboard; sourceTree = "<group>"; };
 		29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelTableCell.swift; sourceTree = "<group>"; };
@@ -1091,13 +1095,14 @@
 			isa = PBXGroup;
 			children = (
 				297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */,
+				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				297AE84E1EC0D58A00B44A1F /* Info.plist */,
 				29A476B11ED24D99005D0953 /* IssueTests.swift */,
 				29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */,
 				29C295091EC7AFA500D46CD2 /* ListTestKit.swift */,
-				295F52A61EF1B9D2000B53CF /* Test.md */,
 				295F52A81EF1B9E2000B53CF /* MMMarkdownASTTests.swift */,
-				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
+				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
+				295F52A61EF1B9D2000B53CF /* Test.md */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -1978,6 +1983,7 @@
 				293A459C1F298E9700DD1006 /* IssueCommentTextCell.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				292FF8A71F2EA860009E63F7 /* Strings.swift in Sources */,
+				29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */,
 				293A458D1F296CF300DD1006 /* MMElement+CodeBlock.swift in Sources */,
 				293A45851F296CE200DD1006 /* IssueCommentCodeBlockModel.swift in Sources */,
 				293A45981F298D5700DD1006 /* IssueCommentTableCollectionCell.swift in Sources */,
@@ -1994,11 +2000,13 @@
 				293A459D1F298EDB00DD1006 /* IssueCommentQuoteCell.swift in Sources */,
 				293A458E1F296CF300DD1006 /* MMElement+Image.swift in Sources */,
 				293A458F1F296CF300DD1006 /* MMElement+Table.swift in Sources */,
+				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				293A459E1F298EE200DD1006 /* IssueCommentHrModel.swift in Sources */,
 				29DA1E8D1F5F8DCF0050C64B /* MarkdownAttribute.swift in Sources */,
 				293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */,
 				293A45901F296CF300DD1006 /* NSAttributedString+Trim.swift in Sources */,
 				293A45931F296D4E00DD1006 /* IssueCommentCodeBlockCell.swift in Sources */,
+				29EDFE7D1F65C583005BCCEB /* SplitViewControllerDelegate.swift in Sources */,
 				293A45991F298D8400DD1006 /* AttributedStringView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
