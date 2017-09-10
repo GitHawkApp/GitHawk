@@ -25,6 +25,7 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
 
             // remove any placeholder VCs from the stack
             primaryNav.viewControllers += secondaryNav.viewControllers.filter {
+                $0.hidesBottomBarWhenPushed = true
                 return ($0 is SplitPlaceholderViewController) == false
             }
         }

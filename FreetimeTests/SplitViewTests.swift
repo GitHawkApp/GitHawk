@@ -24,6 +24,7 @@ class SplitViewTests: XCTestCase {
         let right2 = RootViewController()
         let right3 = UIViewController()
         let right4 = UIViewController()
+        right2.hidesBottomBarWhenPushed = true
         rightNav.pushViewController(right1, animated: false)
         rightNav.pushViewController(right2, animated: false)
         rightNav.pushViewController(right3, animated: false)
@@ -126,6 +127,11 @@ class SplitViewTests: XCTestCase {
         XCTAssertEqual(rightNav.viewControllers[1], right2)
         XCTAssertEqual(rightNav.viewControllers[2], detail1)
         XCTAssertEqual(rightNav.viewControllers[3], detail2)
+
+        XCTAssertFalse(rightNav.viewControllers[0].hidesBottomBarWhenPushed)
+        XCTAssertFalse(rightNav.viewControllers[1].hidesBottomBarWhenPushed)
+        XCTAssertTrue(rightNav.viewControllers[2].hidesBottomBarWhenPushed)
+        XCTAssertTrue(rightNav.viewControllers[3].hidesBottomBarWhenPushed)
     }
 
     func test_whenCollapsing_withPlaceholderStackedOnDetail_thatVCsStackedWithoutPlaceholder() {
