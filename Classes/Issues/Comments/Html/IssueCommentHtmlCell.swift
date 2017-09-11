@@ -47,6 +47,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         "table{border-spacing: 0; border-collapse: collapse;}",
         "th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}",
         "th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}",
+        "img{max-width:100%; box-sizing: border-box;}",
         "</style></head><body>",
         ].joined(separator: "")
     private static let htmlTail = "</body></html>"
