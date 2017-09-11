@@ -25,21 +25,16 @@ PrimaryViewController {
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private let selection: SegmentedControlModel
 
     private let noIssuesResultsKey = "noIssuesResultsKey" as ListDiffable
     private let noPullRequestsResultsKey = "noPullRequestsResultsKey" as ListDiffable
-    private let loadMore = "loadMore" as ListDiffable
 
-    private var issues = [RepositoryIssueSummaryModel]()
-    private var issuesNextPage: String?
-    private var pullRequests = [RepositoryIssueSummaryModel]()
-    private var pullRequestsNextPage: String?
+    private let dataSource: RepositoryDataSource
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
-        self.selection = SegmentedControlModel.forRepository(repo.hasIssuesEnabled)
+        self.dataSource = RepositoryDataSource(hasIssuesEnabled: repo.hasIssuesEnabled)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -72,14 +67,26 @@ PrimaryViewController {
     }
 
     func reload() {
+        client.fetchReadme { result in
+            switch result {
+            case .error: break
+            case .success(let readme):
+                self.dataSource.setReadme(readme, width: self.view.bounds.width, completion: { 
+                    self.update(dismissRefresh: true, animated: true)
+                })
+            }
+        }
+
         client.load(containerWidth: view.bounds.width) { result in
             switch result {
             case .error: break
             case .success(let payload):
-                self.issues = payload.issues.models
-                self.issuesNextPage = payload.issues.nextPage
-                self.pullRequests = payload.pullRequests.models
-                self.pullRequestsNextPage = payload.pullRequests.nextPage
+                self.dataSource.reset(
+                    issues: payload.issues.models,
+                    issuesNextPage: payload.issues.nextPage,
+                    pullRequests: payload.pullRequests.models,
+                    pullRequestsNextPage: payload.pullRequests.nextPage
+                )
                 self.update(dismissRefresh: true, animated: true)
             }
         }
@@ -88,23 +95,23 @@ PrimaryViewController {
     func loadNextPage() {
         let width = view.bounds.width
 
-        if selection.issuesSelected {
-            client.loadMoreIssues(nextPage: issuesNextPage, containerWidth: width, completion: { result in
+        switch dataSource.state {
+        case .readme: return
+        case .issues:
+            client.loadMoreIssues(nextPage: dataSource.issuesNextPage, containerWidth: width, completion: { result in
                 switch result {
                 case .error: break
                 case .success(let payload):
-                    self.issues += payload.models
-                    self.issuesNextPage = payload.nextPage
+                    self.dataSource.appendIssues(issues: payload.models, page: payload.nextPage)
                     self.update(dismissRefresh: true, animated: false)
                 }
             })
-        } else {
-            client.loadMorePullRequests(nextPage: issuesNextPage, containerWidth: width, completion: { result in
+        case .pullRequests:
+            client.loadMorePullRequests(nextPage: dataSource.pullRequestsNextPage, containerWidth: width, completion: { result in
                 switch result {
                 case .error: break
                 case .success(let payload):
-                    self.pullRequests += payload.models
-                    self.pullRequestsNextPage = payload.nextPage
+                    self.dataSource.appendPullRequests(pullRequests: payload.models, page: payload.nextPage)
                     self.update(dismissRefresh: true, animated: false)
                 }
             })
@@ -125,28 +132,16 @@ PrimaryViewController {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var builder = [ListDiffable]()
+        builder.append(dataSource.selection)
 
-        if repo.hasIssuesEnabled {
-            builder.append(selection)
-        }
+        let models = dataSource.selectionModels
+        builder += models
 
-        if selection.issuesSelected {
-            if issues.count > 0 {
-                builder += issues as [ListDiffable]
-                if issuesNextPage != nil {
-                    builder.append(loadMore)
-                }
-            } else if feed.status == .idle {
-                builder.append(noIssuesResultsKey)
-            }
-        } else if !selection.issuesSelected {
-            if pullRequests.count > 0 {
-                builder += pullRequests as [ListDiffable]
-                if pullRequestsNextPage != nil {
-                    builder.append(loadMore)
-                }
-            } else if feed.status == .idle {
-                builder.append(noPullRequestsResultsKey)
+        if models.count == 0, feed.status == .idle {
+            switch dataSource.state {
+            case .readme: break
+            case .issues: builder.append(noIssuesResultsKey)
+            case .pullRequests: builder.append(noPullRequestsResultsKey)
             }
         }
 
@@ -163,12 +158,14 @@ PrimaryViewController {
             return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .issues)
         } else if object === noPullRequestsResultsKey {
             return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .pullRequests)
-        } else if object === selection {
+        } else if object === dataSource.selection {
             return SegmentedControlSectionController(delegate: self, height: controlHeight)
-        } else if object === loadMore {
+        } else if object === dataSource.loadMore {
             return LoadMoreSectionController(delegate: self)
         } else if object is RepositoryIssueSummaryModel {
             return RepositorySummarySectionController(client: client.githubClient, repo: repo)
+        } else if object is RepositoryReadmeModel {
+            return RepositoryReadmeSectionController()
         }
 
         fatalError("Could not find section controller for object")

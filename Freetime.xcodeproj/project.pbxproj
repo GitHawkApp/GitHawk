@@ -290,6 +290,9 @@
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
 		29EDFE7D1F65C583005BCCEB /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
 		29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */; };
+		29EDFE801F6606B6005BCCEB /* RepositoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7F1F6606B6005BCCEB /* RepositoryDataSource.swift */; };
+		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
+		29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
 		29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EE1C161F3A2E7A0046A54D /* Labels.storyboard */; };
 		29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */; };
@@ -611,6 +614,9 @@
 		29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAttribute.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
+		29EDFE7F1F6606B6005BCCEB /* RepositoryDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryDataSource.swift; sourceTree = "<group>"; };
+		29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeModel.swift; sourceTree = "<group>"; };
+		29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeSectionController.swift; sourceTree = "<group>"; };
 		29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelEditCell.swift; sourceTree = "<group>"; };
 		29EE1C161F3A2E7A0046A54D /* Labels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Labels.storyboard; sourceTree = "<group>"; };
 		29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelTableCell.swift; sourceTree = "<group>"; };
@@ -1418,9 +1424,12 @@
 			children = (
 				292ACE191F5CAF9F00C9A02C /* Empty */,
 				986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */,
+				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
+				29EDFE7F1F6606B6005BCCEB /* RepositoryDataSource.swift */,
 				292ACE171F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift */,
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
-				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
+				29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */,
+				29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */,
 				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
 				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
 				986B872F1F2CA90400AAB55C /* RepositoryViewController.swift */,
@@ -1717,6 +1726,7 @@
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
+				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
@@ -1746,6 +1756,7 @@
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
+				29EDFE801F6606B6005BCCEB /* RepositoryDataSource.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */,
 				986B87301F2CA90400AAB55C /* RepositoryViewController.swift in Sources */,
@@ -1901,6 +1912,7 @@
 				2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
+				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,
 				292FCB0A1EDFCC510026635E /* IssueCommentTextCell.swift in Sources */,
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
