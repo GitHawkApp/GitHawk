@@ -15,6 +15,9 @@ ListBindingSectionControllerDataSource {
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
     }()
+    private lazy var photoHandler: PhotoViewHandler = {
+        return PhotoViewHandler(viewController: self.viewController)
+    }()
 
     override init() {
         super.init()
@@ -52,10 +55,10 @@ ListBindingSectionControllerDataSource {
 
         ExtraCommentCellConfigure(
             cell: cell,
-            imageDelegate: nil,
+            imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
-            htmlNavigationDelegate: nil,
-            attributedDelegate: nil
+            htmlNavigationDelegate: viewController,
+            attributedDelegate: viewController
         )
 
         return cell
