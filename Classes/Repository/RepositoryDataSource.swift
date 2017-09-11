@@ -11,7 +11,7 @@ import IGListKit
 
 final class RepositoryDataSource {
 
-    static let readmeTitle = NSLocalizedString("Readme", comment: "")
+    static let overviewTitle = NSLocalizedString("Overview", comment: "")
     static let issuesTitle = NSLocalizedString("Issues", comment: "")
     static let pullRequestsTitle = NSLocalizedString("Pull Requests", comment: "")
 
@@ -28,7 +28,7 @@ final class RepositoryDataSource {
     private(set) var pullRequestsNextPage: String?
 
     init(hasIssuesEnabled: Bool) {
-        var items = [RepositoryDataSource.readmeTitle]
+        var items = [RepositoryDataSource.overviewTitle]
         if hasIssuesEnabled {
             items.append(RepositoryDataSource.issuesTitle)
         }
@@ -46,7 +46,7 @@ final class RepositoryDataSource {
 
     var state: State {
         switch selection.items[selection.selectedIndex] {
-        case RepositoryDataSource.readmeTitle: return .readme
+        case RepositoryDataSource.overviewTitle: return .readme
         case RepositoryDataSource.issuesTitle: return .issues
         case RepositoryDataSource.pullRequestsTitle: return .pullRequests
         default: fatalError("Repository selection in unknown state")
