@@ -82,6 +82,11 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         webView.removeObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath)
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        webView.isHidden = true
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         webView.frame = contentView.bounds
@@ -105,6 +110,10 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
             navigationDelegate?.webViewWantsNavigate(cell: self, url: url)
         }
         return htmlLoad
+    }
+
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        webView.isHidden = false
     }
 
     // MARK: KVO
