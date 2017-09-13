@@ -233,6 +233,7 @@
 		29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
 		29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCD1EF624F500C1E848 /* MMElement+Image.swift */; };
 		29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */; };
+		29973E561F68BFDE0004B693 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29973E551F68BFDE0004B693 /* Signature.swift */; };
 		29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
 		299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */; };
@@ -556,6 +557,7 @@
 		29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MutableTraits.swift"; sourceTree = "<group>"; };
 		29921BCD1EF624F500C1E848 /* MMElement+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+Image.swift"; sourceTree = "<group>"; };
 		29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MMElement+CodeBlock.swift"; sourceTree = "<group>"; };
+		29973E551F68BFDE0004B693 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
 		29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+APIStatus.swift"; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
 		299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Paging.swift"; sourceTree = "<group>"; };
@@ -1206,6 +1208,7 @@
 				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
 				29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
+				29973E551F68BFDE0004B693 /* Signature.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1748,6 +1751,7 @@
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
+				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,

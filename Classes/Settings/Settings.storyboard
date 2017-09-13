@@ -20,7 +20,7 @@
                         <color key="separatorColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="jkq-3p-p02">
-                            <rect key="frame" x="0.0" y="517.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="561.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.4.0 (1207)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bb-Lj-p2k">
@@ -221,7 +221,6 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dQ-YU-Yuw">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="onBackgroundFetchChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="ePm-x8-F16"/>
                                                         <action selector="onMarkRead:" destination="NnB-TU-bkW" eventType="valueChanged" id="QPk-DK-Ufx"/>
                                                     </connections>
                                                 </switch>
@@ -235,12 +234,41 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="0eH-mW-WpD" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="419.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0eH-mW-WpD" id="dAx-L4-nLX">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GitHawk Signature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CT9-Un-qQC">
+                                                    <rect key="frame" x="16" y="12" width="135" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWv-km-fU1">
+                                                    <rect key="frame" x="311" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onSignature:" destination="NnB-TU-bkW" eventType="valueChanged" id="XNf-Bz-K8B"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="ZWv-km-fU1" secondAttribute="trailing" constant="15" id="2GO-x5-Fb4"/>
+                                                <constraint firstItem="ZWv-km-fU1" firstAttribute="centerY" secondItem="dAx-L4-nLX" secondAttribute="centerY" id="3Cs-Wf-roE"/>
+                                                <constraint firstItem="CT9-Un-qQC" firstAttribute="centerY" secondItem="dAx-L4-nLX" secondAttribute="centerY" id="GBz-yD-K3V"/>
+                                                <constraint firstItem="CT9-Un-qQC" firstAttribute="leading" secondItem="dAx-L4-nLX" secondAttribute="leading" constant="16" id="eo0-Mu-LGl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="GTg-1u-cvV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ku5-ZI-OG9" style="IBUITableViewCellStyleDefault" id="Y2k-Zq-AUW" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="455.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="499.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y2k-Zq-AUW" id="XiT-sq-B22">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -277,6 +305,7 @@
                         <outlet property="reportBugCell" destination="WwO-m1-s3q" id="nCb-BL-DRJ"/>
                         <outlet property="reviewAccessCell" destination="TXs-sw-hO1" id="10W-u8-ofC"/>
                         <outlet property="signOutCell" destination="Y2k-Zq-AUW" id="QIk-J0-zqg"/>
+                        <outlet property="signatureSwitch" destination="ZWv-km-fU1" id="pf4-kH-RIp"/>
                         <outlet property="versionLabel" destination="2bb-Lj-p2k" id="qDb-KP-pnk"/>
                         <outlet property="viewSourceCell" destination="SAx-6B-29G" id="0Qs-cw-xwG"/>
                     </connections>

@@ -160,8 +160,12 @@ IssueTextActionsViewDelegate {
 
         super.didPressRightButton(sender)
 
-        if let subjectId = current?.subjectId, let text = text {
-            addCommentClient.addComment(subjectId: subjectId, body: text)
+        if let subjectId = current?.subjectId,
+            let text = text {
+            addCommentClient.addComment(
+                subjectId: subjectId,
+                body: Signature.signed(text: text)
+            )
         }
     }
 

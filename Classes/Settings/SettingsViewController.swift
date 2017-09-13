@@ -29,6 +29,7 @@ final class SettingsViewController: UITableViewController {
     @IBOutlet weak var accountsCell: StyledTableCell!
     @IBOutlet weak var apiStatusLabel: UILabel!
     @IBOutlet weak var apiStatusView: UIView!
+    @IBOutlet weak var signatureSwitch: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ final class SettingsViewController: UITableViewController {
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationClient.readOnOpen()
         apiStatusView.layer.cornerRadius = 7
+        signatureSwitch.isOn = Signature.enabled
 
         updateBadge()
 
@@ -198,4 +200,8 @@ final class SettingsViewController: UITableViewController {
         }
     }
 
+    @IBAction func onSignature(_ sender: Any) {
+        Signature.enabled = signatureSwitch.isOn
+    }
+    
 }

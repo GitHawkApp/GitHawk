@@ -29,6 +29,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         "font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;",
         "color: #\(Styles.Colors.Gray.dark);",
         "padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;",
+        "margin: 0;",
         "}",
         "b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}",
         "i, em{font-style: italic;}",
