@@ -78,6 +78,8 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
         c.alwaysBounceVertical = false
         c.alwaysBounceHorizontal = true
         c.contentInset = UIEdgeInsets(top: 0, left: Styles.Sizes.eventGutter, bottom: 0, right: Styles.Sizes.eventGutter)
+        c.showsVerticalScrollIndicator = false
+        c.showsHorizontalScrollIndicator = false
         return c
     }()
 
