@@ -45,6 +45,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         super.viewDidLoad()
         state = .idle
         client.sessionManager.addListener(listener: self)
+        signInButton.layer.cornerRadius = Styles.Sizes.eventGutter
     }
 
     // MARK: Private API
