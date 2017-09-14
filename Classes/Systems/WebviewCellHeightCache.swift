@@ -31,9 +31,16 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
             size != htmlSizes[html]
             else { return }
         htmlSizes[html] = size
-        UIView.performWithoutAnimation {
-            sectionController.collectionContext?.invalidateLayout(for: sectionController)
-        }
+
+        // temporary hack until this PR lands
+        // https://github.com/Instagram/IGListKit/pull/931
+
+        let layout = (sectionController.collectionContext as! ListAdapter).collectionView?.collectionViewLayout
+        layout?.invalidateLayout()
+
+//        UIView.performWithoutAnimation {
+//            sectionController.collectionContext?.invalidateLayout(for: sectionController)
+//        }
     }
 
 }
