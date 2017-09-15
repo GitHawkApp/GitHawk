@@ -331,6 +331,9 @@
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
+		98B5A0801F6C73C3000617D6 /* NewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A07F1F6C73C3000617D6 /* NewIssueViewController.swift */; };
+		98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */; };
+		98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0831F6C87A7000617D6 /* GitHubClient+NewIssue.swift */; };
 		98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F0A0421F27BC4B0062A2CA /* emoji.json */; };
 /* End PBXBuildFile section */
 
@@ -660,6 +663,9 @@
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
+		98B5A07F1F6C73C3000617D6 /* NewIssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueViewController.swift; sourceTree = "<group>"; };
+		98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewIssue.storyboard; sourceTree = "<group>"; };
+		98B5A0831F6C87A7000617D6 /* GitHubClient+NewIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GitHubClient+NewIssue.swift"; sourceTree = "<group>"; };
 		98F0A0421F27BC4B0062A2CA /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
 		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1118,6 +1124,7 @@
 		297AE8571EC0D5C100B44A1F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				98B5A07E1F6C73A2000617D6 /* New Issue */,
 				292FCAC71EDFCC510026635E /* Issues */,
 				29EE1C131F3A2E440046A54D /* Labels */,
 				297AE8581EC0D5C100B44A1F /* Login */,
@@ -1450,6 +1457,16 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		98B5A07E1F6C73A2000617D6 /* New Issue */ = {
+			isa = PBXGroup;
+			children = (
+				98B5A07F1F6C73C3000617D6 /* NewIssueViewController.swift */,
+				98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */,
+				98B5A0831F6C87A7000617D6 /* GitHubClient+NewIssue.swift */,
+			);
+			path = "New Issue";
+			sourceTree = "<group>";
+		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1575,6 +1592,7 @@
 				984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 				292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */,
+				98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1908,6 +1926,7 @@
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				29EE1C1D1F3A33890046A54D /* RepositoryLabel.swift in Sources */,
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
+				98B5A0801F6C73C3000617D6 /* NewIssueViewController.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
@@ -1934,6 +1953,7 @@
 				292FCAFF1EDFCC510026635E /* IssueCommentSectionController.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */,
 				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
 				297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */,
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,

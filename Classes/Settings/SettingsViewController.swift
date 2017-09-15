@@ -15,7 +15,7 @@ final class SettingsViewController: UITableViewController {
     var sessionManager: GithubSessionManager!
     weak var rootNavigationManager: RootNavigationManager? = nil
 
-    private var client: GithubClient?
+    var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
@@ -33,8 +33,6 @@ final class SettingsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        client = newGithubClient(sessionManager: sessionManager)
 
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationClient.readOnOpen()
@@ -95,13 +93,16 @@ final class SettingsViewController: UITableViewController {
     }
 
     func onReportBug() {
-        let template = "\(Bundle.main.prettyVersionString)\nDevice: \(UIDevice.current.modelName) (iOS \(UIDevice.current.systemVersion)) \n"
-            .addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
-
-        guard let url = URL(string: "https://github.com/rnystrom/GitHawk/issues/new?body=\(template)")
-            else { fatalError("Should always create GitHub issue URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        guard let client = client,
+              let viewController = NewIssueViewController.create(client: client,
+                                                                 owner: "rnystromtest",
+                                                                 repo: "Githawk-Playground",
+                                                                 signature: .bugReport) else {
+            StatusBar.showGenericError()
+            return
+        }
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     func onViewSource() {

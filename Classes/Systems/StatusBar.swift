@@ -50,5 +50,14 @@ enum StatusBar {
         )
         provideHapticFeedback()
     }
+    
+    static func showError(message: String) {
+        JDStatusBarNotification.show(
+            withStatus: message,
+            dismissAfter: 3,
+            styleName: JDStatusBarStyleError
+        )
+        provideHapticFeedback()
+    }
 
 }
