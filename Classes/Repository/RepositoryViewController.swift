@@ -26,6 +26,7 @@ PrimaryViewController {
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
+    private let noReadmeResultsKey = "noReadmeResultsKey" as ListDiffable
     private let noIssuesResultsKey = "noIssuesResultsKey" as ListDiffable
     private let noPullRequestsResultsKey = "noPullRequestsResultsKey" as ListDiffable
 
@@ -139,7 +140,7 @@ PrimaryViewController {
 
         if models.count == 0, feed.status == .idle {
             switch dataSource.state {
-            case .readme: break
+            case .readme: builder.append(noReadmeResultsKey)
             case .issues: builder.append(noIssuesResultsKey)
             case .pullRequests: builder.append(noPullRequestsResultsKey)
             }
@@ -154,7 +155,9 @@ PrimaryViewController {
         // 28 is the default height of UISegmentedControl
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
 
-        if object === noIssuesResultsKey {
+        if object === noReadmeResultsKey {
+            return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .readme)
+        } else if object === noIssuesResultsKey {
             return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .issues)
         } else if object === noPullRequestsResultsKey {
             return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .pullRequests)
