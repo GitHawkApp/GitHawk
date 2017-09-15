@@ -157,6 +157,15 @@ SearchRecentHeaderSectionControllerDelegate {
     }
 
     // MARK: UISearchBarDelegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            term.characters.count > 0 else {
+                state = .idle
+                update(animated: false)
+                return
+        }
+    }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
