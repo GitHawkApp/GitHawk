@@ -160,11 +160,10 @@ SearchRecentHeaderSectionControllerDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            term.characters.count > 0 else {
-                state = .idle
-                update(animated: false)
-                return
-        }
+            term.characters.isEmpty else { return }
+        
+        state = .idle
+        update(animated: false)
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
