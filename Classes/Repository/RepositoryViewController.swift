@@ -63,7 +63,8 @@ PrimaryViewController {
             return
         }
         
-        navigationController?.pushViewController(newIssueViewController, animated: true)
+        let navController = UINavigationController(rootViewController: newIssueViewController)
+        showDetailViewController(navController, sender: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {

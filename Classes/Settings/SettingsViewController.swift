@@ -102,7 +102,8 @@ final class SettingsViewController: UITableViewController {
             return
         }
         
-        navigationController?.pushViewController(viewController, animated: true)
+        let navController = UINavigationController(rootViewController: viewController)
+        showDetailViewController(navController, sender: nil)
     }
 
     func onViewSource() {

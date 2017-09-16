@@ -31,6 +31,7 @@ enum IssueSignatureType {
 
 class NewIssueViewController: UIViewController {
 
+    @IBOutlet var controlsContainerView: UIView!
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
     
@@ -58,9 +59,49 @@ class NewIssueViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Add send button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(send))
+        
+        // Match Styling
+        titleField.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
+        titleField.layer.borderWidth = 1
+        titleField.layer.cornerRadius = 6
+        
+        bodyField.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
+        bodyField.layer.borderWidth = 1
+        bodyField.layer.cornerRadius = 6
+        bodyField.clipsToBounds = true
+        
+        // Add markdown controls
+        setupControls()
     }
     
+    /// Creates and adds the custom controls view for previewing, bold, etc.
+    func setupControls() {
+        let operations: [IssueTextActionOperation] = [
+            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
+                self?.showPreview()
+            })),
+            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+        ]
+        
+        let actions = IssueTextActionsView(operations: operations)
+        actions.delegate = self
+        controlsContainerView.addSubview(actions)
+        actions.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     func send() {
         guard let titleText = titleField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !titleText.isEmpty else {
             StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: ""))
@@ -84,5 +125,22 @@ class NewIssueViewController: UIViewController {
             navController.replaceTopMostViewController(issuesViewController, animated: true)
         }
     }
+    
+    /// Presents a markdown preview of the current message
+    func showPreview() {
+        let controller = IssuePreviewViewController(markdown: bodyField.text)
+        showDetailViewController(controller, sender: nil)
+    }
 
+}
+
+extension NewIssueViewController: IssueTextActionsViewDelegate {
+    /// Called when a user taps on one of the control buttons (preview, bold, etc)
+    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
+        switch operation.operation {
+        case .execute(let block): block()
+        case .wrap(let left, let right): bodyField.replace(left: left, right: right, atLineStart: false)
+        case .line(let left): bodyField.replace(left: left, right: nil, atLineStart: true)
+        }
+    }
 }
