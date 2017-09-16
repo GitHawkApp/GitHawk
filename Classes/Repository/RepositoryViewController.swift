@@ -48,6 +48,22 @@ PrimaryViewController {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
         title = "\(repo.owner)/\(repo.name)"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "write"), style: .plain, target: self, action: #selector(newIssue))
+    }
+    
+    func newIssue() {
+        guard let newIssueViewController = NewIssueViewController.create(
+            client: client.githubClient,
+            owner: repo.owner,
+            repo: repo.name,
+            signature: .sentWithGitHawk
+        ) else {
+            StatusBar.showGenericError()
+            return
+        }
+        
+        navigationController?.pushViewController(newIssueViewController, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {

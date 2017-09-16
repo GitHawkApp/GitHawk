@@ -81,10 +81,7 @@ class NewIssueViewController: UIViewController {
             let issuesViewController = IssuesViewController(client: weakSelf.client, model: model)
             issuesViewController.hidesBottomBarWhenPushed = true
             
-            // Replace "New Issue" VC with "Display Issue" VC
-            var viewControllers = navController.viewControllers
-            viewControllers[viewControllers.count - 1] = issuesViewController
-            navController.setViewControllers(viewControllers, animated: true)
+            navController.replaceTopMostViewController(issuesViewController, animated: true)
         }
     }
 
