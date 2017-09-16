@@ -49,7 +49,14 @@ PrimaryViewController {
         feed.adapter.dataSource = self
         title = "\(repo.owner)/\(repo.name)"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "write"), style: .plain, target: self, action: #selector(newIssue))
+        if repo.hasIssuesEnabled {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(named: "write"),
+                style: .plain,
+                target: self,
+                action: #selector(newIssue)
+            )
+        }
     }
     
     func newIssue() {
