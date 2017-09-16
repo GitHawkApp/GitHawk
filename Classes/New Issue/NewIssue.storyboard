@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="58i-5P-IFH">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IMH-dU-pIV">
                                                 <rect key="frame" x="20" y="16" width="335" height="30"/>
@@ -36,7 +36,7 @@
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjF-jj-Dla" userLabel="Control Container View">
                                                 <rect key="frame" x="20" y="62" width="335" height="30"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="khT-CQ-dgC"/>
                                                 </constraints>
@@ -51,13 +51,13 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="IMH-dU-pIV" firstAttribute="leading" secondItem="58i-5P-IFH" secondAttribute="leading" constant="20" id="8LX-9B-XsL"/>
                                             <constraint firstItem="IMH-dU-pIV" firstAttribute="top" secondItem="58i-5P-IFH" secondAttribute="top" constant="16" id="8yl-3D-pJw"/>
                                             <constraint firstItem="gjF-jj-Dla" firstAttribute="top" secondItem="IMH-dU-pIV" secondAttribute="bottom" constant="16" id="GEH-Vg-9zP"/>
                                             <constraint firstAttribute="trailing" secondItem="Ayj-57-w4b" secondAttribute="trailing" constant="20" id="It6-g1-D2R"/>
-                                            <constraint firstAttribute="bottom" secondItem="Ayj-57-w4b" secondAttribute="bottom" constant="20" id="Qk8-Sw-5Iw"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ayj-57-w4b" secondAttribute="bottom" constant="30" id="Qk8-Sw-5Iw"/>
                                             <constraint firstAttribute="trailing" secondItem="IMH-dU-pIV" secondAttribute="trailing" constant="20" id="RhY-Vv-aVl"/>
                                             <constraint firstItem="gjF-jj-Dla" firstAttribute="leading" secondItem="58i-5P-IFH" secondAttribute="leading" constant="20" id="UQW-f9-6Qs"/>
                                             <constraint firstAttribute="trailing" secondItem="gjF-jj-Dla" secondAttribute="trailing" constant="20" id="e2I-o0-vZO"/>
@@ -66,6 +66,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="58i-5P-IFH" firstAttribute="top" secondItem="7CC-eo-cf1" secondAttribute="top" id="Ipz-8y-gOs"/>
                                     <constraint firstAttribute="bottom" secondItem="58i-5P-IFH" secondAttribute="bottom" id="NLy-8U-HnF"/>
@@ -75,7 +76,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="7CC-eo-cf1" firstAttribute="top" secondItem="Z0j-bW-bUI" secondAttribute="bottom" id="TtG-hj-IF6"/>
                             <constraint firstItem="7CC-eo-cf1" firstAttribute="width" secondItem="meJ-ao-DQQ" secondAttribute="width" id="f84-a9-gSB"/>
@@ -87,6 +88,7 @@
                     <connections>
                         <outlet property="bodyField" destination="Ayj-57-w4b" id="cRt-qv-IZY"/>
                         <outlet property="controlsContainerView" destination="gjF-jj-Dla" id="ZF6-c9-bbZ"/>
+                        <outlet property="scrollView" destination="7CC-eo-cf1" id="paz-8Y-skG"/>
                         <outlet property="titleField" destination="IMH-dU-pIV" id="og0-0X-VdX"/>
                     </connections>
                 </viewController>

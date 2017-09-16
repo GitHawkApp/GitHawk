@@ -31,6 +31,7 @@ enum IssueSignatureType {
 
 class NewIssueViewController: UIViewController {
 
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var controlsContainerView: UIView!
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
@@ -83,32 +84,39 @@ class NewIssueViewController: UIViewController {
         // Update Accessibility
         title = NSLocalizedString("New Issue", comment: "")
         titleField.placeholder = NSLocalizedString("Title", comment: "New Issue Title Placeholder")
+        
+        // Keyboard
+        registerForKeyboardNotifications()
     }
     
-    /// Creates and adds the custom controls view for previewing, bold, etc.
-    func setupControls() {
-        let operations: [IssueTextActionOperation] = [
-            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
-                self?.showPreview()
-            })),
-            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
-        ]
-        
-        let actions = IssueTextActionsView(operations: operations)
-        actions.delegate = self
-        controlsContainerView.addSubview(actions)
-        actions.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
+    
+    // MARK: - Keyboard
+    
+    func registerForKeyboardNotifications() {
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(keyboardWillBeShown(_:)), name: .UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillBeHidden), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWillBeShown(_ notification: NSNotification) {
+        guard let info = notification.userInfo, let rect = info[UIKeyboardFrameBeginUserInfoKey] as? CGRect else {
+            return
+        }
+        
+        let keyboardHeight = rect.size.height
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.scrollIndicatorInsets.bottom = keyboardHeight
+    }
+    
+    func keyboardWillBeHidden() {
+        scrollView.contentInset.bottom = 0
+        scrollView.scrollIndicatorInsets.bottom = 0
+    }
+    
+    // MARK: - Send
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     func send() {
@@ -135,12 +143,38 @@ class NewIssueViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
+    
+    /// Creates and adds the custom controls view for previewing, bold, etc.
+    func setupControls() {
+        let operations: [IssueTextActionOperation] = [
+            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
+                self?.showPreview()
+            })),
+            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+        ]
+        
+        let actions = IssueTextActionsView(operations: operations)
+        actions.delegate = self
+        controlsContainerView.addSubview(actions)
+        actions.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     /// Presents a markdown preview of the current message
     func showPreview() {
         let controller = IssuePreviewViewController(markdown: bodyField.text)
         showDetailViewController(controller, sender: nil)
     }
-
 }
 
 extension NewIssueViewController: IssueTextActionsViewDelegate {
