@@ -12,7 +12,7 @@ import SDWebImage
 import IGListKit
 
 protocol IssueCommentImageCellDelegate: class {
-    func didTapImage(cell: IssueCommentImageCell, image: UIImage)
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage, url: URL)
 }
 
 final class IssueCommentImageCell: UICollectionViewCell,
@@ -24,7 +24,8 @@ UIGestureRecognizerDelegate {
 
     weak var delegate: IssueCommentImageCellDelegate? = nil
     let imageView = UIImageView()
-
+    
+    private var imageUrl: URL!
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let overlay = CreateCollapsibleOverlay()
     private var tapGesture: UITapGestureRecognizer!
@@ -67,13 +68,14 @@ UIGestureRecognizerDelegate {
     func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
         guard let image = imageView.image else { return }
-        delegate?.didTapImage(cell: self, image: image)
+        delegate?.didTapImage(cell: self, image: image, url: imageUrl)
     }
 
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        imageUrl = viewModel.url
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
         imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
