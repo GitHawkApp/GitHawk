@@ -95,8 +95,8 @@ final class SettingsViewController: UITableViewController {
     func onReportBug() {
         guard let client = client,
               let viewController = NewIssueViewController.create(client: client,
-                                                                 owner: "rnystromtest",
-                                                                 repo: "Githawk-Playground",
+                                                                 owner: "rnystrom",
+                                                                 repo: "GitHawk",
                                                                  signature: .bugReport) else {
             StatusBar.showGenericError()
             return
