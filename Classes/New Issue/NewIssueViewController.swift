@@ -31,6 +31,10 @@ enum IssueSignatureType {
 
 class NewIssueViewController: UIViewController {
 
+    static let defaultBodyHeight: CGFloat = 100
+    
+    @IBOutlet var bodyMaxHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var bodyHeightConstraint: NSLayoutConstraint!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var controlsContainerView: UIView!
     @IBOutlet var titleField: UITextField!
@@ -72,11 +76,15 @@ class NewIssueViewController: UIViewController {
         titleField.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
         titleField.layer.borderWidth = 1
         titleField.layer.cornerRadius = 6
+        titleField.delegate = self
         
         bodyField.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
         bodyField.layer.borderWidth = 1
         bodyField.layer.cornerRadius = 6
         bodyField.clipsToBounds = true
+        bodyField.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        bodyField.delegate = self
+        bodyHeightConstraint.constant = NewIssueViewController.defaultBodyHeight
         
         // Add markdown controls
         setupControls()
@@ -109,11 +117,18 @@ class NewIssueViewController: UIViewController {
         let keyboardHeight = rect.size.height
         scrollView.contentInset.bottom = keyboardHeight
         scrollView.scrollIndicatorInsets.bottom = keyboardHeight
+        updateBodyMaxHeight(keyboardHeight: keyboardHeight)
     }
     
     func keyboardWillBeHidden() {
         scrollView.contentInset.bottom = 0
         scrollView.scrollIndicatorInsets.bottom = 0
+        updateBodyMaxHeight()
+    }
+    
+    func updateBodyMaxHeight(keyboardHeight: CGFloat? = nil) {
+        let extraHeight = bodyField.frame.minY + controlsContainerView.frame.height + 32
+        bodyMaxHeightConstraint.constant = scrollView.frame.height - extraHeight - (keyboardHeight ?? 0)
     }
     
     // MARK: - Send
@@ -148,9 +163,6 @@ class NewIssueViewController: UIViewController {
     /// Creates and adds the custom controls view for previewing, bold, etc.
     func setupControls() {
         let operations: [IssueTextActionOperation] = [
-            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
-                self?.showPreview()
-            })),
             IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
             IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
             IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
@@ -171,10 +183,11 @@ class NewIssueViewController: UIViewController {
     }
     
     /// Presents a markdown preview of the current message
-    func showPreview() {
+    @IBAction func didPressPreview(_ sender: UIButton) {
         let controller = IssuePreviewViewController(markdown: bodyField.text)
         showDetailViewController(controller, sender: nil)
     }
+    
 }
 
 extension NewIssueViewController: IssueTextActionsViewDelegate {
@@ -186,4 +199,29 @@ extension NewIssueViewController: IssueTextActionsViewDelegate {
         case .line(let left): bodyField.replace(left: left, right: nil, atLineStart: true)
         }
     }
+}
+
+extension NewIssueViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            bodyHeightConstraint.constant = NewIssueViewController.defaultBodyHeight
+        } else {
+            if textView.contentSize.height > NewIssueViewController.defaultBodyHeight {
+                bodyHeightConstraint.constant = textView.contentSize.height
+            } else {
+                bodyHeightConstraint.constant = NewIssueViewController.defaultBodyHeight
+            }
+        }
+    }
+    
+}
+
+extension NewIssueViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        bodyField.becomeFirstResponder()
+        return false
+    }
+    
 }
