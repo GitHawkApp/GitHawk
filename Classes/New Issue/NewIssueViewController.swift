@@ -60,7 +60,12 @@ class NewIssueViewController: UIViewController {
         super.viewDidLoad()
 
         // Add send button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(send))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Send", comment: "Send New Issue"),
+            style: .done,
+            target: self,
+            action: #selector(send)
+        )
         
         // Match Styling
         titleField.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
@@ -74,6 +79,10 @@ class NewIssueViewController: UIViewController {
         
         // Add markdown controls
         setupControls()
+        
+        // Update Accessibility
+        title = NSLocalizedString("New Issue", comment: "")
+        titleField.placeholder = NSLocalizedString("Title", comment: "New Issue Title Placeholder")
     }
     
     /// Creates and adds the custom controls view for previewing, bold, etc.
@@ -104,7 +113,7 @@ class NewIssueViewController: UIViewController {
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     func send() {
         guard let titleText = titleField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !titleText.isEmpty else {
-            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: ""))
+            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
         
