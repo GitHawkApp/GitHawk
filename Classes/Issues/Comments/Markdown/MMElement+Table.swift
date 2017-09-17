@@ -8,6 +8,7 @@
 
 import UIKit
 import MMMarkdown
+import HTMLString
 
 private typealias Row = IssueCommentTableModel.Row
 private class TableBucket {
@@ -24,7 +25,7 @@ private func buildAttributedString(
     switch element.type {
     case .none, .entity:
         if let substr = markdown.substring(with: element.range) {
-            attributedString.append(NSAttributedString(string: substr, attributes: attributes))
+            attributedString.append(NSAttributedString(string: substr.removingHTMLEntities, attributes: attributes))
         }
     default:
         let childAttributes = PushAttributes(

@@ -12,9 +12,11 @@ import IGListKit
 final class IssueCommentHtmlModel: NSObject, ListDiffable {
 
     let html: String
+    let baseURL: URL?
 
-    init(html: String) {
+    init(html: String, baseURL: URL? = nil) {
         self.html = html
+        self.baseURL = baseURL
     }
 
     // MARK: ListDiffable
