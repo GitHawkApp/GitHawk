@@ -31,21 +31,12 @@ final class IssueCommentTableModel: NSObject, ListDiffable {
         }
     }
 
-    let rowHeight: CGFloat
+    let rowHeight = Styles.Sizes.labelEventHeight
     let columns: [Column]
     let totalHeight: CGFloat
 
     init(columns: [Column]) {
         self.columns = columns
-        self.rowHeight = columns.reduce(0) { currentRowHeight, column  in
-            let maxHeight: CGFloat = column.rows.reduce(0.0) { currentMaxHeight, row in
-                let textSize = row.text.computeSize(0)
-                return max(currentMaxHeight, textSize.height)
-            }
-            
-            let inset = IssueCommentTableCollectionCell.inset.top + IssueCommentTableCollectionCell.inset.bottom
-            return max(currentRowHeight, maxHeight + inset)
-        }
         self.totalHeight = CGFloat(columns.first?.rows.count ?? 0) * rowHeight
     }
 
