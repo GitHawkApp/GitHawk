@@ -91,8 +91,8 @@ final class RatingController {
 
         // system prompt is a much nicer experience, lower the threshold so should occur before in-feed
         switch type {
-        case .system: minInstall = day * 7
-        case .inFeed: minInstall = day * 14
+        case .system: minInstall = day * 3
+        case .inFeed: minInstall = day * 7
         }
 
         guard let install = storage.object(forKey: Keys.install) as? Date,
@@ -106,7 +106,7 @@ final class RatingController {
         let interval: TimeInterval
         switch type {
         case .inFeed: interval = day * 45 // 1.5mo btwn feed prompts
-        case .system: interval = day * 365/3 // max 3 per year per StoreKit API
+        case .system: interval = day * 30 // max 3 per year per StoreKit API
         }
 
         // never prompt w/in the same version
