@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import MMMarkdown
+import HTMLString
 
 private let newlineString = "\n"
 
@@ -47,8 +48,9 @@ func CreateCommentModels(
     repo: String? = nil
     ) -> [ListDiffable] {
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
+    let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
-    guard let document = createCommentAST(markdown: emojiMarkdown)
+    guard let document = createCommentAST(markdown: replaceHTMLentities)
         else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
