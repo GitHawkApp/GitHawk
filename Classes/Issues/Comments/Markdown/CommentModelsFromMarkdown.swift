@@ -148,7 +148,7 @@ func needsNewline(element: MMElement) -> Bool {
     }
 }
 
-func createModel(markdown: String, element: MMElement) -> ListDiffable? {
+func createModel(markdown: String, element: MMElement, owner: String?, repo: String?) -> ListDiffable? {
     switch element.type {
     case .codeBlock:
         return CreateCodeBlock(element: element, markdown: markdown)
@@ -160,7 +160,13 @@ func createModel(markdown: String, element: MMElement) -> ListDiffable? {
         guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
             html.characters.count > 0
             else { return nil }
-        return IssueCommentHtmlModel(html: html)
+        
+        let baseURL: URL? = {
+            guard let owner = owner, let repo = repo else { return nil }
+            return URL(string: "https://github.com/\(owner)/\(repo)/raw/master")
+        }()
+        
+        return IssueCommentHtmlModel(html: html, baseURL: baseURL)
     case .horizontalRule:
         return IssueCommentHrModel()
     default: return nil
@@ -240,7 +246,7 @@ func travelAST(
         attributedString.append(NSAttributedString(string: modifier, attributes: pushedAttributes))
     }
 
-    let model = createModel(markdown: markdown, element: element)
+    let model = createModel(markdown: markdown, element: element, owner: owner, repo: repo)
 
     // if a model exists, push a new model with the current text stack _before_ the model. remember to drain the text
     if let model = model {

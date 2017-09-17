@@ -58,6 +58,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     @objc private let webView = UIWebView()
     private var body = ""
+    var webViewBaseURL: URL?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -98,14 +99,21 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
         body = viewModel.html
+        webViewBaseURL = viewModel.baseURL
+        
         let html = IssueCommentHtmlCell.htmlHead + body + IssueCommentHtmlCell.htmlTail
-        webView.loadHTMLString(html, baseURL: nil)
+        webView.loadHTMLString(html, baseURL: webViewBaseURL)
     }
 
     // MARK: UIWebViewDelegate
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         guard let url = request.url else { return true }
+        
+        if let baseURL = webViewBaseURL, url == baseURL {
+            return true
+        }
+        
         let htmlLoad = url.absoluteString == "about:blank"
         if !htmlLoad {
             navigationDelegate?.webViewWantsNavigate(cell: self, url: url)
