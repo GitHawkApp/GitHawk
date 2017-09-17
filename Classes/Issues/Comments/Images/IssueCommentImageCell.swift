@@ -25,7 +25,7 @@ UIGestureRecognizerDelegate {
     weak var delegate: IssueCommentImageCellDelegate? = nil
     let imageView = UIImageView()
     
-    private var imageUrl: URL!
+    private var imageUrl: URL?
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let overlay = CreateCollapsibleOverlay()
     private var tapGesture: UITapGestureRecognizer!
@@ -67,8 +67,8 @@ UIGestureRecognizerDelegate {
 
     func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
-        guard let image = imageView.image else { return }
-        delegate?.didTapImage(cell: self, image: image, url: imageUrl)
+        guard let image = imageView.image, let url = imageUrl else { return }
+        delegate?.didTapImage(cell: self, image: image, url: url)
     }
 
     // MARK: ListBindable
