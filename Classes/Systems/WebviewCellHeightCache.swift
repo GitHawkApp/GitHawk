@@ -28,8 +28,10 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
 
     func webViewDidResize(cell: IssueCommentHtmlCell, html: String, size: CGSize) {
         guard let sectionController = self.sectionController,
+            sectionController.section != NSNotFound,
             size != htmlSizes[html]
             else { return }
+
         htmlSizes[html] = size
 
         // temporary hack until this PR lands
