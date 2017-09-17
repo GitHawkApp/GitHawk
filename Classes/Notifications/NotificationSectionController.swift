@@ -15,7 +15,7 @@ SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
     private let dataSource: NotificationsDataSource
-
+    private static var selectedCellId : String? = ""
     init(client: NotificationClient, dataSource: NotificationsDataSource) {
         self.client = client
         self.dataSource = dataSource
@@ -49,9 +49,11 @@ SwipeCollectionViewCellDelegate {
             cell.isRead = true
             client.markNotificationRead(id: object.id, isOpen: true)
         }
-
+        if NotificationSectionController.selectedCellId != object.id || UIDevice.current.userInterfaceIdiom == .phone{
+            NotificationSectionController.selectedCellId = object.id
         let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
         viewController?.showDetailViewController(controller, sender: nil)
+        }
     }
 
     // MARK: Private API
@@ -62,6 +64,10 @@ SwipeCollectionViewCellDelegate {
         collectionContext?.performBatch(animated: true, updates: { context in
             context.reload(self)
         })
+    }
+    
+    deinit {
+        NotificationSectionController.selectedCellId = nil
     }
 
     var considerObjectRead: Bool {
