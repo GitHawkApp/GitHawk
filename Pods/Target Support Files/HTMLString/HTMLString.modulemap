@@ -1,0 +1,6 @@
+framework module HTMLString {
+  umbrella header "HTMLString-umbrella.h"
+
+  export *
+  module * { export * }
+}
