@@ -16,7 +16,7 @@ ListBindingSectionControllerDataSource {
         return WebviewCellHeightCache(sectionController: self)
     }()
     private lazy var photoHandler: PhotoViewHandler = {
-        return PhotoViewHandler(viewController: self.viewController)
+        return PhotoViewHandler(viewController: self.viewController, models: self.object?.models ?? [])
     }()
 
     override init() {

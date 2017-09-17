@@ -18,7 +18,7 @@ AttributedStringViewIssueDelegate {
         return WebviewCellHeightCache(sectionController: self)
     }()
     private lazy var photoHandler: PhotoViewHandler = {
-        return PhotoViewHandler(viewController: self.viewController)
+        return PhotoViewHandler(viewController: self.viewController, models: self.object?.bodyModels ?? [])
     }()
     private let tailModel = "tail" as ListDiffable
     private let client: GithubClient
