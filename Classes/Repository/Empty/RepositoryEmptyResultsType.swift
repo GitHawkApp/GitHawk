@@ -24,7 +24,7 @@ enum RepositoryEmptyResultsType {
 
     var text: String {
         switch self {
-        case .readme: return NSLocalizedString("There aren't any Readme file", comment: "")
+        case .readme: return NSLocalizedString("Project has no README.", comment: "")
         case .issues: return NSLocalizedString("There aren't any issues.", comment: "")
         case .pullRequests: return NSLocalizedString("There aren't any pull requests.", comment: "")
         }
