@@ -210,7 +210,13 @@ PrimaryViewController {
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
 
         if object === page { return NotificationNextPageSectionController(delegate: self) }
-        else if object === emptyKey { return NoNewNotificationSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide) }
+        else if object === emptyKey {
+            return NoNewNotificationSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide
+            )
+        }
 
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
