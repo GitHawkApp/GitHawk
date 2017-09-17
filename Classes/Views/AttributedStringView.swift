@@ -14,9 +14,14 @@ protocol AttributedStringViewDelegate: class {
     func didTapEmail(view: AttributedStringView, email: String)
 }
 
+protocol AttributedStringViewIssueDelegate: class {
+    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel)
+}
+
 final class AttributedStringView: UIView {
 
     weak var delegate: AttributedStringViewDelegate? = nil
+    weak var issueDelegate: AttributedStringViewIssueDelegate? = nil
 
     private var text: NSAttributedStringSizing? = nil
 
@@ -63,6 +68,8 @@ final class AttributedStringView: UIView {
             delegate?.didTapUsername(view: self, username: usernameString)
         } else if let emailString = attributes[MarkdownAttribute.email] as? String {
             delegate?.didTapEmail(view: self, email: emailString)
+        } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
+            issueDelegate?.didTapIssue(view: self, issue: issue)
         }
     }
 

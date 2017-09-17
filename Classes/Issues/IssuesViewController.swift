@@ -286,7 +286,11 @@ IssueTextActionsViewDelegate {
     }
 
     func onPreview() {
-        let controller = IssuePreviewViewController(markdown: textView.text)
+        let controller = IssuePreviewViewController(
+            markdown: textView.text,
+            owner: model.owner,
+            repo: model.repo
+        )
         showDetailViewController(controller, sender: nil)
     }
 
@@ -382,7 +386,7 @@ IssueTextActionsViewDelegate {
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController()
+        case is IssueReviewModel: return IssueReviewSectionController(client: client)
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
@@ -425,6 +429,8 @@ IssueTextActionsViewDelegate {
             commentFields: commentFields,
             reactionFields: reactionFields,
             width: view.bounds.width,
+            owner: model.owner,
+            repo: model.repo,
             threadState: .single
             )
             else { return }

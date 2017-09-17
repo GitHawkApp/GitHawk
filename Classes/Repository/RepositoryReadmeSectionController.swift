@@ -58,7 +58,8 @@ ListBindingSectionControllerDataSource {
             imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
-            attributedDelegate: viewController
+            attributedDelegate: viewController,
+            issueAttributedDelegate: nil
         )
 
         return cell

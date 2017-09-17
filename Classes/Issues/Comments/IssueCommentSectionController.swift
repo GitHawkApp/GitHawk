@@ -13,7 +13,8 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate {
+IssueCommentReactionCellDelegate,
+AttributedStringViewIssueDelegate {
 
     private var collapsed = true
     private let client: GithubClient
@@ -155,7 +156,8 @@ IssueCommentReactionCellDelegate {
             imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
-            attributedDelegate: viewController
+            attributedDelegate: viewController,
+            issueAttributedDelegate: self
         )
 
         return cell
@@ -195,7 +197,11 @@ IssueCommentReactionCellDelegate {
         react(content: reaction, isAdd: false)
     }
 
+    // MARK: AttributedStringViewIssueDelegate
+
+    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
+        let controller = IssuesViewController(client: client, model: issue)
+        viewController?.showDetailViewController(controller, sender: nil)
+    }
+
 }
-
-
-

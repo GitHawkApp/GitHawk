@@ -11,7 +11,8 @@ import IGListKit
 
 final class IssueReviewSectionController: ListBindingSectionController<IssueReviewModel>,
     ListBindingSectionControllerDataSource,
-IssueReviewDetailsCellDelegate {
+IssueReviewDetailsCellDelegate,
+AttributedStringViewIssueDelegate {
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -19,9 +20,11 @@ IssueReviewDetailsCellDelegate {
     private lazy var photoHandler: PhotoViewHandler = {
         return PhotoViewHandler(viewController: self.viewController, models: self.object?.bodyModels ?? [])
     }()
-    let tailModel = "tail" as ListDiffable
+    private let tailModel = "tail" as ListDiffable
+    private let client: GithubClient
 
-    override init() {
+    init(client: GithubClient) {
+        self.client = client
         super.init()
         self.inset = Styles.Sizes.listInsetLarge
         self.dataSource = self
@@ -80,7 +83,8 @@ IssueReviewDetailsCellDelegate {
             imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
-            attributedDelegate: viewController
+            attributedDelegate: viewController,
+            issueAttributedDelegate: self
         )
 
         if let cell = cell as? IssueReviewDetailsCell {
@@ -97,6 +101,11 @@ IssueReviewDetailsCellDelegate {
         viewController?.presentProfile(login: actor)
     }
 
+    // MARK: AttributedStringViewIssueDelegate
+
+    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
+        let controller = IssuesViewController(client: client, model: issue)
+        viewController?.showDetailViewController(controller, sender: nil)
+    }
+
 }
-
-

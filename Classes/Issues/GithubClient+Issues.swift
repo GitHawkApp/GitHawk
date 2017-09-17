@@ -65,10 +65,12 @@ extension GithubClient {
                         commentFields: issueType.commentFields,
                         reactionFields: issueType.reactionFields,
                         width: width,
+                        owner: owner,
+                        repo: repo,
                         threadState: .single
                     )
 
-                    let timeline = issueType.timelineViewModels(width: width)
+                    let timeline = issueType.timelineViewModels(owner: owner, repo: repo, width: width)
 
                     // append the issue author for autocomplete
                     var mentionedUsers = timeline.mentionedUsers

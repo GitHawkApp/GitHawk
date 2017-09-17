@@ -50,7 +50,8 @@ func ExtraCommentCellConfigure(
     imageDelegate: IssueCommentImageCellDelegate?,
     htmlDelegate: IssueCommentHtmlCellDelegate?,
     htmlNavigationDelegate: IssueCommentHtmlCellNavigationDelegate?,
-    attributedDelegate: AttributedStringViewDelegate?
+    attributedDelegate: AttributedStringViewDelegate?,
+    issueAttributedDelegate: AttributedStringViewIssueDelegate?
     ) {
     if let cell = cell as? IssueCommentImageCell {
         cell.delegate = imageDelegate
@@ -59,6 +60,7 @@ func ExtraCommentCellConfigure(
         cell.navigationDelegate = htmlNavigationDelegate
     } else if let cell = cell as? IssueCommentTextCell {
         cell.textView.delegate = attributedDelegate
+        cell.textView.issueDelegate = issueAttributedDelegate
     } else if let cell = cell as? IssueCommentQuoteCell {
         cell.textView.delegate = attributedDelegate
     } else if let cell = cell as? IssueCommentTableCell {

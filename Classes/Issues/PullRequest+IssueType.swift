@@ -67,7 +67,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
-    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
+    func timelineViewModels(
+        owner: String,
+        repo: String,
+        width: CGFloat
+        ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }
 
@@ -81,6 +85,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
                     width: width,
+                    owner: owner,
+                    repo: repo,
                     threadState: .single
                     ) {
                     results.append(model)
@@ -172,7 +178,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 // add the diff hunk FIRST then the threaded comments so that the section controllers end up stacked
                 // on top of each other
                 results.append(hunk)
-                results += commentModels(thread: thread, width: width)
+                results += commentModels(
+                    thread: thread,
+                    width: width,
+                    owner: owner,
+                    repo: repo
+                )
             } else if let review = node.asPullRequestReview,
                 let dateString = review.submittedAt,
                 let date = GithubAPIDateFormatter().date(from: dateString) {
@@ -187,7 +198,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     state: review.state,
                     date: date
                 )
-                let bodies = CreateCommentModels(markdown: review.fragments.commentFields.body, width: width)
+                let bodies = CreateCommentModels(
+                    markdown: review.fragments.commentFields.body,
+                    width: width,
+                    owner: owner,
+                    repo: repo
+                )
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,
                     details: details,
@@ -323,7 +339,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return IssueDiffHunkModel(path: firstComment.path, preview: text)
     }
 
-    private func commentModels(thread: Timeline.Node.AsPullRequestReviewThread, width: CGFloat) -> [ListDiffable] {
+    private func commentModels(
+        thread: Timeline.Node.AsPullRequestReviewThread,
+        width: CGFloat,
+        owner: String,
+        repo: String
+        ) -> [ListDiffable] {
         var results = [ListDiffable]()
 
         let tailNodeId = thread.comments.nodes?.last??.fragments.nodeFields.id
@@ -339,6 +360,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 commentFields: fragments.commentFields,
                 reactionFields: fragments.reactionFields,
                 width: width,
+                owner: owner,
+                repo: repo,
                 threadState: isTail ? .tail : .neck
                 ) {
                 results.append(model)
