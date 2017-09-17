@@ -158,9 +158,19 @@ PrimaryViewController {
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
 
         if object === noIssuesResultsKey {
-            return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .issues)
+            return RepositoryEmptyResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide,
+                type: .issues
+            )
         } else if object === noPullRequestsResultsKey {
-            return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .pullRequests)
+            return RepositoryEmptyResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide,
+                type: .pullRequests
+            )
         } else if object === dataSource.selection {
             return SegmentedControlSectionController(delegate: self, height: controlHeight)
         } else if object === dataSource.loadMore {
