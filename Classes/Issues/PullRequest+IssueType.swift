@@ -198,11 +198,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     state: review.state,
                     date: date
                 )
+
+                let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
                 let bodies = CreateCommentModels(
                     markdown: review.fragments.commentFields.body,
                     width: width,
-                    owner: owner,
-                    repo: repo
+                    options: options
                 )
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,

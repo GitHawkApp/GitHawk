@@ -72,7 +72,9 @@ func createCommentModel(
         editedBy: commentFields.editor?.login,
         editedAt: editedAt
     )
-    let bodies = CreateCommentModels(markdown: commentFields.body, width: width, owner: owner, repo: repo)
+
+    let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+    let bodies = CreateCommentModels(markdown: commentFields.body, width: width, options: options)
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)
     return IssueCommentModel(

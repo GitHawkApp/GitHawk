@@ -75,6 +75,8 @@ PrimaryViewController {
                 self.dataSource.setReadme(
                     readme,
                     width: self.view.bounds.width,
+                    owner: self.repo.owner,
+                    repo: self.repo.name,
                     completion: {
                     self.update(dismissRefresh: true, animated: true)
                 })

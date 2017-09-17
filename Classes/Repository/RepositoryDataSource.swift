@@ -90,10 +90,13 @@ final class RepositoryDataSource {
     func setReadme(
         _ readme: String,
         width: CGFloat,
+        owner: String,
+        repo: String,
         completion: @escaping () -> ()
         ) {
         DispatchQueue.global().async {
-            let models = CreateCommentModels(markdown: readme, width: width)
+            let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.baseURL])
+            let models = CreateCommentModels(markdown: readme, width: width, options: options)
             let model = RepositoryReadmeModel(models: models)
             DispatchQueue.main.async {
                 self.readmeModel = model
