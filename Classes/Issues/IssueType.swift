@@ -29,6 +29,10 @@ protocol IssueType {
 
     var reviewRequestModel: IssueAssigneesModel? { get }
 
-    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser])
+    func timelineViewModels(
+        owner: String,
+        repo: String,
+        width: CGFloat
+        ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser])
 
 }

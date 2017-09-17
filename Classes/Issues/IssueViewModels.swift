@@ -50,6 +50,8 @@ func createCommentModel(
     commentFields: CommentFields,
     reactionFields: ReactionFields, 
     width: CGFloat,
+    owner: String,
+    repo: String,
     threadState: IssueCommentModel.ThreadState
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
@@ -70,7 +72,7 @@ func createCommentModel(
         editedBy: commentFields.editor?.login,
         editedAt: editedAt
     )
-    let bodies = CreateCommentModels(markdown: commentFields.body, width: width)
+    let bodies = CreateCommentModels(markdown: commentFields.body, width: width, owner: owner, repo: repo)
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)
     return IssueCommentModel(

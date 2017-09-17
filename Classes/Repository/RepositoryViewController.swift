@@ -71,7 +71,10 @@ PrimaryViewController {
             switch result {
             case .error: break
             case .success(let readme):
-                self.dataSource.setReadme(readme, width: self.view.bounds.width, completion: { 
+                self.dataSource.setReadme(
+                    readme,
+                    width: self.view.bounds.width,
+                    completion: {
                     self.update(dismissRefresh: true, animated: true)
                 })
             }
