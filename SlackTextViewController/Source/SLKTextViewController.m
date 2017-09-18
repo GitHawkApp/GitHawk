@@ -710,7 +710,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     }
     
     if (self.textView.selectedRange.length > 0) {
-        if (self.isAutoCompleting && [self shouldProcessTextForAutoCompletion:self.textView.text]) {
+        if (self.isAutoCompleting && [self shouldProcessTextForAutoCompletion]) {
             [self cancelAutoCompletion];
         }
         return;
@@ -882,7 +882,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     
     __weak typeof(self) weakSelf = self;
     
-    void (^animations)() = ^void(){
+    void (^animations)(void) = ^void(){
         
         weakSelf.textInputbarHC.constant = hidden ? 0.0 : weakSelf.textInputbar.appropriateHeight;
         
@@ -922,29 +922,28 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 
 - (void)slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture {
     return;
-
-    UIView *kb = _textInputbar.inputAccessoryView.superview;
-
-    if (kb == nil) {
-        return;
-    }
-
-    switch (gesture.state) {
-        case UIGestureRecognizerStateChanged: {
-            [UIView performWithoutAnimation:^{
-                self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:kb.frame];
-                self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
-                [self.view layoutIfNeeded];
-            }];
-        }
-            break;
-        case UIGestureRecognizerStateBegan:
-        case UIGestureRecognizerStatePossible:
-        case UIGestureRecognizerStateCancelled:
-        case UIGestureRecognizerStateEnded:
-        case UIGestureRecognizerStateFailed:
-            break;
-    }
+//    UIView *kb = _textInputbar.inputAccessoryView.superview;
+//
+//    if (kb == nil) {
+//        return;
+//    }
+//
+//    switch (gesture.state) {
+//        case UIGestureRecognizerStateChanged: {
+//            [UIView performWithoutAnimation:^{
+//                self.keyboardHC.constant = [self slk_appropriateKeyboardHeightFromRect:kb.frame];
+//                self.scrollViewHC.constant = [self slk_appropriateScrollViewHeight];
+//                [self.view layoutIfNeeded];
+//            }];
+//        }
+//            break;
+//        case UIGestureRecognizerStateBegan:
+//        case UIGestureRecognizerStatePossible:
+//        case UIGestureRecognizerStateCancelled:
+//        case UIGestureRecognizerStateEnded:
+//        case UIGestureRecognizerStateFailed:
+//            break;
+//    }
 }
 
 - (void)OLD_slk_handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
@@ -1423,7 +1422,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     CGRect beginFrame = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
     CGRect endFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    void (^animations)() = ^void() {
+    void (^animations)(void) = ^void() {
         // Scrolls to bottom only if the keyboard is about to show.
         if (self.shouldScrollToBottomAfterKeyboardShows && self.keyboardStatus == SLKKeyboardStatusWillShow) {
             if (self.isInverted) {
@@ -1771,7 +1770,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 {
     NSString *text = self.textView.text;
     
-    if ((!self.isAutoCompleting && text.length == 0) || self.isTransitioning || ![self shouldProcessTextForAutoCompletion:text]) {
+    if ((!self.isAutoCompleting && text.length == 0) || self.isTransitioning || ![self shouldProcessTextForAutoCompletion]) {
         return;
     }
     
