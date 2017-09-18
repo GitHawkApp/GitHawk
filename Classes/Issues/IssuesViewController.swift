@@ -52,11 +52,15 @@ IssueTextActionsViewDelegate {
 
     init(
         client: GithubClient,
-        model: IssueDetailsModel
+        model: IssueDetailsModel,
+        scrollToBottom: Bool = false
         ) {
         self.client = client
         self.model = model
         self.addCommentClient = AddCommentClient(client: client)
+
+        // trick into thinking already scrolled to bottom after load
+        self.hasScrolledToBottom = !scrollToBottom
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!

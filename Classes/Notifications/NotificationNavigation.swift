@@ -9,7 +9,11 @@
 import UIKit
 import SafariServices
 
-func NavigateToNotificationContent(object: NotificationViewModel, client: GithubClient) -> UIViewController {
+func NavigateToNotificationContent(
+    object: NotificationViewModel,
+    client: GithubClient,
+    scrollToBottom: Bool = false
+    ) -> UIViewController {
     switch object.identifier {
     case .hash(let hash):
         let url = URL(string: "https://github.com/\(object.owner)/\(object.repo)/commit/\(hash)")!
@@ -18,7 +22,8 @@ func NavigateToNotificationContent(object: NotificationViewModel, client: Github
         let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
         let controller = IssuesViewController(
             client: client,
-            model: model
+            model: model,
+            scrollToBottom: scrollToBottom
         )
         return UINavigationController(rootViewController: controller)
     }
