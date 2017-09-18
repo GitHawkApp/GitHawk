@@ -15,6 +15,7 @@
 		290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */; };
 		290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744BB1F268D8300FD9E48 /* UserAutocomplete.swift */; };
 		290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */; };
+		2908C5891F6F3EB00071C39D /* IssueLocalReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908C5881F6F3EB00071C39D /* IssueLocalReaction.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A3F1F0466820082E6CC /* NotificationNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
@@ -369,6 +370,7 @@
 		290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToBottom.swift"; sourceTree = "<group>"; };
 		290744BB1F268D8300FD9E48 /* UserAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAutocomplete.swift; sourceTree = "<group>"; };
 		290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserAutocomplete+GraphQL.swift"; sourceTree = "<group>"; };
+		2908C5881F6F3EB00071C39D /* IssueLocalReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLocalReaction.swift; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A3E1F0466820082E6CC /* NotificationNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNavigation.swift; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 				29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */,
 				292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */,
 				2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */,
+				2908C5881F6F3EB00071C39D /* IssueLocalReaction.swift */,
 			);
 			path = Reactions;
 			sourceTree = "<group>";
@@ -1800,6 +1803,7 @@
 				29C9FDD71EC65FEE00EE3A52 /* Subject.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
+				2908C5891F6F3EB00071C39D /* IssueLocalReaction.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */,

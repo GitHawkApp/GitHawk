@@ -161,7 +161,7 @@ UICollectionViewDelegateFlowLayout {
         var users = model.users
         guard users.count > 0 else { return cell }
         
-        switch model.count {
+        switch users.count {
         case 1:
             let format = NSLocalizedString("%@", comment: "")
             cell.label.detailText = String.localizedStringWithFormat(format, users[0])

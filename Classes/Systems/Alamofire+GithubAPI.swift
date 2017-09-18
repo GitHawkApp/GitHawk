@@ -25,6 +25,7 @@ func newGithubClient(
 
     let config = URLSessionConfiguration.default
     config.httpAdditionalHeaders = additionalHeaders
+    config.timeoutIntervalForRequest = 15
 
     if runningInSample() {
         config.urlCache = SampleURLCache(memoryCapacity: 1024*30, diskCapacity: 1024*50, diskPath: "sample_cache")
