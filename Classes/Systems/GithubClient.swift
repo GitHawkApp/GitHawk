@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import JDStatusBarNotification
 import Apollo
+import AlamofireNetworkActivityIndicator
 
 struct GithubClient {
 
@@ -111,6 +112,30 @@ struct GithubClient {
                     request.completion(response, page)
                 }
             })
+    }
+
+    @discardableResult
+    func fetch<Query: GraphQLQuery>(
+        query: Query,
+        resultHandler: OperationResultHandler<Query>? = nil
+        ) -> Cancellable {
+        NetworkActivityIndicatorManager.shared.incrementActivityCount()
+        return apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
+            NetworkActivityIndicatorManager.shared.decrementActivityCount()
+            resultHandler?(result, error)
+        })
+    }
+
+    @discardableResult
+    func perform<Mutation: GraphQLMutation>(
+        mutation: Mutation,
+        resultHandler: OperationResultHandler<Mutation>?
+        ) -> Cancellable {
+        NetworkActivityIndicatorManager.shared.incrementActivityCount()
+        return apollo.perform(mutation: mutation, resultHandler: { (result, error) in
+            NetworkActivityIndicatorManager.shared.decrementActivityCount()
+            resultHandler?(result, error)
+        })
     }
     
 }

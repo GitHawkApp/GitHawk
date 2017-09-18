@@ -39,7 +39,7 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        client.apollo.fetch(query: request, cachePolicy: .fetchIgnoringCacheData) { [weak self] (result, error) in
+        client.fetch(query: request) { [weak self] (result, error) in
             self?.feedRefresh.endRefreshing()
             if let nodes = result?.data?.repository?.labels?.nodes {
                 var labels = [RepositoryLabel]()
