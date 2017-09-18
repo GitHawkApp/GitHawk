@@ -8,6 +8,8 @@
 
 import UIKit
 import IGListKit
+import TUSafariActivity
+import SafariServices
 
 struct RepositoryDetails {
     let owner: String
@@ -49,6 +51,15 @@ PrimaryViewController {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
         title = "\(repo.owner)/\(repo.name)"
+        
+        let rightItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        navigationItem.rightBarButtonItem = rightItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +70,53 @@ PrimaryViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
+    }
+    
+    // MARK: Private API
+    
+    var repoUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    }
+    
+    var repoOwnerUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)")!
+    }
+    
+    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let safariActivity = TUSafariActivity()
+            let controller = UIActivityViewController(activityItems: [strongSelf.repoUrl], applicationActivities: [safariActivity])
+            controller.popoverPresentationController?.barButtonItem = sender
+            strongSelf.present(controller, animated: true)
+        }
+    }
+    
+    func safariAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = SFSafariViewController(url: strongSelf.repoUrl)
+            strongSelf.present(controller, animated: true)
+        }
+    }
+    
+    func viewOwnerAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = SFSafariViewController(url: strongSelf.repoOwnerUrl)
+            strongSelf.present(controller, animated: true)
+        }
+
+    }
+    
+    func onMore(sender: UIBarButtonItem) {
+        let alert = UIAlertController()
+        
+        alert.addAction(shareAction(sender: sender))
+        alert.addAction(safariAction())
+        alert.addAction(viewOwnerAction())
+        alert.popoverPresentationController?.barButtonItem = sender
+        present(alert, animated: true)
     }
 
     // MARK: Data Loading/Paging
