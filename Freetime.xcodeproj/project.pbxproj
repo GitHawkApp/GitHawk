@@ -869,11 +869,11 @@
 			children = (
 				292FCADF1EDFCC510026635E /* IssueCommentReactionCell.swift */,
 				292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */,
+				2908C5881F6F3EB00071C39D /* IssueLocalReaction.swift */,
 				292FCB201EDFCF870026635E /* IssueReactionCell.swift */,
 				29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */,
 				292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */,
 				2963A9311EE1EBE20066509C /* UIMenuController+Reactions.swift */,
-				2908C5881F6F3EB00071C39D /* IssueLocalReaction.swift */,
 			);
 			path = Reactions;
 			sourceTree = "<group>";

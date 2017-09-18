@@ -17,6 +17,7 @@ IssueCommentReactionCellDelegate,
 AttributedStringViewIssueDelegate {
 
     private var collapsed = true
+    private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -78,6 +79,7 @@ AttributedStringViewIssueDelegate {
             add: isAdd
         )
         update(animated: true)
+        generator.impactOccurred()
 
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
             if result == nil {
