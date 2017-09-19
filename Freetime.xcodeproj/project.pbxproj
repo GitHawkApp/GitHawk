@@ -333,6 +333,8 @@
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
 		98B5A0EE1F6FF46C000617D6 /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */; };
+		98B5A10B1F710827000617D6 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A10A1F710827000617D6 /* Project.swift */; };
+		98B5A1131F710E2E000617D6 /* GithubClient+Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */; };
 		98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F0A0421F27BC4B0062A2CA /* emoji.json */; };
 /* End PBXBuildFile section */
 
@@ -664,6 +666,8 @@
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
+		98B5A10A1F710827000617D6 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Projects.swift"; sourceTree = "<group>"; };
 		98F0A0421F27BC4B0062A2CA /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
 		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1164,6 +1168,7 @@
 				29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */,
 				29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */,
 				29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */,
+				98B5A10A1F710827000617D6 /* Project.swift */,
 				29C9FDBF1EC65FEE00EE3A52 /* Repository.swift */,
 				29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */,
 				29C9FDC31EC65FEE00EE3A52 /* Subject.swift */,
@@ -1460,6 +1465,7 @@
 			isa = PBXGroup;
 			children = (
 				98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */,
+				98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -1898,6 +1904,7 @@
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
+				98B5A10B1F710827000617D6 /* Project.swift in Sources */,
 				29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
@@ -1969,6 +1976,7 @@
 				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */,
+				98B5A1131F710E2E000617D6 /* GithubClient+Projects.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,

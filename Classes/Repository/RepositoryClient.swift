@@ -155,7 +155,6 @@ final class RepositoryClient {
     struct RepositoryDetailsPayload {
         let issues: RepositoryPayload
         let pullRequests: RepositoryPayload
-        let projects: [String] // Temp
     }
 
     func load(
@@ -193,13 +192,9 @@ final class RepositoryClient {
                 prNextPage = nil
             }
             
-            let projectNodes = (data.repository?.projects.nodes ?? []).flatMap { $0 }
-            let projects = projectNodes.flatMap { $0.name }
-            
             completion(.success(RepositoryDetailsPayload(
                 issues: RepositoryPayload(models: issues, nextPage: issueNextPage),
-                pullRequests: RepositoryPayload(models: prs, nextPage: prNextPage),
-                projects: projects
+                pullRequests: RepositoryPayload(models: prs, nextPage: prNextPage)
             )))
         }
     }

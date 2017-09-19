@@ -26,12 +26,5 @@ query RepoDetails($owner: String!, $name: String!, $page_size: Int!) {
         endCursor
       }
     }
-    projects(first: 10) {
-      nodes {
-        number
-        name
-        body
-      }
-    }
   }
 }

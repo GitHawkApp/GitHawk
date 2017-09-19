@@ -7,29 +7,83 @@
 //
 
 import UIKit
+import IGListKit
 
-class ProjectListViewController: UIViewController {
+class ProjectListViewController: UIViewController, FeedDelegate, ListAdapterDataSource {
 
+    private let client: GithubClient
+    private let repository: RepositoryDetails
+    
+    private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    private var projects: [Project]?
+    private var nextPageToken: String?
+    
+    // MARK: - Initialiser
+    
+    init(client: GithubClient, repository: RepositoryDetails) {
+        self.client = client
+        self.repository = repository
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        feed.viewDidLoad()
+        feed.adapter.dataSource = self
+        title = NSLocalizedString("Projects", comment: "")
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        feed.viewWillLayoutSubviews(view: view)
     }
-    */
+    
+    // MARK: - Loading
+    
+    private func update() {
+        feed.finishLoading(dismissRefresh: true, animated: true, completion: nil)
+    }
+    
+    private func reload() {
+        client.loadProjects(for: repository, containerWidth: view.frame.width, nextPage: nextPageToken) { result in
+            switch result {
+            case .error(let error):
+                print(error?.localizedDescription)
+            case .success(let projects):
+                self.projects = projects
+                self.update()
+            }
+        }
+    }
+    
+    // MARK: - FeedDelegate
+    
+    func loadFromNetwork(feed: Feed) {
+        reload()
+    }
+    
+    func loadNextPage(feed: Feed) -> Bool {
+        return nextPageToken != nil
+    }
 
+    // MARK: - ListAdapterDataSource
+    
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
+    }
+    
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        fatalError()
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        return nil
+    }
 }
