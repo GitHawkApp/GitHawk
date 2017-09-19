@@ -26,16 +26,22 @@ class Project {
     
     let number: Int
     let name: String
-    let body: String?
+    let body: NSAttributedStringSizing?
     
     // Currently, only loaded once the user enters a project
     var details: Details?
     
-    init(number: Int, name: String, body: String?) {
+    init(number: Int, name: String, body: String?, containerWidth: CGFloat) {
         // TODO: Make name/body sizable strings for lists
         self.number = number
         self.name = name
-        self.body = body
+        
+        if let body = body {
+            let attributedString = NSAttributedString(string: body, attributes: ProjectSummaryCell.descriptionAttributes)
+            self.body = NSAttributedStringSizing(containerWidth: containerWidth, attributedText: attributedString, inset: ProjectSummaryCell.descriptionInset)
+        } else {
+            self.body = nil
+        }
     }
     
     func loadDetails(client: GithubClient, completion: @escaping (Error?) -> Void) {

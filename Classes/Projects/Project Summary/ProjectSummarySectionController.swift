@@ -21,8 +21,13 @@ final class ProjectSummarySectionController: ListGenericSectionController<Projec
     
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: 100)
-//        return CGSize(width: width, height: ceil(object?.title.textViewSize(width).height ?? 0))
+        
+        if let body = object?.body {
+            return CGSize(width: width, height: ceil(body.textViewSize(width).height))
+        } else {
+            let titleHeight = Styles.Fonts.body.lineHeight + (2 * Styles.Sizes.gutter)
+            return CGSize(width: width, height: titleHeight)
+        }
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {

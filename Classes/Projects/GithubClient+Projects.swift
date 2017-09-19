@@ -24,15 +24,23 @@ extension GithubClient {
                 return
             }
 
-            let projects: [Project] = nodes.flatMap({ project in
-                guard let project = project else { return nil }
-                return Project(number: project.number, name: project.name, body: project.body)
-            })
-            
-            // TODO: Project needs to also calculate the height of the project body.
-            // Also need to return any paging info needed
-            
-            completion(.success(projects))
+            DispatchQueue.global().async {
+                var projects: [Project] = nodes.flatMap({ project in
+                    guard let project = project else { return nil }
+                    return Project(number: project.number, name: project.name, body: project.body, containerWidth: containerWidth)
+                })
+                
+                if let last = projects.last {
+                    // Using Alamofire for testing, so just duping the last one without a body to test both situations
+                    projects.append(Project(number: last.number + 1, name: "Test Project w/o description", body: nil, containerWidth: containerWidth))
+                }
+                
+                // Also need to return any paging info needed
+                
+                DispatchQueue.main.async {
+                    completion(.success(projects))
+                }
+            }
         }
     }
     

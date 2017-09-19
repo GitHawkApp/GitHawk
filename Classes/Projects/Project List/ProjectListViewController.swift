@@ -40,6 +40,11 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
         title = NSLocalizedString("Projects", comment: "")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
@@ -52,7 +57,7 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
     }
     
     private func reload() {
-        client.loadProjects(for: repository, containerWidth: view.frame.width, nextPage: nextPageToken) { result in
+        client.loadProjects(for: repository, containerWidth: view.bounds.width, nextPage: nextPageToken) { result in
             switch result {
             case .error(let error):
                 print(error?.localizedDescription)
