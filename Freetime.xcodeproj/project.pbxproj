@@ -329,6 +329,8 @@
 		986B873A1F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */; };
 		986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */; };
 		986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */; };
+		987A57B51F71A5DB00032F4C /* ProjectColumnSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */; };
+		987A57B71F71A61200032F4C /* ProjectColumnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57B61F71A61200032F4C /* ProjectColumnCell.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
@@ -665,6 +667,8 @@
 		986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SegmentedControlModel+Repository.swift"; sourceTree = "<group>"; };
 		986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GQL+RepositoryIssueSummaryType.swift"; sourceTree = "<group>"; };
 		986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryClient.swift; sourceTree = "<group>"; };
+		987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectColumnSectionController.swift; sourceTree = "<group>"; };
+		987A57B61F71A61200032F4C /* ProjectColumnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectColumnCell.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
@@ -1458,6 +1462,15 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		987A57B31F71A3AC00032F4C /* Project Column */ = {
+			isa = PBXGroup;
+			children = (
+				987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */,
+				987A57B61F71A61200032F4C /* ProjectColumnCell.swift */,
+			);
+			path = "Project Column";
+			sourceTree = "<group>";
+		};
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -1495,10 +1508,11 @@
 		98B5A0EC1F6FF44B000617D6 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				988760FC1F71334200279D92 /* Project View */,
+				98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */,
+				987A57B31F71A3AC00032F4C /* Project Column */,
 				988760FB1F71330600279D92 /* Project List */,
 				988760F61F7130C900279D92 /* Project Summary */,
-				98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */,
+				988760FC1F71334200279D92 /* Project View */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -1933,6 +1947,7 @@
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
+				987A57B51F71A5DB00032F4C /* ProjectColumnSectionController.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
@@ -2043,6 +2058,7 @@
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
+				987A57B71F71A61200032F4C /* ProjectColumnCell.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
