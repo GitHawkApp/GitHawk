@@ -29,7 +29,8 @@ extension GithubClient {
                 return Project(number: project.number, name: project.name, body: project.body)
             })
             
-            // TODO: Project needs to also calculate the height of the project name & body.
+            // TODO: Project needs to also calculate the height of the project body.
+            // Also need to return any paging info needed
             
             completion(.success(projects))
         }

@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-class ProjectListViewController: UIViewController, FeedDelegate, ListAdapterDataSource {
+final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapterDataSource {
 
     private let client: GithubClient
     private let repository: RepositoryDetails
@@ -76,11 +76,11 @@ class ProjectListViewController: UIViewController, FeedDelegate, ListAdapterData
     // MARK: - ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
+        return projects ?? []
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        fatalError()
+        return ProjectSummarySectionController(client: client, repo: repository)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
