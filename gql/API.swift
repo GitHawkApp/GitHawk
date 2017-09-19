@@ -2713,6 +2713,204 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
   }
 }
 
+public final class ProjectQuery: GraphQLQuery {
+  public static let operationDefinition =
+    "query Project($owner: String!, $repo: String!, $number: Int!) {" +
+    "  repository(owner: $owner, name: $repo) {" +
+    "    __typename" +
+    "    project(number: $number) {" +
+    "      __typename" +
+    "      columns(first: 10) {" +
+    "        __typename" +
+    "        nodes {" +
+    "          __typename" +
+    "          name" +
+    "          cards(first: 1) {" +
+    "            __typename" +
+    "            nodes {" +
+    "              __typename" +
+    "              content {" +
+    "                __typename" +
+    "                ... on Issue {" +
+    "                  __typename" +
+    "                  title" +
+    "                }" +
+    "                ... on PullRequest {" +
+    "                  __typename" +
+    "                  title" +
+    "                }" +
+    "              }" +
+    "              note" +
+    "              creator {" +
+    "                __typename" +
+    "                login" +
+    "                url" +
+    "              }" +
+    "            }" +
+    "            totalCount" +
+    "          }" +
+    "        }" +
+    "      }" +
+    "    }" +
+    "  }" +
+    "}"
+
+  public let owner: String
+  public let repo: String
+  public let number: Int
+
+  public init(owner: String, repo: String, number: Int) {
+    self.owner = owner
+    self.repo = repo
+    self.number = number
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "repo": repo, "number": number]
+  }
+
+  public struct Data: GraphQLMappable {
+    /// Lookup a given repository by the owner and repository name.
+    public let repository: Repository?
+
+    public init(reader: GraphQLResultReader) throws {
+      repository = try reader.optionalValue(for: Field(responseName: "repository", arguments: ["owner": reader.variables["owner"], "name": reader.variables["repo"]]))
+    }
+
+    public struct Repository: GraphQLMappable {
+      public let __typename: String
+      /// Find project by number.
+      public let project: Project?
+
+      public init(reader: GraphQLResultReader) throws {
+        __typename = try reader.value(for: Field(responseName: "__typename"))
+        project = try reader.optionalValue(for: Field(responseName: "project", arguments: ["number": reader.variables["number"]]))
+      }
+
+      public struct Project: GraphQLMappable {
+        public let __typename: String
+        /// List of columns in the project
+        public let columns: Column
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          columns = try reader.value(for: Field(responseName: "columns", arguments: ["first": 10]))
+        }
+
+        public struct Column: GraphQLMappable {
+          public let __typename: String
+          /// A list of nodes.
+          public let nodes: [Node?]?
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+          }
+
+          public struct Node: GraphQLMappable {
+            public let __typename: String
+            /// The project column's name.
+            public let name: String
+            /// List of cards in the column
+            public let cards: Card
+
+            public init(reader: GraphQLResultReader) throws {
+              __typename = try reader.value(for: Field(responseName: "__typename"))
+              name = try reader.value(for: Field(responseName: "name"))
+              cards = try reader.value(for: Field(responseName: "cards", arguments: ["first": 1]))
+            }
+
+            public struct Card: GraphQLMappable {
+              public let __typename: String
+              /// A list of nodes.
+              public let nodes: [Node?]?
+              /// Identifies the total count of items in the connection.
+              public let totalCount: Int
+
+              public init(reader: GraphQLResultReader) throws {
+                __typename = try reader.value(for: Field(responseName: "__typename"))
+                nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+                totalCount = try reader.value(for: Field(responseName: "totalCount"))
+              }
+
+              public struct Node: GraphQLMappable {
+                public let __typename: String
+                /// The card content item
+                public let content: Content?
+                /// The card note
+                public let note: String?
+                /// The actor who created this card
+                public let creator: Creator?
+
+                public init(reader: GraphQLResultReader) throws {
+                  __typename = try reader.value(for: Field(responseName: "__typename"))
+                  content = try reader.optionalValue(for: Field(responseName: "content"))
+                  note = try reader.optionalValue(for: Field(responseName: "note"))
+                  creator = try reader.optionalValue(for: Field(responseName: "creator"))
+                }
+
+                public struct Content: GraphQLMappable {
+                  public let __typename: String
+
+                  public let asIssue: AsIssue?
+                  public let asPullRequest: AsPullRequest?
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+
+                    asIssue = try AsIssue(reader: reader, ifTypeMatches: __typename)
+                    asPullRequest = try AsPullRequest(reader: reader, ifTypeMatches: __typename)
+                  }
+
+                  public struct AsIssue: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["Issue"]
+
+                    public let __typename: String
+                    /// Identifies the issue title.
+                    public let title: String
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                    }
+                  }
+
+                  public struct AsPullRequest: GraphQLConditionalFragment {
+                    public static let possibleTypes = ["PullRequest"]
+
+                    public let __typename: String
+                    /// Identifies the pull request title.
+                    public let title: String
+
+                    public init(reader: GraphQLResultReader) throws {
+                      __typename = try reader.value(for: Field(responseName: "__typename"))
+                      title = try reader.value(for: Field(responseName: "title"))
+                    }
+                  }
+                }
+
+                public struct Creator: GraphQLMappable {
+                  public let __typename: String
+                  /// The username of the actor.
+                  public let login: String
+                  /// The HTTP URL for this actor.
+                  public let url: String
+
+                  public init(reader: GraphQLResultReader) throws {
+                    __typename = try reader.value(for: Field(responseName: "__typename"))
+                    login = try reader.value(for: Field(responseName: "login"))
+                    url = try reader.value(for: Field(responseName: "url"))
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class RemoveReactionMutation: GraphQLMutation {
   public static let operationDefinition =
     "mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {" +
@@ -2813,6 +3011,15 @@ public final class RepoDetailsQuery: GraphQLQuery {
     "        endCursor" +
     "      }" +
     "    }" +
+    "    projects(first: 10) {" +
+    "      __typename" +
+    "      nodes {" +
+    "        __typename" +
+    "        number" +
+    "        name" +
+    "        body" +
+    "      }" +
+    "    }" +
     "  }" +
     "}"
   public static let queryDocument = operationDefinition.appending(RepoEventFields.fragmentDefinition).appending(NodeFields.fragmentDefinition)
@@ -2845,11 +3052,14 @@ public final class RepoDetailsQuery: GraphQLQuery {
       public let issues: Issue
       /// A list of pull requests that have been opened in the repository.
       public let pullRequests: PullRequest
+      /// A list of projects under the owner.
+      public let projects: Project
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
         issues = try reader.value(for: Field(responseName: "issues", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"]]))
         pullRequests = try reader.value(for: Field(responseName: "pullRequests", arguments: ["first": reader.variables["page_size"], "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"]]))
+        projects = try reader.value(for: Field(responseName: "projects", arguments: ["first": 10]))
       }
 
       public struct Issue: GraphQLMappable {
@@ -2960,6 +3170,34 @@ public final class RepoDetailsQuery: GraphQLQuery {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             hasNextPage = try reader.value(for: Field(responseName: "hasNextPage"))
             endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
+          }
+        }
+      }
+
+      public struct Project: GraphQLMappable {
+        public let __typename: String
+        /// A list of nodes.
+        public let nodes: [Node?]?
+
+        public init(reader: GraphQLResultReader) throws {
+          __typename = try reader.value(for: Field(responseName: "__typename"))
+          nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+        }
+
+        public struct Node: GraphQLMappable {
+          public let __typename: String
+          /// The project's number.
+          public let number: Int
+          /// The project's name.
+          public let name: String
+          /// The project's description body.
+          public let body: String?
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            number = try reader.value(for: Field(responseName: "number"))
+            name = try reader.value(for: Field(responseName: "name"))
+            body = try reader.optionalValue(for: Field(responseName: "body"))
           }
         }
       }
@@ -3286,24 +3524,7 @@ public final class SearchReposQuery: GraphQLQuery {
     "      __typename" +
     "      ... on Repository {" +
     "        __typename" +
-    "        id" +
-    "        name" +
-    "        hasIssuesEnabled" +
-    "        owner {" +
-    "          __typename" +
-    "          login" +
-    "        }" +
-    "        description" +
-    "        pushedAt" +
-    "        primaryLanguage {" +
-    "          __typename" +
-    "          name" +
-    "          color" +
-    "        }" +
-    "        stargazers {" +
-    "          __typename" +
-    "          totalCount" +
-    "        }" +
+    "        ...repositoryFields" +
     "      }" +
     "    }" +
     "    pageInfo {" +
@@ -3314,6 +3535,7 @@ public final class SearchReposQuery: GraphQLQuery {
     "    repositoryCount" +
     "  }" +
     "}"
+  public static let queryDocument = operationDefinition.appending(RepositoryFields.fragmentDefinition)
 
   public let search: String
   public let before: String?
@@ -3366,68 +3588,18 @@ public final class SearchReposQuery: GraphQLQuery {
           public static let possibleTypes = ["Repository"]
 
           public let __typename: String
-          public let id: GraphQLID
-          /// The name of the repository.
-          public let name: String
-          /// Indicates if the repository has issues feature enabled.
-          public let hasIssuesEnabled: Bool
-          /// The User owner of the repository.
-          public let owner: Owner
-          /// The description of the repository.
-          public let description: String?
-          /// Identifies when the repository was last pushed to.
-          public let pushedAt: String?
-          /// The primary language of the repository's code.
-          public let primaryLanguage: PrimaryLanguage?
-          /// A list of users who have starred this starrable.
-          public let stargazers: Stargazer
+
+          public let fragments: Fragments
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
-            id = try reader.value(for: Field(responseName: "id"))
-            name = try reader.value(for: Field(responseName: "name"))
-            hasIssuesEnabled = try reader.value(for: Field(responseName: "hasIssuesEnabled"))
-            owner = try reader.value(for: Field(responseName: "owner"))
-            description = try reader.optionalValue(for: Field(responseName: "description"))
-            pushedAt = try reader.optionalValue(for: Field(responseName: "pushedAt"))
-            primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
-            stargazers = try reader.value(for: Field(responseName: "stargazers"))
+
+            let repositoryFields = try RepositoryFields(reader: reader)
+            fragments = Fragments(repositoryFields: repositoryFields)
           }
 
-          public struct Owner: GraphQLMappable {
-            public let __typename: String
-            /// The username used to login.
-            public let login: String
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              login = try reader.value(for: Field(responseName: "login"))
-            }
-          }
-
-          public struct PrimaryLanguage: GraphQLMappable {
-            public let __typename: String
-            /// The name of the current language.
-            public let name: String
-            /// The color defined for the current language.
-            public let color: String?
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              name = try reader.value(for: Field(responseName: "name"))
-              color = try reader.optionalValue(for: Field(responseName: "color"))
-            }
-          }
-
-          public struct Stargazer: GraphQLMappable {
-            public let __typename: String
-            /// Identifies the total count of items in the connection.
-            public let totalCount: Int
-
-            public init(reader: GraphQLResultReader) throws {
-              __typename = try reader.value(for: Field(responseName: "__typename"))
-              totalCount = try reader.value(for: Field(responseName: "totalCount"))
-            }
+          public struct Fragments {
+            public let repositoryFields: RepositoryFields
           }
         }
       }
@@ -3895,6 +4067,98 @@ public struct RepoEventFields: GraphQLNamedFragment {
     public init(reader: GraphQLResultReader) throws {
       __typename = try reader.value(for: Field(responseName: "__typename"))
       login = try reader.value(for: Field(responseName: "login"))
+    }
+  }
+}
+
+public struct RepositoryFields: GraphQLNamedFragment {
+  public static let fragmentDefinition =
+    "fragment repositoryFields on Repository {" +
+    "  __typename" +
+    "  id" +
+    "  name" +
+    "  hasIssuesEnabled" +
+    "  owner {" +
+    "    __typename" +
+    "    login" +
+    "  }" +
+    "  description" +
+    "  pushedAt" +
+    "  primaryLanguage {" +
+    "    __typename" +
+    "    name" +
+    "    color" +
+    "  }" +
+    "  stargazers {" +
+    "    __typename" +
+    "    totalCount" +
+    "  }" +
+    "}"
+
+  public static let possibleTypes = ["Repository"]
+
+  public let __typename: String
+  public let id: GraphQLID
+  /// The name of the repository.
+  public let name: String
+  /// Indicates if the repository has issues feature enabled.
+  public let hasIssuesEnabled: Bool
+  /// The User owner of the repository.
+  public let owner: Owner
+  /// The description of the repository.
+  public let description: String?
+  /// Identifies when the repository was last pushed to.
+  public let pushedAt: String?
+  /// The primary language of the repository's code.
+  public let primaryLanguage: PrimaryLanguage?
+  /// A list of users who have starred this starrable.
+  public let stargazers: Stargazer
+
+  public init(reader: GraphQLResultReader) throws {
+    __typename = try reader.value(for: Field(responseName: "__typename"))
+    id = try reader.value(for: Field(responseName: "id"))
+    name = try reader.value(for: Field(responseName: "name"))
+    hasIssuesEnabled = try reader.value(for: Field(responseName: "hasIssuesEnabled"))
+    owner = try reader.value(for: Field(responseName: "owner"))
+    description = try reader.optionalValue(for: Field(responseName: "description"))
+    pushedAt = try reader.optionalValue(for: Field(responseName: "pushedAt"))
+    primaryLanguage = try reader.optionalValue(for: Field(responseName: "primaryLanguage"))
+    stargazers = try reader.value(for: Field(responseName: "stargazers"))
+  }
+
+  public struct Owner: GraphQLMappable {
+    public let __typename: String
+    /// The username used to login.
+    public let login: String
+
+    public init(reader: GraphQLResultReader) throws {
+      __typename = try reader.value(for: Field(responseName: "__typename"))
+      login = try reader.value(for: Field(responseName: "login"))
+    }
+  }
+
+  public struct PrimaryLanguage: GraphQLMappable {
+    public let __typename: String
+    /// The name of the current language.
+    public let name: String
+    /// The color defined for the current language.
+    public let color: String?
+
+    public init(reader: GraphQLResultReader) throws {
+      __typename = try reader.value(for: Field(responseName: "__typename"))
+      name = try reader.value(for: Field(responseName: "name"))
+      color = try reader.optionalValue(for: Field(responseName: "color"))
+    }
+  }
+
+  public struct Stargazer: GraphQLMappable {
+    public let __typename: String
+    /// Identifies the total count of items in the connection.
+    public let totalCount: Int
+
+    public init(reader: GraphQLResultReader) throws {
+      __typename = try reader.value(for: Field(responseName: "__typename"))
+      totalCount = try reader.value(for: Field(responseName: "totalCount"))
     }
   }
 }

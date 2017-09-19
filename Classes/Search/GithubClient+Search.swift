@@ -29,7 +29,7 @@ extension GithubClient {
                 var builder = [SearchRepoResult]()
                 
                 result?.data?.search.nodes?.forEach {
-                    guard let repo = $0?.asRepository else { return }
+                    guard let repo = $0?.asRepository?.fragments.repositoryFields else { return }
 
                     let primaryLanguage: GithubLanguage?
                     if let language = repo.primaryLanguage {
