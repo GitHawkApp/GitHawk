@@ -36,7 +36,8 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
         guard let object = object else { return }
         let repo = RepositoryDetails(owner: object.owner, name: object.name, hasIssuesEnabled: object.hasIssuesEnabled)
         let repoViewController = RepositoryViewController(client: client, repo: repo)
-        viewController?.showDetailViewController(repoViewController, sender: nil)
+        let navigation = UINavigationController(rootViewController: repoViewController)
+        viewController?.showDetailViewController(navigation, sender: nil)
     }
     
 }

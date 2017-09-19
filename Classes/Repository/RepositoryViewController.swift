@@ -48,6 +48,8 @@ PrimaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+
         feed.viewDidLoad()
         feed.adapter.dataSource = self
         title = "\(repo.owner)/\(repo.name)"
