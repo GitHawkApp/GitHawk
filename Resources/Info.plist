@@ -33,6 +33,7 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1893</string>
+
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
