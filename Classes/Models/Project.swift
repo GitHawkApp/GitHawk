@@ -14,23 +14,39 @@ class Project {
         class Column {
             /// Object defining either an Issue, Pull Request or Note within a project column
             class Card {
+                enum CardType {
+                    case note
+                    case issue(IssueStatus, Int)
+                    case pullRequest(IssueStatus, Int)
+                    
+                    var rawValue: String {
+                        switch self {
+                        case .note: return "note"
+                        case .issue: return "issue"
+                        case .pullRequest: return "pull-request"
+                        }
+                    }
+                }
+                
                 /// Unique identifier for the card
                 let id: String
                 
-                /// If the card is either an Issue or Pull Request this is the ID of that. Nil if type is Note.
-                let contentId: Int?
+                /// Type of card either note, issue or pull request. Contains ID/Status
+                let type: CardType
                 
                 /// Title of Issue/PR or Note
-                let title: String
+                let title: NSAttributedStringSizing
                 
                 /// The actor who created this card
                 let creator: Creator?
                 
-                init(id: String, title: String, creator: Creator?, contentId: Int?) {
+                init(id: String, title: String, creator: Creator?, type: CardType) {
                     self.id = id
-                    self.title = title
                     self.creator = creator
-                    self.contentId = contentId
+                    self.type = type
+                    
+                    let attributed = NSAttributedString(string: title, attributes: ColumnCardCell.titleAttributes)
+                    self.title = NSAttributedStringSizing(containerWidth: 0, attributedText: attributed, inset: ColumnCardCell.titleInset)
                 }
             }
             
@@ -40,9 +56,13 @@ class Project {
             /// Ordered list of cards
             let cards: [Card]
             
-            init(name: String, cards: [Card]) {
+            /// Total amount of cards in this column
+            let totalCount: Int
+            
+            init(name: String, cards: [Card], totalCount: Int) {
                 self.name = name
                 self.cards = cards
+                self.totalCount = totalCount
             }
         }
         
@@ -122,7 +142,28 @@ extension Project.Details.Column.Card: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? Project.Details.Column.Card else { return false }
-        return title == object.title && contentId == object.contentId && creator?.login == object.creator?.login
+        return title == object.title && type.rawValue == object.type.rawValue && creator?.login == object.creator?.login
+    }
+    
+}
+
+extension Project.Details.Column.Card.CardType {
+    
+    var style: (image: UIImage?, color: UIColor) {
+        switch self {
+        case .note: return (UIImage(named: "note"), Styles.Colors.Gray.dark.color)
+        case .issue(let status, _):
+            switch status {
+            case .open: return (UIImage(named: "issue-opened"), Styles.Colors.Green.medium.color)
+            default: return (UIImage(named: "issue-closed"), Styles.Colors.Red.medium.color)
+            }
+        case .pullRequest(let status, _):
+            switch status {
+            case .merged: return (UIImage(named: "git-merge"), Styles.Colors.purple.color)
+            case .closed: return (UIImage(named: "git-pull-request"), Styles.Colors.Red.medium.color)
+            case .open: return (UIImage(named: "git-pull-request"), Styles.Colors.Green.medium.color)
+            }
+        }
     }
     
 }

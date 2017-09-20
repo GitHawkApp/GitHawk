@@ -27,7 +27,15 @@ extension GithubClient {
             DispatchQueue.global().async {
                 var projects: [Project] = nodes.flatMap({ project in
                     guard let project = project else { return nil }
-                    return Project(number: project.number, name: project.name, body: project.body, containerWidth: containerWidth, repo: repository)
+                    
+                    var body = project.body?.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    // Convert empty string into `nil`
+                    if body?.isEmpty == true {
+                        body = nil
+                    }
+                    
+                    return Project(number: project.number, name: project.name, body: body, containerWidth: containerWidth, repo: repository)
                 })
                 
                 if let last = projects.last {
@@ -64,7 +72,6 @@ extension GithubClient {
                         let issue = card.content?.asIssue
                         let pullRequest = card.content?.asPullRequest
                         
-                        let number = issue?.number ?? pullRequest?.number
                         guard let title = issue?.title ?? pullRequest?.title ?? card.note else { return nil }
                         
                         var creator: Creator?
@@ -73,10 +80,28 @@ extension GithubClient {
                             creator = Creator(login: login, url: url)
                         }
                         
-                        return Project.Details.Column.Card(id: card.id, title: title, creator: creator, contentId: number)
+                        var type: Project.Details.Column.Card.CardType
+                        
+                        if let issue = issue {
+                            type = .issue(issue.closed ? .closed : .open, issue.number)
+                        } else if let pullRequest = pullRequest {
+                            var state: IssueStatus
+                            
+                            switch pullRequest.state {
+                            case .closed: state = .closed
+                            case .merged: state = .merged
+                            case .open: state = .open
+                            }
+                            
+                            type = .pullRequest(state, pullRequest.number)
+                        } else {
+                            type = .note
+                        }
+                        
+                        return Project.Details.Column.Card(id: card.id, title: title, creator: creator, type: type)
                     })
                     
-                    return Project.Details.Column(name: column.name, cards: cards ?? [])
+                    return Project.Details.Column(name: column.name, cards: cards ?? [], totalCount: column.cards.totalCount)
                 })
                 
                 DispatchQueue.main.async {

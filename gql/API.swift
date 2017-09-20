@@ -33,23 +33,6 @@ public enum ProjectState: String {
 
 extension ProjectState: JSONDecodable, JSONEncodable {}
 
-/// Various content states of a ProjectCard
-public enum ProjectCardState: String {
-  case contentOnly = "CONTENT_ONLY" /// The card has content only.
-  case noteOnly = "NOTE_ONLY" /// The card has a note only.
-  case redacted = "REDACTED" /// The card is redacted.
-}
-
-extension ProjectCardState: JSONDecodable, JSONEncodable {}
-
-/// The possible states of an issue.
-public enum IssueState: String {
-  case `open` = "OPEN" /// An issue that is still open
-  case closed = "CLOSED" /// An issue that has been closed
-}
-
-extension IssueState: JSONDecodable, JSONEncodable {}
-
 /// The possible states of a pull request.
 public enum PullRequestState: String {
   case `open` = "OPEN" /// A pull request that is still open.
@@ -58,6 +41,14 @@ public enum PullRequestState: String {
 }
 
 extension PullRequestState: JSONDecodable, JSONEncodable {}
+
+/// The possible states of an issue.
+public enum IssueState: String {
+  case `open` = "OPEN" /// An issue that is still open
+  case closed = "CLOSED" /// An issue that has been closed
+}
+
+extension IssueState: JSONDecodable, JSONEncodable {}
 
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationDefinition =
@@ -2837,15 +2828,16 @@ public final class ProjectQuery: GraphQLQuery {
     "                  __typename" +
     "                  number" +
     "                  title" +
+    "                  closed" +
     "                }" +
     "                ... on PullRequest {" +
     "                  __typename" +
     "                  number" +
     "                  title" +
+    "                  state" +
     "                }" +
     "              }" +
     "              note" +
-    "              state" +
     "              creator {" +
     "                __typename" +
     "                login" +
@@ -2945,8 +2937,6 @@ public final class ProjectQuery: GraphQLQuery {
                 public let content: Content?
                 /// The card note
                 public let note: String?
-                /// The state of ProjectCard
-                public let state: ProjectCardState?
                 /// The actor who created this card
                 public let creator: Creator?
 
@@ -2955,7 +2945,6 @@ public final class ProjectQuery: GraphQLQuery {
                   id = try reader.value(for: Field(responseName: "id"))
                   content = try reader.optionalValue(for: Field(responseName: "content"))
                   note = try reader.optionalValue(for: Field(responseName: "note"))
-                  state = try reader.optionalValue(for: Field(responseName: "state"))
                   creator = try reader.optionalValue(for: Field(responseName: "creator"))
                 }
 
@@ -2980,11 +2969,14 @@ public final class ProjectQuery: GraphQLQuery {
                     public let number: Int
                     /// Identifies the issue title.
                     public let title: String
+                    /// `true` if the object is closed (definition of closed may depend on type)
+                    public let closed: Bool
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       number = try reader.value(for: Field(responseName: "number"))
                       title = try reader.value(for: Field(responseName: "title"))
+                      closed = try reader.value(for: Field(responseName: "closed"))
                     }
                   }
 
@@ -2996,11 +2988,14 @@ public final class ProjectQuery: GraphQLQuery {
                     public let number: Int
                     /// Identifies the pull request title.
                     public let title: String
+                    /// Identifies the state of the pull request.
+                    public let state: PullRequestState
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
                       number = try reader.value(for: Field(responseName: "number"))
                       title = try reader.value(for: Field(responseName: "title"))
+                      state = try reader.value(for: Field(responseName: "state"))
                     }
                   }
                 }

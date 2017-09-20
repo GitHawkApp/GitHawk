@@ -1524,8 +1524,8 @@
 		98B5A0EC1F6FF44B000617D6 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				987A57B81F7259F500032F4C /* Column Card */,
 				98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */,
+				987A57B81F7259F500032F4C /* Column Card */,
 				987A57B31F71A3AC00032F4C /* Project Column */,
 				988760FB1F71330600279D92 /* Project List */,
 				988760F61F7130C900279D92 /* Project Summary */,

@@ -51,17 +51,8 @@ final class ProjectColumnCell: UICollectionViewCell {
     }
     
     func configure(_ model: Project.Details.Column, viewController: UIViewController, feedDelegate: FeedDelegate) {
-        feed = Feed(viewController: viewController, delegate: feedDelegate, collectionView: collectionView, managesLayout: false)
-        titleLabel.text = model.name
+        feed = Feed(viewController: viewController, delegate: feedDelegate, collectionView: collectionView)
+        titleLabel.text = model.name + " (\(model.totalCount))" // Use attributed to make this look pretty
     }
-    
-//    override var accessibilityLabel: String? {
-//        get {
-//            return contentView.subviews
-//                .flatMap { $0.accessibilityLabel }
-//                .reduce("", { $0 + ".\n" + $1 })
-//        }
-//        set { }
-//    }
     
 }

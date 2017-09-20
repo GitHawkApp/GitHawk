@@ -11,10 +11,12 @@ query Project($owner: String!, $repo: String!, $number: Int!) {
                 ... on Issue {
                   number
                   title
+                  closed
                 }
                 ... on PullRequest {
                   number
                   title
+                  state
                 }
               }
               note

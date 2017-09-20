@@ -12,15 +12,20 @@ import SnapKit
 final class ColumnCardCell: SelectableCell {
     
     static let titleInset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
+        top: Styles.Sizes.gutter,
+        left: (Styles.Sizes.columnSpacing * 2) + Styles.Sizes.icon.width,
+        bottom: Styles.Sizes.gutter, // TBD
         right: Styles.Sizes.gutter
     )
     
-    private let reasonImageView = UIImageView()
-    private let titleView = AttributedStringView()
-    private let secondaryLabel = UILabel()
+    private let iconImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let infoLabel = AttributedStringView()
+    
+    static let titleAttributes = [
+        NSFontAttributeName: Styles.Fonts.body,
+        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+    ]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,67 +34,39 @@ final class ColumnCardCell: SelectableCell {
         
         contentView.backgroundColor = .white
         
-        contentView.addSubview(titleView)
+        let inset = ColumnCardCell.titleInset
         
-        reasonImageView.backgroundColor = .clear
-        reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.tintColor = Styles.Colors.Blue.medium.color
-        contentView.addSubview(reasonImageView)
-        reasonImageView.snp.makeConstraints { make in
+        titleLabel.numberOfLines = 0
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView).offset(inset.top)
+            make.left.equalTo(contentView).offset(inset.left)
+            make.right.equalTo(contentView).offset(-inset.right)
+        }
+        
+        iconImageView.backgroundColor = .clear
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.tintColor = Styles.Colors.Blue.medium.color
+        contentView.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
-            make.centerY.equalToSuperview()
             make.left.equalTo(Styles.Sizes.columnSpacing)
+            make.top.equalTo(Styles.Sizes.gutter)
         }
         
-        let inset = RepositorySummaryCell.titleInset
-        
-        secondaryLabel.numberOfLines = 1
-        secondaryLabel.font = Styles.Fonts.secondary
-        secondaryLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(secondaryLabel)
-        secondaryLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
-            make.left.equalTo(inset.left)
-            make.right.equalTo(-inset.right)
-        }
-        
-        contentView.addBorder(.bottom, left: inset.left)
+        contentView.addBorder(.bottom)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        titleView.reposition(width: contentView.bounds.width)
-    }
-    
     // MARK: Public API
     
     func configure(_ model: Project.Details.Column.Card) {
-        secondaryLabel.text = model.title
-//        titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
-//        
-//        let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
-//        secondaryLabel.text = String.localizedStringWithFormat(format, model.number, model.created.agoString, model.author)
-//        
-//        let imageName: String
-//        let tint: UIColor
-//        switch model.status {
-//        case .closed:
-//            imageName = model.pullRequest ? "git-pull-request" : "issue-closed"
-//            tint = Styles.Colors.Red.medium.color
-//        case .open:
-//            imageName = model.pullRequest ? "git-pull-request" : "issue-opened"
-//            tint = Styles.Colors.Green.medium.color
-//        case .merged:
-//            imageName = "git-merge"
-//            tint = Styles.Colors.purple.color
-//        }
-//        
-//        reasonImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-//        reasonImageView.tintColor = tint
+        titleLabel.attributedText = model.title.attributedText
+        iconImageView.image = model.type.style.image?.withRenderingMode(.alwaysTemplate)
+        iconImageView.tintColor = model.type.style.color
     }
     
     override var accessibilityLabel: String? {
