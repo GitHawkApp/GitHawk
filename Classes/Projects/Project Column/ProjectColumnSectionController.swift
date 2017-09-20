@@ -13,13 +13,18 @@ final class ProjectColumnSectionController: ListGenericSectionController<Project
     let topLayoutGuide: UILayoutSupport
     let bottomLayoutGuide: UILayoutSupport
     
+    let client: GithubClient
+    let repo: RepositoryDetails
+    
     var feed: Feed? // Set once the cell is configured
     var firstLoad = true
     var cards: [Project.Details.Column.Card]?
     
-    init(topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
+    init(client: GithubClient, repo: RepositoryDetails, topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
         self.topLayoutGuide = topLayoutGuide
         self.bottomLayoutGuide = bottomLayoutGuide
+        self.client = client
+        self.repo = repo
         super.init()
         self.inset = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
     }
@@ -82,7 +87,7 @@ extension ProjectColumnSectionController: FeedDelegate, ListAdapterDataSource {
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return ColumnCardSectionController()
+        return ColumnCardSectionController(client: client, repo: repo)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

@@ -86,7 +86,7 @@ final class ProjectViewController: UIViewController, FeedDelegate, ListAdapterDa
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return ProjectColumnSectionController(topLayoutGuide: topLayoutGuide, bottomLayoutGuide: bottomLayoutGuide)
+        return ProjectColumnSectionController(client: client, repo: repository, topLayoutGuide: topLayoutGuide, bottomLayoutGuide: bottomLayoutGuide)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

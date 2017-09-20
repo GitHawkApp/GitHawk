@@ -37,6 +37,9 @@ class Project {
                 /// Title of Issue/PR or Note
                 let title: NSAttributedStringSizing
                 
+                /// Info label that goes under the title
+                let description: NSAttributedStringSizing
+                
                 /// The actor who created this card
                 let creator: Creator?
                 
@@ -47,6 +50,19 @@ class Project {
                     
                     let attributed = NSAttributedString(string: title, attributes: ColumnCardCell.titleAttributes)
                     self.title = NSAttributedStringSizing(containerWidth: 0, attributedText: attributed, inset: ColumnCardCell.titleInset)
+                    
+                    var infoString: String
+                    switch type {
+                    case .note:
+                        infoString = "Added by \(creator?.login ?? Strings.unknown)"
+                    case .issue(_, let number), .pullRequest(_, let number):
+                        infoString = "#\(number) opened by \(creator?.login ?? Strings.unknown)"
+                    }
+                    
+                    // TODO: Add attributes around creators name (MarkdownAttribute.username) to enable tapping
+                    
+                    let attributedInfo = NSAttributedString(string: infoString, attributes: ColumnCardCell.infoAttributes)
+                    self.description = NSAttributedStringSizing(containerWidth: 0, attributedText: attributedInfo, inset: ColumnCardCell.infoInset)
                 }
             }
             

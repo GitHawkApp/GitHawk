@@ -17,10 +17,9 @@ final class ProjectColumnCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        accessibilityTraits |= UIAccessibilityTraitButton
-//        isAccessibilityElement = true
-        
         contentView.backgroundColor = .white
+        
+        let titleHeight: CGFloat = 50
         
         titleLabel.numberOfLines = 1
         titleLabel.font = Styles.Fonts.body
@@ -31,14 +30,14 @@ final class ProjectColumnCell: UICollectionViewCell {
             make.top.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
             make.right.equalTo(-Styles.Sizes.gutter)
-            make.height.equalTo(40)
+            make.height.equalTo(titleHeight)
         }
         
         titleLabel.addBorder(.bottom, left: -Styles.Sizes.gutter, right: Styles.Sizes.gutter)
         
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0))
+            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: titleHeight, left: 0, bottom: 0, right: 0))
         }
         
         layer.cornerRadius = 5

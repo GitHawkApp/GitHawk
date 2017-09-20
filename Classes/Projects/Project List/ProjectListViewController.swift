@@ -60,7 +60,7 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
         client.loadProjects(for: repository, containerWidth: view.bounds.width, nextPage: nextPageToken) { result in
             switch result {
             case .error(let error):
-                print(error?.localizedDescription)
+                print(error?.localizedDescription ?? "No Error")
             case .success(let projects):
                 self.projects = projects
                 self.update()
