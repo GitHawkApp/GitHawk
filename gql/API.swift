@@ -25,6 +25,23 @@ public enum PullRequestReviewState: String {
 
 extension PullRequestReviewState: JSONDecodable, JSONEncodable {}
 
+/// State of the project; either 'open' or 'closed'
+public enum ProjectState: String {
+  case `open` = "OPEN" /// The project is open.
+  case closed = "CLOSED" /// The project is closed.
+}
+
+extension ProjectState: JSONDecodable, JSONEncodable {}
+
+/// Various content states of a ProjectCard
+public enum ProjectCardState: String {
+  case contentOnly = "CONTENT_ONLY" /// The card has content only.
+  case noteOnly = "NOTE_ONLY" /// The card has a note only.
+  case redacted = "REDACTED" /// The card is redacted.
+}
+
+extension ProjectCardState: JSONDecodable, JSONEncodable {}
+
 /// The possible states of an issue.
 public enum IssueState: String {
   case `open` = "OPEN" /// An issue that is still open
@@ -2725,6 +2742,7 @@ public final class LoadProjectsQuery: GraphQLQuery {
     "        number" +
     "        name" +
     "        body" +
+    "        state" +
     "      }" +
     "    }" +
     "  }" +
@@ -2780,12 +2798,15 @@ public final class LoadProjectsQuery: GraphQLQuery {
           public let name: String
           /// The project's description body.
           public let body: String?
+          /// Whether the project is open or closed.
+          public let state: ProjectState
 
           public init(reader: GraphQLResultReader) throws {
             __typename = try reader.value(for: Field(responseName: "__typename"))
             number = try reader.value(for: Field(responseName: "number"))
             name = try reader.value(for: Field(responseName: "name"))
             body = try reader.optionalValue(for: Field(responseName: "body"))
+            state = try reader.value(for: Field(responseName: "state"))
           }
         }
       }
@@ -2805,22 +2826,26 @@ public final class ProjectQuery: GraphQLQuery {
     "        nodes {" +
     "          __typename" +
     "          name" +
-    "          cards(first: 1) {" +
+    "          cards(first: 10) {" +
     "            __typename" +
     "            nodes {" +
     "              __typename" +
+    "              id" +
     "              content {" +
     "                __typename" +
     "                ... on Issue {" +
     "                  __typename" +
+    "                  number" +
     "                  title" +
     "                }" +
     "                ... on PullRequest {" +
     "                  __typename" +
+    "                  number" +
     "                  title" +
     "                }" +
     "              }" +
     "              note" +
+    "              state" +
     "              creator {" +
     "                __typename" +
     "                login" +
@@ -2897,7 +2922,7 @@ public final class ProjectQuery: GraphQLQuery {
             public init(reader: GraphQLResultReader) throws {
               __typename = try reader.value(for: Field(responseName: "__typename"))
               name = try reader.value(for: Field(responseName: "name"))
-              cards = try reader.value(for: Field(responseName: "cards", arguments: ["first": 1]))
+              cards = try reader.value(for: Field(responseName: "cards", arguments: ["first": 10]))
             }
 
             public struct Card: GraphQLMappable {
@@ -2915,17 +2940,22 @@ public final class ProjectQuery: GraphQLQuery {
 
               public struct Node: GraphQLMappable {
                 public let __typename: String
+                public let id: GraphQLID
                 /// The card content item
                 public let content: Content?
                 /// The card note
                 public let note: String?
+                /// The state of ProjectCard
+                public let state: ProjectCardState?
                 /// The actor who created this card
                 public let creator: Creator?
 
                 public init(reader: GraphQLResultReader) throws {
                   __typename = try reader.value(for: Field(responseName: "__typename"))
+                  id = try reader.value(for: Field(responseName: "id"))
                   content = try reader.optionalValue(for: Field(responseName: "content"))
                   note = try reader.optionalValue(for: Field(responseName: "note"))
+                  state = try reader.optionalValue(for: Field(responseName: "state"))
                   creator = try reader.optionalValue(for: Field(responseName: "creator"))
                 }
 
@@ -2946,11 +2976,14 @@ public final class ProjectQuery: GraphQLQuery {
                     public static let possibleTypes = ["Issue"]
 
                     public let __typename: String
+                    /// Identifies the issue number.
+                    public let number: Int
                     /// Identifies the issue title.
                     public let title: String
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
+                      number = try reader.value(for: Field(responseName: "number"))
                       title = try reader.value(for: Field(responseName: "title"))
                     }
                   }
@@ -2959,11 +2992,14 @@ public final class ProjectQuery: GraphQLQuery {
                     public static let possibleTypes = ["PullRequest"]
 
                     public let __typename: String
+                    /// Identifies the pull request number.
+                    public let number: Int
                     /// Identifies the pull request title.
                     public let title: String
 
                     public init(reader: GraphQLResultReader) throws {
                       __typename = try reader.value(for: Field(responseName: "__typename"))
+                      number = try reader.value(for: Field(responseName: "number"))
                       title = try reader.value(for: Field(responseName: "title"))
                     }
                   }

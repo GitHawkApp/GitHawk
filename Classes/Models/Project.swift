@@ -12,12 +12,32 @@ class Project {
     
     struct Details {
         class Column {
-            /// Object defining either an Issue, Repository or Note within a project column
-            struct Card {
-                let temp: String
+            /// Object defining either an Issue, Pull Request or Note within a project column
+            class Card {
+                /// Unique identifier for the card
+                let id: String
+                
+                /// If the card is either an Issue or Pull Request this is the ID of that. Nil if type is Note.
+                let contentId: Int?
+                
+                /// Title of Issue/PR or Note
+                let title: String
+                
+                /// The actor who created this card
+                let creator: Creator?
+                
+                init(id: String, title: String, creator: Creator?, contentId: Int?) {
+                    self.id = id
+                    self.title = title
+                    self.creator = creator
+                    self.contentId = contentId
+                }
             }
             
+            /// Title of the column
             let name: String
+            
+            /// Ordered list of cards
             let cards: [Card]
             
             init(name: String, cards: [Card]) {
@@ -26,6 +46,7 @@ class Project {
             }
         }
         
+        /// Ordered list of columns
         let columns: [Column]
     }
     
@@ -86,7 +107,22 @@ extension Project.Details.Column: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? Project.Details.Column else { return false }
+        // Don't need to compare cards as the nested collection view will deal with that
         return name == object.name
+    }
+    
+}
+
+extension Project.Details.Column.Card: ListDiffable {
+    
+    func diffIdentifier() -> NSObjectProtocol {
+        return id as NSString
+    }
+    
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        if self === object { return true }
+        guard let object = object as? Project.Details.Column.Card else { return false }
+        return title == object.title && contentId == object.contentId && creator?.login == object.creator?.login
     }
     
 }

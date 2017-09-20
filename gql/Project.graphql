@@ -4,13 +4,16 @@ query Project($owner: String!, $repo: String!, $number: Int!) {
       columns(first: 10) {
         nodes {
           name
-          cards(first: 1) {
+          cards(first: 10) {
             nodes {
+              id
               content {
                 ... on Issue {
+                  number
                   title
                 }
                 ... on PullRequest {
+                  number
                   title
                 }
               }

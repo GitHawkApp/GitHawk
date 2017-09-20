@@ -5,6 +5,7 @@ query LoadProjects($owner: String!, $repo: String!, $after: String) {
         number
         name
         body
+        state
       }
     }
   }

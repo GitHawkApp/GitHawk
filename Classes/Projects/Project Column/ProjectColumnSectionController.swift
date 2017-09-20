@@ -78,11 +78,11 @@ extension ProjectColumnSectionController: FeedDelegate, ListAdapterDataSource {
     // MARK: - ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
+        return cards ?? []
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        fatalError()
+        return ColumnCardSectionController()
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

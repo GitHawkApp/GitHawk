@@ -57,8 +57,26 @@ extension GithubClient {
             DispatchQueue.global().async {
                 let columns: [Project.Details.Column]? = project.columns.nodes?.flatMap({
                     guard let column = $0 else { return nil }
-                    // Need to parse cards
-                    return Project.Details.Column(name: column.name, cards: [])
+                    
+                    let cards: [Project.Details.Column.Card]? = column.cards.nodes?.flatMap({
+                        guard let card = $0 else { return nil }
+                        
+                        let issue = card.content?.asIssue
+                        let pullRequest = card.content?.asPullRequest
+                        
+                        let number = issue?.number ?? pullRequest?.number
+                        guard let title = issue?.title ?? pullRequest?.title ?? card.note else { return nil }
+                        
+                        var creator: Creator?
+                        
+                        if let login = card.creator?.login, let urlString = card.creator?.url, let url = URL(string: urlString) {
+                            creator = Creator(login: login, url: url)
+                        }
+                        
+                        return Project.Details.Column.Card(id: card.id, title: title, creator: creator, contentId: number)
+                    })
+                    
+                    return Project.Details.Column(name: column.name, cards: cards ?? [])
                 })
                 
                 DispatchQueue.main.async {
