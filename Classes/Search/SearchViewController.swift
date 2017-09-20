@@ -15,7 +15,8 @@ class SearchViewController: UIViewController,
     UISearchBarDelegate,
 SearchEmptyViewDelegate,
 SearchRecentSectionControllerDelegate,
-SearchRecentHeaderSectionControllerDelegate {
+SearchRecentHeaderSectionControllerDelegate,
+SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -135,7 +136,7 @@ SearchRecentHeaderSectionControllerDelegate {
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)
         } else if object is SearchRepoResult {
-            return SearchResultSectionController(client: client)
+            return SearchResultSectionController(client: client, delegate: self)
         } else if object is String {
             return SearchRecentSectionController(delegate: self)
         }
@@ -189,6 +190,12 @@ SearchRecentHeaderSectionControllerDelegate {
         
         state = .idle
         update(animated: false)
+    }
+
+    // MARK: SearchResultSectionControllerDelegate
+
+    func didSelect(result: SearchRepoResult) {
+        searchBar.resignFirstResponder()
     }
     
     // MARK: SearchEmptyViewDelegate
