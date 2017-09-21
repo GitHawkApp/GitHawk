@@ -9,7 +9,10 @@
 import UIKit
 import IGListKit
 
-final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapterDataSource {
+final class ProjectListViewController: UIViewController,
+    FeedDelegate,
+    ListAdapterDataSource,
+    LoadMoreSectionControllerDelegate {
 
     private let client: GithubClient
     private let repository: RepositoryDetails
@@ -17,6 +20,8 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var projects: [Project]?
     private var nextPageToken: String?
+    private let loadMore = "loadMore" as ListDiffable
+    private var errorOnLoad = false
     
     // MARK: - Initialiser
     
@@ -59,13 +64,25 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
     private func reload(loadNext: Bool = false) {
         let nextPage = loadNext ? nextPageToken : nil
         client.loadProjects(for: repository, containerWidth: view.bounds.width, nextPage: nextPage) { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             switch result {
             case .error(let error):
-                print(error?.localizedDescription ?? "No Error")
+                if strongSelf.projects == nil {
+                    strongSelf.errorOnLoad = true
+                }
+                
+                print(error?.localizedDescription ?? "No Error Description")
             case .success(let payload):
-                self?.nextPageToken = payload.nextPage
-                self?.projects = payload.projects
-                self?.update()
+                strongSelf.nextPageToken = payload.nextPage
+                
+                if strongSelf.projects != nil {
+                    strongSelf.projects?.append(contentsOf: payload.projects)
+                } else {
+                    strongSelf.projects = payload.projects
+                }
+                
+                strongSelf.update()
             }
         }
     }
@@ -77,20 +94,51 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
     }
     
     func loadNextPage(feed: Feed) -> Bool {
-        return nextPageToken != nil
+        return false
     }
 
     // MARK: - ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return projects ?? []
+        var builder: [ListDiffable] = projects ?? []
+        
+        if nextPageToken != nil {
+            builder.append(loadMore)
+        }
+        
+        return builder
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return ProjectSummarySectionController(client: client, repo: repository)
+        guard let object = object as? ListDiffable else { fatalError("Unexpected Object") }
+        
+        if object === loadMore { return LoadMoreSectionController(delegate: self) }
+        else if object is Project { return ProjectSummarySectionController(client: client, repo: repository) }
+        
+        fatalError("Unhandled Item Type")
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+        switch feed.status {
+        case .idle:
+            let emptyView = EmptyView()
+            
+            if errorOnLoad {
+                emptyView.label.text = NSLocalizedString("Error loading projects", comment: "")
+            } else {
+                emptyView.label.text = NSLocalizedString("No projects were found!", comment: "")
+            }
+            
+            return emptyView
+        case .loading, .loadingNext:
+            return nil
+        }
     }
+    
+    // MARK: LoadMoreSectionControllerDelegate
+    
+    func didSelect(sectionController: LoadMoreSectionController) {
+        reload(loadNext: true)
+    }
+    
 }
