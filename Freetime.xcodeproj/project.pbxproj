@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
+		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
+		2905AFAF1F7357FA0015AE32 /* RepositoryViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAE1F7357FA0015AE32 /* RepositoryViewController2.swift */; };
 		290744A91F24D2DA00FD9E48 /* AddCommentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744A81F24D2DA00FD9E48 /* AddCommentClient.swift */; };
 		290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B11F250A6800FD9E48 /* AutocompleteCell.swift */; };
 		290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290744B21F250A6800FD9E48 /* EmojiAutocomplete.swift */; };
@@ -362,6 +365,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
+		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
+		2905AFAE1F7357FA0015AE32 /* RepositoryViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController2.swift; sourceTree = "<group>"; };
 		290744A81F24D2DA00FD9E48 /* AddCommentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentClient.swift; sourceTree = "<group>"; };
 		290744B11F250A6800FD9E48 /* AutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
 		290744B21F250A6800FD9E48 /* EmojiAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiAutocomplete.swift; sourceTree = "<group>"; };
@@ -1435,6 +1441,9 @@
 				292ACE191F5CAF9F00C9A02C /* Empty */,
 				986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */,
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
+				2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */,
+				2905AFAE1F7357FA0015AE32 /* RepositoryViewController2.swift */,
+				2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */,
 				29EDFE7F1F6606B6005BCCEB /* RepositoryDataSource.swift */,
 				292ACE171F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift */,
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
@@ -1628,9 +1637,12 @@
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1643,9 +1655,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1714,9 +1729,12 @@
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1729,9 +1747,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1789,6 +1810,7 @@
 				292FCAFC1EDFCC510026635E /* IssueCommentImageModel.swift in Sources */,
 				292CD3D01F0DBB5C00D3D57B /* WebviewCellHeightCache.swift in Sources */,
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
+				2905AFAF1F7357FA0015AE32 /* RepositoryViewController2.swift in Sources */,
 				292FCAF81EDFCC510026635E /* CollapsibleCell.swift in Sources */,
 				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
@@ -1833,6 +1855,7 @@
 				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
 				29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
+				2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */,
 				299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
@@ -1988,6 +2011,7 @@
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
 				293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
+				2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */,
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,

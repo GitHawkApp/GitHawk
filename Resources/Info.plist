@@ -32,7 +32,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
+<<<<<<< HEAD
 	<string>1897</string>
+=======
+	<string>1912</string>
+>>>>>>> WIP paging control on repos
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
