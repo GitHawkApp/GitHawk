@@ -56,14 +56,16 @@ final class ProjectListViewController: UIViewController, FeedDelegate, ListAdapt
         feed.finishLoading(dismissRefresh: true, animated: true, completion: nil)
     }
     
-    private func reload() {
-        client.loadProjects(for: repository, containerWidth: view.bounds.width, nextPage: nextPageToken) { result in
+    private func reload(loadNext: Bool = false) {
+        let nextPage = loadNext ? nextPageToken : nil
+        client.loadProjects(for: repository, containerWidth: view.bounds.width, nextPage: nextPage) { [weak self] result in
             switch result {
             case .error(let error):
                 print(error?.localizedDescription ?? "No Error")
-            case .success(let projects):
-                self.projects = projects
-                self.update()
+            case .success(let payload):
+                self?.nextPageToken = payload.nextPage
+                self?.projects = payload.projects
+                self?.update()
             }
         }
     }

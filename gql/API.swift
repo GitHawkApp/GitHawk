@@ -2726,7 +2726,7 @@ public final class LoadProjectsQuery: GraphQLQuery {
     "query LoadProjects($owner: String!, $repo: String!, $after: String) {" +
     "  repository(owner: $owner, name: $repo) {" +
     "    __typename" +
-    "    projects(first: 10, after: $after) {" +
+    "    projects(first: 1, after: $after) {" +
     "      __typename" +
     "      nodes {" +
     "        __typename" +
@@ -2734,6 +2734,11 @@ public final class LoadProjectsQuery: GraphQLQuery {
     "        name" +
     "        body" +
     "        state" +
+    "      }" +
+    "      pageInfo {" +
+    "        __typename" +
+    "        hasNextPage" +
+    "        endCursor" +
     "      }" +
     "    }" +
     "  }" +
@@ -2768,17 +2773,20 @@ public final class LoadProjectsQuery: GraphQLQuery {
 
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
-        projects = try reader.value(for: Field(responseName: "projects", arguments: ["first": 10, "after": reader.variables["after"]]))
+        projects = try reader.value(for: Field(responseName: "projects", arguments: ["first": 1, "after": reader.variables["after"]]))
       }
 
       public struct Project: GraphQLMappable {
         public let __typename: String
         /// A list of nodes.
         public let nodes: [Node?]?
+        /// Information to aid in pagination.
+        public let pageInfo: PageInfo
 
         public init(reader: GraphQLResultReader) throws {
           __typename = try reader.value(for: Field(responseName: "__typename"))
           nodes = try reader.optionalList(for: Field(responseName: "nodes"))
+          pageInfo = try reader.value(for: Field(responseName: "pageInfo"))
         }
 
         public struct Node: GraphQLMappable {
@@ -2798,6 +2806,20 @@ public final class LoadProjectsQuery: GraphQLQuery {
             name = try reader.value(for: Field(responseName: "name"))
             body = try reader.optionalValue(for: Field(responseName: "body"))
             state = try reader.value(for: Field(responseName: "state"))
+          }
+        }
+
+        public struct PageInfo: GraphQLMappable {
+          public let __typename: String
+          /// When paginating forwards, are there more items?
+          public let hasNextPage: Bool
+          /// When paginating forwards, the cursor to continue.
+          public let endCursor: String?
+
+          public init(reader: GraphQLResultReader) throws {
+            __typename = try reader.value(for: Field(responseName: "__typename"))
+            hasNextPage = try reader.value(for: Field(responseName: "hasNextPage"))
+            endCursor = try reader.optionalValue(for: Field(responseName: "endCursor"))
           }
         }
       }

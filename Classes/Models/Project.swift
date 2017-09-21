@@ -90,14 +90,16 @@ class Project {
     let name: String
     let body: NSAttributedStringSizing?
     let repository: RepositoryDetails
+    let isClosed: Bool
     
     // Currently, only loaded once the user enters a project
     var details: Details?
     
-    init(number: Int, name: String, body: String?, containerWidth: CGFloat, repo: RepositoryDetails) {
+    init(number: Int, name: String, body: String?, closed: Bool, containerWidth: CGFloat, repo: RepositoryDetails) {
         self.number = number
         self.name = name
         self.repository = repo
+        self.isClosed = closed
         
         if let body = body {
             let attributedString = NSAttributedString(string: body, attributes: ProjectSummaryCell.descriptionAttributes)

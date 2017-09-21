@@ -10,22 +10,27 @@ import Foundation
 
 extension GithubClient {
     
+    struct ProjectPayload {
+        let projects: [Project]
+        let nextPage: String?
+    }
+    
     func loadProjects(for repository: RepositoryDetails,
                       containerWidth: CGFloat,
                       nextPage: String?,
-                      completion: @escaping (Result<[Project]>) -> Void) {
+                      completion: @escaping (Result<ProjectPayload>) -> Void) {
         
         let query = LoadProjectsQuery(owner: repository.owner, repo: repository.name, after: nextPage)
         
         fetch(query: query) { (result, error) in
-            guard error == nil, result?.errors == nil, let nodes = result?.data?.repository?.projects.nodes else {
+            guard error == nil, result?.errors == nil, let data = result?.data?.repository?.projects, let nodes = data.nodes else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error(nil))
                 return
             }
 
             DispatchQueue.global().async {
-                var projects: [Project] = nodes.flatMap({ project in
+                let projects: [Project] = nodes.flatMap({ project in
                     guard let project = project else { return nil }
                     
                     var body = project.body?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -35,18 +40,21 @@ extension GithubClient {
                         body = nil
                     }
                     
-                    return Project(number: project.number, name: project.name, body: body, containerWidth: containerWidth, repo: repository)
+                    return Project(number: project.number,
+                                   name: project.name,
+                                   body: body,
+                                   closed: project.state == .closed,
+                                   containerWidth: containerWidth,
+                                   repo: repository)
                 })
                 
-                if let last = projects.last {
-                    // Using Alamofire for testing, so just duping the last one without a body to test both situations
-                    projects.append(Project(number: last.number + 1, name: "Test Project w/o description", body: nil, containerWidth: containerWidth, repo: repository))
+                var nextPage: String?
+                if data.pageInfo.hasNextPage {
+                    nextPage = data.pageInfo.endCursor
                 }
                 
-                // Also need to return any paging info needed
-                
                 DispatchQueue.main.async {
-                    completion(.success(projects))
+                    completion(.success(ProjectPayload(projects: projects, nextPage: nextPage)))
                 }
             }
         }

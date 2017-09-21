@@ -18,8 +18,10 @@ final class ProjectSummaryCell: SelectableCell {
         right: Styles.Sizes.gutter
     )
     
+    private let closedIndicator = UIButton()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
+    private var closedIndicatorToTitleConstraint: Constraint?
     
     static let descriptionAttributes = [
         NSFontAttributeName: Styles.Fonts.secondary,
@@ -35,13 +37,27 @@ final class ProjectSummaryCell: SelectableCell {
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
+        contentView.addSubview(closedIndicator)
+        
+        closedIndicator.titleLabel?.font = Styles.Fonts.secondary
+        closedIndicator.setTitleColor(Styles.Colors.Red.medium.color, for: .normal)
+        closedIndicator.layer.borderColor = Styles.Colors.Red.medium.color.cgColor
+        closedIndicator.layer.borderWidth = 1
+        closedIndicator.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        closedIndicator.contentEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
+        closedIndicator.layer.cornerRadius = 3
+        closedIndicator.snp.makeConstraints { make in
+            make.top.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(ProjectSummaryCell.descriptionInset.left)
+        }
         
         titleLabel.textColor = Styles.Colors.Gray.dark.color
         titleLabel.font = Styles.Fonts.body
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.gutter)
-            make.left.equalTo(ProjectSummaryCell.descriptionInset.left)
+            make.left.equalTo(ProjectSummaryCell.descriptionInset.left).priority(500)
+            self.closedIndicatorToTitleConstraint = make.left.equalTo(closedIndicator.snp.right).offset(Styles.Sizes.columnSpacing).constraint
             make.right.equalTo(ProjectSummaryCell.descriptionInset.right)
         }
         
@@ -62,6 +78,17 @@ final class ProjectSummaryCell: SelectableCell {
     func configure(_ model: Project) {
         titleLabel.text = model.name
         descriptionLabel.attributedText = model.body?.attributedText
+        closedIndicator.setTitle(model.isClosed ? Strings.closed : nil, for: .normal)
+        closedIndicator.isHidden = !model.isClosed
+        
+        let gray = Styles.Colors.Gray.self
+        titleLabel.textColor = model.isClosed ? gray.light.color : gray.dark.color
+        
+        if model.isClosed {
+            closedIndicatorToTitleConstraint?.activate()
+        } else {
+            closedIndicatorToTitleConstraint?.deactivate()
+        }
     }
     
     override var accessibilityLabel: String? {

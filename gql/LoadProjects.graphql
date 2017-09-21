@@ -1,11 +1,15 @@
 query LoadProjects($owner: String!, $repo: String!, $after: String) {
   repository(owner: $owner, name: $repo) {
-    projects(first: 10, after: $after) {
+    projects(first: 1, after: $after) {
       nodes {
         number
         name
         body
         state
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
