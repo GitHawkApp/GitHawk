@@ -3,21 +3,7 @@ query SearchRepos($search: String!, $before: String) {
     # Search Results
     nodes {
     	... on Repository {
-        id
-        name
-        hasIssuesEnabled
-        owner {
-          login
-        }
-        description
-        pushedAt
-        primaryLanguage {
-          name
-          color
-        }
-        stargazers {
-          totalCount
-        }
+        ...repositoryFields
       }
     }
 

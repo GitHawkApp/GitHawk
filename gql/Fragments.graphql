@@ -84,3 +84,21 @@ fragment repoEventFields on Comment {
     login
   }
 }
+
+fragment repositoryFields on Repository {
+  id
+  name
+  hasIssuesEnabled
+  owner {
+    login
+  }
+  description
+  pushedAt
+  primaryLanguage {
+    name
+    color
+  }
+  stargazers {
+    totalCount
+  }
+}

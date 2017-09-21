@@ -108,7 +108,14 @@ PrimaryViewController {
             let controller = SFSafariViewController(url: strongSelf.repoOwnerUrl)
             strongSelf.present(controller, animated: true)
         }
-
+    }
+    
+    func viewProjectsAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("View Projects", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = ProjectListViewController(client: strongSelf.client.githubClient, repository: strongSelf.repo)
+            strongSelf.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func onMore(sender: UIBarButtonItem) {
@@ -117,6 +124,7 @@ PrimaryViewController {
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())
+        alert.addAction(viewProjectsAction()) // Probably a better location for this
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
     }

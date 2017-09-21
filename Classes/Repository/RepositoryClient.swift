@@ -191,7 +191,7 @@ final class RepositoryClient {
             } else {
                 prNextPage = nil
             }
-
+            
             completion(.success(RepositoryDetailsPayload(
                 issues: RepositoryPayload(models: issues, nextPage: issueNextPage),
                 pullRequests: RepositoryPayload(models: prs, nextPage: prNextPage)

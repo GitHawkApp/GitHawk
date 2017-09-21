@@ -329,9 +329,20 @@
 		986B873A1F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */; };
 		986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */; };
 		986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */; };
+		987A57B51F71A5DB00032F4C /* ProjectColumnSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */; };
+		987A57B71F71A61200032F4C /* ProjectColumnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57B61F71A61200032F4C /* ProjectColumnCell.swift */; };
+		987A57BA1F725A1B00032F4C /* ColumnCardSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57B91F725A1B00032F4C /* ColumnCardSectionController.swift */; };
+		987A57BC1F725A5C00032F4C /* ColumnCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57BB1F725A5C00032F4C /* ColumnCardCell.swift */; };
+		987A57BE1F72602800032F4C /* Creator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987A57BD1F72602800032F4C /* Creator.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
+		988760F81F7130F300279D92 /* ProjectSummarySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988760F71F7130F300279D92 /* ProjectSummarySectionController.swift */; };
+		988760FA1F71311900279D92 /* ProjectSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988760F91F71311900279D92 /* ProjectSummaryCell.swift */; };
+		988760FE1F71335B00279D92 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988760FD1F71335B00279D92 /* ProjectViewController.swift */; };
+		98B5A0EE1F6FF46C000617D6 /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */; };
+		98B5A10B1F710827000617D6 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A10A1F710827000617D6 /* Project.swift */; };
+		98B5A1131F710E2E000617D6 /* GithubClient+Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */; };
 		98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F0A0421F27BC4B0062A2CA /* emoji.json */; };
 /* End PBXBuildFile section */
 
@@ -659,9 +670,20 @@
 		986B87391F2CE44F00AAB55C /* SegmentedControlModel+Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SegmentedControlModel+Repository.swift"; sourceTree = "<group>"; };
 		986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GQL+RepositoryIssueSummaryType.swift"; sourceTree = "<group>"; };
 		986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryClient.swift; sourceTree = "<group>"; };
+		987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectColumnSectionController.swift; sourceTree = "<group>"; };
+		987A57B61F71A61200032F4C /* ProjectColumnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectColumnCell.swift; sourceTree = "<group>"; };
+		987A57B91F725A1B00032F4C /* ColumnCardSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnCardSectionController.swift; sourceTree = "<group>"; };
+		987A57BB1F725A5C00032F4C /* ColumnCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnCardCell.swift; sourceTree = "<group>"; };
+		987A57BD1F72602800032F4C /* Creator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Creator.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
+		988760F71F7130F300279D92 /* ProjectSummarySectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSummarySectionController.swift; sourceTree = "<group>"; };
+		988760F91F71311900279D92 /* ProjectSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSummaryCell.swift; sourceTree = "<group>"; };
+		988760FD1F71335B00279D92 /* ProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectListViewController.swift; sourceTree = "<group>"; };
+		98B5A10A1F710827000617D6 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Projects.swift"; sourceTree = "<group>"; };
 		98F0A0421F27BC4B0062A2CA /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
 		CB06D68438D845EC6D23788D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7BD38A4C4C37947FA1FBFB5 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1127,6 +1149,7 @@
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				297AE8611EC0D5C100B44A1F /* Other */,
+				98B5A0EC1F6FF44B000617D6 /* Projects */,
 				986B872E1F2CA8E800AAB55C /* Repository */,
 				986B87171F2B873200AAB55C /* Search */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
@@ -1155,12 +1178,14 @@
 				297AE85F1EC0D5C100B44A1F /* App.swift */,
 				297AE8601EC0D5C100B44A1F /* Authorization.swift */,
 				291929581F3FB1D20012067B /* Content.swift */,
+				987A57BD1F72602800032F4C /* Creator.swift */,
 				291929411F3EA8CD0012067B /* File.swift */,
 				2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */,
 				291929591F3FB1D20012067B /* Link.swift */,
 				29C9FDBA1EC65FEE00EE3A52 /* Notification.swift */,
 				29C9FDBB1EC65FEE00EE3A52 /* Organization.swift */,
 				29C9FDBC1EC65FEE00EE3A52 /* Permission.swift */,
+				98B5A10A1F710827000617D6 /* Project.swift */,
 				29C9FDBF1EC65FEE00EE3A52 /* Repository.swift */,
 				29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */,
 				29C9FDC31EC65FEE00EE3A52 /* Subject.swift */,
@@ -1444,6 +1469,24 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		987A57B31F71A3AC00032F4C /* Project Column */ = {
+			isa = PBXGroup;
+			children = (
+				987A57B41F71A5DB00032F4C /* ProjectColumnSectionController.swift */,
+				987A57B61F71A61200032F4C /* ProjectColumnCell.swift */,
+			);
+			path = "Project Column";
+			sourceTree = "<group>";
+		};
+		987A57B81F7259F500032F4C /* Column Card */ = {
+			isa = PBXGroup;
+			children = (
+				987A57B91F725A1B00032F4C /* ColumnCardSectionController.swift */,
+				987A57BB1F725A5C00032F4C /* ColumnCardCell.swift */,
+			);
+			path = "Column Card";
+			sourceTree = "<group>";
+		};
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -1451,6 +1494,44 @@
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		988760F61F7130C900279D92 /* Project Summary */ = {
+			isa = PBXGroup;
+			children = (
+				988760F71F7130F300279D92 /* ProjectSummarySectionController.swift */,
+				988760F91F71311900279D92 /* ProjectSummaryCell.swift */,
+			);
+			path = "Project Summary";
+			sourceTree = "<group>";
+		};
+		988760FB1F71330600279D92 /* Project List */ = {
+			isa = PBXGroup;
+			children = (
+				98B5A0ED1F6FF46C000617D6 /* ProjectListViewController.swift */,
+			);
+			path = "Project List";
+			sourceTree = "<group>";
+		};
+		988760FC1F71334200279D92 /* Project View */ = {
+			isa = PBXGroup;
+			children = (
+				988760FD1F71335B00279D92 /* ProjectViewController.swift */,
+			);
+			path = "Project View";
+			sourceTree = "<group>";
+		};
+		98B5A0EC1F6FF44B000617D6 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				98B5A1121F710E2E000617D6 /* GithubClient+Projects.swift */,
+				987A57B81F7259F500032F4C /* Column Card */,
+				987A57B31F71A3AC00032F4C /* Project Column */,
+				988760FB1F71330600279D92 /* Project List */,
+				988760F61F7130C900279D92 /* Project Summary */,
+				988760FC1F71334200279D92 /* Project View */,
+			);
+			path = Projects;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -1789,6 +1870,7 @@
 				290744BA1F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
 				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
+				98B5A0EE1F6FF46C000617D6 /* ProjectListViewController.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
@@ -1817,6 +1899,7 @@
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */,
 				29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */,
+				987A57BE1F72602800032F4C /* Creator.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
@@ -1833,6 +1916,7 @@
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
+				988760F81F7130F300279D92 /* ProjectSummarySectionController.swift in Sources */,
 				297403D31F1850DC00ABA95A /* IssueAssigneeViewModel.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
@@ -1844,6 +1928,7 @@
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
+				988760FA1F71311900279D92 /* ProjectSummaryCell.swift in Sources */,
 				291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
@@ -1880,12 +1965,14 @@
 				290744B61F250A6800FD9E48 /* IssueCommentAutocomplete.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
+				987A57B51F71A5DB00032F4C /* ProjectColumnSectionController.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
+				98B5A10B1F710827000617D6 /* Project.swift in Sources */,
 				29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
@@ -1906,6 +1993,7 @@
 				291929421F3EA8CD0012067B /* File.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
 				292FCB081EDFCC510026635E /* IssueCommentSummaryCell.swift in Sources */,
+				987A57BA1F725A1B00032F4C /* ColumnCardSectionController.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				2974069B1F0EDC7C003A6BFB /* IssueCommentTableModel.swift in Sources */,
@@ -1919,6 +2007,7 @@
 				986B87381F2CB29700AAB55C /* RepositorySummaryCell.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */,
+				988760FE1F71335B00279D92 /* ProjectViewController.swift in Sources */,
 				291929551F3FAADF0012067B /* FeedRefresh.swift in Sources */,
 				297403DD1F185A8700ABA95A /* IssueAssigneeUserCell.swift in Sources */,
 				292FCB2C1EE054900026635E /* API.swift in Sources */,
@@ -1941,6 +2030,7 @@
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				2919294B1F3EAD890012067B /* IssueViewFilesCell.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
+				987A57BC1F725A5C00032F4C /* ColumnCardCell.swift in Sources */,
 				291929691F40EEBD0012067B /* NotificationsDataSource.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */,
@@ -1957,6 +2047,7 @@
 				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */,
+				98B5A1131F710E2E000617D6 /* GithubClient+Projects.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
@@ -1987,6 +2078,7 @@
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
+				987A57B71F71A61200032F4C /* ProjectColumnCell.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
