@@ -168,7 +168,7 @@ IssueTextActionsViewDelegate {
             let text = text {
             addCommentClient.addComment(
                 subjectId: subjectId,
-                body: Signature.signed(text: text)
+                body: text
             )
         }
     }
