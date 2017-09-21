@@ -124,6 +124,7 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
     [super layoutSubviews];
 
     [self bringSubviewToFront:self.textView];
+    [self bringSubviewToFront:self.contentView];
     [self bringSubviewToFront:self.rightButton];
     [self bringSubviewToFront:self.leftButton];
 }
