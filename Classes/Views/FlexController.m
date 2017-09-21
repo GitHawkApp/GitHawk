@@ -8,7 +8,7 @@
 
 #import "FlexController.h"
 
-#if DEBUG
+#if DEBUG || TESTFLIGHT
 #import <FLEX/FLEX.h>
 #endif
 
@@ -21,7 +21,7 @@
 }
 
 - (void)onTap:(UITapGestureRecognizer *)recognizer {
-#if DEBUG
+#if DEBUG || TESTFLIGHT
     if (recognizer.state == UIGestureRecognizerStateRecognized) {
         [[FLEXManager sharedManager] showExplorer];
     }
