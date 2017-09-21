@@ -95,7 +95,7 @@ final class ProjectSummaryCell: SelectableCell {
         get {
             return contentView.subviews
                 .flatMap { $0.accessibilityLabel }
-                .reduce("", { $0 + ".\n" + $1 })
+                .reduce("", { "\($0 ?? "").\n\($1)" })
         }
         set { }
     }
