@@ -117,6 +117,7 @@ PrimaryViewController {
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
     }
