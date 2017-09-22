@@ -114,7 +114,7 @@ PrimaryViewController {
         return UIAlertAction(title: NSLocalizedString("Create Issue", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
             
-            guard let newIssueViewController = NewIssueViewController.create(
+            guard let newIssueViewController = NewIssueTableViewController.create(
                 client: strongSelf.client.githubClient,
                 owner: strongSelf.repo.owner,
                 repo: strongSelf.repo.name,

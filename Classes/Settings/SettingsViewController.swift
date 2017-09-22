@@ -94,10 +94,10 @@ final class SettingsViewController: UITableViewController {
 
     func onReportBug() {
         guard let client = client,
-              let viewController = NewIssueViewController.create(client: client,
-                                                                 owner: "rnystrom",
-                                                                 repo: "GitHawk",
-                                                                 signature: .bugReport) else {
+              let viewController = NewIssueTableViewController.create(client: client,
+                                                                      owner: "rnystrom",
+                                                                      repo: "GitHawk",
+                                                                      signature: .bugReport) else {
             StatusBar.showGenericError()
             return
         }
