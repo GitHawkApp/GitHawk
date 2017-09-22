@@ -143,19 +143,19 @@ PrimaryViewController {
             }
         }
 
-        client.load(containerWidth: view.bounds.width) { result in
-            switch result {
-            case .error: break
-            case .success(let payload):
-                self.dataSource.reset(
-                    issues: payload.issues.models,
-                    issuesNextPage: payload.issues.nextPage,
-                    pullRequests: payload.pullRequests.models,
-                    pullRequestsNextPage: payload.pullRequests.nextPage
-                )
-                self.update(dismissRefresh: true, animated: true)
-            }
-        }
+//        client.load(containerWidth: view.bounds.width) { result in
+//            switch result {
+//            case .error: break
+//            case .success(let payload):
+//                self.dataSource.reset(
+//                    issues: payload.issues.models,
+//                    issuesNextPage: payload.issues.nextPage,
+//                    pullRequests: payload.pullRequests.models,
+//                    pullRequestsNextPage: payload.pullRequests.nextPage
+//                )
+//                self.update(dismissRefresh: true, animated: true)
+//            }
+//        }
     }
 
     func loadNextPage() {
@@ -164,7 +164,7 @@ PrimaryViewController {
         switch dataSource.state {
         case .readme: return
         case .issues:
-            client.loadMoreIssues(nextPage: dataSource.issuesNextPage, containerWidth: width, completion: { result in
+            client.loadIssues(nextPage: dataSource.issuesNextPage, containerWidth: width, completion: { result in
                 switch result {
                 case .error: break
                 case .success(let payload):
@@ -173,7 +173,7 @@ PrimaryViewController {
                 }
             })
         case .pullRequests:
-            client.loadMorePullRequests(nextPage: dataSource.pullRequestsNextPage, containerWidth: width, completion: { result in
+            client.loadPullRequests(nextPage: dataSource.pullRequestsNextPage, containerWidth: width, completion: { result in
                 switch result {
                 case .error: break
                 case .success(let payload):
