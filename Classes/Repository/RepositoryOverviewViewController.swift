@@ -40,6 +40,9 @@ ListAdapterDataSource {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+        if #available(iOS 11.0, *) {
+            feed.collectionView.contentInsetAdjustmentBehavior = .never
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

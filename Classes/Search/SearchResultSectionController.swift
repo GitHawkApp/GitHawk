@@ -35,7 +35,7 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
     override func didSelectItem(at index: Int) {
         guard let object = object else { return }
         let repo = RepositoryDetails(owner: object.owner, name: object.name, hasIssuesEnabled: object.hasIssuesEnabled)
-        let repoViewController = RepositoryViewController2(client: client, repo: repo)
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
         viewController?.showDetailViewController(navigation, sender: nil)
     }
