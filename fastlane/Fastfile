@@ -23,6 +23,5 @@ end
 
 lane :appstore do
   gym(scheme: "Freetime")
-
-  # Something else
+  appstore(skip_screenshots: true)
 end
