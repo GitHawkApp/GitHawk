@@ -8,6 +8,8 @@
 
 import UIKit
 import IGListKit
+import TUSafariActivity
+import SafariServices
 
 struct RepositoryDetails {
     let owner: String
@@ -26,6 +28,7 @@ PrimaryViewController {
     private let client: RepositoryClient
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
 
+    private let noReadmeResultsKey = "noReadmeResultsKey" as ListDiffable
     private let noIssuesResultsKey = "noIssuesResultsKey" as ListDiffable
     private let noPullRequestsResultsKey = "noPullRequestsResultsKey" as ListDiffable
 
@@ -45,33 +48,20 @@ PrimaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+
         feed.viewDidLoad()
         feed.adapter.dataSource = self
         title = "\(repo.owner)/\(repo.name)"
-        
-        if repo.hasIssuesEnabled {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: "write"),
-                style: .plain,
-                target: self,
-                action: #selector(newIssue)
-            )
-        }
-    }
     
-    func newIssue() {
-        guard let newIssueViewController = NewIssueViewController.create(
-            client: client.githubClient,
-            owner: repo.owner,
-            repo: repo.name,
-            signature: .sentWithGitHawk
-        ) else {
-            StatusBar.showGenericError()
-            return
-        }
-        
-        let navController = UINavigationController(rootViewController: newIssueViewController)
-        showDetailViewController(navController, sender: nil)
+        let rightItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        navigationItem.rightBarButtonItem = rightItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +72,76 @@ PrimaryViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
+    }
+    
+    // MARK: Private API
+    
+    var repoUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    }
+    
+    var repoOwnerUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)")!
+    }
+    
+    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let safariActivity = TUSafariActivity()
+            let controller = UIActivityViewController(activityItems: [strongSelf.repoUrl], applicationActivities: [safariActivity])
+            controller.popoverPresentationController?.barButtonItem = sender
+            strongSelf.present(controller, animated: true)
+        }
+    }
+    
+    func safariAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = SFSafariViewController(url: strongSelf.repoUrl)
+            strongSelf.present(controller, animated: true)
+        }
+    }
+    
+    func viewOwnerAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            let controller = SFSafariViewController(url: strongSelf.repoOwnerUrl)
+            strongSelf.present(controller, animated: true)
+        }
+    }
+    
+    func newIssueAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Create Issue", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            guard let newIssueViewController = NewIssueViewController.create(
+                client: strongSelf.client.githubClient,
+                owner: strongSelf.repo.owner,
+                repo: strongSelf.repo.name,
+                signature: .sentWithGitHawk)
+            else {
+                StatusBar.showGenericError()
+                return
+            }
+            
+            let navController = UINavigationController(rootViewController: newIssueViewController)
+            strongSelf.showDetailViewController(navController, sender: nil)
+        }
+    }
+    
+    func onMore(sender: UIBarButtonItem) {
+        let alert = UIAlertController()
+        
+        if repo.hasIssuesEnabled {
+            alert.addAction(newIssueAction())
+        }
+        
+        alert.addAction(shareAction(sender: sender))
+        alert.addAction(safariAction())
+        alert.addAction(viewOwnerAction())
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+        alert.popoverPresentationController?.barButtonItem = sender
+        present(alert, animated: true)
     }
 
     // MARK: Data Loading/Paging
@@ -95,7 +155,12 @@ PrimaryViewController {
             switch result {
             case .error: break
             case .success(let readme):
-                self.dataSource.setReadme(readme, width: self.view.bounds.width, completion: { 
+                self.dataSource.setReadme(
+                    readme,
+                    width: self.view.bounds.width,
+                    owner: self.repo.owner,
+                    repo: self.repo.name,
+                    completion: {
                     self.update(dismissRefresh: true, animated: true)
                 })
             }
@@ -163,7 +228,7 @@ PrimaryViewController {
 
         if models.count == 0, feed.status == .idle {
             switch dataSource.state {
-            case .readme: break
+            case .readme: builder.append(noReadmeResultsKey)
             case .issues: builder.append(noIssuesResultsKey)
             case .pullRequests: builder.append(noPullRequestsResultsKey)
             }
@@ -178,10 +243,27 @@ PrimaryViewController {
         // 28 is the default height of UISegmentedControl
         let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
 
-        if object === noIssuesResultsKey {
-            return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .issues)
+        if object === noReadmeResultsKey {
+            return RepositoryEmptyResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide,
+                type: .readme
+            )
+        } else if object === noIssuesResultsKey {
+            return RepositoryEmptyResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide,
+                type: .issues
+            )
         } else if object === noPullRequestsResultsKey {
-            return RepositoryEmptyResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide, type: .pullRequests)
+            return RepositoryEmptyResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide,
+                type: .pullRequests
+            )
         } else if object === dataSource.selection {
             return SegmentedControlSectionController(delegate: self, height: controlHeight)
         } else if object === dataSource.loadMore {

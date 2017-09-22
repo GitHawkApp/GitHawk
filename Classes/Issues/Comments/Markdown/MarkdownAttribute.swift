@@ -13,4 +13,5 @@ enum MarkdownAttribute {
     static let email = "com.freetime.Markdown.email-name"
     static let username = "com.freetime.Markdown.username-name"
     static let usernameDisabled = "com.freetime.Markdown.username-disabled-name"
+    static let issue = "com.freetime.Markdown.issue"
 }

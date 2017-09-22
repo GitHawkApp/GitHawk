@@ -18,7 +18,7 @@ extension GithubClient {
     func search(query: String, before: String? = nil, containerWidth: CGFloat, completion: @escaping (SearchResultType) -> ()) {
         let query = SearchReposQuery(search: query, before: before)
         
-        apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+        fetch(query: query) { (result, error) in
             guard error == nil, result?.errors == nil else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error)

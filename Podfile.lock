@@ -5,11 +5,12 @@ PODS:
   - Apollo (0.5.6)
   - FLAnimatedImage (1.0.12)
   - FLEX (2.4.0)
-  - IGListKit (3.0.0):
-    - IGListKit/Default (= 3.0.0)
-  - IGListKit/Default (3.0.0):
+  - HTMLString (3.0.0)
+  - IGListKit (3.1.1):
+    - IGListKit/Default (= 3.1.1)
+  - IGListKit/Default (3.1.1):
     - IGListKit/Diffing
-  - IGListKit/Diffing (3.0.0)
+  - IGListKit/Diffing (3.1.1)
   - JDStatusBarNotification (1.5.5)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - AlamofireNetworkActivityIndicator (~> 2.1)
   - Apollo (~> 0.5.6)
   - FLEX (~> 2.0)
+  - HTMLString
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
   - NYTPhotoViewer (~> 1.1.0)
@@ -43,7 +45,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   IGListKit:
-    :commit: d0253b705ab87c99a4de209436fbc66733287994
+    :commit: 3f7c7f316abb1ca75d515595d1bca23c571998d2
     :git: https://github.com/Instagram/IGListKit.git
 
 SPEC CHECKSUMS:
@@ -52,13 +54,14 @@ SPEC CHECKSUMS:
   Apollo: 124ddbbca48acca75fd5f9ec5045454cb410bb31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  IGListKit: 9eab6856a15fa25ad72018ff9d9eb2178c240fff
+  HTMLString: 57f421a65b10c4eba75a16c329d1cc82a2167ab3
+  IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 8845ed64908db1fa0a9c7ac1e2064e8738b28220
+PODFILE CHECKSUM: 6082e30730fe122a2f7975e3b140af254ec5b301
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

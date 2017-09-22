@@ -127,7 +127,11 @@ SearchRecentHeaderSectionControllerDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
-            return SearchNoResultsSectionController(topInset: controlHeight, topLayoutGuide: topLayoutGuide)
+            return SearchNoResultsSectionController(
+                topInset: controlHeight,
+                topLayoutGuide: topLayoutGuide,
+                bottomLayoutGuide: bottomLayoutGuide
+            )
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)
         } else if object is SearchRepoResult {
@@ -157,6 +161,14 @@ SearchRecentHeaderSectionControllerDelegate {
     }
 
     // MARK: UISearchBarDelegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            term.characters.isEmpty else { return }
+        
+        state = .idle
+        update(animated: false)
+    }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)

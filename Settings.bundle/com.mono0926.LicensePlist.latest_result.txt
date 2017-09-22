@@ -13,6 +13,9 @@ body: The MIT License (MIT…
 name: FLEX, nameSpecified: 
 body: Copyright (c) 2014-2…
 
+name: HTMLString, nameSpecified: 
+body: The MIT License (MIT…
+
 name: IGListKit, nameSpecified: 
 body: BSD License
 
@@ -47,6 +50,9 @@ body: The MIT License (MIT…
 
 name: FLEX, nameSpecified: 
 body: Copyright (c) 2014-2…
+
+name: HTMLString, nameSpecified: 
+body: The MIT License (MIT…
 
 name: IGListKit, nameSpecified: 
 body: BSD License

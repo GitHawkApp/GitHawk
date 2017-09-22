@@ -103,7 +103,7 @@ final class RepositoryClient {
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> ()
     ) where T: RepositoryQuery {
-        githubClient.apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+        githubClient.fetch(query: query) { (result, error) in
             guard error == nil, result?.errors == nil, let data = result?.data else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error(nil))
@@ -163,7 +163,7 @@ final class RepositoryClient {
         ) {
 
         let query = RepoDetailsQuery(owner: owner, name: name, pageSize: 100)
-        githubClient.apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (result, error) in
+        githubClient.fetch(query: query) { (result, error) in
             guard error == nil, result?.errors == nil, let data = result?.data else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error(nil))

@@ -50,7 +50,11 @@ SwipeCollectionViewCellDelegate {
             client.markNotificationRead(id: object.id, isOpen: true)
         }
 
-        let controller = NavigateToNotificationContent(object: object, client: client.githubClient)
+        let controller = NavigateToNotificationContent(
+            object: object,
+            client: client.githubClient,
+            scrollToBottom: true
+        )
         viewController?.showDetailViewController(controller, sender: nil)
     }
 

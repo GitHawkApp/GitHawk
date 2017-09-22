@@ -63,7 +63,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return milestone?.fragments.milestoneFields
     }
 
-    func timelineViewModels(width: CGFloat) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
+    func timelineViewModels(
+        owner: String,
+        repo: String,
+        width: CGFloat
+        ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
         let cleanNodes = nodes.flatMap { $0 }
 
@@ -77,6 +81,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
                     width: width,
+                    owner: owner,
+                    repo: repo,
                     threadState: .single
                     ) {
                     results.append(model)

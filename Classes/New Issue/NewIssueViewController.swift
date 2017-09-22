@@ -184,7 +184,7 @@ class NewIssueViewController: UIViewController {
     
     /// Presents a markdown preview of the current message
     @IBAction func didPressPreview(_ sender: UIButton) {
-        let controller = IssuePreviewViewController(markdown: bodyField.text)
+        let controller = IssuePreviewViewController(markdown: bodyField.text, owner: owner, repo: repo)
         showDetailViewController(controller, sender: nil)
     }
     

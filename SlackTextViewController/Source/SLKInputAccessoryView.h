@@ -12,7 +12,7 @@
 
 @protocol SLKInputAccessoryViewFrameDelegate <NSObject>
 
-- (void)accessoryView:(SLKInputAccessoryView *)accessoryView didChangeFrame:(CGRect)frame;
+- (void)accessoryView:(SLKInputAccessoryView * _Nullable)accessoryView didChangeFrame:(CGRect)frame;
 
 @end
 
@@ -21,6 +21,6 @@
 /* The system keyboard view used as reference. */
 @property (nonatomic, weak, readonly) UIView *_Nullable keyboardViewProxy;
 
-@property (nonatomic, weak) id<SLKInputAccessoryViewFrameDelegate> frameDelegate;
+@property (nonatomic, weak, nullable) id<SLKInputAccessoryViewFrameDelegate> frameDelegate;
 
 @end

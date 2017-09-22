@@ -9,8 +9,24 @@
 import UIKit
 import IGListKit
 import MMMarkdown
+import HTMLString
 
 private let newlineString = "\n"
+
+struct GitHubFlavors: OptionSet {
+    let rawValue: Int
+
+    static let usernames = GitHubFlavors(rawValue: 1)
+    static let issueShorthand = GitHubFlavors(rawValue: 2)
+    static let baseURL = GitHubFlavors(rawValue: 3)
+
+}
+
+struct GitHubMarkdownOptions {
+    let owner: String
+    let repo: String
+    let flavors: [GitHubFlavors]
+}
 
 func createCommentAST(markdown: String) -> MMDocument? {
     guard markdown.characters.count > 0 else { return nil }
@@ -40,10 +56,15 @@ func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
     )
 }
 
-func CreateCommentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
+func CreateCommentModels(
+    markdown: String,
+    width: CGFloat,
+    options: GitHubMarkdownOptions
+    ) -> [ListDiffable] {
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
+    let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
-    guard let document = createCommentAST(markdown: emojiMarkdown)
+    guard let document = createCommentAST(markdown: replaceHTMLentities)
         else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
@@ -70,12 +91,13 @@ func CreateCommentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
             width: width,
             listLevel: 0,
             quoteLevel: 0,
+            options: options,
             results: &results
         )
     }
 
     // add any remaining text
-    if let text = createTextModel(attributedString: seedString, width: width) {
+    if let text = createTextModel(attributedString: seedString, width: width, options: options) {
         results.append(text)
     }
 
@@ -84,31 +106,35 @@ func CreateCommentModels(markdown: String, width: CGFloat) -> [ListDiffable] {
 
 func createTextModel(
     attributedString: NSAttributedString,
-    width: CGFloat
+    width: CGFloat,
+    options: GitHubMarkdownOptions
     ) -> NSAttributedStringSizing? {
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
     guard trimmedString.length > 0 else { return nil }
-    return createTextModelAddingUsernameAttributes(
+    return createTextModelUpdatingGitHubFeatures(
         attributedString: trimmedString,
         width: width,
-        inset: IssueCommentTextCell.inset
+        inset: IssueCommentTextCell.inset,
+        options: options
     )
 }
 
 func createQuoteModel(
     level: Int,
     attributedString: NSAttributedString,
-    width: CGFloat
+    width: CGFloat,
+    options: GitHubMarkdownOptions
     ) -> IssueCommentQuoteModel {
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
         .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
-    let text = createTextModelAddingUsernameAttributes(
+    let text = createTextModelUpdatingGitHubFeatures(
         attributedString: trimmedString,
         width: width,
-        inset: IssueCommentQuoteCell.inset(quoteLevel: level)
+        inset: IssueCommentQuoteCell.inset(quoteLevel: level),
+        options: options
     )
     return IssueCommentQuoteModel(level: level, quote: text)
 }
@@ -131,7 +157,11 @@ func needsNewline(element: MMElement) -> Bool {
     }
 }
 
-func createModel(markdown: String, element: MMElement) -> ListDiffable? {
+func createModel(
+    markdown: String,
+    element: MMElement,
+    options: GitHubMarkdownOptions
+    ) -> ListDiffable? {
     switch element.type {
     case .codeBlock:
         return CreateCodeBlock(element: element, markdown: markdown)
@@ -143,7 +173,15 @@ func createModel(markdown: String, element: MMElement) -> ListDiffable? {
         guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
             html.characters.count > 0
             else { return nil }
-        return IssueCommentHtmlModel(html: html)
+        
+        let baseURL: URL?
+        if options.flavors.contains(.baseURL) {
+            baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/master")
+        } else {
+            baseURL = nil
+        }
+        
+        return IssueCommentHtmlModel(html: html, baseURL: baseURL)
     case .horizontalRule:
         return IssueCommentHrModel()
     default: return nil
@@ -165,6 +203,7 @@ func travelAST(
     width: CGFloat,
     listLevel: Int,
     quoteLevel: Int,
+    options: GitHubMarkdownOptions,
     results: inout [ListDiffable]
     ) {
     let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
@@ -186,8 +225,13 @@ func travelAST(
     // if entering a block quote, finish up any string that was building
     if isQuote && attributedString.length > 0 {
         if quoteLevel > 0 {
-            results.append(createQuoteModel(level: quoteLevel, attributedString: attributedString, width: width))
-        } else if let text = createTextModel(attributedString: attributedString, width: width) {
+            results.append(createQuoteModel(
+                level: quoteLevel,
+                attributedString: attributedString,
+                width: width,
+                options: options
+            ))
+        } else if let text = createTextModel(attributedString: attributedString, width: width, options: options) {
             results.append(text)
         }
         attributedString.removeAll()
@@ -215,11 +259,11 @@ func travelAST(
         attributedString.append(NSAttributedString(string: modifier, attributes: pushedAttributes))
     }
 
-    let model = createModel(markdown: markdown, element: element)
+    let model = createModel(markdown: markdown, element: element, options: options)
 
     // if a model exists, push a new model with the current text stack _before_ the model. remember to drain the text
     if let model = model {
-        if let text = createTextModel(attributedString: attributedString, width: width) {
+        if let text = createTextModel(attributedString: attributedString, width: width, options: options) {
             results.append(text)
         }
         results.append(model)
@@ -234,6 +278,7 @@ func travelAST(
                 width: width,
                 listLevel: nextListLevel,
                 quoteLevel: nextQuoteLevel,
+                options: options,
                 results: &results
             )
         }
@@ -241,17 +286,22 @@ func travelAST(
 
     // cap the child before exiting
     if isQuote && attributedString.length > 0 {
-        results.append(createQuoteModel(level: nextQuoteLevel, attributedString: attributedString, width: width))
+        results.append(createQuoteModel(
+            level: nextQuoteLevel,
+            attributedString: attributedString,
+            width: width,
+            options: options
+        ))
         attributedString.removeAll()
     }
 }
 
 private let usernameRegex = try! NSRegularExpression(pattern: "\\B@([a-zA-Z0-9_-]+)", options: [])
-func createTextModelAddingUsernameAttributes(
+func updateUsernames(
     attributedString: NSAttributedString,
-    width: CGFloat,
-    inset: UIEdgeInsets
-    ) -> NSAttributedStringSizing {
+    options: GitHubMarkdownOptions
+    ) -> NSAttributedString {
+    guard options.flavors.contains(.usernames) else { return attributedString }
 
     let string = attributedString.string
     let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
@@ -273,10 +323,55 @@ func createTextModelAddingUsernameAttributes(
         let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
         mutableAttributedString.replaceCharacters(in: range, with: usernameAttributedString)
     }
+    return mutableAttributedString
+}
+
+private let issueShorthandRegex = try! NSRegularExpression(pattern: "\\B#([0-9]+)", options: [])
+func updateIssueShorthand(
+    attributedString: NSAttributedString,
+    options: GitHubMarkdownOptions
+    ) -> NSAttributedString {
+    guard options.flavors.contains(.issueShorthand) else { return attributedString }
+
+    let string = attributedString.string
+    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+    let matches = issueShorthandRegex.matches(in: string, options: [], range: string.nsrange)
+
+    for match in matches {
+        let range = match.rangeAt(0)
+        guard let substring = string.substring(with: range) else { continue }
+
+        var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
+        attributes[NSForegroundColorAttributeName] = Styles.Colors.Blue.medium.color
+
+        let number = (substring.replacingOccurrences(of: "#", with: "") as NSString).integerValue
+        attributes[MarkdownAttribute.issue] = IssueDetailsModel(
+            owner: options.owner,
+            repo: options.repo,
+            number: number
+        )
+        
+        mutableAttributedString.replaceCharacters(
+            in: range,
+            with: NSAttributedString(string: substring, attributes: attributes)
+        )
+    }
+    return mutableAttributedString
+}
+
+func createTextModelUpdatingGitHubFeatures(
+    attributedString: NSAttributedString,
+    width: CGFloat,
+    inset: UIEdgeInsets,
+    options: GitHubMarkdownOptions
+    ) -> NSAttributedStringSizing {
+
+    let usernames = updateUsernames(attributedString: attributedString, options: options)
+    let issues = updateIssueShorthand(attributedString: usernames, options: options)
 
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: mutableAttributedString,
+        attributedText: issues,
         inset: inset
     )
 }

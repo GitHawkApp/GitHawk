@@ -15,10 +15,18 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: nil)
     private let markdown: String
+    private let owner: String
+    private let repo: String
     private var model: IssuePreviewModel? = nil
 
-    init(markdown: String) {
+    init(
+        markdown: String,
+        owner: String,
+        repo: String
+        ) {
         self.markdown = markdown
+        self.owner = owner
+        self.repo = repo
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Preview", comment: "")
     }
@@ -30,7 +38,12 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let viewModels = CreateCommentModels(markdown: markdown, width: view.bounds.width)
+        let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+        let viewModels = CreateCommentModels(
+            markdown: markdown,
+            width: view.bounds.width,
+            options: options
+        )
         model = IssuePreviewModel(models: viewModels)
 
         view.addSubview(collectionView)

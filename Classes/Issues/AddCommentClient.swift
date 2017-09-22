@@ -34,7 +34,9 @@ final class AddCommentClient {
     }
 
     func addComment(subjectId: String, body: String) {
-        client.apollo.perform(mutation: AddCommentMutation(subjectId: subjectId, body: body)) { (result, error) in
+        let bodyWithSignature = Signature.signed(text: body)
+
+        client.perform(mutation: AddCommentMutation(subjectId: subjectId, body: bodyWithSignature)) { (result, error) in
             if let commentNode = result?.data?.addComment?.commentEdge.node {
                 let fragments = commentNode.fragments
                 for listener in self.listeners {

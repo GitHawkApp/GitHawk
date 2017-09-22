@@ -55,7 +55,8 @@ ListBindingSectionControllerDataSource {
             imageDelegate: nil,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: nil,
-            attributedDelegate: nil
+            attributedDelegate: nil,
+            issueAttributedDelegate: nil
         )
         
         return cell

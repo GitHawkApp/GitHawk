@@ -13,9 +13,11 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate {
+IssueCommentReactionCellDelegate,
+AttributedStringViewIssueDelegate {
 
     private var collapsed = true
+    private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -67,10 +69,21 @@ IssueCommentReactionCellDelegate {
     }
 
     private func react(content: ReactionContent, isAdd: Bool) {
-        guard let id = object?.id else { return }
-        client.react(subjectID: id, content: content, isAdd: isAdd) { [weak self] result in
-            if let result = result {
-                self?.reactionMutation = result
+        guard let object = self.object else { return }
+
+        let previousReaction = reactionMutation
+        reactionMutation = IssueLocalReaction(
+            fromServer: object.reactions,
+            previousLocal: reactionMutation,
+            content: content,
+            add: isAdd
+        )
+        update(animated: true)
+        generator.impactOccurred()
+
+        client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
+            if result == nil {
+                self?.reactionMutation = previousReaction
                 self?.update(animated: true)
             }
         }
@@ -155,7 +168,8 @@ IssueCommentReactionCellDelegate {
             imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
-            attributedDelegate: viewController
+            attributedDelegate: viewController,
+            issueAttributedDelegate: self
         )
 
         return cell
@@ -195,7 +209,11 @@ IssueCommentReactionCellDelegate {
         react(content: reaction, isAdd: false)
     }
 
+    // MARK: AttributedStringViewIssueDelegate
+
+    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
+        let controller = IssuesViewController(client: client, model: issue)
+        viewController?.showDetailViewController(controller, sender: nil)
+    }
+
 }
-
-
-

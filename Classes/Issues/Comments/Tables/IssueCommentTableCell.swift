@@ -98,7 +98,10 @@ UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
         guard let model = model else { fatalError("Missing model") }
-        return CGSize(width: model.columns[indexPath.section].width, height: model.rowHeight)
+        return CGSize(
+            width: model.columns[indexPath.section].width,
+            height: model.rowHeights[indexPath.item]
+        )
     }
 
 }

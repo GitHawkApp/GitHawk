@@ -15,8 +15,13 @@ default_platform :ios
 # info which you can add here later
 lane :beta do
   # match(type: "appstore")
-  gym(scheme: "Freetime")
+  gym(scheme: "Freetime", configuration: "TestFlight")
 
   # upload to Testflight
   pilot(skip_waiting_for_build_processing: true)
+end
+
+lane :appstore do
+  gym(scheme: "Freetime")
+  appstore(skip_screenshots: true)
 end
