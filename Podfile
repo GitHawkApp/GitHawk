@@ -2,6 +2,7 @@
 platform :ios, '10.0'
 
 use_frameworks!
+inhibit_all_warnings!
 
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
 pod 'SnapKit', '~> 3.2.0'
@@ -14,6 +15,7 @@ pod 'TUSafariActivity', '~> 1.0.0'
 pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'HTMLString'
+pod 'Tabman', '~> 1.0'
 
 target 'Freetime' do
 end

@@ -128,8 +128,8 @@ final class RepositoryClient {
         }
     }
 
-    func loadMoreIssues(
-        nextPage: String?,
+    func loadIssues(
+        nextPage: String? = nil,
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
@@ -140,8 +140,8 @@ final class RepositoryClient {
         )
     }
 
-    func loadMorePullRequests(
-        nextPage: String?,
+    func loadPullRequests(
+        nextPage: String? = nil,
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
@@ -152,52 +152,56 @@ final class RepositoryClient {
         )
     }
 
-    struct RepositoryDetailsPayload {
-        let issues: RepositoryPayload
-        let pullRequests: RepositoryPayload
-    }
+//    struct RepositoryDetailsPayload {
+//        let issues: RepositoryPayload
+//        let pullRequests: RepositoryPayload
+//    }
 
-    func load(
-        containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryDetailsPayload>) -> ()
-        ) {
-
-        let query = RepoDetailsQuery(owner: owner, name: name, pageSize: 100)
-        githubClient.fetch(query: query) { (result, error) in
-            guard error == nil, result?.errors == nil, let data = result?.data else {
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-                completion(.error(nil))
-                return
-            }
-
-            let issueNodes = (data.repository?.issues.nodes ?? []).flatMap { $0 }
-            let issues = issueNodes.flatMap { (node: RepositoryIssueSummaryType) in
-                return createSummaryModel(node, containerWidth: containerWidth)
-            }
-            let issueNextPage: String?
-            if let pageInfo = data.repository?.issues.pageInfo, pageInfo.hasNextPage == true {
-                issueNextPage = pageInfo.endCursor
-            } else {
-                issueNextPage = nil
-            }
-
-            let prNodes = (data.repository?.pullRequests.nodes ?? []).flatMap { $0 }
-            let prs = prNodes.flatMap { (node: RepositoryIssueSummaryType) in
-                return createSummaryModel(node, containerWidth: containerWidth)
-            }
-            let prNextPage: String?
-            if let pageInfo = data.repository?.issues.pageInfo, pageInfo.hasNextPage == true {
-                prNextPage = pageInfo.endCursor
-            } else {
-                prNextPage = nil
-            }
-
-            completion(.success(RepositoryDetailsPayload(
-                issues: RepositoryPayload(models: issues, nextPage: issueNextPage),
-                pullRequests: RepositoryPayload(models: prs, nextPage: prNextPage)
-            )))
-        }
-    }
+//    func loadIssues(
+//        containerWidth: CGFloat,
+//        completion: @escaping (Result<RepositoryPayload>) -> ()
+//
+//    func load(
+//        containerWidth: CGFloat,
+//        completion: @escaping (Result<RepositoryDetailsPayload>) -> ()
+//        ) {
+//
+//        let query = RepoDetailsQuery(owner: owner, name: name, pageSize: 100)
+//        githubClient.fetch(query: query) { (result, error) in
+//            guard error == nil, result?.errors == nil, let data = result?.data else {
+//                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
+//                completion(.error(nil))
+//                return
+//            }
+//
+//            let issueNodes = (data.repository?.issues.nodes ?? []).flatMap { $0 }
+//            let issues = issueNodes.flatMap { (node: RepositoryIssueSummaryType) in
+//                return createSummaryModel(node, containerWidth: containerWidth)
+//            }
+//            let issueNextPage: String?
+//            if let pageInfo = data.repository?.issues.pageInfo, pageInfo.hasNextPage == true {
+//                issueNextPage = pageInfo.endCursor
+//            } else {
+//                issueNextPage = nil
+//            }
+//
+//            let prNodes = (data.repository?.pullRequests.nodes ?? []).flatMap { $0 }
+//            let prs = prNodes.flatMap { (node: RepositoryIssueSummaryType) in
+//                return createSummaryModel(node, containerWidth: containerWidth)
+//            }
+//            let prNextPage: String?
+//            if let pageInfo = data.repository?.issues.pageInfo, pageInfo.hasNextPage == true {
+//                prNextPage = pageInfo.endCursor
+//            } else {
+//                prNextPage = nil
+//            }
+//
+//            completion(.success(RepositoryDetailsPayload(
+//                issues: RepositoryPayload(models: issues, nextPage: issueNextPage),
+//                pullRequests: RepositoryPayload(models: prs, nextPage: prNextPage)
+//            )))
+//        }
+//    }
 
     func fetchReadme(
         completion: @escaping (Result<String>) -> ()
