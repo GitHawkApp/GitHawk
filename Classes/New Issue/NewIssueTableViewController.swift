@@ -38,7 +38,7 @@ enum IssueSignatureType {
     }
 }
 
-class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
+class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
 
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
@@ -98,6 +98,9 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
         // Make the return button move on to description field
         titleField.delegate = self
         
+        // Setup markdown input view
+        setupInputView()
+        
         // Update title to use localization
         title = NSLocalizedString("New Issue", comment: "")
     }
@@ -147,11 +150,49 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Markdown
+    
+    func setupInputView() {
+        let operations: [IssueTextActionOperation] = [
+            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
+                guard let strongSelf = self else { return }
+                let controller = IssuePreviewViewController(markdown: strongSelf.bodyField.text, owner: strongSelf.owner, repo: strongSelf.repo)
+                strongSelf.showDetailViewController(controller, sender: nil)
+            })),
+            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+        ]
+        
+        let actions = IssueTextActionsView(operations: operations)
+        actions.delegate = self
+        actions.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
+        actions.backgroundColor = .white
+        bodyField.inputAccessoryView = actions
+    }
+    
     // MARK: - UITextFieldDelegate
     
+    /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyField.becomeFirstResponder()
         return false
     }
     
+    // MARK: - IssueTextActionsViewDelegate
+    
+    /// Called when a user taps on one of the control buttons (preview, bold, etc)
+    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
+        switch operation.operation {
+        case .execute(let block): block()
+        case .wrap(let left, let right): bodyField.replace(left: left, right: right, atLineStart: false)
+        case .line(let left): bodyField.replace(left: left, right: nil, atLineStart: true)
+        }
+    }
 }
