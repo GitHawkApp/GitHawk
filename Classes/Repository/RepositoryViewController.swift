@@ -21,11 +21,14 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
-        self.controllers = [
-            RepositoryOverviewViewController(client: client, repo: repo),
-            RepositoryIssuesViewController(client: client, repo: repo, type: .issues),
-            RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-        ]
+
+        var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
+        if repo.hasIssuesEnabled {
+            controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
+        }
+        controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests))
+        self.controllers = controllers
+
         super.init(nibName: nil, bundle: nil)
         title = "\(repo.owner)/\(repo.name)"
     }

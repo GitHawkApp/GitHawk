@@ -38,6 +38,11 @@ GitHawk will be released with (at least) a three-phased rollout:
     - Accept, reject, and merge PRs
     - :rocket:
 
+## Installation
+
+If you want to build GitHawk locally, run `npm install`. It will install [apollo-codegen](https://github.com/apollographql/apollo-codegen) that is required to generate the
+GraphQL models.
+
 ## Open Source & Copying
 
 I ship GitHawk on the App Store for free and provide its entire source code for free as well. In the spirit of openness, I have licensed my work under MIT so that you can use my code in your app, if you choose.
