@@ -46,6 +46,7 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
             appearance.state.color = Styles.Colors.Gray.light.color
             appearance.state.selectedColor = Styles.Colors.Blue.medium.color
             appearance.indicator.color = Styles.Colors.Blue.medium.color
+            appearance.layout.itemDistribution = .centered
         })
 
         let rightItem = UIBarButtonItem(
