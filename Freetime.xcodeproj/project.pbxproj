@@ -1673,7 +1673,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bundleVersion=$(git rev-parse --short HEAD)\n\necho \"Starting...\"\necho \"CFBundleVersion = $bundleVersion\"\nplistLocation=${BUILT_PRODUCTS_DIR}/Freetime.app/Info.plist\nif [ -f \"${plistLocation}\" ]; then\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" \"${plistLocation}\"\nelse\n  echo \"Couldn't find Info.plist at location:\"\n  echo \"- ${plistLocation}\"\nfi\n\necho \"Ending...\"";
+			shellScript = "bundleVersion=$(git rev-list HEAD --count)\n\necho \"Starting...\"\necho \"CFBundleVersion = $bundleVersion\"\nplistLocation=${BUILT_PRODUCTS_DIR}/Freetime.app/Info.plist\nif [ -f \"${plistLocation}\" ]; then\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" \"${plistLocation}\"\nelse\n  echo \"Couldn't find Info.plist at location:\"\n  echo \"- ${plistLocation}\"\nfi\n\necho \"Ending...\"";
 		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
