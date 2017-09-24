@@ -126,6 +126,7 @@ PrimaryViewController {
         alert.addAction(cancel)
 
         alert.popoverPresentationController?.barButtonItem = sender
+		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 

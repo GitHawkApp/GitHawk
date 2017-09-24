@@ -42,6 +42,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
                 self?.handle(result: result, authMethod: .pat)
             }
         })
+		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 
@@ -59,6 +60,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: Strings.ok, style: .default))
+		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 

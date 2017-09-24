@@ -14,6 +14,7 @@ extension UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: Strings.ok, style: .default, handler: nil)
         alert.addAction(action)
+		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true, completion: nil)
     }
 

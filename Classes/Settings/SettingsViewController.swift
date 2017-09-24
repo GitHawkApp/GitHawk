@@ -125,6 +125,7 @@ final class SettingsViewController: UITableViewController {
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)
 
+		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 
