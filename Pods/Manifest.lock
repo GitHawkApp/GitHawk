@@ -12,6 +12,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
   - JDStatusBarNotification (1.5.5)
+  - MMMarkdown (0.5.5)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
     - NYTPhotoViewer/Core (= 1.1.0)
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - HTMLString
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
+  - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage (~> 4.0.0)
   - SlackTextViewController (from `Local Pods/SlackTextViewController`)
@@ -52,6 +54,8 @@ EXTERNAL SOURCES:
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
+  MMMarkdown:
+    :path: Local Pods/MMMarkdown
   SlackTextViewController:
     :path: Local Pods/SlackTextViewController
   SwipeCellKit:
@@ -71,6 +75,7 @@ SPEC CHECKSUMS:
   HTMLString: 57f421a65b10c4eba75a16c329d1cc82a2167ab3
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
+  MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
@@ -81,6 +86,6 @@ SPEC CHECKSUMS:
   Tabman: 128d19d2e5bc4a54d0a899efb4a66715d9706fab
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: e1b5547d006b082cbe92500fc0eff97fae7837ba
+PODFILE CHECKSUM: 55989c4cf7b34635fdaa064f2453f62492d50877
 
 COCOAPODS: 1.2.1
