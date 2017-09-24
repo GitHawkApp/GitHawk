@@ -1,6 +1,7 @@
 query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {
   repository(owner: $owner, name: $repo) {
     name
+    viewerCanAdminister
     mentionableUsers(first: 100) {
       nodes {
         avatarUrl

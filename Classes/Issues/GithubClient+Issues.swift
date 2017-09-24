@@ -100,19 +100,22 @@ extension GithubClient {
                         milestoneModel = nil
                     }
 
+                    let canAdmin = repository?.viewerCanAdminister ?? false
+
                     let issueResult = IssueResult(
                         subjectId: issueType.id,
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
-                        labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),
+                        labels: IssueLabelsModel(viewerCanUpdate: canAdmin, labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
-                        viewerCanUpdate: issueType.viewerCanUpdate
+                        viewerCanUpdate: issueType.viewerCanUpdate,
+                        viewerCanAdminister: canAdmin
                     )
 
                     DispatchQueue.main.async {

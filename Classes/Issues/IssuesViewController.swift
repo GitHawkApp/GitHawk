@@ -38,7 +38,13 @@ IssueTextActionsViewDelegate {
 
     private var current: IssueResult? = nil {
         didSet {
-            self.setTextInputbarHidden(current == nil, animated: true)
+            let hidden: Bool
+            if let current = self.current {
+                hidden = current.status.locked && !current.viewerCanUpdate
+            } else {
+                hidden = true
+            }
+            self.setTextInputbarHidden(hidden, animated: true)
 
             // hack required to get textInputBar.contentView + textView laid out correctly
             self.textInputbar.layoutIfNeeded()
@@ -228,7 +234,7 @@ IssueTextActionsViewDelegate {
     }
 
     func closeAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true,
+        guard current?.viewerCanAdminister == true,
             let status = localStatusChange?.model.status ?? current?.status.status,
             status != .merged
             else { return nil }
