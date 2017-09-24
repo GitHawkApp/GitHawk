@@ -22,7 +22,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
     // MARK: Private API
 
     @IBAction func onAdd(_ sender: Any) {
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Add Account", comment: ""),
             message: NSLocalizedString("To sign in with another account, please add a new Personal Access Token with user and repo scopes.", comment: ""),
             preferredStyle: .alert
@@ -53,7 +53,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
     }
 
     private func handleError() {
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Error", comment: ""),
             message: NSLocalizedString("There was an error adding another account. Please try again.", comment: ""),
             preferredStyle: .alert

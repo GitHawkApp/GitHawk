@@ -80,21 +80,20 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     func safariAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
-            let controller = SFSafariViewController(url: strongSelf.repoUrl)
-            strongSelf.present(controller, animated: true)
+			strongSelf.presentSafari(url: strongSelf.repoUrl)
         }
     }
 
     func viewOwnerAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
-            let controller = SFSafariViewController(url: URL(string: "https://github.com/\(strongSelf.repo.owner)")!)
-            strongSelf.present(controller, animated: true)
+			let url = URL(string: "https://github.com/\(strongSelf.repo.owner)")!
+			strongSelf.presentSafari(url: url)
         }
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())

@@ -11,5 +11,5 @@ import SafariServices
 
 func CreateProfileViewController(login: String) -> UIViewController {
     let url = URL(string: "https://github.com/\(login)")!
-    return SFSafariViewController(url: url)
+	return try! SFSafariViewController.configured(with: url)
 }
