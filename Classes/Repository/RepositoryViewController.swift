@@ -93,13 +93,12 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
-		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 

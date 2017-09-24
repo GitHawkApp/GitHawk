@@ -241,7 +241,7 @@ IssueTextActionsViewDelegate {
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         if let close = closeAction() {
             alert.addAction(close)
@@ -251,7 +251,6 @@ IssueTextActionsViewDelegate {
         alert.addAction(safariAction())
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
-		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 

@@ -57,7 +57,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     }
 
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Personal Access Token", comment: ""),
             message: NSLocalizedString("Sign in with a Personal Access Token with both repo and user scopes.", comment: ""),
             preferredStyle: .alert
@@ -79,7 +79,6 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
                 self?.handle(result: result, authMethod: .pat)
             }
         })
-		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 
@@ -93,13 +92,12 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     private func handleError() {
         state = .idle
 
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Error", comment: ""),
             message: NSLocalizedString("There was an error signing in to GitHub. Please try again.", comment: ""),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: Strings.ok, style: .default))
-		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 

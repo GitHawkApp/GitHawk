@@ -118,11 +118,10 @@ final class SettingsViewController: UITableViewController {
 
         let title = NSLocalizedString("Are you sure?", comment: "")
         let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)
 
-		alert.view.tintColor = Styles.Colors.Blue.medium.color
         present(alert, animated: true)
     }
 
