@@ -42,6 +42,7 @@ final class SettingsViewController: UITableViewController {
         signatureSwitch.isOn = Signature.enabled
 
         updateBadge()
+		style()
 
         NotificationCenter.default.addObserver(
             self,
@@ -199,6 +200,11 @@ final class SettingsViewController: UITableViewController {
             apiStatusLabel.textColor = color
         }
     }
+	
+	private func style() {
+		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
+			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
+	}
 
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
