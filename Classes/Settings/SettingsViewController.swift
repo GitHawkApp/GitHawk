@@ -91,8 +91,7 @@ final class SettingsViewController: UITableViewController {
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
             else { fatalError("Should always create GitHub issue URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        presentSafari(url: url)
     }
 
     func onReportBug() {
@@ -101,15 +100,13 @@ final class SettingsViewController: UITableViewController {
 
         guard let url = URL(string: "https://github.com/rnystrom/GitHawk/issues/new?body=\(template)")
             else { fatalError("Should always create GitHub issue URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        presentSafari(url: url)
     }
 
     func onViewSource() {
         guard let url = URL(string: "https://github.com/rnystrom/GitHawk/")
             else { fatalError("Should always create GitHub URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+		presentSafari(url: url)
     }
 
     func onSignOut() {
