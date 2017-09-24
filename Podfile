@@ -16,6 +16,9 @@ pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'HTMLString'
 pod 'Tabman', '~> 1.0'
+pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
+pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
+pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 
 target 'Freetime' do
 end
