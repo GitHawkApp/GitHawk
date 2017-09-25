@@ -70,16 +70,6 @@ NewIssueTableViewControllerDelegate {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
 
-    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [strongSelf.repoUrl], applicationActivities: [safariActivity])
-            controller.popoverPresentationController?.barButtonItem = sender
-            strongSelf.present(controller, animated: true)
-        }
-    }
-
     func safariAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
@@ -123,7 +113,7 @@ NewIssueTableViewControllerDelegate {
             alert.addAction(newIssueAction())
         }
         
-        alert.addAction(shareAction(sender: sender))
+        alert.addAction(AlertActions.share([repoUrl], activities: [TUSafariActivity()], controller: self, sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))

@@ -233,16 +233,6 @@ IssueCommentSectionControllerDelegate {
         return "\(model.owner)/\(model.repo)#\(model.number)"
     }
 
-    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [strongSelf.externalURL], applicationActivities: [safariActivity])
-            controller.popoverPresentationController?.barButtonItem = sender
-            strongSelf.present(controller, animated: true)
-        }
-    }
-
     func safariAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
@@ -288,7 +278,7 @@ IssueCommentSectionControllerDelegate {
             alert.addAction(close)
         }
 
-        alert.addAction(shareAction(sender: sender))
+        alert.addAction(AlertActions.share([externalURL], activities: [TUSafariActivity()], controller: self, sender: sender))
         alert.addAction(safariAction())
         if let viewRepo = viewRepoAction() {
             alert.addAction(viewRepo)
