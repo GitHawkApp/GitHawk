@@ -115,6 +115,7 @@ extension GithubClient {
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
+                        hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
                         viewerCanAdminister: canAdmin
                     )
 
