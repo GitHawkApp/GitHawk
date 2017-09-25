@@ -91,9 +91,33 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
 			strongSelf.presentSafari(url: url)
         }
     }
+    
+    func newIssueAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Create Issue", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            guard let newIssueViewController = NewIssueTableViewController.create(
+                client: strongSelf.client,
+                owner: strongSelf.repo.owner,
+                repo: strongSelf.repo.name,
+                signature: .sentWithGitHawk)
+            else {
+                StatusBar.showGenericError()
+                return
+            }
+            
+            let navController = UINavigationController(rootViewController: newIssueViewController)
+            strongSelf.showDetailViewController(navController, sender: nil)
+        }
+    }
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        
+        if repo.hasIssuesEnabled {
+            alert.addAction(newIssueAction())
+        }
+        
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())
