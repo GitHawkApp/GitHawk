@@ -194,6 +194,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "  repository(owner: $owner, name: $repo) {" +
     "    __typename" +
     "    name" +
+    "    viewerCanAdminister" +
     "    mentionableUsers(first: 100) {" +
     "      __typename" +
     "      nodes {" +
@@ -741,6 +742,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
       public let __typename: String
       /// The name of the repository.
       public let name: String
+      /// Indicates whether the viewer has admin permissions on this repository.
+      public let viewerCanAdminister: Bool
       /// A list of Users that can be mentioned in the context of the repository.
       public let mentionableUsers: MentionableUser
       /// Returns a single issue-like object from the current repository by number.
@@ -749,6 +752,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
       public init(reader: GraphQLResultReader) throws {
         __typename = try reader.value(for: Field(responseName: "__typename"))
         name = try reader.value(for: Field(responseName: "name"))
+        viewerCanAdminister = try reader.value(for: Field(responseName: "viewerCanAdminister"))
         mentionableUsers = try reader.value(for: Field(responseName: "mentionableUsers", arguments: ["first": 100]))
         issueOrPullRequest = try reader.optionalValue(for: Field(responseName: "issueOrPullRequest", arguments: ["number": reader.variables["number"]]))
       }
