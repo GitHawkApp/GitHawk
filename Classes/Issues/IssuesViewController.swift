@@ -239,6 +239,23 @@ IssueTextActionsViewDelegate {
             self?.setStatus(close: close)
         })
     }
+    
+    func viewRepoAction() -> UIAlertAction? {
+        guard let result = current else {
+            return nil
+        }
+        
+        let repo = RepositoryDetails(
+            owner: model.owner,
+            name: model.repo,
+            hasIssuesEnabled: current?.hasIssuesEnabled ?? false
+        )
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        return UIAlertAction(title: NSLocalizedString("Open Repository", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.show(repoViewController, sender: nil)
+        }
+    }
 
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -249,6 +266,9 @@ IssueTextActionsViewDelegate {
 
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
+        if let viewRepo = viewRepoAction() {
+            alert.addAction(viewRepo)
+        }
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)

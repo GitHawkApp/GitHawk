@@ -112,7 +112,8 @@ extension GithubClient {
                         milestone: milestoneModel,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
-                        viewerCanUpdate: issueType.viewerCanUpdate
+                        viewerCanUpdate: issueType.viewerCanUpdate,
+                        hasIssuesEnabled: repository?.hasIssuesEnabled ?? false
                     )
 
                     DispatchQueue.main.async {

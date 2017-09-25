@@ -24,6 +24,7 @@ struct IssueResult {
     let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
+    let hasIssuesEnabled: Bool
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })
