@@ -38,7 +38,13 @@ IssueTextActionsViewDelegate {
 
     private var current: IssueResult? = nil {
         didSet {
-            self.setTextInputbarHidden(current == nil, animated: true)
+            let hidden: Bool
+            if let current = self.current {
+                hidden = current.status.locked && !current.viewerCanUpdate
+            } else {
+                hidden = true
+            }
+            self.setTextInputbarHidden(hidden, animated: true)
 
             // hack required to get textInputBar.contentView + textView laid out correctly
             self.textInputbar.layoutIfNeeded()
@@ -180,7 +186,7 @@ IssueTextActionsViewDelegate {
             let text = text {
             addCommentClient.addComment(
                 subjectId: subjectId,
-                body: Signature.signed(text: text)
+                body: text
             )
         }
     }
@@ -257,7 +263,7 @@ IssueTextActionsViewDelegate {
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         if let close = closeAction() {
             alert.addAction(close)
@@ -265,7 +271,7 @@ IssueTextActionsViewDelegate {
 
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
-        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
     }

@@ -14,6 +14,7 @@ private typealias Row = IssueCommentTableModel.Row
 private class TableBucket {
     var rows = [Row]()
     var maxWidth: CGFloat = 0
+    var maxHeight: CGFloat = 0
 }
 
 private func buildAttributedString(
@@ -80,6 +81,9 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
 
     var buckets = [TableBucket]()
 
+    // track the tallest row while building each column
+    var rowHeights = [CGFloat]()
+
     var baseAttributes: [String: Any] = [
         NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
         NSBackgroundColorAttributeName: UIColor.white,
@@ -103,6 +107,8 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
 
         let models = rowModels(markdown: markdown, element: row, attributes: baseAttributes, fill: fill)
 
+        var maxHeight: CGFloat = 0
+
         // prepopulate the buckets in case this is the first pass
         while buckets.count < models.count {
             buckets.append(TableBucket())
@@ -114,11 +120,16 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
             bucket.rows.append(Row(text: model, fill: fill))
 
             // adjust the max width of each column using whatever is the largest so all cells are the same width
-            bucket.maxWidth = max(bucket.maxWidth, model.textViewSize(0).width)
+            let size = model.textViewSize(0)
+            bucket.maxWidth = max(bucket.maxWidth, size.width)
+            maxHeight = max(maxHeight, size.height)
         }
+
+        rowHeights.append(maxHeight)
     }
 
     return IssueCommentTableModel(
-        columns: buckets.map { IssueCommentTableModel.Column(width: $0.maxWidth, rows: $0.rows) }
+        columns: buckets.map { IssueCommentTableModel.Column(width: $0.maxWidth, rows: $0.rows) },
+        rowHeights: rowHeights
     )
 }

@@ -56,7 +56,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/IGListKit</string>
 			<key>Title</key>
-			<string>IGListKit (3.0.0)</string>
+			<string>IGListKit (3.1.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -70,9 +70,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/MMMarkdown</string>
+			<key>Title</key>
+			<string>MMMarkdown (0.5.5)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/NYTPhotoViewer</string>
 			<key>Title</key>
 			<string>NYTPhotoViewer (1.1.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/Pageboy</string>
+			<key>Title</key>
+			<string>Pageboy (2.0.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/PureLayout</string>
+			<key>Title</key>
+			<string>PureLayout (3.0.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -86,9 +110,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/SlackTextViewController</string>
+			<key>Title</key>
+			<string>SlackTextViewController (1.9.5)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/SnapKit</string>
 			<key>Title</key>
 			<string>SnapKit (3.2.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/SwipeCellKit</string>
+			<key>Title</key>
+			<string>SwipeCellKit (1.9.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/Tabman</string>
+			<key>Title</key>
+			<string>Tabman (1.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

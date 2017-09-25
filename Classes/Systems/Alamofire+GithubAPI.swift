@@ -31,6 +31,7 @@ func newGithubClient(
         config.urlCache = SampleURLCache(memoryCapacity: 1024*30, diskCapacity: 1024*50, diskPath: "sample_cache")
     } else {
         // disable URL caching for the v3 API
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
     }
 

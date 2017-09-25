@@ -2,6 +2,7 @@
 platform :ios, '10.0'
 
 use_frameworks!
+inhibit_all_warnings!
 
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
 pod 'SnapKit', '~> 3.2.0'
@@ -12,8 +13,12 @@ pod 'JDStatusBarNotification', '~> 1.5.5'
 pod 'Apollo', '~> 0.5.6'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'NYTPhotoViewer', '~> 1.1.0'
-pod 'FLEX', '~> 2.0', :configurations => ['Debug']
+pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'HTMLString'
+pod 'Tabman', '~> 1.0'
+pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
+pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
+pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 
 target 'Freetime' do
 end

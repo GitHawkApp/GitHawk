@@ -1,0 +1,6 @@
+framework module SlackTextViewController {
+  umbrella header "SlackTextViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

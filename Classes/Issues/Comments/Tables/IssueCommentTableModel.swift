@@ -19,6 +19,7 @@ final class IssueCommentTableModel: NSObject, ListDiffable {
             self.text = text
             self.fill = fill
         }
+
     }
 
     final class Column {
@@ -31,13 +32,12 @@ final class IssueCommentTableModel: NSObject, ListDiffable {
         }
     }
 
-    let rowHeight = Styles.Sizes.labelEventHeight
     let columns: [Column]
-    let totalHeight: CGFloat
+    let rowHeights: [CGFloat]
 
-    init(columns: [Column]) {
+    init(columns: [Column], rowHeights: [CGFloat]) {
         self.columns = columns
-        self.totalHeight = CGFloat(columns.first?.rows.count ?? 0) * rowHeight
+        self.rowHeights = rowHeights
     }
 
     // MARK: ListDiffable
