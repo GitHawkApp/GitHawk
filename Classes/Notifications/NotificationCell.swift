@@ -103,7 +103,7 @@ final class NotificationCell: SwipeSelectableCell {
         reasonImageView.image = viewModel.type.icon?.withRenderingMode(.alwaysTemplate)
         accessibilityLabel = contentView.subviews
             .flatMap { $0.accessibilityLabel }
-            .reduce("", { "\($0 ?? "").\n\($1)" })
+            .reduce("", { "\($0).\n\($1)" })
             .appending(".\n\(viewModel.type.localizedString)")
     }
 
