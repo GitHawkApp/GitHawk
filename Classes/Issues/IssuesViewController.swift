@@ -234,7 +234,7 @@ IssueTextActionsViewDelegate {
     }
 
     func closeAction() -> UIAlertAction? {
-        guard current?.viewerCanAdminister == true,
+        guard current?.viewerCanUpdate == true,
             let status = localStatusChange?.model.status ?? current?.status.status,
             status != .merged
             else { return nil }

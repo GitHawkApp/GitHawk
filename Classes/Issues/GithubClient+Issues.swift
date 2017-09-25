@@ -107,7 +107,7 @@ extension GithubClient {
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
-                        labels: IssueLabelsModel(viewerCanUpdate: canAdmin, labels: issueType.labelableFields.issueLabelModels),
+                        labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
