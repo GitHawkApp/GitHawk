@@ -25,6 +25,7 @@ struct IssueResult {
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool
+    let viewerCanAdminister: Bool
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })

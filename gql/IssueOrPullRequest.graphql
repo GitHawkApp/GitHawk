@@ -2,6 +2,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
   repository(owner: $owner, name: $repo) {
     name
     hasIssuesEnabled
+    viewerCanAdminister
     mentionableUsers(first: 100) {
       nodes {
         avatarUrl

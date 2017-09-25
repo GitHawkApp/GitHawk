@@ -213,7 +213,7 @@ AttributedStringViewIssueDelegate {
 
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
         let controller = IssuesViewController(client: client, model: issue)
-        viewController?.showDetailViewController(controller, sender: nil)
+        viewController?.show(controller, sender: nil)
     }
 
 }
