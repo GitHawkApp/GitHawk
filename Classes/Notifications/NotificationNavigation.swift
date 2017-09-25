@@ -17,7 +17,7 @@ func NavigateToNotificationContent(
     switch object.identifier {
     case .hash(let hash):
         let url = URL(string: "https://github.com/\(object.owner)/\(object.repo)/commit/\(hash)")!
-        return SFSafariViewController(url: url)
+        return try! SFSafariViewController.configured(with: url)
     case .number(let number):
         let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
         let controller = IssuesViewController(

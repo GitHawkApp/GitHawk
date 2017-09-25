@@ -42,6 +42,7 @@ final class SettingsViewController: UITableViewController {
         signatureSwitch.isOn = Signature.enabled
 
         updateBadge()
+		style()
 
         NotificationCenter.default.addObserver(
             self,
@@ -90,8 +91,7 @@ final class SettingsViewController: UITableViewController {
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
             else { fatalError("Should always create GitHub issue URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        presentSafari(url: url)
     }
 
     func onReportBug() {
@@ -100,15 +100,13 @@ final class SettingsViewController: UITableViewController {
 
         guard let url = URL(string: "https://github.com/rnystrom/GitHawk/issues/new?body=\(template)")
             else { fatalError("Should always create GitHub issue URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+        presentSafari(url: url)
     }
 
     func onViewSource() {
         guard let url = URL(string: "https://github.com/rnystrom/GitHawk/")
             else { fatalError("Should always create GitHub URL") }
-        let safari = SFSafariViewController(url: url)
-        present(safari, animated: true)
+		presentSafari(url: url)
     }
 
     func onSignOut() {
@@ -120,7 +118,7 @@ final class SettingsViewController: UITableViewController {
 
         let title = NSLocalizedString("Are you sure?", comment: "")
         let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         alert.addAction(cancelAction)
         alert.addAction(signoutAction)
 
@@ -199,6 +197,11 @@ final class SettingsViewController: UITableViewController {
             apiStatusLabel.textColor = color
         }
     }
+	
+	private func style() {
+		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
+			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
+	}
 
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn

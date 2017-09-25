@@ -247,7 +247,7 @@ IssueTextActionsViewDelegate {
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         if let close = closeAction() {
             alert.addAction(close)
