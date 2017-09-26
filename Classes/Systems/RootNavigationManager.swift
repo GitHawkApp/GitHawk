@@ -13,6 +13,7 @@ final class RootNavigationManager: GithubSessionListener {
 
     private let sessionManager: GithubSessionManager
     private let splitDelegate = SplitViewControllerDelegate()
+    private let tabDelegate = TabBarControllerDelegate()
 
     // weak refs to avoid cycles
     weak private var rootViewController: UISplitViewController?
@@ -34,6 +35,7 @@ final class RootNavigationManager: GithubSessionListener {
         
         self.tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
         self.tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
+        self.tabBarController?.delegate = self.tabDelegate
     }
 
     // MARK: Public API

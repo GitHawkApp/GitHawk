@@ -19,7 +19,8 @@ class NotificationsViewController: UIViewController,
 FeedSelectionProviding,
 ForegroundHandlerDelegate,
 RatingSectionControllerDelegate,
-PrimaryViewController {
+PrimaryViewController,
+TabNavRootViewControllerType {
 
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
@@ -296,5 +297,13 @@ PrimaryViewController {
         ratingToken = nil
         feed.adapter.performUpdates(animated: true)
     }
+
+    // MARK: TabNavRootViewControllerType
+
+    func didSingleTapTab() {
+        feed.collectionView.scrollToTop(animated: true)
+    }
+
+    func didDoubleTapTab() {}
     
 }
