@@ -93,7 +93,7 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     }
     
     func newIssueAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Create Issue", comment: ""), style: .default) { [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
             
             guard let newIssueViewController = NewIssueTableViewController.create(
@@ -106,8 +106,7 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
                 return
             }
             
-            let navController = UINavigationController(rootViewController: newIssueViewController)
-            strongSelf.showDetailViewController(navController, sender: nil)
+            strongSelf.show(newIssueViewController, sender: nil)
         }
     }
 
