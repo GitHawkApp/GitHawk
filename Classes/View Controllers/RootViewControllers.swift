@@ -10,6 +10,7 @@ import UIKit
 
 func newSettingsRootViewController(
     sessionManager: GithubSessionManager,
+    client: GithubClient,
     rootNavigationManager: RootNavigationManager
     ) -> UIViewController {
     guard let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()
@@ -17,6 +18,7 @@ func newSettingsRootViewController(
 
     if let nav = controller as? UINavigationController,
         let first = nav.viewControllers.first as? SettingsViewController {
+        first.client = client
         first.sessionManager = sessionManager
         first.rootNavigationManager = rootNavigationManager
         nav.tabBarItem.title = NSLocalizedString("Settings", comment: "")

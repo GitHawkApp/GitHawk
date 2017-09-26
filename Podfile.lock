@@ -12,6 +12,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
   - JDStatusBarNotification (1.5.5)
+  - MMMarkdown (0.5.5)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
     - NYTPhotoViewer/Core (= 1.1.0)
@@ -24,7 +25,9 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - SlackTextViewController (1.9.5)
   - SnapKit (3.2.0)
+  - SwipeCellKit (1.9.0)
   - Tabman (1.0.0):
     - Pageboy (~> 2.0.0)
     - PureLayout (~> 3.0.0)
@@ -38,9 +41,12 @@ DEPENDENCIES:
   - HTMLString
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - JDStatusBarNotification (~> 1.5.5)
+  - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage (~> 4.0.0)
+  - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 3.2.0)
+  - SwipeCellKit (from `Local Pods/SwipeCellKit`)
   - Tabman (~> 1.0)
   - TUSafariActivity (~> 1.0.0)
 
@@ -48,6 +54,12 @@ EXTERNAL SOURCES:
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
+  MMMarkdown:
+    :path: Local Pods/MMMarkdown
+  SlackTextViewController:
+    :path: Local Pods/SlackTextViewController
+  SwipeCellKit:
+    :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
   IGListKit:
@@ -63,14 +75,17 @@ SPEC CHECKSUMS:
   HTMLString: 57f421a65b10c4eba75a16c329d1cc82a2167ab3
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
+  MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
   Tabman: 128d19d2e5bc4a54d0a899efb4a66715d9706fab
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 688f9fa1a162cf53f07605533eed2039360aa430
+PODFILE CHECKSUM: 55989c4cf7b34635fdaa064f2453f62492d50877
 
 COCOAPODS: 1.3.1

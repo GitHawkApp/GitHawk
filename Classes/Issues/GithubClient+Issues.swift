@@ -100,6 +100,8 @@ extension GithubClient {
                         milestoneModel = nil
                     }
 
+                    let canAdmin = repository?.viewerCanAdminister ?? false
+
                     let issueResult = IssueResult(
                         subjectId: issueType.id,
                         pullRequest: issueType.pullRequest,
@@ -112,7 +114,9 @@ extension GithubClient {
                         milestone: milestoneModel,
                         mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
-                        viewerCanUpdate: issueType.viewerCanUpdate
+                        viewerCanUpdate: issueType.viewerCanUpdate,
+                        hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
+                        viewerCanAdminister: canAdmin
                     )
 
                     DispatchQueue.main.async {

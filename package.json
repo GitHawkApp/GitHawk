@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "apollo-codegen": "^0.10.13"
+  }
+}

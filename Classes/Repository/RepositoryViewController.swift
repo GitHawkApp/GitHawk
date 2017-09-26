@@ -21,11 +21,14 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
-        self.controllers = [
-            RepositoryOverviewViewController(client: client, repo: repo),
-            RepositoryIssuesViewController(client: client, repo: repo, type: .issues),
-            RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-        ]
+
+        var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
+        if repo.hasIssuesEnabled {
+            controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
+        }
+        controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests))
+        self.controllers = controllers
+
         super.init(nibName: nil, bundle: nil)
         title = "\(repo.owner)/\(repo.name)"
     }
@@ -77,21 +80,44 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
     func safariAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
-            let controller = SFSafariViewController(url: strongSelf.repoUrl)
-            strongSelf.present(controller, animated: true)
+			strongSelf.presentSafari(url: strongSelf.repoUrl)
         }
     }
 
     func viewOwnerAction() -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
-            let controller = SFSafariViewController(url: URL(string: "https://github.com/\(strongSelf.repo.owner)")!)
-            strongSelf.present(controller, animated: true)
+			let url = URL(string: "https://github.com/\(strongSelf.repo.owner)")!
+			strongSelf.presentSafari(url: url)
+        }
+    }
+    
+    func newIssueAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Create Issue", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            
+            guard let newIssueViewController = NewIssueTableViewController.create(
+                client: strongSelf.client,
+                owner: strongSelf.repo.owner,
+                repo: strongSelf.repo.name,
+                signature: .sentWithGitHawk)
+            else {
+                StatusBar.showGenericError()
+                return
+            }
+            
+            let navController = UINavigationController(rootViewController: newIssueViewController)
+            strongSelf.showDetailViewController(navController, sender: nil)
         }
     }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        
+        if repo.hasIssuesEnabled {
+            alert.addAction(newIssueAction())
+        }
+        
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
         alert.addAction(viewOwnerAction())

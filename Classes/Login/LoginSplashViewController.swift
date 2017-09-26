@@ -51,13 +51,13 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     // MARK: Private API
 
     @IBAction func onSignInButton(_ sender: Any) {
-        let safari = SFSafariViewController(url: loginURL)
-        safariController = safari
-        present(safari, animated: true)
+		guard let safariController = try? SFSafariViewController.configured(with: loginURL) else { return }
+        self.safariController = safariController
+        present(safariController, animated: true)
     }
 
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Personal Access Token", comment: ""),
             message: NSLocalizedString("Sign in with a Personal Access Token with both repo and user scopes.", comment: ""),
             preferredStyle: .alert
@@ -92,7 +92,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     private func handleError() {
         state = .idle
 
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Error", comment: ""),
             message: NSLocalizedString("There was an error signing in to GitHub. Please try again.", comment: ""),
             preferredStyle: .alert

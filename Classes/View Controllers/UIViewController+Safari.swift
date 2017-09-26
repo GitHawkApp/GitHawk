@@ -12,16 +12,8 @@ import SafariServices
 extension UIViewController {
 
     func presentSafari(url: URL) {
-        let http = "http"
-        let schemedURL: URL
-        // handles http and https
-        if url.scheme?.hasPrefix(http) == true {
-            schemedURL = url
-        } else {
-            guard let u = URL(string: http + "://" + url.absoluteString) else { return }
-            schemedURL = u
-        }
-        present(SFSafariViewController(url: schemedURL), animated: true)
+		guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
+		present(safariViewController, animated: true)
     }
 
     func presentProfile(login: String) {
@@ -43,4 +35,29 @@ extension UIViewController {
         presentSafari(url: url)
     }
 
+}
+
+extension SFSafariViewController {
+
+	static func configured(with url: URL) throws -> SFSafariViewController {
+		let http = "http"
+		let schemedURL: URL
+		// handles http and https
+		if url.scheme?.hasPrefix(http) == true {
+			schemedURL = url
+		} else {
+			guard let u = URL(string: http + "://" + url.absoluteString) else { throw URL.Error.failedToCreateURL }
+			schemedURL = u
+		}
+		let safariViewController = SFSafariViewController(url: schemedURL)
+		safariViewController.preferredControlTintColor = Styles.Colors.Blue.medium.color
+		return safariViewController
+	}
+}
+
+extension URL {
+	
+	enum Error: Swift.Error {
+		case failedToCreateURL
+	}
 }

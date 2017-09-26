@@ -64,6 +64,7 @@ final class RootNavigationManager: GithubSessionListener {
         // rebuild the settings VC if it doesn't exist
         settingsRootViewController = settingsRootViewController ?? newSettingsRootViewController(
             sessionManager: sessionManager,
+            client: client,
             rootNavigationManager: self
         )
 

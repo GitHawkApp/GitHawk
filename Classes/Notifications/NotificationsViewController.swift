@@ -109,7 +109,7 @@ PrimaryViewController {
     }
 
     @objc private func onMarkAll(sender: UIBarButtonItem) {
-        let alert = UIAlertController(
+        let alert = UIAlertController.configured(
             title: NSLocalizedString("Notifications", comment: ""),
             message: "Mark all notifications as read?",
             preferredStyle: .alert

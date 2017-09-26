@@ -38,7 +38,13 @@ IssueTextActionsViewDelegate {
 
     private var current: IssueResult? = nil {
         didSet {
-            self.setTextInputbarHidden(current == nil, animated: true)
+            let hidden: Bool
+            if let current = self.current {
+                hidden = current.status.locked && !current.viewerCanUpdate
+            } else {
+                hidden = true
+            }
+            self.setTextInputbarHidden(hidden, animated: true)
 
             // hack required to get textInputBar.contentView + textView laid out correctly
             self.textInputbar.layoutIfNeeded()
@@ -65,7 +71,7 @@ IssueTextActionsViewDelegate {
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        title = "\(model.owner)/\(model.repo)#\(model.number)"
+        title = issueTitle
 
         self.addCommentClient.addListener(listener: self)
 
@@ -146,6 +152,18 @@ IssueTextActionsViewDelegate {
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let informator = HandoffInformator(activityName: "viewIssue", activityTitle:
+            issueTitle, url: externalURL)
+        setupUserActivity(with: informator)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        invalidateUserActivity()
+    }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -208,6 +226,10 @@ IssueTextActionsViewDelegate {
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
+    
+    var issueTitle: String {
+        return "\(model.owner)/\(model.repo)#\(model.number)"
+    }
 
     func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
@@ -239,9 +261,26 @@ IssueTextActionsViewDelegate {
             self?.setStatus(close: close)
         })
     }
+    
+    func viewRepoAction() -> UIAlertAction? {
+        guard let result = current else {
+            return nil
+        }
+        
+        let repo = RepositoryDetails(
+            owner: model.owner,
+            name: model.repo,
+            hasIssuesEnabled: current?.hasIssuesEnabled ?? false
+        )
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        return UIAlertAction(title: NSLocalizedString("Open Repository", comment: ""), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.show(repoViewController, sender: nil)
+        }
+    }
 
     func onMore(sender: UIBarButtonItem) {
-        let alert = UIAlertController()
+		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         if let close = closeAction() {
             alert.addAction(close)
@@ -249,6 +288,9 @@ IssueTextActionsViewDelegate {
 
         alert.addAction(shareAction(sender: sender))
         alert.addAction(safariAction())
+        if let viewRepo = viewRepoAction() {
+            alert.addAction(viewRepo)
+        }
         alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
