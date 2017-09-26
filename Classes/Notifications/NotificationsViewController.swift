@@ -118,18 +118,15 @@ TabNavRootViewControllerType {
             message: "Mark all notifications as read?",
             preferredStyle: .alert
         )
-        let markAll = UIAlertAction(
-            title: NSLocalizedString("Mark All Read", comment: ""),
-            style: .default
-        ) { _ in
-            self.markAllRead()
-        }
-        alert.addAction(markAll)
-
-        let cancel = UIAlertAction(title: Strings.cancel, style: .cancel)
-        alert.addAction(cancel)
-
+        
+        alert.addActions([
+            AlertAction.markAll({ [weak self] _ in
+                self?.markAllRead()
+            }),
+            AlertAction.cancel()
+        ])
         alert.popoverPresentationController?.barButtonItem = sender
+        
         present(alert, animated: true)
     }
 

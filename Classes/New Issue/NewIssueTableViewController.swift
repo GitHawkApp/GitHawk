@@ -171,10 +171,15 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         let message = NSLocalizedString("Are you sure you want to discard this new issue? Your message will be lost.", comment: "New Issue - Cancel w/ Unsaved Changes Message")
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Go back", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: { _ in
-            dismissBlock()
-        }))
+        alert.addActions([
+            AlertAction.no(),
+            AlertAction(AlertActionBuilder {
+                $0.title = Strings.yes
+                $0.style = .destructive
+            }).get { _ in
+                dismissBlock()
+            }
+        ])
         
         present(alert, animated: true, completion: nil)
     }

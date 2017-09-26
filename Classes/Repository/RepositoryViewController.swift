@@ -69,55 +69,42 @@ NewIssueTableViewControllerDelegate {
     var repoUrl: URL {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
-
-    func safariAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-			strongSelf.presentSafari(url: strongSelf.repoUrl)
-        }
-    }
-
-    func viewOwnerAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-			let url = URL(string: "https://github.com/\(strongSelf.repo.owner)")!
-			strongSelf.presentSafari(url: url)
-        }
-    }
     
-    func newIssueAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            
-            guard let newIssueViewController = NewIssueTableViewController.create(
-                client: strongSelf.client,
-                owner: strongSelf.repo.owner,
-                repo: strongSelf.repo.name,
-                signature: .sentWithGitHawk)
-            else {
-                StatusBar.showGenericError()
-                return
-            }
-
-            newIssueViewController.delegate = self
-            let nav = UINavigationController(rootViewController: newIssueViewController)
-            nav.modalPresentationStyle = .formSheet
-            strongSelf.present(nav, animated: true)
+    func newIssueAction() -> UIAlertAction? {
+        guard let newIssueViewController = NewIssueTableViewController.create(
+            client: client,
+            owner: repo.owner,
+            repo: repo.name,
+            signature: .sentWithGitHawk)
+        else {
+            StatusBar.showGenericError()
+            return nil
         }
+        
+        newIssueViewController.delegate = self
+        weak var weakSelf = self
+        
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+            .newIssue(issueController: newIssueViewController)
     }
 
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         
-        if repo.hasIssuesEnabled {
-            alert.addAction(newIssueAction())
+        weak var weakSelf = self
+        let alertBuilder = AlertActionBuilder { builder in
+            builder.rootViewController = weakSelf
         }
         
-        alert.addAction(AlertActions.share([repoUrl], activities: [TUSafariActivity()], controller: self, sender: sender))
-        alert.addAction(safariAction())
-        alert.addAction(viewOwnerAction())
-        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+        alert.addActions([
+            repo.hasIssuesEnabled ? newIssueAction() : nil,
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], sender: sender),
+            AlertAction(alertBuilder).openInSafari(url: repoUrl),
+            AlertAction(alertBuilder).view(owner: URL(string: "https://github.com/\(repo.owner)")!),
+            AlertAction.cancel(),
+        ])
         alert.popoverPresentationController?.barButtonItem = sender
+        
         present(alert, animated: true)
     }
 

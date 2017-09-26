@@ -66,19 +66,21 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         alert.addTextField { (textField) in
             textField.placeholder = NSLocalizedString("Personal Access Token", comment: "")
         }
-        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+        
+        alert.addActions([
+            AlertAction.cancel(),
+            AlertAction.login({ [weak alert, weak self] _ in
+                alert?.actions.forEach { $0.isEnabled = false }
+                
+                self?.state = .fetchingToken
+                
+                let token = alert?.textFields?.first?.text ?? ""
+                self?.client.verifyPersonalAccessToken(token: token) { result in
+                    self?.handle(result: result, authMethod: .pat)
+                }
+            })
+        ])
 
-        let logInTitle = NSLocalizedString("Sign In", comment: "")
-        alert.addAction(UIAlertAction(title: logInTitle, style: .default) { [weak alert, weak self] _ in
-            alert?.actions.forEach { $0.isEnabled = false }
-
-            self?.state = .fetchingToken
-
-            let token = alert?.textFields?.first?.text ?? ""
-            self?.client.verifyPersonalAccessToken(token: token) { result in
-                self?.handle(result: result, authMethod: .pat)
-            }
-        })
         present(alert, animated: true)
     }
 
@@ -97,7 +99,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
             message: NSLocalizedString("There was an error signing in to GitHub. Please try again.", comment: ""),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: Strings.ok, style: .default))
+        alert.addAction(AlertAction.ok())
         present(alert, animated: true)
     }
 
