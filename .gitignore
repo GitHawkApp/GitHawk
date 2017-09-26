@@ -69,3 +69,8 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 node_modules
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-metadata
