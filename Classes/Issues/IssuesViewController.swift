@@ -71,7 +71,8 @@ IssueTextActionsViewDelegate {
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        title = issueTitle
+        self.title = issueTitle
+        self.hidesBottomBarWhenPushed = true
 
         self.addCommentClient.addListener(listener: self)
 

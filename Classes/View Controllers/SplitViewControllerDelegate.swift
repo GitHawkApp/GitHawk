@@ -81,8 +81,6 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
 
         if splitViewController.isCollapsed {
             if let nav = vc as? UINavigationController, let first = nav.viewControllers.first {
-                // always remove the tab bar when pushing VCs
-                first.hidesBottomBarWhenPushed = true
                 tab.selectedViewController?.show(first, sender: sender)
             } else {
                 tab.selectedViewController?.show(vc, sender: sender)
