@@ -176,7 +176,7 @@ func createModel(
         
         let baseURL: URL?
         if options.flavors.contains(.baseURL) {
-            baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/master")
+            baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/master/")
         } else {
             baseURL = nil
         }
