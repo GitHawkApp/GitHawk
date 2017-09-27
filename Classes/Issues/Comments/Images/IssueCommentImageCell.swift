@@ -43,8 +43,6 @@ UIGestureRecognizerDelegate {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
-//            make.top.left.right.equalTo(contentView)
-//            make.height.equalTo(IssueCommentImageCell.preferredHeight)
         }
 
         spinner.hidesWhenStopped = true

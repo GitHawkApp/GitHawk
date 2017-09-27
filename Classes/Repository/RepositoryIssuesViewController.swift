@@ -80,7 +80,11 @@ LoadMoreSectionControllerDelegate {
             switch result {
             case .error: break
             case .success(let payload):
-                self?.models = payload.models
+                if nextPage {
+                    self?.models += payload.models
+                } else {
+                    self?.models = payload.models
+                }
                 self?.nextPage = payload.nextPage
                 self?.feed.finishLoading(dismissRefresh: true, animated: !nextPage)
             }
