@@ -71,8 +71,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             if let comment = node.asIssueComment {
                 if let model = createCommentModel(
                     id: comment.id,
-                    commentFields: commentFields,
-                    reactionFields: reactionFields,
+                    commentFields: CommentFields(snapshot: comment.snapshot),
+                    reactionFields: ReactionFields(snapshot: comment.snapshot),
                     width: width,
                     owner: owner,
                     repo: repo,
