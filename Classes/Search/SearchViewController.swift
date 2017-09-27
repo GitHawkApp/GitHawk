@@ -15,7 +15,8 @@ class SearchViewController: UIViewController,
     UISearchBarDelegate,
 SearchEmptyViewDelegate,
 SearchRecentSectionControllerDelegate,
-SearchRecentHeaderSectionControllerDelegate {
+SearchRecentHeaderSectionControllerDelegate,
+TabNavRootViewControllerType {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -201,7 +202,7 @@ SearchRecentHeaderSectionControllerDelegate {
     // MARK: SearchRecentSectionControllerDelegate
 
     func didSelect(recentSectionController: SearchRecentSectionController, text: String) {
-        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.setShowsCancelButton(true, animated: false)
         searchBar.text = text
         search(term: text)
     }
@@ -211,6 +212,16 @@ SearchRecentHeaderSectionControllerDelegate {
     func didTapClear(sectionController: SearchRecentHeaderSectionController) {
         recentStore.clear()
         adapter.performUpdates(animated: true)
+    }
+
+    // MARK: TabNavRootViewControllerType
+
+    func didSingleTapTab() {
+        collectionView.scrollToTop(animated: true)
+    }
+
+    func didDoubleTapTab() {
+        searchBar.becomeFirstResponder()
     }
     
 }

@@ -24,6 +24,8 @@ final class TabBarControllerDelegate: NSObject, UITabBarControllerDelegate {
         // confirm at root VC
         if tabBarController.selectedViewController == viewController,
             let nav = viewController as? UINavigationController,
+            // don't handle taps when the nav is popping
+            nav.transitionCoordinator?.viewController(forKey: UITransitionContextViewControllerKey.from) == nil,
             let root = nav.viewControllers.first as? TabNavRootViewControllerType {
             tapCount += 1
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.17, execute: {
