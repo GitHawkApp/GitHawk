@@ -17,6 +17,9 @@ AttributedStringViewIssueDelegate {
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
     }()
+    private lazy var imageCache: ImageCellHeightCache = {
+        return ImageCellHeightCache(sectionController: self)
+    }()
     private lazy var photoHandler: PhotoViewHandler = {
         return PhotoViewHandler(viewController: self.viewController)
     }()
@@ -53,7 +56,12 @@ AttributedStringViewIssueDelegate {
         if viewModel === tailModel {
             height = Styles.Sizes.rowSpacing
         } else {
-            height = BodyHeightForComment(viewModel: viewModel, width: width, webviewCache: webviewCache)
+            height = BodyHeightForComment(
+                viewModel: viewModel,
+                width: width,
+                webviewCache: webviewCache,
+                imageCache: imageCache
+            )
         }
         return CGSize(width: width, height: height)
     }
@@ -84,7 +92,8 @@ AttributedStringViewIssueDelegate {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self
+            issueAttributedDelegate: self,
+            imageHeightDelegate: imageCache
         )
 
         if let cell = cell as? IssueReviewDetailsCell {

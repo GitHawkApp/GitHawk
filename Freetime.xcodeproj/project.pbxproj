@@ -172,6 +172,7 @@
 		294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */; };
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
+		294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
 		295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
@@ -478,6 +479,7 @@
 		294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavRootViewControllerType.swift; sourceTree = "<group>"; };
 		294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToTop.swift"; sourceTree = "<group>"; };
+		294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellHeightCache.swift; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
 		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
 		295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventSectionController.swift; sourceTree = "<group>"; };
@@ -1192,16 +1194,17 @@
 				2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */,
 				299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */,
 				29316DBC1ECC8970007CAE3F /* GithubUserSession.swift */,
+				294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */,
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
 				2980033A1F51E82400BE90F4 /* Rating */,
 				293189271F5391F700EF0911 /* Result.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
+				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
 				29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
-				29973E551F68BFDE0004B693 /* Signature.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1989,6 +1992,7 @@
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
+				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				292FCB131EDFCC510026635E /* IssueLabelDotCell.swift in Sources */,
 				292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,

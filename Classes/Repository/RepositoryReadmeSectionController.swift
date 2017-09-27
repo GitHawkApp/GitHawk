@@ -15,6 +15,9 @@ ListBindingSectionControllerDataSource {
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
     }()
+    private lazy var imageCache: ImageCellHeightCache = {
+        return ImageCellHeightCache(sectionController: self)
+    }()
     private lazy var photoHandler: PhotoViewHandler = {
         return PhotoViewHandler(viewController: self.viewController)
     }()
@@ -39,7 +42,12 @@ ListBindingSectionControllerDataSource {
         at index: Int
         ) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        let height = BodyHeightForComment(viewModel: viewModel, width: width, webviewCache: webviewCache)
+        let height = BodyHeightForComment(
+            viewModel: viewModel,
+            width: width,
+            webviewCache: webviewCache,
+            imageCache: imageCache
+        )
         return CGSize(width: width, height: height)
     }
 
@@ -59,7 +67,8 @@ ListBindingSectionControllerDataSource {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             attributedDelegate: viewController,
-            issueAttributedDelegate: nil
+            issueAttributedDelegate: nil,
+            imageHeightDelegate: imageCache
         )
 
         return cell

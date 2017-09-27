@@ -26,6 +26,9 @@ AttributedStringViewIssueDelegate {
     private lazy var photoHandler: PhotoViewHandler = {
         return PhotoViewHandler(viewController: self.viewController)
     }()
+    private lazy var imageCache: ImageCellHeightCache = {
+        return ImageCellHeightCache(sectionController: self)
+    }()
 
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
@@ -126,7 +129,12 @@ AttributedStringViewIssueDelegate {
         } else if viewModel is IssueCommentDetailsViewModel {
             height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
         } else {
-            height = BodyHeightForComment(viewModel: viewModel, width: width, webviewCache: webviewCache)
+            height = BodyHeightForComment(
+                viewModel: viewModel,
+                width: width,
+                webviewCache: webviewCache,
+                imageCache: imageCache
+            )
         }
 
         return CGSize(width: width, height: height)
@@ -169,7 +177,8 @@ AttributedStringViewIssueDelegate {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self
+            issueAttributedDelegate: self,
+            imageHeightDelegate: imageCache
         )
 
         return cell

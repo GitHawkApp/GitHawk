@@ -8,14 +8,19 @@
 
 import UIKit
 
-func BodyHeightForComment(viewModel: Any, width: CGFloat, webviewCache: WebviewCellHeightCache? = nil) -> CGFloat {
+func BodyHeightForComment(
+    viewModel: Any,
+    width: CGFloat,
+    webviewCache: WebviewCellHeightCache?,
+    imageCache: ImageCellHeightCache?
+    ) -> CGFloat {
     if let viewModel = viewModel as? NSAttributedStringSizing {
         return viewModel.textViewSize(width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
         let inset = IssueCommentCodeBlockCell.scrollViewInset
         return viewModel.contentSize.height + inset.top + inset.bottom
-    } else if viewModel is IssueCommentImageModel {
-        return 200.0
+    } else if let viewModel = viewModel as? IssueCommentImageModel {
+        return imageCache?.height(model: viewModel, width: width) ?? 200
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
         return viewModel.quote.textViewSize(width).height
     } else if viewModel is IssueCommentHrModel {
@@ -51,10 +56,12 @@ func ExtraCommentCellConfigure(
     htmlDelegate: IssueCommentHtmlCellDelegate?,
     htmlNavigationDelegate: IssueCommentHtmlCellNavigationDelegate?,
     attributedDelegate: AttributedStringViewDelegate?,
-    issueAttributedDelegate: AttributedStringViewIssueDelegate?
+    issueAttributedDelegate: AttributedStringViewIssueDelegate?,
+    imageHeightDelegate: IssueCommentImageHeightCellDelegate
     ) {
     if let cell = cell as? IssueCommentImageCell {
         cell.delegate = imageDelegate
+        cell.heightDelegate = imageHeightDelegate
     } else if let cell = cell as? IssueCommentHtmlCell {
         cell.delegate = htmlDelegate
         cell.navigationDelegate = htmlNavigationDelegate

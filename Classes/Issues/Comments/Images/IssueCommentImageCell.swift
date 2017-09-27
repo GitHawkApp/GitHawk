@@ -15,14 +15,18 @@ protocol IssueCommentImageCellDelegate: class {
     func didTapImage(cell: IssueCommentImageCell, image: UIImage)
 }
 
+protocol IssueCommentImageHeightCellDelegate: class {
+    func imageDidFinishLoad(cell: IssueCommentImageCell, url: URL, size: CGSize)
+}
+
 final class IssueCommentImageCell: UICollectionViewCell,
 ListBindable,
 CollapsibleCell,
 UIGestureRecognizerDelegate {
 
-    static let preferredHeight: CGFloat = 200
-
     weak var delegate: IssueCommentImageCellDelegate? = nil
+    weak var heightDelegate: IssueCommentImageHeightCellDelegate? = nil
+
     let imageView = UIImageView()
 
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -38,8 +42,9 @@ UIGestureRecognizerDelegate {
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(contentView)
-            make.height.equalTo(IssueCommentImageCell.preferredHeight)
+            make.edges.equalTo(contentView)
+//            make.top.left.right.equalTo(contentView)
+//            make.height.equalTo(IssueCommentImageCell.preferredHeight)
         }
 
         spinner.hidesWhenStopped = true
@@ -76,9 +81,16 @@ UIGestureRecognizerDelegate {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
-        imageView.sd_setImage(with: viewModel.url) { [unowned self] (image, error, type, url) in
-            self.imageView.backgroundColor = .clear
-            self.spinner.stopAnimating()
+
+        let imageURL = viewModel.url
+        imageView.sd_setImage(with: imageURL) { [weak self] (image, error, type, url) in
+            guard let strongSelf = self else { return }
+            strongSelf.imageView.backgroundColor = .clear
+            strongSelf.spinner.stopAnimating()
+
+            if let size = image?.size {
+                strongSelf.heightDelegate?.imageDidFinishLoad(cell: strongSelf, url: imageURL, size: size)
+            }
         }
     }
 
