@@ -134,7 +134,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
         loadPage(
-            query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, pageSize: 100),
+            query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
             containerWidth: containerWidth,
             completion: completion
         )
@@ -146,7 +146,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
         loadPage(
-            query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, pageSize: 100),
+            query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
             containerWidth: containerWidth,
             completion: completion
         )
