@@ -30,7 +30,8 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
         self.controllers = controllers
 
         super.init(nibName: nil, bundle: nil)
-        title = "\(repo.owner)/\(repo.name)"
+
+        self.title = "\(repo.owner)/\(repo.name)"
     }
 
     required init?(coder aDecoder: NSCoder) {

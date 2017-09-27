@@ -34,6 +34,7 @@ LoadMoreSectionControllerDelegate {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
         self.type = type
+
         super.init(nibName: nil, bundle: nil)
 
         switch type {
@@ -51,6 +52,10 @@ LoadMoreSectionControllerDelegate {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+
+        // set the frame in -viewDidLoad is required when working with TabMan
+        feed.collectionView.frame = view.bounds
+
         if #available(iOS 11.0, *) {
             feed.collectionView.contentInsetAdjustmentBehavior = .never
         }
