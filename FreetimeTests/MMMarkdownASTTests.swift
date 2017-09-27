@@ -98,4 +98,21 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertNotNil(text.attributedText.attributes(at: 45, effectiveRange: nil)[MarkdownAttribute.username])
     }
 
+    func test_shortlinks() {
+        let markdown = "test #123 #abc abc#123 and GH-3 and owner/repo#123 end"
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand])
+        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
+        XCTAssertEqual(result.count, 1)
+        let text = result.first as! NSAttributedStringSizing
+        XCTAssertNil(text.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNotNil(text.attributedText.attributes(at: 7, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNil(text.attributedText.attributes(at: 12, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNil(text.attributedText.attributes(at: 20, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNil(text.attributedText.attributes(at: 25, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNotNil(text.attributedText.attributes(at: 29, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNotNil(text.attributedText.attributes(at: 38, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNotNil(text.attributedText.attributes(at: 49, effectiveRange: nil)[MarkdownAttribute.issue])
+        XCTAssertNil(text.attributedText.attributes(at: 52, effectiveRange: nil)[MarkdownAttribute.issue])
+    }
+
 }

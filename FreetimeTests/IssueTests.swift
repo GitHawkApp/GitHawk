@@ -49,7 +49,7 @@ class IssueTests: XCTestCase {
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\n\nthen some more text")
+        XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
     }
 
     func test_whenImageAtTheEnd() {
@@ -61,7 +61,7 @@ class IssueTests: XCTestCase {
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
         XCTAssertEqual(models.count, 2)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\n\nthen some more text")
+        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
 
