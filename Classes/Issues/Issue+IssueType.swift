@@ -11,40 +11,32 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var pullRequest: Bool {
         return false
     }
 
     var labelableFields: LabelableFields {
-        return fragments.labelableFields
+        return .init(snapshot: snapshot)
     }
 
     var commentFields: CommentFields {
-        return fragments.commentFields
+        return .init(snapshot: snapshot)
     }
 
     var reactionFields: ReactionFields {
-        return fragments.reactionFields
+        return .init(snapshot: snapshot)
     }
 
     var closableFields: ClosableFields {
-        return fragments.closableFields
+        return .init(snapshot: snapshot)
     }
 
     var merged: Bool {
         return false
     }
 
-    var locked: Bool {
-        return fragments.lockableFields.locked
-    }
-
     var assigneeFields: AssigneeFields {
-        return fragments.assigneeFields
+        return .init(snapshot: snapshot)
     }
 
     var reviewRequestModel: IssueAssigneesModel? {
@@ -53,10 +45,6 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
 
     var headPaging: HeadPaging {
         return timeline.pageInfo.fragments.headPaging
-    }
-
-    var viewerCanUpdate: Bool {
-        return fragments.updatableFields.viewerCanUpdate
     }
 
     var milestoneFields: MilestoneFields? {
@@ -77,9 +65,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         for node in cleanNodes {
             if let comment = node.asIssueComment {
                 if let model = createCommentModel(
-                    id: comment.fragments.nodeFields.id,
-                    commentFields: comment.fragments.commentFields,
-                    reactionFields: comment.fragments.reactionFields,
+                    id: comment.id,
+                    commentFields: commentFields,
+                    reactionFields: reactionFields,
                     width: width,
                     owner: owner,
                     repo: repo,
@@ -95,7 +83,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
                 let model = IssueLabeledModel(
-                    id: unlabeled.fragments.nodeFields.id,
+                    id: unlabeled.id,
                     actor: unlabeled.actor?.login ?? Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
@@ -106,7 +94,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let labeled = node.asLabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: labeled.createdAt) {
                 let model = IssueLabeledModel(
-                    id: labeled.fragments.nodeFields.id,
+                    id: labeled.id,
                     actor: labeled.actor?.login ?? Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,
@@ -117,7 +105,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let closed = node.asClosedEvent,
                 let date = GithubAPIDateFormatter().date(from: closed.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: closed.fragments.nodeFields.id, 
+                    id: closed.id,
                     actor: closed.actor?.login ?? Strings.unknown,
                     commitHash: closed.closedCommit?.oid,
                     date: date,
@@ -128,7 +116,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let reopened = node.asReopenedEvent,
                 let date = GithubAPIDateFormatter().date(from: reopened.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: reopened.fragments.nodeFields.id,
+                    id: reopened.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
                     commitHash: nil,
                     date: date,
@@ -139,7 +127,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let locked = node.asLockedEvent,
                 let date = GithubAPIDateFormatter().date(from: locked.createdAt) {
                     let model = IssueStatusEventModel(
-                        id: locked.fragments.nodeFields.id,
+                        id: locked.id,
                         actor: locked.actor?.login ?? Strings.unknown,
                         commitHash: nil,
                         date: date,
@@ -150,7 +138,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let unlocked = node.asUnlockedEvent,
                 let date = GithubAPIDateFormatter().date(from: unlocked.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: unlocked.fragments.nodeFields.id,
+                    id: unlocked.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
                     commitHash: nil,
                     date: date,
@@ -161,7 +149,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let referenced = node.asReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
-                let id = referenced.fragments.nodeFields.id
+                let id = referenced.id
                 if let commitRef = referenced.refCommit {
                     let model = IssueReferencedCommitModel(
                         id: id,
@@ -207,7 +195,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     width: width
                 )
                 let model = IssueRenamedModel(
-                    id: rename.fragments.nodeFields.id,
+                    id: rename.id,
                     actor: rename.actor?.login ?? Strings.unknown,
                     date: date,
                     titleChangeString: text
@@ -216,7 +204,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let assigned = node.asAssignedEvent,
                 let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
                 let model = IssueRequestModel(
-                    id: assigned.fragments.nodeFields.id,
+                    id: assigned.id,
                     actor: assigned.actor?.login ?? Strings.unknown,
                     user: assigned.user?.login ?? Strings.unknown,
                     date: date,
@@ -226,7 +214,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let unassigned = node.asUnassignedEvent,
                 let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
                 let model = IssueRequestModel(
-                    id: unassigned.fragments.nodeFields.id,
+                    id: unassigned.id,
                     actor: unassigned.actor?.login ?? Strings.unknown,
                     user: unassigned.user?.login ?? Strings.unknown,
                     date: date,
@@ -236,7 +224,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let milestone = node.asMilestonedEvent,
                 let date = GithubAPIDateFormatter().date(from: milestone.createdAt) {
                 let model = IssueMilestoneEventModel(
-                    id: milestone.fragments.nodeFields.id,
+                    id: milestone.id,
                     actor: milestone.actor?.login ?? Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
@@ -246,7 +234,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let demilestone = node.asDemilestonedEvent,
                 let date = GithubAPIDateFormatter().date(from: demilestone.createdAt) {
                 let model = IssueMilestoneEventModel(
-                    id: demilestone.fragments.nodeFields.id,
+                    id: demilestone.id,
                     actor: demilestone.actor?.login ?? Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
@@ -257,7 +245,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let urlString = commit.author?.user?.avatarUrl,
                 let avatarURL = URL(string: urlString) {
                 let model = IssueCommitModel(
-                    id: commit.fragments.nodeFields.id,
+                    id: commit.id,
                     login: commit.author?.user?.login ?? Strings.unknown,
                     avatarURL: avatarURL,
                     message: commit.messageHeadline,
