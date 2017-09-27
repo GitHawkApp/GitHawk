@@ -326,7 +326,7 @@ func updateUsernames(
     return mutableAttributedString
 }
 
-private let issueShorthandRegex = try! NSRegularExpression(pattern: "\\B#([0-9]+)", options: [])
+private let issueShorthandRegex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
 func updateIssueShorthand(
     attributedString: NSAttributedString,
     options: GitHubMarkdownOptions
@@ -338,23 +338,21 @@ func updateIssueShorthand(
     let matches = issueShorthandRegex.matches(in: string, options: [], range: string.nsrange)
 
     for match in matches {
-        let range = match.rangeAt(0)
-        guard let substring = string.substring(with: range) else { continue }
+        let ownerRange = match.rangeAt(3)
+        let repoRange = match.rangeAt(4)
+        let numberRange = match.rangeAt(5)
+        guard let numberSubstring = string.substring(with: numberRange) else { continue }
 
-        var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
+        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
         attributes[NSForegroundColorAttributeName] = Styles.Colors.Blue.medium.color
 
-        let number = (substring.replacingOccurrences(of: "#", with: "") as NSString).integerValue
         attributes[MarkdownAttribute.issue] = IssueDetailsModel(
-            owner: options.owner,
-            repo: options.repo,
-            number: number
+            owner: string.substring(with: ownerRange) ?? options.owner,
+            repo: string.substring(with: repoRange) ?? options.repo,
+            number: (numberSubstring as NSString).integerValue
         )
-        
-        mutableAttributedString.replaceCharacters(
-            in: range,
-            with: NSAttributedString(string: substring, attributes: attributes)
-        )
+
+        mutableAttributedString.setAttributes(attributes, range: match.range)
     }
     return mutableAttributedString
 }
