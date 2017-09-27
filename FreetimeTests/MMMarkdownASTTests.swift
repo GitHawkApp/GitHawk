@@ -27,12 +27,14 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_creatingTestMarkdownWorks() {
-        let result = CreateCommentModels(markdown: testMarkdown, width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: testMarkdown, width: 300, options: options)
         XCTAssertTrue(result.count > 0)
     }
 
     func test_plainText() {
-        let result = CreateCommentModels(markdown: "foo", width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: "foo", width: 300, options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -40,7 +42,8 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_paragraphWithBold() {
-        let result = CreateCommentModels(markdown: "foo **bar**", width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: "foo **bar**", width: 300, options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -48,7 +51,8 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_paragraphWithItalics() {
-        let result = CreateCommentModels(markdown: "foo _bar_", width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: "foo _bar_", width: 300, options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -62,7 +66,8 @@ final class MMMarkdownASTTests: XCTestCase {
             "    - 2.1",
             "- 1.3",
             ].joined(separator: "\n")
-        let result = CreateCommentModels(markdown: md, width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: md, width: 300, options: options)
 
         // MMMarkdown puts an extra "\n" after **bold** as an entity type. TODO
         let text = result.first as! NSAttributedStringSizing
@@ -71,14 +76,16 @@ final class MMMarkdownASTTests: XCTestCase {
 
     func test_listWithNewlinesBetween() {
         let markdown = "1. line 1\n\n2. line 2"
-        let result = CreateCommentModels(markdown: markdown, width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
         let text = result.first as! NSAttributedStringSizing
         XCTAssertEqual(text.attributedText.string, "1. line 1\n2. line 2")
     }
 
     func test_usernames() {
         let markdown = "@user not @user\n@user user@gmail.com and @user"
-        let result = CreateCommentModels(markdown: markdown, width: 300)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.usernames])
+        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
         XCTAssertEqual(result.count, 1)
         let text = result.first as! NSAttributedStringSizing
         XCTAssertNotNil(text.attributedText.attributes(at: 0, effectiveRange: nil)[MarkdownAttribute.username])
