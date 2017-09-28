@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import TUSafariActivity
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
@@ -19,6 +20,7 @@ AttributedStringViewIssueDelegate {
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
+    private let model: IssueDetailsModel
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -33,7 +35,8 @@ AttributedStringViewIssueDelegate {
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
 
-    init(client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient) {
+        self.model = model
         self.client = client
         super.init()
         self.dataSource = self
@@ -56,6 +59,19 @@ AttributedStringViewIssueDelegate {
     }
 
     // MARK: Private API
+
+    func shareAction(sender: UIView) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
+            guard let model = self?.model,
+                let number = self?.object?.number,
+                let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
+                else { return }
+            let safariActivity = TUSafariActivity()
+            let controller = UIActivityViewController(activityItems: [url], applicationActivities: [safariActivity])
+            controller.popoverPresentationController?.sourceView = sender
+            self?.viewController?.present(controller, animated: true)
+        }
+    }
 
     @discardableResult
     private func uncollapse() -> Bool {
@@ -201,7 +217,13 @@ AttributedStringViewIssueDelegate {
 
     // MARK: IssueCommentDetailCellDelegate
 
-    func didTapMore(cell: IssueCommentDetailCell) {}
+    func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        alert.addAction(shareAction(sender: sender))
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+        alert.popoverPresentationController?.sourceView = sender
+        viewController?.present(alert, animated: true)
+    }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else { return }

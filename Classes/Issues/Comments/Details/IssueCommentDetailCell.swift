@@ -12,7 +12,7 @@ import IGListKit
 import SDWebImage
 
 protocol IssueCommentDetailCellDelegate: class {
-    func didTapMore(cell: IssueCommentDetailCell)
+    func didTapMore(cell: IssueCommentDetailCell, sender: UIView)
     func didTapProfile(cell: IssueCommentDetailCell)
 }
 
@@ -73,11 +73,10 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.top.equalTo(loginLabel.snp.bottom)
         }
 
-        moreButton.isHidden = true
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         moreButton.tintColor = Styles.Colors.Gray.light.color
-        moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
         moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
@@ -116,8 +115,8 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     // MARK: Private API
 
-    func onMore() {
-        delegate?.didTapMore(cell: self)
+    func onMore(sender: UIButton) {
+        delegate?.didTapMore(cell: self, sender: sender)
     }
 
     func onTapAvatar() {

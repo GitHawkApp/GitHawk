@@ -11,12 +11,12 @@ import IGListKit
 
 final class IssueCommentModel: ListDiffable {
 
-
     let id: String
     let details: IssueCommentDetailsViewModel
     let bodyModels: [ListDiffable]
     let reactions: IssueCommentReactionViewModel
     let collapse: (model: AnyObject, height: CGFloat)?
+    let number: Int?
 
     enum ThreadState {
         case single
@@ -39,6 +39,7 @@ final class IssueCommentModel: ListDiffable {
         self.reactions = reactions
         self.collapse = collapse
         self.threadState = threadState
+        self.number = GraphQLIDDecode(id: id, separator: "IssueComment")
     }
 
     // MARK: ListDiffable
