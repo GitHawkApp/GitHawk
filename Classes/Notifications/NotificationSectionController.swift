@@ -50,12 +50,18 @@ SwipeCollectionViewCellDelegate {
             client.markNotificationRead(id: object.id, isOpen: true)
         }
 
-        let controller = NavigateToNotificationContent(
-            object: object,
-            client: client.githubClient,
-            scrollToBottom: true
-        )
-        viewController?.showDetailViewController(controller, sender: nil)
+        switch object.identifier {
+        case .hash(let hash):
+            viewController?.presentCommit(owner: object.owner, repo: object.repo, hash: hash)
+        case .number(let number):
+            let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
+            let controller = IssuesViewController(
+                client: client.githubClient,
+                model: model,
+                scrollToBottom: true
+            )
+            viewController?.showDetailViewController(controller, sender: nil)
+        }
     }
 
     // MARK: Private API
