@@ -125,7 +125,7 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
             maxHeight = max(maxHeight, size.height)
         }
 
-        rowHeights.append(maxHeight)
+        rowHeights.append(ceil(maxHeight))
     }
 
     return IssueCommentTableModel(
