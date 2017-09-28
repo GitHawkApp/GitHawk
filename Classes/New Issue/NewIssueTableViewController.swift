@@ -38,7 +38,7 @@ enum IssueSignatureType {
     }
 }
 
-class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
+final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
 
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
@@ -80,12 +80,7 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
         super.viewDidLoad()
 
         // Add send button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Submit", comment: ""),
-            style: .done,
-            target: self,
-            action: #selector(send)
-        )
+        setRightBarItemIdle()
         
         // Add cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -105,7 +100,22 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
         title = NSLocalizedString("New Issue", comment: "")
     }
     
-    // MARK: - Buttons
+    // MARK: Private API
+
+    func setRightBarItemSpinning() {
+        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activity.startAnimating()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
+    }
+
+    func setRightBarItemIdle() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Submit", comment: ""),
+            style: .done,
+            target: self,
+            action: #selector(send)
+        )
+    }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     func send() {
@@ -113,11 +123,17 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
             StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
+
+        titleField.resignFirstResponder()
+        bodyField.resignFirstResponder()
+        setRightBarItemSpinning()
         
         let signature = self.signature?.addition ?? ""
         
         client.createIssue(owner: owner, repo: repo, title: titleText, body: (bodyText ?? "") + signature) { [weak self] model in
             guard let weakSelf = self, let navController = weakSelf.navigationController else { return }
+
+            weakSelf.setRightBarItemIdle()
             
             guard let model = model else {
                 StatusBar.showGenericError()
@@ -150,8 +166,6 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
         present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Markdown
-    
     func setupInputView() {
         let operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
@@ -177,7 +191,7 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
         bodyField.inputAccessoryView = actions
     }
     
-    // MARK: - UITextFieldDelegate
+    // MARK: UITextFieldDelegate
     
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -185,7 +199,7 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
         return false
     }
     
-    // MARK: - IssueTextActionsViewDelegate
+    // MARK: IssueTextActionsViewDelegate
     
     /// Called when a user taps on one of the control buttons (preview, bold, etc)
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
