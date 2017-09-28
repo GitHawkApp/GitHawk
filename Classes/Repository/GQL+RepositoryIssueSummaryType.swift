@@ -10,10 +10,6 @@ import Foundation
 
 extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var repoEventFields: RepoEventFields {
         return fragments.repoEventFields
     }
@@ -32,10 +28,6 @@ extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummary
 }
 
 extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
-
-    var id: String {
-        return fragments.nodeFields.id
-    }
 
     var repoEventFields: RepoEventFields {
         return fragments.repoEventFields

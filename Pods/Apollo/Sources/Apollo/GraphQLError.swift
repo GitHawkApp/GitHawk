@@ -1,3 +1,5 @@
+import Foundation
+
 /// Represents an error encountered during the execution of a GraphQL operation.
 ///
 ///  - SeeAlso: [The Response Format section in the GraphQL specification](https://facebook.github.io/graphql/#sec-Response-Format)
@@ -6,6 +8,10 @@ public struct GraphQLError: Error {
   
   init(_ object: JSONObject) {
     self.object = object
+  }
+  
+  init(_ message: String) {
+    self.init(["message": message])
   }
   
   /// GraphQL servers may provide additional entries as they choose to produce more helpful or machine‐readable errors.
@@ -40,5 +46,11 @@ public struct GraphQLError: Error {
 extension GraphQLError: CustomStringConvertible {
   public var description: String {
     return self.message
+  }
+}
+
+extension GraphQLError: LocalizedError {
+  public var errorDescription: String? {
+    return description
   }
 }

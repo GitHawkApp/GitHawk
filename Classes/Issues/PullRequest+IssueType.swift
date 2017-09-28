@@ -11,40 +11,29 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var pullRequest: Bool {
         return true
     }
 
     var labelableFields: LabelableFields {
-        return fragments.labelableFields
+        return .init(snapshot: snapshot)
     }
 
     var commentFields: CommentFields {
-        return fragments.commentFields
+        return .init(snapshot: snapshot)
     }
 
     var reactionFields: ReactionFields {
-        return fragments.reactionFields
+        return .init(snapshot: snapshot)
     }
 
     var closableFields: ClosableFields {
-        return fragments.closableFields
-    }
-
-    var locked: Bool {
-        return fragments.lockableFields.locked
+        // Seems really unnecessary?
+        return .init(snapshot: snapshot)
     }
 
     var assigneeFields: AssigneeFields {
-        return fragments.assigneeFields
-    }
-
-    var viewerCanUpdate: Bool {
-        return fragments.updatableFields.viewerCanUpdate
+        return .init(snapshot: snapshot)
     }
 
     var milestoneFields: MilestoneFields? {
@@ -81,9 +70,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         for node in cleanNodes {
             if let comment = node.asIssueComment {
                 if let model = createCommentModel(
-                    id: comment.fragments.nodeFields.id,
-                    commentFields: comment.fragments.commentFields,
-                    reactionFields: comment.fragments.reactionFields,
+                    id: comment.id,
+                    commentFields: CommentFields(snapshot: comment.snapshot),
+                    reactionFields: ReactionFields(snapshot: comment.snapshot),
                     width: width,
                     owner: owner,
                     repo: repo,
@@ -99,7 +88,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
                 let model = IssueLabeledModel(
-                    id: unlabeled.fragments.nodeFields.id,
+                    id: unlabeled.id,
                     actor: unlabeled.actor?.login ?? Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
@@ -110,7 +99,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let labeled = node.asLabeledEvent,
                 let date = GithubAPIDateFormatter().date(from: labeled.createdAt) {
                 let model = IssueLabeledModel(
-                    id: labeled.fragments.nodeFields.id,
+                    id: labeled.id,
                     actor: labeled.actor?.login ?? Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,
@@ -121,7 +110,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let closed = node.asClosedEvent,
                 let date = GithubAPIDateFormatter().date(from: closed.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: closed.fragments.nodeFields.id,
+                    id: closed.id,
                     actor: closed.actor?.login ?? Strings.unknown,
                     commitHash: closed.closedCommit?.oid,
                     date: date,
@@ -132,7 +121,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let reopened = node.asReopenedEvent,
                 let date = GithubAPIDateFormatter().date(from: reopened.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: reopened.fragments.nodeFields.id,
+                    id: reopened.id,
                     actor: reopened.actor?.login ?? Strings.unknown,
                     commitHash: nil,
                     date: date,
@@ -143,7 +132,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let merged = node.asMergedEvent,
                 let date = GithubAPIDateFormatter().date(from: merged.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: merged.fragments.nodeFields.id,
+                    id: merged.id,
                     actor: merged.actor?.login ?? Strings.unknown,
                     commitHash: merged.mergedCommit?.oid ?? "",
                     date: date,
@@ -154,7 +143,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let locked = node.asLockedEvent,
                 let date = GithubAPIDateFormatter().date(from: locked.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: locked.fragments.nodeFields.id,
+                    id: locked.id,
                     actor: locked.actor?.login ?? Strings.unknown,
                     commitHash: nil,
                     date: date,
@@ -165,7 +154,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let unlocked = node.asUnlockedEvent,
                 let date = GithubAPIDateFormatter().date(from: unlocked.createdAt) {
                 let model = IssueStatusEventModel(
-                    id: unlocked.fragments.nodeFields.id,
+                    id: unlocked.id,
                     actor: unlocked.actor?.login ?? Strings.unknown,
                     commitHash: nil,
                     date: date,
@@ -190,7 +179,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
                 // avoid displaying reviews that are empty comments (e.g. no actual content)
                 // the real content for these is likely a PR review thread comment instead
-                let markdown = review.fragments.commentFields.body.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let markdown = review.body.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 guard markdown.characters.count > 0 || review.state != .commented else { continue }
 
                 let details = IssueReviewDetailsModel(
@@ -201,12 +190,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
                 let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
                 let bodies = CreateCommentModels(
-                    markdown: review.fragments.commentFields.body,
+                    markdown: review.body,
                     width: width,
                     options: options
                 )
                 let model = IssueReviewModel(
-                    id: review.fragments.nodeFields.id,
+                    id: review.id,
                     details: details,
                     bodyModels: bodies
                 )
@@ -214,7 +203,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let referenced = node.asReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
-                let id = referenced.fragments.nodeFields.id
+                let id = referenced.id
                 if let issueReference = referenced.subject.asIssue {
                     let model = IssueReferencedModel(
                         id: id,
@@ -250,7 +239,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     width: width
                 )
                 let model = IssueRenamedModel(
-                    id: rename.fragments.nodeFields.id,
+                    id: rename.id,
                     actor: rename.actor?.login ?? Strings.unknown,
                     date: date,
                     titleChangeString: text
@@ -259,7 +248,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let assigned = node.asAssignedEvent,
                 let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
                 let model = IssueRequestModel(
-                    id: assigned.fragments.nodeFields.id,
+                    id: assigned.id,
                     actor: assigned.actor?.login ?? Strings.unknown,
                     user: assigned.user?.login ?? Strings.unknown,
                     date: date,
@@ -269,7 +258,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let unassigned = node.asUnassignedEvent,
                 let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
                 let model = IssueRequestModel(
-                    id: unassigned.fragments.nodeFields.id,
+                    id: unassigned.id,
                     actor: unassigned.actor?.login ?? Strings.unknown,
                     user: unassigned.user?.login ?? Strings.unknown,
                     date: date,
@@ -279,7 +268,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let reviewRequested = node.asReviewRequestedEvent,
                 let date = GithubAPIDateFormatter().date(from: reviewRequested.createdAt) {
                 let model = IssueRequestModel(
-                    id: reviewRequested.fragments.nodeFields.id,
+                    id: reviewRequested.id,
                     actor: reviewRequested.actor?.login ?? Strings.unknown,
                     user: reviewRequested.subject.login,
                     date: date,
@@ -289,7 +278,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let reviewRequestRemoved = node.asReviewRequestRemovedEvent,
                 let date = GithubAPIDateFormatter().date(from: reviewRequestRemoved.createdAt) {
                 let model = IssueRequestModel(
-                    id: reviewRequestRemoved.fragments.nodeFields.id,
+                    id: reviewRequestRemoved.id,
                     actor: reviewRequestRemoved.actor?.login ?? Strings.unknown,
                     user: reviewRequestRemoved.subject.login,
                     date: date,
@@ -299,7 +288,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let milestone = node.asMilestonedEvent,
                 let date = GithubAPIDateFormatter().date(from: milestone.createdAt) {
                 let model = IssueMilestoneEventModel(
-                    id: milestone.fragments.nodeFields.id,
+                    id: milestone.id,
                     actor: milestone.actor?.login ?? Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
@@ -309,7 +298,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let demilestone = node.asDemilestonedEvent,
                 let date = GithubAPIDateFormatter().date(from: demilestone.createdAt) {
                 let model = IssueMilestoneEventModel(
-                    id: demilestone.fragments.nodeFields.id,
+                    id: demilestone.id,
                     actor: demilestone.actor?.login ?? Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
@@ -320,7 +309,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let urlString = commit.author?.user?.avatarUrl,
                 let avatarURL = URL(string: urlString) {
                 let model = IssueCommitModel(
-                    id: commit.fragments.nodeFields.id,
+                    id: commit.id,
                     login: commit.author?.user?.login ?? Strings.unknown,
                     avatarURL: avatarURL,
                     message: commit.messageHeadline,

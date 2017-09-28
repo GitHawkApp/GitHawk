@@ -68,7 +68,11 @@ extension Bool: JSONDecodable, JSONEncodable {
 extension RawRepresentable where RawValue: JSONDecodable {
   public init(jsonValue value: JSONValue) throws {
     let rawValue = try RawValue(jsonValue: value)
-    self.init(rawValue: rawValue)!
+    if let tempSelf = Self(rawValue: rawValue) {
+      self = tempSelf
+    } else {
+      throw JSONDecodingError.couldNotConvert(value: value, to: Self.self)
+    }
   }
 }
 
@@ -85,12 +89,6 @@ extension Optional where Wrapped: JSONDecodable {
     } else {
       self = .some(try Wrapped(jsonValue: value))
     }
-  }
-}
-
-extension NSNull: JSONEncodable {
-  public var jsonValue: JSONValue {
-    return self
   }
 }
 
@@ -118,9 +116,7 @@ extension Dictionary: JSONEncodable {
     var jsonObject = JSONObject(minimumCapacity: count)
     for (key, value) in self {
       if case let (key as String, value as JSONEncodable) = (key, value) {
-        if !isNil(value) {
-          jsonObject[key] = value.jsonValue
-        }
+        jsonObject[key] = value.jsonValue
       } else {
         fatalError("Dictionary is only JSONEncodable if Value is (and if Key is String)")
       }
