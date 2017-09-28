@@ -83,7 +83,8 @@ func createCommentModel(
         bodyModels: bodies,
         reactions: reactions,
         collapse: collapse,
-        threadState: threadState
+        threadState: threadState,
+        rawMarkdown: commentFields.body
     )
 }
 

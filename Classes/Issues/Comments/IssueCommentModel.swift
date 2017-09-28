@@ -17,6 +17,7 @@ final class IssueCommentModel: ListDiffable {
     let reactions: IssueCommentReactionViewModel
     let collapse: (model: AnyObject, height: CGFloat)?
     let number: Int?
+    let rawMarkdown: String
 
     enum ThreadState {
         case single
@@ -31,7 +32,8 @@ final class IssueCommentModel: ListDiffable {
         bodyModels: [ListDiffable],
         reactions: IssueCommentReactionViewModel,
         collapse: (AnyObject, CGFloat)?,
-        threadState: ThreadState
+        threadState: ThreadState,
+        rawMarkdown: String
         ) {
         self.id = id
         self.details = details
@@ -40,6 +42,7 @@ final class IssueCommentModel: ListDiffable {
         self.collapse = collapse
         self.threadState = threadState
         self.number = GraphQLIDDecode(id: id, separator: "IssueComment")
+        self.rawMarkdown = rawMarkdown
     }
 
     // MARK: ListDiffable
