@@ -87,7 +87,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     width: width,
                     owner: owner,
                     repo: repo,
-                    threadState: .single
+                    threadState: .single,
+                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate
                     ) {
                     results.append(model)
 
@@ -363,7 +364,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 width: width,
                 owner: owner,
                 repo: repo,
-                threadState: isTail ? .tail : .neck
+                threadState: isTail ? .tail : .neck,
+                viewerCanUpdate: false // unsupported by github
                 ) {
                 results.append(model)
             }

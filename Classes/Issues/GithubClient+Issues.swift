@@ -68,7 +68,8 @@ extension GithubClient {
                         width: width,
                         owner: owner,
                         repo: repo,
-                        threadState: .single
+                        threadState: .single,
+                        viewerCanUpdate: issueType.viewerCanUpdate
                     )
 
                     let timeline = issueType.timelineViewModels(owner: owner, repo: repo, width: width)

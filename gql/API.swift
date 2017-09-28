@@ -54,11 +54,12 @@ public final class AddCommentMutation: GraphQLMutation {
     "        ...nodeFields" +
     "        ...reactionFields" +
     "        ...commentFields" +
+    "        ...updatableFields" +
     "      }" +
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition)
 
   public let subjectId: GraphQLID
   public let body: String
@@ -111,13 +112,15 @@ public final class AddCommentMutation: GraphQLMutation {
             let nodeFields = try NodeFields(reader: reader)
             let reactionFields = try ReactionFields(reader: reader)
             let commentFields = try CommentFields(reader: reader)
-            fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+            let updatableFields = try UpdatableFields(reader: reader)
+            fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields, updatableFields: updatableFields)
           }
 
           public struct Fragments {
             public let nodeFields: NodeFields
             public let reactionFields: ReactionFields
             public let commentFields: CommentFields
+            public let updatableFields: UpdatableFields
           }
         }
       }
@@ -235,6 +238,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "              ...nodeFields" +
     "              ...reactionFields" +
     "              ...commentFields" +
+    "              ...updatableFields" +
     "            }" +
     "            ... on LabeledEvent {" +
     "              __typename" +
@@ -450,6 +454,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "              ...nodeFields" +
     "              ...reactionFields" +
     "              ...commentFields" +
+    "              ...updatableFields" +
     "            }" +
     "            ... on LabeledEvent {" +
     "              __typename" +
@@ -711,7 +716,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     "    }" +
     "  }" +
     "}"
-  public static let queryDocument = operationDefinition.appending(HeadPaging.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(MilestoneFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
+  public static let queryDocument = operationDefinition.appending(HeadPaging.fragmentDefinition).appending(NodeFields.fragmentDefinition).appending(ReactionFields.fragmentDefinition).appending(CommentFields.fragmentDefinition).appending(UpdatableFields.fragmentDefinition).appending(ReferencedRepositoryFields.fragmentDefinition).appending(MilestoneFields.fragmentDefinition).appending(LockableFields.fragmentDefinition).appending(ClosableFields.fragmentDefinition).appending(LabelableFields.fragmentDefinition).appending(AssigneeFields.fragmentDefinition)
 
   public let owner: String
   public let repo: String
@@ -1588,13 +1593,15 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   let nodeFields = try NodeFields(reader: reader)
                   let reactionFields = try ReactionFields(reader: reader)
                   let commentFields = try CommentFields(reader: reader)
-                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+                  let updatableFields = try UpdatableFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields, updatableFields: updatableFields)
                 }
 
                 public struct Fragments {
                   public let nodeFields: NodeFields
                   public let reactionFields: ReactionFields
                   public let commentFields: CommentFields
+                  public let updatableFields: UpdatableFields
                 }
               }
             }
@@ -2651,13 +2658,15 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   let nodeFields = try NodeFields(reader: reader)
                   let reactionFields = try ReactionFields(reader: reader)
                   let commentFields = try CommentFields(reader: reader)
-                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields)
+                  let updatableFields = try UpdatableFields(reader: reader)
+                  fragments = Fragments(nodeFields: nodeFields, reactionFields: reactionFields, commentFields: commentFields, updatableFields: updatableFields)
                 }
 
                 public struct Fragments {
                   public let nodeFields: NodeFields
                   public let reactionFields: ReactionFields
                   public let commentFields: CommentFields
+                  public let updatableFields: UpdatableFields
                 }
               }
             }

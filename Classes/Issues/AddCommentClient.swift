@@ -9,7 +9,13 @@
 import Foundation
 
 protocol AddCommentListener: class {
-    func didSendComment(client: AddCommentClient, id: String, commentFields: CommentFields, reactionFields: ReactionFields)
+    func didSendComment(
+        client: AddCommentClient,
+        id: String,
+        commentFields: CommentFields,
+        reactionFields: ReactionFields,
+        viewerCanUpdate: Bool
+    )
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String)
 }
 
@@ -44,7 +50,8 @@ final class AddCommentClient {
                         client: self,
                         id: fragments.nodeFields.id,
                         commentFields: fragments.commentFields,
-                        reactionFields: fragments.reactionFields
+                        reactionFields: fragments.reactionFields,
+                        viewerCanUpdate: fragments.updatableFields.viewerCanUpdate
                     )
                 }
             } else {

@@ -52,7 +52,8 @@ func createCommentModel(
     width: CGFloat,
     owner: String,
     repo: String,
-    threadState: IssueCommentModel.ThreadState
+    threadState: IssueCommentModel.ThreadState,
+    viewerCanUpdate: Bool
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
         let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
@@ -84,7 +85,8 @@ func createCommentModel(
         reactions: reactions,
         collapse: collapse,
         threadState: threadState,
-        rawMarkdown: commentFields.body
+        rawMarkdown: commentFields.body,
+        viewerCanUpdate: viewerCanUpdate
     )
 }
 

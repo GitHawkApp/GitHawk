@@ -20,7 +20,8 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueTextActionsViewDelegate {
+IssueTextActionsViewDelegate,
+IssueCommentSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -427,7 +428,7 @@ IssueTextActionsViewDelegate {
 
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
+        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client, delegate: self)
         case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
@@ -470,7 +471,13 @@ IssueTextActionsViewDelegate {
 
     // MARK: AddCommentListener
 
-    func didSendComment(client: AddCommentClient, id: String, commentFields: CommentFields, reactionFields: ReactionFields) {
+    func didSendComment(
+        client: AddCommentClient,
+        id: String,
+        commentFields: CommentFields,
+        reactionFields: ReactionFields,
+        viewerCanUpdate: Bool
+        ) {
         guard let comment = createCommentModel(
             id: id,
             commentFields: commentFields,
@@ -478,7 +485,8 @@ IssueTextActionsViewDelegate {
             width: view.bounds.width,
             owner: model.owner,
             repo: model.repo,
-            threadState: .single
+            threadState: .single,
+            viewerCanUpdate: viewerCanUpdate
             )
             else { return }
         sentComments.append(comment)
@@ -524,6 +532,12 @@ IssueTextActionsViewDelegate {
         case .wrap(let left, let right): textView.replace(left: left, right: right, atLineStart: false)
         case .line(let left): textView.replace(left: left, right: nil, atLineStart: true)
         }
+    }
+
+    // MARK: IssueCommentSectionControllerDelegate
+
+    func didEdit(sectionController: IssueCommentSectionController) {
+        
     }
 
 }

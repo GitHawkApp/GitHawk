@@ -83,7 +83,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     width: width,
                     owner: owner,
                     repo: repo,
-                    threadState: .single
+                    threadState: .single,
+                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate
                     ) {
                     results.append(model)
 

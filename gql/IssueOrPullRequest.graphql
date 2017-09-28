@@ -29,6 +29,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...nodeFields
               ...reactionFields
               ...commentFields
+              ...updatableFields
             }
             ... on LabeledEvent {
               ...nodeFields
@@ -161,6 +162,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...nodeFields
               ...reactionFields
               ...commentFields
+              ...updatableFields
             }
             ... on LabeledEvent {
               ...nodeFields

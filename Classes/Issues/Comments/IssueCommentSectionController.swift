@@ -10,6 +10,10 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 
+protocol IssueCommentSectionControllerDelegate: class {
+    func didEdit(sectionController: IssueCommentSectionController)
+}
+
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
@@ -21,6 +25,7 @@ AttributedStringViewIssueDelegate {
     private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
     private let model: IssueDetailsModel
+    private weak var delegate: IssueCommentSectionControllerDelegate? = nil
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -35,9 +40,13 @@ AttributedStringViewIssueDelegate {
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    // set and reload to enter "editing" UI mode
+    private var editing = false
+
+    init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
         self.model = model
         self.client = client
+        self.delegate = delegate
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
@@ -71,6 +80,10 @@ AttributedStringViewIssueDelegate {
             controller.popoverPresentationController?.sourceView = sender
             self?.viewController?.present(controller, animated: true)
         }
+    }
+
+    func edit() -> UIAlertAction? {
+        return nil
     }
 
     @discardableResult
