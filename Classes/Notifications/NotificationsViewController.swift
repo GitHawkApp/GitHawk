@@ -183,15 +183,16 @@ TabNavRootViewControllerType {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        guard hasError == false else { return [] }
+        let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
+
+        guard hasError == false, viewModels.count > 0
+            else { return [] }
 
         var objects: [ListDiffable] = [selection]
 
         if let token = ratingToken {
             objects.append(token)
         }
-
-        let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
 
         if viewModels.count == 0 && feed.status == .idle {
             objects.append(emptyKey)
