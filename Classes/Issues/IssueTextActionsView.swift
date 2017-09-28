@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class IssueTextActionsCell: UICollectionViewCell {
+final class IssueTextActionsCell: SelectableCell {
 
     let label = UILabel()
     let imageView = UIImageView()
@@ -72,12 +72,10 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 30
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
         c.backgroundColor = .clear
         c.alwaysBounceVertical = false
         c.alwaysBounceHorizontal = true
-        c.contentInset = UIEdgeInsets(top: 0, left: Styles.Sizes.eventGutter, bottom: 0, right: Styles.Sizes.eventGutter)
         c.showsVerticalScrollIndicator = false
         c.showsHorizontalScrollIndicator = false
         return c
@@ -121,13 +119,14 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.didSelect(actionsView: self, operation: operations[indexPath.item])
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
         return CGSize(
-            width: min(operations[indexPath.item].icon?.size.width ?? 0, height),
+            width: (operations[indexPath.item].icon?.size.width ?? 0) + Styles.Sizes.eventGutter*2,
             height: height
         )
     }
