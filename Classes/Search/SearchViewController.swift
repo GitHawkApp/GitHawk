@@ -16,7 +16,8 @@ class SearchViewController: UIViewController,
 SearchEmptyViewDelegate,
 SearchRecentSectionControllerDelegate,
 SearchRecentHeaderSectionControllerDelegate,
-TabNavRootViewControllerType {
+TabNavRootViewControllerType,
+SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -136,7 +137,7 @@ TabNavRootViewControllerType {
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)
         } else if object is SearchRepoResult {
-            return SearchResultSectionController(client: client)
+            return SearchResultSectionController(client: client, delegate: self)
         } else if object is String {
             return SearchRecentSectionController(delegate: self)
         }
@@ -222,6 +223,12 @@ TabNavRootViewControllerType {
 
     func didDoubleTapTab() {
         searchBar.becomeFirstResponder()
+    }
+
+    // MARK: SearchResultSectionControllerDelegate
+
+    func didSelect(sectionController: SearchResultSectionController) {
+        searchBar.resignFirstResponder()
     }
     
 }

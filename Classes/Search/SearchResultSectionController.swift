@@ -8,12 +8,18 @@
 
 import IGListKit
 
+protocol SearchResultSectionControllerDelegate: class {
+    func didSelect(sectionController: SearchResultSectionController)
+}
+
 final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
 
+    private weak var delegate: SearchResultSectionControllerDelegate? = nil
     private let client: GithubClient
     
-    init(client: GithubClient) {
+    init(client: GithubClient, delegate: SearchResultSectionControllerDelegate) {
         self.client = client
+        self.delegate = delegate
         super.init()
     }
     
@@ -34,6 +40,9 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
     
     override func didSelectItem(at index: Int) {
         guard let object = object else { return }
+
+        delegate?.didSelect(sectionController: self)
+
         let repo = RepositoryDetails(owner: object.owner, name: object.name, hasIssuesEnabled: object.hasIssuesEnabled)
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
