@@ -54,6 +54,8 @@ TabNavRootViewControllerType {
         feed.adapter.dataSource = self
 
         resetRightBarItem()
+
+        navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +83,7 @@ TabNavRootViewControllerType {
     private func updateUnreadState() {
         let unreadCount = dataSource.unreadNotifications.count
         navigationItem.rightBarButtonItem?.isEnabled = unreadCount > 0
+        navigationController?.tabBarItem.badgeValue = unreadCount > 0 ? "\(unreadCount)" : nil
         BadgeNotifications.update(count: unreadCount)
     }
 
