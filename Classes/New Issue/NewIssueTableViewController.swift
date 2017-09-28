@@ -185,9 +185,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         ]
         
         let actions = IssueTextActionsView(operations: operations)
+        actions.backgroundColor = Styles.Colors.Gray.lighter.color
         actions.delegate = self
         actions.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
-        actions.backgroundColor = .white
+        actions.addBorder(.top)
         bodyField.inputAccessoryView = actions
     }
     
