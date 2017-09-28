@@ -81,7 +81,7 @@ class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, I
 
         // Add send button
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Send", comment: ""),
+            title: NSLocalizedString("Submit", comment: ""),
             style: .done,
             target: self,
             action: #selector(send)
