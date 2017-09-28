@@ -81,7 +81,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalTo(imageView)
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
         }
 
