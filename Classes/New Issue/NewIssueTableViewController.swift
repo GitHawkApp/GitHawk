@@ -38,15 +38,21 @@ enum IssueSignatureType {
     }
 }
 
+protocol NewIssueTableViewControllerDelegate: class {
+    func didDismissAfterCreatingIssue(model: IssueDetailsModel)
+}
+
 final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
+
+    weak var delegate: NewIssueTableViewControllerDelegate? = nil
 
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
     
-    var client: GithubClient!
-    var owner: String!
-    var repo: String!
-    var signature: IssueSignatureType?
+    private var client: GithubClient!
+    private var owner: String!
+    private var repo: String!
+    private var signature: IssueSignatureType?
     
     private var titleText: String? {
         guard let raw = titleField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
@@ -131,26 +137,30 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         let signature = self.signature?.addition ?? ""
         
         client.createIssue(owner: owner, repo: repo, title: titleText, body: (bodyText ?? "") + signature) { [weak self] model in
-            guard let weakSelf = self, let navController = weakSelf.navigationController else { return }
+            guard let strongSelf = self else { return }
 
-            weakSelf.setRightBarItemIdle()
+            strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
                 StatusBar.showGenericError()
                 return
             }
-            
-            let issuesViewController = IssuesViewController(client: weakSelf.client, model: model)
-            issuesViewController.hidesBottomBarWhenPushed = true
-            
-            navController.replaceTopMostViewController(issuesViewController, animated: true)
+
+            let delegate = strongSelf.delegate
+            strongSelf.dismiss(animated: true, completion: {
+                delegate?.didDismissAfterCreatingIssue(model: model)
+            })
         }
     }
 
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
     func cancel() {
+        let dismissBlock = {
+            self.dismiss(animated: true)
+        }
+
         if titleText == nil && bodyText == nil {
-            _ = navigationController?.popViewController(animated: true)
+            dismissBlock()
             return
         }
         
@@ -159,8 +169,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { [weak self] _ in
-            _ = self?.navigationController?.popViewController(animated: true)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { _ in
+            dismissBlock()
         }))
         
         present(alert, animated: true, completion: nil)

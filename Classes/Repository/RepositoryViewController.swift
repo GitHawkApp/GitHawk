@@ -12,7 +12,9 @@ import Pageboy
 import TUSafariActivity
 import SafariServices
 
-class RepositoryViewController: TabmanViewController, PageboyViewControllerDataSource {
+class RepositoryViewController: TabmanViewController,
+PageboyViewControllerDataSource,
+NewIssueTableViewControllerDelegate {
 
     private let repo: RepositoryDetails
     private let client: GithubClient
@@ -106,8 +108,11 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
                 StatusBar.showGenericError()
                 return
             }
-            
-            strongSelf.show(newIssueViewController, sender: nil)
+
+            newIssueViewController.delegate = self
+            let nav = UINavigationController(rootViewController: newIssueViewController)
+            nav.modalPresentationStyle = .formSheet
+            strongSelf.present(nav, animated: true)
         }
     }
 
@@ -138,6 +143,13 @@ class RepositoryViewController: TabmanViewController, PageboyViewControllerDataS
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
+    }
+
+    // MARK: NewIssueTableViewControllerDelegate
+
+    func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
+        let issuesViewController = IssuesViewController(client: client, model: model)
+        show(issuesViewController, sender: self)
     }
 
 }
