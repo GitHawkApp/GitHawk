@@ -172,11 +172,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addActions([
-            AlertAction.no(),
-            AlertAction(AlertActionBuilder {
-                $0.title = Strings.yes
-                $0.style = .destructive
-            }).get { _ in
+            AlertAction.goBack(),
+            AlertAction.discard { _ in
                 dismissBlock()
             }
         ])
