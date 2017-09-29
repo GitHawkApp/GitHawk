@@ -35,12 +35,14 @@ struct AlertAction {
         return UIAlertAction(title: self.title, style: self.style, handler: handler)
     }
     
-    func share(_ items: [Any], activities: [UIActivity]?, sender: UIBarButtonItem) -> UIAlertAction {
+    func share(_ items: [Any],
+               activities: [UIActivity]?,
+               buildActivityBlock: ((UIActivityViewController) -> Void)?) -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
-            activityController.popoverPresentationController?.barButtonItem = sender
+            buildActivityBlock?(activityController)
             
             rootViewController.present(activityController, animated: true)
         }

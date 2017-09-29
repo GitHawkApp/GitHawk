@@ -69,17 +69,14 @@ AttributedStringViewIssueDelegate {
 
     // MARK: Private API
 
-    func shareAction(sender: UIView) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
-            guard let model = self?.model,
-                let number = self?.object?.number,
-                let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
-                else { return }
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [url], applicationActivities: [safariActivity])
-            controller.popoverPresentationController?.sourceView = sender
-            self?.viewController?.present(controller, animated: true)
-        }
+    func shareAction(sender: UIView) -> UIAlertAction? {
+        guard let number = object?.number,
+            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
+        else { return nil }
+        weak var weakSelf = self
+        
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
+            .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
 
     func edit() -> UIAlertAction? {
@@ -232,9 +229,11 @@ AttributedStringViewIssueDelegate {
 
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
-        alert.addAction(shareAction(sender: sender))
-        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
         alert.popoverPresentationController?.sourceView = sender
+        alert.addActions([
+            shareAction(sender: sender),
+            AlertAction.cancel()
+        ])
         viewController?.present(alert, animated: true)
     }
 

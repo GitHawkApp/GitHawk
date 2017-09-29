@@ -267,7 +267,7 @@ IssueCommentSectionControllerDelegate {
         
         alert.addActions([
             closeAction(),
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()], sender: sender),
+            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
             AlertAction.cancel()
