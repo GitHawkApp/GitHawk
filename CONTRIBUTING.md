@@ -4,11 +4,11 @@ This project is continuing to develop rapidly and new features are constantly be
 
 ### Setup
 
-In order to compile and run GitHawk locally you will need to provide your own client ID and secret keys from GitHub. You can get these by [registering](https://github.com/settings/applications/new) a new OAuth application. The "Authorization callback URL" must be set to `freetime://`, otherwise you're free to fill it in yourself!
+In order to compile and run GitHawk locally, you will need to provide your own client ID and secret keys from GitHub. You can get these by [registering](https://github.com/settings/applications/new) a new OAuth application. The "Authorization callback URL" must be set to `freetime://`, otherwise you're free to fill it in yourself!
 
 Once you have your client ID and secret you can populate these values into the [Secrets.swift](https://github.com/rnystrom/GitHawk/blob/master/Classes/Other/Secrets.swift) file. You should **never** commit these changes!
 
-Finally you will also need to install `apollo-codegen`, this is a command line tool which is required to create the GraphQL models! This can be done easily by running `npm install`.
+Finally, you will also need to install `apollo-codegen`, this is a command line tool which is required to create the GraphQL models! This can be done easily by running `npm install`.
 
 ### Pull Requests
 
@@ -18,7 +18,7 @@ Pull Requests should have a suitable amount of testing done to ensure it doesn't
 
 ### Issues
 
-We use [GitHub issues](https://github.com/rnystrom/GitHawk/issues) in order to track feature requests and bugs! You can raise bugs through the app itself from the Settings page and then tapping "Report a Bug" - this will also include some device specific information to make fixing those bugs a little bit easier!
+We use [GitHub issues](https://github.com/rnystrom/GitHawk/issues) in order to track feature requests and bugs! You can raise bugs through the app itself from the Settings page and then tap "Report a Bug" - this will also include some device specific information to make fixing those bugs a little bit easier!
 
 ### Beta Testing
 

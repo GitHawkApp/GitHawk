@@ -9,7 +9,8 @@
 import UIKit
 import SafariServices
 
-final class SettingsViewController: UITableViewController {
+final class SettingsViewController: UITableViewController,
+NewIssueTableViewControllerDelegate {
 
     // must be injected
     var sessionManager: GithubSessionManager!
@@ -75,6 +76,7 @@ final class SettingsViewController: UITableViewController {
         if cell === reviewAccessCell {
             onReviewAccess()
         } else if cell === reportBugCell {
+            tableView.deselectRow(at: indexPath, animated: true)
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
@@ -101,9 +103,10 @@ final class SettingsViewController: UITableViewController {
             StatusBar.showGenericError()
             return
         }
-        
+        viewController.delegate = self
         let navController = UINavigationController(rootViewController: viewController)
-        showDetailViewController(navController, sender: nil)
+        navController.modalPresentationStyle = .formSheet
+        present(navController, animated: true)
     }
 
     func onViewSource() {
@@ -210,4 +213,11 @@ final class SettingsViewController: UITableViewController {
         Signature.enabled = signatureSwitch.isOn
     }
     
+    // MARK: NewIssueTableViewControllerDelegate
+    
+    func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
+        let issuesViewController = IssuesViewController(client: client, model: model)
+        let navigation = UINavigationController(rootViewController: issuesViewController)
+        showDetailViewController(navigation, sender: nil)
+    }
 }
