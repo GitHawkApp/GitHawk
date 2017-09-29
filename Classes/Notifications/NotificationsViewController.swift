@@ -185,7 +185,7 @@ TabNavRootViewControllerType {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
 
-        guard hasError == false, viewModels.count > 0
+        guard hasError == false || viewModels.count > 0
             else { return [] }
 
         var objects: [ListDiffable] = [selection]
