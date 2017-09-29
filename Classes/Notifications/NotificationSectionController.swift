@@ -60,7 +60,8 @@ SwipeCollectionViewCellDelegate {
                 model: model,
                 scrollToBottom: true
             )
-            viewController?.showDetailViewController(controller, sender: nil)
+            let navigation = UINavigationController(rootViewController: controller)
+            viewController?.showDetailViewController(navigation, sender: nil)
         }
     }
 
