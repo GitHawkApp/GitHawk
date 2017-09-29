@@ -233,41 +233,19 @@ IssueCommentSectionControllerDelegate {
         return "\(model.owner)/\(model.repo)#\(model.number)"
     }
 
-    func shareAction(sender: UIBarButtonItem) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let safariActivity = TUSafariActivity()
-            let controller = UIActivityViewController(activityItems: [strongSelf.externalURL], applicationActivities: [safariActivity])
-            controller.popoverPresentationController?.barButtonItem = sender
-            strongSelf.present(controller, animated: true)
-        }
-    }
-
-    func safariAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let controller = SFSafariViewController(url: strongSelf.externalURL)
-            strongSelf.present(controller, animated: true)
-        }
-    }
-
     func closeAction() -> UIAlertAction? {
         guard current?.viewerCanUpdate == true,
             let status = localStatusChange?.model.status ?? current?.status.status,
             status != .merged
             else { return nil }
-
-        let close = status == .open
-        let title = close ? NSLocalizedString("Close", comment: "") : NSLocalizedString("Reopen", comment: "")
-        return UIAlertAction(title: title, style: .default, handler: { [weak self] _ in
-            self?.setStatus(close: close)
-        })
+        
+        return AlertAction.toggleIssue(status) { [weak self] _ in
+            self?.setStatus(close: status == .open)
+        }
     }
     
     func viewRepoAction() -> UIAlertAction? {
-        guard let result = current else {
-            return nil
-        }
+        guard let _ = current else { return nil }
         
         let repo = RepositoryDetails(
             owner: model.owner,
@@ -275,26 +253,27 @@ IssueCommentSectionControllerDelegate {
             hasIssuesEnabled: current?.hasIssuesEnabled ?? false
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
-        return UIAlertAction(title: NSLocalizedString("Open Repository", comment: ""), style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            strongSelf.show(repoViewController, sender: nil)
-        }
+        weak var weakSelf = self
+        
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+            .view(repo: repoViewController)
     }
 
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
-        if let close = closeAction() {
-            alert.addAction(close)
-        }
-
-        alert.addAction(shareAction(sender: sender))
-        alert.addAction(safariAction())
-        if let viewRepo = viewRepoAction() {
-            alert.addAction(viewRepo)
-        }
-        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
+        weak var weakSelf = self
+        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
+        
+        alert.addActions([
+            closeAction(),
+            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
+            AlertAction(alertBuilder).openInSafari(url: externalURL),
+            viewRepoAction(),
+            AlertAction.cancel()
+        ])
         alert.popoverPresentationController?.barButtonItem = sender
+        
         present(alert, animated: true)
     }
 
