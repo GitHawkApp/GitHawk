@@ -100,6 +100,9 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         titleField.delegate = self
         
         // Setup markdown input view
+        bodyField.contentInset = .zero
+        bodyField.textContainerInset = .zero
+        bodyField.textContainer.lineFragmentPadding = 0
         setupInputView()
         
         // Update title to use localization
@@ -165,11 +168,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         }
         
         let title = NSLocalizedString("Unsaved Changes", comment: "New Issue - Cancel w/ Unsaved Changes Title")
-        let message = NSLocalizedString("Are you sure you want to cancel this new issue? Your message will be lost.", comment: "New Issue - Cancel w/ Unsaved Changes Message")
+        let message = NSLocalizedString("Are you sure you want to discard this new issue? Your message will be lost.", comment: "New Issue - Cancel w/ Unsaved Changes Message")
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Go back", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: { _ in
             dismissBlock()
         }))
         
