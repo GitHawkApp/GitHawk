@@ -116,17 +116,18 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onSignOut() {
-        let cancelAction = UIAlertAction(title: Strings.cancel, style: .cancel, handler: nil)
-
-        let signoutAction = UIAlertAction(title: Strings.signout, style: .destructive) { _ in
-            self.signout()
-        }
-
         let title = NSLocalizedString("Are you sure?", comment: "")
         let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(cancelAction)
-        alert.addAction(signoutAction)
+        alert.addActions([
+            AlertAction.cancel(),
+            AlertAction(AlertActionBuilder {
+                $0.title = Strings.signout
+                $0.style = .destructive
+            }).get { [weak self] _ in
+                self?.signout()
+            }
+        ])
 
         present(alert, animated: true)
     }
