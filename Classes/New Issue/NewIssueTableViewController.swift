@@ -42,7 +42,11 @@ protocol NewIssueTableViewControllerDelegate: class {
     func didDismissAfterCreatingIssue(model: IssueDetailsModel)
 }
 
-final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
+final class NewIssueTableViewController: UITableViewController,
+    UITextFieldDelegate,
+    IssueTextActionsViewDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate? = nil
 
@@ -197,6 +201,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
             IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
             IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
+            IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .execute({ [weak self] in
+                guard let strongSelf = self else { return }
+                
+                let picker = UIImagePickerController()
+                picker.delegate = strongSelf
+                
+                strongSelf.present(picker, animated: true, completion: nil)
+            }))
         ]
         
         let actions = IssueTextActionsView(operations: operations)
@@ -224,5 +236,29 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         case .wrap(let left, let right): bodyField.replace(left: left, right: right, atLineStart: false)
         case .line(let left): bodyField.replace(left: left, right: nil, atLineStart: true)
         }
+    }
+    
+    // MARK: UIImagePickerControllerDelegate
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        
+        ImgurClient().uploadImage(image: image) { [weak self] result in
+            switch result {
+            case .error(let error):
+                print(error?.localizedDescription ?? "No Error")
+            case .success(let link):
+                print(link)
+                self?.bodyField.replace(left: "![GitHawk Upload](\(link))", right: nil, atLineStart: true)
+            }
+            
+            DispatchQueue.main.async {
+                self?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }

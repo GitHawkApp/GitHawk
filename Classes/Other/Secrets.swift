@@ -14,3 +14,9 @@ public enum GithubAPI {
     static let clientSecret = "YOUR_CLIENT_SECRET"
 
 }
+
+public enum ImgurAPI {
+    
+    static let clientID = "<# Imgur API client ID #>"
+    
+}
