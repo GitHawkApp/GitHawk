@@ -46,7 +46,8 @@ final class NewIssueTableViewController: UITableViewController,
     UITextFieldDelegate,
     IssueTextActionsViewDelegate,
     UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate {
+    UINavigationControllerDelegate,
+    ImageUploadDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate? = nil
 
@@ -242,23 +243,24 @@ final class NewIssueTableViewController: UITableViewController,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        print(client.sessionManager.focusedUserSession?.username ?? Strings.unknown)
         
-        ImgurClient().uploadImage(image: image) { [weak self] result in
-            switch result {
-            case .error(let error):
-                print(error?.localizedDescription ?? "No Error")
-            case .success(let link):
-                print(link)
-                self?.bodyField.replace(left: "![GitHawk Upload](\(link))", right: nil, atLineStart: true)
-            }
+        dismiss(animated: true) { [weak self] in
+            guard let strongSelf = self else { return }
             
-            DispatchQueue.main.async {
-                self?.dismiss(animated: true, completion: nil)
-            }
+            let username = strongSelf.client.sessionManager.focusedUserSession?.username
+            let uploadVc = ImageUploadViewController.create(image, username: username, delegate: strongSelf)
+            strongSelf.present(uploadVc!, animated: true, completion: nil)
         }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: ImageUploadDelegate
+    
+    func imageUploaded(link: String, altText: String) {
+        bodyField.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: true)
     }
 }

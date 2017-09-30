@@ -340,6 +340,8 @@
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
 		988BC25D1F7EAFDC00BCF20C /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988BC25C1F7EAFDC00BCF20C /* ImgurClient.swift */; };
+		988BC2611F7FBDC200BCF20C /* ImageUpload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 988BC2601F7FBDC200BCF20C /* ImageUpload.storyboard */; };
+		988BC2631F7FCC9200BCF20C /* ImageUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988BC2621F7FCC9200BCF20C /* ImageUploadViewController.swift */; };
 		98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */; };
 		98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0831F6C87A7000617D6 /* GitHubClient+NewIssue.swift */; };
 		98B5A0861F6D0FFE000617D6 /* UINavigationController+Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */; };
@@ -667,6 +669,8 @@
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		988BC25C1F7EAFDC00BCF20C /* ImgurClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurClient.swift; sourceTree = "<group>"; };
+		988BC2601F7FBDC200BCF20C /* ImageUpload.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageUpload.storyboard; sourceTree = "<group>"; };
+		988BC2621F7FCC9200BCF20C /* ImageUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadViewController.swift; sourceTree = "<group>"; };
 		98B5A0811F6C73D6000617D6 /* NewIssue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewIssue.storyboard; sourceTree = "<group>"; };
 		98B5A0831F6C87A7000617D6 /* GitHubClient+NewIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GitHubClient+NewIssue.swift"; sourceTree = "<group>"; };
 		98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Replace.swift"; sourceTree = "<group>"; };
@@ -1475,6 +1479,8 @@
 			isa = PBXGroup;
 			children = (
 				988BC25C1F7EAFDC00BCF20C /* ImgurClient.swift */,
+				988BC2601F7FBDC200BCF20C /* ImageUpload.storyboard */,
+				988BC2621F7FCC9200BCF20C /* ImageUploadViewController.swift */,
 			);
 			path = "Image Upload";
 			sourceTree = "<group>";
@@ -1610,6 +1616,7 @@
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
 				292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */,
+				988BC2611F7FBDC200BCF20C /* ImageUpload.storyboard in Resources */,
 				984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 				292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */,
@@ -1834,6 +1841,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988BC2631F7FCC9200BCF20C /* ImageUploadViewController.swift in Sources */,
 				988BC25D1F7EAFDC00BCF20C /* ImgurClient.swift in Sources */,
 				297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */,
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
