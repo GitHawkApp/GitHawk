@@ -14,16 +14,16 @@ protocol ImageUploadDelegate: class {
 
 class ImageUploadViewController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet var previewImageView: UIImageView!
-    @IBOutlet var titleTextField: UITextField!
-    @IBOutlet var bodyTextField: UITextView!
+    @IBOutlet private var previewImageView: UIImageView!
+    @IBOutlet private var titleTextField: UITextField!
+    @IBOutlet private var bodyTextField: UITextView!
     
-    var image: UIImage! // Set through the create function
-    var username: String?
-    weak var delegate: ImageUploadDelegate?
+    private var image: UIImage! // Set through the create function
+    private var username: String?
+    private weak var delegate: ImageUploadDelegate?
     
-    var compressionData: String?
-    lazy var client = ImgurClient()
+    private var compressionData: String?
+    private lazy var client = ImgurClient()
     
     private var titleText: String? {
         guard let raw = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
@@ -69,8 +69,8 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
         
-        // Compres and encode the image in the background to speed up the upload process
-        client.compressAndEncodeImage(image, completion: { [weak self] result in
+        // Compress and encode the image in the background to speed up the upload process
+        compressAndEncodeImage(image, completion: { [weak self] result in
             switch result {
             case .error:
                 StatusBar.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
@@ -88,12 +88,14 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Navigation Bar
     
+    /// Sets the right bar button item to have a spinning activity indicator
     private func setRightBarItemSpinning() {
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activity.startAnimating()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
     }
     
+    /// Sets the right bar button item to have a checkmark, enabling the user to upload the image
     private func setRightBarItemIdle() {
         let item = UIBarButtonItem(
             image: UIImage(named: "check"),
@@ -143,8 +145,10 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         
         // Check that we have enough "tokens" to actually upload the image
         client.canUploadImage { [weak self] success in
+            // Ensure that we do have enough tokens, otherwise remove the upload button
             guard success else {
                 StatusBar.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
+                self?.navigationItem.rightBarButtonItem = nil
                 return
             }
             
@@ -154,21 +158,25 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
                 name += " by \(username)"
             }
             
-            self?.client.uploadImage(
-                base64: compressionData,
-                name: name,
-                title: self?.titleText ?? "",
-                description: self?.descriptionText ?? "") { [weak self] result in
-                    
-                DispatchQueue.main.async {
-                    switch result {
-                    case .error:
-                        StatusBar.showGenericError()
-                        self?.setRightBarItemIdle()
-                        return
-                    case .success(let link):
-                        self?.delegate?.imageUploaded(link: link, altText: name)
-                        self?.dismiss(animated: true, completion: nil)
+            // Ensure the upload step is on the background thread
+            DispatchQueue.global(qos: .userInitiated).async {
+                self?.client.uploadImage(
+                    base64: compressionData,
+                    name: name,
+                    title: self?.titleText ?? "",
+                    description: self?.descriptionText ?? "") { [weak self] result in
+                        
+                    // UI Work, so ensure it's on the main thread
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .error:
+                            StatusBar.showGenericError()
+                            self?.setRightBarItemIdle()
+                            return
+                        case .success(let link):
+                            self?.delegate?.imageUploaded(link: link, altText: name)
+                            self?.dismiss(animated: true, completion: nil)
+                        }
                     }
                 }
             }
@@ -181,6 +189,26 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyTextField.becomeFirstResponder()
         return false
+    }
+    
+    // MARK: Image Preparation
+    
+    /// Compressed and Encodes in Base64 the provided UIImage.
+    ///
+    /// Process is moved to a background thread in order to prevent UI blocking.
+    ///
+    /// Compression is a value between 0.0 and 1.0. Lower is smaller file size but worse quality.
+    private func compressAndEncodeImage(_ image: UIImage, compression: CGFloat = 0.2, completion: @escaping (Result<String>) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let data = UIImageJPEGRepresentation(image, compression)
+            
+            guard let base64 = data?.base64EncodedString() else {
+                completion(.error(nil))
+                return
+            }
+            
+            completion(.success(base64))
+        }
     }
 
 }

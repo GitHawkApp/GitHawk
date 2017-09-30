@@ -40,8 +40,6 @@ final class ImgurClient {
                 return
             }
             
-            print(data)
-            
             guard let userRemaining = data["UserRemaining"] as? Int, let clientRemaining = data["ClientRemaining"] as? Int else {
                 completion(false)
                 return
@@ -54,51 +52,26 @@ final class ImgurClient {
     }
     
     func uploadImage(base64: String, name: String, title: String, description: String, completion: @escaping (Result<String>) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            let params = [
-                "image": base64, // Base64 version of the provided image
-                "type": "base64",
-                "name": name,
-                "title": title,
-                "description": description
-            ]
-            
-            print("checkpoint alpha")
-            completion(.success("https://i.imgur.com/AcxRJow.jpg"))
-//            self.request("image", method: .post, parameters: params) { response in
-//                print("checkpoint beta")
-//                guard let dict = response.value as? [String: Any], let data = dict["data"] as? [String: Any] else {
-//                    completion(.error(nil))
-//                    return
-//                }
-//
-//                print(dict)
-//
-//                guard let link = data["link"] as? String else {
-//                    completion(.error(nil))
-//                    return
-//                }
-//
-//                completion(.success(link))
-//            }
-        }
-    }
-    
-    /// Compressed and Encodes in Base64 the provided UIImage.
-    ///
-    /// Process is moved to a background thread in order to prevent UI blocking.
-    ///
-    /// Compression is a value between 0.0 and 1.0. Lower is smaller file size but worse quality.
-    func compressAndEncodeImage(_ image: UIImage, compression: CGFloat = 0.2, completion: @escaping (Result<String>) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            let data = UIImageJPEGRepresentation(image, compression)
-            
-            guard let base64 = data?.base64EncodedString() else {
+        let params = [
+            "image": base64, // Base64 version of the provided image
+            "type": "base64",
+            "name": name,
+            "title": title,
+            "description": description
+        ]
+        
+        request("image", method: .post, parameters: params) { response in
+            guard let dict = response.value as? [String: Any], let data = dict["data"] as? [String: Any] else {
                 completion(.error(nil))
                 return
             }
-            
-            completion(.success(base64))
+
+            guard let link = data["link"] as? String else {
+                completion(.error(nil))
+                return
+            }
+
+            completion(.success(link))
         }
     }
     
