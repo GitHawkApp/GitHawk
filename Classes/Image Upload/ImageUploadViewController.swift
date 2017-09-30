@@ -37,20 +37,18 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         return raw
     }
     
-    class func create(_ image: UIImage, username: String?, delegate: ImageUploadDelegate) -> UINavigationController? {
+    class func create(_ image: UIImage, username: String?, delegate: ImageUploadDelegate) -> ImageUploadViewController? {
         let storyboard = UIStoryboard(name: "ImageUpload", bundle: nil)
         
-        guard let navController = storyboard.instantiateInitialViewController() as? UINavigationController else {
+        guard let viewController = storyboard.instantiateInitialViewController() as? ImageUploadViewController else {
             return nil
         }
         
-        if let uploadVc = navController.topViewController as? ImageUploadViewController {
-            uploadVc.image = image
-            uploadVc.username = username
-            uploadVc.delegate = delegate
-        }
+        viewController.image = image
+        viewController.username = username
+        viewController.delegate = delegate
         
-        return navController
+        return viewController
     }
     
     override func viewDidLoad() {
@@ -76,6 +74,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
             switch result {
             case .error:
                 StatusBar.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
+                self?.navigationItem.rightBarButtonItem = nil
             case .success(let base64):
                 self?.compressionData = base64
                 

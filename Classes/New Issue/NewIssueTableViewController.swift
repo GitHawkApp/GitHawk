@@ -205,10 +205,11 @@ final class NewIssueTableViewController: UITableViewController,
             IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .execute({ [weak self] in
                 guard let strongSelf = self else { return }
                 
-                let picker = UIImagePickerController()
-                picker.delegate = strongSelf
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = strongSelf
+                imagePicker.modalPresentationStyle = .formSheet
                 
-                strongSelf.present(picker, animated: true, completion: nil)
+                strongSelf.present(imagePicker, animated: true, completion: nil)
             }))
         ]
         
@@ -243,15 +244,11 @@ final class NewIssueTableViewController: UITableViewController,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        print(client.sessionManager.focusedUserSession?.username ?? Strings.unknown)
         
-        dismiss(animated: true) { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            let username = strongSelf.client.sessionManager.focusedUserSession?.username
-            let uploadVc = ImageUploadViewController.create(image, username: username, delegate: strongSelf)
-            strongSelf.present(uploadVc!, animated: true, completion: nil)
-        }
+        let username = client.sessionManager.focusedUserSession?.username
+        guard let uploadController = ImageUploadViewController.create(image, username: username, delegate: self) else { return }
+        
+        picker.pushViewController(uploadController, animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
