@@ -62,14 +62,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/JDStatusBarNotification</string>
-			<key>Title</key>
-			<string>JDStatusBarNotification (1.5.5)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/MMMarkdown</string>
 			<key>Title</key>
 			<string>MMMarkdown (0.5.5)</string>
@@ -144,7 +136,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Toaster</string>
 			<key>Title</key>
-			<string>Toaster</string>
+			<string>Toaster (2.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
