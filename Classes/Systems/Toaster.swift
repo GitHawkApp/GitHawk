@@ -10,47 +10,39 @@ import Foundation
 import Toaster
 
 enum Toaster {
-    
+
     private static func provideHapticFeedback() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
 
     static func showRevokeError() {
-        Toast(text: NSLocalizedString("Your access token was revoked.", comment: ""),
-              duration: Delay.long).show()
-
-        provideHapticFeedback()
+        showError(message: NSLocalizedString("Your access token was revoked.", comment: ""))
     }
 
     static func showNetworkError() {
-        Toast(text: NSLocalizedString("Cannot connect to GitHub.", comment: ""),
-              duration: Delay.long).show()
-
-        provideHapticFeedback()
+        showError(message: NSLocalizedString("Cannot connect to GitHub.", comment: ""))
     }
 
     static func showGenericError() {
-        Toast(text: NSLocalizedString("Something went wrong.", comment: ""),
-              duration: Delay.long).show()
-
-        provideHapticFeedback()
+        showError(message: NSLocalizedString("Something went wrong.", comment: ""))
     }
 
     static func showPermissionsError() {
-        Toast(text: NSLocalizedString("You must request access.", comment: ""),
-              duration: Delay.long).show()
-
-        provideHapticFeedback()
+        showError(message: NSLocalizedString("You must request access.", comment: ""))
     }
     
-    static func showError(message: String) {
-        Toast(text: message, duration: Delay.long).show()
+    static func showError(message: String,
+                          textColor: UIColor = UIColor.white,
+                          backgroundColor: UIColor = Styles.Colors.Red.medium.color ) {
+        let toast = Toast(text: message, duration: Delay.long)
 
-        JDStatusBarNotification.show(
-            withStatus: message,
-            dismissAfter: 3,
-            styleName: JDStatusBarStyleError
-        )
+        toast.view.backgroundColor = backgroundColor
+        toast.view.textColor = textColor
+        toast.view.bottomOffsetPortrait = 60
+        toast.view.bottomOffsetLandscape = 60
+
+        toast.show()
+
         provideHapticFeedback()
     }
 
