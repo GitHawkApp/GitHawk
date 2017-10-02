@@ -53,7 +53,7 @@ So if you remove downloads from Asia Pacific, we're hovering between **10-20 dow
 
 In early September, if you searched "github" on the App Store, GitHawk would show up way, way down. There were at least 25 apps that would show up before it!
 
-However, as of October 2, 2017, GitHawk is **ranked 10th when searching for "github"!** That's a huge improvemnt in only a month!
+However, as of October 2, 2017, GitHawk is **ranked 10th when searching for "github"!** That's a huge improvement in only a month!
 
 The iOS 11 App Store update now shows more ratings than just the previous version. That's a blessing because I like to ship pretty fast.
 
