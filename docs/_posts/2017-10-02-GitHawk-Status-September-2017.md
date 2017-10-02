@@ -62,9 +62,9 @@ We also added two different rating prompts:
 - `SKStoreReviewController` for alert-style prompts after making a notification (or all of them) read.
 - A dismissable in-feed unit if you haven't been exposed to the native rater in a while
 
-![native](https://user-images.githubusercontent.com/739696/31087853-e5531668-a79e-11e7-91c7-81b829514684.png)
+Here are those prompts in action:
 
-![in-feed](https://user-images.githubusercontent.com/739696/31087848-e34bbf5a-a79e-11e7-9f2e-6d6e754b9c94.png)
+![rating](https://user-images.githubusercontent.com/739696/31088978-cfe652a0-a7a2-11e7-8caf-dc19005cd57e.jpg)
 
 You can [check out the source](https://github.com/rnystrom/GitHawk/blob/master/Classes/Systems/Rating/RatingController.swift) to see how I mix & match the two rating styles.
 
