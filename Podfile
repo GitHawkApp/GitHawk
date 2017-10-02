@@ -19,6 +19,7 @@ pod 'Tabman', '~> 1.0'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
+pod 'Toaster', '~> 2.1'
 
 target 'Freetime' do
 end

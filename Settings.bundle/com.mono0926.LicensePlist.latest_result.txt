@@ -59,6 +59,9 @@ body: MIT License
 
 Copyrig…
 
+name: Toaster, nameSpecified: 
+body:             DO WHAT …
+
 name: Alamofire, nameSpecified: 
 body: Copyright (c) 2014-2…
 
@@ -119,6 +122,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: Toaster, nameSpecified: 
+body:             DO WHAT …
 
 add-version-numbers: true
 
