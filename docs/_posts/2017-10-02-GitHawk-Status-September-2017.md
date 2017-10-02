@@ -87,9 +87,11 @@ I shipped version 1.10.0 on 9/22/17 if that isn't obvious by this iTunes impress
 
 ![impressions](https://user-images.githubusercontent.com/739696/31088194-0ed874a0-a7a0-11e7-97db-1b82c4dc33eb.png)
 
+All in all, I basically tripled my impressions!
+
 > I do wish that I could measure the effectiveness of the App Preview, description, and keyword changes independently. 🙏 for App Store A/B testing!
 
-### Product Page View Sources
+### Product-Page View Sources
 
 Impressions are nice, but they are counted when someone scrolls by GitHawk on a search results page. What about people that actually view the product page?
 
