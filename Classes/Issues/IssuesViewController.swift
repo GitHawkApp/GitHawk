@@ -351,7 +351,7 @@ IssueCommentSectionControllerDelegate {
             case .error:
                 self?.localStatusChange = nil
                 self?.feed.adapter.performUpdates(animated: true)
-                StatusBar.showGenericError()
+                Toaster.showGenericError()
             default: break // dont need to handle success since updated optimistically
             }
         }

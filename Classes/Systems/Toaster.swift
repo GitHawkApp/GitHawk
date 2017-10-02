@@ -1,5 +1,5 @@
 //
-//  StatusBar.swift
+//  Toaster.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/17/17.
@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import JDStatusBarNotification
 import Toaster
 
-enum StatusBar {
+enum Toaster {
     
     private static func provideHapticFeedback() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
