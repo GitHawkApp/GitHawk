@@ -154,32 +154,36 @@ UICollectionViewDelegateFlowLayout {
             for: indexPath
             ) as! IssueReactionCell
         let model = reactions[indexPath.item]
-        cell.label.text = "\(model.content.emoji) \(model.count)"
-        cell.contentView.backgroundColor = model.viewerDidReact ? Styles.Colors.Blue.light.color : .clear
-        cell.accessibilityHint = model.viewerDidReact ? NSLocalizedString("Tap to remove your reaction", comment: "") : NSLocalizedString("Tap to react with this emoji", comment: "")
-        
-        var users = model.users
-        guard users.count > 0 else { return cell }
-        
+        let users = model.users
+        let detailText: String
         switch users.count {
+        case 0:
+            detailText = ""
         case 1:
             let format = NSLocalizedString("%@", comment: "")
-            cell.label.detailText = String.localizedStringWithFormat(format, users[0])
+            detailText = String.localizedStringWithFormat(format, users[0])
             break
         case 2:
             let format = NSLocalizedString("%@ and %@", comment: "")
-            cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1])
+            detailText = String.localizedStringWithFormat(format, users[0], users[1])
             break
         case 3:
             let format = NSLocalizedString("%@, %@ and %@", comment: "")
-            cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2])
+            detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2])
             break
         default:
             let difference = model.count - users.count
             let format = NSLocalizedString("%@, %@, %@ and %d other(s)", comment: "")
-            cell.label.detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2], difference)
+            detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2], difference)
             break
         }
+
+        cell.configure(
+            emoji: model.content.emoji,
+            count: model.count,
+            detail: detailText,
+            isViewer: model.viewerDidReact
+        )
         
         return cell
     }

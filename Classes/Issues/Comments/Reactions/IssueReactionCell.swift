@@ -11,27 +11,90 @@ import SnapKit
 
 final class IssueReactionCell: UICollectionViewCell {
 
-    let label = ShowMoreDetailsLabel()
+    private let emojiLabel = UILabel()
+    private let countLabel = ShowMoreDetailsLabel()
+    private var detailText = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        label.textAlignment = .center
-        label.backgroundColor = .clear
-        label.font = Styles.Fonts.body
-        label.textColor = Styles.Colors.Blue.medium.color
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
+        let offset: CGFloat = 6
+
+        emojiLabel.textAlignment = .center
+        emojiLabel.backgroundColor = .clear
+        // hint bigger emoji than labels
+        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2)
+        contentView.addSubview(emojiLabel)
+        emojiLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.centerX.equalTo(contentView).offset(-offset)
         }
+
+        countLabel.textAlignment = .center
+        countLabel.backgroundColor = .clear
+        countLabel.font = Styles.Fonts.body
+        countLabel.textColor = Styles.Colors.Blue.medium.color
+        contentView.addSubview(countLabel)
+        countLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(emojiLabel)
+            make.left.equalTo(emojiLabel.snp.right).offset(offset)
+        }
+
+        let longPress = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(IssueReactionCell.showMenu(recognizer:))
+        )
+        isUserInteractionEnabled = true
+        addGestureRecognizer(longPress)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // required for UIMenuController
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(IssueReactionCell.empty)
+    }
+
+    // MARK: Public API
+
+    func configure(emoji: String, count: Int, detail: String, isViewer: Bool) {
+        emojiLabel.text = emoji
+        countLabel.text = "\(count)"
+        detailText = detail
+        contentView.backgroundColor = isViewer ? Styles.Colors.Blue.light.color : .clear
+        accessibilityHint = isViewer
+            ? NSLocalizedString("Tap to remove your reaction", comment: "")
+            : NSLocalizedString("Tap to react with this emoji", comment: "")
+    }
+
+    // MARK: Private API
+
+    func showMenu(recognizer: UITapGestureRecognizer) {
+        guard recognizer.state == .began,
+            detailText.characters.count > 0 else { return }
+
+        becomeFirstResponder()
+
+        let menu = UIMenuController.shared
+        menu.menuItems = [
+            UIMenuItem(title: detailText, action: #selector(IssueReactionCell.empty))
+        ]
+        menu.setTargetRect(contentView.bounds, in: self)
+        menu.setMenuVisible(true, animated: true)
+    }
+
+    func empty() {}
+
+    // MARK: Accessibility
+
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews
