@@ -226,10 +226,9 @@ UICollectionViewDelegateFlowLayout {
                 }
             case .remove:
                 if let data = data(for: queued.content) {
-                    data.cell.pullOut(completion: { _ in
-                        self.reactions = viewModel.models
-                        self.collectionView.deleteItems(at: [data.path])
-                    })
+                    data.cell.pullOut()
+                    self.reactions = viewModel.models
+                    self.collectionView.deleteItems(at: [data.path])
                 }
             case .none: break
             }

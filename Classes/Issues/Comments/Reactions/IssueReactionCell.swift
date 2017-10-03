@@ -89,7 +89,7 @@ final class IssueReactionCell: UICollectionViewCell {
         })
     }
 
-    func pullOut(completion: @escaping (Bool) -> ()) {
+    func pullOut() {
         // hack to prevent changing to "0"
         countLabel.text = "1"
 
@@ -100,7 +100,7 @@ final class IssueReactionCell: UICollectionViewCell {
             self.countLabel.alpha = 0
             self.emojiLabel.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
             self.emojiLabel.alpha = 0
-        }, completion: completion)
+        })
     }
 
     func iterate(add: Bool) {
