@@ -35,15 +35,21 @@ enum Toaster {
                           textColor: UIColor = UIColor.white,
                           backgroundColor: UIColor = Styles.Colors.Red.medium.color ) {
         let toast = Toast(text: message, duration: Delay.long)
+        var bottomInset: CGFloat = 0.0
+
+        if #available(iOS 11, *) {
+            let insets = UIApplication.shared.delegate?.window??.safeAreaInsets
+
+            bottomInset = insets?.bottom ?? 0
+        }
 
         toast.view.backgroundColor = backgroundColor
         toast.view.textColor = textColor
-        toast.view.bottomOffsetPortrait = 60
-        toast.view.bottomOffsetLandscape = 60
+        toast.view.bottomOffsetPortrait = 60 + bottomInset
+        toast.view.bottomOffsetLandscape = 60 + bottomInset
 
         toast.show()
 
         provideHapticFeedback()
     }
-
 }
