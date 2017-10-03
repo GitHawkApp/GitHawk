@@ -97,19 +97,20 @@ AttributedStringViewIssueDelegate {
         return true
     }
 
-    private func react(content: ReactionContent, isAdd: Bool) {
+    private func react(cell: IssueCommentReactionCell, content: ReactionContent, isAdd: Bool) {
         guard let object = self.object else { return }
 
         let previousReaction = reactionMutation
-        reactionMutation = IssueLocalReaction(
+        let result = IssueLocalReaction(
             fromServer: object.reactions,
             previousLocal: reactionMutation,
             content: content,
             add: isAdd
         )
+        reactionMutation = result.viewModel
+        cell.perform(operation: result.operation, content: content)
         update(animated: true)
         generator.impactOccurred()
-
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
             if result == nil {
                 self?.reactionMutation = previousReaction
@@ -192,8 +193,7 @@ AttributedStringViewIssueDelegate {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
             let threadState = object?.threadState
-            let showBorder = threadState == .single || threadState == .tail
-            cell.setBorderVisible(showBorder)
+            cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
 
@@ -245,11 +245,11 @@ AttributedStringViewIssueDelegate {
     // MARK: IssueCommentReactionCellDelegate
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
-        react(content: reaction, isAdd: true)
+        react(cell: cell, content: reaction, isAdd: true)
     }
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
-        react(content: reaction, isAdd: false)
+        react(cell: cell, content: reaction, isAdd: false)
     }
 
     // MARK: AttributedStringViewIssueDelegate

@@ -75,6 +75,43 @@ final class IssueReactionCell: UICollectionViewCell {
             : NSLocalizedString("Tap to react with this emoji", comment: "")
     }
 
+    func popIn() {
+        emojiLabel.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        emojiLabel.alpha = 0
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: [.curveEaseInOut], animations: {
+            self.emojiLabel.transform = .identity
+            self.emojiLabel.alpha = 1
+        })
+
+        countLabel.alpha = 0
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.countLabel.alpha = 1
+        })
+    }
+
+    func pullOut(completion: @escaping (Bool) -> ()) {
+        // hack to prevent changing to "0"
+        countLabel.text = "1"
+
+        countLabel.alpha = 1
+        emojiLabel.transform = .identity
+        emojiLabel.alpha = 1
+        UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: {
+            self.countLabel.alpha = 0
+            self.emojiLabel.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+            self.emojiLabel.alpha = 0
+        }, completion: completion)
+    }
+
+    func iterate(add: Bool) {
+        let animation = CATransition()
+        animation.duration = 0.25
+        animation.type = kCATransitionPush
+        animation.subtype = add ? kCATransitionFromTop : kCATransitionFromBottom
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        countLabel.layer.add(animation, forKey: "text-change")
+    }
+
     // MARK: Private API
 
     func showMenu(recognizer: UITapGestureRecognizer) {

@@ -35,6 +35,7 @@ UICollectionViewDelegateFlowLayout {
     }()
     private var reactions = [ReactionViewModel]()
     private var border: UIView? = nil
+    private var queuedOperation: (content: ReactionContent, operation: IssueReactionOperation)? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,11 +74,26 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: Public API
 
-    func setBorderVisible(_ visible: Bool) {
-        border?.isHidden = !visible
+    func perform(operation: IssueReactionOperation, content: ReactionContent) {
+        // store the content:operation pair for next binding
+        // implies that IGListBindingSectionController will do its thing, and this method is called
+        // in sectionController(_, cellForViewModel:,at index:)
+        queuedOperation = (content, operation)
+    }
+
+    func configure(borderVisible: Bool) {
+        self.border?.isHidden = !borderVisible
     }
 
     // MARK: Private API
+
+    func cell(for content: ReactionContent) -> IssueReactionCell? {
+        guard let idx = reactions.index(where: { (model: ReactionViewModel) -> Bool in
+            return model.content == content
+        }) else { return nil }
+        let path = IndexPath(item: idx, section: 0)
+        return collectionView.cellForItem(at: path) as? IssueReactionCell
+    }
 
     @objc private func onAddButton() {
         addButton.becomeFirstResponder()
@@ -134,26 +150,7 @@ UICollectionViewDelegateFlowLayout {
         delegate?.didAdd(cell: self, reaction: .heart)
     }
 
-    // MARK: ListBindable
-
-    func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueCommentReactionViewModel else { return }
-        reactions = viewModel.models
-        collectionView.reloadData()
-    }
-
-    // MARK: UICollectionViewDataSource
-
-    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return reactions.count
-    }
-
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: IssueCommentReactionCell.reuse,
-            for: indexPath
-            ) as! IssueReactionCell
-        let model = reactions[indexPath.item]
+    func configure(cell: IssueReactionCell, model: ReactionViewModel) {
         let users = model.users
         let detailText: String
         switch users.count {
@@ -184,7 +181,76 @@ UICollectionViewDelegateFlowLayout {
             detail: detailText,
             isViewer: model.viewerDidReact
         )
-        
+    }
+
+    func data(for content: ReactionContent) -> (path: IndexPath, cell: IssueReactionCell)? {
+        guard let idx = reactions.index(where: { (model: ReactionViewModel) -> Bool in
+            return model.content == content
+        }) else { return nil }
+        let path = IndexPath(item: idx, section: 0)
+        guard let cell = collectionView.cellForItem(at: path) as? IssueReactionCell else { return nil }
+        return (path, cell)
+    }
+
+    func iterate(content: ReactionContent, add: Bool) {
+        guard let data = data(for: content) else { return }
+        configure(cell: data.cell, model: reactions[data.path.item])
+        data.cell.iterate(add: add)
+    }
+
+    // MARK: ListBindable
+
+    func bindViewModel(_ viewModel: Any) {
+        guard let viewModel = viewModel as? IssueCommentReactionViewModel else { return }
+
+        // if add:first, cell needs to be inserted THEN popIn()
+        // if sub:last, cell needs to pullOut() THEN deleted
+        // else incr/decr
+        if let queued = queuedOperation {
+            queuedOperation = nil
+            
+            switch queued.operation {
+            case .add:
+                self.reactions = viewModel.models
+                iterate(content: queued.content, add: true)
+            case .subtract:
+                self.reactions = viewModel.models
+                iterate(content: queued.content, add: false)
+            case .insert:
+                self.reactions = viewModel.models
+                self.collectionView.reloadData()
+                // required after changing data and trying to retrieve a cell before next layout pass
+                self.collectionView.layoutIfNeeded()
+                if let data = data(for: queued.content) {
+                    data.cell.popIn()
+                }
+            case .remove:
+                if let data = data(for: queued.content) {
+                    data.cell.pullOut(completion: { _ in
+                        self.reactions = viewModel.models
+                        self.collectionView.deleteItems(at: [data.path])
+                    })
+                }
+            case .none: break
+            }
+        } else {
+            self.reactions = viewModel.models
+            self.collectionView.reloadData()
+        }
+    }
+
+    // MARK: UICollectionViewDataSource
+
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return reactions.count
+    }
+
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: IssueCommentReactionCell.reuse,
+            for: indexPath
+            ) as! IssueReactionCell
+        configure(cell: cell, model: reactions[indexPath.item])
         return cell
     }
 
