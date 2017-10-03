@@ -9,7 +9,6 @@ pod 'SnapKit', '~> 3.2.0'
 pod 'Alamofire', '~> 4.4.0'
 pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
 pod 'SDWebImage', '~> 4.0.0'
-pod 'JDStatusBarNotification', '~> 1.5.5'
 pod 'Apollo', '~> 0.5.6'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'NYTPhotoViewer', '~> 1.1.0'
@@ -19,6 +18,7 @@ pod 'Tabman', '~> 1.0'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
+pod 'Toaster', '~> 2.1'
 
 target 'Freetime' do
 end

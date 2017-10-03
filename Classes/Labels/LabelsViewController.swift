@@ -49,7 +49,7 @@ final class LabelsViewController: UITableViewController {
                 }
                 self?.update(labels: labels)
             } else {
-                StatusBar.showGenericError()
+                Toaster.showGenericError()
             }
         }
     }

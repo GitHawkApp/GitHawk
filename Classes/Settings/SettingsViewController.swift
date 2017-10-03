@@ -100,7 +100,7 @@ NewIssueTableViewControllerDelegate {
                                                                       owner: "rnystrom",
                                                                       repo: "GitHawk",
                                                                       signature: .bugReport) else {
-            StatusBar.showGenericError()
+            Toaster.showGenericError()
             return
         }
         viewController.delegate = self

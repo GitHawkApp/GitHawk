@@ -21,9 +21,6 @@ body: BSD License
 
 For `IG…
 
-name: JDStatusBarNotification, nameSpecified: 
-body: Copyright © 2013 Mar…
-
 name: MMMarkdown, nameSpecified: 
 body: **Copyright (c) 2012…
 
@@ -58,6 +55,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: Toaster, nameSpecified: 
+body:             DO WHAT …
 
 name: Alamofire, nameSpecified: 
 body: Copyright (c) 2014-2…
@@ -82,9 +82,6 @@ body: BSD License
 
 For `IG…
 
-name: JDStatusBarNotification, nameSpecified: 
-body: Copyright © 2013 Mar…
-
 name: MMMarkdown, nameSpecified: 
 body: **Copyright (c) 2012…
 
@@ -119,6 +116,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: Toaster, nameSpecified: 
+body:             DO WHAT …
 
 add-version-numbers: true
 

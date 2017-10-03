@@ -129,7 +129,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     func send() {
         guard let titleText = titleText else {
-            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            Toaster.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
 
@@ -145,7 +145,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                StatusBar.showGenericError()
+                Toaster.showGenericError()
                 return
             }
 

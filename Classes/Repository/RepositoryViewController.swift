@@ -77,7 +77,7 @@ NewIssueTableViewControllerDelegate {
             repo: repo.name,
             signature: .sentWithGitHawk)
         else {
-            StatusBar.showGenericError()
+            Toaster.showGenericError()
             return nil
         }
         

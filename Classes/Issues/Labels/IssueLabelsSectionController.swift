@@ -111,7 +111,7 @@ LabelsViewControllerDelegate {
                 self?.labelsOverride = nil
                 self?.update(animated: true)
                 if statusCode == 403 {
-                    StatusBar.showPermissionsError()
+                    Toaster.showPermissionsError()
                 }
             }
         }

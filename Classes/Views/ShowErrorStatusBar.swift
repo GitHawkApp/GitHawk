@@ -10,9 +10,9 @@ import Foundation
 
 func ShowErrorStatusBar(graphQLErrors: [Error]?, networkError: Error?) {
     if networkError != nil {
-        StatusBar.showNetworkError()
+        Toaster.showNetworkError()
     }
     else if graphQLErrors != nil && graphQLErrors!.count > 0 {
-        StatusBar.showGenericError()
+        Toaster.showGenericError()
     }
 }

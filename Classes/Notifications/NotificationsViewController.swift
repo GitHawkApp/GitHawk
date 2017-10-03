@@ -157,7 +157,7 @@ TabNavRootViewControllerType {
                 self.dataSource.update(width: width, notifications: notifications, completion: block)
             }
         case .error:
-            StatusBar.showNetworkError()
+            Toaster.showNetworkError()
             self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)
         }
@@ -268,7 +268,7 @@ TabNavRootViewControllerType {
 
     func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
         dataSource.removeOptimisticRead(id: id)
-        StatusBar.showGenericError()
+        Toaster.showGenericError()
 
         if !isOpen {
             update(dismissRefresh: false, animated: true)
