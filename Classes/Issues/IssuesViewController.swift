@@ -89,7 +89,7 @@ IssueCommentSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        makeBackBarItemEmpty()
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self

@@ -18,7 +18,7 @@ final class IssueFilesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        makeBackBarItemEmpty()
 
         feedRefresh.refreshControl.addTarget(self, action: #selector(IssueFilesViewController.onRefresh), for: .valueChanged)
         tableView.refreshControl = feedRefresh.refreshControl

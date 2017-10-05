@@ -33,7 +33,7 @@ func newNotificationsRootViewController(client: GithubClient) -> UIViewControlle
     let controller = NotificationsViewController(client: client)
     let title = NSLocalizedString("Inbox", comment: "")
     controller.navigationItem.title = title
-    controller.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+    controller.makeBackBarItemEmpty()
     let nav = UINavigationController(rootViewController: controller)
     nav.tabBarItem.title = title
     nav.tabBarItem.image = UIImage(named: "tab-inbox")
