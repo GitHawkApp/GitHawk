@@ -43,7 +43,7 @@ NewIssueTableViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        makeBackBarItemEmpty()
 
         dataSource = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }

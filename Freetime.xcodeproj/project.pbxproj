@@ -282,6 +282,8 @@
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
+		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
+		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
 		29DA1E771F5DA27D0050C64B /* SearchEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E761F5DA27D0050C64B /* SearchEmptyView.swift */; };
 		29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */; };
 		29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E7D1F5DF2960050C64B /* LoadMoreCell.swift */; };
@@ -608,6 +610,8 @@
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
+		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
+		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
 		29DA1E761F5DA27D0050C64B /* SearchEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEmptyView.swift; sourceTree = "<group>"; };
 		29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLoadingView.swift; sourceTree = "<group>"; };
 		29DA1E7D1F5DF2960050C64B /* LoadMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMoreCell.swift; sourceTree = "<group>"; };
@@ -1224,19 +1228,21 @@
 		297AE8681EC0D5C200B44A1F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */,
 				297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */,
 				29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */,
 				29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */,
 				29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */,
+				294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */,
+				294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */,
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
 				292CD3D51F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift */,
+				29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */,
 				292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
 				292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */,
-				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
-				294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */,
-				294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */,
+				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1826,6 +1832,7 @@
 				297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */,
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
 				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
+				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
 				2919295B1F3FB1D20012067B /* Link.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFilesTableCell.swift in Sources */,
@@ -1936,6 +1943,7 @@
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
+				29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */,
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
