@@ -31,15 +31,4 @@ end
 
 post_install do |installer|
   system("sh scripts/generateAcknowledgements.sh")
-
-  # list all pods (local or remote) that need to be capped using swift 3.2
-  swift_3_2_targets = ['SwipeCellKit']
-  installer.pods_project.targets.each do |target|
-    if swift_3_2_targets.include? target.name
-      target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '3.2'
-      end
-    end
-  end
-
 end
