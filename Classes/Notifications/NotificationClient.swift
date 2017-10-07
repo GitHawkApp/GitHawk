@@ -20,11 +20,6 @@ final class NotificationClient {
     }
     private var listeners = [ListenerWrapper]()
 
-//    enum Result {
-//        case failed(Error?)
-//        case success([Notification], Int?)
-//    }
-
     let githubClient: GithubClient
 
     init(githubClient: GithubClient) {
@@ -81,7 +76,7 @@ final class NotificationClient {
                 }
             }
 
-            completion(.success(notifications, page))
+            completion(.success((notifications, page)))
         }
 
         githubClient.request(GithubClient.Request(

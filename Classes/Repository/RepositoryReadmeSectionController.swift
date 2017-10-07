@@ -55,11 +55,12 @@ ListBindingSectionControllerDataSource {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         cellForViewModel viewModel: Any,
         at index: Int
-        ) -> UICollectionViewCell {
+        ) -> UICollectionViewCell & ListBindable {
         guard let context = self.collectionContext else { fatalError("Missing context") }
 
         let cellClass: AnyClass = CellTypeForComment(viewModel: viewModel)
-        let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError("Cell not bindable") }
 
         ExtraCommentCellConfigure(
             cell: cell,

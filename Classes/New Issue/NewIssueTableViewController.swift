@@ -93,7 +93,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             title: NSLocalizedString("Cancel", comment: ""),
             style: .plain,
             target: self,
-            action: #selector(cancel)
+            action: #selector(onCancel)
         )
         
         // Make the return button move on to description field
@@ -122,12 +122,13 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             title: NSLocalizedString("Submit", comment: ""),
             style: .done,
             target: self,
-            action: #selector(send)
+            action: #selector(onSend)
         )
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
-    func send() {
+    @objc
+    func onSend() {
         guard let titleText = titleText else {
             StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
@@ -157,7 +158,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
-    func cancel() {
+    @objc
+    func onCancel() {
         let dismissBlock = {
             self.dismiss(animated: true)
         }

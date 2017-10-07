@@ -136,6 +136,7 @@ NewIssueTableViewControllerDelegate {
         sessionManager.logout()
     }
 
+    @objc
     func updateBadge() {
         BadgeNotifications.check { state in
             let authorized: Bool

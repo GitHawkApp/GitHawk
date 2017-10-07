@@ -62,6 +62,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
 
     // MARK: Private API
 
+    @objc
     func onActorTapped() {
         delegate?.didTapActor(cell: self)
     }
@@ -110,12 +111,12 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         icon.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
 
         var attributes = [
-            NSFontAttributeName: Styles.Fonts.title,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
+            NSAttributedStringKey.font: Styles.Fonts.title,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         let mActorString = NSMutableAttributedString(string: viewModel.actor, attributes: attributes)
 
-        attributes[NSFontAttributeName] = Styles.Fonts.secondary
+        attributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
         mActorString.append(NSAttributedString(string: " \(action)", attributes: attributes))
         actorButton.setAttributedTitle(mActorString, for: .normal)
     }

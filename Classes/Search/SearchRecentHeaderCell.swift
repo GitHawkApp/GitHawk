@@ -51,6 +51,7 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onClear() {
         delegate?.didSelectClear(cell: self)
     }

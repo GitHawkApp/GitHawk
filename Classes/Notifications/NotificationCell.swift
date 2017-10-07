@@ -86,12 +86,12 @@ final class NotificationCell: SwipeSelectableCell {
 
     func configure(_ viewModel: NotificationViewModel) {
         var titleAttributes = [
-            NSFontAttributeName: Styles.Fonts.title,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
+            NSAttributedStringKey.font: Styles.Fonts.title,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
         let title = NSMutableAttributedString(string: "\(viewModel.owner)/\(viewModel.repo) ", attributes: titleAttributes)
 
-        titleAttributes[NSFontAttributeName] = Styles.Fonts.secondary
+        titleAttributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
         switch viewModel.identifier {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break

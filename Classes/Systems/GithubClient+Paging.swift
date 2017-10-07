@@ -23,14 +23,14 @@ func PagingData(link: String?) -> GithubClient.Page? {
 
     for l in links {
         guard let semicolonRange = l.range(of: ";") else { continue }
-        let urlString = l.substring(to: semicolonRange.lowerBound)
+        let urlString = l[l.utf8.startIndex..<semicolonRange.lowerBound]
             .trimmingCharacters(in: whitespaceAndBrackets)
         guard let pageItem = urlString.valueForQuery(key: "page")
             else { continue }
         let page = (pageItem as NSString).integerValue
 
         guard let match = linkRegex.firstMatch(in: l, options: [], range: l.nsrange) else { continue }
-        let substring = l.substring(with: match.rangeAt(1))
+        let substring = l.substring(with: match.range(at: 1))
         if substring == "next" {
             next = page
         } else if substring == "last" {

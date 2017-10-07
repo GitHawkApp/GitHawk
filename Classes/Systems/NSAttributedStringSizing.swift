@@ -146,7 +146,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         return contents
     }
 
-    func attributes(point: CGPoint) -> [String: Any]? {
+    func attributes(point: CGPoint) -> [NSAttributedStringKey: Any]? {
         var fractionDistance: CGFloat = 1.0
         let index = layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: &fractionDistance)
         if index != NSNotFound, fractionDistance < 1.0 {

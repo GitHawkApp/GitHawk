@@ -50,7 +50,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         _ sectionController: ListBindingSectionController<ListDiffable>,
         cellForViewModel viewModel: Any,
         at index: Int
-        ) -> UICollectionViewCell {
+        ) -> UICollectionViewCell & ListBindable {
         guard let context = collectionContext
             else { fatalError("Collection context must be set") }
         let cellClass: AnyClass
@@ -59,7 +59,9 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         case is NSAttributedStringSizing: cellClass = IssueDiffHunkPreviewCell.self
         default: fatalError("Unsupported model \(viewModel)")
         }
-        return context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError("Cell not bindable") }
+        return cell
     }
 
 }

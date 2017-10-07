@@ -259,6 +259,7 @@ IssueCommentSectionControllerDelegate {
             .view(repo: repoViewController)
     }
 
+    @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 

@@ -67,6 +67,7 @@ UIGestureRecognizerDelegate {
 
     // MARK: Private API
 
+    @objc
     func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
         guard let image = imageView.image else { return }

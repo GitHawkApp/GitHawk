@@ -41,9 +41,9 @@ func createCommentAST(markdown: String) -> MMDocument? {
 
 func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
     let attributes = [
-        NSFontAttributeName: Styles.Fonts.body.addingTraits(traits: .traitItalic),
-        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
-        NSBackgroundColorAttributeName: UIColor.white
+        .font: Styles.Fonts.body.addingTraits(traits: .traitItalic),
+        .foregroundColor: Styles.Colors.Gray.medium.color,
+        NSAttributedStringKey.backgroundColor: UIColor.white
     ]
     let text = NSAttributedString(
         string: NSLocalizedString("No description provided.", comment: ""),
@@ -69,15 +69,15 @@ func CreateCommentModels(
 
     var results = [ListDiffable]()
 
-    let baseAttributes: [String: Any] = [
-        NSFontAttributeName: Styles.Fonts.body,
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-        NSParagraphStyleAttributeName: {
+    let baseAttributes: [NSAttributedStringKey: Any] = [
+        .font: Styles.Fonts.body,
+        .foregroundColor: Styles.Colors.Gray.dark.color,
+        .paragraphStyle: {
             let para = NSMutableParagraphStyle()
             para.paragraphSpacingBefore = 12;
             return para
         }(),
-        NSBackgroundColorAttributeName: UIColor.white,
+        NSAttributedStringKey.backgroundColor: UIColor.white,
     ]
 
     let seedString = NSMutableAttributedString()
@@ -199,7 +199,7 @@ func travelAST(
     markdown: String,
     element: MMElement,
     attributedString: NSMutableAttributedString,
-    attributeStack: [String: Any],
+    attributeStack: [NSAttributedStringKey: Any],
     width: CGFloat,
     listLevel: Int,
     quoteLevel: Int,
@@ -308,7 +308,7 @@ func updateUsernames(
     let matches = usernameRegex.matches(in: string, options: [], range: string.nsrange)
 
     for match in matches {
-        let range = match.rangeAt(0)
+        let range = match.range(at: 0)
         guard let substring = string.substring(with: range) else { continue }
 
         var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
@@ -316,8 +316,8 @@ func updateUsernames(
         // manually disable username highlighting for some text (namely code)
         guard attributes[MarkdownAttribute.usernameDisabled] == nil else { continue }
 
-        let font = attributes[NSFontAttributeName] as? UIFont ?? Styles.Fonts.body
-        attributes[NSFontAttributeName] = font.addingTraits(traits: .traitBold)
+        let font = attributes[.font] as? UIFont ?? Styles.Fonts.body
+        attributes[.font] = font.addingTraits(traits: .traitBold)
         attributes[MarkdownAttribute.username] = substring.replacingOccurrences(of: "@", with: "")
 
         let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
@@ -338,13 +338,13 @@ func updateIssueShorthand(
     let matches = issueShorthandRegex.matches(in: string, options: [], range: string.nsrange)
 
     for match in matches {
-        let ownerRange = match.rangeAt(3)
-        let repoRange = match.rangeAt(4)
-        let numberRange = match.rangeAt(5)
+        let ownerRange = match.range(at: 3)
+        let repoRange = match.range(at: 4)
+        let numberRange = match.range(at: 5)
         guard let numberSubstring = string.substring(with: numberRange) else { continue }
 
         var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
-        attributes[NSForegroundColorAttributeName] = Styles.Colors.Blue.medium.color
+        attributes[.foregroundColor] = Styles.Colors.Blue.medium.color
 
         attributes[MarkdownAttribute.issue] = IssueDetailsModel(
             owner: string.substring(with: ownerRange) ?? options.owner,

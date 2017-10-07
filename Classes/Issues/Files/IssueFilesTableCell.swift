@@ -17,17 +17,17 @@ final class IssueFilesTableCell: StyledTableCell {
 
     func configure(path: String, additions: Int, deletions: Int) {
         let changeString = NSMutableAttributedString()
-        var attributes: [String: Any] = [
-            NSFontAttributeName: Styles.Fonts.secondaryBold,
+        var attributes: [NSAttributedStringKey: Any] = [
+            .font: Styles.Fonts.secondaryBold,
         ]
 
         if additions > 0 {
-            attributes[NSForegroundColorAttributeName] = Styles.Colors.Green.medium.color
+            attributes[.foregroundColor] = Styles.Colors.Green.medium.color
             changeString.append(NSAttributedString(string: "+\(additions) ", attributes: attributes))
         }
 
         if deletions > 0 {
-            attributes[NSForegroundColorAttributeName] = Styles.Colors.Red.medium.color
+            attributes[.foregroundColor] = Styles.Colors.Red.medium.color
             changeString.append(NSAttributedString(string: "-\(deletions)", attributes: attributes))
         }
 

@@ -34,6 +34,7 @@ final class LabelsViewController: UITableViewController {
 
     // MARK: Private API
 
+    @objc
     func onRefresh() {
         fetch()
     }

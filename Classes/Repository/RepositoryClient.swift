@@ -49,8 +49,8 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
         else { return nil }
 
     let attributes = [
-        NSFontAttributeName: Styles.Fonts.body,
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        NSAttributedStringKey.font: Styles.Fonts.body,
+        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
     ]
     let title = NSAttributedStringSizing(
         containerWidth: containerWidth,

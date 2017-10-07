@@ -51,6 +51,7 @@ final class IssueFileContentViewController: UIViewController {
 
     // MARK: Private API
 
+    @objc
     func onRefresh() {
         fetch()
     }
