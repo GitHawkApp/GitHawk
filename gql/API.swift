@@ -60,21 +60,7 @@ extension PullRequestState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
 
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationString =
-    "mutation AddComment($subject_id: ID!, $body: String!) {" +
-    "  addComment(input: {subjectId: $subject_id, body: $body}) {" +
-    "    __typename" +
-    "    commentEdge {" +
-    "      __typename" +
-    "      node {" +
-    "        __typename" +
-    "        ...nodeFields" +
-    "        ...reactionFields" +
-    "        ...commentFields" +
-    "        ...updatableFields" +
-    "      }" +
-    "    }" +
-    "  }" +
-    "}"
+    "mutation AddComment($subject_id: ID!, $body: String!) {\n  addComment(input: {subjectId: $subject_id, body: $body}) {\n    __typename\n    commentEdge {\n      __typename\n      node {\n        __typename\n        ...nodeFields\n        ...reactionFields\n        ...commentFields\n        ...updatableFields\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(NodeFields.fragmentString).appending(ReactionFields.fragmentString).appending(CommentFields.fragmentString).appending(UpdatableFields.fragmentString) }
 
@@ -94,7 +80,7 @@ public final class AddCommentMutation: GraphQLMutation {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("addComment", arguments: ["input": ["subjectId": Variable("subject_id"), "body": Variable("body")]], type: .object(AddComment.self)),
+      GraphQLField("addComment", arguments: ["input": ["subjectId": GraphQLVariable("subject_id"), "body": GraphQLVariable("body")]], type: .object(AddComment.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -104,13 +90,13 @@ public final class AddCommentMutation: GraphQLMutation {
     }
 
     public init(addComment: AddComment? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "addComment": addComment])
+      self.init(snapshot: ["__typename": "Mutation", "addComment": addComment.flatMap { $0.snapshot }])
     }
 
     /// Adds a comment to an Issue or Pull Request.
     public var addComment: AddComment? {
       get {
-        return (snapshot["addComment"]! as! Snapshot?).flatMap { AddComment(snapshot: $0) }
+        return (snapshot["addComment"] as? Snapshot).flatMap { AddComment(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "addComment")
@@ -122,7 +108,7 @@ public final class AddCommentMutation: GraphQLMutation {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("commentEdge", type: .nonNull(.object(CommentEdge.self))),
+        GraphQLField("commentEdge", type: .nonNull(.object(CommentEdge.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -132,7 +118,7 @@ public final class AddCommentMutation: GraphQLMutation {
       }
 
       public init(commentEdge: CommentEdge) {
-        self.init(snapshot: ["__typename": "AddCommentPayload", "commentEdge": commentEdge])
+        self.init(snapshot: ["__typename": "AddCommentPayload", "commentEdge": commentEdge.snapshot])
       }
 
       public var __typename: String {
@@ -159,7 +145,7 @@ public final class AddCommentMutation: GraphQLMutation {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("node", type: .object(Node.self)),
+          GraphQLField("node", type: .object(Node.selections)),
         ]
 
         public var snapshot: Snapshot
@@ -169,7 +155,7 @@ public final class AddCommentMutation: GraphQLMutation {
         }
 
         public init(node: Node? = nil) {
-          self.init(snapshot: ["__typename": "IssueCommentEdge", "node": node])
+          self.init(snapshot: ["__typename": "IssueCommentEdge", "node": node.flatMap { $0.snapshot }])
         }
 
         public var __typename: String {
@@ -184,7 +170,7 @@ public final class AddCommentMutation: GraphQLMutation {
         /// The item at the end of the edge.
         public var node: Node? {
           get {
-            return (snapshot["node"]! as! Snapshot?).flatMap { Node(snapshot: $0) }
+            return (snapshot["node"] as? Snapshot).flatMap { Node(snapshot: $0) }
           }
           set {
             snapshot.updateValue(newValue?.snapshot, forKey: "node")
@@ -196,15 +182,19 @@ public final class AddCommentMutation: GraphQLMutation {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-            GraphQLField("author", type: .object(Author.self)),
-            GraphQLField("editor", type: .object(Editor.self)),
+            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("author", type: .object(Author.selections)),
+            GraphQLField("editor", type: .object(Editor.selections)),
             GraphQLField("lastEditedAt", type: .scalar(String.self)),
             GraphQLField("body", type: .nonNull(.scalar(String.self))),
             GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
           ]
 
@@ -215,7 +205,7 @@ public final class AddCommentMutation: GraphQLMutation {
           }
 
           public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) {
-            self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
+            self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
           }
 
           public var __typename: String {
@@ -227,6 +217,7 @@ public final class AddCommentMutation: GraphQLMutation {
             }
           }
 
+          /// ID of the object.
           public var id: GraphQLID {
             get {
               return snapshot["id"]! as! GraphQLID
@@ -249,7 +240,7 @@ public final class AddCommentMutation: GraphQLMutation {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
             }
             set {
               snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
@@ -259,7 +250,7 @@ public final class AddCommentMutation: GraphQLMutation {
           /// The actor who authored the comment.
           public var author: Author? {
             get {
-              return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+              return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -269,7 +260,7 @@ public final class AddCommentMutation: GraphQLMutation {
           /// The actor who edited the comment.
           public var editor: Editor? {
             get {
-              return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+              return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -279,7 +270,7 @@ public final class AddCommentMutation: GraphQLMutation {
           /// The moment the editor made the last edit
           public var lastEditedAt: String? {
             get {
-              return snapshot["lastEditedAt"]! as! String?
+              return snapshot["lastEditedAt"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -331,7 +322,7 @@ public final class AddCommentMutation: GraphQLMutation {
               return Fragments(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
 
@@ -343,7 +334,7 @@ public final class AddCommentMutation: GraphQLMutation {
                 return NodeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -352,7 +343,7 @@ public final class AddCommentMutation: GraphQLMutation {
                 return ReactionFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -361,7 +352,7 @@ public final class AddCommentMutation: GraphQLMutation {
                 return CommentFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -370,7 +361,7 @@ public final class AddCommentMutation: GraphQLMutation {
                 return UpdatableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
           }
@@ -381,7 +372,7 @@ public final class AddCommentMutation: GraphQLMutation {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
               GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
             ]
 
@@ -392,7 +383,7 @@ public final class AddCommentMutation: GraphQLMutation {
             }
 
             public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
             }
 
             public var __typename: String {
@@ -439,7 +430,7 @@ public final class AddCommentMutation: GraphQLMutation {
 
               public static let selections: [GraphQLSelection] = [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("nodes", type: .list(.object(Node.self))),
+                GraphQLField("nodes", type: .list(.object(Node.selections))),
                 GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
               ]
 
@@ -450,7 +441,7 @@ public final class AddCommentMutation: GraphQLMutation {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -465,7 +456,7 @@ public final class AddCommentMutation: GraphQLMutation {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
                 }
                 set {
                   snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -632,15 +623,7 @@ public final class AddCommentMutation: GraphQLMutation {
 
 public final class AddReactionMutation: GraphQLMutation {
   public static let operationString =
-    "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {" +
-    "  addReaction(input: {subjectId: $subject_id, content: $content}) {" +
-    "    __typename" +
-    "    subject {" +
-    "      __typename" +
-    "      ...reactionFields" +
-    "    }" +
-    "  }" +
-    "}"
+    "mutation AddReaction($subject_id: ID!, $content: ReactionContent!) {\n  addReaction(input: {subjectId: $subject_id, content: $content}) {\n    __typename\n    subject {\n      __typename\n      ...reactionFields\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(ReactionFields.fragmentString) }
 
@@ -660,7 +643,7 @@ public final class AddReactionMutation: GraphQLMutation {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("addReaction", arguments: ["input": ["subjectId": Variable("subject_id"), "content": Variable("content")]], type: .object(AddReaction.self)),
+      GraphQLField("addReaction", arguments: ["input": ["subjectId": GraphQLVariable("subject_id"), "content": GraphQLVariable("content")]], type: .object(AddReaction.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -670,13 +653,13 @@ public final class AddReactionMutation: GraphQLMutation {
     }
 
     public init(addReaction: AddReaction? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "addReaction": addReaction])
+      self.init(snapshot: ["__typename": "Mutation", "addReaction": addReaction.flatMap { $0.snapshot }])
     }
 
     /// Adds a reaction to a subject.
     public var addReaction: AddReaction? {
       get {
-        return (snapshot["addReaction"]! as! Snapshot?).flatMap { AddReaction(snapshot: $0) }
+        return (snapshot["addReaction"] as? Snapshot).flatMap { AddReaction(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "addReaction")
@@ -688,7 +671,7 @@ public final class AddReactionMutation: GraphQLMutation {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+        GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -698,7 +681,7 @@ public final class AddReactionMutation: GraphQLMutation {
       }
 
       public init(subject: Subject) {
-        self.init(snapshot: ["__typename": "AddReactionPayload", "subject": subject])
+        self.init(snapshot: ["__typename": "AddReactionPayload", "subject": subject.snapshot])
       }
 
       public var __typename: String {
@@ -725,8 +708,9 @@ public final class AddReactionMutation: GraphQLMutation {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
+          GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
         ]
 
         public var snapshot: Snapshot
@@ -736,23 +720,23 @@ public final class AddReactionMutation: GraphQLMutation {
         }
 
         public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public var __typename: String {
@@ -777,7 +761,7 @@ public final class AddReactionMutation: GraphQLMutation {
         /// A list of reactions grouped by content left on the subject.
         public var reactionGroups: [ReactionGroup]? {
           get {
-            return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
@@ -789,7 +773,7 @@ public final class AddReactionMutation: GraphQLMutation {
             return Fragments(snapshot: snapshot)
           }
           set {
-            snapshot = newValue.snapshot
+            snapshot += newValue.snapshot
           }
         }
 
@@ -801,7 +785,7 @@ public final class AddReactionMutation: GraphQLMutation {
               return ReactionFields(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
         }
@@ -812,7 +796,7 @@ public final class AddReactionMutation: GraphQLMutation {
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+            GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
             GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
           ]
 
@@ -823,7 +807,7 @@ public final class AddReactionMutation: GraphQLMutation {
           }
 
           public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-            self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+            self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
           }
 
           public var __typename: String {
@@ -870,7 +854,7 @@ public final class AddReactionMutation: GraphQLMutation {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
               GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
             ]
 
@@ -881,7 +865,7 @@ public final class AddReactionMutation: GraphQLMutation {
             }
 
             public init(nodes: [Node?]? = nil, totalCount: Int) {
-              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
             }
 
             public var __typename: String {
@@ -896,7 +880,7 @@ public final class AddReactionMutation: GraphQLMutation {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -959,529 +943,7 @@ public final class AddReactionMutation: GraphQLMutation {
 
 public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationString =
-    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {" +
-    "  repository(owner: $owner, name: $repo) {" +
-    "    __typename" +
-    "    name" +
-    "    hasIssuesEnabled" +
-    "    viewerCanAdminister" +
-    "    mentionableUsers(first: 100) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        avatarUrl" +
-    "        login" +
-    "      }" +
-    "    }" +
-    "    issueOrPullRequest(number: $number) {" +
-    "      __typename" +
-    "      ... on Issue {" +
-    "        __typename" +
-    "        timeline(last: $page_size, before: $before) {" +
-    "          __typename" +
-    "          pageInfo {" +
-    "            __typename" +
-    "            ...headPaging" +
-    "          }" +
-    "          nodes {" +
-    "            __typename" +
-    "            ... on Commit {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              author {" +
-    "                __typename" +
-    "                user {" +
-    "                  __typename" +
-    "                  login" +
-    "                  avatarUrl" +
-    "                }" +
-    "              }" +
-    "              oid" +
-    "              messageHeadline" +
-    "            }" +
-    "            ... on IssueComment {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              ...reactionFields" +
-    "              ...commentFields" +
-    "              ...updatableFields" +
-    "            }" +
-    "            ... on LabeledEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              label {" +
-    "                __typename" +
-    "                color" +
-    "                name" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on UnlabeledEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              label {" +
-    "                __typename" +
-    "                color" +
-    "                name" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on ClosedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              closedCommit: commit {" +
-    "                __typename" +
-    "                oid" +
-    "              }" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on ReopenedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on RenamedTitleEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "              currentTitle" +
-    "            }" +
-    "            ... on LockedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on UnlockedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on ReferencedEvent {" +
-    "              __typename" +
-    "              createdAt" +
-    "              ...nodeFields" +
-    "              refCommit: commit {" +
-    "                __typename" +
-    "                oid" +
-    "              }" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              commitRepository {" +
-    "                __typename" +
-    "                ...referencedRepositoryFields" +
-    "              }" +
-    "              subject {" +
-    "                __typename" +
-    "                ... on Issue {" +
-    "                  __typename" +
-    "                  title" +
-    "                  number" +
-    "                  closed" +
-    "                }" +
-    "                ... on PullRequest {" +
-    "                  __typename" +
-    "                  title" +
-    "                  number" +
-    "                  closed" +
-    "                  merged" +
-    "                }" +
-    "              }" +
-    "            }" +
-    "            ... on RenamedTitleEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              currentTitle" +
-    "              previousTitle" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on AssignedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              user {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on UnassignedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              user {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on MilestonedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              milestoneTitle" +
-    "            }" +
-    "            ... on DemilestonedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              milestoneTitle" +
-    "            }" +
-    "          }" +
-    "        }" +
-    "        milestone {" +
-    "          __typename" +
-    "          ...milestoneFields" +
-    "        }" +
-    "        ...reactionFields" +
-    "        ...commentFields" +
-    "        ...lockableFields" +
-    "        ...closableFields" +
-    "        ...labelableFields" +
-    "        ...updatableFields" +
-    "        ...nodeFields" +
-    "        ...assigneeFields" +
-    "        number" +
-    "        title" +
-    "      }" +
-    "      ... on PullRequest {" +
-    "        __typename" +
-    "        timeline(last: $page_size, before: $before) {" +
-    "          __typename" +
-    "          pageInfo {" +
-    "            __typename" +
-    "            ...headPaging" +
-    "          }" +
-    "          nodes {" +
-    "            __typename" +
-    "            ... on Commit {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              author {" +
-    "                __typename" +
-    "                user {" +
-    "                  __typename" +
-    "                  login" +
-    "                  avatarUrl" +
-    "                }" +
-    "              }" +
-    "              oid" +
-    "              messageHeadline" +
-    "            }" +
-    "            ... on IssueComment {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              ...reactionFields" +
-    "              ...commentFields" +
-    "              ...updatableFields" +
-    "            }" +
-    "            ... on LabeledEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              label {" +
-    "                __typename" +
-    "                color" +
-    "                name" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on UnlabeledEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              label {" +
-    "                __typename" +
-    "                color" +
-    "                name" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on ClosedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              closedCommit: commit {" +
-    "                __typename" +
-    "                oid" +
-    "              }" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on ReopenedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on RenamedTitleEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "              currentTitle" +
-    "            }" +
-    "            ... on LockedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on UnlockedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on MergedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              mergedCommit: commit {" +
-    "                __typename" +
-    "                oid" +
-    "              }" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              createdAt" +
-    "            }" +
-    "            ... on PullRequestReviewThread {" +
-    "              __typename" +
-    "              comments(first: $page_size) {" +
-    "                __typename" +
-    "                nodes {" +
-    "                  __typename" +
-    "                  ...reactionFields" +
-    "                  ...nodeFields" +
-    "                  ...commentFields" +
-    "                  path" +
-    "                  diffHunk" +
-    "                }" +
-    "              }" +
-    "            }" +
-    "            ... on PullRequestReview {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              ...commentFields" +
-    "              state" +
-    "              submittedAt" +
-    "              author {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on ReferencedEvent {" +
-    "              __typename" +
-    "              createdAt" +
-    "              ...nodeFields" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              commitRepository {" +
-    "                __typename" +
-    "                ...referencedRepositoryFields" +
-    "              }" +
-    "              subject {" +
-    "                __typename" +
-    "                ... on Issue {" +
-    "                  __typename" +
-    "                  title" +
-    "                  number" +
-    "                  closed" +
-    "                }" +
-    "                ... on PullRequest {" +
-    "                  __typename" +
-    "                  title" +
-    "                  number" +
-    "                  closed" +
-    "                  merged" +
-    "                }" +
-    "              }" +
-    "            }" +
-    "            ... on RenamedTitleEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              currentTitle" +
-    "              previousTitle" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on AssignedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              user {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on UnassignedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              user {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on ReviewRequestedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              subject {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on ReviewRequestRemovedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              subject {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "            }" +
-    "            ... on MilestonedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              milestoneTitle" +
-    "            }" +
-    "            ... on DemilestonedEvent {" +
-    "              __typename" +
-    "              ...nodeFields" +
-    "              createdAt" +
-    "              actor {" +
-    "                __typename" +
-    "                login" +
-    "              }" +
-    "              milestoneTitle" +
-    "            }" +
-    "          }" +
-    "        }" +
-    "        reviewRequests(first: $page_size) {" +
-    "          __typename" +
-    "          nodes {" +
-    "            __typename" +
-    "            reviewer {" +
-    "              __typename" +
-    "              login" +
-    "              avatarUrl" +
-    "            }" +
-    "          }" +
-    "        }" +
-    "        milestone {" +
-    "          __typename" +
-    "          ...milestoneFields" +
-    "        }" +
-    "        ...reactionFields" +
-    "        ...commentFields" +
-    "        ...lockableFields" +
-    "        ...closableFields" +
-    "        ...labelableFields" +
-    "        ...updatableFields" +
-    "        ...nodeFields" +
-    "        ...assigneeFields" +
-    "        number" +
-    "        title" +
-    "        merged" +
-    "      }" +
-    "    }" +
-    "  }" +
-    "}"
+    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    name\n    hasIssuesEnabled\n    viewerCanAdminister\n    mentionableUsers(first: 100) {\n      __typename\n      nodes {\n        __typename\n        avatarUrl\n        login\n      }\n    }\n    issueOrPullRequest(number: $number) {\n      __typename\n      ... on Issue {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              closedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              refCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n      }\n      ... on PullRequest {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              closedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on MergedEvent {\n              ...nodeFields\n              mergedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on PullRequestReviewThread {\n              comments(first: $page_size) {\n                __typename\n                nodes {\n                  __typename\n                  ...reactionFields\n                  ...nodeFields\n                  ...commentFields\n                  path\n                  diffHunk\n                }\n              }\n            }\n            ... on PullRequestReview {\n              ...nodeFields\n              ...commentFields\n              state\n              submittedAt\n              author {\n                __typename\n                login\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              subject {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestRemovedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              subject {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        reviewRequests(first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            reviewer {\n              __typename\n              login\n              avatarUrl\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n        merged\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(HeadPaging.fragmentString).appending(NodeFields.fragmentString).appending(ReactionFields.fragmentString).appending(CommentFields.fragmentString).appending(UpdatableFields.fragmentString).appending(ReferencedRepositoryFields.fragmentString).appending(MilestoneFields.fragmentString).appending(LockableFields.fragmentString).appending(ClosableFields.fragmentString).appending(LabelableFields.fragmentString).appending(AssigneeFields.fragmentString) }
 
@@ -1507,7 +969,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("repository", arguments: ["owner": Variable("owner"), "name": Variable("repo")], type: .object(Repository.self)),
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("repo")], type: .object(Repository.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -1517,13 +979,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
     public var repository: Repository? {
       get {
-        return (snapshot["repository"]! as! Snapshot?).flatMap { Repository(snapshot: $0) }
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "repository")
@@ -1538,8 +1000,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         GraphQLField("name", type: .nonNull(.scalar(String.self))),
         GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
         GraphQLField("viewerCanAdminister", type: .nonNull(.scalar(Bool.self))),
-        GraphQLField("mentionableUsers", arguments: ["first": 100], type: .nonNull(.object(MentionableUser.self))),
-        GraphQLField("issueOrPullRequest", arguments: ["number": Variable("number")], type: .object(IssueOrPullRequest.self)),
+        GraphQLField("mentionableUsers", arguments: ["first": 100], type: .nonNull(.object(MentionableUser.selections))),
+        GraphQLField("issueOrPullRequest", arguments: ["number": GraphQLVariable("number")], type: .object(IssueOrPullRequest.selections)),
       ]
 
       public var snapshot: Snapshot
@@ -1549,7 +1011,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
       }
 
       public init(name: String, hasIssuesEnabled: Bool, viewerCanAdminister: Bool, mentionableUsers: MentionableUser, issueOrPullRequest: IssueOrPullRequest? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "name": name, "hasIssuesEnabled": hasIssuesEnabled, "viewerCanAdminister": viewerCanAdminister, "mentionableUsers": mentionableUsers, "issueOrPullRequest": issueOrPullRequest])
+        self.init(snapshot: ["__typename": "Repository", "name": name, "hasIssuesEnabled": hasIssuesEnabled, "viewerCanAdminister": viewerCanAdminister, "mentionableUsers": mentionableUsers.snapshot, "issueOrPullRequest": issueOrPullRequest.flatMap { $0.snapshot }])
       }
 
       public var __typename: String {
@@ -1604,7 +1066,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
       /// Returns a single issue-like object from the current repository by number.
       public var issueOrPullRequest: IssueOrPullRequest? {
         get {
-          return (snapshot["issueOrPullRequest"]! as! Snapshot?).flatMap { IssueOrPullRequest(snapshot: $0) }
+          return (snapshot["issueOrPullRequest"] as? Snapshot).flatMap { IssueOrPullRequest(snapshot: $0) }
         }
         set {
           snapshot.updateValue(newValue?.snapshot, forKey: "issueOrPullRequest")
@@ -1616,7 +1078,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("nodes", type: .list(.object(Node.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
         ]
 
         public var snapshot: Snapshot
@@ -1626,7 +1088,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil) {
-          self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes])
+          self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
         }
 
         public var __typename: String {
@@ -1641,7 +1103,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -1702,9 +1164,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         public static let possibleTypes = ["Issue", "PullRequest"]
 
         public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLFragmentSpread(AsIssue.self),
-          GraphQLFragmentSpread(AsPullRequest.self),
+          GraphQLTypeCase(
+            variants: ["Issue": AsIssue.selections, "PullRequest": AsPullRequest.selections],
+            default: [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            ]
+          )
         ]
 
         public var snapshot: Snapshot
@@ -1714,11 +1179,11 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         }
 
         public static func makeIssue(timeline: AsIssue.Timeline, milestone: AsIssue.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsIssue.ReactionGroup]? = nil, author: AsIssue.Author? = nil, editor: AsIssue.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsIssue.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsIssue.Assignee, number: Int, title: String) -> IssueOrPullRequest {
-          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "timeline": timeline, "milestone": milestone, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees, "number": number, "title": title])
+          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
         }
 
-        public static func makePullRequest(timeline: AsPullRequest.Timeline, milestone: AsPullRequest.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsPullRequest.ReactionGroup]? = nil, author: AsPullRequest.Author? = nil, editor: AsPullRequest.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsPullRequest.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsPullRequest.Assignee, number: Int, title: String, reviewRequests: AsPullRequest.ReviewRequest? = nil, merged: Bool) -> IssueOrPullRequest {
-          return IssueOrPullRequest(snapshot: ["__typename": "PullRequest", "timeline": timeline, "milestone": milestone, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees, "number": number, "title": title, "reviewRequests": reviewRequests, "merged": merged])
+        public static func makePullRequest(timeline: AsPullRequest.Timeline, reviewRequests: AsPullRequest.ReviewRequest? = nil, milestone: AsPullRequest.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsPullRequest.ReactionGroup]? = nil, author: AsPullRequest.Author? = nil, editor: AsPullRequest.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsPullRequest.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsPullRequest.Assignee, number: Int, title: String, merged: Bool) -> IssueOrPullRequest {
+          return IssueOrPullRequest(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { $0.snapshot }, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged])
         }
 
         public var __typename: String {
@@ -1741,38 +1206,35 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           }
         }
 
-        public var asPullRequest: AsPullRequest? {
-          get {
-            if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
-            return AsPullRequest(snapshot: snapshot)
-          }
-          set {
-            guard let newValue = newValue else { return }
-            snapshot = newValue.snapshot
-          }
-        }
-
-        public struct AsIssue: GraphQLFragment {
+        public struct AsIssue: GraphQLSelectionSet {
           public static let possibleTypes = ["Issue"]
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("timeline", arguments: ["last": Variable("page_size"), "before": Variable("before")], type: .nonNull(.object(Timeline.self))),
-            GraphQLField("milestone", type: .object(Milestone.self)),
+            GraphQLField("timeline", arguments: ["last": GraphQLVariable("page_size"), "before": GraphQLVariable("before")], type: .nonNull(.object(Timeline.selections))),
+            GraphQLField("milestone", type: .object(Milestone.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-            GraphQLField("author", type: .object(Author.self)),
-            GraphQLField("editor", type: .object(Editor.self)),
+            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("author", type: .object(Author.selections)),
+            GraphQLField("editor", type: .object(Editor.selections)),
             GraphQLField("lastEditedAt", type: .scalar(String.self)),
             GraphQLField("body", type: .nonNull(.scalar(String.self))),
             GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("locked", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("closed", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.self)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-            GraphQLField("assignees", arguments: ["first": Variable("page_size")], type: .nonNull(.object(Assignee.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("assignees", arguments: ["first": GraphQLVariable("page_size")], type: .nonNull(.object(Assignee.selections))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
           ]
@@ -1784,7 +1246,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           }
 
           public init(timeline: Timeline, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String) {
-            self.init(snapshot: ["__typename": "Issue", "timeline": timeline, "milestone": milestone, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees, "number": number, "title": title])
+            self.init(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
           }
 
           public var __typename: String {
@@ -1809,7 +1271,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// Identifies the milestone associated with the issue.
           public var milestone: Milestone? {
             get {
-              return (snapshot["milestone"]! as! Snapshot?).flatMap { Milestone(snapshot: $0) }
+              return (snapshot["milestone"] as? Snapshot).flatMap { Milestone(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "milestone")
@@ -1829,7 +1291,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
             }
             set {
               snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
@@ -1839,7 +1301,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The actor who authored the comment.
           public var author: Author? {
             get {
-              return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+              return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -1849,7 +1311,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The actor who edited the comment.
           public var editor: Editor? {
             get {
-              return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+              return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -1859,7 +1321,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The moment the editor made the last edit
           public var lastEditedAt: String? {
             get {
-              return snapshot["lastEditedAt"]! as! String?
+              return snapshot["lastEditedAt"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -1919,7 +1381,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of labels associated with the object.
           public var labels: Label? {
             get {
-              return (snapshot["labels"]! as! Snapshot?).flatMap { Label(snapshot: $0) }
+              return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "labels")
@@ -1936,6 +1398,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
+          /// ID of the object.
           public var id: GraphQLID {
             get {
               return snapshot["id"]! as! GraphQLID
@@ -1980,7 +1443,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               return Fragments(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
 
@@ -1992,7 +1455,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return ReactionFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2001,7 +1464,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return CommentFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2010,7 +1473,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return LockableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2019,7 +1482,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return ClosableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2028,7 +1491,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return LabelableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2037,7 +1500,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return UpdatableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2046,7 +1509,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return NodeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -2055,7 +1518,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return AssigneeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
           }
@@ -2065,8 +1528,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -2076,7 +1539,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(pageInfo: PageInfo, nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "IssueTimelineConnection", "pageInfo": pageInfo, "nodes": nodes])
+              self.init(snapshot: ["__typename": "IssueTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -2101,7 +1564,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -2112,6 +1575,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["PageInfo"]
 
               public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("hasPreviousPage", type: .nonNull(.scalar(Bool.self))),
                 GraphQLField("startCursor", type: .scalar(String.self)),
@@ -2149,7 +1613,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// When paginating backwards, the cursor to continue.
               public var startCursor: String? {
                 get {
-                  return snapshot["startCursor"]! as! String?
+                  return snapshot["startCursor"] as? String
                 }
                 set {
                   snapshot.updateValue(newValue, forKey: "startCursor")
@@ -2161,7 +1625,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   return Fragments(snapshot: snapshot)
                 }
                 set {
-                  snapshot = newValue.snapshot
+                  snapshot += newValue.snapshot
                 }
               }
 
@@ -2173,7 +1637,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return HeadPaging(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
               }
@@ -2183,21 +1647,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["Commit", "IssueComment", "CrossReferencedEvent", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "ReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent"]
 
               public static let selections: [GraphQLSelection] = [
-                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLFragmentSpread(AsCommit.self),
-                GraphQLFragmentSpread(AsIssueComment.self),
-                GraphQLFragmentSpread(AsLabeledEvent.self),
-                GraphQLFragmentSpread(AsUnlabeledEvent.self),
-                GraphQLFragmentSpread(AsClosedEvent.self),
-                GraphQLFragmentSpread(AsReopenedEvent.self),
-                GraphQLFragmentSpread(AsRenamedTitleEvent.self),
-                GraphQLFragmentSpread(AsLockedEvent.self),
-                GraphQLFragmentSpread(AsUnlockedEvent.self),
-                GraphQLFragmentSpread(AsReferencedEvent.self),
-                GraphQLFragmentSpread(AsAssignedEvent.self),
-                GraphQLFragmentSpread(AsUnassignedEvent.self),
-                GraphQLFragmentSpread(AsMilestonedEvent.self),
-                GraphQLFragmentSpread(AsDemilestonedEvent.self),
+                GraphQLTypeCase(
+                  variants: ["Commit": AsCommit.selections, "IssueComment": AsIssueComment.selections, "LabeledEvent": AsLabeledEvent.selections, "UnlabeledEvent": AsUnlabeledEvent.selections, "ClosedEvent": AsClosedEvent.selections, "ReopenedEvent": AsReopenedEvent.selections, "RenamedTitleEvent": AsRenamedTitleEvent.selections, "LockedEvent": AsLockedEvent.selections, "UnlockedEvent": AsUnlockedEvent.selections, "ReferencedEvent": AsReferencedEvent.selections, "AssignedEvent": AsAssignedEvent.selections, "UnassignedEvent": AsUnassignedEvent.selections, "MilestonedEvent": AsMilestonedEvent.selections, "DemilestonedEvent": AsDemilestonedEvent.selections],
+                  default: [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  ]
+                )
               ]
 
               public var snapshot: Snapshot
@@ -2206,24 +1661,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
-                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author, "oid": oid, "messageHeadline": messageHeadline])
-              }
-
-              public static func makeIssueComment(id: GraphQLID, author: AsIssueComment.Author? = nil, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) -> Node {
-                return Node(snapshot: ["__typename": "IssueComment", "id": id, "author": author, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
-              }
-
               public static func makeCrossReferencedEvent() -> Node {
                 return Node(snapshot: ["__typename": "CrossReferencedEvent"])
-              }
-
-              public static func makeClosedEvent(id: GraphQLID, createdAt: String, actor: AsClosedEvent.Actor? = nil, closedCommit: AsClosedEvent.ClosedCommit? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "createdAt": createdAt, "actor": actor, "closedCommit": closedCommit])
-              }
-
-              public static func makeReopenedEvent(id: GraphQLID, createdAt: String, actor: AsReopenedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "createdAt": createdAt, "actor": actor])
               }
 
               public static func makeSubscribedEvent() -> Node {
@@ -2234,44 +1673,60 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return Node(snapshot: ["__typename": "UnsubscribedEvent"])
               }
 
-              public static func makeReferencedEvent(id: GraphQLID, createdAt: String, actor: AsReferencedEvent.Actor? = nil, refCommit: AsReferencedEvent.RefCommit? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReferencedEvent", "id": id, "createdAt": createdAt, "actor": actor, "refCommit": refCommit, "commitRepository": commitRepository, "subject": subject])
+              public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
+                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+              }
+
+              public static func makeIssueComment(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, author: AsIssueComment.Author? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) -> Node {
+                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
+              }
+
+              public static func makeLabeledEvent(id: GraphQLID, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+              }
+
+              public static func makeUnlabeledEvent(id: GraphQLID, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+              }
+
+              public static func makeClosedEvent(id: GraphQLID, closedCommit: AsClosedEvent.ClosedCommit? = nil, actor: AsClosedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeReopenedEvent(id: GraphQLID, actor: AsReopenedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeRenamedTitleEvent(id: GraphQLID, actor: AsRenamedTitleEvent.Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) -> Node {
+                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+              }
+
+              public static func makeLockedEvent(id: GraphQLID, actor: AsLockedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeUnlockedEvent(id: GraphQLID, actor: AsUnlockedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeReferencedEvent(createdAt: String, id: GraphQLID, refCommit: AsReferencedEvent.RefCommit? = nil, actor: AsReferencedEvent.Actor? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
+                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
               }
 
               public static func makeAssignedEvent(id: GraphQLID, createdAt: String, actor: AsAssignedEvent.Actor? = nil, user: AsAssignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
+                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
               }
 
               public static func makeUnassignedEvent(id: GraphQLID, createdAt: String, actor: AsUnassignedEvent.Actor? = nil, user: AsUnassignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
-              }
-
-              public static func makeLabeledEvent(id: GraphQLID, createdAt: String, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label) -> Node {
-                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
-              }
-
-              public static func makeUnlabeledEvent(id: GraphQLID, createdAt: String, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label) -> Node {
-                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
+                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
               }
 
               public static func makeMilestonedEvent(id: GraphQLID, createdAt: String, actor: AsMilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
+                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public static func makeDemilestonedEvent(id: GraphQLID, createdAt: String, actor: AsDemilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
-              }
-
-              public static func makeRenamedTitleEvent(id: GraphQLID, createdAt: String, actor: AsRenamedTitleEvent.Actor? = nil, currentTitle: String, previousTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "createdAt": createdAt, "actor": actor, "currentTitle": currentTitle, "previousTitle": previousTitle])
-              }
-
-              public static func makeLockedEvent(id: GraphQLID, createdAt: String, actor: AsLockedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
-              }
-
-              public static func makeUnlockedEvent(id: GraphQLID, createdAt: String, actor: AsUnlockedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public var __typename: String {
@@ -2294,156 +1749,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public var asIssueComment: AsIssueComment? {
-                get {
-                  if !AsIssueComment.possibleTypes.contains(__typename) { return nil }
-                  return AsIssueComment(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asLabeledEvent: AsLabeledEvent? {
-                get {
-                  if !AsLabeledEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsLabeledEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnlabeledEvent: AsUnlabeledEvent? {
-                get {
-                  if !AsUnlabeledEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnlabeledEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asClosedEvent: AsClosedEvent? {
-                get {
-                  if !AsClosedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsClosedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReopenedEvent: AsReopenedEvent? {
-                get {
-                  if !AsReopenedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReopenedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asRenamedTitleEvent: AsRenamedTitleEvent? {
-                get {
-                  if !AsRenamedTitleEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsRenamedTitleEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asLockedEvent: AsLockedEvent? {
-                get {
-                  if !AsLockedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsLockedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnlockedEvent: AsUnlockedEvent? {
-                get {
-                  if !AsUnlockedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnlockedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReferencedEvent: AsReferencedEvent? {
-                get {
-                  if !AsReferencedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReferencedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asAssignedEvent: AsAssignedEvent? {
-                get {
-                  if !AsAssignedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsAssignedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnassignedEvent: AsUnassignedEvent? {
-                get {
-                  if !AsUnassignedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnassignedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asMilestonedEvent: AsMilestonedEvent? {
-                get {
-                  if !AsMilestonedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsMilestonedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asDemilestonedEvent: AsDemilestonedEvent? {
-                get {
-                  if !AsDemilestonedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsDemilestonedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public struct AsCommit: GraphQLFragment {
+              public struct AsCommit: GraphQLSelectionSet {
                 public static let possibleTypes = ["Commit"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                  GraphQLField("author", type: .object(Author.self)),
+                  GraphQLField("author", type: .object(Author.selections)),
                   GraphQLField("oid", type: .nonNull(.scalar(String.self))),
                   GraphQLField("messageHeadline", type: .nonNull(.scalar(String.self))),
                 ]
@@ -2455,7 +1768,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, oid: String, messageHeadline: String) {
-                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author, "oid": oid, "messageHeadline": messageHeadline])
+                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
                 }
 
                 public var __typename: String {
@@ -2467,6 +1780,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -2479,7 +1793,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Authorship details of the commit.
                 public var author: Author? {
                   get {
-                    return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+                    return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -2511,7 +1825,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -2523,7 +1837,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -2533,7 +1847,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("user", type: .object(User.self)),
+                    GraphQLField("user", type: .object(User.selections)),
                   ]
 
                   public var snapshot: Snapshot
@@ -2543,7 +1857,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(user: User? = nil) {
-                    self.init(snapshot: ["__typename": "GitActor", "user": user])
+                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { $0.snapshot }])
                   }
 
                   public var __typename: String {
@@ -2558,7 +1872,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   /// The GitHub user corresponding to the email field. Null if no such user exists.
                   public var user: User? {
                     get {
-                      return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                      return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                     }
                     set {
                       snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -2616,20 +1930,35 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsIssueComment: GraphQLFragment {
+              public var asIssueComment: AsIssueComment? {
+                get {
+                  if !AsIssueComment.possibleTypes.contains(__typename) { return nil }
+                  return AsIssueComment(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsIssueComment: GraphQLSelectionSet {
                 public static let possibleTypes = ["IssueComment"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                  GraphQLField("author", type: .object(Author.self)),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-                  GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-                  GraphQLField("editor", type: .object(Editor.self)),
+                  GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("author", type: .object(Author.selections)),
+                  GraphQLField("editor", type: .object(Editor.selections)),
                   GraphQLField("lastEditedAt", type: .scalar(String.self)),
                   GraphQLField("body", type: .nonNull(.scalar(String.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
                 ]
 
@@ -2639,8 +1968,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, author: Author? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) {
-                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "author": author, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
+                public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) {
+                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
                 }
 
                 public var __typename: String {
@@ -2652,22 +1981,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
-                  }
-                }
-
-                /// The actor who authored the comment.
-                public var author: Author? {
-                  get {
-                    return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "author")
                   }
                 }
 
@@ -2684,17 +2004,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// A list of reactions grouped by content left on the subject.
                 public var reactionGroups: [ReactionGroup]? {
                   get {
-                    return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
                   }
                   set {
                     snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
                   }
                 }
 
+                /// The actor who authored the comment.
+                public var author: Author? {
+                  get {
+                    return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "author")
+                  }
+                }
+
                 /// The actor who edited the comment.
                 public var editor: Editor? {
                   get {
-                    return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+                    return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -2704,7 +2034,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// The moment the editor made the last edit
                 public var lastEditedAt: String? {
                   get {
-                    return snapshot["lastEditedAt"]! as! String?
+                    return snapshot["lastEditedAt"] as? String
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -2756,7 +2086,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -2768,7 +2098,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -2777,7 +2107,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return ReactionFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -2786,7 +2116,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return CommentFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -2795,7 +2125,154 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return UpdatableFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
+                    }
+                  }
+                }
+
+                public struct ReactionGroup: GraphQLSelectionSet {
+                  public static let possibleTypes = ["ReactionGroup"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
+                    GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
+                    GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
+                    self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// Whether or not the authenticated user has left a reaction on the subject.
+                  public var viewerHasReacted: Bool {
+                    get {
+                      return snapshot["viewerHasReacted"]! as! Bool
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "viewerHasReacted")
+                    }
+                  }
+
+                  /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
+                  public var users: User {
+                    get {
+                      return User(snapshot: snapshot["users"]! as! Snapshot)
+                    }
+                    set {
+                      snapshot.updateValue(newValue.snapshot, forKey: "users")
+                    }
+                  }
+
+                  /// Identifies the emoji reaction.
+                  public var content: ReactionContent {
+                    get {
+                      return snapshot["content"]! as! ReactionContent
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "content")
+                    }
+                  }
+
+                  public struct User: GraphQLSelectionSet {
+                    public static let possibleTypes = ["ReactingUserConnection"]
+
+                    public static let selections: [GraphQLSelection] = [
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      GraphQLField("nodes", type: .list(.object(Node.selections))),
+                      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+                    ]
+
+                    public var snapshot: Snapshot
+
+                    public init(snapshot: Snapshot) {
+                      self.snapshot = snapshot
+                    }
+
+                    public init(nodes: [Node?]? = nil, totalCount: Int) {
+                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                    }
+
+                    public var __typename: String {
+                      get {
+                        return snapshot["__typename"]! as! String
+                      }
+                      set {
+                        snapshot.updateValue(newValue, forKey: "__typename")
+                      }
+                    }
+
+                    /// A list of nodes.
+                    public var nodes: [Node?]? {
+                      get {
+                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                      }
+                      set {
+                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                      }
+                    }
+
+                    /// Identifies the total count of items in the connection.
+                    public var totalCount: Int {
+                      get {
+                        return snapshot["totalCount"]! as! Int
+                      }
+                      set {
+                        snapshot.updateValue(newValue, forKey: "totalCount")
+                      }
+                    }
+
+                    public struct Node: GraphQLSelectionSet {
+                      public static let possibleTypes = ["User"]
+
+                      public static let selections: [GraphQLSelection] = [
+                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                      ]
+
+                      public var snapshot: Snapshot
+
+                      public init(snapshot: Snapshot) {
+                        self.snapshot = snapshot
+                      }
+
+                      public init(login: String) {
+                        self.init(snapshot: ["__typename": "User", "login": login])
+                      }
+
+                      public var __typename: String {
+                        get {
+                          return snapshot["__typename"]! as! String
+                        }
+                        set {
+                          snapshot.updateValue(newValue, forKey: "__typename")
+                        }
+                      }
+
+                      /// The username used to login.
+                      public var login: String {
+                        get {
+                          return snapshot["login"]! as! String
+                        }
+                        set {
+                          snapshot.updateValue(newValue, forKey: "login")
+                        }
+                      }
                     }
                   }
                 }
@@ -2857,153 +2334,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                public struct ReactionGroup: GraphQLSelectionSet {
-                  public static let possibleTypes = ["ReactionGroup"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-                    GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
-                    GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-                    self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// Whether or not the authenticated user has left a reaction on the subject.
-                  public var viewerHasReacted: Bool {
-                    get {
-                      return snapshot["viewerHasReacted"]! as! Bool
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "viewerHasReacted")
-                    }
-                  }
-
-                  /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
-                  public var users: User {
-                    get {
-                      return User(snapshot: snapshot["users"]! as! Snapshot)
-                    }
-                    set {
-                      snapshot.updateValue(newValue.snapshot, forKey: "users")
-                    }
-                  }
-
-                  /// Identifies the emoji reaction.
-                  public var content: ReactionContent {
-                    get {
-                      return snapshot["content"]! as! ReactionContent
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "content")
-                    }
-                  }
-
-                  public struct User: GraphQLSelectionSet {
-                    public static let possibleTypes = ["ReactingUserConnection"]
-
-                    public static let selections: [GraphQLSelection] = [
-                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                      GraphQLField("nodes", type: .list(.object(Node.self))),
-                      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
-                    ]
-
-                    public var snapshot: Snapshot
-
-                    public init(snapshot: Snapshot) {
-                      self.snapshot = snapshot
-                    }
-
-                    public init(nodes: [Node?]? = nil, totalCount: Int) {
-                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
-                    }
-
-                    public var __typename: String {
-                      get {
-                        return snapshot["__typename"]! as! String
-                      }
-                      set {
-                        snapshot.updateValue(newValue, forKey: "__typename")
-                      }
-                    }
-
-                    /// A list of nodes.
-                    public var nodes: [Node?]? {
-                      get {
-                        return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-                      }
-                      set {
-                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-                      }
-                    }
-
-                    /// Identifies the total count of items in the connection.
-                    public var totalCount: Int {
-                      get {
-                        return snapshot["totalCount"]! as! Int
-                      }
-                      set {
-                        snapshot.updateValue(newValue, forKey: "totalCount")
-                      }
-                    }
-
-                    public struct Node: GraphQLSelectionSet {
-                      public static let possibleTypes = ["User"]
-
-                      public static let selections: [GraphQLSelection] = [
-                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                        GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                      ]
-
-                      public var snapshot: Snapshot
-
-                      public init(snapshot: Snapshot) {
-                        self.snapshot = snapshot
-                      }
-
-                      public init(login: String) {
-                        self.init(snapshot: ["__typename": "User", "login": login])
-                      }
-
-                      public var __typename: String {
-                        get {
-                          return snapshot["__typename"]! as! String
-                        }
-                        set {
-                          snapshot.updateValue(newValue, forKey: "__typename")
-                        }
-                      }
-
-                      /// The username used to login.
-                      public var login: String {
-                        get {
-                          return snapshot["login"]! as! String
-                        }
-                        set {
-                          snapshot.updateValue(newValue, forKey: "login")
-                        }
-                      }
-                    }
-                  }
-                }
-
                 public struct Editor: GraphQLSelectionSet {
                   public static let possibleTypes = ["Organization", "User", "Bot"]
 
@@ -3051,15 +2381,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsLabeledEvent: GraphQLFragment {
+              public var asLabeledEvent: AsLabeledEvent? {
+                get {
+                  if !AsLabeledEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsLabeledEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsLabeledEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["LabeledEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("label", type: .nonNull(.object(Label.selections))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("label", type: .nonNull(.object(Label.self))),
                 ]
 
                 public var snapshot: Snapshot
@@ -3068,8 +2410,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, label: Label) {
-                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
+                public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
+                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3081,6 +2423,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -3090,20 +2433,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the date and time when the object was created.
-                public var createdAt: String {
-                  get {
-                    return snapshot["createdAt"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -3120,12 +2453,22 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// Identifies the date and time when the object was created.
+                public var createdAt: String {
+                  get {
+                    return snapshot["createdAt"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "createdAt")
+                  }
+                }
+
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3137,7 +2480,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -3238,15 +2581,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnlabeledEvent: GraphQLFragment {
+              public var asUnlabeledEvent: AsUnlabeledEvent? {
+                get {
+                  if !AsUnlabeledEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnlabeledEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnlabeledEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnlabeledEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("label", type: .nonNull(.object(Label.selections))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("label", type: .nonNull(.object(Label.self))),
                 ]
 
                 public var snapshot: Snapshot
@@ -3255,8 +2610,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, label: Label) {
-                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
+                public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
+                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3268,6 +2623,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -3277,20 +2633,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the date and time when the object was created.
-                public var createdAt: String {
-                  get {
-                    return snapshot["createdAt"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -3307,12 +2653,22 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// Identifies the date and time when the object was created.
+                public var createdAt: String {
+                  get {
+                    return snapshot["createdAt"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "createdAt")
+                  }
+                }
+
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3324,7 +2680,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -3425,15 +2781,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsClosedEvent: GraphQLFragment {
+              public var asClosedEvent: AsClosedEvent? {
+                get {
+                  if !AsClosedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsClosedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsClosedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ClosedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("commit", alias: "closedCommit", type: .object(ClosedCommit.selections)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("commit", alias: "closedCommit", type: .object(ClosedCommit.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -3442,8 +2810,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, closedCommit: ClosedCommit? = nil) {
-                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "createdAt": createdAt, "actor": actor, "closedCommit": closedCommit])
+                public init(id: GraphQLID, closedCommit: ClosedCommit? = nil, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3455,12 +2823,33 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the commit associated with the 'closed' event.
+                public var closedCommit: ClosedCommit? {
+                  get {
+                    return (snapshot["closedCommit"] as? Snapshot).flatMap { ClosedCommit(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "closedCommit")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -3474,32 +2863,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
-                /// Identifies the commit associated with the 'closed' event.
-                public var closedCommit: ClosedCommit? {
-                  get {
-                    return (snapshot["closedCommit"]! as! Snapshot?).flatMap { ClosedCommit(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "closedCommit")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3511,53 +2880,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
-                    }
-                  }
-                }
-
-                public struct Actor: GraphQLSelectionSet {
-                  public static let possibleTypes = ["Organization", "User", "Bot"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public static func makeOrganization(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Organization", "login": login])
-                  }
-
-                  public static func makeUser(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "User", "login": login])
-                  }
-
-                  public static func makeBot(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Bot", "login": login])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// The username of the actor.
-                  public var login: String {
-                    get {
-                      return snapshot["login"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "login")
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -3599,16 +2922,74 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
                 }
+
+                public struct Actor: GraphQLSelectionSet {
+                  public static let possibleTypes = ["Organization", "User", "Bot"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public static func makeOrganization(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Organization", "login": login])
+                  }
+
+                  public static func makeUser(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "User", "login": login])
+                  }
+
+                  public static func makeBot(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Bot", "login": login])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// The username of the actor.
+                  public var login: String {
+                    get {
+                      return snapshot["login"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "login")
+                    }
+                  }
+                }
               }
 
-              public struct AsReopenedEvent: GraphQLFragment {
+              public var asReopenedEvent: AsReopenedEvent? {
+                get {
+                  if !AsReopenedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReopenedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReopenedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReopenedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -3617,8 +2998,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3630,12 +3011,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -3649,22 +3041,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3676,7 +3058,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -3728,16 +3110,33 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsRenamedTitleEvent: GraphQLFragment {
+              public var asRenamedTitleEvent: AsRenamedTitleEvent? {
+                get {
+                  if !AsRenamedTitleEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsRenamedTitleEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsRenamedTitleEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["RenamedTitleEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("currentTitle", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                   GraphQLField("currentTitle", type: .nonNull(.scalar(String.self))),
                   GraphQLField("previousTitle", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -3746,8 +3145,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, currentTitle: String, previousTitle: String) {
-                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "createdAt": createdAt, "actor": actor, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) {
+                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
                 }
 
                 public var __typename: String {
@@ -3759,12 +3158,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -3775,16 +3185,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -3813,7 +3213,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3825,7 +3225,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -3834,6 +3234,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public static let possibleTypes = ["Organization", "User", "Bot"]
 
                   public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("login", type: .nonNull(.scalar(String.self))),
                   ]
@@ -3877,14 +3279,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsLockedEvent: GraphQLFragment {
+              public var asLockedEvent: AsLockedEvent? {
+                get {
+                  if !AsLockedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsLockedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsLockedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["LockedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -3893,8 +3307,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3906,12 +3320,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -3925,22 +3350,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -3952,7 +3367,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -4004,14 +3419,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnlockedEvent: GraphQLFragment {
+              public var asUnlockedEvent: AsUnlockedEvent? {
+                get {
+                  if !AsUnlockedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnlockedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnlockedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnlockedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -4020,8 +3447,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -4033,12 +3460,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -4052,22 +3490,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -4079,7 +3507,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -4131,17 +3559,29 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsReferencedEvent: GraphQLFragment {
+              public var asReferencedEvent: AsReferencedEvent? {
+                get {
+                  if !AsReferencedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReferencedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReferencedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("commit", alias: "refCommit", type: .object(RefCommit.self)),
-                  GraphQLField("commitRepository", type: .nonNull(.object(CommitRepository.self))),
-                  GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("commit", alias: "refCommit", type: .object(RefCommit.selections)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("commitRepository", type: .nonNull(.object(CommitRepository.selections))),
+                  GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
                 ]
 
                 public var snapshot: Snapshot
@@ -4150,8 +3590,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, refCommit: RefCommit? = nil, commitRepository: CommitRepository, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReferencedEvent", "id": id, "createdAt": createdAt, "actor": actor, "refCommit": refCommit, "commitRepository": commitRepository, "subject": subject])
+                public init(createdAt: String, id: GraphQLID, refCommit: RefCommit? = nil, actor: Actor? = nil, commitRepository: CommitRepository, subject: Subject) {
+                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -4160,15 +3600,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "__typename")
-                  }
-                }
-
-                public var id: GraphQLID {
-                  get {
-                    return snapshot["id"]! as! GraphQLID
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "id")
                   }
                 }
 
@@ -4182,23 +3613,33 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
+                /// ID of the object.
+                public var id: GraphQLID {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return snapshot["id"]! as! GraphQLID
                   }
                   set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
+                    snapshot.updateValue(newValue, forKey: "id")
                   }
                 }
 
                 /// Identifies the commit associated with the 'referenced' event.
                 public var refCommit: RefCommit? {
                   get {
-                    return (snapshot["refCommit"]! as! Snapshot?).flatMap { RefCommit(snapshot: $0) }
+                    return (snapshot["refCommit"] as? Snapshot).flatMap { RefCommit(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "refCommit")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -4227,7 +3668,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -4239,53 +3680,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
-                    }
-                  }
-                }
-
-                public struct Actor: GraphQLSelectionSet {
-                  public static let possibleTypes = ["Organization", "User", "Bot"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public static func makeOrganization(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Organization", "login": login])
-                  }
-
-                  public static func makeUser(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "User", "login": login])
-                  }
-
-                  public static func makeBot(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Bot", "login": login])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// The username of the actor.
-                  public var login: String {
-                    get {
-                      return snapshot["login"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "login")
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -4328,13 +3723,60 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                public struct Actor: GraphQLSelectionSet {
+                  public static let possibleTypes = ["Organization", "User", "Bot"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public static func makeOrganization(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Organization", "login": login])
+                  }
+
+                  public static func makeUser(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "User", "login": login])
+                  }
+
+                  public static func makeBot(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Bot", "login": login])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// The username of the actor.
+                  public var login: String {
+                    get {
+                      return snapshot["login"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "login")
+                    }
+                  }
+                }
+
                 public struct CommitRepository: GraphQLSelectionSet {
                   public static let possibleTypes = ["Repository"]
 
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("name", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("owner", type: .nonNull(.object(Owner.self))),
+                    GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
                   ]
 
                   public var snapshot: Snapshot
@@ -4344,7 +3786,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(name: String, owner: Owner) {
-                    self.init(snapshot: ["__typename": "Repository", "name": name, "owner": owner])
+                    self.init(snapshot: ["__typename": "Repository", "name": name, "owner": owner.snapshot])
                   }
 
                   public var __typename: String {
@@ -4381,7 +3823,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return Fragments(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -4393,7 +3835,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         return ReferencedRepositoryFields(snapshot: snapshot)
                       }
                       set {
-                        snapshot = newValue.snapshot
+                        snapshot += newValue.snapshot
                       }
                     }
                   }
@@ -4445,9 +3887,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public static let possibleTypes = ["Issue", "PullRequest"]
 
                   public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLFragmentSpread(AsIssue.self),
-                    GraphQLFragmentSpread(AsPullRequest.self),
+                    GraphQLTypeCase(
+                      variants: ["Issue": AsIssue.selections, "PullRequest": AsPullRequest.selections],
+                      default: [
+                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      ]
+                    )
                   ]
 
                   public var snapshot: Snapshot
@@ -4484,18 +3929,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
 
-                  public var asPullRequest: AsPullRequest? {
-                    get {
-                      if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
-                      return AsPullRequest(snapshot: snapshot)
-                    }
-                    set {
-                      guard let newValue = newValue else { return }
-                      snapshot = newValue.snapshot
-                    }
-                  }
-
-                  public struct AsIssue: GraphQLFragment {
+                  public struct AsIssue: GraphQLSelectionSet {
                     public static let possibleTypes = ["Issue"]
 
                     public static let selections: [GraphQLSelection] = [
@@ -4555,7 +3989,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
 
-                  public struct AsPullRequest: GraphQLFragment {
+                  public var asPullRequest: AsPullRequest? {
+                    get {
+                      if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
+                      return AsPullRequest(snapshot: snapshot)
+                    }
+                    set {
+                      guard let newValue = newValue else { return }
+                      snapshot = newValue.snapshot
+                    }
+                  }
+
+                  public struct AsPullRequest: GraphQLSelectionSet {
                     public static let possibleTypes = ["PullRequest"]
 
                     public static let selections: [GraphQLSelection] = [
@@ -4628,15 +4073,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsAssignedEvent: GraphQLFragment {
+              public var asAssignedEvent: AsAssignedEvent? {
+                get {
+                  if !AsAssignedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsAssignedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsAssignedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["AssignedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("user", type: .object(User.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("user", type: .object(User.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -4646,7 +4103,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
+                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
                 }
 
                 public var __typename: String {
@@ -4658,6 +4115,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -4680,7 +4138,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -4690,7 +4148,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the user who was assigned.
                 public var user: User? {
                   get {
-                    return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                    return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -4702,7 +4160,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -4714,7 +4172,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -4804,15 +4262,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnassignedEvent: GraphQLFragment {
+              public var asUnassignedEvent: AsUnassignedEvent? {
+                get {
+                  if !AsUnassignedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnassignedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnassignedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnassignedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("user", type: .object(User.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("user", type: .object(User.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -4822,7 +4292,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
+                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
                 }
 
                 public var __typename: String {
@@ -4834,6 +4304,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -4856,7 +4327,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -4866,7 +4337,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the subject (user) who was unassigned.
                 public var user: User? {
                   get {
-                    return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                    return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -4878,7 +4349,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -4890,7 +4361,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -4980,14 +4451,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsMilestonedEvent: GraphQLFragment {
+              public var asMilestonedEvent: AsMilestonedEvent? {
+                get {
+                  if !AsMilestonedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsMilestonedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsMilestonedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["MilestonedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("milestoneTitle", type: .nonNull(.scalar(String.self))),
                 ]
 
@@ -4998,7 +4481,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -5010,6 +4493,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -5032,7 +4516,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -5054,7 +4538,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -5066,7 +4550,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -5118,14 +4602,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsDemilestonedEvent: GraphQLFragment {
+              public var asDemilestonedEvent: AsDemilestonedEvent? {
+                get {
+                  if !AsDemilestonedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsDemilestonedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsDemilestonedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["DemilestonedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("milestoneTitle", type: .nonNull(.scalar(String.self))),
                 ]
 
@@ -5136,7 +4632,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -5148,6 +4644,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -5170,7 +4667,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -5192,7 +4689,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -5204,7 +4701,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -5262,6 +4759,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             public static let possibleTypes = ["Milestone"]
 
             public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("number", type: .nonNull(.scalar(Int.self))),
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
@@ -5322,7 +4820,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return Fragments(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -5334,7 +4832,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   return MilestoneFields(snapshot: snapshot)
                 }
                 set {
-                  snapshot = newValue.snapshot
+                  snapshot += newValue.snapshot
                 }
               }
             }
@@ -5346,7 +4844,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
               GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
             ]
 
@@ -5357,7 +4855,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
             }
 
             public var __typename: String {
@@ -5404,7 +4902,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
               public static let selections: [GraphQLSelection] = [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("nodes", type: .list(.object(Node.self))),
+                GraphQLField("nodes", type: .list(.object(Node.selections))),
                 GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
               ]
 
@@ -5415,7 +4913,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -5430,7 +4928,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
                 }
                 set {
                   snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -5595,7 +5093,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -5605,7 +5103,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -5620,7 +5118,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -5682,7 +5180,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -5692,7 +5190,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes])
+              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -5707,7 +5205,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -5765,30 +5263,49 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           }
         }
 
-        public struct AsPullRequest: GraphQLFragment {
+        public var asPullRequest: AsPullRequest? {
+          get {
+            if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
+            return AsPullRequest(snapshot: snapshot)
+          }
+          set {
+            guard let newValue = newValue else { return }
+            snapshot = newValue.snapshot
+          }
+        }
+
+        public struct AsPullRequest: GraphQLSelectionSet {
           public static let possibleTypes = ["PullRequest"]
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("timeline", arguments: ["last": Variable("page_size"), "before": Variable("before")], type: .nonNull(.object(Timeline.self))),
-            GraphQLField("milestone", type: .object(Milestone.self)),
+            GraphQLField("timeline", arguments: ["last": GraphQLVariable("page_size"), "before": GraphQLVariable("before")], type: .nonNull(.object(Timeline.selections))),
+            GraphQLField("reviewRequests", arguments: ["first": GraphQLVariable("page_size")], type: .object(ReviewRequest.selections)),
+            GraphQLField("milestone", type: .object(Milestone.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-            GraphQLField("author", type: .object(Author.self)),
-            GraphQLField("editor", type: .object(Editor.self)),
+            GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("author", type: .object(Author.selections)),
+            GraphQLField("editor", type: .object(Editor.selections)),
             GraphQLField("lastEditedAt", type: .scalar(String.self)),
             GraphQLField("body", type: .nonNull(.scalar(String.self))),
             GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("locked", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("closed", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.self)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-            GraphQLField("assignees", arguments: ["first": Variable("page_size")], type: .nonNull(.object(Assignee.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("assignees", arguments: ["first": GraphQLVariable("page_size")], type: .nonNull(.object(Assignee.selections))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
-            GraphQLField("reviewRequests", arguments: ["first": Variable("page_size")], type: .object(ReviewRequest.self)),
             GraphQLField("merged", type: .nonNull(.scalar(Bool.self))),
           ]
 
@@ -5798,8 +5315,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(timeline: Timeline, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String, reviewRequests: ReviewRequest? = nil, merged: Bool) {
-            self.init(snapshot: ["__typename": "PullRequest", "timeline": timeline, "milestone": milestone, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees, "number": number, "title": title, "reviewRequests": reviewRequests, "merged": merged])
+          public init(timeline: Timeline, reviewRequests: ReviewRequest? = nil, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String, merged: Bool) {
+            self.init(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { $0.snapshot }, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged])
           }
 
           public var __typename: String {
@@ -5821,10 +5338,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
+          /// A list of review requests associated with the pull request.
+          public var reviewRequests: ReviewRequest? {
+            get {
+              return (snapshot["reviewRequests"] as? Snapshot).flatMap { ReviewRequest(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "reviewRequests")
+            }
+          }
+
           /// Identifies the milestone associated with the pull request.
           public var milestone: Milestone? {
             get {
-              return (snapshot["milestone"]! as! Snapshot?).flatMap { Milestone(snapshot: $0) }
+              return (snapshot["milestone"] as? Snapshot).flatMap { Milestone(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "milestone")
@@ -5844,7 +5371,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
             }
             set {
               snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
@@ -5854,7 +5381,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The actor who authored the comment.
           public var author: Author? {
             get {
-              return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+              return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -5864,7 +5391,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The actor who edited this pull request's body.
           public var editor: Editor? {
             get {
-              return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+              return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -5874,7 +5401,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// The moment the editor made the last edit
           public var lastEditedAt: String? {
             get {
-              return snapshot["lastEditedAt"]! as! String?
+              return snapshot["lastEditedAt"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -5934,7 +5461,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of labels associated with the object.
           public var labels: Label? {
             get {
-              return (snapshot["labels"]! as! Snapshot?).flatMap { Label(snapshot: $0) }
+              return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "labels")
@@ -5951,6 +5478,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
+          /// ID of the object.
           public var id: GraphQLID {
             get {
               return snapshot["id"]! as! GraphQLID
@@ -5990,16 +5518,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
-          /// A list of review requests associated with the pull request.
-          public var reviewRequests: ReviewRequest? {
-            get {
-              return (snapshot["reviewRequests"]! as! Snapshot?).flatMap { ReviewRequest(snapshot: $0) }
-            }
-            set {
-              snapshot.updateValue(newValue?.snapshot, forKey: "reviewRequests")
-            }
-          }
-
           /// Whether or not the pull request was merged.
           public var merged: Bool {
             get {
@@ -6015,7 +5533,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               return Fragments(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
 
@@ -6027,7 +5545,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return ReactionFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6036,7 +5554,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return CommentFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6045,7 +5563,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return LockableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6054,7 +5572,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return ClosableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6063,7 +5581,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return LabelableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6072,7 +5590,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return UpdatableFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6081,7 +5599,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return NodeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -6090,7 +5608,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return AssigneeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
           }
@@ -6100,8 +5618,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -6111,7 +5629,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(pageInfo: PageInfo, nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "PullRequestTimelineConnection", "pageInfo": pageInfo, "nodes": nodes])
+              self.init(snapshot: ["__typename": "PullRequestTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -6136,7 +5654,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -6147,6 +5665,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["PageInfo"]
 
               public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("hasPreviousPage", type: .nonNull(.scalar(Bool.self))),
                 GraphQLField("startCursor", type: .scalar(String.self)),
@@ -6184,7 +5703,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// When paginating backwards, the cursor to continue.
               public var startCursor: String? {
                 get {
-                  return snapshot["startCursor"]! as! String?
+                  return snapshot["startCursor"] as? String
                 }
                 set {
                   snapshot.updateValue(newValue, forKey: "startCursor")
@@ -6196,7 +5715,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   return Fragments(snapshot: snapshot)
                 }
                 set {
-                  snapshot = newValue.snapshot
+                  snapshot += newValue.snapshot
                 }
               }
 
@@ -6208,7 +5727,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return HeadPaging(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
               }
@@ -6218,26 +5737,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               public static let possibleTypes = ["Commit", "CommitCommentThread", "PullRequestReview", "PullRequestReviewThread", "PullRequestReviewComment", "IssueComment", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "CrossReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent"]
 
               public static let selections: [GraphQLSelection] = [
-                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLFragmentSpread(AsCommit.self),
-                GraphQLFragmentSpread(AsIssueComment.self),
-                GraphQLFragmentSpread(AsLabeledEvent.self),
-                GraphQLFragmentSpread(AsUnlabeledEvent.self),
-                GraphQLFragmentSpread(AsClosedEvent.self),
-                GraphQLFragmentSpread(AsReopenedEvent.self),
-                GraphQLFragmentSpread(AsRenamedTitleEvent.self),
-                GraphQLFragmentSpread(AsLockedEvent.self),
-                GraphQLFragmentSpread(AsUnlockedEvent.self),
-                GraphQLFragmentSpread(AsMergedEvent.self),
-                GraphQLFragmentSpread(AsPullRequestReviewThread.self),
-                GraphQLFragmentSpread(AsPullRequestReview.self),
-                GraphQLFragmentSpread(AsReferencedEvent.self),
-                GraphQLFragmentSpread(AsAssignedEvent.self),
-                GraphQLFragmentSpread(AsUnassignedEvent.self),
-                GraphQLFragmentSpread(AsReviewRequestedEvent.self),
-                GraphQLFragmentSpread(AsReviewRequestRemovedEvent.self),
-                GraphQLFragmentSpread(AsMilestonedEvent.self),
-                GraphQLFragmentSpread(AsDemilestonedEvent.self),
+                GraphQLTypeCase(
+                  variants: ["Commit": AsCommit.selections, "IssueComment": AsIssueComment.selections, "LabeledEvent": AsLabeledEvent.selections, "UnlabeledEvent": AsUnlabeledEvent.selections, "ClosedEvent": AsClosedEvent.selections, "ReopenedEvent": AsReopenedEvent.selections, "RenamedTitleEvent": AsRenamedTitleEvent.selections, "LockedEvent": AsLockedEvent.selections, "UnlockedEvent": AsUnlockedEvent.selections, "MergedEvent": AsMergedEvent.selections, "PullRequestReviewThread": AsPullRequestReviewThread.selections, "PullRequestReview": AsPullRequestReview.selections, "ReferencedEvent": AsReferencedEvent.selections, "AssignedEvent": AsAssignedEvent.selections, "UnassignedEvent": AsUnassignedEvent.selections, "ReviewRequestedEvent": AsReviewRequestedEvent.selections, "ReviewRequestRemovedEvent": AsReviewRequestRemovedEvent.selections, "MilestonedEvent": AsMilestonedEvent.selections, "DemilestonedEvent": AsDemilestonedEvent.selections],
+                  default: [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  ]
+                )
               ]
 
               public var snapshot: Snapshot
@@ -6246,36 +5751,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
-                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author, "oid": oid, "messageHeadline": messageHeadline])
-              }
-
               public static func makeCommitCommentThread() -> Node {
                 return Node(snapshot: ["__typename": "CommitCommentThread"])
               }
 
-              public static func makePullRequestReview(id: GraphQLID, author: AsPullRequestReview.Author? = nil, editor: AsPullRequestReview.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, state: PullRequestReviewState, submittedAt: String? = nil) -> Node {
-                return Node(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt])
-              }
-
-              public static func makePullRequestReviewThread(comments: AsPullRequestReviewThread.Comment) -> Node {
-                return Node(snapshot: ["__typename": "PullRequestReviewThread", "comments": comments])
-              }
-
               public static func makePullRequestReviewComment() -> Node {
                 return Node(snapshot: ["__typename": "PullRequestReviewComment"])
-              }
-
-              public static func makeIssueComment(id: GraphQLID, author: AsIssueComment.Author? = nil, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) -> Node {
-                return Node(snapshot: ["__typename": "IssueComment", "id": id, "author": author, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
-              }
-
-              public static func makeClosedEvent(id: GraphQLID, createdAt: String, actor: AsClosedEvent.Actor? = nil, closedCommit: AsClosedEvent.ClosedCommit? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "createdAt": createdAt, "actor": actor, "closedCommit": closedCommit])
-              }
-
-              public static func makeReopenedEvent(id: GraphQLID, createdAt: String, actor: AsReopenedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "createdAt": createdAt, "actor": actor])
               }
 
               public static func makeSubscribedEvent() -> Node {
@@ -6286,52 +5767,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return Node(snapshot: ["__typename": "UnsubscribedEvent"])
               }
 
-              public static func makeMergedEvent(id: GraphQLID, createdAt: String, actor: AsMergedEvent.Actor? = nil, mergedCommit: AsMergedEvent.MergedCommit? = nil) -> Node {
-                return Node(snapshot: ["__typename": "MergedEvent", "id": id, "createdAt": createdAt, "actor": actor, "mergedCommit": mergedCommit])
-              }
-
-              public static func makeReferencedEvent(id: GraphQLID, createdAt: String, actor: AsReferencedEvent.Actor? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReferencedEvent", "id": id, "createdAt": createdAt, "actor": actor, "commitRepository": commitRepository, "subject": subject])
-              }
-
               public static func makeCrossReferencedEvent() -> Node {
                 return Node(snapshot: ["__typename": "CrossReferencedEvent"])
-              }
-
-              public static func makeAssignedEvent(id: GraphQLID, createdAt: String, actor: AsAssignedEvent.Actor? = nil, user: AsAssignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
-              }
-
-              public static func makeUnassignedEvent(id: GraphQLID, createdAt: String, actor: AsUnassignedEvent.Actor? = nil, user: AsUnassignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
-              }
-
-              public static func makeLabeledEvent(id: GraphQLID, createdAt: String, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label) -> Node {
-                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
-              }
-
-              public static func makeUnlabeledEvent(id: GraphQLID, createdAt: String, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label) -> Node {
-                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
-              }
-
-              public static func makeMilestonedEvent(id: GraphQLID, createdAt: String, actor: AsMilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
-              }
-
-              public static func makeDemilestonedEvent(id: GraphQLID, createdAt: String, actor: AsDemilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
-              }
-
-              public static func makeRenamedTitleEvent(id: GraphQLID, createdAt: String, actor: AsRenamedTitleEvent.Actor? = nil, currentTitle: String, previousTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "createdAt": createdAt, "actor": actor, "currentTitle": currentTitle, "previousTitle": previousTitle])
-              }
-
-              public static func makeLockedEvent(id: GraphQLID, createdAt: String, actor: AsLockedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
-              }
-
-              public static func makeUnlockedEvent(id: GraphQLID, createdAt: String, actor: AsUnlockedEvent.Actor? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
               }
 
               public static func makeDeployedEvent() -> Node {
@@ -6354,16 +5791,84 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return Node(snapshot: ["__typename": "BaseRefForcePushedEvent"])
               }
 
+              public static func makeReviewDismissedEvent() -> Node {
+                return Node(snapshot: ["__typename": "ReviewDismissedEvent"])
+              }
+
+              public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
+                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+              }
+
+              public static func makeIssueComment(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, author: AsIssueComment.Author? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) -> Node {
+                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
+              }
+
+              public static func makeLabeledEvent(id: GraphQLID, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+              }
+
+              public static func makeUnlabeledEvent(id: GraphQLID, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+              }
+
+              public static func makeClosedEvent(id: GraphQLID, closedCommit: AsClosedEvent.ClosedCommit? = nil, actor: AsClosedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeReopenedEvent(id: GraphQLID, actor: AsReopenedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeRenamedTitleEvent(id: GraphQLID, actor: AsRenamedTitleEvent.Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) -> Node {
+                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+              }
+
+              public static func makeLockedEvent(id: GraphQLID, actor: AsLockedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeUnlockedEvent(id: GraphQLID, actor: AsUnlockedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makeMergedEvent(id: GraphQLID, mergedCommit: AsMergedEvent.MergedCommit? = nil, actor: AsMergedEvent.Actor? = nil, createdAt: String) -> Node {
+                return Node(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+              }
+
+              public static func makePullRequestReviewThread(comments: AsPullRequestReviewThread.Comment) -> Node {
+                return Node(snapshot: ["__typename": "PullRequestReviewThread", "comments": comments.snapshot])
+              }
+
+              public static func makePullRequestReview(id: GraphQLID, author: AsPullRequestReview.Author? = nil, editor: AsPullRequestReview.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, state: PullRequestReviewState, submittedAt: String? = nil) -> Node {
+                return Node(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt])
+              }
+
+              public static func makeReferencedEvent(createdAt: String, id: GraphQLID, actor: AsReferencedEvent.Actor? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
+                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
+              }
+
+              public static func makeAssignedEvent(id: GraphQLID, createdAt: String, actor: AsAssignedEvent.Actor? = nil, user: AsAssignedEvent.User? = nil) -> Node {
+                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+              }
+
+              public static func makeUnassignedEvent(id: GraphQLID, createdAt: String, actor: AsUnassignedEvent.Actor? = nil, user: AsUnassignedEvent.User? = nil) -> Node {
+                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+              }
+
               public static func makeReviewRequestedEvent(id: GraphQLID, createdAt: String, actor: AsReviewRequestedEvent.Actor? = nil, subject: AsReviewRequestedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor, "subject": subject])
+                return Node(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "subject": subject.snapshot])
               }
 
               public static func makeReviewRequestRemovedEvent(id: GraphQLID, createdAt: String, actor: AsReviewRequestRemovedEvent.Actor? = nil, subject: AsReviewRequestRemovedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor, "subject": subject])
+                return Node(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "subject": subject.snapshot])
               }
 
-              public static func makeReviewDismissedEvent() -> Node {
-                return Node(snapshot: ["__typename": "ReviewDismissedEvent"])
+              public static func makeMilestonedEvent(id: GraphQLID, createdAt: String, actor: AsMilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
+                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+              }
+
+              public static func makeDemilestonedEvent(id: GraphQLID, createdAt: String, actor: AsDemilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
+                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public var __typename: String {
@@ -6386,211 +5891,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public var asIssueComment: AsIssueComment? {
-                get {
-                  if !AsIssueComment.possibleTypes.contains(__typename) { return nil }
-                  return AsIssueComment(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asLabeledEvent: AsLabeledEvent? {
-                get {
-                  if !AsLabeledEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsLabeledEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnlabeledEvent: AsUnlabeledEvent? {
-                get {
-                  if !AsUnlabeledEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnlabeledEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asClosedEvent: AsClosedEvent? {
-                get {
-                  if !AsClosedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsClosedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReopenedEvent: AsReopenedEvent? {
-                get {
-                  if !AsReopenedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReopenedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asRenamedTitleEvent: AsRenamedTitleEvent? {
-                get {
-                  if !AsRenamedTitleEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsRenamedTitleEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asLockedEvent: AsLockedEvent? {
-                get {
-                  if !AsLockedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsLockedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnlockedEvent: AsUnlockedEvent? {
-                get {
-                  if !AsUnlockedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnlockedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asMergedEvent: AsMergedEvent? {
-                get {
-                  if !AsMergedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsMergedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asPullRequestReviewThread: AsPullRequestReviewThread? {
-                get {
-                  if !AsPullRequestReviewThread.possibleTypes.contains(__typename) { return nil }
-                  return AsPullRequestReviewThread(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asPullRequestReview: AsPullRequestReview? {
-                get {
-                  if !AsPullRequestReview.possibleTypes.contains(__typename) { return nil }
-                  return AsPullRequestReview(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReferencedEvent: AsReferencedEvent? {
-                get {
-                  if !AsReferencedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReferencedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asAssignedEvent: AsAssignedEvent? {
-                get {
-                  if !AsAssignedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsAssignedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asUnassignedEvent: AsUnassignedEvent? {
-                get {
-                  if !AsUnassignedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsUnassignedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReviewRequestedEvent: AsReviewRequestedEvent? {
-                get {
-                  if !AsReviewRequestedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReviewRequestedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asReviewRequestRemovedEvent: AsReviewRequestRemovedEvent? {
-                get {
-                  if !AsReviewRequestRemovedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsReviewRequestRemovedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asMilestonedEvent: AsMilestonedEvent? {
-                get {
-                  if !AsMilestonedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsMilestonedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public var asDemilestonedEvent: AsDemilestonedEvent? {
-                get {
-                  if !AsDemilestonedEvent.possibleTypes.contains(__typename) { return nil }
-                  return AsDemilestonedEvent(snapshot: snapshot)
-                }
-                set {
-                  guard let newValue = newValue else { return }
-                  snapshot = newValue.snapshot
-                }
-              }
-
-              public struct AsCommit: GraphQLFragment {
+              public struct AsCommit: GraphQLSelectionSet {
                 public static let possibleTypes = ["Commit"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                  GraphQLField("author", type: .object(Author.self)),
+                  GraphQLField("author", type: .object(Author.selections)),
                   GraphQLField("oid", type: .nonNull(.scalar(String.self))),
                   GraphQLField("messageHeadline", type: .nonNull(.scalar(String.self))),
                 ]
@@ -6602,7 +5910,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, oid: String, messageHeadline: String) {
-                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author, "oid": oid, "messageHeadline": messageHeadline])
+                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
                 }
 
                 public var __typename: String {
@@ -6614,6 +5922,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -6626,7 +5935,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Authorship details of the commit.
                 public var author: Author? {
                   get {
-                    return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+                    return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -6658,7 +5967,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -6670,7 +5979,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -6680,7 +5989,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("user", type: .object(User.self)),
+                    GraphQLField("user", type: .object(User.selections)),
                   ]
 
                   public var snapshot: Snapshot
@@ -6690,7 +5999,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(user: User? = nil) {
-                    self.init(snapshot: ["__typename": "GitActor", "user": user])
+                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { $0.snapshot }])
                   }
 
                   public var __typename: String {
@@ -6705,7 +6014,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   /// The GitHub user corresponding to the email field. Null if no such user exists.
                   public var user: User? {
                     get {
-                      return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                      return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                     }
                     set {
                       snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -6763,20 +6072,35 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsIssueComment: GraphQLFragment {
+              public var asIssueComment: AsIssueComment? {
+                get {
+                  if !AsIssueComment.possibleTypes.contains(__typename) { return nil }
+                  return AsIssueComment(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsIssueComment: GraphQLSelectionSet {
                 public static let possibleTypes = ["IssueComment"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                  GraphQLField("author", type: .object(Author.self)),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-                  GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-                  GraphQLField("editor", type: .object(Editor.self)),
+                  GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("author", type: .object(Author.selections)),
+                  GraphQLField("editor", type: .object(Editor.selections)),
                   GraphQLField("lastEditedAt", type: .scalar(String.self)),
                   GraphQLField("body", type: .nonNull(.scalar(String.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
                 ]
 
@@ -6786,8 +6110,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, author: Author? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) {
-                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "author": author, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
+                public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool) {
+                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate])
                 }
 
                 public var __typename: String {
@@ -6799,22 +6123,13 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
-                  }
-                }
-
-                /// The actor who authored the comment.
-                public var author: Author? {
-                  get {
-                    return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "author")
                   }
                 }
 
@@ -6831,17 +6146,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// A list of reactions grouped by content left on the subject.
                 public var reactionGroups: [ReactionGroup]? {
                   get {
-                    return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
                   }
                   set {
                     snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
                   }
                 }
 
+                /// The actor who authored the comment.
+                public var author: Author? {
+                  get {
+                    return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "author")
+                  }
+                }
+
                 /// The actor who edited the comment.
                 public var editor: Editor? {
                   get {
-                    return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+                    return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -6851,7 +6176,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// The moment the editor made the last edit
                 public var lastEditedAt: String? {
                   get {
-                    return snapshot["lastEditedAt"]! as! String?
+                    return snapshot["lastEditedAt"] as? String
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -6903,7 +6228,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -6915,7 +6240,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -6924,7 +6249,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return ReactionFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -6933,7 +6258,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return CommentFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -6942,7 +6267,154 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return UpdatableFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
+                    }
+                  }
+                }
+
+                public struct ReactionGroup: GraphQLSelectionSet {
+                  public static let possibleTypes = ["ReactionGroup"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
+                    GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
+                    GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
+                    self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// Whether or not the authenticated user has left a reaction on the subject.
+                  public var viewerHasReacted: Bool {
+                    get {
+                      return snapshot["viewerHasReacted"]! as! Bool
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "viewerHasReacted")
+                    }
+                  }
+
+                  /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
+                  public var users: User {
+                    get {
+                      return User(snapshot: snapshot["users"]! as! Snapshot)
+                    }
+                    set {
+                      snapshot.updateValue(newValue.snapshot, forKey: "users")
+                    }
+                  }
+
+                  /// Identifies the emoji reaction.
+                  public var content: ReactionContent {
+                    get {
+                      return snapshot["content"]! as! ReactionContent
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "content")
+                    }
+                  }
+
+                  public struct User: GraphQLSelectionSet {
+                    public static let possibleTypes = ["ReactingUserConnection"]
+
+                    public static let selections: [GraphQLSelection] = [
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      GraphQLField("nodes", type: .list(.object(Node.selections))),
+                      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+                    ]
+
+                    public var snapshot: Snapshot
+
+                    public init(snapshot: Snapshot) {
+                      self.snapshot = snapshot
+                    }
+
+                    public init(nodes: [Node?]? = nil, totalCount: Int) {
+                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                    }
+
+                    public var __typename: String {
+                      get {
+                        return snapshot["__typename"]! as! String
+                      }
+                      set {
+                        snapshot.updateValue(newValue, forKey: "__typename")
+                      }
+                    }
+
+                    /// A list of nodes.
+                    public var nodes: [Node?]? {
+                      get {
+                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                      }
+                      set {
+                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                      }
+                    }
+
+                    /// Identifies the total count of items in the connection.
+                    public var totalCount: Int {
+                      get {
+                        return snapshot["totalCount"]! as! Int
+                      }
+                      set {
+                        snapshot.updateValue(newValue, forKey: "totalCount")
+                      }
+                    }
+
+                    public struct Node: GraphQLSelectionSet {
+                      public static let possibleTypes = ["User"]
+
+                      public static let selections: [GraphQLSelection] = [
+                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                      ]
+
+                      public var snapshot: Snapshot
+
+                      public init(snapshot: Snapshot) {
+                        self.snapshot = snapshot
+                      }
+
+                      public init(login: String) {
+                        self.init(snapshot: ["__typename": "User", "login": login])
+                      }
+
+                      public var __typename: String {
+                        get {
+                          return snapshot["__typename"]! as! String
+                        }
+                        set {
+                          snapshot.updateValue(newValue, forKey: "__typename")
+                        }
+                      }
+
+                      /// The username used to login.
+                      public var login: String {
+                        get {
+                          return snapshot["login"]! as! String
+                        }
+                        set {
+                          snapshot.updateValue(newValue, forKey: "login")
+                        }
+                      }
                     }
                   }
                 }
@@ -7004,153 +6476,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                public struct ReactionGroup: GraphQLSelectionSet {
-                  public static let possibleTypes = ["ReactionGroup"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-                    GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
-                    GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-                    self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// Whether or not the authenticated user has left a reaction on the subject.
-                  public var viewerHasReacted: Bool {
-                    get {
-                      return snapshot["viewerHasReacted"]! as! Bool
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "viewerHasReacted")
-                    }
-                  }
-
-                  /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
-                  public var users: User {
-                    get {
-                      return User(snapshot: snapshot["users"]! as! Snapshot)
-                    }
-                    set {
-                      snapshot.updateValue(newValue.snapshot, forKey: "users")
-                    }
-                  }
-
-                  /// Identifies the emoji reaction.
-                  public var content: ReactionContent {
-                    get {
-                      return snapshot["content"]! as! ReactionContent
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "content")
-                    }
-                  }
-
-                  public struct User: GraphQLSelectionSet {
-                    public static let possibleTypes = ["ReactingUserConnection"]
-
-                    public static let selections: [GraphQLSelection] = [
-                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                      GraphQLField("nodes", type: .list(.object(Node.self))),
-                      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
-                    ]
-
-                    public var snapshot: Snapshot
-
-                    public init(snapshot: Snapshot) {
-                      self.snapshot = snapshot
-                    }
-
-                    public init(nodes: [Node?]? = nil, totalCount: Int) {
-                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
-                    }
-
-                    public var __typename: String {
-                      get {
-                        return snapshot["__typename"]! as! String
-                      }
-                      set {
-                        snapshot.updateValue(newValue, forKey: "__typename")
-                      }
-                    }
-
-                    /// A list of nodes.
-                    public var nodes: [Node?]? {
-                      get {
-                        return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-                      }
-                      set {
-                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-                      }
-                    }
-
-                    /// Identifies the total count of items in the connection.
-                    public var totalCount: Int {
-                      get {
-                        return snapshot["totalCount"]! as! Int
-                      }
-                      set {
-                        snapshot.updateValue(newValue, forKey: "totalCount")
-                      }
-                    }
-
-                    public struct Node: GraphQLSelectionSet {
-                      public static let possibleTypes = ["User"]
-
-                      public static let selections: [GraphQLSelection] = [
-                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                        GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                      ]
-
-                      public var snapshot: Snapshot
-
-                      public init(snapshot: Snapshot) {
-                        self.snapshot = snapshot
-                      }
-
-                      public init(login: String) {
-                        self.init(snapshot: ["__typename": "User", "login": login])
-                      }
-
-                      public var __typename: String {
-                        get {
-                          return snapshot["__typename"]! as! String
-                        }
-                        set {
-                          snapshot.updateValue(newValue, forKey: "__typename")
-                        }
-                      }
-
-                      /// The username used to login.
-                      public var login: String {
-                        get {
-                          return snapshot["login"]! as! String
-                        }
-                        set {
-                          snapshot.updateValue(newValue, forKey: "login")
-                        }
-                      }
-                    }
-                  }
-                }
-
                 public struct Editor: GraphQLSelectionSet {
                   public static let possibleTypes = ["Organization", "User", "Bot"]
 
@@ -7198,15 +6523,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsLabeledEvent: GraphQLFragment {
+              public var asLabeledEvent: AsLabeledEvent? {
+                get {
+                  if !AsLabeledEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsLabeledEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsLabeledEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["LabeledEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("label", type: .nonNull(.object(Label.selections))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("label", type: .nonNull(.object(Label.self))),
                 ]
 
                 public var snapshot: Snapshot
@@ -7215,8 +6552,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, label: Label) {
-                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
+                public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
+                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7228,6 +6565,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -7237,20 +6575,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the date and time when the object was created.
-                public var createdAt: String {
-                  get {
-                    return snapshot["createdAt"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -7267,12 +6595,22 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// Identifies the date and time when the object was created.
+                public var createdAt: String {
+                  get {
+                    return snapshot["createdAt"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "createdAt")
+                  }
+                }
+
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -7284,7 +6622,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -7385,15 +6723,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnlabeledEvent: GraphQLFragment {
+              public var asUnlabeledEvent: AsUnlabeledEvent? {
+                get {
+                  if !AsUnlabeledEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnlabeledEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnlabeledEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnlabeledEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("label", type: .nonNull(.object(Label.selections))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("label", type: .nonNull(.object(Label.self))),
                 ]
 
                 public var snapshot: Snapshot
@@ -7402,8 +6752,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, label: Label) {
-                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "createdAt": createdAt, "actor": actor, "label": label])
+                public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
+                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7415,6 +6765,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -7424,20 +6775,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the date and time when the object was created.
-                public var createdAt: String {
-                  get {
-                    return snapshot["createdAt"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -7454,12 +6795,22 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// Identifies the date and time when the object was created.
+                public var createdAt: String {
+                  get {
+                    return snapshot["createdAt"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "createdAt")
+                  }
+                }
+
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -7471,7 +6822,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -7572,15 +6923,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsClosedEvent: GraphQLFragment {
+              public var asClosedEvent: AsClosedEvent? {
+                get {
+                  if !AsClosedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsClosedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsClosedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ClosedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("commit", alias: "closedCommit", type: .object(ClosedCommit.selections)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("commit", alias: "closedCommit", type: .object(ClosedCommit.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -7589,8 +6952,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, closedCommit: ClosedCommit? = nil) {
-                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "createdAt": createdAt, "actor": actor, "closedCommit": closedCommit])
+                public init(id: GraphQLID, closedCommit: ClosedCommit? = nil, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7602,12 +6965,33 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the commit associated with the 'closed' event.
+                public var closedCommit: ClosedCommit? {
+                  get {
+                    return (snapshot["closedCommit"] as? Snapshot).flatMap { ClosedCommit(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "closedCommit")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -7621,32 +7005,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
-                /// Identifies the commit associated with the 'closed' event.
-                public var closedCommit: ClosedCommit? {
-                  get {
-                    return (snapshot["closedCommit"]! as! Snapshot?).flatMap { ClosedCommit(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "closedCommit")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -7658,53 +7022,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
-                    }
-                  }
-                }
-
-                public struct Actor: GraphQLSelectionSet {
-                  public static let possibleTypes = ["Organization", "User", "Bot"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public static func makeOrganization(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Organization", "login": login])
-                  }
-
-                  public static func makeUser(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "User", "login": login])
-                  }
-
-                  public static func makeBot(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Bot", "login": login])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// The username of the actor.
-                  public var login: String {
-                    get {
-                      return snapshot["login"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "login")
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -7746,16 +7064,74 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
                 }
+
+                public struct Actor: GraphQLSelectionSet {
+                  public static let possibleTypes = ["Organization", "User", "Bot"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public static func makeOrganization(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Organization", "login": login])
+                  }
+
+                  public static func makeUser(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "User", "login": login])
+                  }
+
+                  public static func makeBot(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Bot", "login": login])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// The username of the actor.
+                  public var login: String {
+                    get {
+                      return snapshot["login"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "login")
+                    }
+                  }
+                }
               }
 
-              public struct AsReopenedEvent: GraphQLFragment {
+              public var asReopenedEvent: AsReopenedEvent? {
+                get {
+                  if !AsReopenedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReopenedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReopenedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReopenedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -7764,8 +7140,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7777,12 +7153,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -7796,22 +7183,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -7823,7 +7200,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -7875,16 +7252,33 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsRenamedTitleEvent: GraphQLFragment {
+              public var asRenamedTitleEvent: AsRenamedTitleEvent? {
+                get {
+                  if !AsRenamedTitleEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsRenamedTitleEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsRenamedTitleEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["RenamedTitleEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("currentTitle", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                   GraphQLField("currentTitle", type: .nonNull(.scalar(String.self))),
                   GraphQLField("previousTitle", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -7893,8 +7287,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, currentTitle: String, previousTitle: String) {
-                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "createdAt": createdAt, "actor": actor, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) {
+                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
                 }
 
                 public var __typename: String {
@@ -7906,12 +7300,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -7922,16 +7327,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -7960,7 +7355,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -7972,7 +7367,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -7981,6 +7376,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public static let possibleTypes = ["Organization", "User", "Bot"]
 
                   public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("login", type: .nonNull(.scalar(String.self))),
                   ]
@@ -8024,14 +7421,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsLockedEvent: GraphQLFragment {
+              public var asLockedEvent: AsLockedEvent? {
+                get {
+                  if !AsLockedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsLockedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsLockedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["LockedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -8040,8 +7449,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8053,12 +7462,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -8072,22 +7492,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -8099,7 +7509,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -8151,14 +7561,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnlockedEvent: GraphQLFragment {
+              public var asUnlockedEvent: AsUnlockedEvent? {
+                get {
+                  if !AsUnlockedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnlockedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnlockedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnlockedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -8167,8 +7589,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil) {
-                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "createdAt": createdAt, "actor": actor])
+                public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8180,12 +7602,23 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
@@ -8199,22 +7632,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
-                  }
-                }
-
                 public var fragments: Fragments {
                   get {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -8226,7 +7649,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -8278,15 +7701,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsMergedEvent: GraphQLFragment {
+              public var asMergedEvent: AsMergedEvent? {
+                get {
+                  if !AsMergedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsMergedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsMergedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["MergedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("commit", alias: "mergedCommit", type: .object(MergedCommit.selections)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("commit", alias: "mergedCommit", type: .object(MergedCommit.self)),
                 ]
 
                 public var snapshot: Snapshot
@@ -8295,8 +7730,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, mergedCommit: MergedCommit? = nil) {
-                  self.init(snapshot: ["__typename": "MergedEvent", "id": id, "createdAt": createdAt, "actor": actor, "mergedCommit": mergedCommit])
+                public init(id: GraphQLID, mergedCommit: MergedCommit? = nil, actor: Actor? = nil, createdAt: String) {
+                  self.init(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8308,42 +7743,43 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "id")
-                  }
-                }
-
-                /// Identifies the date and time when the object was created.
-                public var createdAt: String {
-                  get {
-                    return snapshot["createdAt"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "createdAt")
-                  }
-                }
-
-                /// Identifies the actor who performed the event.
-                public var actor: Actor? {
-                  get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
-                  }
-                  set {
-                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
                   }
                 }
 
                 /// Identifies the commit associated with the `merge` event.
                 public var mergedCommit: MergedCommit? {
                   get {
-                    return (snapshot["mergedCommit"]! as! Snapshot?).flatMap { MergedCommit(snapshot: $0) }
+                    return (snapshot["mergedCommit"] as? Snapshot).flatMap { MergedCommit(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "mergedCommit")
+                  }
+                }
+
+                /// Identifies the actor who performed the event.
+                public var actor: Actor? {
+                  get {
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
+                  }
+                  set {
+                    snapshot.updateValue(newValue?.snapshot, forKey: "actor")
+                  }
+                }
+
+                /// Identifies the date and time when the object was created.
+                public var createdAt: String {
+                  get {
+                    return snapshot["createdAt"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "createdAt")
                   }
                 }
 
@@ -8352,7 +7788,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -8364,53 +7800,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
-                    }
-                  }
-                }
-
-                public struct Actor: GraphQLSelectionSet {
-                  public static let possibleTypes = ["Organization", "User", "Bot"]
-
-                  public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                  ]
-
-                  public var snapshot: Snapshot
-
-                  public init(snapshot: Snapshot) {
-                    self.snapshot = snapshot
-                  }
-
-                  public static func makeOrganization(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Organization", "login": login])
-                  }
-
-                  public static func makeUser(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "User", "login": login])
-                  }
-
-                  public static func makeBot(login: String) -> Actor {
-                    return Actor(snapshot: ["__typename": "Bot", "login": login])
-                  }
-
-                  public var __typename: String {
-                    get {
-                      return snapshot["__typename"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "__typename")
-                    }
-                  }
-
-                  /// The username of the actor.
-                  public var login: String {
-                    get {
-                      return snapshot["login"]! as! String
-                    }
-                    set {
-                      snapshot.updateValue(newValue, forKey: "login")
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -8452,14 +7842,71 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
                 }
+
+                public struct Actor: GraphQLSelectionSet {
+                  public static let possibleTypes = ["Organization", "User", "Bot"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public static func makeOrganization(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Organization", "login": login])
+                  }
+
+                  public static func makeUser(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "User", "login": login])
+                  }
+
+                  public static func makeBot(login: String) -> Actor {
+                    return Actor(snapshot: ["__typename": "Bot", "login": login])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  /// The username of the actor.
+                  public var login: String {
+                    get {
+                      return snapshot["login"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "login")
+                    }
+                  }
+                }
               }
 
-              public struct AsPullRequestReviewThread: GraphQLFragment {
+              public var asPullRequestReviewThread: AsPullRequestReviewThread? {
+                get {
+                  if !AsPullRequestReviewThread.possibleTypes.contains(__typename) { return nil }
+                  return AsPullRequestReviewThread(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsPullRequestReviewThread: GraphQLSelectionSet {
                 public static let possibleTypes = ["PullRequestReviewThread"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("comments", arguments: ["first": Variable("page_size")], type: .nonNull(.object(Comment.self))),
+                  GraphQLField("comments", arguments: ["first": GraphQLVariable("page_size")], type: .nonNull(.object(Comment.selections))),
                 ]
 
                 public var snapshot: Snapshot
@@ -8469,7 +7916,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(comments: Comment) {
-                  self.init(snapshot: ["__typename": "PullRequestReviewThread", "comments": comments])
+                  self.init(snapshot: ["__typename": "PullRequestReviewThread", "comments": comments.snapshot])
                 }
 
                 public var __typename: String {
@@ -8496,7 +7943,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("nodes", type: .list(.object(Node.self))),
+                    GraphQLField("nodes", type: .list(.object(Node.selections))),
                   ]
 
                   public var snapshot: Snapshot
@@ -8506,7 +7953,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(nodes: [Node?]? = nil) {
-                    self.init(snapshot: ["__typename": "PullRequestReviewCommentConnection", "nodes": nodes])
+                    self.init(snapshot: ["__typename": "PullRequestReviewCommentConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
                   }
 
                   public var __typename: String {
@@ -8521,7 +7968,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   /// A list of nodes.
                   public var nodes: [Node?]? {
                     get {
-                      return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                      return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
                     }
                     set {
                       snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -8533,11 +7980,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                     public static let selections: [GraphQLSelection] = [
                       GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                       GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-                      GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
+                      GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                       GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                      GraphQLField("author", type: .object(Author.self)),
-                      GraphQLField("editor", type: .object(Editor.self)),
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      GraphQLField("author", type: .object(Author.selections)),
+                      GraphQLField("editor", type: .object(Editor.selections)),
                       GraphQLField("lastEditedAt", type: .scalar(String.self)),
                       GraphQLField("body", type: .nonNull(.scalar(String.self))),
                       GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
@@ -8553,7 +8003,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
 
                     public init(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, id: GraphQLID, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, path: String, diffHunk: String) {
-                      self.init(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups, "id": id, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "path": path, "diffHunk": diffHunk])
+                      self.init(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "path": path, "diffHunk": diffHunk])
                     }
 
                     public var __typename: String {
@@ -8578,13 +8028,14 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// A list of reactions grouped by content left on the subject.
                     public var reactionGroups: [ReactionGroup]? {
                       get {
-                        return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                        return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
                       }
                       set {
                         snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
                       }
                     }
 
+                    /// ID of the object.
                     public var id: GraphQLID {
                       get {
                         return snapshot["id"]! as! GraphQLID
@@ -8597,7 +8048,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// The actor who authored the comment.
                     public var author: Author? {
                       get {
-                        return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+                        return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
                       }
                       set {
                         snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -8607,7 +8058,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// The actor who edited the comment.
                     public var editor: Editor? {
                       get {
-                        return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+                        return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
                       }
                       set {
                         snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -8617,7 +8068,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// The moment the editor made the last edit
                     public var lastEditedAt: String? {
                       get {
-                        return snapshot["lastEditedAt"]! as! String?
+                        return snapshot["lastEditedAt"] as? String
                       }
                       set {
                         snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -8679,7 +8130,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         return Fragments(snapshot: snapshot)
                       }
                       set {
-                        snapshot = newValue.snapshot
+                        snapshot += newValue.snapshot
                       }
                     }
 
@@ -8691,7 +8142,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                           return ReactionFields(snapshot: snapshot)
                         }
                         set {
-                          snapshot = newValue.snapshot
+                          snapshot += newValue.snapshot
                         }
                       }
 
@@ -8700,7 +8151,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                           return NodeFields(snapshot: snapshot)
                         }
                         set {
-                          snapshot = newValue.snapshot
+                          snapshot += newValue.snapshot
                         }
                       }
 
@@ -8709,7 +8160,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                           return CommentFields(snapshot: snapshot)
                         }
                         set {
-                          snapshot = newValue.snapshot
+                          snapshot += newValue.snapshot
                         }
                       }
                     }
@@ -8720,7 +8171,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       public static let selections: [GraphQLSelection] = [
                         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                         GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-                        GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+                        GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
                         GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
                       ]
 
@@ -8731,7 +8182,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       }
 
                       public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-                        self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+                        self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
                       }
 
                       public var __typename: String {
@@ -8778,7 +8229,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                         public static let selections: [GraphQLSelection] = [
                           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                          GraphQLField("nodes", type: .list(.object(Node.self))),
+                          GraphQLField("nodes", type: .list(.object(Node.selections))),
                           GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
                         ]
 
@@ -8789,7 +8240,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         }
 
                         public init(nodes: [Node?]? = nil, totalCount: Int) {
-                          self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+                          self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
                         }
 
                         public var __typename: String {
@@ -8804,7 +8255,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         /// A list of nodes.
                         public var nodes: [Node?]? {
                           get {
-                            return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
                           }
                           set {
                             snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -8967,20 +8418,34 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsPullRequestReview: GraphQLFragment {
+              public var asPullRequestReview: AsPullRequestReview? {
+                get {
+                  if !AsPullRequestReview.possibleTypes.contains(__typename) { return nil }
+                  return AsPullRequestReview(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsPullRequestReview: GraphQLSelectionSet {
                 public static let possibleTypes = ["PullRequestReview"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                  GraphQLField("author", type: .object(Author.self)),
-                  GraphQLField("editor", type: .object(Editor.self)),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("author", type: .object(Author.selections)),
+                  GraphQLField("editor", type: .object(Editor.selections)),
                   GraphQLField("lastEditedAt", type: .scalar(String.self)),
                   GraphQLField("body", type: .nonNull(.scalar(String.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
                   GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
                   GraphQLField("state", type: .nonNull(.scalar(PullRequestReviewState.self))),
                   GraphQLField("submittedAt", type: .scalar(String.self)),
+                  GraphQLField("author", type: .object(Author.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -8990,7 +8455,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, state: PullRequestReviewState, submittedAt: String? = nil) {
-                  self.init(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt])
+                  self.init(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt])
                 }
 
                 public var __typename: String {
@@ -9002,6 +8467,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -9014,7 +8480,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// The actor who authored the comment.
                 public var author: Author? {
                   get {
-                    return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+                    return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "author")
@@ -9024,7 +8490,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// The actor who edited the comment.
                 public var editor: Editor? {
                   get {
-                    return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
+                    return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "editor")
@@ -9034,7 +8500,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// The moment the editor made the last edit
                 public var lastEditedAt: String? {
                   get {
-                    return snapshot["lastEditedAt"]! as! String?
+                    return snapshot["lastEditedAt"] as? String
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "lastEditedAt")
@@ -9084,7 +8550,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies when the Pull Request Review was submitted
                 public var submittedAt: String? {
                   get {
-                    return snapshot["submittedAt"]! as! String?
+                    return snapshot["submittedAt"] as? String
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "submittedAt")
@@ -9096,7 +8562,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -9108,7 +8574,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -9117,7 +8583,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return CommentFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -9129,6 +8595,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("login", type: .nonNull(.scalar(String.self))),
                     GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("login", type: .nonNull(.scalar(String.self))),
                   ]
 
                   public var snapshot: Snapshot
@@ -9226,16 +8694,28 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsReferencedEvent: GraphQLFragment {
+              public var asReferencedEvent: AsReferencedEvent? {
+                get {
+                  if !AsReferencedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReferencedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReferencedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReferencedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("commitRepository", type: .nonNull(.object(CommitRepository.self))),
-                  GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("commitRepository", type: .nonNull(.object(CommitRepository.selections))),
+                  GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
                 ]
 
                 public var snapshot: Snapshot
@@ -9244,8 +8724,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, commitRepository: CommitRepository, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReferencedEvent", "id": id, "createdAt": createdAt, "actor": actor, "commitRepository": commitRepository, "subject": subject])
+                public init(createdAt: String, id: GraphQLID, actor: Actor? = nil, commitRepository: CommitRepository, subject: Subject) {
+                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -9254,15 +8734,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                   set {
                     snapshot.updateValue(newValue, forKey: "__typename")
-                  }
-                }
-
-                public var id: GraphQLID {
-                  get {
-                    return snapshot["id"]! as! GraphQLID
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "id")
                   }
                 }
 
@@ -9276,10 +8747,20 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
+                public var id: GraphQLID {
+                  get {
+                    return snapshot["id"]! as! GraphQLID
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "id")
+                  }
+                }
+
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -9311,7 +8792,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -9323,7 +8804,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -9379,8 +8860,9 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
                   public static let selections: [GraphQLSelection] = [
                     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                     GraphQLField("name", type: .nonNull(.scalar(String.self))),
-                    GraphQLField("owner", type: .nonNull(.object(Owner.self))),
+                    GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
                   ]
 
                   public var snapshot: Snapshot
@@ -9390,7 +8872,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(name: String, owner: Owner) {
-                    self.init(snapshot: ["__typename": "Repository", "name": name, "owner": owner])
+                    self.init(snapshot: ["__typename": "Repository", "name": name, "owner": owner.snapshot])
                   }
 
                   public var __typename: String {
@@ -9427,7 +8909,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return Fragments(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
 
@@ -9439,7 +8921,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         return ReferencedRepositoryFields(snapshot: snapshot)
                       }
                       set {
-                        snapshot = newValue.snapshot
+                        snapshot += newValue.snapshot
                       }
                     }
                   }
@@ -9491,9 +8973,12 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   public static let possibleTypes = ["Issue", "PullRequest"]
 
                   public static let selections: [GraphQLSelection] = [
-                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                    GraphQLFragmentSpread(AsIssue.self),
-                    GraphQLFragmentSpread(AsPullRequest.self),
+                    GraphQLTypeCase(
+                      variants: ["Issue": AsIssue.selections, "PullRequest": AsPullRequest.selections],
+                      default: [
+                        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      ]
+                    )
                   ]
 
                   public var snapshot: Snapshot
@@ -9530,18 +9015,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
 
-                  public var asPullRequest: AsPullRequest? {
-                    get {
-                      if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
-                      return AsPullRequest(snapshot: snapshot)
-                    }
-                    set {
-                      guard let newValue = newValue else { return }
-                      snapshot = newValue.snapshot
-                    }
-                  }
-
-                  public struct AsIssue: GraphQLFragment {
+                  public struct AsIssue: GraphQLSelectionSet {
                     public static let possibleTypes = ["Issue"]
 
                     public static let selections: [GraphQLSelection] = [
@@ -9601,7 +9075,18 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
                   }
 
-                  public struct AsPullRequest: GraphQLFragment {
+                  public var asPullRequest: AsPullRequest? {
+                    get {
+                      if !AsPullRequest.possibleTypes.contains(__typename) { return nil }
+                      return AsPullRequest(snapshot: snapshot)
+                    }
+                    set {
+                      guard let newValue = newValue else { return }
+                      snapshot = newValue.snapshot
+                    }
+                  }
+
+                  public struct AsPullRequest: GraphQLSelectionSet {
                     public static let possibleTypes = ["PullRequest"]
 
                     public static let selections: [GraphQLSelection] = [
@@ -9674,15 +9159,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsAssignedEvent: GraphQLFragment {
+              public var asAssignedEvent: AsAssignedEvent? {
+                get {
+                  if !AsAssignedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsAssignedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsAssignedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["AssignedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("user", type: .object(User.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("user", type: .object(User.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -9692,7 +9189,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
+                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
                 }
 
                 public var __typename: String {
@@ -9704,6 +9201,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -9726,7 +9224,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -9736,7 +9234,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the user who was assigned.
                 public var user: User? {
                   get {
-                    return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                    return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -9748,7 +9246,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -9760,7 +9258,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -9850,15 +9348,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsUnassignedEvent: GraphQLFragment {
+              public var asUnassignedEvent: AsUnassignedEvent? {
+                get {
+                  if !AsUnassignedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsUnassignedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsUnassignedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["UnassignedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("user", type: .object(User.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("user", type: .object(User.selections)),
                 ]
 
                 public var snapshot: Snapshot
@@ -9868,7 +9378,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor, "user": user])
+                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
                 }
 
                 public var __typename: String {
@@ -9880,6 +9390,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -9902,7 +9413,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -9912,7 +9423,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the subject (user) who was unassigned.
                 public var user: User? {
                   get {
-                    return (snapshot["user"]! as! Snapshot?).flatMap { User(snapshot: $0) }
+                    return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "user")
@@ -9924,7 +9435,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -9936,7 +9447,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -10026,15 +9537,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsReviewRequestedEvent: GraphQLFragment {
+              public var asReviewRequestedEvent: AsReviewRequestedEvent? {
+                get {
+                  if !AsReviewRequestedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReviewRequestedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReviewRequestedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReviewRequestedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
                 ]
 
                 public var snapshot: Snapshot
@@ -10044,7 +9567,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor, "subject": subject])
+                  self.init(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -10056,6 +9579,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -10078,7 +9602,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -10100,7 +9624,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -10112,7 +9636,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -10202,15 +9726,27 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsReviewRequestRemovedEvent: GraphQLFragment {
+              public var asReviewRequestRemovedEvent: AsReviewRequestRemovedEvent? {
+                get {
+                  if !AsReviewRequestRemovedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsReviewRequestRemovedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsReviewRequestRemovedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["ReviewRequestRemovedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
-                  GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+                  GraphQLField("actor", type: .object(Actor.selections)),
+                  GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
                 ]
 
                 public var snapshot: Snapshot
@@ -10220,7 +9756,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor, "subject": subject])
+                  self.init(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -10232,6 +9768,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -10254,7 +9791,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -10276,7 +9813,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -10288,7 +9825,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -10378,14 +9915,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsMilestonedEvent: GraphQLFragment {
+              public var asMilestonedEvent: AsMilestonedEvent? {
+                get {
+                  if !AsMilestonedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsMilestonedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsMilestonedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["MilestonedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("milestoneTitle", type: .nonNull(.scalar(String.self))),
                 ]
 
@@ -10396,7 +9945,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -10408,6 +9957,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -10430,7 +9980,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -10452,7 +10002,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -10464,7 +10014,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -10516,14 +10066,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
               }
 
-              public struct AsDemilestonedEvent: GraphQLFragment {
+              public var asDemilestonedEvent: AsDemilestonedEvent? {
+                get {
+                  if !AsDemilestonedEvent.possibleTypes.contains(__typename) { return nil }
+                  return AsDemilestonedEvent(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsDemilestonedEvent: GraphQLSelectionSet {
                 public static let possibleTypes = ["DemilestonedEvent"]
 
                 public static let selections: [GraphQLSelection] = [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                   GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("actor", type: .object(Actor.self)),
+                  GraphQLField("actor", type: .object(Actor.selections)),
                   GraphQLField("milestoneTitle", type: .nonNull(.scalar(String.self))),
                 ]
 
@@ -10534,7 +10096,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -10546,6 +10108,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
+                /// ID of the object.
                 public var id: GraphQLID {
                   get {
                     return snapshot["id"]! as! GraphQLID
@@ -10568,7 +10131,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// Identifies the actor who performed the event.
                 public var actor: Actor? {
                   get {
-                    return (snapshot["actor"]! as! Snapshot?).flatMap { Actor(snapshot: $0) }
+                    return (snapshot["actor"] as? Snapshot).flatMap { Actor(snapshot: $0) }
                   }
                   set {
                     snapshot.updateValue(newValue?.snapshot, forKey: "actor")
@@ -10590,7 +10153,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     return Fragments(snapshot: snapshot)
                   }
                   set {
-                    snapshot = newValue.snapshot
+                    snapshot += newValue.snapshot
                   }
                 }
 
@@ -10602,7 +10165,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       return NodeFields(snapshot: snapshot)
                     }
                     set {
-                      snapshot = newValue.snapshot
+                      snapshot += newValue.snapshot
                     }
                   }
                 }
@@ -10656,10 +10219,136 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
+          public struct ReviewRequest: GraphQLSelectionSet {
+            public static let possibleTypes = ["ReviewRequestConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(nodes: [Node?]? = nil) {
+              self.init(snapshot: ["__typename": "ReviewRequestConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// A list of nodes.
+            public var nodes: [Node?]? {
+              get {
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+              }
+              set {
+                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+              }
+            }
+
+            public struct Node: GraphQLSelectionSet {
+              public static let possibleTypes = ["ReviewRequest"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("reviewer", type: .object(Reviewer.selections)),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(reviewer: Reviewer? = nil) {
+                self.init(snapshot: ["__typename": "ReviewRequest", "reviewer": reviewer.flatMap { $0.snapshot }])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the author associated with this review request.
+              public var reviewer: Reviewer? {
+                get {
+                  return (snapshot["reviewer"] as? Snapshot).flatMap { Reviewer(snapshot: $0) }
+                }
+                set {
+                  snapshot.updateValue(newValue?.snapshot, forKey: "reviewer")
+                }
+              }
+
+              public struct Reviewer: GraphQLSelectionSet {
+                public static let possibleTypes = ["User"]
+
+                public static let selections: [GraphQLSelection] = [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("login", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+                ]
+
+                public var snapshot: Snapshot
+
+                public init(snapshot: Snapshot) {
+                  self.snapshot = snapshot
+                }
+
+                public init(login: String, avatarUrl: String) {
+                  self.init(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
+                }
+
+                public var __typename: String {
+                  get {
+                    return snapshot["__typename"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// The username used to login.
+                public var login: String {
+                  get {
+                    return snapshot["login"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "login")
+                  }
+                }
+
+                /// A URL pointing to the user's public avatar.
+                public var avatarUrl: String {
+                  get {
+                    return snapshot["avatarUrl"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "avatarUrl")
+                  }
+                }
+              }
+            }
+          }
+
           public struct Milestone: GraphQLSelectionSet {
             public static let possibleTypes = ["Milestone"]
 
             public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("number", type: .nonNull(.scalar(Int.self))),
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
@@ -10720,7 +10409,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 return Fragments(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -10732,7 +10421,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   return MilestoneFields(snapshot: snapshot)
                 }
                 set {
-                  snapshot = newValue.snapshot
+                  snapshot += newValue.snapshot
                 }
               }
             }
@@ -10744,7 +10433,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+              GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
               GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
             ]
 
@@ -10755,7 +10444,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+              self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
             }
 
             public var __typename: String {
@@ -10802,7 +10491,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
               public static let selections: [GraphQLSelection] = [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("nodes", type: .list(.object(Node.self))),
+                GraphQLField("nodes", type: .list(.object(Node.selections))),
                 GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
               ]
 
@@ -10813,7 +10502,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -10828,7 +10517,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
                 }
                 set {
                   snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -10993,7 +10682,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -11003,7 +10692,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -11018,7 +10707,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -11080,7 +10769,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -11090,7 +10779,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes])
+              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
             }
 
             public var __typename: String {
@@ -11105,7 +10794,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -11161,131 +10850,6 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
             }
           }
-
-          public struct ReviewRequest: GraphQLSelectionSet {
-            public static let possibleTypes = ["ReviewRequestConnection"]
-
-            public static let selections: [GraphQLSelection] = [
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
-            ]
-
-            public var snapshot: Snapshot
-
-            public init(snapshot: Snapshot) {
-              self.snapshot = snapshot
-            }
-
-            public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "ReviewRequestConnection", "nodes": nodes])
-            }
-
-            public var __typename: String {
-              get {
-                return snapshot["__typename"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "__typename")
-              }
-            }
-
-            /// A list of nodes.
-            public var nodes: [Node?]? {
-              get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-              }
-              set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-              }
-            }
-
-            public struct Node: GraphQLSelectionSet {
-              public static let possibleTypes = ["ReviewRequest"]
-
-              public static let selections: [GraphQLSelection] = [
-                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("reviewer", type: .object(Reviewer.self)),
-              ]
-
-              public var snapshot: Snapshot
-
-              public init(snapshot: Snapshot) {
-                self.snapshot = snapshot
-              }
-
-              public init(reviewer: Reviewer? = nil) {
-                self.init(snapshot: ["__typename": "ReviewRequest", "reviewer": reviewer])
-              }
-
-              public var __typename: String {
-                get {
-                  return snapshot["__typename"]! as! String
-                }
-                set {
-                  snapshot.updateValue(newValue, forKey: "__typename")
-                }
-              }
-
-              /// Identifies the author associated with this review request.
-              public var reviewer: Reviewer? {
-                get {
-                  return (snapshot["reviewer"]! as! Snapshot?).flatMap { Reviewer(snapshot: $0) }
-                }
-                set {
-                  snapshot.updateValue(newValue?.snapshot, forKey: "reviewer")
-                }
-              }
-
-              public struct Reviewer: GraphQLSelectionSet {
-                public static let possibleTypes = ["User"]
-
-                public static let selections: [GraphQLSelection] = [
-                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("login", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
-                ]
-
-                public var snapshot: Snapshot
-
-                public init(snapshot: Snapshot) {
-                  self.snapshot = snapshot
-                }
-
-                public init(login: String, avatarUrl: String) {
-                  self.init(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
-                }
-
-                public var __typename: String {
-                  get {
-                    return snapshot["__typename"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "__typename")
-                  }
-                }
-
-                /// The username used to login.
-                public var login: String {
-                  get {
-                    return snapshot["login"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "login")
-                  }
-                }
-
-                /// A URL pointing to the user's public avatar.
-                public var avatarUrl: String {
-                  get {
-                    return snapshot["avatarUrl"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "avatarUrl")
-                  }
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -11294,15 +10858,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
 
 public final class RemoveReactionMutation: GraphQLMutation {
   public static let operationString =
-    "mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {" +
-    "  removeReaction(input: {subjectId: $subject_id, content: $content}) {" +
-    "    __typename" +
-    "    subject {" +
-    "      __typename" +
-    "      ...reactionFields" +
-    "    }" +
-    "  }" +
-    "}"
+    "mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {\n  removeReaction(input: {subjectId: $subject_id, content: $content}) {\n    __typename\n    subject {\n      __typename\n      ...reactionFields\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(ReactionFields.fragmentString) }
 
@@ -11322,7 +10878,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("removeReaction", arguments: ["input": ["subjectId": Variable("subject_id"), "content": Variable("content")]], type: .object(RemoveReaction.self)),
+      GraphQLField("removeReaction", arguments: ["input": ["subjectId": GraphQLVariable("subject_id"), "content": GraphQLVariable("content")]], type: .object(RemoveReaction.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -11332,13 +10888,13 @@ public final class RemoveReactionMutation: GraphQLMutation {
     }
 
     public init(removeReaction: RemoveReaction? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "removeReaction": removeReaction])
+      self.init(snapshot: ["__typename": "Mutation", "removeReaction": removeReaction.flatMap { $0.snapshot }])
     }
 
     /// Removes a reaction from a subject.
     public var removeReaction: RemoveReaction? {
       get {
-        return (snapshot["removeReaction"]! as! Snapshot?).flatMap { RemoveReaction(snapshot: $0) }
+        return (snapshot["removeReaction"] as? Snapshot).flatMap { RemoveReaction(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "removeReaction")
@@ -11350,7 +10906,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("subject", type: .nonNull(.object(Subject.self))),
+        GraphQLField("subject", type: .nonNull(.object(Subject.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -11360,7 +10916,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
       }
 
       public init(subject: Subject) {
-        self.init(snapshot: ["__typename": "RemoveReactionPayload", "subject": subject])
+        self.init(snapshot: ["__typename": "RemoveReactionPayload", "subject": subject.snapshot])
       }
 
       public var __typename: String {
@@ -11387,8 +10943,9 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
+          GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
         ]
 
         public var snapshot: Snapshot
@@ -11398,23 +10955,23 @@ public final class RemoveReactionMutation: GraphQLMutation {
         }
 
         public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
+          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
         }
 
         public var __typename: String {
@@ -11439,7 +10996,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
         /// A list of reactions grouped by content left on the subject.
         public var reactionGroups: [ReactionGroup]? {
           get {
-            return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
@@ -11451,7 +11008,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
             return Fragments(snapshot: snapshot)
           }
           set {
-            snapshot = newValue.snapshot
+            snapshot += newValue.snapshot
           }
         }
 
@@ -11463,7 +11020,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
               return ReactionFields(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
         }
@@ -11474,7 +11031,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
+            GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
             GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
           ]
 
@@ -11485,7 +11042,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
           }
 
           public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-            self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
+            self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
           }
 
           public var __typename: String {
@@ -11532,7 +11089,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("nodes", type: .list(.object(Node.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
               GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
             ]
 
@@ -11543,7 +11100,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
             }
 
             public init(nodes: [Node?]? = nil, totalCount: Int) {
-              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
+              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
             }
 
             public var __typename: String {
@@ -11558,7 +11115,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
               }
               set {
                 snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -11621,27 +11178,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
 
 public final class RepoIssuePagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {" +
-    "  repository(owner: $owner, name: $name) {" +
-    "    __typename" +
-    "    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        ...repoEventFields" +
-    "        ...nodeFields" +
-    "        title" +
-    "        number" +
-    "        state" +
-    "      }" +
-    "      pageInfo {" +
-    "        __typename" +
-    "        hasNextPage" +
-    "        endCursor" +
-    "      }" +
-    "    }" +
-    "  }" +
-    "}"
+    "query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString) }
 
@@ -11665,7 +11202,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("repository", arguments: ["owner": Variable("owner"), "name": Variable("name")], type: .object(Repository.self)),
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -11675,13 +11212,13 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
     public var repository: Repository? {
       get {
-        return (snapshot["repository"]! as! Snapshot?).flatMap { Repository(snapshot: $0) }
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "repository")
@@ -11693,7 +11230,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("issues", arguments: ["first": Variable("page_size"), "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "after": Variable("after")], type: .nonNull(.object(Issue.self))),
+        GraphQLField("issues", arguments: ["first": GraphQLVariable("page_size"), "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED"], "after": GraphQLVariable("after")], type: .nonNull(.object(Issue.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -11703,7 +11240,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
       }
 
       public init(issues: Issue) {
-        self.init(snapshot: ["__typename": "Repository", "issues": issues])
+        self.init(snapshot: ["__typename": "Repository", "issues": issues.snapshot])
       }
 
       public var __typename: String {
@@ -11730,8 +11267,8 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("nodes", type: .list(.object(Node.self))),
-          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
         ]
 
         public var snapshot: Snapshot
@@ -11741,7 +11278,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
-          self.init(snapshot: ["__typename": "IssueConnection", "nodes": nodes, "pageInfo": pageInfo])
+          self.init(snapshot: ["__typename": "IssueConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot])
         }
 
         public var __typename: String {
@@ -11756,7 +11293,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -11778,8 +11315,10 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-            GraphQLField("author", type: .object(Author.self)),
+            GraphQLField("author", type: .object(Author.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
@@ -11793,7 +11332,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
           }
 
           public init(createdAt: String, author: Author? = nil, id: GraphQLID, title: String, number: Int, state: IssueState) {
-            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author, "id": id, "title": title, "number": number, "state": state])
+            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -11818,13 +11357,14 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
           /// The actor who authored the comment.
           public var author: Author? {
             get {
-              return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+              return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "author")
             }
           }
 
+          /// ID of the object.
           public var id: GraphQLID {
             get {
               return snapshot["id"]! as! GraphQLID
@@ -11869,7 +11409,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
               return Fragments(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
 
@@ -11881,7 +11421,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
                 return RepoEventFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -11890,7 +11430,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
                 return NodeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
           }
@@ -11983,7 +11523,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
           /// When paginating forwards, the cursor to continue.
           public var endCursor: String? {
             get {
-              return snapshot["endCursor"]! as! String?
+              return snapshot["endCursor"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "endCursor")
@@ -11997,27 +11537,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
 public final class RepoPullRequestPagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {" +
-    "  repository(owner: $owner, name: $name) {" +
-    "    __typename" +
-    "    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        ...repoEventFields" +
-    "        ...nodeFields" +
-    "        title" +
-    "        number" +
-    "        state" +
-    "      }" +
-    "      pageInfo {" +
-    "        __typename" +
-    "        hasNextPage" +
-    "        endCursor" +
-    "      }" +
-    "    }" +
-    "  }" +
-    "}"
+    "query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString) }
 
@@ -12041,7 +11561,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("repository", arguments: ["owner": Variable("owner"), "name": Variable("name")], type: .object(Repository.self)),
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -12051,13 +11571,13 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
     public var repository: Repository? {
       get {
-        return (snapshot["repository"]! as! Snapshot?).flatMap { Repository(snapshot: $0) }
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "repository")
@@ -12069,7 +11589,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("pullRequests", arguments: ["first": Variable("page_size"), "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "after": Variable("after")], type: .nonNull(.object(PullRequest.self))),
+        GraphQLField("pullRequests", arguments: ["first": GraphQLVariable("page_size"), "orderBy": ["field": "CREATED_AT", "direction": "DESC"], "states": ["OPEN", "CLOSED", "MERGED"], "after": GraphQLVariable("after")], type: .nonNull(.object(PullRequest.selections))),
       ]
 
       public var snapshot: Snapshot
@@ -12079,7 +11599,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
       }
 
       public init(pullRequests: PullRequest) {
-        self.init(snapshot: ["__typename": "Repository", "pullRequests": pullRequests])
+        self.init(snapshot: ["__typename": "Repository", "pullRequests": pullRequests.snapshot])
       }
 
       public var __typename: String {
@@ -12106,8 +11626,8 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("nodes", type: .list(.object(Node.self))),
-          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
         ]
 
         public var snapshot: Snapshot
@@ -12117,7 +11637,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
-          self.init(snapshot: ["__typename": "PullRequestConnection", "nodes": nodes, "pageInfo": pageInfo])
+          self.init(snapshot: ["__typename": "PullRequestConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot])
         }
 
         public var __typename: String {
@@ -12132,7 +11652,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -12154,8 +11674,10 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-            GraphQLField("author", type: .object(Author.self)),
+            GraphQLField("author", type: .object(Author.selections)),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
@@ -12169,7 +11691,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
           }
 
           public init(createdAt: String, author: Author? = nil, id: GraphQLID, title: String, number: Int, state: PullRequestState) {
-            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author, "id": id, "title": title, "number": number, "state": state])
+            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -12194,13 +11716,14 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
           /// The actor who authored the comment.
           public var author: Author? {
             get {
-              return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+              return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "author")
             }
           }
 
+          /// ID of the object.
           public var id: GraphQLID {
             get {
               return snapshot["id"]! as! GraphQLID
@@ -12245,7 +11768,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
               return Fragments(snapshot: snapshot)
             }
             set {
-              snapshot = newValue.snapshot
+              snapshot += newValue.snapshot
             }
           }
 
@@ -12257,7 +11780,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
                 return RepoEventFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
 
@@ -12266,7 +11789,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
                 return NodeFields(snapshot: snapshot)
               }
               set {
-                snapshot = newValue.snapshot
+                snapshot += newValue.snapshot
               }
             }
           }
@@ -12359,7 +11882,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
           /// When paginating forwards, the cursor to continue.
           public var endCursor: String? {
             get {
-              return snapshot["endCursor"]! as! String?
+              return snapshot["endCursor"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "endCursor")
@@ -12373,19 +11896,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
 
 public final class RepositoryLabelsQuery: GraphQLQuery {
   public static let operationString =
-    "query RepositoryLabels($owner: String!, $repo: String!) {" +
-    "  repository(owner: $owner, name: $repo) {" +
-    "    __typename" +
-    "    labels(first: 100) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        name" +
-    "        color" +
-    "      }" +
-    "    }" +
-    "  }" +
-    "}"
+    "query RepositoryLabels($owner: String!, $repo: String!) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    labels(first: 100) {\n      __typename\n      nodes {\n        __typename\n        name\n        color\n      }\n    }\n  }\n}"
 
   public var owner: String
   public var repo: String
@@ -12403,7 +11914,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("repository", arguments: ["owner": Variable("owner"), "name": Variable("repo")], type: .object(Repository.self)),
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("repo")], type: .object(Repository.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -12413,13 +11924,13 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
     public var repository: Repository? {
       get {
-        return (snapshot["repository"]! as! Snapshot?).flatMap { Repository(snapshot: $0) }
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
       }
       set {
         snapshot.updateValue(newValue?.snapshot, forKey: "repository")
@@ -12431,7 +11942,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("labels", arguments: ["first": 100], type: .object(Label.self)),
+        GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
       ]
 
       public var snapshot: Snapshot
@@ -12441,7 +11952,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
       }
 
       public init(labels: Label? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "labels": labels])
+        self.init(snapshot: ["__typename": "Repository", "labels": labels.flatMap { $0.snapshot }])
       }
 
       public var __typename: String {
@@ -12456,7 +11967,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
       /// A list of labels associated with the repository.
       public var labels: Label? {
         get {
-          return (snapshot["labels"]! as! Snapshot?).flatMap { Label(snapshot: $0) }
+          return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
         }
         set {
           snapshot.updateValue(newValue?.snapshot, forKey: "labels")
@@ -12468,7 +11979,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("nodes", type: .list(.object(Node.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
         ]
 
         public var snapshot: Snapshot
@@ -12478,7 +11989,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil) {
-          self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes])
+          self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
         }
 
         public var __typename: String {
@@ -12493,7 +12004,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
           }
           set {
             snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -12555,41 +12066,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
 
 public final class SearchReposQuery: GraphQLQuery {
   public static let operationString =
-    "query SearchRepos($search: String!, $before: String) {" +
-    "  search(first: 100, query: $search, type: REPOSITORY, before: $before) {" +
-    "    __typename" +
-    "    nodes {" +
-    "      __typename" +
-    "      ... on Repository {" +
-    "        __typename" +
-    "        id" +
-    "        name" +
-    "        hasIssuesEnabled" +
-    "        owner {" +
-    "          __typename" +
-    "          login" +
-    "        }" +
-    "        description" +
-    "        pushedAt" +
-    "        primaryLanguage {" +
-    "          __typename" +
-    "          name" +
-    "          color" +
-    "        }" +
-    "        stargazers {" +
-    "          __typename" +
-    "          totalCount" +
-    "        }" +
-    "      }" +
-    "    }" +
-    "    pageInfo {" +
-    "      __typename" +
-    "      endCursor" +
-    "      hasNextPage" +
-    "    }" +
-    "    repositoryCount" +
-    "  }" +
-    "}"
+    "query SearchRepos($search: String!, $before: String) {\n  search(first: 100, query: $search, type: REPOSITORY, before: $before) {\n    __typename\n    nodes {\n      __typename\n      ... on Repository {\n        id\n        name\n        hasIssuesEnabled\n        owner {\n          __typename\n          login\n        }\n        description\n        pushedAt\n        primaryLanguage {\n          __typename\n          name\n          color\n        }\n        stargazers {\n          __typename\n          totalCount\n        }\n      }\n    }\n    pageInfo {\n      __typename\n      endCursor\n      hasNextPage\n    }\n    repositoryCount\n  }\n}"
 
   public var search: String
   public var before: String?
@@ -12607,7 +12084,7 @@ public final class SearchReposQuery: GraphQLQuery {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("search", arguments: ["first": 100, "query": Variable("search"), "type": "REPOSITORY", "before": Variable("before")], type: .nonNull(.object(Search.self))),
+      GraphQLField("search", arguments: ["first": 100, "query": GraphQLVariable("search"), "type": "REPOSITORY", "before": GraphQLVariable("before")], type: .nonNull(.object(Search.selections))),
     ]
 
     public var snapshot: Snapshot
@@ -12617,7 +12094,7 @@ public final class SearchReposQuery: GraphQLQuery {
     }
 
     public init(search: Search) {
-      self.init(snapshot: ["__typename": "Query", "search": search])
+      self.init(snapshot: ["__typename": "Query", "search": search.snapshot])
     }
 
     /// Perform a search across resources.
@@ -12635,8 +12112,8 @@ public final class SearchReposQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("nodes", type: .list(.object(Node.self))),
-        GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.self))),
+        GraphQLField("nodes", type: .list(.object(Node.selections))),
+        GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
         GraphQLField("repositoryCount", type: .nonNull(.scalar(Int.self))),
       ]
 
@@ -12647,7 +12124,7 @@ public final class SearchReposQuery: GraphQLQuery {
       }
 
       public init(nodes: [Node?]? = nil, pageInfo: PageInfo, repositoryCount: Int) {
-        self.init(snapshot: ["__typename": "SearchResultItemConnection", "nodes": nodes, "pageInfo": pageInfo, "repositoryCount": repositoryCount])
+        self.init(snapshot: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot, "repositoryCount": repositoryCount])
       }
 
       public var __typename: String {
@@ -12662,7 +12139,7 @@ public final class SearchReposQuery: GraphQLQuery {
       /// A list of nodes.
       public var nodes: [Node?]? {
         get {
-          return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+          return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
         }
         set {
           snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
@@ -12693,8 +12170,12 @@ public final class SearchReposQuery: GraphQLQuery {
         public static let possibleTypes = ["Issue", "PullRequest", "Repository", "User", "Organization"]
 
         public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLFragmentSpread(AsRepository.self),
+          GraphQLTypeCase(
+            variants: ["Repository": AsRepository.selections],
+            default: [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            ]
+          )
         ]
 
         public var snapshot: Snapshot
@@ -12711,16 +12192,16 @@ public final class SearchReposQuery: GraphQLQuery {
           return Node(snapshot: ["__typename": "PullRequest"])
         }
 
-        public static func makeRepository(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: AsRepository.Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: AsRepository.PrimaryLanguage? = nil, stargazers: AsRepository.Stargazer) -> Node {
-          return Node(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage, "stargazers": stargazers])
-        }
-
         public static func makeUser() -> Node {
           return Node(snapshot: ["__typename": "User"])
         }
 
         public static func makeOrganization() -> Node {
           return Node(snapshot: ["__typename": "Organization"])
+        }
+
+        public static func makeRepository(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: AsRepository.Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: AsRepository.PrimaryLanguage? = nil, stargazers: AsRepository.Stargazer) -> Node {
+          return Node(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { $0.snapshot }, "stargazers": stargazers.snapshot])
         }
 
         public var __typename: String {
@@ -12743,7 +12224,7 @@ public final class SearchReposQuery: GraphQLQuery {
           }
         }
 
-        public struct AsRepository: GraphQLFragment {
+        public struct AsRepository: GraphQLSelectionSet {
           public static let possibleTypes = ["Repository"]
 
           public static let selections: [GraphQLSelection] = [
@@ -12751,11 +12232,11 @@ public final class SearchReposQuery: GraphQLQuery {
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
             GraphQLField("name", type: .nonNull(.scalar(String.self))),
             GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
-            GraphQLField("owner", type: .nonNull(.object(Owner.self))),
+            GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
             GraphQLField("description", type: .scalar(String.self)),
             GraphQLField("pushedAt", type: .scalar(String.self)),
-            GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.self)),
-            GraphQLField("stargazers", type: .nonNull(.object(Stargazer.self))),
+            GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.selections)),
+            GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
           ]
 
           public var snapshot: Snapshot
@@ -12765,7 +12246,7 @@ public final class SearchReposQuery: GraphQLQuery {
           }
 
           public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer) {
-            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage, "stargazers": stargazers])
+            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { $0.snapshot }, "stargazers": stargazers.snapshot])
           }
 
           public var __typename: String {
@@ -12819,7 +12300,7 @@ public final class SearchReposQuery: GraphQLQuery {
           /// The description of the repository.
           public var description: String? {
             get {
-              return snapshot["description"]! as! String?
+              return snapshot["description"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "description")
@@ -12829,7 +12310,7 @@ public final class SearchReposQuery: GraphQLQuery {
           /// Identifies when the repository was last pushed to.
           public var pushedAt: String? {
             get {
-              return snapshot["pushedAt"]! as! String?
+              return snapshot["pushedAt"] as? String
             }
             set {
               snapshot.updateValue(newValue, forKey: "pushedAt")
@@ -12839,7 +12320,7 @@ public final class SearchReposQuery: GraphQLQuery {
           /// The primary language of the repository's code.
           public var primaryLanguage: PrimaryLanguage? {
             get {
-              return (snapshot["primaryLanguage"]! as! Snapshot?).flatMap { PrimaryLanguage(snapshot: $0) }
+              return (snapshot["primaryLanguage"] as? Snapshot).flatMap { PrimaryLanguage(snapshot: $0) }
             }
             set {
               snapshot.updateValue(newValue?.snapshot, forKey: "primaryLanguage")
@@ -12939,7 +12420,7 @@ public final class SearchReposQuery: GraphQLQuery {
             /// The color defined for the current language.
             public var color: String? {
               get {
-                return snapshot["color"]! as! String?
+                return snapshot["color"] as? String
               }
               set {
                 snapshot.updateValue(newValue, forKey: "color")
@@ -13018,7 +12499,7 @@ public final class SearchReposQuery: GraphQLQuery {
         /// When paginating forwards, the cursor to continue.
         public var endCursor: String? {
           get {
-            return snapshot["endCursor"]! as! String?
+            return snapshot["endCursor"] as? String
           }
           set {
             snapshot.updateValue(newValue, forKey: "endCursor")
@@ -13039,12 +12520,742 @@ public final class SearchReposQuery: GraphQLQuery {
   }
 }
 
+public struct ReactionFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment reactionFields on Reactable {\n  __typename\n  viewerCanReact\n  reactionGroups {\n    __typename\n    viewerHasReacted\n    users(first: 3) {\n      __typename\n      nodes {\n        __typename\n        login\n      }\n      totalCount\n    }\n    content\n  }\n}"
+
+  public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReviewComment"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
+    GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.selections)))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
+    return ReactionFields(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+  }
+
+  public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
+    return ReactionFields(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+  }
+
+  public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
+    return ReactionFields(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+  }
+
+  public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
+    return ReactionFields(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+  }
+
+  public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
+    return ReactionFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// Can user react to this subject
+  public var viewerCanReact: Bool {
+    get {
+      return snapshot["viewerCanReact"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "viewerCanReact")
+    }
+  }
+
+  /// A list of reactions grouped by content left on the subject.
+  public var reactionGroups: [ReactionGroup]? {
+    get {
+      return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+    }
+    set {
+      snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+    }
+  }
+
+  public struct ReactionGroup: GraphQLSelectionSet {
+    public static let possibleTypes = ["ReactionGroup"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
+      GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.selections))),
+      GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
+      self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users.snapshot, "content": content])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// Whether or not the authenticated user has left a reaction on the subject.
+    public var viewerHasReacted: Bool {
+      get {
+        return snapshot["viewerHasReacted"]! as! Bool
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "viewerHasReacted")
+      }
+    }
+
+    /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
+    public var users: User {
+      get {
+        return User(snapshot: snapshot["users"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "users")
+      }
+    }
+
+    /// Identifies the emoji reaction.
+    public var content: ReactionContent {
+      get {
+        return snapshot["content"]! as! ReactionContent
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "content")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["ReactingUserConnection"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("nodes", type: .list(.object(Node.selections))),
+        GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(nodes: [Node?]? = nil, totalCount: Int) {
+        self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A list of nodes.
+      public var nodes: [Node?]? {
+        get {
+          return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+        }
+        set {
+          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+        }
+      }
+
+      /// Identifies the total count of items in the connection.
+      public var totalCount: Int {
+        get {
+          return snapshot["totalCount"]! as! Int
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "totalCount")
+        }
+      }
+
+      public struct Node: GraphQLSelectionSet {
+        public static let possibleTypes = ["User"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("login", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(login: String) {
+          self.init(snapshot: ["__typename": "User", "login": login])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// The username used to login.
+        public var login: String {
+          get {
+            return snapshot["login"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "login")
+          }
+        }
+      }
+    }
+  }
+}
+
+public struct CommentFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment commentFields on Comment {\n  __typename\n  author {\n    __typename\n    login\n    avatarUrl\n  }\n  editor {\n    __typename\n    login\n  }\n  lastEditedAt\n  body\n  createdAt\n  viewerDidAuthor\n}"
+
+  public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment", "GistComment"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("author", type: .object(Author.selections)),
+    GraphQLField("editor", type: .object(Editor.selections)),
+    GraphQLField("lastEditedAt", type: .scalar(String.self)),
+    GraphQLField("body", type: .nonNull(.scalar(String.self))),
+    GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+    GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "Issue", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makeCommitComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "CommitComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makePullRequest(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "PullRequest", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makeIssueComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "IssueComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makePullRequestReview(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "PullRequestReview", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makePullRequestReviewComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "PullRequestReviewComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public static func makeGistComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
+    return CommentFields(snapshot: ["__typename": "GistComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// The actor who authored the comment.
+  public var author: Author? {
+    get {
+      return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
+    }
+    set {
+      snapshot.updateValue(newValue?.snapshot, forKey: "author")
+    }
+  }
+
+  /// The actor who edited the comment.
+  public var editor: Editor? {
+    get {
+      return (snapshot["editor"] as? Snapshot).flatMap { Editor(snapshot: $0) }
+    }
+    set {
+      snapshot.updateValue(newValue?.snapshot, forKey: "editor")
+    }
+  }
+
+  /// The moment the editor made the last edit
+  public var lastEditedAt: String? {
+    get {
+      return snapshot["lastEditedAt"] as? String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "lastEditedAt")
+    }
+  }
+
+  /// The comment body as Markdown.
+  public var body: String {
+    get {
+      return snapshot["body"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "body")
+    }
+  }
+
+  /// Identifies the date and time when the object was created.
+  public var createdAt: String {
+    get {
+      return snapshot["createdAt"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "createdAt")
+    }
+  }
+
+  /// Did the viewer author this comment.
+  public var viewerDidAuthor: Bool {
+    get {
+      return snapshot["viewerDidAuthor"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "viewerDidAuthor")
+    }
+  }
+
+  public struct Author: GraphQLSelectionSet {
+    public static let possibleTypes = ["Organization", "User", "Bot"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("login", type: .nonNull(.scalar(String.self))),
+      GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public static func makeOrganization(login: String, avatarUrl: String) -> Author {
+      return Author(snapshot: ["__typename": "Organization", "login": login, "avatarUrl": avatarUrl])
+    }
+
+    public static func makeUser(login: String, avatarUrl: String) -> Author {
+      return Author(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
+    }
+
+    public static func makeBot(login: String, avatarUrl: String) -> Author {
+      return Author(snapshot: ["__typename": "Bot", "login": login, "avatarUrl": avatarUrl])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// The username of the actor.
+    public var login: String {
+      get {
+        return snapshot["login"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "login")
+      }
+    }
+
+    /// A URL pointing to the actor's public avatar.
+    public var avatarUrl: String {
+      get {
+        return snapshot["avatarUrl"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "avatarUrl")
+      }
+    }
+  }
+
+  public struct Editor: GraphQLSelectionSet {
+    public static let possibleTypes = ["Organization", "User", "Bot"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("login", type: .nonNull(.scalar(String.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public static func makeOrganization(login: String) -> Editor {
+      return Editor(snapshot: ["__typename": "Organization", "login": login])
+    }
+
+    public static func makeUser(login: String) -> Editor {
+      return Editor(snapshot: ["__typename": "User", "login": login])
+    }
+
+    public static func makeBot(login: String) -> Editor {
+      return Editor(snapshot: ["__typename": "Bot", "login": login])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// The username of the actor.
+    public var login: String {
+      get {
+        return snapshot["login"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "login")
+      }
+    }
+  }
+}
+
+public struct LockableFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment lockableFields on Lockable {\n  __typename\n  locked\n}"
+
+  public static let possibleTypes = ["Issue", "PullRequest"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("locked", type: .nonNull(.scalar(Bool.self))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(locked: Bool) -> LockableFields {
+    return LockableFields(snapshot: ["__typename": "Issue", "locked": locked])
+  }
+
+  public static func makePullRequest(locked: Bool) -> LockableFields {
+    return LockableFields(snapshot: ["__typename": "PullRequest", "locked": locked])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// `true` if the object is locked
+  public var locked: Bool {
+    get {
+      return snapshot["locked"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "locked")
+    }
+  }
+}
+
+public struct ClosableFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment closableFields on Closable {\n  __typename\n  closed\n}"
+
+  public static let possibleTypes = ["Project", "Issue", "PullRequest"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("closed", type: .nonNull(.scalar(Bool.self))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeProject(closed: Bool) -> ClosableFields {
+    return ClosableFields(snapshot: ["__typename": "Project", "closed": closed])
+  }
+
+  public static func makeIssue(closed: Bool) -> ClosableFields {
+    return ClosableFields(snapshot: ["__typename": "Issue", "closed": closed])
+  }
+
+  public static func makePullRequest(closed: Bool) -> ClosableFields {
+    return ClosableFields(snapshot: ["__typename": "PullRequest", "closed": closed])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// `true` if the object is closed (definition of closed may depend on type)
+  public var closed: Bool {
+    get {
+      return snapshot["closed"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "closed")
+    }
+  }
+}
+
+public struct LabelableFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment labelableFields on Labelable {\n  __typename\n  labels(first: 100) {\n    __typename\n    nodes {\n      __typename\n      color\n      name\n    }\n  }\n}"
+
+  public static let possibleTypes = ["Issue", "PullRequest"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(labels: Label? = nil) -> LabelableFields {
+    return LabelableFields(snapshot: ["__typename": "Issue", "labels": labels.flatMap { $0.snapshot }])
+  }
+
+  public static func makePullRequest(labels: Label? = nil) -> LabelableFields {
+    return LabelableFields(snapshot: ["__typename": "PullRequest", "labels": labels.flatMap { $0.snapshot }])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// A list of labels associated with the object.
+  public var labels: Label? {
+    get {
+      return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
+    }
+    set {
+      snapshot.updateValue(newValue?.snapshot, forKey: "labels")
+    }
+  }
+
+  public struct Label: GraphQLSelectionSet {
+    public static let possibleTypes = ["LabelConnection"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("nodes", type: .list(.object(Node.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(nodes: [Node?]? = nil) {
+      self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// A list of nodes.
+    public var nodes: [Node?]? {
+      get {
+        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+      }
+      set {
+        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+      }
+    }
+
+    public struct Node: GraphQLSelectionSet {
+      public static let possibleTypes = ["Label"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("color", type: .nonNull(.scalar(String.self))),
+        GraphQLField("name", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(color: String, name: String) {
+        self.init(snapshot: ["__typename": "Label", "color": color, "name": name])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// Identifies the label color.
+      public var color: String {
+        get {
+          return snapshot["color"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "color")
+        }
+      }
+
+      /// Identifies the label name.
+      public var name: String {
+        get {
+          return snapshot["name"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+    }
+  }
+}
+
+public struct UpdatableFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment updatableFields on Updatable {\n  __typename\n  viewerCanUpdate\n}"
+
+  public static let possibleTypes = ["Project", "Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment", "GistComment"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeProject(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "Project", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makeIssue(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "Issue", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makeCommitComment(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "CommitComment", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makePullRequest(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "PullRequest", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makeIssueComment(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "IssueComment", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makePullRequestReview(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "PullRequestReview", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makePullRequestReviewComment(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public static func makeGistComment(viewerCanUpdate: Bool) -> UpdatableFields {
+    return UpdatableFields(snapshot: ["__typename": "GistComment", "viewerCanUpdate": viewerCanUpdate])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// Check if the current viewer can update this object.
+  public var viewerCanUpdate: Bool {
+    get {
+      return snapshot["viewerCanUpdate"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "viewerCanUpdate")
+    }
+  }
+}
+
 public struct NodeFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment nodeFields on Node {" +
-    "  __typename" +
-    "  id" +
-    "}"
+    "fragment nodeFields on Node {\n  __typename\n  id\n}"
 
   public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "Milestone", "ReviewRequest", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "CrossReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "ProtectedBranch", "PushAllowance", "Team", "OrganizationInvitation", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "BaseRefChangedEvent", "AddedToProjectEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent", "RepositoryInvitation", "Tag"]
 
@@ -13379,620 +13590,16 @@ public struct NodeFields: GraphQLFragment {
   }
 }
 
-public struct ReactionFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment reactionFields on Reactable {" +
-    "  __typename" +
-    "  viewerCanReact" +
-    "  reactionGroups {" +
-    "    __typename" +
-    "    viewerHasReacted" +
-    "    users(first: 3) {" +
-    "      __typename" +
-    "      nodes {" +
-    "        __typename" +
-    "        login" +
-    "      }" +
-    "      totalCount" +
-    "    }" +
-    "    content" +
-    "  }" +
-    "}"
-
-  public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReviewComment"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("viewerCanReact", type: .nonNull(.scalar(Bool.self))),
-    GraphQLField("reactionGroups", type: .list(.nonNull(.object(ReactionGroup.self)))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
-  }
-
-  public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
-  }
-
-  public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
-  }
-
-  public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
-  }
-
-  public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// Can user react to this subject
-  public var viewerCanReact: Bool {
-    get {
-      return snapshot["viewerCanReact"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "viewerCanReact")
-    }
-  }
-
-  /// A list of reactions grouped by content left on the subject.
-  public var reactionGroups: [ReactionGroup]? {
-    get {
-      return (snapshot["reactionGroups"]! as! [Snapshot]?).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
-    }
-    set {
-      snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
-    }
-  }
-
-  public struct ReactionGroup: GraphQLSelectionSet {
-    public static let possibleTypes = ["ReactionGroup"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-      GraphQLField("viewerHasReacted", type: .nonNull(.scalar(Bool.self))),
-      GraphQLField("users", arguments: ["first": 3], type: .nonNull(.object(User.self))),
-      GraphQLField("content", type: .nonNull(.scalar(ReactionContent.self))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(viewerHasReacted: Bool, users: User, content: ReactionContent) {
-      self.init(snapshot: ["__typename": "ReactionGroup", "viewerHasReacted": viewerHasReacted, "users": users, "content": content])
-    }
-
-    public var __typename: String {
-      get {
-        return snapshot["__typename"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "__typename")
-      }
-    }
-
-    /// Whether or not the authenticated user has left a reaction on the subject.
-    public var viewerHasReacted: Bool {
-      get {
-        return snapshot["viewerHasReacted"]! as! Bool
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "viewerHasReacted")
-      }
-    }
-
-    /// Users who have reacted to the reaction subject with the emotion represented by this reaction group
-    public var users: User {
-      get {
-        return User(snapshot: snapshot["users"]! as! Snapshot)
-      }
-      set {
-        snapshot.updateValue(newValue.snapshot, forKey: "users")
-      }
-    }
-
-    /// Identifies the emoji reaction.
-    public var content: ReactionContent {
-      get {
-        return snapshot["content"]! as! ReactionContent
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "content")
-      }
-    }
-
-    public struct User: GraphQLSelectionSet {
-      public static let possibleTypes = ["ReactingUserConnection"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("nodes", type: .list(.object(Node.self))),
-        GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(nodes: [Node?]? = nil, totalCount: Int) {
-        self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes, "totalCount": totalCount])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      /// A list of nodes.
-      public var nodes: [Node?]? {
-        get {
-          return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-        }
-        set {
-          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-        }
-      }
-
-      /// Identifies the total count of items in the connection.
-      public var totalCount: Int {
-        get {
-          return snapshot["totalCount"]! as! Int
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "totalCount")
-        }
-      }
-
-      public struct Node: GraphQLSelectionSet {
-        public static let possibleTypes = ["User"]
-
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("login", type: .nonNull(.scalar(String.self))),
-        ]
-
-        public var snapshot: Snapshot
-
-        public init(snapshot: Snapshot) {
-          self.snapshot = snapshot
-        }
-
-        public init(login: String) {
-          self.init(snapshot: ["__typename": "User", "login": login])
-        }
-
-        public var __typename: String {
-          get {
-            return snapshot["__typename"]! as! String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        /// The username used to login.
-        public var login: String {
-          get {
-            return snapshot["login"]! as! String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "login")
-          }
-        }
-      }
-    }
-  }
-}
-
-public struct CommentFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment commentFields on Comment {" +
-    "  __typename" +
-    "  author {" +
-    "    __typename" +
-    "    login" +
-    "    avatarUrl" +
-    "  }" +
-    "  editor {" +
-    "    __typename" +
-    "    login" +
-    "  }" +
-    "  lastEditedAt" +
-    "  body" +
-    "  createdAt" +
-    "  viewerDidAuthor" +
-    "}"
-
-  public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment", "GistComment"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("author", type: .object(Author.self)),
-    GraphQLField("editor", type: .object(Editor.self)),
-    GraphQLField("lastEditedAt", type: .scalar(String.self)),
-    GraphQLField("body", type: .nonNull(.scalar(String.self))),
-    GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-    GraphQLField("viewerDidAuthor", type: .nonNull(.scalar(Bool.self))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeIssue(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "Issue", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makeCommitComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "CommitComment", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makePullRequest(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequest", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makeIssueComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "IssueComment", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makePullRequestReview(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequestReview", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makePullRequestReviewComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequestReviewComment", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public static func makeGistComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "GistComment", "author": author, "editor": editor, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// The actor who authored the comment.
-  public var author: Author? {
-    get {
-      return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
-    }
-    set {
-      snapshot.updateValue(newValue?.snapshot, forKey: "author")
-    }
-  }
-
-  /// The actor who edited the comment.
-  public var editor: Editor? {
-    get {
-      return (snapshot["editor"]! as! Snapshot?).flatMap { Editor(snapshot: $0) }
-    }
-    set {
-      snapshot.updateValue(newValue?.snapshot, forKey: "editor")
-    }
-  }
-
-  /// The moment the editor made the last edit
-  public var lastEditedAt: String? {
-    get {
-      return snapshot["lastEditedAt"]! as! String?
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "lastEditedAt")
-    }
-  }
-
-  /// The comment body as Markdown.
-  public var body: String {
-    get {
-      return snapshot["body"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "body")
-    }
-  }
-
-  /// Identifies the date and time when the object was created.
-  public var createdAt: String {
-    get {
-      return snapshot["createdAt"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "createdAt")
-    }
-  }
-
-  /// Did the viewer author this comment.
-  public var viewerDidAuthor: Bool {
-    get {
-      return snapshot["viewerDidAuthor"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "viewerDidAuthor")
-    }
-  }
-
-  public struct Author: GraphQLSelectionSet {
-    public static let possibleTypes = ["Organization", "User", "Bot"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-      GraphQLField("login", type: .nonNull(.scalar(String.self))),
-      GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public static func makeOrganization(login: String, avatarUrl: String) -> Author {
-      return Author(snapshot: ["__typename": "Organization", "login": login, "avatarUrl": avatarUrl])
-    }
-
-    public static func makeUser(login: String, avatarUrl: String) -> Author {
-      return Author(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
-    }
-
-    public static func makeBot(login: String, avatarUrl: String) -> Author {
-      return Author(snapshot: ["__typename": "Bot", "login": login, "avatarUrl": avatarUrl])
-    }
-
-    public var __typename: String {
-      get {
-        return snapshot["__typename"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "__typename")
-      }
-    }
-
-    /// The username of the actor.
-    public var login: String {
-      get {
-        return snapshot["login"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "login")
-      }
-    }
-
-    /// A URL pointing to the actor's public avatar.
-    public var avatarUrl: String {
-      get {
-        return snapshot["avatarUrl"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "avatarUrl")
-      }
-    }
-  }
-
-  public struct Editor: GraphQLSelectionSet {
-    public static let possibleTypes = ["Organization", "User", "Bot"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-      GraphQLField("login", type: .nonNull(.scalar(String.self))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public static func makeOrganization(login: String) -> Editor {
-      return Editor(snapshot: ["__typename": "Organization", "login": login])
-    }
-
-    public static func makeUser(login: String) -> Editor {
-      return Editor(snapshot: ["__typename": "User", "login": login])
-    }
-
-    public static func makeBot(login: String) -> Editor {
-      return Editor(snapshot: ["__typename": "Bot", "login": login])
-    }
-
-    public var __typename: String {
-      get {
-        return snapshot["__typename"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "__typename")
-      }
-    }
-
-    /// The username of the actor.
-    public var login: String {
-      get {
-        return snapshot["login"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "login")
-      }
-    }
-  }
-}
-
-public struct UpdatableFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment updatableFields on Updatable {" +
-    "  __typename" +
-    "  viewerCanUpdate" +
-    "}"
-
-  public static let possibleTypes = ["Project", "Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment", "GistComment"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("viewerCanUpdate", type: .nonNull(.scalar(Bool.self))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeProject(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "Project", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makeIssue(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "Issue", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makeCommitComment(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "CommitComment", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makePullRequest(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "PullRequest", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makeIssueComment(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "IssueComment", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makePullRequestReview(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "PullRequestReview", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makePullRequestReviewComment(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public static func makeGistComment(viewerCanUpdate: Bool) -> UpdatableFields {
-    return UpdatableFields(snapshot: ["__typename": "GistComment", "viewerCanUpdate": viewerCanUpdate])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// Check if the current viewer can update this object.
-  public var viewerCanUpdate: Bool {
-    get {
-      return snapshot["viewerCanUpdate"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "viewerCanUpdate")
-    }
-  }
-}
-
-public struct HeadPaging: GraphQLFragment {
-  public static let fragmentString =
-    "fragment headPaging on PageInfo {" +
-    "  __typename" +
-    "  hasPreviousPage" +
-    "  startCursor" +
-    "}"
-
-  public static let possibleTypes = ["PageInfo"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("hasPreviousPage", type: .nonNull(.scalar(Bool.self))),
-    GraphQLField("startCursor", type: .scalar(String.self)),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public init(hasPreviousPage: Bool, startCursor: String? = nil) {
-    self.init(snapshot: ["__typename": "PageInfo", "hasPreviousPage": hasPreviousPage, "startCursor": startCursor])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// When paginating backwards, are there more items?
-  public var hasPreviousPage: Bool {
-    get {
-      return snapshot["hasPreviousPage"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "hasPreviousPage")
-    }
-  }
-
-  /// When paginating backwards, the cursor to continue.
-  public var startCursor: String? {
-    get {
-      return snapshot["startCursor"]! as! String?
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "startCursor")
-    }
-  }
-}
-
 public struct ReferencedRepositoryFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment referencedRepositoryFields on RepositoryInfo {" +
-    "  __typename" +
-    "  name" +
-    "  owner {" +
-    "    __typename" +
-    "    login" +
-    "  }" +
-    "}"
+    "fragment referencedRepositoryFields on RepositoryInfo {\n  __typename\n  name\n  owner {\n    __typename\n    login\n  }\n}"
 
   public static let possibleTypes = ["Repository", "RepositoryInvitationRepository"]
 
   public static let selections: [GraphQLSelection] = [
     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
     GraphQLField("name", type: .nonNull(.scalar(String.self))),
-    GraphQLField("owner", type: .nonNull(.object(Owner.self))),
+    GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
   ]
 
   public var snapshot: Snapshot
@@ -14002,11 +13609,11 @@ public struct ReferencedRepositoryFields: GraphQLFragment {
   }
 
   public static func makeRepository(name: String, owner: Owner) -> ReferencedRepositoryFields {
-    return ReferencedRepositoryFields(snapshot: ["__typename": "Repository", "name": name, "owner": owner])
+    return ReferencedRepositoryFields(snapshot: ["__typename": "Repository", "name": name, "owner": owner.snapshot])
   }
 
   public static func makeRepositoryInvitationRepository(name: String, owner: Owner) -> ReferencedRepositoryFields {
-    return ReferencedRepositoryFields(snapshot: ["__typename": "RepositoryInvitationRepository", "name": name, "owner": owner])
+    return ReferencedRepositoryFields(snapshot: ["__typename": "RepositoryInvitationRepository", "name": name, "owner": owner.snapshot])
   }
 
   public var __typename: String {
@@ -14081,14 +13688,193 @@ public struct ReferencedRepositoryFields: GraphQLFragment {
   }
 }
 
+public struct AssigneeFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment assigneeFields on Assignable {\n  __typename\n  assignees(first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      login\n      avatarUrl\n    }\n  }\n}"
+
+  public static let possibleTypes = ["Issue", "PullRequest"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("assignees", arguments: ["first": GraphQLVariable("page_size")], type: .nonNull(.object(Assignee.selections))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public static func makeIssue(assignees: Assignee) -> AssigneeFields {
+    return AssigneeFields(snapshot: ["__typename": "Issue", "assignees": assignees.snapshot])
+  }
+
+  public static func makePullRequest(assignees: Assignee) -> AssigneeFields {
+    return AssigneeFields(snapshot: ["__typename": "PullRequest", "assignees": assignees.snapshot])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// A list of Users assigned to this object.
+  public var assignees: Assignee {
+    get {
+      return Assignee(snapshot: snapshot["assignees"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "assignees")
+    }
+  }
+
+  public struct Assignee: GraphQLSelectionSet {
+    public static let possibleTypes = ["UserConnection"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("nodes", type: .list(.object(Node.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(nodes: [Node?]? = nil) {
+      self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// A list of nodes.
+    public var nodes: [Node?]? {
+      get {
+        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+      }
+      set {
+        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+      }
+    }
+
+    public struct Node: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+        GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(login: String, avatarUrl: String) {
+        self.init(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The username used to login.
+      public var login: String {
+        get {
+          return snapshot["login"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "login")
+        }
+      }
+
+      /// A URL pointing to the user's public avatar.
+      public var avatarUrl: String {
+        get {
+          return snapshot["avatarUrl"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "avatarUrl")
+        }
+      }
+    }
+  }
+}
+
+public struct HeadPaging: GraphQLFragment {
+  public static let fragmentString =
+    "fragment headPaging on PageInfo {\n  __typename\n  hasPreviousPage\n  startCursor\n}"
+
+  public static let possibleTypes = ["PageInfo"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("hasPreviousPage", type: .nonNull(.scalar(Bool.self))),
+    GraphQLField("startCursor", type: .scalar(String.self)),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public init(hasPreviousPage: Bool, startCursor: String? = nil) {
+    self.init(snapshot: ["__typename": "PageInfo", "hasPreviousPage": hasPreviousPage, "startCursor": startCursor])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  /// When paginating backwards, are there more items?
+  public var hasPreviousPage: Bool {
+    get {
+      return snapshot["hasPreviousPage"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "hasPreviousPage")
+    }
+  }
+
+  /// When paginating backwards, the cursor to continue.
+  public var startCursor: String? {
+    get {
+      return snapshot["startCursor"] as? String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "startCursor")
+    }
+  }
+}
+
 public struct MilestoneFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment milestoneFields on Milestone {" +
-    "  __typename" +
-    "  number" +
-    "  title" +
-    "  url" +
-    "}"
+    "fragment milestoneFields on Milestone {\n  __typename\n  number\n  title\n  url\n}"
 
   public static let possibleTypes = ["Milestone"]
 
@@ -14149,407 +13935,16 @@ public struct MilestoneFields: GraphQLFragment {
   }
 }
 
-public struct LockableFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment lockableFields on Lockable {" +
-    "  __typename" +
-    "  locked" +
-    "}"
-
-  public static let possibleTypes = ["Issue", "PullRequest"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("locked", type: .nonNull(.scalar(Bool.self))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeIssue(locked: Bool) -> LockableFields {
-    return LockableFields(snapshot: ["__typename": "Issue", "locked": locked])
-  }
-
-  public static func makePullRequest(locked: Bool) -> LockableFields {
-    return LockableFields(snapshot: ["__typename": "PullRequest", "locked": locked])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// `true` if the object is locked
-  public var locked: Bool {
-    get {
-      return snapshot["locked"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "locked")
-    }
-  }
-}
-
-public struct ClosableFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment closableFields on Closable {" +
-    "  __typename" +
-    "  closed" +
-    "}"
-
-  public static let possibleTypes = ["Project", "Issue", "PullRequest"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("closed", type: .nonNull(.scalar(Bool.self))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeProject(closed: Bool) -> ClosableFields {
-    return ClosableFields(snapshot: ["__typename": "Project", "closed": closed])
-  }
-
-  public static func makeIssue(closed: Bool) -> ClosableFields {
-    return ClosableFields(snapshot: ["__typename": "Issue", "closed": closed])
-  }
-
-  public static func makePullRequest(closed: Bool) -> ClosableFields {
-    return ClosableFields(snapshot: ["__typename": "PullRequest", "closed": closed])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// `true` if the object is closed (definition of closed may depend on type)
-  public var closed: Bool {
-    get {
-      return snapshot["closed"]! as! Bool
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "closed")
-    }
-  }
-}
-
-public struct LabelableFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment labelableFields on Labelable {" +
-    "  __typename" +
-    "  labels(first: 100) {" +
-    "    __typename" +
-    "    nodes {" +
-    "      __typename" +
-    "      color" +
-    "      name" +
-    "    }" +
-    "  }" +
-    "}"
-
-  public static let possibleTypes = ["Issue", "PullRequest"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("labels", arguments: ["first": 100], type: .object(Label.self)),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeIssue(labels: Label? = nil) -> LabelableFields {
-    return LabelableFields(snapshot: ["__typename": "Issue", "labels": labels])
-  }
-
-  public static func makePullRequest(labels: Label? = nil) -> LabelableFields {
-    return LabelableFields(snapshot: ["__typename": "PullRequest", "labels": labels])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// A list of labels associated with the object.
-  public var labels: Label? {
-    get {
-      return (snapshot["labels"]! as! Snapshot?).flatMap { Label(snapshot: $0) }
-    }
-    set {
-      snapshot.updateValue(newValue?.snapshot, forKey: "labels")
-    }
-  }
-
-  public struct Label: GraphQLSelectionSet {
-    public static let possibleTypes = ["LabelConnection"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-      GraphQLField("nodes", type: .list(.object(Node.self))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(nodes: [Node?]? = nil) {
-      self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes])
-    }
-
-    public var __typename: String {
-      get {
-        return snapshot["__typename"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "__typename")
-      }
-    }
-
-    /// A list of nodes.
-    public var nodes: [Node?]? {
-      get {
-        return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-      }
-    }
-
-    public struct Node: GraphQLSelectionSet {
-      public static let possibleTypes = ["Label"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("color", type: .nonNull(.scalar(String.self))),
-        GraphQLField("name", type: .nonNull(.scalar(String.self))),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(color: String, name: String) {
-        self.init(snapshot: ["__typename": "Label", "color": color, "name": name])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      /// Identifies the label color.
-      public var color: String {
-        get {
-          return snapshot["color"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "color")
-        }
-      }
-
-      /// Identifies the label name.
-      public var name: String {
-        get {
-          return snapshot["name"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "name")
-        }
-      }
-    }
-  }
-}
-
-public struct AssigneeFields: GraphQLFragment {
-  public static let fragmentString =
-    "fragment assigneeFields on Assignable {" +
-    "  __typename" +
-    "  assignees(first: $page_size) {" +
-    "    __typename" +
-    "    nodes {" +
-    "      __typename" +
-    "      login" +
-    "      avatarUrl" +
-    "    }" +
-    "  }" +
-    "}"
-
-  public static let possibleTypes = ["Issue", "PullRequest"]
-
-  public static let selections: [GraphQLSelection] = [
-    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-    GraphQLField("assignees", arguments: ["first": Variable("page_size")], type: .nonNull(.object(Assignee.self))),
-  ]
-
-  public var snapshot: Snapshot
-
-  public init(snapshot: Snapshot) {
-    self.snapshot = snapshot
-  }
-
-  public static func makeIssue(assignees: Assignee) -> AssigneeFields {
-    return AssigneeFields(snapshot: ["__typename": "Issue", "assignees": assignees])
-  }
-
-  public static func makePullRequest(assignees: Assignee) -> AssigneeFields {
-    return AssigneeFields(snapshot: ["__typename": "PullRequest", "assignees": assignees])
-  }
-
-  public var __typename: String {
-    get {
-      return snapshot["__typename"]! as! String
-    }
-    set {
-      snapshot.updateValue(newValue, forKey: "__typename")
-    }
-  }
-
-  /// A list of Users assigned to this object.
-  public var assignees: Assignee {
-    get {
-      return Assignee(snapshot: snapshot["assignees"]! as! Snapshot)
-    }
-    set {
-      snapshot.updateValue(newValue.snapshot, forKey: "assignees")
-    }
-  }
-
-  public struct Assignee: GraphQLSelectionSet {
-    public static let possibleTypes = ["UserConnection"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-      GraphQLField("nodes", type: .list(.object(Node.self))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(nodes: [Node?]? = nil) {
-      self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes])
-    }
-
-    public var __typename: String {
-      get {
-        return snapshot["__typename"]! as! String
-      }
-      set {
-        snapshot.updateValue(newValue, forKey: "__typename")
-      }
-    }
-
-    /// A list of nodes.
-    public var nodes: [Node?]? {
-      get {
-        return (snapshot["nodes"]! as! [Snapshot?]?).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
-      }
-    }
-
-    public struct Node: GraphQLSelectionSet {
-      public static let possibleTypes = ["User"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("login", type: .nonNull(.scalar(String.self))),
-        GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(login: String, avatarUrl: String) {
-        self.init(snapshot: ["__typename": "User", "login": login, "avatarUrl": avatarUrl])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      /// The username used to login.
-      public var login: String {
-        get {
-          return snapshot["login"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "login")
-        }
-      }
-
-      /// A URL pointing to the user's public avatar.
-      public var avatarUrl: String {
-        get {
-          return snapshot["avatarUrl"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "avatarUrl")
-        }
-      }
-    }
-  }
-}
-
 public struct RepoEventFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment repoEventFields on Comment {" +
-    "  __typename" +
-    "  createdAt" +
-    "  author {" +
-    "    __typename" +
-    "    login" +
-    "  }" +
-    "}"
+    "fragment repoEventFields on Comment {\n  __typename\n  createdAt\n  author {\n    __typename\n    login\n  }\n}"
 
   public static let possibleTypes = ["Issue", "CommitComment", "PullRequest", "IssueComment", "PullRequestReview", "PullRequestReviewComment", "GistComment"]
 
   public static let selections: [GraphQLSelection] = [
     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
     GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
-    GraphQLField("author", type: .object(Author.self)),
+    GraphQLField("author", type: .object(Author.selections)),
   ]
 
   public var snapshot: Snapshot
@@ -14559,31 +13954,31 @@ public struct RepoEventFields: GraphQLFragment {
   }
 
   public static func makeIssue(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makeCommitComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "CommitComment", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "CommitComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makePullRequest(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makeIssueComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "IssueComment", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "IssueComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makePullRequestReview(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequestReview", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "PullRequestReview", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makePullRequestReviewComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequestReviewComment", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "PullRequestReviewComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public static func makeGistComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "GistComment", "createdAt": createdAt, "author": author])
+    return RepoEventFields(snapshot: ["__typename": "GistComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
   }
 
   public var __typename: String {
@@ -14608,7 +14003,7 @@ public struct RepoEventFields: GraphQLFragment {
   /// The actor who authored the comment.
   public var author: Author? {
     get {
-      return (snapshot["author"]! as! Snapshot?).flatMap { Author(snapshot: $0) }
+      return (snapshot["author"] as? Snapshot).flatMap { Author(snapshot: $0) }
     }
     set {
       snapshot.updateValue(newValue?.snapshot, forKey: "author")

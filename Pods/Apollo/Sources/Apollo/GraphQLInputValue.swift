@@ -1,8 +1,10 @@
+import Foundation
+
 public protocol GraphQLInputValue {
   func evaluate(with variables: [String: JSONEncodable]?) throws -> JSONValue
 }
 
-public struct Variable {
+public struct GraphQLVariable {
   let name: String
   
   public init(_ name: String) {
@@ -10,7 +12,7 @@ public struct Variable {
   }
 }
 
-extension Variable: GraphQLInputValue {
+extension GraphQLVariable: GraphQLInputValue {
   public func evaluate(with variables: [String: JSONEncodable]?) throws -> JSONValue {
     guard let value = variables?[name] else {
       throw GraphQLError("Variable \(name) was not provided.")
@@ -45,6 +47,27 @@ extension Dictionary {
       }
     }
     return jsonObject
+  }
+}
+
+extension Array: GraphQLInputValue {
+  public func evaluate(with variables: [String: JSONEncodable]?) throws -> JSONValue {
+    return try evaluate(with: variables) as [JSONValue]
+  }
+}
+
+extension Array {
+  public func evaluate(with variables: [String: JSONEncodable]?) throws -> [JSONValue] {
+    var jsonArray = [JSONValue]()
+    jsonArray.reserveCapacity(count)
+    for (value) in self {
+      if case let (value as GraphQLInputValue) = value {
+        jsonArray.append(try value.evaluate(with: variables))
+      } else {
+        fatalError("Array is only GraphQLInputValue if Element is")
+      }
+    }
+    return jsonArray
   }
 }
 
