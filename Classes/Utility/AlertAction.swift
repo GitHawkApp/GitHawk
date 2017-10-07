@@ -38,7 +38,7 @@ struct AlertAction {
     func share(_ items: [Any],
                activities: [UIActivity]?,
                buildActivityBlock: ((UIActivityViewController) -> Void)?) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Send To", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
