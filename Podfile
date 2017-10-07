@@ -10,7 +10,7 @@ pod 'Alamofire', '~> 4.4.0'
 pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
 pod 'SDWebImage', '~> 4.0.0'
 pod 'JDStatusBarNotification', '~> 1.5.5'
-pod 'Apollo', '~> 0.5.6'
+pod 'Apollo', '~> 0.6.5'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']

@@ -11,10 +11,6 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var pullRequest: Bool {
         return true
     }
@@ -35,16 +31,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return fragments.closableFields
     }
 
-    var locked: Bool {
-        return fragments.lockableFields.locked
-    }
-
     var assigneeFields: AssigneeFields {
         return fragments.assigneeFields
-    }
-
-    var viewerCanUpdate: Bool {
-        return fragments.updatableFields.viewerCanUpdate
     }
 
     var milestoneFields: MilestoneFields? {
