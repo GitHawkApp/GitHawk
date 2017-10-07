@@ -17,17 +17,9 @@ public extension TabmanBar {
         internal let barInsets: UIEdgeInsets
         
         /// The inset required for the top layout guide (UINavigationBar etc.).
-        @available(*, deprecated: 1.0.1, message: "Use safeAreaInsets")
-        public var topLayoutGuide: CGFloat {
-            return safeAreaInsets.top
-        }
+        public let topLayoutGuide: CGFloat
         /// The inset required for the bottom layout guide (UITabBar etc.).
-        @available(*, deprecated: 1.0.1, message: "Use safeAreaInsets")
-        public var bottomLayoutGuide: CGFloat {
-            return safeAreaInsets.bottom
-        }
-        /// The insets that determine the safe area for the view controller view.
-        public let safeAreaInsets: UIEdgeInsets
+        public let bottomLayoutGuide: CGFloat
         /// The inset required for the bar.
         public var bar: CGFloat {
             return max(barInsets.top, barInsets.bottom)
@@ -38,8 +30,8 @@ public extension TabmanBar {
         /// This takes topLayoutGuide, bottomlayoutGuide and the bar height into account.
         /// Set on a UIScrollView's contentInset to manually inset the contents.
         public var all: UIEdgeInsets {
-            let top = safeAreaInsets.top + barInsets.top
-            let bottom = safeAreaInsets.bottom + barInsets.bottom
+            let top = topLayoutGuide + barInsets.top
+            let bottom = bottomLayoutGuide + barInsets.bottom
             
             if barInsets.top > 0.0 {
                 return UIEdgeInsetsMake(top, 0.0, 0.0, 0.0)
@@ -50,14 +42,17 @@ public extension TabmanBar {
         
         // MARK: Init
         
-        internal init(safeAreaInsets: UIEdgeInsets,
+        internal init(topLayoutGuide: CGFloat,
+                      bottomLayoutGuide: CGFloat,
                       bar: UIEdgeInsets) {
-            self.safeAreaInsets = safeAreaInsets
+            self.topLayoutGuide = topLayoutGuide
+            self.bottomLayoutGuide = bottomLayoutGuide
             self.barInsets = bar
         }
         
         internal init() {
-            self.init(safeAreaInsets: .zero,
+            self.init(topLayoutGuide: 0.0,
+                      bottomLayoutGuide: 0.0,
                       bar: .zero)
         }
         

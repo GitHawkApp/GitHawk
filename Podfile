@@ -4,22 +4,28 @@ platform :ios, '10.0'
 use_frameworks!
 inhibit_all_warnings!
 
-pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
-pod 'SnapKit', '~> 4.0.0'
+# normal pods
 pod 'Alamofire', '~> 4.4.0'
 pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
-pod 'SDWebImage', '~> 4.0.0'
-pod 'JDStatusBarNotification', '~> 1.5.5'
 pod 'Apollo', '~> 0.7.0-alpha.5'
-pod 'TUSafariActivity', '~> 1.0.0'
-pod 'NYTPhotoViewer', '~> 1.1.0'
-pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'HTMLString', '~> 4.0.1'
-pod 'Tabman', '~> 1.0'
+pod 'JDStatusBarNotification', '~> 1.5.5'
+pod 'NYTPhotoViewer', '~> 1.1.0'
+pod 'SDWebImage', '~> 4.0.0'
+pod 'SnapKit', '~> 4.0.0'
+pod 'Tabman', '1.0.1'
+pod 'TUSafariActivity', '~> 1.0.0'
+
+# prerelease pods
+pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
+
+# debugging pods
+pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
+
+# local pods w/ custom changes
+pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
-pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
-
 
 target 'Freetime' do
 

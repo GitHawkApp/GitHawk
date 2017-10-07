@@ -30,7 +30,7 @@ PODS:
   - SlackTextViewController (1.9.5)
   - SnapKit (4.0.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.0.2):
+  - Tabman (1.0.1):
     - Pageboy (~> 2.0.0)
     - PureLayout (~> 3.0.0)
   - TUSafariActivity (1.0.4)
@@ -49,7 +49,7 @@ DEPENDENCIES:
   - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
-  - Tabman (~> 1.0)
+  - Tabman (= 1.0.1)
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
@@ -85,9 +85,9 @@ SPEC CHECKSUMS:
   SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 558bede024627206c554e1c8cee728d380655ebf
+  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: ebc1dff6855c96749c17cd0e61da619b2f8162a7
+PODFILE CHECKSUM: 18e5831c4dab12d0e03417d31ce60de4bb0bdca8
 
 COCOAPODS: 1.4.0.beta.1
