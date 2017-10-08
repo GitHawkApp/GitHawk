@@ -258,7 +258,7 @@ TabNavRootViewControllerType {
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        self.searchQuery = query
+        self.searchQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         update(dismissRefresh: false)
     }
 
