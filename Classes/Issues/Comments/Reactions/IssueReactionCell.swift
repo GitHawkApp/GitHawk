@@ -117,7 +117,7 @@ final class IssueReactionCell: UICollectionViewCell {
     @objc
     func showMenu(recognizer: UITapGestureRecognizer) {
         guard recognizer.state == .began,
-            detailText.characters.count > 0 else { return }
+            !detailText.isEmpty else { return }
 
         becomeFirstResponder()
 
