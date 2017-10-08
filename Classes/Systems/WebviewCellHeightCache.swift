@@ -11,7 +11,7 @@ import IGListKit
 
 final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
 
-    private var htmlSizes = [String: CGSize]()
+    private static let cache = WidthCache<String, CGSize>()
     private weak var sectionController: ListSectionController? = nil
 
     init(sectionController: ListSectionController) {
@@ -20,19 +20,20 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
 
     // MARK: Public API
 
-    func height(model: IssueCommentHtmlModel) -> CGFloat {
-        return htmlSizes[model.html]?.height ?? Styles.Sizes.tableCellHeight
+    func height(model: IssueCommentHtmlModel, width: CGFloat) -> CGFloat {
+        return WebviewCellHeightCache.cache.data(key: model.html, width: width)?.height
+            ?? Styles.Sizes.tableCellHeight
     }
 
     // MARK: IssueCommentHtmlCellDelegate
 
-    func webViewDidResize(cell: IssueCommentHtmlCell, html: String, size: CGSize) {
+    func webViewDidResize(cell: IssueCommentHtmlCell, html: String, cellWidth: CGFloat, size: CGSize) {
         guard let sectionController = self.sectionController,
             sectionController.section != NSNotFound,
-            size != htmlSizes[html]
+            size != WebviewCellHeightCache.cache.data(key: html, width: cellWidth)
             else { return }
 
-        htmlSizes[html] = size
+        WebviewCellHeightCache.cache.set(data: size, key: html, width: cellWidth)
 
         UIView.performWithoutAnimation {
             sectionController.collectionContext?.invalidateLayout(for: sectionController)
