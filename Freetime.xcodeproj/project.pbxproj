@@ -323,6 +323,9 @@
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
+		7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */; };
+		7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */; };
+		7BF841301F8A919E004B9CDC /* NotificationViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */; };
 		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
 		98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */; };
 		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
@@ -651,6 +654,9 @@
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
+		7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
+		7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
+		7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationViewModel+Filter.swift"; sourceTree = "<group>"; };
 		94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		984D9CA81F212ADF00ECEA7F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
@@ -1187,6 +1193,7 @@
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7BBFEE551F8A8A0400C68E47 /* SearchBar */,
 				29DA1E7C1F5DF2960050C64B /* LoadMore */,
 				298BA0941EC947F100B01946 /* SegmentedControl */,
 			);
@@ -1364,6 +1371,7 @@
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
+				7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1405,6 +1413,15 @@
 				29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */,
 			);
 			path = Labeled;
+			sourceTree = "<group>";
+		};
+		7BBFEE551F8A8A0400C68E47 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */,
+				7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */,
+			);
+			path = SearchBar;
 			sourceTree = "<group>";
 		};
 		986B87171F2B873200AAB55C /* Search */ = {
@@ -1839,6 +1856,7 @@
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
 				299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				7BF841301F8A919E004B9CDC /* NotificationViewModel+Filter.swift in Sources */,
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
@@ -1888,6 +1906,7 @@
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
+				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
@@ -2103,6 +2122,7 @@
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
+				7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */,
 				4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
