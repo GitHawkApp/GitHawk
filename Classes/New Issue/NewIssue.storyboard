@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -66,8 +65,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="eBF-MA-viM" secondAttribute="trailing" constant="16" id="08O-4V-KE7"/>
                                                 <constraint firstItem="eBF-MA-viM" firstAttribute="leading" secondItem="cRk-FX-ieU" secondAttribute="leading" constant="16" id="Oce-XS-DCR"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="eBF-MA-viM" secondAttribute="bottom" id="cUW-rn-BWR"/>
-                                                <constraint firstItem="eBF-MA-viM" firstAttribute="top" secondItem="cRk-FX-ieU" secondAttribute="topMargin" id="t4f-1g-aUB"/>
+                                                <constraint firstAttribute="bottom" secondItem="eBF-MA-viM" secondAttribute="bottom" constant="8" id="cUW-rn-BWR"/>
+                                                <constraint firstItem="eBF-MA-viM" firstAttribute="top" secondItem="cRk-FX-ieU" secondAttribute="top" constant="8" id="t4f-1g-aUB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
