@@ -20,7 +20,7 @@ extension IssueTextActionsView {
         let operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak viewController] in
                 let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
-                viewController?.showDetailViewController(controller, sender: nil)
+                viewController?.navigationController?.pushViewController(controller, animated: true)
             })),
             IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
             IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),

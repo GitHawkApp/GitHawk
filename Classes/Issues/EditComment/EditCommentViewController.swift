@@ -51,7 +51,8 @@ class EditCommentViewController: UIViewController {
             action: #selector(EditCommentViewController.onCancel)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .save,
+            title: NSLocalizedString("Save", comment: ""),
+            style: .done,
             target: self,
             action: #selector(EditCommentViewController.onSave)
         )
@@ -97,7 +98,8 @@ class EditCommentViewController: UIViewController {
         cancelAction_onCancel(
             texts: [textView.text],
             title: NSLocalizedString("Unsaved Changes", comment: ""),
-            message: NSLocalizedString("Are you sure you want to discard your edit? Your changes will be lost.", comment: "")
+            message: NSLocalizedString("Are you sure you want to discard your edit? Your changes will be lost.",
+                                       comment: "")
         )
     }
 
