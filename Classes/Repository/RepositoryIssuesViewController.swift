@@ -14,11 +14,13 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource {
+class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource, SearchBarSectionControllerDelegate {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
+    private let searchKey: ListDiffable = "searchKey" as ListDiffable
+    private var searchQuery: String = ""
 
     init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
         self.repo = repo
@@ -49,7 +51,34 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
-    // MARK: Overides
+    // MARK: Issue filtering
+
+    func filter(_ items: [ListDiffable], _ query: String) -> [ListDiffable] {
+        guard !query.isEmpty else {  return items }
+
+        let searchText = query.lowercased()
+
+        return items.filter { item -> Bool in
+            // If every non RepositoryIssueSummaryModel type will never be filtered as they can be the head models
+            guard let summaryModel = item as? RepositoryIssueSummaryModel else { return true }
+
+            // Check if the query is numeric, if so search the issue number
+            if query.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil {
+                let ticketNumber = String(summaryModel.number)
+                return ticketNumber.contains(searchText)
+            }
+
+            let author = summaryModel.author.lowercased()
+            if author.contains(searchText) { return true }
+
+            let title = summaryModel.title.attributedText.string.lowercased()
+            if title.contains(searchText) { return true }
+
+            return false
+        }
+    }
+
+    // MARK: Overrides
 
     override func fetch(page: NSString?) {
         let width = view.bounds.width
@@ -73,13 +102,32 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
+    override func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        let allObjects = super.objects(for: listAdapter)
+        switch type {
+        case .issues: return filter(allObjects, self.searchQuery)
+        case .pullRequests: return filter(allObjects, self.searchQuery)
+        }
+    }
+
+    // MARK: SearchBarSectionControllerDelegate
+
+    func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
+        self.searchQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.performUpdate()
+    }
+
     // MARK: BaseListViewControllerDataSource
 
     func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
+        return [searchKey]
     }
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        if let object = model as? ListDiffable, object === searchKey {
+            let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
+            return SearchBarSectionController(placeholder: NSLocalizedString("Search", comment: ""), delegate: self, height: searchBarHeight)
+        }
         return RepositorySummarySectionController(client: client.githubClient, repo: repo)
     }
 
@@ -96,5 +144,4 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
             type: empty
         )
     }
-
 }
