@@ -34,15 +34,9 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
 
         htmlSizes[html] = size
 
-        // temporary hack until this PR lands
-        // https://github.com/Instagram/IGListKit/pull/931
-
-        let layout = (sectionController.collectionContext as! ListAdapter).collectionView?.collectionViewLayout
-        layout?.invalidateLayout()
-
-//        UIView.performWithoutAnimation {
-//            sectionController.collectionContext?.invalidateLayout(for: sectionController)
-//        }
+        UIView.performWithoutAnimation {
+            sectionController.collectionContext?.invalidateLayout(for: sectionController)
+        }
     }
 
 }
