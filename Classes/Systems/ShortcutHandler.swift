@@ -10,6 +10,10 @@ import Foundation
 
 struct ShortcutHandler {
 
+    private struct Constants {
+        static let searchViewControllerIndex = 1
+    }
+
     private enum Items: String {
         case search
         case switchAccount
@@ -25,18 +29,17 @@ struct ShortcutHandler {
         let itemType = Items(rawValue: item.type)
         switch itemType {
         case .some(.search):
-            navigationManager.selectViewController(atIndex: 1)
-            break
+            navigationManager.selectViewController(atIndex: Constants.searchViewControllerIndex)
+            return true
         case .some(.switchAccount):
             if let index = item.userInfo?["sessionIndex"] as? Int {
                 let session = sessionManager.userSessions[index]
                 sessionManager.focus(session, dismiss: false)
             }
-            break
+            return true
         default:
             return false
         }
-        return true
     }
 
     private static func generateItems(sessionManager: GithubSessionManager) -> [UIApplicationShortcutItem] {
