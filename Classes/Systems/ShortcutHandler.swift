@@ -26,19 +26,17 @@ struct ShortcutHandler {
     static func handle(shortcutItem item: UIApplicationShortcutItem,
                        sessionManager: GithubSessionManager,
                        navigationManager: RootNavigationManager) -> Bool {
-        let itemType = Items(rawValue: item.type)
+        guard let itemType = Items(rawValue: item.type) else { return false }
         switch itemType {
-        case .some(.search):
+        case .search:
             navigationManager.selectViewController(atIndex: Constants.searchViewControllerIndex)
             return true
-        case .some(.switchAccount):
+        case .switchAccount:
             if let index = item.userInfo?["sessionIndex"] as? Int {
                 let session = sessionManager.userSessions[index]
                 sessionManager.focus(session, dismiss: false)
             }
             return true
-        default:
-            return false
         }
     }
 
