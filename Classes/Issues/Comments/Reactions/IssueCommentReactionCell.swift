@@ -127,27 +127,35 @@ UICollectionViewDelegateFlowLayout {
     }
 
     @objc private func onThumbsUp() {
-        delegate?.didAdd(cell: self, reaction: .thumbsUp)
+        addOrRemove(reaction: .thumbsUp)
     }
 
     @objc private func onThumbsDown() {
-        delegate?.didAdd(cell: self, reaction: .thumbsDown)
+        addOrRemove(reaction: .thumbsDown)
     }
 
     @objc private func onLaugh() {
-        delegate?.didAdd(cell: self, reaction: .laugh)
+        addOrRemove(reaction: .laugh)
     }
 
     @objc private func onHooray() {
-        delegate?.didAdd(cell: self, reaction: .hooray)
+        addOrRemove(reaction: .hooray)
     }
 
     @objc private func onConfused() {
-        delegate?.didAdd(cell: self, reaction: .confused)
+        addOrRemove(reaction: .confused)
     }
 
     @objc private func onHeart() {
-        delegate?.didAdd(cell: self, reaction: .heart)
+        addOrRemove(reaction: .heart)
+    }
+
+    func addOrRemove(reaction: ReactionContent) {
+        if let didReact = reactions.first(where: { $0.content == reaction })?.viewerDidReact, didReact == true {
+            delegate?.didRemove(cell: self, reaction: reaction)
+        } else {
+            delegate?.didAdd(cell: self, reaction: reaction)
+        }
     }
 
     func configure(cell: IssueReactionCell, model: ReactionViewModel) {
