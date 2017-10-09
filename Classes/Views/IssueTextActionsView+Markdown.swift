@@ -34,9 +34,9 @@ extension IssueTextActionsView {
             ]
         let actions = IssueTextActionsView(operations: operations)
         actions.backgroundColor = Styles.Colors.Gray.lighter.color
-        actions.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
         if addBorder {
             actions.addBorder(.top)
+            actions.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
         }
         return actions
     }

@@ -91,6 +91,7 @@ class EditCommentViewController: UIViewController {
             addBorder: true
         )
         textActionsController.configure(textView: textView, actions: actions)
+        textView.inputAccessoryView = actions
     }
 
     @objc

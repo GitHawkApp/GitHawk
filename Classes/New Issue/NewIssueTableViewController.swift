@@ -179,6 +179,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             addBorder: true
         )
         textActionsController.configure(textView: bodyField, actions: actions)
+        bodyField.inputAccessoryView = actions
     }
     
     // MARK: UITextFieldDelegate

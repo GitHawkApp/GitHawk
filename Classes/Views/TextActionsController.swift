@@ -17,7 +17,6 @@ final class TextActionsController: IssueTextActionsViewDelegate {
     func configure(textView: UITextView, actions: IssueTextActionsView) {
         self.textView = textView
         actions.delegate = self
-        textView.inputAccessoryView = actions
     }
 
     // MARK: IssueTextActionsViewDelegate
