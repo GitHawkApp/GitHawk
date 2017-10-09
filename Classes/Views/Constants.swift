@@ -1,5 +1,5 @@
 //
-//  Strings.swift
+//  Constants.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/15/17.
@@ -8,7 +8,13 @@
 
 import Foundation
 
-enum Strings {
+enum Constants {
+
+    enum URLs {
+        static let repository = "https://github.com/rnystrom/GitHawk/"
+        static let website = "http://www.githawk.com/"
+        static let blog = "http://blog.githawk.com/"
+    }
 
     static let all = NSLocalizedString("All", comment: "")
     static let unread = NSLocalizedString("Unread", comment: "")
@@ -19,7 +25,9 @@ enum Strings {
     static let signin = NSLocalizedString("Sign In", comment: "")
     static let signout = NSLocalizedString("Sign out", comment: "")
     static let open = NSLocalizedString("Open", comment: "")
+    static let close = NSLocalizedString("Close", comment: "")
     static let closed = NSLocalizedString("Closed", comment: "")
+    static let reopen = NSLocalizedString("Reopen", comment: "")
     static let reopened = NSLocalizedString("Reopened", comment: "")
     static let unknown = NSLocalizedString("Unknown", comment: "")
     static let merged = NSLocalizedString("Merged", comment: "")

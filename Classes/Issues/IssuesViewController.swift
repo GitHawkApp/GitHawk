@@ -327,7 +327,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,

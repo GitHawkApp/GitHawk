@@ -91,7 +91,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         // Add cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: Constants.cancel,
             style: .plain,
             target: self,
             action: #selector(onCancel)
