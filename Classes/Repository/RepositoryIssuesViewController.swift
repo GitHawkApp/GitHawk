@@ -51,33 +51,6 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
-    // MARK: Issue filtering
-
-    func filter(_ items: [ListDiffable], _ query: String) -> [ListDiffable] {
-        guard !query.isEmpty else {  return items }
-
-        let searchText = query.lowercased()
-
-        return items.filter { item -> Bool in
-            // If every non RepositoryIssueSummaryModel type will never be filtered as they can be the head models
-            guard let summaryModel = item as? RepositoryIssueSummaryModel else { return true }
-
-            // Check if the query is numeric, if so search the issue number
-            if query.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil {
-                let ticketNumber = String(summaryModel.number)
-                return ticketNumber.contains(searchText)
-            }
-
-            let author = summaryModel.author.lowercased()
-            if author.contains(searchText) { return true }
-
-            let title = summaryModel.title.attributedText.string.lowercased()
-            if title.contains(searchText) { return true }
-
-            return false
-        }
-    }
-
     // MARK: Overrides
 
     override func fetch(page: NSString?) {
@@ -105,8 +78,8 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
     override func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let allObjects = super.objects(for: listAdapter)
         switch type {
-        case .issues: return filter(allObjects, self.searchQuery)
-        case .pullRequests: return filter(allObjects, self.searchQuery)
+        case .issues: return filterIssues(allObjects, self.searchQuery)
+        case .pullRequests: return filterIssues(allObjects, self.searchQuery)
         }
     }
 
