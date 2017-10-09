@@ -127,30 +127,30 @@ UICollectionViewDelegateFlowLayout {
     }
 
     @objc private func onThumbsUp() {
-        addOrRemove(reaction: .thumbsUp)
+        toggle(reaction: .thumbsUp)
     }
 
     @objc private func onThumbsDown() {
-        addOrRemove(reaction: .thumbsDown)
+        toggle(reaction: .thumbsDown)
     }
 
     @objc private func onLaugh() {
-        addOrRemove(reaction: .laugh)
+        toggle(reaction: .laugh)
     }
 
     @objc private func onHooray() {
-        addOrRemove(reaction: .hooray)
+        toggle(reaction: .hooray)
     }
 
     @objc private func onConfused() {
-        addOrRemove(reaction: .confused)
+        toggle(reaction: .confused)
     }
 
     @objc private func onHeart() {
-        addOrRemove(reaction: .heart)
+        toggle(reaction: .heart)
     }
 
-    func addOrRemove(reaction: ReactionContent) {
+    func toggle(reaction: ReactionContent) {
         if let didReact = reactions.first(where: { $0.content == reaction })?.viewerDidReact, didReact == true {
             delegate?.didRemove(cell: self, reaction: reaction)
         } else {
