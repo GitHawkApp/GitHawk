@@ -12,17 +12,17 @@ extension UIColor {
 
     // http://stackoverflow.com/a/27203691/940936
     public static func fromHex(_ hex: String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
-        if (cString.hasPrefix("#")) {
+        if cString.hasPrefix("#") {
             cString.remove(at: cString.startIndex)
         }
 
-        if ((cString.characters.count) != 6) {
-            return UIColor.gray
+        if cString.count != 6 {
+            return .gray
         }
 
-        var rgbValue:UInt32 = 0
+        var rgbValue: UInt32 = 0
         Scanner(string: cString).scanHexInt32(&rgbValue)
 
         return UIColor(

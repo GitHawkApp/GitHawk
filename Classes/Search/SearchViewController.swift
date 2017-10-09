@@ -166,7 +166,7 @@ SearchResultSectionControllerDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            term.characters.isEmpty else { return }
+            term.isEmpty else { return }
         
         state = .idle
         update(animated: false)
@@ -179,8 +179,7 @@ SearchResultSectionControllerDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            term.characters.count > 0
-            else { return }
+            !term.isEmpty else { return }
         search(term: term)
     }
 

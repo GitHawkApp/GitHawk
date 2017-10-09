@@ -141,7 +141,7 @@ func createQuoteModel(
 
 func substringOrNewline(text: String, range: NSRange) -> String {
     let substring = text.substring(with: range) ?? ""
-    if substring.characters.count > 0 {
+    if !substring.isEmpty {
         return substring
     } else {
         return newlineString
@@ -171,7 +171,7 @@ func createModel(
         return CreateTable(element: element, markdown: markdown)
     case .HTML:
         guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
-            html.characters.count > 0
+            !html.isEmpty
             else { return nil }
         
         let baseURL: URL?
