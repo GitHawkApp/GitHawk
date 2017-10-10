@@ -83,6 +83,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return viewController
     }
     
+    deinit {
+        titleField.removeTarget(self, action: nil, for: .editingChanged)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
