@@ -99,6 +99,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         // Make the return button move on to description field
         titleField.delegate = self
+        titleField.addTarget(
+            self,
+            action: #selector(NewIssueTableViewController.textFieldEditingChanged),
+            for: .editingChanged
+        )
         
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
@@ -123,6 +128,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onSend)
         )
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
@@ -188,6 +194,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyField.becomeFirstResponder()
         return false
+    }
+    
+    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    @objc
+    func textFieldEditingChanged(_ textField: UITextField) {
+        navigationItem.rightBarButtonItem?.isEnabled = textField.hasText
     }
 
 }
