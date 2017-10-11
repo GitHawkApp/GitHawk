@@ -262,6 +262,13 @@
 		29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */; };
 		29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */; };
 		29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
+		29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */; };
+		29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */; };
+		29AF1E861F8AADD00008A0EF /* UIViewController+CancelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E851F8AADD00008A0EF /* UIViewController+CancelAction.swift */; };
+		29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E871F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift */; };
+		29AF1E8A1F8AB1C30008A0EF /* TextActionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */; };
+		29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */; };
+		29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */; };
 		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C167671ECA005500439D62 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Strings.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
@@ -590,6 +597,13 @@
 		29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Overlay.swift"; sourceTree = "<group>"; };
 		29A476B11ED24D99005D0953 /* IssueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTests.swift; sourceTree = "<group>"; };
 		29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerDelegate.swift; sourceTree = "<group>"; };
+		29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
+		29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+GitHawk.swift"; sourceTree = "<group>"; };
+		29AF1E851F8AADD00008A0EF /* UIViewController+CancelAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CancelAction.swift"; sourceTree = "<group>"; };
+		29AF1E871F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueTextActionsView+Markdown.swift"; sourceTree = "<group>"; };
+		29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextActionsController.swift; sourceTree = "<group>"; };
+		29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeDirectoryViewController.swift; sourceTree = "<group>"; };
+		29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFile.swift; sourceTree = "<group>"; };
 		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -792,6 +806,7 @@
 				292FCAC81EDFCC510026635E /* Comments */,
 				293A45A01F29953800DD1006 /* Commit */,
 				292CD3B91F0AF26900D3D57B /* DiffHunk */,
+				29AF1E801F8AAB1D0008A0EF /* EditComment */,
 				291929431F3EAAAF0012067B /* Files */,
 				29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */,
 				294563EB1EE5012100DBCD35 /* Issue+IssueType.swift */,
@@ -1249,6 +1264,7 @@
 				292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */,
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
 				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
+				29AF1E851F8AADD00008A0EF /* UIViewController+CancelAction.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1265,6 +1281,7 @@
 				291929541F3FAADF0012067B /* FeedRefresh.swift */,
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
+				29AF1E871F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift */,
 				98835BD11F1A158D005BA24F /* LabelCell.swift */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
 				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
@@ -1281,8 +1298,10 @@
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */,
+				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1319,6 +1338,14 @@
 				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
 			);
 			path = SegmentedControl;
+			sourceTree = "<group>";
+		};
+		29AF1E801F8AAB1D0008A0EF /* EditComment */ = {
+			isa = PBXGroup;
+			children = (
+				29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */,
+			);
+			path = EditComment;
 			sourceTree = "<group>";
 		};
 		29C1677B1ECA1CED00439D62 /* Settings */ = {
@@ -1450,6 +1477,8 @@
 				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
 				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
 				2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */,
+				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
+				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1857,6 +1886,7 @@
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
+				29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */,
 				291929611F3FD2960012067B /* DiffString.swift in Sources */,
 				290744B51F250A6800FD9E48 /* EmojiAutocomplete.swift in Sources */,
 				29C167691ECA016500439D62 /* EmptyView.swift in Sources */,
@@ -1882,6 +1912,7 @@
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
+				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
 				297403D91F18545A00ABA95A /* IssueAssigneesSectionController.swift in Sources */,
@@ -1900,6 +1931,7 @@
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
 				292FCAFB1EDFCC510026635E /* IssueCommentImageCell.swift in Sources */,
+				29AF1E8A1F8AB1C30008A0EF /* TextActionsController.swift in Sources */,
 				292FCAFC1EDFCC510026635E /* IssueCommentImageModel.swift in Sources */,
 				292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */,
 				292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */,
@@ -1937,6 +1969,7 @@
 				292FCB141EDFCC510026635E /* IssueLabelsModel.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				292FCB161EDFCC510026635E /* IssueLabelSummaryCell.swift in Sources */,
+				29AF1E861F8AADD00008A0EF /* UIViewController+CancelAction.swift in Sources */,
 				292FCB171EDFCC510026635E /* IssueLabelSummaryModel.swift in Sources */,
 				2908C5891F6F3EB00071C39D /* IssueLocalReaction.swift in Sources */,
 				2931892B1F5397E400EF0911 /* IssueMilestoneCell.swift in Sources */,
@@ -2037,6 +2070,7 @@
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
+				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
 				2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */,
@@ -2059,11 +2093,13 @@
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
 				29DA1E881F5E2B8A0050C64B /* SearchRecentHeaderCell.swift in Sources */,
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
+				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
 				986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */,
 				986B87251F2B990A00AAB55C /* SearchRepoResultCell.swift in Sources */,
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
+				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
