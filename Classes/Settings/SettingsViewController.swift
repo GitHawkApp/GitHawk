@@ -49,6 +49,11 @@ NewIssueTableViewControllerDelegate {
             name: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil
         )
+
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.largeTitleDisplayMode = .automatic
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
