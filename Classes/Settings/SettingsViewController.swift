@@ -54,7 +54,7 @@ NewIssueTableViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
-        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.unknown
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
         client?.fetchAPIStatus { [weak self] result in
             self?.update(statusResult: result)
         }
@@ -122,7 +122,7 @@ NewIssueTableViewControllerDelegate {
         alert.addActions([
             AlertAction.cancel(),
             AlertAction(AlertActionBuilder {
-                $0.title = Constants.signout
+                $0.title = Constants.Strings.signout
                 $0.style = .destructive
             }).get { [weak self] _ in
                 self?.signout()

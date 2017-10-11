@@ -83,19 +83,19 @@ struct AlertAction {
     // MARK: - Static
     
     static func cancel(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Constants.cancel, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: handler)
     }
     
     static func ok(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Constants.ok, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.ok, style: .default, handler: handler)
     }
     
     static func no(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Constants.no, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.no, style: .cancel, handler: handler)
     }
     
     static func yes(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Constants.yes, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.yes, style: .default, handler: handler)
     }
     
     static func goBack(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -108,14 +108,14 @@ struct AlertAction {
     
     static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let title = status == .open
-            ? Constants.close
-            : Constants.reopen
+            ? Constants.Strings.close
+            : Constants.Strings.reopen
         
         return UIAlertAction(title: title, style: .default, handler: handler)
     }
     
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Constants.signin, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {

@@ -11,11 +11,11 @@ import Foundation
 extension SegmentedControlModel {
 
     static func forNotifications() -> SegmentedControlModel {
-        return SegmentedControlModel(items: [Constants.unread, Constants.all])
+        return SegmentedControlModel(items: [Constants.Strings.unread, Constants.Strings.all])
     }
 
     var unreadSelected: Bool {
-        return items[selectedIndex] == Constants.unread
+        return items[selectedIndex] == Constants.Strings.unread
     }
 
 }
