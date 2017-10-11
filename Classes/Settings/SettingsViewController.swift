@@ -209,8 +209,6 @@ NewIssueTableViewControllerDelegate {
 	private func style() {
 		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
 			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
-
-        signOutCell.textLabel?.textColor = Styles.Colors.Red.medium.color
 	}
 
     @IBAction func onSignature(_ sender: Any) {
