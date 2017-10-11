@@ -6,8 +6,6 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-// BuddyBuild requires a source change to build, will remove
-
 import Foundation
 
 protocol AddCommentListener: class {
