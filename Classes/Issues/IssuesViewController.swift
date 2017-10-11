@@ -389,21 +389,20 @@ IssueCommentSectionControllerDelegate {
             objects.append(rootComment)
         }
         
-        objects += current.timelineViewModels.filter({ (model) -> Bool in
-            // Allow any model which is not a comment model
-            guard let commentModel = model as? IssueCommentModel, let number = commentModel.number else { return true }
-            
-            // Only allow the model if the number is not in the deleted comments list
-            return !deletedComments.contains(number)
-        })
-        
+        objects += current.timelineViewModels
         objects += sentComments
 
         if let event = localStatusChange?.event {
             objects.append(event)
         }
 
-        return objects
+        return objects.filter({ (model) -> Bool in
+            // Allow any model which is not a comment model
+            guard let commentModel = model as? IssueCommentModel, let number = commentModel.number else { return true }
+            
+            // Only allow the model if the number is not in the deleted comments list
+            return !deletedComments.contains(number)
+        })
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {

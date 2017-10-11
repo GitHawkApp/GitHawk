@@ -191,7 +191,7 @@ extension GithubClient {
             if response.response?.statusCode == 204 {
                 completion(.success(true))
             } else {
-                completion(.error(nil))
+                completion(.error(response.error))
             }
         }))
     }
