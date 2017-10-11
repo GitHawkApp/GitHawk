@@ -103,7 +103,7 @@ struct AlertAction {
     }
     
     static func discard(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .default, handler: handler)
+        return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: handler)
     }
     
     static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -111,7 +111,7 @@ struct AlertAction {
             ? NSLocalizedString("Close", comment: "")
             : NSLocalizedString("Reopen", comment: "")
         
-        return UIAlertAction(title: title, style: .default, handler: handler)
+        return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -119,7 +119,7 @@ struct AlertAction {
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .default, handler: handler)
+        return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .destructive, handler: handler)
     }
     
 }

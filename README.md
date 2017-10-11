@@ -1,8 +1,10 @@
 # GitHawk
 
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59d904ff8588d60001729c4e&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59d904ff8588d60001729c4e/build/latest?branch=master)
+
 The simplest way to **read** and **respond** to your GitHub notifications on iOS.
 
-<a href=https://itunes.apple.com/app/githawk-for-github/id1252320249><img src=app-store-badge.png width=250></a>
+<a href=https://itunes.apple.com/app/githawk-for-github/id1252320249><img src=Design/app-store-badge.png width=250></a>
 
 ## What
 

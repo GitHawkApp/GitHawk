@@ -260,7 +260,7 @@ UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
-        let modifier = CGFloat(reactions[indexPath.item].count.description.characters.count - 1)
+        let modifier = CGFloat(reactions[indexPath.item].count.description.count - 1)
         return CGSize(width: 50 + modifier * 5, height: collectionView.bounds.height)
     }
 

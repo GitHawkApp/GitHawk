@@ -40,9 +40,6 @@ AttributedStringViewIssueDelegate {
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
 
-    // set and reload to enter "editing" UI mode
-    private var editing = false
-
     init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
         self.model = model
         self.client = client
@@ -79,8 +76,17 @@ AttributedStringViewIssueDelegate {
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
 
-    func edit() -> UIAlertAction? {
-        return nil
+    func edit(sender: UIView) -> UIAlertAction? {
+        guard object?.viewerCanUpdate == true else { return nil }
+        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
+            guard let markdown = self?.object?.rawMarkdown,
+                let owner = self?.model.owner,
+                let repo = self?.model.repo
+                else { return }
+            let edit = EditCommentViewController(markdown: markdown, owner: owner, repo: repo)
+            let nav = UINavigationController(rootViewController: edit)
+            self?.viewController?.present(nav, animated: true, completion: nil)
+        })
     }
 
     @discardableResult
