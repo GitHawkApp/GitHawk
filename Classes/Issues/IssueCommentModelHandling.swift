@@ -26,7 +26,7 @@ func BodyHeightForComment(
     } else if viewModel is IssueCommentHrModel {
         return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
     } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {
-        return cache.height(model: viewModel)
+        return cache.height(model: viewModel, width: width)
     } else if let viewModel = viewModel as? IssueCommentTableModel {
         let inset = IssueCommentTableCell.inset
         return viewModel.rowHeights.reduce(0) { $0 + $1 } + inset.top + inset.bottom

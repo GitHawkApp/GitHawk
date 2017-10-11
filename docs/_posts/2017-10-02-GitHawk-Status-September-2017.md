@@ -1,5 +1,6 @@
 ---
 layout: post
+author: ryannystrom
 title: GitHawk Stats - September 2017
 ---
 

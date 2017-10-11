@@ -11,7 +11,8 @@ import IGListKit
 
 final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
 
-    private var sizes = [URL: CGSize]()
+    // width is unused since the full size of the image is stored
+    private static let cache = WidthCache<URL, CGSize>()
     private weak var sectionController: ListSectionController? = nil
 
     init(sectionController: ListSectionController) {
@@ -21,7 +22,7 @@ final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
     // MARK: Public API
 
     func height(model: IssueCommentImageModel, width: CGFloat) -> CGFloat {
-        guard let size = sizes[model.url] else { return 200 }
+        guard let size = ImageCellHeightCache.cache.data(key: model.url, width: 0) else { return 200 }
         let ratio = size.width / size.height
         return ceil(width / ratio)
     }
@@ -31,16 +32,14 @@ final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
     func imageDidFinishLoad(cell: IssueCommentImageCell, url: URL, size: CGSize) {
         guard let sectionController = self.sectionController,
             sectionController.section != NSNotFound,
-            size != sizes[url]
+            size != ImageCellHeightCache.cache.data(key: url, width: 0)
             else { return }
 
-        sizes[url] = size
+        ImageCellHeightCache.cache.set(data: size, key: url, width: 0)
 
-        // temporary hack until this PR lands
-        // https://github.com/Instagram/IGListKit/pull/931
-
-        let layout = (sectionController.collectionContext as! ListAdapter).collectionView?.collectionViewLayout
-        layout?.invalidateLayout()
+        UIView.performWithoutAnimation {
+            sectionController.collectionContext?.invalidateLayout(for: sectionController)
+        }
     }
 
 }
