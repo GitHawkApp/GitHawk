@@ -75,6 +75,14 @@ AttributedStringViewIssueDelegate {
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
+    
+    func deleteAction() -> UIAlertAction? {
+        guard object?.viewerCanDelete == true, let number = object?.number else { return nil }
+        
+        return AlertAction.delete({ [weak self] _ in
+            print("delete \(number)")
+        })
+    }
 
     func edit(sender: UIView) -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
@@ -240,6 +248,7 @@ AttributedStringViewIssueDelegate {
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
+            deleteAction(),
             AlertAction.cancel()
         ])
         viewController?.present(alert, animated: true)

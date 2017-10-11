@@ -106,6 +106,10 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .default, handler: handler)
     }
     
+    static func delete(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .default, handler: handler)
+    }
+    
     static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let title = status == .open
             ? NSLocalizedString("Close", comment: "")
