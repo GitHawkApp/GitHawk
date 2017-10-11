@@ -47,6 +47,10 @@ SwipeCollectionViewCellDelegate {
 
         switch object.identifier {
         case .hash(let hash):
+            if NotificationClient.readOnOpen() {
+                cell.isRead = true
+                client.markNotificationRead(id: object.id, isOpen: true)
+            }
             viewController?.presentCommit(owner: object.owner, repo: object.repo, hash: hash)
         case .number(let number):
             let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
