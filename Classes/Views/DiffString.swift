@@ -7,6 +7,24 @@
 //
 
 import UIKit
+import Highlightr
+
+func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttributedString {
+    guard let highlightr = Highlightr() else {
+        return NSAttributedString(string: code)
+    }
+
+    highlightr.setTheme(to: "github")
+    let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
+
+    if includeDiff {
+        attributedText.enumerateAttribute(NSFontAttributeName, in: NSRange(0..<colorCodedString.length), options: .longestEffectiveRangeNotRequired) { value, range, stop in
+            print(value, range, stop)
+        }
+    }
+
+    return colorCodedString
+}
 
 func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
     let split = code.components(separatedBy: CharacterSet.newlines)
