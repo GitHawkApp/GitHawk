@@ -123,6 +123,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onSend)
         )
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
@@ -189,5 +190,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         bodyField.becomeFirstResponder()
         return false
     }
-
+    
+    // MARK: Actions
+    
+    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    @IBAction func titleFieldEditingChanged(_ sender: Any) {
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
+    }
+    
 }
