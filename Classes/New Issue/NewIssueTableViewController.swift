@@ -203,7 +203,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Called when editing changed on the title field, enable/disable submit button based on title text
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
-        navigationItem.rightBarButtonItem?.isEnabled = textField.hasText
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
 
 }
