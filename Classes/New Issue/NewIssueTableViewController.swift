@@ -83,10 +83,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return viewController
     }
     
-    deinit {
-        titleField.removeTarget(self, action: nil, for: .editingChanged)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -103,11 +99,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         // Make the return button move on to description field
         titleField.delegate = self
-        titleField.addTarget(
-            self,
-            action: #selector(NewIssueTableViewController.textFieldEditingChanged),
-            for: .editingChanged
-        )
         
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
@@ -200,10 +191,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return false
     }
     
+    // MARK: Actions
+    
     /// Called when editing changed on the title field, enable/disable submit button based on title text
-    @objc
-    func textFieldEditingChanged(_ textField: UITextField) {
+    @IBAction func titleFieldEditingChanged(_ sender: Any) {
         navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
-
+    
 }
