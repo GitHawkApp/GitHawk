@@ -56,6 +56,10 @@ TabNavRootViewControllerType {
         resetRightBarItem()
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.largeTitleDisplayMode = .automatic
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
