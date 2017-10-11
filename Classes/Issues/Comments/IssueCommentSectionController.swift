@@ -80,7 +80,18 @@ AttributedStringViewIssueDelegate {
         guard object?.viewerCanDelete == true, let number = object?.number else { return nil }
         
         return AlertAction.delete({ [weak self] _ in
-            print("delete \(number)")
+            let title = NSLocalizedString("Are you sure?", comment: "")
+            let message = NSLocalizedString("Deleting this comment is irreversible, do you want to continue?", comment: "")
+            let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
+            
+            alert.addActions([
+                AlertAction.cancel(),
+                AlertAction.yes({ [weak self] _ in
+                    print("delete \(number)")
+                })
+            ])
+            
+            self?.viewController?.present(alert, animated: true)
         })
     }
 
