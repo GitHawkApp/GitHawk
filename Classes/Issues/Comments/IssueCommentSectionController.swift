@@ -12,6 +12,7 @@ import TUSafariActivity
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didEdit(sectionController: IssueCommentSectionController)
+    func didDelete(commentID: Int)
 }
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
@@ -87,7 +88,7 @@ AttributedStringViewIssueDelegate {
             alert.addActions([
                 AlertAction.cancel(),
                 AlertAction.yes({ [weak self] _ in
-                    print("delete \(number)")
+                    self?.delegate?.didDelete(commentID: number)
                 })
             ])
             

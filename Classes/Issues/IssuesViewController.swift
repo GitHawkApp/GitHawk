@@ -56,6 +56,9 @@ IssueCommentSectionControllerDelegate {
     // set to optimistically change the open/closed status
     // clear when refreshing or on request failure
     private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
+    
+    // List of deleted comments to optimistially remove them from the feed
+    private var deletedComments = [Int]()
 
     init(
         client: GithubClient,
@@ -386,7 +389,14 @@ IssueCommentSectionControllerDelegate {
             objects.append(rootComment)
         }
         
-        objects += current.timelineViewModels
+        objects += current.timelineViewModels.filter({ (model) -> Bool in
+            // Allow any model which is not a comment model
+            guard let commentModel = model as? IssueCommentModel, let number = commentModel.number else { return true }
+            
+            // Only allow the model if the number is not in the deleted comments list
+            return !deletedComments.contains(number)
+        })
+        
         objects += sentComments
 
         if let event = localStatusChange?.event {
@@ -505,6 +515,26 @@ IssueCommentSectionControllerDelegate {
 
     func didEdit(sectionController: IssueCommentSectionController) {
         
+    }
+    
+    func didDelete(commentID: Int) {
+        // Optimistically delete the comment
+        deletedComments.append(commentID)
+        feed.adapter.performUpdates(animated: true)
+        
+        // Actually delete the comment now
+        client.deleteComment(owner: model.owner, repo: model.repo, commentID: commentID) { [weak self] result in
+            switch result {
+            case .error:
+                if let index = self?.deletedComments.index(of: commentID) {
+                    self?.deletedComments.remove(at: index)
+                    self?.feed.adapter.performUpdates(animated: true)
+                }
+                
+                StatusBar.showGenericError()
+            case .success: break // Don't need to handle success since updated optimistically
+            }
+        }
     }
 
 }
