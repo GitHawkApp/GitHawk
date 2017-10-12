@@ -14,6 +14,7 @@ final class IssuePatchContentViewController: UIViewController {
     private let client: GithubClient
     private let scrollView = UIScrollView()
     private let attributeView = AttributedStringView()
+    private let codeTextView = CodeTextView()
 
     init(file: File, client: GithubClient) {
         self.file = file
@@ -22,14 +23,17 @@ final class IssuePatchContentViewController: UIViewController {
 
         title = file.filename
 
+        let colorCodedString = CreateColorCodedString(code: file.patch, includeDiff: true)
         let width: CGFloat = 0
         let text = NSAttributedStringSizing(
             containerWidth: width,
-            attributedText: CreateColorCodedString(code: file.patch, includeDiff: true),
+            attributedText: colorCodedString,
             inset: Styles.Sizes.textViewInset
         )
         scrollView.contentSize = text.textViewSize(width)
         attributeView.configureAndSizeToFit(text: text, width: width)
+
+        codeTextView.attributedText = colorCodedString
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +48,7 @@ final class IssuePatchContentViewController: UIViewController {
         scrollView.isDirectionalLockEnabled = true
         view.addSubview(scrollView)
 
-        scrollView.addSubview(attributeView)
+        scrollView.addSubview(codeTextView)
     }
 
     override func viewWillLayoutSubviews() {
