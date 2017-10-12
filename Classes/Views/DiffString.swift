@@ -18,14 +18,14 @@ func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttribut
 
     if includeDiff {
         let attributedText = NSMutableAttributedString(attributedString: colorCodedString)
-        for line in lines {
-            guard let range = code.range(of: line) else { continue }
-            let nsrange = NSRange(range, in: code)
 
+        for line in lines {
             if line.hasPrefix("+") {
-                attributedText.addAttribute(.backgroundColor, value: Styles.Colors.Green.light.color as Any, range: nsrange)
+                let attributes = [NSAttributedStringKey.backgroundColor: Styles.Colors.Green.light.color]
+                attributedText.addAttributes(for: line, attributes: attributes, mode: .all)
             } else if line.hasPrefix("-") {
-                attributedText.addAttribute(.backgroundColor, value: Styles.Colors.Red.light.color as Any, range: nsrange)
+                let attributes = [NSAttributedStringKey.backgroundColor: Styles.Colors.Red.light.color]
+                attributedText.addAttributes(for: line, attributes: attributes, mode: .all)
             }
         }
 
