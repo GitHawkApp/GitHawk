@@ -25,7 +25,7 @@ final class IssuePatchContentViewController: UIViewController {
         let width: CGFloat = 0
         let text = NSAttributedStringSizing(
             containerWidth: width,
-            attributedText: CreateDiffString(code: file.patch),
+            attributedText: CreateColorCodedString(code: file.patch, includeDiff: true),
             inset: Styles.Sizes.textViewInset
         )
         scrollView.contentSize = text.textViewSize(width)

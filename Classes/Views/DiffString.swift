@@ -10,20 +10,31 @@ import UIKit
 import Highlightr
 
 func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttributedString {
-    guard let highlightr = Highlightr() else {
-        return NSAttributedString(string: code)
-    }
-
-    highlightr.setTheme(to: "github")
-    let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
+    guard let highlightr = Highlightr() else { return NSAttributedString(string: code) }
 
     if includeDiff {
-        attributedText.enumerateAttribute(NSFontAttributeName, in: NSRange(0..<colorCodedString.length), options: .longestEffectiveRangeNotRequired) { value, range, stop in
-            print(value, range, stop)
-        }
-    }
+        highlightr.setTheme(to: "github")
+        let colorCodedString = highlightr.highlight(code, as: "swift") ?? NSAttributedString(string: code)
+        let lines = code.components(separatedBy: CharacterSet.newlines)
 
-    return colorCodedString
+        let attributedText = NSMutableAttributedString(attributedString: colorCodedString)
+        for line in lines {
+            guard let range = code.range(of: line) else { continue }
+            let nsrange = NSRange(range, in: code)
+
+            if line.hasPrefix("+") {
+                attributedText.addAttribute(.backgroundColor, value: Styles.Colors.Green.light.color as Any, range: nsrange)
+            } else if line.hasPrefix("-") {
+                attributedText.addAttribute(.backgroundColor, value: Styles.Colors.Red.light.color as Any, range: nsrange)
+            }
+        }
+
+        return attributedText
+    } else {
+        highlightr.setTheme(to: "github")
+        let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
+        return colorCodedString
+    }
 }
 
 func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
@@ -45,6 +56,7 @@ func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
             NSAttributedStringKey.font: Styles.Fonts.code,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
+
         if line.hasPrefix("+") {
             attributes[NSAttributedStringKey.backgroundColor] = Styles.Colors.Green.light.color
         } else if line.hasPrefix("-") {
