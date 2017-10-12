@@ -29,10 +29,8 @@ extension NSMutableAttributedString {
                     return
                 case .all:
                     self.addAttributes(attributes, range: lineRange)
-                    break
                 case .last:
                     rangeCollection.append(range)
-                    break
                 }
 
                 range = NSRange(location: range.location + range.length, length: inputLength - (range.location + range.length))
@@ -43,9 +41,7 @@ extension NSMutableAttributedString {
         case .last:
             let indexOfLast = rangeCollection.count - 1
             self.addAttributes(attributes, range: rangeCollection[indexOfLast])
-            break
-        default:
-            break
+        default: break
         }
     }
 }
