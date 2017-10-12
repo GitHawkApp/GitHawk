@@ -15,6 +15,7 @@ pod 'SDWebImage', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
 pod 'Tabman', '1.0.1'
 pod 'TUSafariActivity', '~> 1.0.0'
+pod 'Highlightr', :git => 'https://github.com/raspu/Highlightr.git', :branch => 'swift4'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'

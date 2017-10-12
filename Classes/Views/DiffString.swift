@@ -7,6 +7,33 @@
 //
 
 import UIKit
+import Highlightr
+
+func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttributedString {
+    guard let highlightr = Highlightr() else { return NSAttributedString(string: code) }
+
+    highlightr.setTheme(to: "github")
+    let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
+    let lines = code.components(separatedBy: CharacterSet.newlines)
+
+    if includeDiff {
+        let attributedText = NSMutableAttributedString(attributedString: colorCodedString)
+
+        for line in lines {
+            if line.hasPrefix("+") {
+                let attributes = [NSAttributedStringKey.backgroundColor: Styles.Colors.Green.light.color]
+                attributedText.addAttributes(for: line, attributes: attributes, mode: .all)
+            } else if line.hasPrefix("-") {
+                let attributes = [NSAttributedStringKey.backgroundColor: Styles.Colors.Red.light.color]
+                attributedText.addAttributes(for: line, attributes: attributes, mode: .all)
+            }
+        }
+
+        return attributedText
+    }
+
+    return colorCodedString
+}
 
 func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
     let split = code.components(separatedBy: CharacterSet.newlines)
@@ -27,6 +54,7 @@ func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
             NSAttributedStringKey.font: Styles.Fonts.code,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
+
         if line.hasPrefix("+") {
             attributes[NSAttributedStringKey.backgroundColor] = Styles.Colors.Green.light.color
         } else if line.hasPrefix("-") {
