@@ -12,11 +12,11 @@ import Highlightr
 func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttributedString {
     guard let highlightr = Highlightr() else { return NSAttributedString(string: code) }
 
-    if includeDiff {
-        highlightr.setTheme(to: "github")
-        let colorCodedString = highlightr.highlight(code, as: "swift") ?? NSAttributedString(string: code)
-        let lines = code.components(separatedBy: CharacterSet.newlines)
+    highlightr.setTheme(to: "github")
+    let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
+    let lines = code.components(separatedBy: CharacterSet.newlines)
 
+    if includeDiff {
         let attributedText = NSMutableAttributedString(attributedString: colorCodedString)
         for line in lines {
             guard let range = code.range(of: line) else { continue }
@@ -30,11 +30,9 @@ func CreateColorCodedString(code: String, includeDiff: Bool=false) -> NSAttribut
         }
 
         return attributedText
-    } else {
-        highlightr.setTheme(to: "github")
-        let colorCodedString = highlightr.highlight(code, as: nil) ?? NSAttributedString(string: code)
-        return colorCodedString
     }
+
+    return colorCodedString
 }
 
 func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
