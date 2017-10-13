@@ -58,7 +58,7 @@ struct AlertAction {
     }
     
     func view(repo repoViewController: RepositoryViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Open Repository", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: NSLocalizedString("View Repository", comment: ""), style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             rootViewController.show(repoViewController, sender: nil)
         }
@@ -72,7 +72,7 @@ struct AlertAction {
     }
     
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: Strings.newIssue, style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
@@ -103,7 +103,7 @@ struct AlertAction {
     }
     
     static func discard(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .default, handler: handler)
+        return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: handler)
     }
     
     static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -111,7 +111,7 @@ struct AlertAction {
             ? NSLocalizedString("Close", comment: "")
             : NSLocalizedString("Reopen", comment: "")
         
-        return UIAlertAction(title: title, style: .default, handler: handler)
+        return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
     static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -127,7 +127,7 @@ struct AlertAction {
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .default, handler: handler)
+        return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .destructive, handler: handler)
     }
     
 }

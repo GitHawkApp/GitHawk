@@ -82,6 +82,12 @@ final class RootNavigationManager: GithubSessionListener {
         nav.pushViewController(login, animated: true)
     }
 
+    @discardableResult
+    public func selectViewController(atIndex index: Int) -> UIViewController? {
+        tabBarController?.selectedIndex = index
+        return tabBarController?.selectedViewController
+    }
+
     // MARK: GithubSessionListener
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
