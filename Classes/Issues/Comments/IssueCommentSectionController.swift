@@ -264,7 +264,7 @@ AttributedStringViewIssueDelegate {
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
         // don't remove a reaction if it doesn't exist
         guard let reactions = reactionMutation ?? self.object?.reactions,
-            !reactions.viewerDidReact(reaction: reaction)
+            reactions.viewerDidReact(reaction: reaction)
             else { return }
 
         react(cell: cell, content: reaction, isAdd: false)
