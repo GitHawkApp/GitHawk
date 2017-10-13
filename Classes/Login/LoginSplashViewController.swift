@@ -10,6 +10,7 @@ import UIKit
 import SafariServices
 
 private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(GithubAPI.clientID)&scope=user+repo+notifications")!
+private let callbackURLScheme = "freetime://"
 
 final class LoginSplashViewController: UIViewController, GithubSessionListener {
 
@@ -24,6 +25,17 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var safariController: SFSafariViewController? = nil
 
+    @available(iOS 11.0, *)
+    private var authSession: SFAuthenticationSession? {
+        get {
+            return _authSession as? SFAuthenticationSession
+        }
+        set {
+            _authSession = newValue
+        }
+    }
+    private var _authSession: Any?
+    
     var state: State = .idle {
         didSet {
             let hideSpinner: Bool
@@ -51,9 +63,23 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     // MARK: Private API
 
     @IBAction func onSignInButton(_ sender: Any) {
-		guard let safariController = try? SFSafariViewController.configured(with: loginURL) else { return }
-        self.safariController = safariController
-        present(safariController, animated: true)
+        if #available(iOS 11.0, *) {
+            self.authSession = SFAuthenticationSession(url: loginURL, callbackURLScheme: callbackURLScheme, completionHandler: { [weak self] (callbackUrl, error) in
+                guard error == nil, let callbackUrl = callbackUrl else {
+                    switch error! {
+                    case SFAuthenticationError.canceledLogin: break
+                    default: self?.handleError()
+                    }
+                    return
+                }
+                self?.client.sessionManager.receivedCodeRedirect(url: callbackUrl)
+            })
+            self.authSession?.start()
+        } else {
+            guard let safariController = try? SFSafariViewController.configured(with: loginURL) else { return }
+            self.safariController = safariController
+            present(safariController, animated: true)
+        }
     }
 
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {

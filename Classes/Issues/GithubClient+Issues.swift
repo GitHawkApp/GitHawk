@@ -183,4 +183,19 @@ extension GithubClient {
         }))
     }
     
+    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> ()) {
+        request(Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
+            method: locked ? .put : .delete,
+            completion: { (response, _) in
+                // As per documentation this endpoint returns no content, so all we can validate is that
+                // the status code is "204 No Content".
+                if response.response?.statusCode == 204 {
+                    completion(.success(true))
+                } else {
+                    completion(.error(nil))
+                }
+        }))
+    }
+    
 }
