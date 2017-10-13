@@ -22,6 +22,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
+    @IBOutlet weak var viewBlogCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
@@ -80,6 +81,8 @@ NewIssueTableViewControllerDelegate {
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
+        } else if cell === viewBlogCell {
+            onViewBlog()
         } else if cell === signOutCell {
             tableView.deselectRow(at: indexPath, animated: true)
             onSignOut()
@@ -113,6 +116,12 @@ NewIssueTableViewControllerDelegate {
         guard let url = URL(string: "https://github.com/rnystrom/GitHawk/")
             else { fatalError("Should always create GitHub URL") }
 		presentSafari(url: url)
+    }
+
+    func onViewBlog() {
+        guard let url = URL(string: "http://blog.githawk.com/")
+            else { fatalError("Should always create Githawk blog URL") }
+        presentSafari(url: url)
     }
 
     func onSignOut() {
