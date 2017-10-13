@@ -13,6 +13,7 @@ import SnapKit
 class NotificationsViewController: UIViewController,
     ListAdapterDataSource,
     SegmentedControlSectionControllerDelegate,
+    SearchBarSectionControllerDelegate,
     FeedDelegate,
     NotificationClientListener,
     NotificationNextPageSectionControllerDelegate,
@@ -25,8 +26,10 @@ TabNavRootViewControllerType {
     private let client: NotificationClient
     private let selection = SegmentedControlModel.forNotifications()
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
+    private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: NSNumber? = nil
+    private var searchQuery: String = ""
     private var hasError = false
     private let dataSource = NotificationsDataSource()
     private let foreground = ForegroundHandler(threshold: 5 * 60)
@@ -157,7 +160,7 @@ TabNavRootViewControllerType {
                 self.dataSource.update(width: width, notifications: notifications, completion: block)
             }
         case .error:
-            StatusBar.showNetworkError()
+            ToastManager.showNetworkError()
             self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)
         }
@@ -180,14 +183,15 @@ TabNavRootViewControllerType {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let viewModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
+        let relevantModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
+        let viewModels = filterNotifications(relevantModels, self.searchQuery)
 
         if hasError && viewModels.count == 0 {
             return []
         }
 
-        var objects: [ListDiffable] = [selection]
-
+        var objects: [ListDiffable] = [searchKey, selection]
+        
         if let token = ratingToken {
             objects.append(token)
         }
@@ -221,6 +225,11 @@ TabNavRootViewControllerType {
             )
         }
 
+        if object === searchKey {
+            let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
+            return SearchBarSectionController(placeholder: NSLocalizedString("Search notifications", comment: ""), delegate: self, height: searchBarHeight)
+        }
+
         switch object {
         case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
         case is NotificationViewModel: return NotificationSectionController(client: client, dataSource: dataSource)
@@ -246,6 +255,13 @@ TabNavRootViewControllerType {
         update(dismissRefresh: false)
     }
 
+    // MARK: SearchBarSectionControllerDelegate
+
+    func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
+        self.searchQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        update(dismissRefresh: false)
+    }
+
     // MARK: FeedDelegate
 
     func loadFromNetwork(feed: Feed) {
@@ -268,7 +284,7 @@ TabNavRootViewControllerType {
 
     func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
         dataSource.removeOptimisticRead(id: id)
-        StatusBar.showGenericError()
+        ToastManager.showGenericError()
 
         if !isOpen {
             update(dismissRefresh: false, animated: true)

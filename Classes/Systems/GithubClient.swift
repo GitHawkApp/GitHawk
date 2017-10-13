@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import JDStatusBarNotification
 import Apollo
 import AlamofireNetworkActivityIndicator
 
@@ -105,7 +104,7 @@ struct GithubClient {
                 if request.logoutOnAuthFailure,
                     let statusCode = response.response?.statusCode,
                     statusCode == 401 {
-                    StatusBar.showRevokeError()
+                    ToastManager.showRevokeError()
                     self.sessionManager.logout()
                 } else {
                     let page = PagingData(link: response.response?.allHeaderFields["Link"] as? String)

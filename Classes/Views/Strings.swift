@@ -24,6 +24,7 @@ enum Strings {
     static let unknown = NSLocalizedString("Unknown", comment: "")
     static let merged = NSLocalizedString("Merged", comment: "")
     static let locked = NSLocalizedString("Locked", comment: "")
+    static let newIssue = NSLocalizedString("New Issue", comment: "")
     static let bullet = "\u{2022}"
     static let bulletHollow = "\u{25E6}"
 

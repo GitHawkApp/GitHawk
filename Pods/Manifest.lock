@@ -13,7 +13,6 @@ PODS:
   - IGListKit/Default (3.1.1):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
-  - JDStatusBarNotification (1.5.5)
   - MMMarkdown (0.5.5)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
@@ -42,7 +41,6 @@ DEPENDENCIES:
   - FLEX (~> 2.0)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
-  - JDStatusBarNotification (~> 1.5.5)
   - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage (~> 4.0.0)
@@ -76,7 +74,6 @@ SPEC CHECKSUMS:
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
-  JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
@@ -88,6 +85,6 @@ SPEC CHECKSUMS:
   Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 800ea22e673b603979cfab9990c2398b0a44c7e0
+PODFILE CHECKSUM: 88bf4d401077f3861ff7b3767c5a925d3c6a793e
 
 COCOAPODS: 1.4.0.beta.1
