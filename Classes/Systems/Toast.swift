@@ -201,6 +201,9 @@ final class ToastManager {
             let referenceView = viewController.view
             else { return }
 
+        // get rid of any view if currently displaying
+        dismiss()
+
         self.config = config
         startTimer()
 
@@ -315,6 +318,9 @@ final class ToastManager {
             view.center = center
         }, completion: { _ in
             view.removeFromSuperview()
+            self.view = nil
+            self.springBehavior = nil
+            self.animator = nil
         })
     }
 
