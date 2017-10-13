@@ -29,6 +29,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
         contentView.backgroundColor = .white
 
+        searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(searchBar)

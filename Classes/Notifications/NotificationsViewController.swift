@@ -226,8 +226,10 @@ TabNavRootViewControllerType {
         }
 
         if object === searchKey {
-            let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
-            return SearchBarSectionController(placeholder: NSLocalizedString("Search notifications", comment: ""), delegate: self, height: searchBarHeight)
+            return SearchBarSectionController(
+                placeholder: Strings.search,
+                delegate: self
+            )
         }
 
         switch object {
