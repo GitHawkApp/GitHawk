@@ -130,7 +130,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     @objc
     func onSend() {
         guard let titleText = titleText else {
-            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            ToastManager.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
 
@@ -146,7 +146,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                StatusBar.showGenericError()
+                ToastManager.showGenericError()
                 return
             }
 

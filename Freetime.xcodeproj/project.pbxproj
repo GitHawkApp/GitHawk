@@ -1238,10 +1238,10 @@
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */,
-				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
-				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				293971881F904C82002FAC4B /* Toast.swift */,
 				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
+				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
+				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
