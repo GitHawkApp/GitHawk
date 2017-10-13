@@ -105,7 +105,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         setupInputView()
         
         // Update title to use localization
-        title = NSLocalizedString("New Issue", comment: "")
+        title = Strings.newIssue
     }
     
     // MARK: Private API
