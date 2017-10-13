@@ -122,4 +122,8 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .destructive, handler: handler)
     }
     
+    static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Clear All", comment: ""), style: .destructive, handler: handler)
+    }
+    
 }

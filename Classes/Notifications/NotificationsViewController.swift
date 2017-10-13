@@ -115,7 +115,7 @@ TabNavRootViewControllerType {
     @objc private func onMarkAll(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Notifications", comment: ""),
-            message: "Mark all notifications as read?",
+            message: NSLocalizedString("Mark all notifications as read?", comment: ""),
             preferredStyle: .alert
         )
         
@@ -125,7 +125,6 @@ TabNavRootViewControllerType {
             }),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
         
         present(alert, animated: true)
     }
