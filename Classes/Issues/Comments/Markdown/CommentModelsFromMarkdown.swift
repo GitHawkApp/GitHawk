@@ -29,7 +29,7 @@ struct GitHubMarkdownOptions {
 }
 
 func createCommentAST(markdown: String) -> MMDocument? {
-    guard markdown.characters.count > 0 else { return nil }
+    guard !markdown.isEmpty else { return nil }
     let parser = MMParser(extensions: .gitHubFlavored)
     var error: NSError? = nil
     let document = parser.parseMarkdown(markdown, error: &error)
