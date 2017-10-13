@@ -239,6 +239,16 @@ IssueCommentSectionControllerDelegate {
         }
     }
     
+    func lockAction() -> UIAlertAction? {
+        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+            return nil
+        }
+        
+        return AlertAction.toggleLocked(locked) { [weak self] _ in
+            self?.setLocked(!locked)
+        }
+    }
+    
     func viewRepoAction() -> UIAlertAction? {
         guard let _ = current else { return nil }
         
@@ -263,6 +273,7 @@ IssueCommentSectionControllerDelegate {
         
         alert.addActions([
             closeAction(),
+            lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
@@ -342,6 +353,42 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             number: model.number,
             status: close ? .closed : .open
+        ) { [weak self] result in
+            switch result {
+            case .error:
+                self?.localStatusChange = nil
+                self?.feed.adapter.performUpdates(animated: true)
+                ToastManager.showGenericError()
+            default: break // dont need to handle success since updated optimistically
+            }
+        }
+    }
+    
+    func setLocked(_ locked: Bool) {
+        guard let currentStatus = current?.status else { return }
+        
+        let localModel = IssueStatusModel(
+            status: currentStatus.status,
+            pullRequest: currentStatus.pullRequest,
+            locked: locked
+        )
+        let localEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: locked ? .locked : .unlocked,
+            pullRequest: currentStatus.pullRequest
+        )
+        
+        localStatusChange = (localModel, localEvent)
+        feed.adapter.performUpdates(animated: true)
+        
+        client.setLocked(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            locked: locked
         ) { [weak self] result in
             switch result {
             case .error:

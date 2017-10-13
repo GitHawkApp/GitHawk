@@ -22,7 +22,6 @@ class StyledTableCell: UITableViewCell {
 
     private func configure() {
         textLabel?.font = Styles.Fonts.body
-        textLabel?.textColor = Styles.Colors.Gray.dark.color
 
         let background = UIView()
         background.backgroundColor = Styles.Colors.Gray.alphaLighter
