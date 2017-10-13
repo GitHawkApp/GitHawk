@@ -72,7 +72,7 @@ struct AlertAction {
     }
     
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: Strings.newIssue, style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
