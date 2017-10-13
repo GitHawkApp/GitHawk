@@ -114,6 +114,14 @@ struct AlertAction {
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
+    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
+        let title = locked
+            ? NSLocalizedString("Unlock", comment: "")
+            : NSLocalizedString("Lock", comment: "")
+        
+        return UIAlertAction(title: title, style: .default, handler: handler)
+    }
+    
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Strings.signin, style: .default, handler: handler)
     }
