@@ -270,6 +270,12 @@ AttributedStringViewIssueDelegate {
         react(cell: cell, content: reaction, isAdd: false)
     }
 
+    func didToggle(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        // TODO: Toggle here. If reacted, remove. Else add.
+//        didRemove(cell: cell, reaction: reaction)
+//        didAdd(cell: cell, reaction: reaction)
+    }
+
     // MARK: AttributedStringViewIssueDelegate
 
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {

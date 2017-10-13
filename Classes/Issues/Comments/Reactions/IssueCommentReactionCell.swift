@@ -11,6 +11,7 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate {
+    func didToggle(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
@@ -127,27 +128,27 @@ UICollectionViewDelegateFlowLayout {
     }
 
     @objc private func onThumbsUp() {
-        delegate?.didAdd(cell: self, reaction: .thumbsUp)
+        delegate?.didToggle(cell: self, reaction: .thumbsUp)
     }
 
     @objc private func onThumbsDown() {
-        delegate?.didAdd(cell: self, reaction: .thumbsDown)
+        delegate?.didToggle(cell: self, reaction: .thumbsDown)
     }
 
     @objc private func onLaugh() {
-        delegate?.didAdd(cell: self, reaction: .laugh)
+        delegate?.didToggle(cell: self, reaction: .laugh)
     }
 
     @objc private func onHooray() {
-        delegate?.didAdd(cell: self, reaction: .hooray)
+        delegate?.didToggle(cell: self, reaction: .hooray)
     }
 
     @objc private func onConfused() {
-        delegate?.didAdd(cell: self, reaction: .confused)
+        delegate?.didToggle(cell: self, reaction: .confused)
     }
 
     @objc private func onHeart() {
-        delegate?.didAdd(cell: self, reaction: .heart)
+        delegate?.didToggle(cell: self, reaction: .heart)
     }
 
     func configure(cell: IssueReactionCell, model: ReactionViewModel) {
