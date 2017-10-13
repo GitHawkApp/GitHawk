@@ -1,6 +1,6 @@
 //
 //  NewIssueTableViewController.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Sherlock, James on 22/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

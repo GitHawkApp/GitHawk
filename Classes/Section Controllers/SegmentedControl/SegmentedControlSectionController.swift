@@ -1,6 +1,6 @@
 //
 //  SegmentedControlSectionController.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ryan Nystrom on 5/14/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

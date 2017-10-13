@@ -34,7 +34,7 @@
         <!--Split Placeholder View Controller-->
         <scene sceneID="mEq-vE-g6O">
             <objects>
-                <viewController id="icu-Mt-euN" customClass="SplitPlaceholderViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="icu-Mt-euN" customClass="SplitPlaceholderViewController" customModule="GitHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mSP-iM-qpV"/>
                         <viewControllerLayoutGuide type="bottom" id="qjJ-aI-c1s"/>
@@ -69,7 +69,7 @@
         <!--Split Placeholder View Controller-->
         <scene sceneID="6Um-PN-O7R">
             <objects>
-                <viewController id="koZ-WT-T3h" customClass="SplitPlaceholderViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="koZ-WT-T3h" customClass="SplitPlaceholderViewController" customModule="GitHawk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qh9-St-NDe"/>
                         <viewControllerLayoutGuide type="bottom" id="T04-C0-L7D"/>

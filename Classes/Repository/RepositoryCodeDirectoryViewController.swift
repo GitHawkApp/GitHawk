@@ -1,6 +1,6 @@
 //
 //  RepositoryCodeDirectoryViewController.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ryan Nystrom on 10/8/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
@@ -30,7 +30,7 @@ class RepositoryCodeDirectoryViewController: UITableViewController {
         files = [
             RepositoryFile(name: "Classes", isDirectory: true),
             RepositoryFile(name: "Tests", isDirectory: true),
-            RepositoryFile(name: "Freetime.xcodeproj", isDirectory: true),
+            RepositoryFile(name: "GitHawk.xcodeproj", isDirectory: true),
             RepositoryFile(name: "LICENSE", isDirectory: false),
             RepositoryFile(name: "README.md", isDirectory: false),
             RepositoryFile(name: "Podfile", isDirectory: false),

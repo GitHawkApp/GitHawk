@@ -1,6 +1,6 @@
 //
 //  Device+Model.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Sherlock, James on 14/07/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

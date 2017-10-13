@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_FreetimeTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_FreetimeTestsVersionString[];
+FOUNDATION_EXPORT double Pods_GitHawkVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_GitHawkVersionString[];
 

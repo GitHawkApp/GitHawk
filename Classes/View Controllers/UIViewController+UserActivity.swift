@@ -1,6 +1,6 @@
 //
 //  UIViewController+UserActivity.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Bas Broek on 20/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

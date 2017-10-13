@@ -1,6 +1,6 @@
 //
 //  GitHubClient+NewIssue.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Sherlock, James on 15/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

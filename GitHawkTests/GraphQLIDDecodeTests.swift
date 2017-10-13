@@ -1,6 +1,6 @@
 //
 //  GraphQLIDDecodeTests.swift
-//  FreetimeTests
+//  GitHawkTests
 //
 //  Created by Ryan Nystrom on 9/27/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

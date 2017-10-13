@@ -1,6 +1,6 @@
 //
 //  UIAlertController+AddAction.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ivan Magda on 26/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

@@ -27,11 +27,11 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 
-target 'Freetime' do
+target 'GitHawk' do
 
 end
 
-target 'FreetimeTests' do
+target 'GitHawkTests' do
 
 end
 

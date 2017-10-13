@@ -1,6 +1,6 @@
 //
 //  UINavigationController+Replace.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Sherlock, James on 16/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

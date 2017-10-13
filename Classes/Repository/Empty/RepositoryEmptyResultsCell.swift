@@ -1,6 +1,6 @@
 //
 //  RepositoryEmptyResultsCell.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Sherlock, James on 01/08/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
