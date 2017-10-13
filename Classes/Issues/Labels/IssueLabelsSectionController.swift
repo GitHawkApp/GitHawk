@@ -29,7 +29,10 @@ LabelsViewControllerDelegate {
 
     // MARK: ListBindingSectionControllerDataSource
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, viewModelsFor object: Any) -> [ListDiffable] {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        viewModelsFor object: Any
+        ) -> [ListDiffable] {
         var viewModels = [ListDiffable]()
 
         // use override labels when available
@@ -50,13 +53,21 @@ LabelsViewControllerDelegate {
         return viewModels
     }
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, sizeForViewModel viewModel: Any, at index: Int) -> CGSize {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        sizeForViewModel viewModel: Any,
+        at index: Int
+        ) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
     }
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, cellForViewModel viewModel: Any, at index: Int) -> UICollectionViewCell {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        cellForViewModel viewModel: Any,
+        at index: Int
+        ) -> UICollectionViewCell & ListBindable {
         guard let context = self.collectionContext
             else { fatalError("Collection context must be set") }
 
@@ -67,12 +78,18 @@ LabelsViewControllerDelegate {
         default: cellClass = IssueLabelEditCell.self
         }
         
-        return context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError("Cell not bindable") }
+        return cell
     }
 
     // MARK: ListBindingSectionControllerSelectionDelegate
 
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        didSelectItemAt index: Int,
+        viewModel: Any
+        ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
         if let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? IssueLabelEditCell {
@@ -111,7 +128,7 @@ LabelsViewControllerDelegate {
                 self?.labelsOverride = nil
                 self?.update(animated: true)
                 if statusCode == 403 {
-                    StatusBar.showPermissionsError()
+                    ToastManager.showPermissionsError()
                 }
             }
         }

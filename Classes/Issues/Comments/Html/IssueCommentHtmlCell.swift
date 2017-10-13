@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 
 protocol IssueCommentHtmlCellDelegate: class {
-    func webViewDidResize(cell: IssueCommentHtmlCell, html: String, size: CGSize)
+    func webViewDidResize(cell: IssueCommentHtmlCell, html: String, cellWidth: CGFloat, size: CGSize)
 }
 
 protocol IssueCommentHtmlCellNavigationDelegate: class {
@@ -129,7 +129,12 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == IssueCommentHtmlCell.WebviewKeyPath {
-            delegate?.webViewDidResize(cell: self, html: body, size: webView.scrollView.contentSize)
+            delegate?.webViewDidResize(
+                cell: self,
+                html: body,
+                cellWidth: contentView.bounds.width,
+                size: webView.scrollView.contentSize
+            )
         }
     }
 

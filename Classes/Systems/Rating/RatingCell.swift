@@ -66,6 +66,7 @@ final class RatingCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onDismiss() {
         delegate?.didTapDismiss(cell: self)
     }

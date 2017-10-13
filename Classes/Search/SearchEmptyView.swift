@@ -62,6 +62,7 @@ final class SearchEmptyView: UIView {
 
     // MARK: Private API
 
+    @objc
     func onTap() {
         delegate?.didTap(emptyView: self)
     }

@@ -20,7 +20,7 @@ private class TableBucket {
 private func buildAttributedString(
     markdown: String,
     element: MMElement,
-    attributes: [String: Any],
+    attributes: [NSAttributedStringKey: Any],
     attributedString: NSMutableAttributedString
     ) {
     switch element.type {
@@ -48,7 +48,7 @@ private func buildAttributedString(
 private func rowModels(
     markdown: String,
     element: MMElement,
-    attributes: [String: Any],
+    attributes: [NSAttributedStringKey: Any],
     fill: Bool
     ) -> [NSAttributedStringSizing] {
 
@@ -84,9 +84,9 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
     // track the tallest row while building each column
     var rowHeights = [CGFloat]()
 
-    var baseAttributes: [String: Any] = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-        NSBackgroundColorAttributeName: UIColor.white,
+    var baseAttributes: [NSAttributedStringKey: Any] = [
+        .foregroundColor: Styles.Colors.Gray.dark.color,
+        .backgroundColor: UIColor.white,
         ]
 
     var rowCount = 0
@@ -94,16 +94,16 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
     for row in element.children {
         switch row.type {
         case .tableHeader:
-            baseAttributes[NSFontAttributeName] = Styles.Fonts.bodyBold
+            baseAttributes[NSAttributedStringKey.font] = Styles.Fonts.bodyBold
         case .tableRow:
             rowCount += 1
-            baseAttributes[NSFontAttributeName] = Styles.Fonts.body
+            baseAttributes[NSAttributedStringKey.font] = Styles.Fonts.body
         default: continue
         }
 
         let fill = rowCount > 0 && rowCount % 2 == 0
 
-        baseAttributes[NSBackgroundColorAttributeName] = fill ? Styles.Colors.Gray.lighter.color : .white
+        baseAttributes[NSAttributedStringKey.backgroundColor] = fill ? Styles.Colors.Gray.lighter.color : .white
 
         let models = rowModels(markdown: markdown, element: row, attributes: baseAttributes, fill: fill)
 

@@ -46,6 +46,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onActor() {
         delegate?.didTapActor(cell: self)
     }
@@ -54,16 +55,16 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
 
     func configure(_ model: IssueMilestoneEventModel) {
         let boldAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.secondaryBold
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
 
         let actor = NSAttributedString(string: model.actor, attributes: boldAttributes)
         actorButton.setAttributedTitle(actor, for: .normal)
 
         let separatorAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
-            NSFontAttributeName: Styles.Fonts.secondary
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondary
         ]
 
         let action: String

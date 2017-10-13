@@ -100,7 +100,7 @@ NewIssueTableViewControllerDelegate {
                                                                       owner: "rnystrom",
                                                                       repo: "GitHawk",
                                                                       signature: .bugReport) else {
-            StatusBar.showGenericError()
+            ToastManager.showGenericError()
             return
         }
         viewController.delegate = self
@@ -136,6 +136,7 @@ NewIssueTableViewControllerDelegate {
         sessionManager.logout()
     }
 
+    @objc
     func updateBadge() {
         BadgeNotifications.check { state in
             let authorized: Bool

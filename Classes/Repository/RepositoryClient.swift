@@ -10,18 +10,18 @@ import Apollo
 
 protocol RepositoryQuery {
     // generated queries should share the same init
-    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType]
-    func nextPageToken(from data: GraphQLMappable) -> String?
+    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType]
+    func nextPageToken(from data: GraphQLSelectionSet) -> String?
 }
 
 extension RepoIssuePagesQuery: RepositoryQuery {
 
-    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType] {
+    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let issues = data as? Data else { return [] }
         return issues.repository?.issues.nodes?.flatMap { $0 } ?? []
     }
 
-    func nextPageToken(from data: GraphQLMappable) -> String? {
+    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
         guard let issues = data as? Data else { return nil }
         guard let pageInfo = issues.repository?.issues.pageInfo, pageInfo.hasNextPage else { return nil }
         return pageInfo.endCursor
@@ -31,12 +31,12 @@ extension RepoIssuePagesQuery: RepositoryQuery {
 
 extension RepoPullRequestPagesQuery: RepositoryQuery {
 
-    func summaryTypes(from data: GraphQLMappable) -> [RepositoryIssueSummaryType] {
+    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return [] }
         return prs.repository?.pullRequests.nodes?.flatMap { $0 } ?? []
     }
 
-    func nextPageToken(from data: GraphQLMappable) -> String? {
+    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return nil }
         guard let pageInfo = prs.repository?.pullRequests.pageInfo, pageInfo.hasNextPage else { return nil }
         return pageInfo.endCursor
@@ -49,8 +49,8 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
         else { return nil }
 
     let attributes = [
-        NSFontAttributeName: Styles.Fonts.body,
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+        NSAttributedStringKey.font: Styles.Fonts.body,
+        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
     ]
     let title = NSAttributedStringSizing(
         containerWidth: containerWidth,
@@ -70,7 +70,7 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
 
 func createSummaryModel(
     query: RepositoryQuery,
-    data: GraphQLMappable,
+    data: GraphQLSelectionSet,
     containerWidth: CGFloat
     ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
@@ -134,7 +134,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
         loadPage(
-            query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, pageSize: 100),
+            query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
             containerWidth: containerWidth,
             completion: completion
         )
@@ -146,7 +146,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> ()
         ) {
         loadPage(
-            query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, pageSize: 100),
+            query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
             containerWidth: containerWidth,
             completion: completion
         )

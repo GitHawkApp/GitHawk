@@ -32,9 +32,12 @@ final class ShowMoreDetailsLabel: UILabel {
         return true
     }
 
+    // MARK: Private API
+
+    @objc
     func showMenu(recognizer: UITapGestureRecognizer) {
         guard recognizer.state == .began,
-            detailText.characters.count > 0 else { return }
+            !detailText.isEmpty else { return }
 
         becomeFirstResponder()
 
@@ -45,7 +48,8 @@ final class ShowMoreDetailsLabel: UILabel {
         menu.setTargetRect(bounds, in: self)
         menu.setMenuVisible(true, animated: true)
     }
-    
+
+    @objc
     func empty() {}
     
 }

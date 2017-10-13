@@ -9,9 +9,9 @@
 import Foundation
 
 enum MarkdownAttribute {
-    static let url = "com.freetime.Markdown.url-name"
-    static let email = "com.freetime.Markdown.email-name"
-    static let username = "com.freetime.Markdown.username-name"
-    static let usernameDisabled = "com.freetime.Markdown.username-disabled-name"
-    static let issue = "com.freetime.Markdown.issue"
+    static let url = NSAttributedStringKey(rawValue: "com.freetime.Markdown.url-name")
+    static let email = NSAttributedStringKey(rawValue: "com.freetime.Markdown.email-name")
+    static let username = NSAttributedStringKey(rawValue: "com.freetime.Markdown.username-name")
+    static let usernameDisabled = NSAttributedStringKey(rawValue: "com.freetime.Markdown.username-disabled-name")
+    static let issue = NSAttributedStringKey(rawValue: "com.freetime.Markdown.issue")
 }

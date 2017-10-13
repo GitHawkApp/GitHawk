@@ -1,5 +1,6 @@
 ---
 layout: post
+author: basthomas
 title: Accessibility in GitHawk
 ---
 

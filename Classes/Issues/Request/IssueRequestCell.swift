@@ -54,10 +54,12 @@ final class IssueRequestCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onActor() {
         delegate?.didTapActor(cell: self)
     }
 
+    @objc
     func onUser() {
         delegate?.didTapUser(cell: self)
     }
@@ -66,12 +68,12 @@ final class IssueRequestCell: UICollectionViewCell {
 
     func configure(_ model: IssueRequestModel) {
         let actorAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondaryBold,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let phraseAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondary,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
 
         let phrase: String

@@ -42,7 +42,7 @@ final class AddCommentClient {
     func addComment(subjectId: String, body: String) {
         let bodyWithSignature = Signature.signed(text: body)
 
-        client.perform(mutation: AddCommentMutation(subjectId: subjectId, body: bodyWithSignature)) { (result, error) in
+        client.perform(mutation: AddCommentMutation(subject_id: subjectId, body: bodyWithSignature)) { (result, error) in
             if let commentNode = result?.data?.addComment?.commentEdge.node {
                 let fragments = commentNode.fragments
                 for listener in self.listeners {

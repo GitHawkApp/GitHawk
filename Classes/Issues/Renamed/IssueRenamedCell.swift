@@ -61,6 +61,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onActor() {
         delegate?.didTapActor(cell: self)
     }
@@ -69,13 +70,13 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     func configure(_ model: IssueRenamedModel) {
         let actorAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondaryBold,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let actor = NSMutableAttributedString(string: model.actor, attributes: actorAttributes)
         let referencedAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondary,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         actor.append(NSAttributedString(
             string: NSLocalizedString(" renamed", comment: ""),

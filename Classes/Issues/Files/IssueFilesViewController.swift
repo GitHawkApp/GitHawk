@@ -36,6 +36,7 @@ final class IssueFilesViewController: UITableViewController {
 
     // MARK: Private API
 
+    @objc
     func onRefresh() {
         fetch()
     }

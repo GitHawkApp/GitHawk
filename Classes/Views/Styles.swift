@@ -116,7 +116,7 @@ enum Styles {
     static func setupAppearance() {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
-            [NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color]
+            [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
     }
 
 }

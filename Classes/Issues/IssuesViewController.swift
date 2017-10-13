@@ -20,7 +20,6 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueTextActionsViewDelegate,
 IssueCommentSectionControllerDelegate {
 
     private let client: GithubClient
@@ -29,6 +28,7 @@ IssueCommentSectionControllerDelegate {
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private var hasScrolledToBottom = false
     private let viewFilesModel = "view_files" as ListDiffable
+    private let textActionsController = TextActionsController()
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -109,22 +109,17 @@ IssueCommentSectionControllerDelegate {
         // displayed once an add comment client is created (requires a gql subject id)
         setTextInputbarHidden(true, animated: false)
 
-        let operations: [IssueTextActionOperation] = [
-            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
-                self?.onPreview()
-            })),
-            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
-        ]
-        let actions = IssueTextActionsView(operations: operations)
-        actions.delegate = self
+        let getMarkdownBlock = { [weak self] () -> (String) in
+            return self?.textView.text ?? ""
+        }
+        let actions = IssueTextActionsView.forMarkdown(
+            viewController: self,
+            getMarkdownBlock: getMarkdownBlock,
+            repo: model.repo,
+            owner: model.owner,
+            addBorder: false
+        )
+        textActionsController.configure(textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
         // i'm not sure exactly what these would be in SnapKit (would pref SK tho)
@@ -259,6 +254,7 @@ IssueCommentSectionControllerDelegate {
             .view(repo: repoViewController)
     }
 
+    @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
@@ -351,7 +347,7 @@ IssueCommentSectionControllerDelegate {
             case .error:
                 self?.localStatusChange = nil
                 self?.feed.adapter.performUpdates(animated: true)
-                StatusBar.showGenericError()
+                ToastManager.showGenericError()
             default: break // dont need to handle success since updated optimistically
             }
         }
@@ -501,16 +497,6 @@ IssueCommentSectionControllerDelegate {
 
     func didSelect(sectionController: IssueNeckLoadSectionController) {
         fetch(previous: true)
-    }
-
-    // MARK: IssueTextActionsViewDelegate
-
-    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
-        switch operation.operation {
-        case .execute(let block): block()
-        case .wrap(let left, let right): textView.replace(left: left, right: right, atLineStart: false)
-        case .line(let left): textView.replace(left: left, right: nil, atLineStart: true)
-        }
     }
 
     // MARK: IssueCommentSectionControllerDelegate

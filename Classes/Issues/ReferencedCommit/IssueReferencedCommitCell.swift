@@ -56,10 +56,12 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onName() {
         delegate?.didTapActor(cell: self)
     }
 
+    @objc
     func onHash() {
         delegate?.didTapHash(cell: self)
     }
@@ -70,16 +72,16 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
         nameButton.setTitle(model.actor, for: .normal)
 
         let referenceAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondary,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
         ]
         let title = NSMutableAttributedString(
             string: NSLocalizedString("referenced ", comment: ""),
             attributes: referenceAttributes
         )
         let hashAttributes = [
-            NSFontAttributeName: Styles.Fonts.code.addingTraits(traits: .traitBold),
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSAttributedStringKey.font: Styles.Fonts.code.addingTraits(traits: .traitBold),
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         title.append(NSAttributedString(string: model.hash.hashDisplay, attributes: hashAttributes))
         referencedButton.setAttributedTitle(title, for: .normal)

@@ -42,7 +42,7 @@ protocol NewIssueTableViewControllerDelegate: class {
     func didDismissAfterCreatingIssue(model: IssueDetailsModel)
 }
 
-final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate, IssueTextActionsViewDelegate {
+final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate? = nil
 
@@ -53,6 +53,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     private var owner: String!
     private var repo: String!
     private var signature: IssueSignatureType?
+    private let textActionsController = TextActionsController()
     
     private var titleText: String? {
         guard let raw = titleField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
@@ -93,20 +94,18 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             title: NSLocalizedString("Cancel", comment: ""),
             style: .plain,
             target: self,
-            action: #selector(cancel)
+            action: #selector(onCancel)
         )
         
         // Make the return button move on to description field
         titleField.delegate = self
         
         // Setup markdown input view
-        bodyField.contentInset = .zero
-        bodyField.textContainerInset = .zero
-        bodyField.textContainer.lineFragmentPadding = 0
+        bodyField.githawkConfigure(inset: false)
         setupInputView()
         
         // Update title to use localization
-        title = NSLocalizedString("New Issue", comment: "")
+        title = Strings.newIssue
     }
     
     // MARK: Private API
@@ -122,14 +121,16 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             title: NSLocalizedString("Submit", comment: ""),
             style: .done,
             target: self,
-            action: #selector(send)
+            action: #selector(onSend)
         )
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
-    func send() {
+    @objc
+    func onSend() {
         guard let titleText = titleText else {
-            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            ToastManager.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
 
@@ -145,7 +146,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                StatusBar.showGenericError()
+                ToastManager.showGenericError()
                 return
             }
 
@@ -157,53 +158,28 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
-    func cancel() {
-        let dismissBlock = {
-            self.dismiss(animated: true)
-        }
-
-        if titleText == nil && bodyText == nil {
-            dismissBlock()
-            return
-        }
-        
-        let title = NSLocalizedString("Unsaved Changes", comment: "New Issue - Cancel w/ Unsaved Changes Title")
-        let message = NSLocalizedString("Are you sure you want to discard this new issue? Your message will be lost.", comment: "New Issue - Cancel w/ Unsaved Changes Message")
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addActions([
-            AlertAction.goBack(),
-            AlertAction.discard { _ in
-                dismissBlock()
-            }
-        ])
-        
-        present(alert, animated: true, completion: nil)
+    @objc
+    func onCancel() {
+        cancelAction_onCancel(
+            texts: [titleText, bodyText],
+            title: NSLocalizedString("Unsaved Changes", comment: "New Issue - Cancel w/ Unsaved Changes Title"),
+            message: NSLocalizedString("Are you sure you want to discard this new issue? Your message will be lost.",
+                                       comment: "New Issue - Cancel w/ Unsaved Changes Message")
+        )
     }
     
     func setupInputView() {
-        let operations: [IssueTextActionOperation] = [
-            IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak self] in
-                guard let strongSelf = self else { return }
-                let controller = IssuePreviewViewController(markdown: strongSelf.bodyField.text, owner: strongSelf.owner, repo: strongSelf.repo)
-                strongSelf.showDetailViewController(controller, sender: nil)
-            })),
-            IssueTextActionOperation(icon: UIImage(named: "bar-bold"), operation: .wrap("**", "**")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-italic"), operation: .wrap("_", "_")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code"), operation: .wrap("`", "`")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-code-block"), operation: .wrap("```\n", "\n```")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-strikethrough"), operation: .wrap("~~", "~~")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
-        ]
-        
-        let actions = IssueTextActionsView(operations: operations)
-        actions.backgroundColor = Styles.Colors.Gray.lighter.color
-        actions.delegate = self
-        actions.frame = CGRect(x: 0, y: 0, width: 10, height: 50)
-        actions.addBorder(.top)
+        let getMarkdownBlock = { [weak self] () -> (String) in
+            return self?.bodyField.text ?? ""
+        }
+        let actions = IssueTextActionsView.forMarkdown(
+            viewController: self,
+            getMarkdownBlock: getMarkdownBlock,
+            repo: repo,
+            owner: owner,
+            addBorder: true
+        )
+        textActionsController.configure(textView: bodyField, actions: actions)
         bodyField.inputAccessoryView = actions
     }
     
@@ -215,14 +191,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         return false
     }
     
-    // MARK: IssueTextActionsViewDelegate
+    // MARK: Actions
     
-    /// Called when a user taps on one of the control buttons (preview, bold, etc)
-    func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
-        switch operation.operation {
-        case .execute(let block): block()
-        case .wrap(let left, let right): bodyField.replace(left: left, right: right, atLineStart: false)
-        case .line(let left): bodyField.replace(left: left, right: nil, atLineStart: true)
-        }
+    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    @IBAction func titleFieldEditingChanged(_ sender: Any) {
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
+    
 }

@@ -68,10 +68,12 @@ final class IssueStatusEventCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onActor() {
         delegate?.didTapActor(cell: self)
     }
 
+    @objc
     func onHash() {
         delegate?.didTapHash(cell: self)
     }
@@ -80,8 +82,8 @@ final class IssueStatusEventCell: UICollectionViewCell {
 
     func configure(_ model: IssueStatusEventModel) {
         let actorAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.secondaryBold
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
         actorButton.setAttributedTitle(NSAttributedString(string: model.actor, attributes: actorAttributes), for: .normal)
 
