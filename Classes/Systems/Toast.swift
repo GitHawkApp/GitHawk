@@ -201,12 +201,11 @@ final class ToastManager {
             let referenceView = viewController.view
             else { return }
 
+        // get rid of any view if currently displaying
+        dismiss()
+
         self.config = config
         startTimer()
-
-        if let view = self.view {
-            view.removeFromSuperview()
-        }
 
         let view = ToastView(configuration: config)
         view.frame = CGRect(origin: .zero, size: view.contentSize())
@@ -306,7 +305,8 @@ final class ToastManager {
     func dismiss() {
         guard let referenceView = self.animator?.referenceView,
             let springBehavior = self.springBehavior,
-            let view = self.view
+            let view = self.view,
+            view.superview != nil
             else { return }
         var center = springBehavior.anchorPoint
         center.y = referenceView.bounds.height + view.bounds.height / 2 + 100
@@ -319,5 +319,4 @@ final class ToastManager {
     }
 
 }
-
 
