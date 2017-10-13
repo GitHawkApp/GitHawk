@@ -23,9 +23,10 @@ PODS:
   - NYTPhotoViewer/Core (1.1.0)
   - Pageboy (2.0.0)
   - PureLayout (3.0.2)
-  - SDWebImage (4.0.0):
-    - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - SDWebImage/GIF (4.0.0):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - SlackTextViewController (1.9.5)
   - SnapKit (4.0.0)
   - SwipeCellKit (1.9.0)
@@ -43,7 +44,7 @@ DEPENDENCIES:
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
-  - SDWebImage (~> 4.0.0)
+  - SDWebImage/GIF (~> 4.0.0)
   - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
@@ -85,6 +86,6 @@ SPEC CHECKSUMS:
   Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 88bf4d401077f3861ff7b3767c5a925d3c6a793e
+PODFILE CHECKSUM: ace2f34a7d73e2c1c9cdfc7471f86b2916e4cc49
 
-COCOAPODS: 1.4.0.beta.1
+COCOAPODS: 1.2.1
