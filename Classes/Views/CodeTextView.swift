@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Highlightr
 
 final class LineLayoutManager: NSLayoutManager {
 
     private var lastParagraphLocation: Int = 0
     private var lastParagraphNumber: Int = 0
 
-    public var gutterTextColor = UIColor.darkGray
+    public var gutterTextColor = UIColor.fromHex("#A4A4A4")
     public var gutterFont = UIFont.systemFont(ofSize: 11.0)
 
     public override init() {
@@ -31,24 +32,25 @@ final class LineLayoutManager: NSLayoutManager {
 
     private func paragraphForRange(range: NSRange) -> Int {
         let currentString = NSString(string: self.textStorage?.string ?? "")
-        let characterRange = NSMakeRange(range.location,lastParagraphLocation - range.location)
         var paragraphNumber = lastParagraphNumber
 
         if range.location == lastParagraphLocation {
             return lastParagraphNumber
         } else if range.location < lastParagraphLocation {
+            let characterRange = NSMakeRange(range.location, lastParagraphLocation - range.location)
             currentString.enumerateSubstrings(in: characterRange, options:
             [.byParagraphs, .substringNotRequired, .reverse]) { substring, substringRange, enclosingRange, stop in
-                if enclosingRange.location <= characterRange.location {
+                if enclosingRange.location <= range.location {
                     stop.pointee = true
                 }
 
                 paragraphNumber = paragraphNumber - 1
             }
         } else {
-            currentString.enumerateSubstrings(in: range, options:
-            [.byParagraphs, .substringNotRequired, .reverse]) { substring, substringRange, enclosingRange, stop in
-                if enclosingRange.location >= characterRange.location {
+            let characterRange = NSMakeRange(self.lastParagraphLocation, range.location - self.lastParagraphLocation)
+            currentString.enumerateSubstrings(in: characterRange, options:
+            [.byParagraphs, .substringNotRequired]) { substring, substringRange, enclosingRange, stop in
+                if enclosingRange.location >= range.location {
                     stop.pointee = true
                 }
 
@@ -110,7 +112,13 @@ final class LineLayoutManager: NSLayoutManager {
 
 private class InternalCodeTextView: UITextView {
 
-    var gutterBackgroundColor: UIColor = .lightGray {
+    var gutterBackgroundColor: UIColor = UIColor.fromHex("#F5F9F7") {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+
+    var gutterLineColor: UIColor = UIColor.fromHex("#E2E5E4") {
         didSet {
             setNeedsDisplay()
         }
@@ -118,16 +126,22 @@ private class InternalCodeTextView: UITextView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup()
     }
 
     override init(frame: CGRect, textContainer: NSTextContainer? = nil) {
         super.init(frame: frame, textContainer: textContainer)
+        setup()
     }
 
     public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func setup() {
+        // Cause drawRect: to be called on frame resizing and device rotation
+        self.contentMode = .redraw
+    }
 
     override func draw(_ rect: CGRect) {
         // draw the guttee of the text view
@@ -136,51 +150,65 @@ private class InternalCodeTextView: UITextView {
             return
         }
 
+        let gutterWidth: CGFloat = 40
+        let gutterStrokeWidth: CGFloat = 0.5
+
         // draw the gutter on the screen
         let viewBounds = self.bounds
         context.setFillColor(gutterBackgroundColor.cgColor)
-        context.fill(CGRect(x: bounds.origin.x, y: bounds.origin.y, width: 40, height: bounds.size.height))
-        context.setStrokeColor(UIColor.darkGray.cgColor)
-        context.setLineWidth(0.5)
-        context.stroke(CGRect(x: bounds.origin.x + 39.5, y: bounds.origin.y, width: 0.5, height: viewBounds.height))
+        context.fill(CGRect(x: bounds.origin.x, y: bounds.origin.y, width: gutterWidth, height: bounds.size.height))
+        context.setStrokeColor(gutterLineColor.cgColor)
+        context.setLineWidth(gutterStrokeWidth)
+        context.stroke(CGRect(x: bounds.origin.x + (gutterWidth - gutterStrokeWidth), y: bounds.origin.y, width: gutterStrokeWidth, height: viewBounds.height))
 
         super.draw(rect)
     }
 }
 
-class CodeTextView: UIView {
+public class CodeTextView: UIView {
 
     private let layoutManager = LineLayoutManager()
     private var internalTextView: InternalCodeTextView?
 
-    var gutterBackgroundColor: UIColor = .lightGray {
+    public var isEditable: Bool = true {
+        didSet {
+            internalTextView?.isEditable = isEditable
+        }
+    }
+
+    public var gutterBackgroundColor: UIColor = UIColor.fromHex("#F5F9F7") {
         didSet {
             internalTextView?.gutterBackgroundColor = gutterBackgroundColor
         }
     }
 
-    var gutterTextColor: UIColor = .blue {
+    override public var backgroundColor: UIColor? {
         didSet {
-            layoutManager.gutterTextColor = gutterTextColor
-            print("woef")
-            layoutManager.invalidateDisplay(forGlyphRange: NSMakeRange(0, 9999999))
+            internalTextView?.backgroundColor = backgroundColor
             internalTextView?.setNeedsDisplay()
         }
     }
 
-    var text: String? {
+    public var gutterTextColor: UIColor = UIColor.fromHex("#A8A8A8") {
+        didSet {
+            layoutManager.gutterTextColor = gutterTextColor
+            internalTextView?.setNeedsDisplay()
+        }
+    }
+
+    public var text: String? {
         didSet {
             internalTextView?.text = text
         }
     }
 
-    var attributedText: NSAttributedString? {
+    public var attributedText: NSAttributedString? {
         didSet {
             internalTextView?.attributedText = attributedText
         }
     }
 
-    var font: UIFont? {
+    public var font: UIFont? {
         didSet {
             internalTextView?.font = font
         }
@@ -192,6 +220,8 @@ class CodeTextView: UIView {
     }
 
     func setup() {
+        // Cause drawRect: to be called on frame resizing and device rotation
+        self.contentMode = .redraw
 
         // Assign the `UITextView`'s `NSLayoutManager` to the `NSTextStorage` subclass
         let textStorage = NSTextStorage()
@@ -208,10 +238,15 @@ class CodeTextView: UIView {
         internalTextView = InternalCodeTextView(frame: self.bounds, textContainer: textContainer)
         guard let internalTextView = internalTextView else { return }
 
+        backgroundColor = UIColor.fromHex("#F5F9F7")
         internalTextView.frame = self.bounds
         internalTextView.gutterBackgroundColor = gutterBackgroundColor
         internalTextView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(internalTextView)
+    }
+
+    override public func layoutSubviews() {
+        self.internalTextView?.frame = self.bounds
     }
 
     public required init(coder aDecoder: NSCoder) {
