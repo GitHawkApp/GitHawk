@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ToastViewConfiguration {
+public struct ToastViewConfiguration {
     let text: String
     let backgroundColor: UIColor
     let insets: UIEdgeInsets
@@ -24,7 +24,7 @@ struct ToastViewConfiguration {
 
 protocol ToastViewDelegate: class {}
 
-final class ToastView: UIView {
+private final class ToastView: UIView {
 
     weak var delegate: ToastViewDelegate? = nil
 
@@ -183,7 +183,7 @@ final class ToastManager {
     }
 
     private let dynamicItem = ToastDynamicItem()
-    public var view: ToastView? = nil
+    private var view: ToastView? = nil
     private lazy var animator: UIDynamicAnimator? = nil
     private var springBehavior: UIAttachmentBehavior? = nil
     private var config: ToastViewConfiguration? = nil

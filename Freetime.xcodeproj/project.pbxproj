@@ -119,6 +119,7 @@
 		2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931892E1F539C0E00EF0911 /* IssueMilestoneSectionController.swift */; };
 		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
 		293971891F904C82002FAC4B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293971881F904C82002FAC4B /* Toast.swift */; };
+		2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */; };
 		293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476B11ED24D99005D0953 /* IssueTests.swift */; };
 		293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
@@ -476,6 +477,7 @@
 		2931892E1F539C0E00EF0911 /* IssueMilestoneSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueMilestoneSectionController.swift; sourceTree = "<group>"; };
 		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		293971881F904C82002FAC4B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+GitHawk.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
 		293A45A31F2995CE00DD1006 /* IssueCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitCell.swift; sourceTree = "<group>"; };
 		293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1242,6 +1244,7 @@
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				293971881F904C82002FAC4B /* Toast.swift */,
+				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1877,6 +1880,7 @@
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
+				2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
