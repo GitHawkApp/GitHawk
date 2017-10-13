@@ -16,11 +16,6 @@ protocol SearchBarCellDelegate: class {
 final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
     weak var delegate: SearchBarCellDelegate? = nil
-    var placeholder: String? {
-        didSet {
-            searchBar.placeholder = placeholder
-        }
-    }
 
     private let searchBar = UISearchBar(frame: .zero)
 
@@ -42,6 +37,13 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public API
+
+    func configure(query: String, placeholder: String) {
+        searchBar.text = query
+        searchBar.placeholder = placeholder
     }
 
     // MARK: Private API

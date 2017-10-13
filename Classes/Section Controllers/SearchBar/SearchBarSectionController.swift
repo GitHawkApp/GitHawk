@@ -17,6 +17,7 @@ final class SearchBarSectionController: ListSectionController, SearchBarCellDele
 
     private weak var delegate: SearchBarSectionControllerDelegate? = nil
     private let placeholder: String
+    private var query = ""
 
     init(placeholder: String, delegate: SearchBarSectionControllerDelegate) {
         self.delegate = delegate
@@ -34,13 +35,14 @@ final class SearchBarSectionController: ListSectionController, SearchBarCellDele
         guard let cell = collectionContext?.dequeueReusableCell(of: SearchBarCell.self, for: self, at: index) as? SearchBarCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.delegate = self
-        cell.placeholder = placeholder
+        cell.configure(query: query, placeholder: placeholder)
         return cell
     }
 
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSearchText(cell: SearchBarCell, query: String) {
+        self.query = query
         self.delegate?.didChangeSelection(sectionController: self, query: query)
     }
 }
