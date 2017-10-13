@@ -1,6 +1,6 @@
 //
 //  SettingsAccountsViewController.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ryan Nystrom on 8/25/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

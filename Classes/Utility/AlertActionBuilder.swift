@@ -1,6 +1,6 @@
 //
 //  AlertActionBuilder.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ivan Magda on 27/09/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  IssueCommitSectionController.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ryan Nystrom on 7/26/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

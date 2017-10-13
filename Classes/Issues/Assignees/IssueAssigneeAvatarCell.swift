@@ -1,6 +1,6 @@
 //
 //  IssueAssigneeAvatarCell.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Ryan Nystrom on 7/13/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

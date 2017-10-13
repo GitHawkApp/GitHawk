@@ -1,6 +1,6 @@
 //
 //  SelectionProviding.swift
-//  Freetime
+//  GitHawk
 //
 //  Created by Shahpour Benkau on 23/07/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
