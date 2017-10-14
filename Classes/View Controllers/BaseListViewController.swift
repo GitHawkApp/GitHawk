@@ -106,6 +106,10 @@ LoadMoreSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
+    func performUpdate() {
+        feed.finishLoading(dismissRefresh: false)
+    }
+
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
