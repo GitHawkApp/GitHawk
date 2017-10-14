@@ -265,6 +265,7 @@
 		29A5AF3F1F9266370065D529 /* NotificationViewModel+Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF3E1F9266370065D529 /* NotificationViewModel+Filterable.swift */; };
 		29A5AF411F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */; };
 		29A5AF431F926C600065D529 /* Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF421F926C600065D529 /* Filterable.swift */; };
+		29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */; };
 		29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
 		29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */; };
 		29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */; };
@@ -609,6 +610,7 @@
 		29A5AF3E1F9266370065D529 /* NotificationViewModel+Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationViewModel+Filterable.swift"; sourceTree = "<group>"; };
 		29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryIssueSummaryModel+Filterable.swift"; sourceTree = "<group>"; };
 		29A5AF421F926C600065D529 /* Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filterable.swift; sourceTree = "<group>"; };
+		29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Repository.swift"; sourceTree = "<group>"; };
 		29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerDelegate.swift; sourceTree = "<group>"; };
 		29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
 		29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+GitHawk.swift"; sourceTree = "<group>"; };
@@ -1495,6 +1497,7 @@
 			isa = PBXGroup;
 			children = (
 				292ACE191F5CAF9F00C9A02C /* Empty */,
+				29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */,
 				986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */,
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
 				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
@@ -2011,6 +2014,7 @@
 				2931892D1F539BA300EF0911 /* IssueMilestoneModel.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
+				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,

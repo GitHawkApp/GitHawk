@@ -8,16 +8,26 @@
 
 import UIKit
 
-class RepositoryCodeDirectoryViewController: UITableViewController {
+class RepositoryCodeDirectoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let client: GithubClient
     private let path: String
+    private let repo: RepositoryDetails
     private let cellIdentifier = "cell"
     private let feedRefresh = FeedRefresh()
     private var files = [RepositoryFile]()
+    private let isRoot: Bool
 
-    init(path: String) {
+    init(client: GithubClient, repo: RepositoryDetails, path: String, isRoot: Bool) {
+        self.client = client
+        self.repo = repo
         self.path = path
+        self.isRoot = isRoot
         super.init(nibName: nil, bundle: nil)
+        self.title = isRoot
+        ? NSLocalizedString("Code", comment: "")
+        : path
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -27,14 +37,15 @@ class RepositoryCodeDirectoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        files = [
-            RepositoryFile(name: "Classes", isDirectory: true),
-            RepositoryFile(name: "Tests", isDirectory: true),
-            RepositoryFile(name: "Freetime.xcodeproj", isDirectory: true),
-            RepositoryFile(name: "LICENSE", isDirectory: false),
-            RepositoryFile(name: "README.md", isDirectory: false),
-            RepositoryFile(name: "Podfile", isDirectory: false),
-        ]
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubview(tableView)
+
+        // set the frame in -viewDidLoad is required when working with TabMan
+        tableView.frame = view.bounds
+        if isRoot, #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
 
         makeBackBarItemEmpty()
 
@@ -45,36 +56,57 @@ class RepositoryCodeDirectoryViewController: UITableViewController {
         )
         tableView.refreshControl = feedRefresh.refreshControl
         tableView.register(StyledTableCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 0.1))
 
         feedRefresh.beginRefreshing()
         fetch()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(tableView: tableView)
+    }
+
     // MARK: Private API
 
     func fetch() {
-        feedRefresh.endRefreshing()
+        client.fetchFiles(owner: repo.owner, repo: repo.name, path: path) { [weak self] (result) in
+            switch result {
+            case .error:
+                ToastManager.showGenericError()
+            case .success(let files):
+                self?.files = files
+                self?.tableView.reloadData()
+                self?.feedRefresh.endRefreshing()
+            }
+        }
     }
 
     @objc
     func onRefresh() {
-        feedRefresh.endRefreshing()
+        fetch()
     }
 
     // MARK: UITableViewDataSource
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return files.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         let file = files[indexPath.row]
         cell.textLabel?.text = file.name
 
         let imageName = file.isDirectory ? "file-directory" : "file"
-        cell.imageView?.image = UIImage(named: imageName)
+        cell.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        cell.imageView?.tintColor = Styles.Colors.blueGray.color
         cell.accessoryType = file.isDirectory ? .disclosureIndicator : .none
 
         return cell
@@ -82,10 +114,19 @@ class RepositoryCodeDirectoryViewController: UITableViewController {
 
     // MARK: UITableViewDelegate
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        // TODO: push another controller
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let file = files[indexPath.row]
+        if file.isDirectory {
+            let controller = RepositoryCodeDirectoryViewController(
+                client: client,
+                repo: repo,
+                path: path.isEmpty ? file.name : "\(path)/\(file.name)",
+                isRoot: false
+            )
+            navigationController?.pushViewController(controller, animated: true)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 
 }
