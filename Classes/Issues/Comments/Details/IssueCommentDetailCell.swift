@@ -145,7 +145,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
             let editedByOwner = NSLocalizedString("Edited", comment: "")
             let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
-            editedLabel.text = "\(Strings.bullet) " + String.localizedStringWithFormat(format, editedLogin)
+            editedLabel.text = "\(Constants.Strings.bullet) " + String.localizedStringWithFormat(format, editedLogin)
             
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
             editedLabel.detailText = String.localizedStringWithFormat(detailFormat, editedLogin, editedDate.agoString)

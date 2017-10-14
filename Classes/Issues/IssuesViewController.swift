@@ -338,7 +338,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,
@@ -374,7 +374,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: locked ? .locked : .unlocked,

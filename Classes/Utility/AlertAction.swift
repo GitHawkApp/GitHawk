@@ -72,7 +72,7 @@ struct AlertAction {
     }
     
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
-        return UIAlertAction(title: Strings.newIssue, style: .default) { _ in
+        return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
@@ -83,19 +83,19 @@ struct AlertAction {
     // MARK: - Static
     
     static func cancel(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.cancel, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: handler)
     }
     
     static func ok(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.ok, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.ok, style: .default, handler: handler)
     }
     
     static func no(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.no, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.no, style: .cancel, handler: handler)
     }
     
     static func yes(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.yes, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.yes, style: .default, handler: handler)
     }
     
     static func goBack(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -127,7 +127,7 @@ struct AlertAction {
     }
     
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.signin, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
