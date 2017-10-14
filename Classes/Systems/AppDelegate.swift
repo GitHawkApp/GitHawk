@@ -35,7 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkActivityIndicatorManager.shared.isEnabled = true
         Styles.setupAppearance()
         BadgeNotifications.configure(application: application)
+        ShortcutHandler.configure(application: application, sessionManager: sessionManager)
+
         return true
+    }
+
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(ShortcutHandler.handle(shortcutItem: shortcutItem,
+                                                 sessionManager: sessionManager,
+                                                 navigationManager: rootNavigationManager))
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

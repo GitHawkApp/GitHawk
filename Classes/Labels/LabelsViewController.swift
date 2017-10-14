@@ -34,6 +34,7 @@ final class LabelsViewController: UITableViewController {
 
     // MARK: Private API
 
+    @objc
     func onRefresh() {
         fetch()
     }
@@ -49,7 +50,7 @@ final class LabelsViewController: UITableViewController {
                 }
                 self?.update(labels: labels)
             } else {
-                StatusBar.showGenericError()
+                ToastManager.showGenericError()
             }
         }
     }

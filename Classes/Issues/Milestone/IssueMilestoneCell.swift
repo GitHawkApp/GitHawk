@@ -32,16 +32,16 @@ final class IssueMilestoneCell: SelectableCell {
 
     func configure(title: String) {
         let milestoneAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.light.color,
-            NSFontAttributeName: Styles.Fonts.secondary
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondary
         ]
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
             attributes: milestoneAttributes
         )
         let titleAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.secondaryBold
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
         titleText.append(NSAttributedString(string: title, attributes: titleAttributes))
         titleLabel.attributedText = titleText

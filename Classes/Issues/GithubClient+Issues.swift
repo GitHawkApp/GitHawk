@@ -48,7 +48,7 @@ extension GithubClient {
             owner: owner,
             repo: repo,
             number: number,
-            pageSize: 100,
+            page_size: 100,
             before: prependResult?.minStartCursor
         )
 
@@ -138,7 +138,7 @@ extension GithubClient {
         completion: @escaping (IssueCommentReactionViewModel?) -> ()
         ) {
         if isAdd {
-            perform(mutation: AddReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
+            perform(mutation: AddReactionMutation(subject_id: subjectID, content: content)) { (result, error) in
                 if let reactionFields = result?.data?.addReaction?.subject.fragments.reactionFields {
                     completion(createIssueReactions(reactions: reactionFields))
                 } else {
@@ -147,7 +147,7 @@ extension GithubClient {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
             }
         } else {
-            perform(mutation: RemoveReactionMutation(subjectId: subjectID, content: content)) { (result, error) in
+            perform(mutation: RemoveReactionMutation(subject_id: subjectID, content: content)) { (result, error) in
                 if let reactionFields = result?.data?.removeReaction?.subject.fragments.reactionFields {
                     completion(createIssueReactions(reactions: reactionFields))
                 } else {
@@ -177,6 +177,21 @@ extension GithubClient {
             completion: { (response, _) in
                 if response.value != nil {
                     completion(.success(status))
+                } else {
+                    completion(.error(nil))
+                }
+        }))
+    }
+    
+    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> ()) {
+        request(Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
+            method: locked ? .put : .delete,
+            completion: { (response, _) in
+                // As per documentation this endpoint returns no content, so all we can validate is that
+                // the status code is "204 No Content".
+                if response.response?.statusCode == 204 {
+                    completion(.success(true))
                 } else {
                     completion(.error(nil))
                 }

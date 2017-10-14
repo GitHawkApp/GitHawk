@@ -46,7 +46,7 @@ final class SearchRepoResultCell: SelectableCell {
 
         // always collapse and truncate the title
         titleLabel.lineBreakMode = .byTruncatingMiddle
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
         languageLabel.font = Styles.Fonts.secondary
         languageLabel.textColor = Styles.Colors.Gray.light.color
@@ -89,13 +89,13 @@ final class SearchRepoResultCell: SelectableCell {
     
     func configure(result: SearchRepoResult) {
         let ownerAttributes = [
-            NSFontAttributeName: Styles.Fonts.body,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSAttributedStringKey.font: Styles.Fonts.body,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let title = NSMutableAttributedString(string: result.owner + "/", attributes: ownerAttributes)
         let nameAttributes = [
-            NSFontAttributeName: Styles.Fonts.bodyBold,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color
+            NSAttributedStringKey.font: Styles.Fonts.bodyBold,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         title.append(NSAttributedString(string: result.name, attributes: nameAttributes))
         titleLabel.attributedText = title

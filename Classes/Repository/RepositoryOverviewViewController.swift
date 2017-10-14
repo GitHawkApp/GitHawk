@@ -43,7 +43,7 @@ ListAdapterDataSource {
 
         // set the frame in -viewDidLoad is required when working with TabMan
         feed.collectionView.frame = view.bounds
-        
+
         if #available(iOS 11.0, *) {
             feed.collectionView.contentInsetAdjustmentBehavior = .never
         }

@@ -8,17 +8,33 @@
 
 import Foundation
 
+enum IssueReactionOperation {
+    case add
+    case subtract
+    case insert
+    case remove
+    case none
+}
+
+struct IssueLocalReactionModel {
+    let viewModel: IssueCommentReactionViewModel
+    let operation: IssueReactionOperation
+}
+
 func IssueLocalReaction(
     fromServer: IssueCommentReactionViewModel,
     previousLocal: IssueCommentReactionViewModel?,
     content: ReactionContent,
     add: Bool
-    ) -> IssueCommentReactionViewModel {
+    ) -> IssueLocalReactionModel {
     let base = previousLocal ?? fromServer
 
-    // update model
-    // insert when from 0 && isAdd
-    // delete when 1 && !isAdd
+    // capture exactly what type of transition is taking place:
+    // inserting the first reaction (count == 1)
+    // incrementing a reaction (count > 1)
+    // removing the last reaction (count == 1)
+    // decrementing a reaction (count > 1)
+    let operation: IssueReactionOperation
 
     var prev: (index: Int, model: ReactionViewModel)? = nil
     for (i, model) in base.models.enumerated() {
@@ -33,13 +49,17 @@ func IssueLocalReaction(
         let newCount = foundPrev.model.count + (add ? 1 : -1)
         if newCount == 0 {
             models.remove(at: foundPrev.index)
+            operation = .remove
         } else {
-            models[foundPrev.index] = ReactionViewModel(
+            let model = ReactionViewModel(
                 content: content,
                 count: newCount,
                 viewerDidReact: add,
                 users: foundPrev.model.users
             )
+            models[foundPrev.index] = model
+            // found a previous, op isn't last/first but must match add param
+            operation = add ? .add : .subtract
         }
     } else if add {
         models.append(ReactionViewModel(
@@ -48,6 +68,12 @@ func IssueLocalReaction(
             viewerDidReact: true,
             users: []
         ))
+        operation = .insert
+    } else {
+        operation = .none
     }
-    return IssueCommentReactionViewModel(models: models)
+    return IssueLocalReactionModel(
+        viewModel: IssueCommentReactionViewModel(models: models),
+        operation: operation
+    )
 }

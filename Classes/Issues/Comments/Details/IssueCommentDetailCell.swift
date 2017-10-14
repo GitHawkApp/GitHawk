@@ -115,14 +115,17 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     // MARK: Private API
 
+    @objc
     func onMore(sender: UIButton) {
         delegate?.didTapMore(cell: self, sender: sender)
     }
 
+    @objc
     func onTapAvatar() {
         delegate?.didTapProfile(cell: self)
     }
 
+    @objc
     func onTapLoginLabel() {
         delegate?.didTapProfile(cell: self)
     }

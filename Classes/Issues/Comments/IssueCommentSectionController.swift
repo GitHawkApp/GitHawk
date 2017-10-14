@@ -40,9 +40,6 @@ AttributedStringViewIssueDelegate {
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
 
-    // set and reload to enter "editing" UI mode
-    private var editing = false
-
     init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
         self.model = model
         self.client = client
@@ -79,8 +76,17 @@ AttributedStringViewIssueDelegate {
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
 
-    func edit() -> UIAlertAction? {
-        return nil
+    func edit(sender: UIView) -> UIAlertAction? {
+        guard object?.viewerCanUpdate == true else { return nil }
+        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
+            guard let markdown = self?.object?.rawMarkdown,
+                let owner = self?.model.owner,
+                let repo = self?.model.repo
+                else { return }
+            let edit = EditCommentViewController(markdown: markdown, owner: owner, repo: repo)
+            let nav = UINavigationController(rootViewController: edit)
+            self?.viewController?.present(nav, animated: true, completion: nil)
+        })
     }
 
     @discardableResult
@@ -97,19 +103,20 @@ AttributedStringViewIssueDelegate {
         return true
     }
 
-    private func react(content: ReactionContent, isAdd: Bool) {
+    private func react(cell: IssueCommentReactionCell, content: ReactionContent, isAdd: Bool) {
         guard let object = self.object else { return }
 
         let previousReaction = reactionMutation
-        reactionMutation = IssueLocalReaction(
+        let result = IssueLocalReaction(
             fromServer: object.reactions,
             previousLocal: reactionMutation,
             content: content,
             add: isAdd
         )
+        reactionMutation = result.viewModel
+        cell.perform(operation: result.operation, content: content)
         update(animated: true)
         generator.impactOccurred()
-
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
             if result == nil {
                 self?.reactionMutation = previousReaction
@@ -170,7 +177,7 @@ AttributedStringViewIssueDelegate {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         cellForViewModel viewModel: Any,
         at index: Int
-        ) -> UICollectionViewCell {
+        ) -> UICollectionViewCell & ListBindable {
         guard let context = self.collectionContext else { fatalError("Collection context must be set") }
 
         let cellClass: AnyClass
@@ -179,7 +186,9 @@ AttributedStringViewIssueDelegate {
         case is IssueCommentReactionViewModel: cellClass = IssueCommentReactionCell.self
         default: cellClass = CellTypeForComment(viewModel: viewModel)
         }
-        let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
+
+        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError("Cell not bindable") }
 
         // extra config outside of bind API. applies to multiple cell types.
         if let cell = cell as? CollapsibleCell {
@@ -192,8 +201,7 @@ AttributedStringViewIssueDelegate {
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
             let threadState = object?.threadState
-            let showBorder = threadState == .single || threadState == .tail
-            cell.setBorderVisible(showBorder)
+            cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
 
@@ -245,11 +253,21 @@ AttributedStringViewIssueDelegate {
     // MARK: IssueCommentReactionCellDelegate
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
-        react(content: reaction, isAdd: true)
+        // don't add a reaction if already reacted
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            !reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
+        react(cell: cell, content: reaction, isAdd: true)
     }
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
-        react(content: reaction, isAdd: false)
+        // don't remove a reaction if it doesn't exist
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
+        react(cell: cell, content: reaction, isAdd: false)
     }
 
     // MARK: AttributedStringViewIssueDelegate

@@ -10,8 +10,18 @@ import UIKit
 
 class StyledTableCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configure()
+    }
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configure()
+    }
+
+    private func configure() {
+        textLabel?.font = Styles.Fonts.body
 
         let background = UIView()
         background.backgroundColor = Styles.Colors.Gray.alphaLighter

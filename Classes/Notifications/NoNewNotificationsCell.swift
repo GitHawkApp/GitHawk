@@ -18,6 +18,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        emoji.isAccessibilityElement = false
         emoji.text = "🎉"
         emoji.textAlignment = .center
         emoji.backgroundColor = .clear
@@ -31,6 +32,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         shadow.fillColor = UIColor(white: 0, alpha: 0.05).cgColor
         contentView.layer.addSublayer(shadow)
 
+        label.isAccessibilityElement = false
         label.text = NSLocalizedString("Inbox zero!", comment: "")
         label.textAlignment = .center
         label.backgroundColor = .clear
@@ -51,6 +53,9 @@ final class NoNewNotificationsCell: UICollectionViewCell {
                 name: NSNotification.Name.UIApplicationWillEnterForeground,
                 object: nil
         )
+        
+        contentView.isAccessibilityElement = true
+        contentView.accessibilityLabel = NSLocalizedString("You have no new notifications!", comment: "Inbox Zero Accessibility Label")
     }
 
     required init?(coder aDecoder: NSCoder) {

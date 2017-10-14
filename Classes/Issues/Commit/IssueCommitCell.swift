@@ -64,7 +64,7 @@ final class IssueCommitCell: UICollectionViewCell {
 
         // always collapse and truncate
         messageLabel.lineBreakMode = .byTruncatingMiddle
-        messageLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        messageLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,6 +80,7 @@ final class IssueCommitCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onAvatar() {
         delegate?.didTapAvatar(cell: self)
     }

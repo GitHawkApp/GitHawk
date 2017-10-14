@@ -21,9 +21,9 @@ func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBl
     inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
     inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
 
-    let attributes: [String: Any] = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-        NSFontAttributeName: Styles.Fonts.code
+    let attributes: [NSAttributedStringKey: Any] = [
+        .foregroundColor: Styles.Colors.Gray.dark.color,
+        .font: Styles.Fonts.code
     ]
 
     let stringSizing = NSAttributedStringSizing(

@@ -43,7 +43,7 @@ NewIssueTableViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        makeBackBarItemEmpty()
 
         dataSource = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
@@ -64,6 +64,16 @@ NewIssueTableViewControllerDelegate {
         navigationItem.rightBarButtonItem = rightItem
     }
 
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+        } else {
+            // Fallback on earlier versions
+        }
+        setNeedsScrollViewInsetUpdate()
+        print("safe area insets changed")
+    }
+
     // MARK: Private API
 
     var repoUrl: URL {
@@ -77,7 +87,7 @@ NewIssueTableViewControllerDelegate {
             repo: repo.name,
             signature: .sentWithGitHawk)
         else {
-            StatusBar.showGenericError()
+            ToastManager.showGenericError()
             return nil
         }
         
@@ -88,6 +98,7 @@ NewIssueTableViewControllerDelegate {
             .newIssue(issueController: newIssueViewController)
     }
 
+    @objc
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         

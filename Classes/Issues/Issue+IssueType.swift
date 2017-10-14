@@ -11,10 +11,6 @@ import IGListKit
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: IssueType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var pullRequest: Bool {
         return false
     }
@@ -39,10 +35,6 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return false
     }
 
-    var locked: Bool {
-        return fragments.lockableFields.locked
-    }
-
     var assigneeFields: AssigneeFields {
         return fragments.assigneeFields
     }
@@ -53,10 +45,6 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
 
     var headPaging: HeadPaging {
         return timeline.pageInfo.fragments.headPaging
-    }
-
-    var viewerCanUpdate: Bool {
-        return fragments.updatableFields.viewerCanUpdate
     }
 
     var milestoneFields: MilestoneFields? {

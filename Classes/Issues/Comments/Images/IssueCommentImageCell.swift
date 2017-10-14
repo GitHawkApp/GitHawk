@@ -12,7 +12,7 @@ import SDWebImage
 import IGListKit
 
 protocol IssueCommentImageCellDelegate: class {
-    func didTapImage(cell: IssueCommentImageCell, image: UIImage)
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage, animatedImageData: Data?)
 }
 
 protocol IssueCommentImageHeightCellDelegate: class {
@@ -27,7 +27,7 @@ UIGestureRecognizerDelegate {
     weak var delegate: IssueCommentImageCellDelegate? = nil
     weak var heightDelegate: IssueCommentImageHeightCellDelegate? = nil
 
-    let imageView = UIImageView()
+    let imageView = FLAnimatedImageView()
 
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let overlay = CreateCollapsibleOverlay()
@@ -67,10 +67,13 @@ UIGestureRecognizerDelegate {
 
     // MARK: Private API
 
+    @objc
     func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
         guard let image = imageView.image else { return }
-        delegate?.didTapImage(cell: self, image: image)
+        let data = imageView.animatedImage.data
+        
+        delegate?.didTapImage(cell: self, image: image, animatedImageData: data)
     }
 
     // MARK: ListBindable

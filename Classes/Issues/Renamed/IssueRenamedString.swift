@@ -10,12 +10,12 @@ import UIKit
 
 func IssueRenamedString(previous: String, current: String, width: CGFloat) -> NSAttributedStringSizing {
     let titleAttributes = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-        NSFontAttributeName: Styles.Fonts.secondaryBold
+        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+        NSAttributedStringKey.font: Styles.Fonts.secondaryBold
     ]
     let dividerAttributes = [
-        NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
-        NSFontAttributeName: Styles.Fonts.secondary
+        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
+        NSAttributedStringKey.font: Styles.Fonts.secondary
     ]
     let text = NSMutableAttributedString(string: previous, attributes: titleAttributes)
     text.append(NSAttributedString(string: NSLocalizedString(" to ", comment: ""), attributes: dividerAttributes))

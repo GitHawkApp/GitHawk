@@ -55,10 +55,12 @@ final class IssueLabeledCell: UICollectionViewCell {
 
     // MARK: Private API
 
+    @objc
     func onActor() {
         delegate?.didTapActor(cell: self)
     }
 
+    @objc
     func onLabel() {
         delegate?.didTapLabel(cell: self)
     }
@@ -67,8 +69,8 @@ final class IssueLabeledCell: UICollectionViewCell {
 
     func configure(_ model: IssueLabeledModel) {
         let actorAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
-            NSFontAttributeName: Styles.Fonts.secondaryBold
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
         let actor = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
@@ -78,8 +80,8 @@ final class IssueLabeledCell: UICollectionViewCell {
         case .removed: actionString = NSLocalizedString(" removed", comment: "")
         }
         let actionAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.Gray.medium.color,
-            NSFontAttributeName: Styles.Fonts.secondary
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondary
         ]
         let action = NSAttributedString(string: actionString, attributes: actionAttributes)
         let descriptionText = NSMutableAttributedString(attributedString: actor)

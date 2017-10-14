@@ -53,7 +53,7 @@ final class IssueReferencedCell: UICollectionViewCell {
 
         // always collapse and truncate
         titleLabel.lineBreakMode = .byTruncatingMiddle
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,13 +64,13 @@ final class IssueReferencedCell: UICollectionViewCell {
 
     func configure(_ model: IssueReferencedModel) {
         let titleAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondaryBold,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
         ]
         let title = NSMutableAttributedString(string: model.title, attributes: titleAttributes)
         let numberAttributes = [
-            NSFontAttributeName: Styles.Fonts.secondary,
-            NSForegroundColorAttributeName: Styles.Colors.Gray.light.color
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
         title.append(NSAttributedString(string: " #\(model.number)", attributes: numberAttributes))
         titleLabel.attributedText = title

@@ -70,13 +70,15 @@ AttributedStringViewIssueDelegate {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         cellForViewModel viewModel: Any,
         at index: Int
-        ) -> UICollectionViewCell {
+        ) -> UICollectionViewCell & ListBindable {
         guard let context = self.collectionContext,
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
 
         if viewModel === tailModel {
-            return context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index)
+            guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
+                else { fatalError("Cell not bindable") }
+            return cell
         }
 
         let cellClass: AnyClass
@@ -84,7 +86,8 @@ AttributedStringViewIssueDelegate {
         case is IssueReviewDetailsModel: cellClass = IssueReviewDetailsCell.self
         default: cellClass = CellTypeForComment(viewModel: viewModel)
         }
-        let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index)
+        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError("Cell not bindable") }
 
         ExtraCommentCellConfigure(
             cell: cell,

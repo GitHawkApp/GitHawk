@@ -60,6 +60,7 @@ final class AttributedStringView: UIView {
 
     // MARK: Private API
 
+    @objc
     func onTap(recognizer: UITapGestureRecognizer) {
         guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
         if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {

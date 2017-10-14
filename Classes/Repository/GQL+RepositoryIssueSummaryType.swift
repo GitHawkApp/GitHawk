@@ -10,10 +10,6 @@ import Foundation
 
 extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var repoEventFields: RepoEventFields {
         return fragments.repoEventFields
     }
@@ -33,10 +29,6 @@ extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummary
 
 extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
 
-    var id: String {
-        return fragments.nodeFields.id
-    }
-
     var repoEventFields: RepoEventFields {
         return fragments.repoEventFields
     }
@@ -54,51 +46,3 @@ extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: Repository
     }
     
 }
-
-//extension RepoDetailsQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
-//
-//    var id: String {
-//        return fragments.nodeFields.id
-//    }
-//
-//    var repoEventFields: RepoEventFields {
-//        return fragments.repoEventFields
-//    }
-//
-//    var pullRequest: Bool {
-//        return false
-//    }
-//
-//    var status: IssueStatus {
-//        switch state {
-//        case .closed: return .closed
-//        case .open: return .open
-//        }
-//    }
-//
-//}
-//
-//extension RepoDetailsQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
-//
-//    var id: String {
-//        return fragments.nodeFields.id
-//    }
-//
-//    var repoEventFields: RepoEventFields {
-//        return fragments.repoEventFields
-//    }
-//
-//    var pullRequest: Bool {
-//        return true
-//    }
-//
-//    var status: IssueStatus {
-//        switch state {
-//        case .closed: return .closed
-//        case .open: return .open
-//        case .merged: return .merged
-//        }
-//    }
-//
-//}
-

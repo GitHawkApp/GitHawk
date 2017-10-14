@@ -73,7 +73,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         compressAndEncodeImage(image, completion: { [weak self] result in
             switch result {
             case .error:
-                StatusBar.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
+                ToastManager.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
                 self?.navigationItem.rightBarButtonItem = nil
             case .success(let base64):
                 self?.compressionData = base64
@@ -139,7 +139,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         
         // Should never caught in here as the button will be disabled in this situation
         guard let compressionData = compressionData else {
-            StatusBar.showGenericError()
+            ToastManager.showGenericError()
             return
         }
         
@@ -147,7 +147,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         client.canUploadImage { [weak self] success in
             // Ensure that we do have enough tokens, otherwise remove the upload button
             guard success else {
-                StatusBar.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
+                ToastManager.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
                 self?.navigationItem.rightBarButtonItem = nil
                 return
             }
@@ -170,7 +170,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
                     DispatchQueue.main.async {
                         switch result {
                         case .error:
-                            StatusBar.showGenericError()
+                            ToastManager.showGenericError()
                             self?.setRightBarItemIdle()
                             return
                         case .success(let link):
