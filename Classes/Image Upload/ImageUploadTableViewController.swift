@@ -1,8 +1,8 @@
 //
-//  ImageUploadViewController.swift
+//  ImageUploadTableViewController.swift
 //  Freetime
 //
-//  Created by Sherlock, James on 30/09/2017.
+//  Created by Sherlock, James on 14/10/2017.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
@@ -12,8 +12,8 @@ protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
 }
 
-class ImageUploadViewController: UIViewController, UITextFieldDelegate {
-
+class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate {
+    
     @IBOutlet private var previewImageView: UIImageView!
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var bodyTextField: UITextView!
@@ -37,10 +37,10 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         return raw
     }
     
-    class func create(_ image: UIImage, username: String?, delegate: ImageUploadDelegate) -> ImageUploadViewController? {
+    class func create(_ image: UIImage, username: String?, delegate: ImageUploadDelegate) -> ImageUploadTableViewController? {
         let storyboard = UIStoryboard(name: "ImageUpload", bundle: nil)
         
-        guard let viewController = storyboard.instantiateInitialViewController() as? ImageUploadViewController else {
+        guard let viewController = storyboard.instantiateInitialViewController() as? ImageUploadTableViewController else {
             return nil
         }
         
@@ -53,7 +53,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Set the preview image
         previewImageView.image = image
         
@@ -108,7 +108,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
         item.accessibilityLabel = NSLocalizedString("Upload", comment: "")
         navigationItem.rightBarButtonItem = item
     }
-
+    
     @IBAction func didPressClose() {
         let dismissBlock = {
             self.dismiss(animated: true)
@@ -128,7 +128,7 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
             AlertAction.discard { _ in
                 dismissBlock()
             }
-        ])
+            ])
         
         present(alert, animated: true, completion: nil)
     }
@@ -166,18 +166,18 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
                     title: self?.titleText ?? "",
                     description: self?.descriptionText ?? "") { [weak self] result in
                         
-                    // UI Work, so ensure it's on the main thread
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .error:
-                            ToastManager.showGenericError()
-                            self?.setRightBarItemIdle()
-                            return
-                        case .success(let link):
-                            self?.delegate?.imageUploaded(link: link, altText: name)
-                            self?.dismiss(animated: true, completion: nil)
+                        // UI Work, so ensure it's on the main thread
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .error:
+                                ToastManager.showGenericError()
+                                self?.setRightBarItemIdle()
+                                return
+                            case .success(let link):
+                                self?.delegate?.imageUploaded(link: link, altText: name)
+                                self?.dismiss(animated: true, completion: nil)
+                            }
                         }
-                    }
                 }
             }
         }
@@ -209,6 +209,5 @@ class ImageUploadViewController: UIViewController, UITextFieldDelegate {
             
             completion(.success(base64))
         }
-    }
-
+    }        
 }

@@ -208,7 +208,7 @@ final class NewIssueTableViewController: UITableViewController,
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         
         let username = client.sessionManager.focusedUserSession?.username
-        guard let uploadController = ImageUploadViewController.create(image, username: username, delegate: self) else { return }
+        guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
         
         picker.pushViewController(uploadController, animated: true)
     }

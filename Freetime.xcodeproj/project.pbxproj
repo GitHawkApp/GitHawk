@@ -338,8 +338,8 @@
 		7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */; };
 		7BF841301F8A919E004B9CDC /* NotificationViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */; };
 		9823B2B81F921AC100DC3C09 /* ImageUpload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9823B2B51F921AC100DC3C09 /* ImageUpload.storyboard */; };
-		9823B2B91F921AC100DC3C09 /* ImageUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B2B61F921AC100DC3C09 /* ImageUploadViewController.swift */; };
 		9823B2BA1F921AC100DC3C09 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B2B71F921AC100DC3C09 /* ImgurClient.swift */; };
+		9823B2BC1F9224D500DC3C09 /* ImageUploadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B2BB1F9224D500DC3C09 /* ImageUploadTableViewController.swift */; };
 		98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */; };
 		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
 		986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B871A1F2B87DD00AAB55C /* SearchRepoResult.swift */; };
@@ -683,8 +683,8 @@
 		7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationViewModel+Filter.swift"; sourceTree = "<group>"; };
 		94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		9823B2B51F921AC100DC3C09 /* ImageUpload.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageUpload.storyboard; sourceTree = "<group>"; };
-		9823B2B61F921AC100DC3C09 /* ImageUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUploadViewController.swift; sourceTree = "<group>"; };
 		9823B2B71F921AC100DC3C09 /* ImgurClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgurClient.swift; sourceTree = "<group>"; };
+		9823B2BB1F9224D500DC3C09 /* ImageUploadTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadTableViewController.swift; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
 		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
 		986B871A1F2B87DD00AAB55C /* SearchRepoResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepoResult.swift; sourceTree = "<group>"; };
@@ -1471,8 +1471,8 @@
 			isa = PBXGroup;
 			children = (
 				9823B2B51F921AC100DC3C09 /* ImageUpload.storyboard */,
-				9823B2B61F921AC100DC3C09 /* ImageUploadViewController.swift */,
 				9823B2B71F921AC100DC3C09 /* ImgurClient.swift */,
+				9823B2BB1F9224D500DC3C09 /* ImageUploadTableViewController.swift */,
 			);
 			path = "Image Upload";
 			sourceTree = "<group>";
@@ -1938,7 +1938,6 @@
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */,
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
-				9823B2B91F921AC100DC3C09 /* ImageUploadViewController.swift in Sources */,
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
@@ -1989,6 +1988,7 @@
 				293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */,
 				293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */,
 				293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */,
+				9823B2BC1F9224D500DC3C09 /* ImageUploadTableViewController.swift in Sources */,
 				293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */,
 				291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */,
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
