@@ -214,10 +214,6 @@ IssueCommentSectionControllerDelegate {
         return autocomplete.cellHeight
     }
 
-    override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
-        return false
-    }
-
     // MARK: Private API
 
     var externalURL: URL {
