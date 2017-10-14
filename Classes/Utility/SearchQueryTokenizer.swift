@@ -50,5 +50,4 @@ func isIssueStatus(status: IssueStatus, text: String) -> Bool {
     case .closed: return text == "closed"
     case .merged: return text == "merged"
     }
-    return false
 }

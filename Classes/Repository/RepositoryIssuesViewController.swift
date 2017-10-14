@@ -99,7 +99,7 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
         if let object = model as? ListDiffable, object === searchKey {
             let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
-            return SearchBarSectionController(placeholder: NSLocalizedString("Search", comment: ""), delegate: self, height: searchBarHeight)
+            return SearchBarSectionController(placeholder: NSLocalizedString("Search", comment: ""), delegate: self)
         }
         return RepositorySummarySectionController(client: client.githubClient, repo: repo)
     }
