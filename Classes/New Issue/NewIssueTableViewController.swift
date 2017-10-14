@@ -105,7 +105,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         setupInputView()
         
         // Update title to use localization
-        title = NSLocalizedString("New Issue", comment: "")
+        title = Constants.Strings.newIssue
     }
     
     // MARK: Private API
@@ -123,13 +123,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onSend)
         )
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc
     func onSend() {
         guard let titleText = titleText else {
-            StatusBar.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            ToastManager.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
 
@@ -145,7 +146,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                StatusBar.showGenericError()
+                ToastManager.showGenericError(viewController: self)
                 return
             }
 
@@ -189,5 +190,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         bodyField.becomeFirstResponder()
         return false
     }
-
+    
+    // MARK: Actions
+    
+    /// Called when editing changed on the title field, enable/disable submit button based on title text
+    @IBAction func titleFieldEditingChanged(_ sender: Any) {
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
+    }
+    
 }

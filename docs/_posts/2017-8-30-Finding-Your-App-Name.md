@@ -1,5 +1,6 @@
 ---
 layout: post
+author: ryannystrom
 title: Finding Your App Name
 ---
 

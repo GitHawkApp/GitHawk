@@ -26,14 +26,16 @@ enum Constants {
         static let signin = NSLocalizedString("Sign In", comment: "")
         static let signout = NSLocalizedString("Sign out", comment: "")
         static let open = NSLocalizedString("Open", comment: "")
-        static let close = NSLocalizedString("Close", comment: "")
+        static let close = NSLocalizedString("Closed", comment: "")
         static let closed = NSLocalizedString("Closed", comment: "")
         static let reopen = NSLocalizedString("Reopen", comment: "")
         static let reopened = NSLocalizedString("Reopened", comment: "")
         static let unknown = NSLocalizedString("Unknown", comment: "")
         static let merged = NSLocalizedString("Merged", comment: "")
         static let locked = NSLocalizedString("Locked", comment: "")
+        static let newIssue = NSLocalizedString("New Issue", comment: "")
         static let bullet = "\u{2022}"
         static let bulletHollow = "\u{25E6}"
+        static let search = NSLocalizedString("Search", comment: "")
     }
 }

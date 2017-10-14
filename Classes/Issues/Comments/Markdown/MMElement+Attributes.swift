@@ -42,6 +42,7 @@ func PushAttributes(
         NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         MarkdownAttribute.usernameDisabled: true,
+        MarkdownAttribute.linkShorteningDisabled: true,
         ]
     case .link: newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,

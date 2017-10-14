@@ -12,16 +12,26 @@ import IGListKit
 final class IssueCommentReactionViewModel: ListDiffable {
 
     let models: [ReactionViewModel]
-    private let map: [String: Int]
+    private let map: [ReactionContent: ReactionViewModel]
+    private let flatState: String
 
     init(models: [ReactionViewModel]) {
         self.models = models
 
-        var map = [String: Int]()
+        var map = [ReactionContent: ReactionViewModel]()
+        var flatState = ""
         for model in models {
-            map[model.content.rawValue] = model.count
+            map[model.content] = model
+            flatState += "\(model.content.rawValue)\(model.count)"
         }
         self.map = map
+        self.flatState = flatState
+    }
+
+    // MARK: Public API
+
+    func viewerDidReact(reaction: ReactionContent) -> Bool {
+        return map[reaction]?.viewerDidReact == true
     }
 
     // MARK: ListDiffable
@@ -34,7 +44,7 @@ final class IssueCommentReactionViewModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueCommentReactionViewModel else { return false }
-        return map == object.map
+        return flatState == object.flatState
     }
 
 }

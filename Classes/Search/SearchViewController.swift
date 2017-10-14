@@ -210,8 +210,22 @@ SearchResultSectionControllerDelegate {
     // MARK: SearchRecentHeaderSectionControllerDelegate
 
     func didTapClear(sectionController: SearchRecentHeaderSectionController) {
-        recentStore.clear()
-        adapter.performUpdates(animated: true)
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Recent Searches", comment: ""),
+            message: NSLocalizedString("Remove all recent searches?", comment: ""),
+            preferredStyle: .alert
+        )
+        
+        alert.addActions([
+            AlertAction.clearAll({ [weak self] _ in
+                guard let strongSelf = self else { return }
+                strongSelf.recentStore.clear()
+                strongSelf.adapter.performUpdates(animated: true)
+            }),
+            AlertAction.cancel()
+        ])
+        
+        present(alert, animated: true)
     }
 
     // MARK: TabNavRootViewControllerType
