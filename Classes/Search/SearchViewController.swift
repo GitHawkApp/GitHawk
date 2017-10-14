@@ -32,13 +32,7 @@ SearchResultSectionControllerDelegate {
     }
     private var state: State = .idle
 
-    private var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        return searchController
-    }()
-
+    private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -63,22 +57,12 @@ SearchResultSectionControllerDelegate {
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = NSLocalizedString("Search", comment: "")
-        searchController.searchBar.tintColor = Styles.Colors.Blue.medium.color
-        searchController.searchBar.backgroundColor = .clear
-        searchController.searchBar.searchBarStyle = .minimal
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
-            navigationItem.title = "Search"
-            navigationController?.navigationBar.prefersLargeTitles = true
-        } else {
-            navigationItem.titleView = searchController.searchBar
-            searchController.hidesNavigationBarDuringPresentation = false
-        }
-        
-        definesPresentationContext = true
+        searchBar.delegate = self
+        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchBar.backgroundColor = .clear
+        searchBar.searchBarStyle = .minimal
+        navigationItem.titleView = searchBar
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -211,17 +195,15 @@ SearchResultSectionControllerDelegate {
     // MARK: SearchEmptyViewDelegate
 
     func didTap(emptyView: SearchEmptyView) {
-        searchController.searchBar.resignFirstResponder()
-        searchController.searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
 
     // MARK: SearchRecentSectionControllerDelegate
 
     func didSelect(recentSectionController: SearchRecentSectionController, text: String) {
-        searchController.isActive = true
-        searchController.searchBar.resignFirstResponder()
-        searchController.searchBar.setShowsCancelButton(true, animated: false)
-        searchController.searchBar.text = text
+        searchBar.setShowsCancelButton(true, animated: false)
+        searchBar.text = text
         search(term: text)
     }
 
@@ -253,13 +235,13 @@ SearchResultSectionControllerDelegate {
     }
 
     func didDoubleTapTab() {
-        searchController.searchBar.becomeFirstResponder()
+        searchBar.becomeFirstResponder()
     }
 
     // MARK: SearchResultSectionControllerDelegate
 
     func didSelect(sectionController: SearchResultSectionController) {
-        searchController.searchBar.resignFirstResponder()
+        searchBar.resignFirstResponder()
     }
     
 }
