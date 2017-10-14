@@ -19,6 +19,11 @@ protocol BaseListViewControllerDataSource: class {
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController
 }
 
+// Add to models to filter them with search query strings
+protocol Filterable {
+    func match(query: String) -> Bool
+}
+
 /**
  Subclassable view controller with basic list features:
  - Composed list data with head and body contents
@@ -40,6 +45,7 @@ LoadMoreSectionControllerDelegate {
     private var page: PagingType? = nil
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
+    private var filterQuery: String? = nil
 
     init(
         emptyErrorMessage: String,
@@ -78,7 +84,7 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: Public API
 
-    func update(
+    final func update(
         models: [ListDiffable],
         page: PagingType?,
         append: Bool,
@@ -97,7 +103,7 @@ LoadMoreSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
-    func error(
+    final func error(
         animated: Bool,
         completion: (() -> ())? = nil
         ) {
@@ -106,13 +112,14 @@ LoadMoreSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
-    func performUpdate() {
-        feed.finishLoading(dismissRefresh: false)
+    final func filter(query: String?, animated: Bool) {
+        filterQuery = query?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        feed.adapter.performUpdates(animated: animated)
     }
 
     // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+    final func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         assert(Thread.isMainThread)
         guard let dataSource = self.dataSource else { return [] }
 
@@ -138,10 +145,22 @@ LoadMoreSectionControllerDelegate {
             }
         }
 
-        return allObjects
+        // if a query string exists, return matching Filterable objects
+        if let query = filterQuery, !query.isEmpty {
+            return allObjects.filter({ (object) -> Bool in
+                if let object = object as? Filterable {
+                    return object.match(query: query)
+                } else {
+                    // if object isn't Filterable, always include it
+                    return true
+                }
+            })
+        } else {
+            return allObjects
+        }
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+    final func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         assert(Thread.isMainThread)
         guard let object = object as? ListDiffable,
         let dataSource = self.dataSource
@@ -154,25 +173,25 @@ LoadMoreSectionControllerDelegate {
         return dataSource.sectionController(model: object, listAdapter: listAdapter)
     }
 
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+    final func emptyView(for listAdapter: ListAdapter) -> UIView? {
         assert(Thread.isMainThread)
         return nil
     }
 
     // MARK: FeedDelegate
 
-    func loadFromNetwork(feed: Feed) {
+    final func loadFromNetwork(feed: Feed) {
         assert(Thread.isMainThread)
         fetch(page: nil)
     }
 
-    func loadNextPage(feed: Feed) -> Bool {
+    final func loadNextPage(feed: Feed) -> Bool {
         return false
     }
 
     // MARK: LoadMoreSectionControllerDelegate
 
-    func didSelect(sectionController: LoadMoreSectionController) {
+    final func didSelect(sectionController: LoadMoreSectionController) {
         fetch(page: page)
     }
 

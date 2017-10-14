@@ -75,19 +75,10 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
-    override func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let allObjects = super.objects(for: listAdapter)
-        switch type {
-        case .issues: return filterIssues(allObjects, self.searchQuery)
-        case .pullRequests: return filterIssues(allObjects, self.searchQuery)
-        }
-    }
-
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        self.searchQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.performUpdate()
+        filter(query: query.trimmingCharacters(in: .whitespacesAndNewlines), animated: true)
     }
 
     // MARK: BaseListViewControllerDataSource
@@ -98,7 +89,6 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
         if let object = model as? ListDiffable, object === searchKey {
-            let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
             return SearchBarSectionController(placeholder: NSLocalizedString("Search", comment: ""), delegate: self)
         }
         return RepositorySummarySectionController(client: client.githubClient, repo: repo)
