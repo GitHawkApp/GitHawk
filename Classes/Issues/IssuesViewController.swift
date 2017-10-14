@@ -119,6 +119,8 @@ IssueCommentSectionControllerDelegate {
             owner: model.owner,
             addBorder: false
         )
+        // text input bar uses UIVisualEffectView, don't try to match it
+        actions.backgroundColor = .clear
         textActionsController.configure(textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
