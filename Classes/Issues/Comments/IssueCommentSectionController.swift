@@ -12,7 +12,6 @@ import TUSafariActivity
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didEdit(sectionController: IssueCommentSectionController)
-    func didDelete(commentID: Int)
 }
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
@@ -26,6 +25,7 @@ AttributedStringViewIssueDelegate {
     private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
     private let model: IssueDetailsModel
+    private var hasBeenDeleted = false
     private weak var delegate: IssueCommentSectionControllerDelegate? = nil
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -88,7 +88,7 @@ AttributedStringViewIssueDelegate {
             alert.addActions([
                 AlertAction.cancel(),
                 AlertAction.delete { [weak self] _ in
-                    self?.delegate?.didDelete(commentID: number)
+                    self?.deleteComment()
                 }
             ])
             
@@ -144,6 +144,27 @@ AttributedStringViewIssueDelegate {
             }
         }
     }
+    
+    /// Deletes the co
+    private func deleteComment() {
+        guard let number = object?.number else { return }
+        
+        // Optimistically delete the comment
+        hasBeenDeleted = true
+        update(animated: true, completion: nil)
+
+        // Actually delete the comment now
+        client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
+            switch result {
+            case .error:
+                self?.hasBeenDeleted = false
+                self?.update(animated: true, completion: nil)
+
+                ToastManager.showGenericError()
+            case .success: break // Don't need to handle success since updated optimistically
+            }
+        }
+    }
 
     // MARK: ListBindingSectionControllerDataSource
 
@@ -152,7 +173,8 @@ AttributedStringViewIssueDelegate {
         viewModelsFor object: Any
         ) -> [ListDiffable] {
         guard let object = self.object else { return [] }
-
+        guard !hasBeenDeleted else { return [] }
+        
         var bodies = [ListDiffable]()
         for body in object.bodyModels {
             bodies.append(body)
@@ -274,10 +296,20 @@ AttributedStringViewIssueDelegate {
     // MARK: IssueCommentReactionCellDelegate
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        // don't add a reaction if already reacted
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            !reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
         react(cell: cell, content: reaction, isAdd: true)
     }
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        // don't remove a reaction if it doesn't exist
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
         react(cell: cell, content: reaction, isAdd: false)
     }
 

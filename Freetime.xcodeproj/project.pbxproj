@@ -112,12 +112,13 @@
 		29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */; };
 		29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */; };
 		29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */; };
-		29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29316DCC1ECD31E9007CAE3F /* StatusBar.swift */; };
 		293189281F5391F700EF0911 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293189271F5391F700EF0911 /* Result.swift */; };
 		2931892B1F5397E400EF0911 /* IssueMilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931892A1F5397E400EF0911 /* IssueMilestoneCell.swift */; };
 		2931892D1F539BA300EF0911 /* IssueMilestoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931892C1F539BA300EF0911 /* IssueMilestoneModel.swift */; };
 		2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931892E1F539C0E00EF0911 /* IssueMilestoneSectionController.swift */; };
 		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
+		293971891F904C82002FAC4B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293971881F904C82002FAC4B /* Toast.swift */; };
+		2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */; };
 		293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
 		293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476B11ED24D99005D0953 /* IssueTests.swift */; };
 		293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
@@ -326,12 +327,17 @@
 		29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */; };
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
+		3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
+		7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */; };
+		7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */; };
+		7BF841301F8A919E004B9CDC /* NotificationViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */; };
+		984D9CA91F212ADF00ECEA7F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984D9CA81F212ADF00ECEA7F /* Settings.bundle */; };
 		98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */; };
 		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
 		986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B871A1F2B87DD00AAB55C /* SearchRepoResult.swift */; };
@@ -468,12 +474,13 @@
 		29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllers.swift; sourceTree = "<group>"; };
 		29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationManager.swift; sourceTree = "<group>"; };
 		29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+GithubAPI.swift"; sourceTree = "<group>"; };
-		29316DCC1ECD31E9007CAE3F /* StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		293189271F5391F700EF0911 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		2931892A1F5397E400EF0911 /* IssueMilestoneCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueMilestoneCell.swift; sourceTree = "<group>"; };
 		2931892C1F539BA300EF0911 /* IssueMilestoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueMilestoneModel.swift; sourceTree = "<group>"; };
 		2931892E1F539C0E00EF0911 /* IssueMilestoneSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueMilestoneSectionController.swift; sourceTree = "<group>"; };
 		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
+		293971881F904C82002FAC4B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+GitHawk.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
 		293A45A31F2995CE00DD1006 /* IssueCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitCell.swift; sourceTree = "<group>"; };
 		293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitSectionController.swift; sourceTree = "<group>"; };
@@ -662,12 +669,16 @@
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
 		35E1CE59E98A2C8E7F451CA6 /* Pods-FreetimeTests.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.testflight.xcconfig"; sourceTree = "<group>"; };
 		3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UserActivity.swift"; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
+		7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
+		7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
+		7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationViewModel+Filter.swift"; sourceTree = "<group>"; };
 		94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
 		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
@@ -1204,6 +1215,7 @@
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7BBFEE551F8A8A0400C68E47 /* SearchBar */,
 				29DA1E7C1F5DF2960050C64B /* LoadMore */,
 				298BA0941EC947F100B01946 /* SegmentedControl */,
 			);
@@ -1235,10 +1247,12 @@
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
-				29316DCC1ECD31E9007CAE3F /* StatusBar.swift */,
 				29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */,
+				293971881F904C82002FAC4B /* Toast.swift */,
+				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
+				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1394,6 +1408,7 @@
 				29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */,
 				29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */,
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
+				7BF8412F1F8A919E004B9CDC /* NotificationViewModel+Filter.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1435,6 +1450,15 @@
 				29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */,
 			);
 			path = Labeled;
+			sourceTree = "<group>";
+		};
+		7BBFEE551F8A8A0400C68E47 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */,
+				7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */,
+			);
+			path = SearchBar;
 			sourceTree = "<group>";
 		};
 		986B87171F2B873200AAB55C /* Search */ = {
@@ -1683,7 +1707,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
+			shellScript = "if [[ ! -z \"${DISABLE_APOLLO}\" ]]; then\n  echo \"Stopping Task: Remove 'DISABLE_APOLLO' env variable to continue.\"\n  exit\nfi\n\nPATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1699,7 +1723,6 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
-				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/MMMarkdown/MMMarkdown.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1720,7 +1743,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMMarkdown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1752,7 +1774,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		96C731F68491692BBBF5E151 /* [CP] Copy Pods Resources */ = {
@@ -1784,7 +1806,6 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
-				"${BUILT_PRODUCTS_DIR}/JDStatusBarNotification/JDStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/MMMarkdown/MMMarkdown.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -1805,7 +1826,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JDStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMMarkdown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1837,7 +1857,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */ = {
@@ -1871,9 +1891,11 @@
 				297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */,
 				299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */,
 				297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */,
+				7BF841301F8A919E004B9CDC /* NotificationViewModel+Filter.swift in Sources */,
 				290744B41F250A6800FD9E48 /* AutocompleteCell.swift in Sources */,
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
+				2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
@@ -1922,6 +1944,7 @@
 				292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */,
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
+				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
@@ -2005,6 +2028,7 @@
 				295C31CF1F0AA67600521CED /* IssueStatus+ButtonState.swift in Sources */,
 				290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */,
 				294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */,
+				3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */,
 				295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
@@ -2103,6 +2127,7 @@
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
+				293971891F904C82002FAC4B /* Toast.swift in Sources */,
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
@@ -2114,7 +2139,6 @@
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
-				29316DCD1ECD31E9007CAE3F /* StatusBar.swift in Sources */,
 				29A08FC11F12F08100C5368E /* String+HashDisplay.swift in Sources */,
 				2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */,
 				29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */,
@@ -2143,6 +2167,7 @@
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
+				7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */,
 				4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */,
 				29C9FDD81EC65FEE00EE3A52 /* User.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,

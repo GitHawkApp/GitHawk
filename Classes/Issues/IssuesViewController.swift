@@ -56,9 +56,6 @@ IssueCommentSectionControllerDelegate {
     // set to optimistically change the open/closed status
     // clear when refreshing or on request failure
     private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
-    
-    // List of deleted comments to optimistially remove them from the feed
-    private var deletedComments = [Int]()
 
     init(
         client: GithubClient,
@@ -242,6 +239,16 @@ IssueCommentSectionControllerDelegate {
         }
     }
     
+    func lockAction() -> UIAlertAction? {
+        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+            return nil
+        }
+        
+        return AlertAction.toggleLocked(locked) { [weak self] _ in
+            self?.setLocked(!locked)
+        }
+    }
+    
     func viewRepoAction() -> UIAlertAction? {
         guard let _ = current else { return nil }
         
@@ -266,6 +273,7 @@ IssueCommentSectionControllerDelegate {
         
         alert.addActions([
             closeAction(),
+            lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
@@ -350,7 +358,43 @@ IssueCommentSectionControllerDelegate {
             case .error:
                 self?.localStatusChange = nil
                 self?.feed.adapter.performUpdates(animated: true)
-                StatusBar.showGenericError()
+                ToastManager.showGenericError()
+            default: break // dont need to handle success since updated optimistically
+            }
+        }
+    }
+    
+    func setLocked(_ locked: Bool) {
+        guard let currentStatus = current?.status else { return }
+        
+        let localModel = IssueStatusModel(
+            status: currentStatus.status,
+            pullRequest: currentStatus.pullRequest,
+            locked: locked
+        )
+        let localEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: locked ? .locked : .unlocked,
+            pullRequest: currentStatus.pullRequest
+        )
+        
+        localStatusChange = (localModel, localEvent)
+        feed.adapter.performUpdates(animated: true)
+        
+        client.setLocked(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            locked: locked
+        ) { [weak self] result in
+            switch result {
+            case .error:
+                self?.localStatusChange = nil
+                self?.feed.adapter.performUpdates(animated: true)
+                ToastManager.showGenericError()
             default: break // dont need to handle success since updated optimistically
             }
         }
@@ -396,13 +440,7 @@ IssueCommentSectionControllerDelegate {
             objects.append(event)
         }
 
-        return objects.filter({ (model) -> Bool in
-            // Allow any model which is not a comment model
-            guard let commentModel = model as? IssueCommentModel, let number = commentModel.number else { return true }
-            
-            // Only allow the model if the number is not in the deleted comments list
-            return !deletedComments.contains(number)
-        })
+        return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -514,26 +552,6 @@ IssueCommentSectionControllerDelegate {
 
     func didEdit(sectionController: IssueCommentSectionController) {
         
-    }
-    
-    func didDelete(commentID: Int) {
-        // Optimistically delete the comment
-        deletedComments.append(commentID)
-        feed.adapter.performUpdates(animated: true)
-        
-        // Actually delete the comment now
-        client.deleteComment(owner: model.owner, repo: model.repo, commentID: commentID) { [weak self] result in
-            switch result {
-            case .error:
-                if let index = self?.deletedComments.index(of: commentID) {
-                    self?.deletedComments.remove(at: index)
-                    self?.feed.adapter.performUpdates(animated: true)
-                }
-                
-                StatusBar.showGenericError()
-            case .success: break // Don't need to handle success since updated optimistically
-            }
-        }
     }
 
 }
