@@ -226,7 +226,7 @@ TabNavRootViewControllerType {
 
         if object === searchKey {
             return SearchBarSectionController(
-                placeholder: Strings.search,
+                placeholder: Constants.Strings.search,
                 delegate: self
             )
         }

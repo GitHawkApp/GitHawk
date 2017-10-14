@@ -234,7 +234,7 @@ IssueCommentSectionControllerDelegate {
             status != .merged
             else { return nil }
         
-        return AlertAction.toggleIssue(status) { [weak self] _ in
+        return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setStatus(close: status == .open)
         }
     }
@@ -244,7 +244,7 @@ IssueCommentSectionControllerDelegate {
             return nil
         }
         
-        return AlertAction.toggleLocked(locked) { [weak self] _ in
+        return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setLocked(!locked)
         }
     }
@@ -338,7 +338,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,
@@ -374,7 +374,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: locked ? .locked : .unlocked,

@@ -89,11 +89,11 @@ final class IssueStatusEventCell: UICollectionViewCell {
 
         let title: String
         switch model.status {
-        case .reopened: title = Strings.reopened // open event only happens when RE-opening
-        case .closed: title = Strings.closed
-        case .locked: title = Strings.locked
+        case .reopened: title = Constants.Strings.reopened // open event only happens when RE-opening
+        case .closed: title = Constants.Strings.closed
+        case .locked: title = Constants.Strings.locked
         case .unlocked: title = NSLocalizedString("Unlocked", comment: "")
-        case .merged: title = Strings.merged
+        case .merged: title = Constants.Strings.merged
         }
         statusButton.setTitle(title, for: .normal)
         statusButton.config(pullRequest: model.pullRequest, state: model.status.buttonState)
