@@ -22,9 +22,9 @@ NYTPhotosViewControllerDelegate {
 
     // MARK: IssueCommentImageCellDelegate
 
-    func didTapImage(cell: IssueCommentImageCell, image: UIImage) {
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage, animatedImageData: Data?) {
         referenceImageView = cell.imageView
-        let photo = IssueCommentPhoto(image: image)
+        let photo = IssueCommentPhoto(image: image, data: animatedImageData)
         let photosViewController = NYTPhotosViewController(photos: [photo])
         photosViewController.delegate = self
         viewController?.present(photosViewController, animated: true)

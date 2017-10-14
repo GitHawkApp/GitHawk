@@ -118,7 +118,7 @@ TabNavRootViewControllerType {
     @objc private func onMarkAll(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Notifications", comment: ""),
-            message: "Mark all notifications as read?",
+            message: NSLocalizedString("Mark all notifications as read?", comment: ""),
             preferredStyle: .alert
         )
         
@@ -128,7 +128,6 @@ TabNavRootViewControllerType {
             }),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
         
         present(alert, animated: true)
     }
@@ -160,7 +159,7 @@ TabNavRootViewControllerType {
                 self.dataSource.update(width: width, notifications: notifications, completion: block)
             }
         case .error:
-            StatusBar.showNetworkError()
+            ToastManager.showNetworkError()
             self.hasError = true
             self.update(dismissRefresh: !append, animated: animated)
         }
@@ -226,8 +225,10 @@ TabNavRootViewControllerType {
         }
 
         if object === searchKey {
-            let searchBarHeight = 44 + 2*Styles.Sizes.rowSpacing
-            return SearchBarSectionController(placeholder: NSLocalizedString("Search notifications", comment: ""), delegate: self, height: searchBarHeight)
+            return SearchBarSectionController(
+                placeholder: Strings.search,
+                delegate: self
+            )
         }
 
         switch object {
@@ -284,7 +285,7 @@ TabNavRootViewControllerType {
 
     func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
         dataSource.removeOptimisticRead(id: id)
-        StatusBar.showGenericError()
+        ToastManager.showGenericError()
 
         if !isOpen {
             update(dismissRefresh: false, animated: true)

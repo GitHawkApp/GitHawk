@@ -62,10 +62,6 @@ NewIssueTableViewControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-        
-        if #available(iOS 11, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -91,7 +87,7 @@ NewIssueTableViewControllerDelegate {
             repo: repo.name,
             signature: .sentWithGitHawk)
         else {
-            StatusBar.showGenericError()
+            ToastManager.showGenericError()
             return nil
         }
         

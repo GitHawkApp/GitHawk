@@ -253,10 +253,20 @@ AttributedStringViewIssueDelegate {
     // MARK: IssueCommentReactionCellDelegate
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        // don't add a reaction if already reacted
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            !reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
         react(cell: cell, content: reaction, isAdd: true)
     }
 
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent) {
+        // don't remove a reaction if it doesn't exist
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            reactions.viewerDidReact(reaction: reaction)
+            else { return }
+
         react(cell: cell, content: reaction, isAdd: false)
     }
 
