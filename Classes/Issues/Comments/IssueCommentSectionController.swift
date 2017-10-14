@@ -145,7 +145,7 @@ AttributedStringViewIssueDelegate {
         }
     }
     
-    /// Deletes the co
+    /// Deletes the comment and optimistically removes it from the feed
     private func deleteComment() {
         guard let number = object?.number else { return }
         
