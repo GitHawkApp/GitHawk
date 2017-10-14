@@ -91,7 +91,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         // Add cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: Constants.Strings.cancel,
             style: .plain,
             target: self,
             action: #selector(onCancel)
@@ -105,7 +105,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         setupInputView()
         
         // Update title to use localization
-        title = Strings.newIssue
+        title = Constants.Strings.newIssue
     }
     
     // MARK: Private API

@@ -54,7 +54,7 @@ NewIssueTableViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
-        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Strings.unknown
+        accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
         client?.fetchAPIStatus { [weak self] result in
             self?.update(statusResult: result)
         }
@@ -110,7 +110,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onViewSource() {
-        guard let url = URL(string: "https://github.com/rnystrom/GitHawk/")
+        guard let url = URL(string: Constants.URLs.repository)
             else { fatalError("Should always create GitHub URL") }
 		presentSafari(url: url)
     }
@@ -122,7 +122,7 @@ NewIssueTableViewControllerDelegate {
         alert.addActions([
             AlertAction.cancel(),
             AlertAction(AlertActionBuilder {
-                $0.title = Strings.signout
+                $0.title = Constants.Strings.signout
                 $0.style = .destructive
             }).get { [weak self] _ in
                 self?.signout()

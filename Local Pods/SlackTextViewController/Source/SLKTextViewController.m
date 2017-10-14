@@ -1752,7 +1752,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     
     NSRange range = NSMakeRange(location, length);
     NSRange insertionRange = [self.textView slk_insertText:string inRange:range];
-    
+
     self.textView.selectedRange = NSMakeRange(insertionRange.location, 0);
     
     [self.textView slk_scrollToCaretPositonAnimated:NO];
