@@ -26,7 +26,7 @@ enum Constants {
         static let signin = NSLocalizedString("Sign In", comment: "")
         static let signout = NSLocalizedString("Sign out", comment: "")
         static let open = NSLocalizedString("Open", comment: "")
-        static let close = NSLocalizedString("Closed", comment: "")
+        static let close = NSLocalizedString("Close", comment: "")
         static let closed = NSLocalizedString("Closed", comment: "")
         static let reopen = NSLocalizedString("Reopen", comment: "")
         static let reopened = NSLocalizedString("Reopened", comment: "")
