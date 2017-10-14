@@ -58,7 +58,7 @@ struct AlertAction {
     }
     
     func view(repo repoViewController: RepositoryViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Open Repository", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: NSLocalizedString("View Repository", comment: ""), style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             rootViewController.show(repoViewController, sender: nil)
         }
@@ -72,7 +72,7 @@ struct AlertAction {
     }
     
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("New Issue", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: Strings.newIssue, style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
@@ -114,12 +114,24 @@ struct AlertAction {
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
+    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
+        let title = locked
+            ? NSLocalizedString("Unlock", comment: "")
+            : NSLocalizedString("Lock", comment: "")
+        
+        return UIAlertAction(title: title, style: .default, handler: handler)
+    }
+    
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Strings.signin, style: .default, handler: handler)
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .destructive, handler: handler)
+    }
+    
+    static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Clear All", comment: ""), style: .destructive, handler: handler)
     }
     
 }

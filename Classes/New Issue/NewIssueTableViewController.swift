@@ -105,7 +105,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         setupInputView()
         
         // Update title to use localization
-        title = NSLocalizedString("New Issue", comment: "")
+        title = Strings.newIssue
     }
     
     // MARK: Private API
@@ -123,7 +123,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onSend)
         )
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
@@ -146,7 +146,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                ToastManager.showGenericError()
+                ToastManager.showGenericError(viewController: self)
                 return
             }
 

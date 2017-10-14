@@ -12,13 +12,14 @@ import NYTPhotoViewer
 final class IssueCommentPhoto: NSObject, NYTPhoto {
 
     let image: UIImage?
-
-    init(image: UIImage) {
+    let imageData: Data?
+    
+    init(image: UIImage, data: Data?) {
         self.image = image
+        self.imageData = data
     }
 
     // unused
-    let imageData: Data? = nil
     let placeholderImage: UIImage? = nil
     let attributedCaptionTitle: NSAttributedString? = nil
     let attributedCaptionCredit: NSAttributedString? = nil

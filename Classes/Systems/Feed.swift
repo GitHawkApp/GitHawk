@@ -52,6 +52,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.backgroundColor = Styles.Colors.background
         self.collectionView.refreshControl = feedRefresh.refreshControl
+        self.collectionView.keyboardDismissMode = .onDrag
         feedRefresh.refreshControl.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
     }
 
