@@ -106,6 +106,10 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: handler)
     }
     
+    static func delete(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
+    }
+    
     static func toggleIssue(_ status: IssueStatus, issue: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let issueType = issue ? "Issue" : "Pull Request"
         

@@ -47,6 +47,10 @@ fragment updatableFields on Updatable {
   viewerCanUpdate
 }
 
+fragment deletableFields on Deletable {
+  viewerCanDelete
+}
+
 fragment nodeFields on Node {
   id
 }

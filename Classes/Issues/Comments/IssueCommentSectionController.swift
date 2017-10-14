@@ -25,6 +25,7 @@ AttributedStringViewIssueDelegate {
     private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
     private let model: IssueDetailsModel
+    private var hasBeenDeleted = false
     private weak var delegate: IssueCommentSectionControllerDelegate? = nil
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -75,6 +76,25 @@ AttributedStringViewIssueDelegate {
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
+    
+    func deleteAction() -> UIAlertAction? {
+        guard object?.viewerCanDelete == true, let number = object?.number else { return nil }
+        
+        return AlertAction.delete { [weak self] _ in
+            let title = NSLocalizedString("Are you sure?", comment: "")
+            let message = NSLocalizedString("Deleting this comment is irreversible, do you want to continue?", comment: "")
+            let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
+            
+            alert.addActions([
+                AlertAction.cancel(),
+                AlertAction.delete { [weak self] _ in
+                    self?.deleteComment()
+                }
+            ])
+            
+            self?.viewController?.present(alert, animated: true)
+        }
+    }
 
     func edit(sender: UIView) -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
@@ -124,6 +144,27 @@ AttributedStringViewIssueDelegate {
             }
         }
     }
+    
+    /// Deletes the comment and optimistically removes it from the feed
+    private func deleteComment() {
+        guard let number = object?.number else { return }
+        
+        // Optimistically delete the comment
+        hasBeenDeleted = true
+        update(animated: true, completion: nil)
+
+        // Actually delete the comment now
+        client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
+            switch result {
+            case .error:
+                self?.hasBeenDeleted = false
+                self?.update(animated: true, completion: nil)
+
+                ToastManager.showGenericError()
+            case .success: break // Don't need to handle success since updated optimistically
+            }
+        }
+    }
 
     // MARK: ListBindingSectionControllerDataSource
 
@@ -132,7 +173,8 @@ AttributedStringViewIssueDelegate {
         viewModelsFor object: Any
         ) -> [ListDiffable] {
         guard let object = self.object else { return [] }
-
+        guard !hasBeenDeleted else { return [] }
+        
         var bodies = [ListDiffable]()
         for body in object.bodyModels {
             bodies.append(body)
@@ -240,6 +282,7 @@ AttributedStringViewIssueDelegate {
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
+            deleteAction(),
             AlertAction.cancel()
         ])
         viewController?.present(alert, animated: true)

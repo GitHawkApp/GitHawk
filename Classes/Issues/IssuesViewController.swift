@@ -496,7 +496,8 @@ IssueCommentSectionControllerDelegate {
         id: String,
         commentFields: CommentFields,
         reactionFields: ReactionFields,
-        viewerCanUpdate: Bool
+        viewerCanUpdate: Bool,
+        viewerCanDelete: Bool
         ) {
         guard let comment = createCommentModel(
             id: id,
@@ -506,7 +507,8 @@ IssueCommentSectionControllerDelegate {
             owner: model.owner,
             repo: model.repo,
             threadState: .single,
-            viewerCanUpdate: viewerCanUpdate
+            viewerCanUpdate: viewerCanUpdate,
+            viewerCanDelete: viewerCanDelete
             )
             else { return }
         sentComments.append(comment)

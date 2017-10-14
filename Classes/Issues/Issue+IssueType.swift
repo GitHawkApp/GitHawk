@@ -72,7 +72,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     owner: owner,
                     repo: repo,
                     threadState: .single,
-                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate
+                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
+                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete
                     ) {
                     results.append(model)
 
