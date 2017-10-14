@@ -151,34 +151,12 @@ UICollectionViewDelegateFlowLayout {
     }
 
     func configure(cell: IssueReactionCell, model: ReactionViewModel) {
-        let users = model.users
-        let detailText: String
-        switch users.count {
-        case 0:
-            detailText = ""
-        case 1:
-            let format = NSLocalizedString("%@", comment: "")
-            detailText = String.localizedStringWithFormat(format, users[0])
-            break
-        case 2:
-            let format = NSLocalizedString("%@ and %@", comment: "")
-            detailText = String.localizedStringWithFormat(format, users[0], users[1])
-            break
-        case 3:
-            let format = NSLocalizedString("%@, %@ and %@", comment: "")
-            detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2])
-            break
-        default:
-            let difference = model.count - users.count
-            let format = NSLocalizedString("%@, %@, %@ and %d other(s)", comment: "")
-            detailText = String.localizedStringWithFormat(format, users[0], users[1], users[2], difference)
-            break
-        }
+        let detail = createReactionDetailText(model: model)
 
         cell.configure(
             emoji: model.content.emoji,
             count: model.count,
-            detail: detailText,
+            detail: detail,
             isViewer: model.viewerDidReact
         )
     }
