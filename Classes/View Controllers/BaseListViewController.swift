@@ -108,7 +108,7 @@ LoadMoreSectionControllerDelegate {
     }
 
     final func filter(query: String?, animated: Bool) {
-        filterQuery = query?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        filterQuery = query
         feed.adapter.performUpdates(animated: animated)
     }
 

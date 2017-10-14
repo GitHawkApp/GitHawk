@@ -182,10 +182,9 @@ TabNavRootViewControllerType {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let relevantModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
-        let viewModels = filtered(array: relevantModels, query: searchQuery)
+        let selectedModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
 
-        if hasError && viewModels.count == 0 {
+        if hasError && selectedModels.count == 0 {
             return []
         }
 
@@ -195,10 +194,10 @@ TabNavRootViewControllerType {
             objects.append(token)
         }
 
-        if viewModels.count == 0 && feed.status == .idle {
+        if selectedModels.count == 0 && feed.status == .idle {
             objects.append(emptyKey)
         } else {
-            objects += viewModels as [ListDiffable]
+            objects += selectedModels as [ListDiffable]
 
             // only append paging if there are visible notifications
             if let page = self.page {
@@ -206,7 +205,7 @@ TabNavRootViewControllerType {
             }
         }
 
-        return objects
+        return filtered(array: objects, query: searchQuery)
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {

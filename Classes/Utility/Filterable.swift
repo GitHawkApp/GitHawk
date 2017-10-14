@@ -14,9 +14,12 @@ protocol Filterable {
 }
 
 func filtered<T>(array: [T], query: String) -> [T] {
+    let cleanQuery = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    guard !cleanQuery.isEmpty else { return array }
+
     return array.filter({ (o) -> Bool in
         if let o = o as? Filterable {
-            return o.match(query: query)
+            return o.match(query: cleanQuery)
         } else {
             // if object isn't Filterable, always include it
             return true
