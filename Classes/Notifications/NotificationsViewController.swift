@@ -183,7 +183,7 @@ TabNavRootViewControllerType {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let relevantModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
-        let viewModels = filterNotifications(relevantModels, self.searchQuery)
+        let viewModels = filtered(array: relevantModels, query: searchQuery)
 
         if hasError && viewModels.count == 0 {
             return []

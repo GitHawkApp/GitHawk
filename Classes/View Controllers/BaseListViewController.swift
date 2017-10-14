@@ -19,11 +19,6 @@ protocol BaseListViewControllerDataSource: class {
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController
 }
 
-// Add to models to filter them with search query strings
-protocol Filterable {
-    func match(query: String) -> Bool
-}
-
 /**
  Subclassable view controller with basic list features:
  - Composed list data with head and body contents
@@ -146,15 +141,8 @@ LoadMoreSectionControllerDelegate {
         }
 
         // if a query string exists, return matching Filterable objects
-        if let query = filterQuery, !query.isEmpty {
-            return allObjects.filter({ (object) -> Bool in
-                if let object = object as? Filterable {
-                    return object.match(query: query)
-                } else {
-                    // if object isn't Filterable, always include it
-                    return true
-                }
-            })
+        if let query = filterQuery {
+            return filtered(array: allObjects, query: query)
         } else {
             return allObjects
         }
