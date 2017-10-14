@@ -19,7 +19,7 @@ struct ReactionViewModel {
 
 func createReactionDetailText(model: ReactionViewModel) -> String {
     let users = model.users
-    switch model.count {
+    switch users.count {
     case 0:
         return ""
     case 1:
@@ -28,12 +28,15 @@ func createReactionDetailText(model: ReactionViewModel) -> String {
     case 2:
         let format = NSLocalizedString("%@ and %@", comment: "")
         return .localizedStringWithFormat(format, users[0], users[1])
-    case 3:
-        let format = NSLocalizedString("%@, %@ and %@", comment: "")
-        return .localizedStringWithFormat(format, users[0], users[1], users[2])
     default:
-        let difference = model.count - users.count
-        let format = NSLocalizedString("%@, %@, %@ and %d other(s)", comment: "")
-        return .localizedStringWithFormat(format, users[0], users[1], users[2], difference)
+        assert(users.count >= 3)
+        if model.count > 3 {
+            let difference = model.count - users.count
+            let format = NSLocalizedString("%@, %@, %@ and %d other(s)", comment: "")
+            return .localizedStringWithFormat(format, users[0], users[1], users[2], difference)
+        } else {
+            let format = NSLocalizedString("%@, %@ and %@", comment: "")
+            return .localizedStringWithFormat(format, users[0], users[1], users[2])
+        }
     }
 }

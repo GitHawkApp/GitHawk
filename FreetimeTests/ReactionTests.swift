@@ -125,4 +125,9 @@ class ReactionTests: XCTestCase {
         
         XCTAssertFalse(createReactionDetailText(model: multiSelfOutOfRange).contains(viewer))
     }
+
+    func test_whenModelCountAndUserCountMismatch() {
+        let model = ReactionViewModel(content: .thumbsUp, count: 1, viewerDidReact: false, users: [])
+        XCTAssertEqual(createReactionDetailText(model: model), "")
+    }
 }
