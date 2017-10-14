@@ -234,7 +234,7 @@ IssueCommentSectionControllerDelegate {
             status != .merged
             else { return nil }
         
-        return AlertAction.toggleIssue(status) { [weak self] _ in
+        return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setStatus(close: status == .open)
         }
     }
@@ -244,7 +244,7 @@ IssueCommentSectionControllerDelegate {
             return nil
         }
         
-        return AlertAction.toggleLocked(locked) { [weak self] _ in
+        return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setLocked(!locked)
         }
     }
