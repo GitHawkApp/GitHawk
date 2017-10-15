@@ -94,6 +94,9 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
+        // override Feed bg color setting
+        view.backgroundColor = Styles.Colors.background
+
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")

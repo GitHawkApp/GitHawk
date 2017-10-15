@@ -73,7 +73,7 @@ SearchResultSectionControllerDelegate {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        let bounds = view.bounds
+        let bounds = view.safeBounds
         if bounds != collectionView.frame {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
