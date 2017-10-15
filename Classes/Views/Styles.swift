@@ -73,8 +73,8 @@ enum Styles {
         static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
         static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)
         static let smallTitle = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.smallTitle)
-        static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
-        static let secondaryCode = UIFont(name: "Courier", size: Styles.Sizes.Text.secondary)!
+        static let code = UIFont(name: "Menlo", size: Styles.Sizes.Text.body)!
+        static let secondaryCode = UIFont(name: "Menlo", size: Styles.Sizes.Text.secondary)!
     }
 
     enum Colors {
