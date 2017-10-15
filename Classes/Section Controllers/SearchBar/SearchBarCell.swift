@@ -24,6 +24,8 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
         contentView.backgroundColor = .white
 
+        searchBar.returnKeyType = .done
+        searchBar.enablesReturnKeyAutomatically = false
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.tintColor = Styles.Colors.Blue.medium.color
@@ -50,5 +52,9 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.didChangeSearchText(cell: self, query: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
