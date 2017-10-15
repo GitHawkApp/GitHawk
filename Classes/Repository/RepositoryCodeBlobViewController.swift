@@ -73,7 +73,8 @@ final class RepositoryCodeBlobViewController: UIViewController {
             switch result {
             case .success(let text):
                 self?.handle(text: text)
-            case .nonUTF8: break
+            case .nonUTF8:
+                ToastManager.showError(message: NSLocalizedString("Cannot load file type.", comment: ""))
             case .error:
                 ToastManager.showGenericError()
             }
