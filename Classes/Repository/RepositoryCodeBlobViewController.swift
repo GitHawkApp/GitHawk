@@ -16,6 +16,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let textView = UITextView()
     private let feedRefresh = FeedRefresh()
+    private let emptyView = EmptyView()
 
     init(client: GithubClient, repo: RepositoryDetails, path: String) {
         self.client = client
@@ -32,7 +33,12 @@ final class RepositoryCodeBlobViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        scrollView.backgroundColor = .white
+        view.backgroundColor = .white
+
+        emptyView.isHidden = true
+        view.addSubview(emptyView)
+
+        scrollView.backgroundColor = .clear
         scrollView.isDirectionalLockEnabled = true
         view.addSubview(scrollView)
 
@@ -57,7 +63,9 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        scrollView.frame = view.bounds
+        let bounds = view.bounds
+        emptyView.frame = bounds
+        scrollView.frame = bounds
     }
 
     // MARK: Private API
@@ -74,14 +82,24 @@ final class RepositoryCodeBlobViewController: UIViewController {
             case .success(let text):
                 self?.handle(text: text)
             case .nonUTF8:
-                ToastManager.showError(message: NSLocalizedString("Cannot load file type.", comment: ""))
+                self?.error(cannotLoad: true)
             case .error:
+                self?.error(cannotLoad: false)
                 ToastManager.showGenericError()
             }
         }
     }
 
+    func error(cannotLoad: Bool) {
+        emptyView.isHidden = false
+        emptyView.label.text = cannotLoad
+            ? NSLocalizedString("Cannot display file as text", comment: "")
+            : NSLocalizedString("Error loading file", comment: "")
+    }
+
     func handle(text: String) {
+        emptyView.isHidden = true
+
         textView.text = text
         let max = CGFloat.greatestFiniteMagnitude
         let size = textView.sizeThatFits(CGSize(width: max, height: max))
