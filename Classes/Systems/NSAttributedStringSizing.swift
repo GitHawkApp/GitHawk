@@ -24,14 +24,13 @@ extension CGSize {
         size.height += inset.top + inset.bottom
         return size
     }
-
 }
 
-final class NSAttributedStringSizing: NSObject, ListDiffable {
+final class NSAttributedStringSizing: NSObject, ListDiffable, GutterLayoutManagerDelegate {
 
-    private let textContainer: NSTextContainer
+    private let textContainer: GutterTextContainer
     private let textStorage: NSTextStorage
-    private let layoutManager: NSLayoutManager
+    private let layoutManager: GutterLayoutManager
 
     let inset: UIEdgeInsets
     let attributedText: NSAttributedString
@@ -51,19 +50,24 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         showsInvisibleCharacters: Bool = false,
         showsControlCharacters: Bool = false,
         usesFontLeading: Bool = true,
-        screenScale: CGFloat = UIScreen.main.scale
+        screenScale: CGFloat = UIScreen.main.scale,
+        showGutter: Bool = false,
+        showLineNumbers: Bool = false,
+        gutterDelegate: GutterLayoutManagerDelegate? = nil
         ) {
         self.attributedText = attributedText
         self.inset = inset
         self.screenScale = screenScale
         self.backgroundColor = backgroundColor
 
-        textContainer = NSTextContainer()
-        textContainer.exclusionPaths = exclusionPaths
+        textContainer = GutterTextContainer()
+        textContainer.exclusionPaths = []
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
 
-        layoutManager = NSLayoutManager()
+        layoutManager = GutterLayoutManager()
+        layoutManager.showGutter = showGutter
+        layoutManager.showLineNumbers = showLineNumbers
         layoutManager.allowsNonContiguousLayout = allowsNonContiguousLayout
         layoutManager.hyphenationFactor = hyphenationFactor
         layoutManager.showsInvisibleCharacters = showsInvisibleCharacters
@@ -77,6 +81,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         super.init()
 
+        layoutManager.gutterDelegate = gutterDelegate
         computeSize(containerWidth)
     }
 
@@ -181,5 +186,4 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         return true
     }
-
 }
