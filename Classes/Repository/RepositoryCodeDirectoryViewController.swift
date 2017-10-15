@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RepositoryCodeDirectoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class RepositoryCodeDirectoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let client: GithubClient
@@ -116,17 +116,20 @@ class RepositoryCodeDirectoryViewController: UIViewController, UITableViewDelega
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let file = files[indexPath.row]
+        let newPath = path.isEmpty ? file.name : "\(path)/\(file.name)"
+
+        let controller: UIViewController
         if file.isDirectory {
-            let controller = RepositoryCodeDirectoryViewController(
+            controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
-                path: path.isEmpty ? file.name : "\(path)/\(file.name)",
+                path: newPath,
                 isRoot: false
             )
-            navigationController?.pushViewController(controller, animated: true)
         } else {
-            tableView.deselectRow(at: indexPath, animated: true)
+            controller = RepositoryCodeBlobViewController(client: client, repo: repo, path: newPath)
         }
+        navigationController?.pushViewController(controller, animated: true)
     }
 
 }

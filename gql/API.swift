@@ -11239,6 +11239,184 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
+public final class RepoFileQuery: GraphQLQuery {
+  public static let operationString =
+    "query RepoFile($owner: String!, $name: String!, $branchAndPath: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    object(expression: $branchAndPath) {\n      __typename\n      ... on Blob {\n        text\n      }\n    }\n  }\n}"
+
+  public var owner: String
+  public var name: String
+  public var branchAndPath: String
+
+  public init(owner: String, name: String, branchAndPath: String) {
+    self.owner = owner
+    self.name = name
+    self.branchAndPath = branchAndPath
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "name": name, "branchAndPath": branchAndPath]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(repository: Repository? = nil) {
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+    }
+
+    /// Lookup a given repository by the owner and repository name.
+    public var repository: Repository? {
+      get {
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "repository")
+      }
+    }
+
+    public struct Repository: GraphQLSelectionSet {
+      public static let possibleTypes = ["Repository"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("object", arguments: ["expression": GraphQLVariable("branchAndPath")], type: .object(Object.selections)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(object: Object? = nil) {
+        self.init(snapshot: ["__typename": "Repository", "object": object.flatMap { $0.snapshot }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A Git object in the repository
+      public var object: Object? {
+        get {
+          return (snapshot["object"] as? Snapshot).flatMap { Object(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue?.snapshot, forKey: "object")
+        }
+      }
+
+      public struct Object: GraphQLSelectionSet {
+        public static let possibleTypes = ["Commit", "Tree", "Blob", "Tag"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLTypeCase(
+            variants: ["Blob": AsBlob.selections],
+            default: [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            ]
+          )
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public static func makeCommit() -> Object {
+          return Object(snapshot: ["__typename": "Commit"])
+        }
+
+        public static func makeTree() -> Object {
+          return Object(snapshot: ["__typename": "Tree"])
+        }
+
+        public static func makeTag() -> Object {
+          return Object(snapshot: ["__typename": "Tag"])
+        }
+
+        public static func makeBlob(text: String? = nil) -> Object {
+          return Object(snapshot: ["__typename": "Blob", "text": text])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var asBlob: AsBlob? {
+          get {
+            if !AsBlob.possibleTypes.contains(__typename) { return nil }
+            return AsBlob(snapshot: snapshot)
+          }
+          set {
+            guard let newValue = newValue else { return }
+            snapshot = newValue.snapshot
+          }
+        }
+
+        public struct AsBlob: GraphQLSelectionSet {
+          public static let possibleTypes = ["Blob"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("text", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(text: String? = nil) {
+            self.init(snapshot: ["__typename": "Blob", "text": text])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// UTF8 text data or null if the Blob is binary
+          public var text: String? {
+            get {
+              return snapshot["text"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "text")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class RepoFilesQuery: GraphQLQuery {
   public static let operationString =
     "query RepoFiles($owner: String!, $name: String!, $branchAndPath: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    object(expression: $branchAndPath) {\n      __typename\n      ... on Tree {\n        entries {\n          __typename\n          name\n          type\n        }\n      }\n    }\n  }\n}"
