@@ -214,10 +214,9 @@ class GutterLayoutManager: NSLayoutManager {
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
 
-        guard showGutter, showLineNumbers else {
-            return
-        }
+        guard showGutter, showLineNumbers else { return }
 
+        //  Draw line numbers
         var gutterRect: CGRect = .zero
         var paragraphNumber = 0
 
@@ -226,6 +225,9 @@ class GutterLayoutManager: NSLayoutManager {
 
             let charRange = weakSelf.characterRange(forGlyphRange: glyphRange, actualGlyphRange: nil)
             let paraRange = NSString(string: textStorage.string).paragraphRange(for: charRange)
+
+            // Only draw line numbers for the paragraph's first line fragment.  Subsequent fragments are wrapped portions of the paragraph
+            // and don't get the line number.
             if charRange.location == paraRange.location {
                 gutterRect = CGRect(x: 0, y: rect.origin.y, width: weakSelf.gutterWidth, height: rect.size.height).offsetBy(dx: origin.x, dy: origin.y)
                 paragraphNumber = weakSelf.paragraphForRange(range: charRange)
@@ -233,6 +235,8 @@ class GutterLayoutManager: NSLayoutManager {
             }
         }
 
+        // Deal with the special case of an empty last line where enumerateLineFragmentsForGlyphRange
+        // has no line  fragments to draw
         if NSMaxRange(glyphsToShow) < self.numberOfGlyphs {
             gutterRect = gutterRect.offsetBy(dx: 0, dy: gutterRect.height)
             drawGutterLineNumber(paragraphNumber + 2, in: gutterRect)
