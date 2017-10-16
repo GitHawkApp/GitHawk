@@ -23,8 +23,13 @@ final class SearchRecentCell: SelectableCell {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
+            if #available(iOS 11.0, *) {
+                make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(Styles.Sizes.gutter)
+                make.right.lessThanOrEqualTo(safeAreaLayoutGuide.snp.rightMargin).offset(-Styles.Sizes.gutter)
+            } else {
+                make.left.equalTo(Styles.Sizes.gutter)
+                make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
+            }
         }
 
         addBorder(.bottom, left: Styles.Sizes.gutter)
