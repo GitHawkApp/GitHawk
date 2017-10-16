@@ -18,7 +18,7 @@ final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, Collaps
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
@@ -35,6 +35,7 @@ final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, Collaps
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 

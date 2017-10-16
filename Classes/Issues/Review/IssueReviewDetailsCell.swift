@@ -25,7 +25,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         let iconSize = Styles.Sizes.icon
         icon.clipsToBounds = true
@@ -58,6 +58,11 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Private API

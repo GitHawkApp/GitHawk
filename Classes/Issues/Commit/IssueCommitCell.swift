@@ -71,6 +71,11 @@ final class IssueCommitCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     // MARK: Public API
 
     func configure(_ model: IssueCommitModel) {

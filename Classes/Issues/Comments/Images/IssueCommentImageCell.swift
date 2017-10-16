@@ -37,7 +37,7 @@ UIGestureRecognizerDelegate {
         super.init(frame: frame)
 
         contentView.clipsToBounds = true
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
@@ -62,6 +62,7 @@ UIGestureRecognizerDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 

@@ -27,7 +27,7 @@ final class RepositorySummaryCell: SelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         contentView.addSubview(titleView)
         

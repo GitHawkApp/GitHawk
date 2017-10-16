@@ -78,7 +78,7 @@ AttributedStringViewIssueDelegate {
     }
     
     func deleteAction() -> UIAlertAction? {
-        guard object?.viewerCanDelete == true, let number = object?.number else { return nil }
+        guard object?.viewerCanDelete == true else { return nil }
         
         return AlertAction.delete { [weak self] _ in
             let title = NSLocalizedString("Are you sure?", comment: "")

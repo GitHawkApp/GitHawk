@@ -22,7 +22,7 @@ final class SegmentedControlCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         segmentedControl.addTarget(self, action: #selector(SegmentedControlCell.didSelect(sender:)), for: .valueChanged)
         segmentedControl.tintColor = Styles.Colors.Blue.medium.color
@@ -37,6 +37,13 @@ final class SegmentedControlCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
+    // MARK: Public API
 
     public func configure(items: [String], selectedIndex: Int) {
         segmentedControl.removeAllSegments()

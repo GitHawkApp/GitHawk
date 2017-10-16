@@ -16,20 +16,15 @@ final class SearchRecentCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            if #available(iOS 11.0, *) {
-                make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(Styles.Sizes.gutter)
-                make.right.lessThanOrEqualTo(safeAreaLayoutGuide.snp.rightMargin).offset(-Styles.Sizes.gutter)
-            } else {
-                make.left.equalTo(Styles.Sizes.gutter)
-                make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
-            }
+            make.left.equalTo(Styles.Sizes.gutter)
+            make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
 
         addBorder(.bottom, left: Styles.Sizes.gutter)
@@ -37,6 +32,11 @@ final class SearchRecentCell: SelectableCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API

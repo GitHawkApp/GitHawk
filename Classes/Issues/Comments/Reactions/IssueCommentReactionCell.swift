@@ -40,7 +40,7 @@ UICollectionViewDelegateFlowLayout {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
@@ -65,11 +65,16 @@ UICollectionViewDelegateFlowLayout {
             make.top.bottom.right.equalTo(contentView)
         }
 
-        border = contentView.addBorder(.bottom)
+        border = addBorder(.bottom, useSafeMargins: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API

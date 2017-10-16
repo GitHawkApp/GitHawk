@@ -32,7 +32,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
@@ -85,7 +85,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
         }
 
-        border = contentView.addBorder(.top)
+        border = addBorder(.top, useSafeMargins: false)
 
         authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.insertSubview(authorBackgroundView, at: 0)
@@ -101,6 +101,11 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(dateLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
             make.centerY.equalTo(dateLabel)
         }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
     
     required init?(coder aDecoder: NSCoder) {
