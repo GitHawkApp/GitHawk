@@ -12,6 +12,7 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
+        static let defaultGutterWidth: CGFloat = 32
         static let eventGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonIcon = CGSize(width: 25, height: 25)
@@ -73,8 +74,9 @@ enum Styles {
         static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
         static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)
         static let smallTitle = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.smallTitle)
-        static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
-        static let secondaryCode = UIFont(name: "Courier", size: Styles.Sizes.Text.secondary)!
+        static let code = UIFont(name: "Menlo", size: Styles.Sizes.Text.body)!
+        static let secondaryCode = UIFont(name: "Menlo", size: Styles.Sizes.Text.secondary)!
+        static let gutter = UIFont.systemFont(ofSize: 11.0)
     }
 
     enum Colors {
@@ -104,6 +106,7 @@ enum Styles {
             static let light = "a3aab1"
             static let lighter = "f6f8fa"
             static let border = "bcbbc1"
+            static let gutter = "a4a4a4"
 
             static let alphaLighter = UIColor(white: 0, alpha: 0.10)
         }
@@ -112,7 +115,6 @@ enum Styles {
             static let medium = "f29d50"
             static let light = "fff5b1"
         }
-
     }
 
     static func setupAppearance() {

@@ -15,6 +15,9 @@ pod 'SnapKit', '~> 4.0.0'
 pod 'Tabman', '1.0.1'
 pod 'TUSafariActivity', '~> 1.0.0'
 
+# not using the original git repository as that one doesn't compile in Swift 4 out of the box
+pod 'Highlightr', :git => 'https://github.com/macteo/Highlightr.git', :branch => 'swift4'
+
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
 
