@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GutterLayoutManagerDelegate {
+protocol GutterLayoutManagerDelegate: class {
 
     func getLineForLine(gutterLayoutManager: GutterLayoutManager, lineNumber: Int, for line: String) -> String
 
@@ -59,13 +59,14 @@ class GutterTextContainer: NSTextContainer {
  **/
 class GutterLayoutManager: NSLayoutManager {
 
-    struct Constants {
-        static let paragraphPadding: CGFloat = 4
-        static let standardGutterWidth: CGFloat = 32
-    }
+    private let paragraphPadding: CGFloat = 4
 
     private var lastParagraphLocation: Int = 0
     private var lastParagraphNumber: Int = 0
+
+    private var gutterWidth: CGFloat {
+        return CGFloat(gutterDelegate?.getMaximumGutterWidth(gutterLayoutManager: self) ?? Styles.Sizes.defaultGutterWidth)
+    }
 
     public var showGutter: Bool = false {
         didSet {
@@ -81,24 +82,20 @@ class GutterLayoutManager: NSLayoutManager {
         }
     }
 
-    public var gutterTextColor = UIColor.fromHex("#A4A4A4") {
+    public var gutterTextColor = Styles.Colors.Gray.gutter.color {
         didSet {
             guard let textStorage = self.textStorage else { return }
             self.invalidateDisplay(forCharacterRange: NSMakeRange(0, textStorage.length))
         }
     }
 
-    public var gutterFont = UIFont.systemFont(ofSize: 11.0) {
+    public var gutterFont = Styles.Fonts.gutter {
         didSet {
             guard let textStorage = self.textStorage else { return }
             self.invalidateDisplay(forCharacterRange: NSMakeRange(0, textStorage.length))
         }
     }
-    public var gutterDelegate: GutterLayoutManagerDelegate?
-
-    private var gutterWidth: CGFloat {
-        return CGFloat(gutterDelegate?.getMaximumGutterWidth(gutterLayoutManager: self) ?? Constants.standardGutterWidth)
-    }
+    public weak var gutterDelegate: GutterLayoutManagerDelegate?
 
     public override init() {
         super.init()
@@ -179,7 +176,7 @@ class GutterLayoutManager: NSLayoutManager {
         let gutterLineNumber = actualLineNumber as NSString
         let gutterLineSize = gutterLineNumber.size(withAttributes: gutterAttributes)
 
-        let targetRect = rect.offsetBy(dx: rect.width - Constants.paragraphPadding - gutterLineSize.width, dy: (rect.height - gutterLineSize.height) / 2)
+        let targetRect = rect.offsetBy(dx: rect.width - paragraphPadding - gutterLineSize.width, dy: (rect.height - gutterLineSize.height) / 2)
         gutterLineNumber.draw(in: targetRect, withAttributes: gutterAttributes)
     }
 

@@ -61,7 +61,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable, GutterLayoutManage
         self.backgroundColor = backgroundColor
 
         textContainer = GutterTextContainer()
-        textContainer.exclusionPaths = []
+        textContainer.exclusionPaths = exclusionPaths
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
 
