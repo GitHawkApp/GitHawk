@@ -132,7 +132,7 @@ IssueCommentSectionControllerDelegate {
         contentView.addSubview(actions)
         let views = ["actions": actions]
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]-4-|",
+            withVisualFormat: "V:|[actions(30)]-4@999-|",
             options: [],
             metrics: nil,
             views: views
