@@ -53,6 +53,8 @@ SearchResultSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = Styles.Colors.background
+
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
@@ -73,7 +75,7 @@ SearchResultSectionControllerDelegate {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        let bounds = view.safeBounds
+        let bounds = view.bounds
         if bounds != collectionView.frame {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
