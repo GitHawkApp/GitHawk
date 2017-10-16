@@ -42,7 +42,7 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
             make.centerY.equalTo(label)
         }
 
-        addBorder(.bottom)
+        addBorder(.bottom, useSafeMargins: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
