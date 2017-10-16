@@ -250,6 +250,7 @@ final class ToastManager {
         }
 
         func dismiss() {
+            invalidateTimer()
             animator.removeBehavior(springBehavior)
 
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
@@ -261,6 +262,9 @@ final class ToastManager {
         }
 
         func recenter() {
+            // UIDynamics will throw if adding the behavior back when the view has already been removed
+            guard view.superview != nil else { return }
+
             animator.removeBehavior(springBehavior)
             springBehavior.anchorPoint = anchor(view: view, viewController: viewController)
             animator.addBehavior(springBehavior)
@@ -347,7 +351,9 @@ final class ToastManager {
                     var center = toast.view.center
                     center.y = finalY
                     toast.view.center = center
-                })
+                }) { _ in
+                    toast.view.removeFromSuperview()
+                }
             } else {
                 toast.startTimer()
                 toast.animator.addBehavior(toast.springBehavior)
