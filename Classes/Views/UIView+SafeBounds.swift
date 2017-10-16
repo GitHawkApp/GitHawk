@@ -17,7 +17,12 @@ extension UIView {
         } else {
             safeInsets = .zero
         }
-        return UIEdgeInsetsInsetRect(bounds, safeInsets)
+        return CGRect(
+            x: safeInsets.left,
+            y: bounds.minY,
+            width: bounds.width - safeInsets.left - safeInsets.right,
+            height: bounds.height
+        )
     }
 
 }
