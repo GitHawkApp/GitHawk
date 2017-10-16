@@ -8,13 +8,26 @@
 
 import UIKit
 
-final class RepositoryCodeBlobViewController: UIViewController {
+final class RepositoryCodeBlobViewController: UIViewController, GutterLayoutManagerDelegate {
 
     private let client: GithubClient
     private let path: String
     private let repo: RepositoryDetails
     private let scrollView = UIScrollView()
-    private let textView = UITextView()
+    private let textView: UITextView = {
+        let textContainer = GutterTextContainer()
+
+        let layoutManager = GutterLayoutManager()
+        layoutManager.showGutter = true
+        layoutManager.showLineNumbers = true
+        layoutManager.addTextContainer(textContainer)
+
+        // storage implicitly required to use NSLayoutManager + NSTextContainer and find a size
+        let textStorage = NSTextStorage()
+        textStorage.addLayoutManager(layoutManager)
+
+        return UITextView(frame: .zero, textContainer: textContainer)
+    }()
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
 
@@ -44,6 +57,10 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
         scrollView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(RepositoryCodeBlobViewController.onRefresh), for: .valueChanged)
+
+        if let layoutManager = textView.layoutManager as? GutterLayoutManager {
+            layoutManager.gutterDelegate = self
+        }
 
         textView.font = Styles.Fonts.code
         textView.isScrollEnabled = false
@@ -100,11 +117,21 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
 
-        textView.text = text
+        textView.attributedText = CreateColorCodedString(code: text, includeDiff: false, lineHandler: nil)
         let max = CGFloat.greatestFiniteMagnitude
         let size = textView.sizeThatFits(CGSize(width: max, height: max))
         textView.frame = CGRect(origin: .zero, size: size)
         scrollView.contentSize = size
     }
 
+    // MARK: GutterLayoutManagerDelegate implementation
+
+    func getMaximumGutterWidth(gutterLayoutManager: GutterLayoutManager) -> CGFloat {
+        guard let textStorage = gutterLayoutManager.textStorage else { return 0 }
+        let numberOfLines = textStorage.string.components(separatedBy: .newlines).count
+        let maxLength = "\(numberOfLines)".count
+        let fillerString = String(repeating: "9", count: maxLength)
+        let maxGutterSize = (fillerString as NSString).size(withAttributes: [NSAttributedStringKey.font: gutterLayoutManager.gutterFont])
+        return ceil(maxGutterSize.width)
+    }
 }
