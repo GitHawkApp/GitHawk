@@ -110,12 +110,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     
     // MARK: Private API
 
-    func setRightBarItemSpinning() {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activity.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
-    }
-
     func setRightBarItemIdle() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Submit", comment: ""),

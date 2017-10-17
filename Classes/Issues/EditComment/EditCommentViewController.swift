@@ -10,21 +10,25 @@ import UIKit
 import SnapKit
 
 protocol EditCommentViewControllerDelegate: class {
-
+    func didEditComment(viewController: EditCommentViewController, markdown: String)
 }
 
 class EditCommentViewController: UIViewController {
 
     weak var delegate: EditCommentViewControllerDelegate? = nil
 
+    private let commentID: Int
+    private let client: GithubClient
     private let textView = UITextView()
     private let textActionsController = TextActionsController()
     private let repo: String
     private let owner: String
 
-    init(markdown: String, owner: String, repo: String) {
+    init(client: GithubClient, markdown: String, owner: String, repo: String, commentID: Int) {
+        self.client = client
         self.owner = owner
         self.repo = repo
+        self.commentID = commentID
         super.init(nibName: nil, bundle: nil)
         textView.text = markdown
     }
@@ -50,12 +54,7 @@ class EditCommentViewController: UIViewController {
             target: self,
             action: #selector(EditCommentViewController.onCancel)
         )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Save", comment: ""),
-            style: .done,
-            target: self,
-            action: #selector(EditCommentViewController.onSave)
-        )
+        setRightBarItemIdle()
 
         let nc = NotificationCenter.default
         nc.addObserver(
@@ -78,6 +77,15 @@ class EditCommentViewController: UIViewController {
     }
 
     // MARK: Private API
+
+    func setRightBarItemIdle() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Save", comment: ""),
+            style: .done,
+            target: self,
+            action: #selector(EditCommentViewController.onSave)
+        )
+    }
 
     func setupInputView() {
         let getMarkdownBlock = { [weak self] () -> (String) in
@@ -106,19 +114,42 @@ class EditCommentViewController: UIViewController {
 
     @objc
     func onSave() {
-        print("save")
+        setRightBarItemSpinning()
+        textView.isEditable = false
+        textView.resignFirstResponder()
+        let markdown = textView.text ?? ""
+        client.editComment(owner: owner, repo: repo, commentID: commentID, body: markdown) { [weak self] (result) in
+            switch result {
+            case .success: self?.didSave(markdown: markdown)
+            case .error: self?.error()
+            }
+        }
+    }
+
+    func didSave(markdown: String) {
+        navigationItem.rightBarButtonItem = nil
+        delegate?.didEditComment(viewController: self, markdown: markdown)
+    }
+
+    func error() {
+        setRightBarItemIdle()
+        ToastManager.showGenericError()
     }
 
     // MARK: Notifications
 
     @objc
     func onKeyboardWillShow(notification: NSNotification) {
-        print("kb will show")
+        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
+        textView.contentInset = inset
+        textView.scrollIndicatorInsets = inset
     }
 
     @objc
     func onKeyboardWillHide(notification: NSNotification) {
-        print("kb will show")
+        textView.contentInset = .zero
+        textView.scrollIndicatorInsets = .zero
     }
 
 }
