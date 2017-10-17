@@ -123,6 +123,8 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitUserSelect='none'")
+        webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitTouchCallout='none'")
         webView.isHidden = false
     }
 
