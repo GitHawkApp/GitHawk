@@ -17,7 +17,12 @@ extension UICollectionViewCell {
         } else {
             insets = .zero
         }
-        contentView.frame = UIEdgeInsetsInsetRect(bounds, insets)
+        contentView.frame = CGRect(
+            x: insets.left,
+            y: bounds.minY,
+            width: bounds.width - insets.left - insets.right,
+            height: bounds.height
+        )
     }
 
 }
