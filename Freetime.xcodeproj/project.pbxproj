@@ -235,6 +235,7 @@
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
 		2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		2982ED8B1F95900F00DBF8EB /* GithubClient+EditComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED8A1F95900F00DBF8EB /* GithubClient+EditComment.swift */; };
+		2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
@@ -2235,6 +2236,7 @@
 				293A45801F296BEA00DD1006 /* GithubEmoji.swift in Sources */,
 				293A458C1F296CF300DD1006 /* MMElement+Attributes.swift in Sources */,
 				293A45951F296D8E00DD1006 /* IssueCommentImageModel.swift in Sources */,
+				2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				293A459B1F298E7D00DD1006 /* IssueCommentSummaryModel.swift in Sources */,
 				293A458B1F296CF300DD1006 /* CommentModelsFromMarkdown.swift in Sources */,
 				293A457D1F296BD200DD1006 /* NSAttributedStringSizing.swift in Sources */,
