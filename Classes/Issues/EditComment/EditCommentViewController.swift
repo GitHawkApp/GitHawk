@@ -113,6 +113,8 @@ class EditCommentViewController: UIViewController {
 
     @objc
     func onCancel() {
+        textView.resignFirstResponder()
+
         let dismissBlock = { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.didCancel(viewController: strongSelf)
