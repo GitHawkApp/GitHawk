@@ -354,4 +354,8 @@ EditCommentViewControllerDelegate {
         update(animated: true)
     }
 
+    func didCancel(viewController: EditCommentViewController) {
+        viewController.dismiss(animated: true)
+    }
+
 }

@@ -11,6 +11,7 @@ import SnapKit
 
 protocol EditCommentViewControllerDelegate: class {
     func didEditComment(viewController: EditCommentViewController, markdown: String)
+    func didCancel(viewController: EditCommentViewController)
 }
 
 class EditCommentViewController: UIViewController {
@@ -23,6 +24,7 @@ class EditCommentViewController: UIViewController {
     private let textActionsController = TextActionsController()
     private let issueModel: IssueDetailsModel
     private let isRoot: Bool
+    private let originalMarkdown: String
 
     init(
         client: GithubClient,
@@ -35,6 +37,7 @@ class EditCommentViewController: UIViewController {
         self.issueModel = issueModel
         self.commentID = commentID
         self.isRoot = isRoot
+        self.originalMarkdown = markdown
         super.init(nibName: nil, bundle: nil)
         textView.text = markdown
     }
@@ -110,12 +113,28 @@ class EditCommentViewController: UIViewController {
 
     @objc
     func onCancel() {
-        cancelAction_onCancel(
-            texts: [textView.text],
-            title: NSLocalizedString("Unsaved Changes", comment: ""),
-            message: NSLocalizedString("Are you sure you want to discard your edit? Your changes will be lost.",
-                                       comment: "")
-        )
+        let dismissBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didCancel(viewController: strongSelf)
+        }
+
+        // if text unchanged, just dismiss
+        if originalMarkdown == textView.text {
+            dismissBlock()
+        } else {
+            let alert = UIAlertController(
+                title: NSLocalizedString("Unsaved Changes", comment: ""),
+                message: NSLocalizedString("Are you sure you want to discard your edit? Your changes will be lost.", comment: ""),
+                preferredStyle: .alert
+            )
+            alert.addActions([
+                AlertAction.goBack(),
+                AlertAction.discard { _ in
+                    dismissBlock()
+                }
+                ])
+            present(alert, animated: true, completion: nil)
+        }
     }
 
     @objc
