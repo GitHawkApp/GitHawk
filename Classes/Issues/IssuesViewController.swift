@@ -511,7 +511,8 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             threadState: .single,
             viewerCanUpdate: viewerCanUpdate,
-            viewerCanDelete: viewerCanDelete
+            viewerCanDelete: viewerCanDelete,
+            isRoot: false
             )
             else { return }
         sentComments.append(comment)

@@ -104,17 +104,17 @@ EditCommentViewControllerDelegate {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit Comment", comment: ""), style: .default, handler: { [weak self] _ in
             guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
-                let owner = self?.model.owner,
-                let repo = self?.model.repo,
+                let issueModel = self?.model,
                 let client = self?.client,
-                let commentID = self?.object?.number
+                let commentID = self?.object?.number,
+                let isRoot = self?.object?.isRoot
                 else { return }
             let edit = EditCommentViewController(
                 client: client,
                 markdown: markdown,
-                owner: owner,
-                repo: repo,
-                commentID: commentID
+                issueModel: issueModel,
+                commentID: commentID,
+                isRoot: isRoot
             )
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
@@ -301,8 +301,8 @@ EditCommentViewControllerDelegate {
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
-            deleteAction(),
             editAction(),
+            deleteAction(),
             AlertAction.cancel()
         ])
         viewController?.present(alert, animated: true)

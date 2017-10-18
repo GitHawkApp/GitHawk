@@ -21,14 +21,20 @@ class EditCommentViewController: UIViewController {
     private let client: GithubClient
     private let textView = UITextView()
     private let textActionsController = TextActionsController()
-    private let repo: String
-    private let owner: String
+    private let issueModel: IssueDetailsModel
+    private let isRoot: Bool
 
-    init(client: GithubClient, markdown: String, owner: String, repo: String, commentID: Int) {
+    init(
+        client: GithubClient,
+        markdown: String,
+        issueModel: IssueDetailsModel,
+        commentID: Int,
+        isRoot: Bool
+        ) {
         self.client = client
-        self.owner = owner
-        self.repo = repo
+        self.issueModel = issueModel
         self.commentID = commentID
+        self.isRoot = isRoot
         super.init(nibName: nil, bundle: nil)
         textView.text = markdown
     }
@@ -94,8 +100,8 @@ class EditCommentViewController: UIViewController {
         let actions = IssueTextActionsView.forMarkdown(
             viewController: self,
             getMarkdownBlock: getMarkdownBlock,
-            repo: repo,
-            owner: owner,
+            repo: issueModel.repo,
+            owner: issueModel.repo,
             addBorder: true
         )
         textActionsController.configure(textView: textView, actions: actions)
@@ -118,7 +124,14 @@ class EditCommentViewController: UIViewController {
         textView.isEditable = false
         textView.resignFirstResponder()
         let markdown = textView.text ?? ""
-        client.editComment(owner: owner, repo: repo, commentID: commentID, body: markdown) { [weak self] (result) in
+        client.editComment(
+            owner: issueModel.owner,
+            repo: issueModel.repo,
+            issueNumber: issueModel.number,
+            commentID: commentID,
+            body: markdown,
+            isRoot: isRoot
+        ) { [weak self] (result) in
             switch result {
             case .success: self?.didSave(markdown: markdown)
             case .error: self?.error()
@@ -153,3 +166,4 @@ class EditCommentViewController: UIViewController {
     }
 
 }
+
