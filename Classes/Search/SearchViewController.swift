@@ -24,6 +24,7 @@ SearchResultSectionControllerDelegate {
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
     private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
     private let recentStore = SearchRecentStore()
+    private let debouncer = Debouncer()
 
     enum State {
         case idle
@@ -169,11 +170,14 @@ SearchResultSectionControllerDelegate {
     // MARK: UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            term.isEmpty else { return }
-        
+        guard let term = searchTerm(for: searchBar.text) else { return }
+        if case let .loading(request) = state {
+            request.cancel()
+            recentStore.removeLast()
+        }
         state = .idle
         update(animated: false)
+        debouncer.action = { [weak self] in self?.search(term: term) }
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -182,8 +186,8 @@ SearchResultSectionControllerDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            !term.isEmpty else { return }
+
+        guard let term = searchTerm(for: searchBar.text) else { return }
         search(term: term)
     }
 
@@ -256,5 +260,13 @@ SearchResultSectionControllerDelegate {
         recentStore.remove(recent: text)
         update(animated: true)
     }
-    
+
+    // MARK: Private functions
+
+    private func searchTerm(for searchBarText: String?) -> String? {
+        guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !term.isEmpty else { return nil }
+        return term
+    }
+
 }

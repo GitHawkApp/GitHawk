@@ -53,6 +53,12 @@ final class SearchRecentStore {
         return _recents.array as? [String] ?? []
     }
 
+    func removeLast() {
+        guard !recents.isEmpty else { return }
+        _recents.removeObject(at: _recents.count - 1)
+        save()
+    }
+
     // MARK: Private API
 
     func save() {

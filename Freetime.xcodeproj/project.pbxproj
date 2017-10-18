@@ -372,6 +372,8 @@
 		DC60C6CE1F98346400241271 /* MockSearchEmptyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6CD1F98346400241271 /* MockSearchEmptyViewDelegate.swift */; };
 		DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6D21F983BB900241271 /* SignatureTests.swift */; };
 		DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */; };
+		DC60C6C81F9803BF00241271 /* SearchRecentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6C71F9803BF00241271 /* SearchRecentStoreTests.swift */; };
+		DC7857101F97F546009BADDA /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78570F1F97F546009BADDA /* Debouncer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -727,6 +729,8 @@
 		DC60C6CD1F98346400241271 /* MockSearchEmptyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchEmptyViewDelegate.swift; sourceTree = "<group>"; };
 		DC60C6D21F983BB900241271 /* SignatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureTests.swift; sourceTree = "<group>"; };
 		DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelCellTests.swift; sourceTree = "<group>"; };
+		DC60C6C71F9803BF00241271 /* SearchRecentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentStoreTests.swift; sourceTree = "<group>"; };
+		DC78570F1F97F546009BADDA /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1283,6 +1287,7 @@
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
+				DC78570F1F97F546009BADDA /* Debouncer.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -2168,6 +2173,7 @@
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
 				986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */,
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
+				DC7857101F97F546009BADDA /* Debouncer.swift in Sources */,
 				29DA1E881F5E2B8A0050C64B /* SearchRecentHeaderCell.swift in Sources */,
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
@@ -2276,6 +2282,7 @@
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				294B11251F7B40CA00E04F2D /* IssueDetailsModel.swift in Sources */,
 				293A45941F296D5B00DD1006 /* CollapsibleCell.swift in Sources */,
+				DC60C6C81F9803BF00241271 /* SearchRecentStoreTests.swift in Sources */,
 				293A45961F298C9500DD1006 /* UIColor+Hex.swift in Sources */,
 				293A459D1F298EDB00DD1006 /* IssueCommentQuoteCell.swift in Sources */,
 				293A458E1F296CF300DD1006 /* MMElement+Image.swift in Sources */,
