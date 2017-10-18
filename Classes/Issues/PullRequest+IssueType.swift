@@ -77,7 +77,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     repo: repo,
                     threadState: .single,
                     viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
-                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete
+                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
+                    isRoot: false
                     ) {
                     results.append(model)
 
@@ -355,7 +356,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 repo: repo,
                 threadState: isTail ? .tail : .neck,
                 viewerCanUpdate: false, // unsupported by github
-                viewerCanDelete: false
+                viewerCanDelete: false,
+                isRoot: false
                 ) {
                 results.append(model)
             }

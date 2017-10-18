@@ -73,7 +73,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     repo: repo,
                     threadState: .single,
                     viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
-                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete
+                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
+                    isRoot: false
                     ) {
                     results.append(model)
 
