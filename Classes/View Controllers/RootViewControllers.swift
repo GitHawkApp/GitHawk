@@ -49,3 +49,13 @@ func newSearchRootViewController(client: GithubClient) -> UIViewController {
     nav.tabBarItem.selectedImage = UIImage(named: "tab-search-selected")
     return nav
 }
+
+func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
+    let title = NSLocalizedString("Bookmarks", comment: "nil")
+    let controller = BookmarksViewController(client: client)
+    controller.title = title
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem = UITabBarItem.init(tabBarSystemItem: .bookmarks, tag: 3)
+    nav.tabBarItem.title = title
+    return nav
+}

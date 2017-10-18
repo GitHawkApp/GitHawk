@@ -100,7 +100,17 @@ NewIssueTableViewControllerDelegate {
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
             .newIssue(issueController: newIssueViewController)
     }
-
+    
+    func bookmarkAction() -> UIAlertAction? {
+        let bookmarkModel = BookmarkModel(
+            type: .repo,
+            name: repo.name,
+            owner: repo.owner,
+            hasIssueEnabled: repo.hasIssuesEnabled
+        )
+        return AlertAction.bookmark(bookmarkModel)
+    }
+    
     @objc
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -109,6 +119,7 @@ NewIssueTableViewControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         
         alert.addActions([
+            bookmarkAction(),
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: repoUrl),

@@ -265,6 +265,19 @@ IssueCommentSectionControllerDelegate {
             .view(repo: repoViewController)
     }
 
+    func bookmarkAction() -> UIAlertAction? {
+        guard let current = current else { return nil }
+        let bookmarkModel = BookmarkModel(
+            type: current.pullRequest ? .pullRequest : .issue,
+            name: model.repo,
+            owner: model.owner,
+            number: model.number,
+            title: current.title.attributedText.string
+        )
+        
+        return AlertAction.bookmark(bookmarkModel)
+    }
+    
     @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -273,6 +286,7 @@ IssueCommentSectionControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         
         alert.addActions([
+            bookmarkAction(),
             closeAction(),
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },

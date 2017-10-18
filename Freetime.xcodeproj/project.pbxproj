@@ -339,6 +339,10 @@
 		49D029011F91D9C700E39094 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
+		65E63B981F977A1F00ECD884 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */; };
+		65E63B9A1F977B1D00ECD884 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B991F977B1D00ECD884 /* BookmarkStore.swift */; };
+		65E63B9C1F977B4600ECD884 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */; };
+		65E63B9E1F978B8900ECD884 /* BookmarkStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B9D1F978B8900ECD884 /* BookmarkStoreTests.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
@@ -687,6 +691,10 @@
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
+		65E63B991F977B1D00ECD884 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
+		65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
+		65E63B9D1F978B8900ECD884 /* BookmarkStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStoreTests.swift; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
@@ -1163,6 +1171,7 @@
 				49D028FF1F91D90C00E39094 /* ReactionTests.swift */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
+				65E63B9D1F978B8900ECD884 /* BookmarkStoreTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -1170,6 +1179,7 @@
 		297AE8571EC0D5C100B44A1F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				65E63B961F97796500ECD884 /* Bookmark */,
 				292FCAC71EDFCC510026635E /* Issues */,
 				29EE1C131F3A2E440046A54D /* Labels */,
 				297AE8581EC0D5C100B44A1F /* Login */,
@@ -1466,6 +1476,16 @@
 				29FB942D1EE751F70016E6D4 /* IssueLabeledSectionController.swift */,
 			);
 			path = Labeled;
+			sourceTree = "<group>";
+		};
+		65E63B961F97796500ECD884 /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */,
+				65E63B991F977B1D00ECD884 /* BookmarkStore.swift */,
+				65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */,
+			);
+			path = Bookmark;
 			sourceTree = "<group>";
 		};
 		7BBFEE551F8A8A0400C68E47 /* SearchBar */ = {
@@ -2039,6 +2059,7 @@
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
+				65E63B981F977A1F00ECD884 /* BookmarksViewController.swift in Sources */,
 				297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */,
 				297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
@@ -2099,6 +2120,7 @@
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
+				65E63B9C1F977B4600ECD884 /* BookmarkModel.swift in Sources */,
 				29C9FDCF1EC65FEE00EE3A52 /* Organization.swift in Sources */,
 				29C9FDD01EC65FEE00EE3A52 /* Permission.swift in Sources */,
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,
@@ -2147,6 +2169,7 @@
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
+				65E63B9A1F977B1D00ECD884 /* BookmarkStore.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
@@ -2225,6 +2248,7 @@
 				29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */,
 				293A458D1F296CF300DD1006 /* MMElement+CodeBlock.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
+				65E63B9E1F978B8900ECD884 /* BookmarkStoreTests.swift in Sources */,
 				293A45851F296CE200DD1006 /* IssueCommentCodeBlockModel.swift in Sources */,
 				293A45981F298D5700DD1006 /* IssueCommentTableCollectionCell.swift in Sources */,
 				293A459F1F298EED00DD1006 /* IssueCommentHtmlModel.swift in Sources */,
