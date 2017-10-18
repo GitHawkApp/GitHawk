@@ -25,7 +25,7 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(Styles.Sizes.gutter)
         }
 
-        lockedButton.setTitle(Strings.locked, for: .normal)
+        lockedButton.setTitle(Constants.Strings.locked, for: .normal)
         lockedButton.config(pullRequest: false, state: .locked)
         lockedButton.setupAsLabel()
         contentView.addSubview(lockedButton)
@@ -39,6 +39,11 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -46,9 +51,9 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
 
         let title: String
         switch viewModel.status {
-        case .closed: title = Strings.closed
-        case .open: title = Strings.open
-        case .merged: title = Strings.merged
+        case .closed: title = Constants.Strings.closed
+        case .open: title = Constants.Strings.open
+        case .merged: title = Constants.Strings.merged
         }
         button.setTitle(title, for: .normal)
         button.config(pullRequest: viewModel.pullRequest, state: viewModel.status.buttonState)

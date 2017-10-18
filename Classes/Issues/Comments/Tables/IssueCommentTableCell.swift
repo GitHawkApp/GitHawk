@@ -31,7 +31,7 @@ UICollectionViewDelegateFlowLayout {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         collectionView.register(IssueCommentTableCollectionCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.delegate = self
@@ -48,6 +48,7 @@ UICollectionViewDelegateFlowLayout {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         collectionView.frame = contentView.bounds
     }
 

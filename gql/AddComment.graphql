@@ -6,6 +6,7 @@ mutation AddComment($subject_id: ID!, $body: String!) {
         ...reactionFields
         ...commentFields
         ...updatableFields
+        ...deletableFields
       }
     }
   }

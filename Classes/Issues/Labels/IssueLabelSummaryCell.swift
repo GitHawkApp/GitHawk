@@ -55,6 +55,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
 
         let height = contentView.bounds.height
         let size = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero

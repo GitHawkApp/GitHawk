@@ -16,7 +16,7 @@ final class SearchRecentCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
@@ -32,6 +32,11 @@ final class SearchRecentCell: SelectableCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API

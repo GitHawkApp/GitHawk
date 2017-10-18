@@ -24,7 +24,7 @@ final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         contentView.addSubview(scrollView)
         scrollView.addSubview(textView)
@@ -36,6 +36,7 @@ final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         scrollView.frame = CGRect(
             x: 0,
             y: 0,

@@ -66,6 +66,8 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 
+        view.backgroundColor = .white
+
         refresh()
 
         adapter.collectionView = collectionView
@@ -79,6 +81,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     func viewWillLayoutSubviews(view: UIView) {
         let bounds = view.bounds
+
         let changed = bounds != collectionView.frame
         if managesLayout && changed {
             collectionView.frame = bounds

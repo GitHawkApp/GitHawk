@@ -94,6 +94,9 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
+        // override Feed bg color setting
+        view.backgroundColor = Styles.Colors.background
+
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
@@ -119,6 +122,8 @@ IssueCommentSectionControllerDelegate {
             owner: model.owner,
             addBorder: false
         )
+        // text input bar uses UIVisualEffectView, don't try to match it
+        actions.backgroundColor = .clear
         textActionsController.configure(textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
@@ -127,7 +132,7 @@ IssueCommentSectionControllerDelegate {
         contentView.addSubview(actions)
         let views = ["actions": actions]
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]-4-|",
+            withVisualFormat: "V:|[actions(30)]-4@999-|",
             options: [],
             metrics: nil,
             views: views
@@ -214,10 +219,6 @@ IssueCommentSectionControllerDelegate {
         return autocomplete.cellHeight
     }
 
-    override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
-        return false
-    }
-
     // MARK: Private API
 
     var externalURL: URL {
@@ -234,7 +235,7 @@ IssueCommentSectionControllerDelegate {
             status != .merged
             else { return nil }
         
-        return AlertAction.toggleIssue(status) { [weak self] _ in
+        return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setStatus(close: status == .open)
         }
     }
@@ -244,7 +245,7 @@ IssueCommentSectionControllerDelegate {
             return nil
         }
         
-        return AlertAction.toggleLocked(locked) { [weak self] _ in
+        return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setLocked(!locked)
         }
     }
@@ -338,7 +339,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,
@@ -374,7 +375,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: locked ? .locked : .unlocked,
@@ -498,7 +499,8 @@ IssueCommentSectionControllerDelegate {
         id: String,
         commentFields: CommentFields,
         reactionFields: ReactionFields,
-        viewerCanUpdate: Bool
+        viewerCanUpdate: Bool,
+        viewerCanDelete: Bool
         ) {
         guard let comment = createCommentModel(
             id: id,
@@ -508,7 +510,8 @@ IssueCommentSectionControllerDelegate {
             owner: model.owner,
             repo: model.repo,
             threadState: .single,
-            viewerCanUpdate: viewerCanUpdate
+            viewerCanUpdate: viewerCanUpdate,
+            viewerCanDelete: viewerCanDelete
             )
             else { return }
         sentComments.append(comment)

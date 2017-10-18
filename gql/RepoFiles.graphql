@@ -1,0 +1,12 @@
+query RepoFiles($owner: String!, $name: String!, $branchAndPath: String!) {
+  repository(owner: $owner, name: $name) {
+    object(expression: $branchAndPath) {
+      ... on Tree {
+        entries {
+          name
+          type
+        }
+      }
+    }
+  }
+}

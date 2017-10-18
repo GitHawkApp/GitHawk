@@ -30,6 +30,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...reactionFields
               ...commentFields
               ...updatableFields
+              ...deletableFields
             }
             ... on LabeledEvent {
               ...nodeFields
@@ -163,6 +164,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...reactionFields
               ...commentFields
               ...updatableFields
+              ...deletableFields
             }
             ... on LabeledEvent {
               ...nodeFields

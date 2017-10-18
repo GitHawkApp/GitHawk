@@ -72,7 +72,7 @@ struct AlertAction {
     }
     
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
-        return UIAlertAction(title: Strings.newIssue, style: .default) { _ in
+        return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
@@ -83,19 +83,19 @@ struct AlertAction {
     // MARK: - Static
     
     static func cancel(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.cancel, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: handler)
     }
     
     static func ok(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.ok, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.ok, style: .default, handler: handler)
     }
     
     static func no(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.no, style: .cancel, handler: handler)
+        return UIAlertAction(title: Constants.Strings.no, style: .cancel, handler: handler)
     }
     
     static func yes(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.yes, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.yes, style: .default, handler: handler)
     }
     
     static func goBack(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -106,24 +106,32 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Discard", comment: ""), style: .destructive, handler: handler)
     }
     
-    static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
+    static func delete(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
+    }
+    
+    static func toggleIssue(_ status: IssueStatus, issue: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
+        let issueType = issue ? "Issue" : "Pull Request"
+        
         let title = status == .open
-            ? NSLocalizedString("Close", comment: "")
-            : NSLocalizedString("Reopen", comment: "")
+            ? NSLocalizedString("Close \(issueType)", comment: "")
+            : NSLocalizedString("Reopen \(issueType)", comment: "")
         
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
-    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = locked
-            ? NSLocalizedString("Unlock", comment: "")
-            : NSLocalizedString("Lock", comment: "")
+    static func toggleLocked(_ locked: Bool, issue: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
+        let issueType = issue ? "Issue" : "Pull Request"
         
-        return UIAlertAction(title: title, style: .default, handler: handler)
+        let title = locked
+            ? NSLocalizedString("Unlock \(issueType)", comment: "")
+            : NSLocalizedString("Lock \(issueType)", comment: "")
+        
+        return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
     
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: Strings.signin, style: .default, handler: handler)
+        return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {

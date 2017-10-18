@@ -31,7 +31,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
         contentView.clipsToBounds = true
 
         // make didSelectItem work for the cell
@@ -51,6 +51,8 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+        
         // size the scrollview to the width of the cell but match its height to its content size
         // that way when the cell is collapsed, the scroll view isn't vertically scrollable
         let inset = IssueCommentCodeBlockCell.scrollViewInset
