@@ -70,7 +70,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         setRightBarItemSpinning()
         
         // Compress and encode the image in the background to speed up the upload process
-        compressAndEncodeImage(image, completion: { [weak self] result in
+        image.compressAndEncode { [weak self] result in
             switch result {
             case .error:
                 ToastManager.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
@@ -83,7 +83,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
                     self?.setRightBarItemIdle()
                 }
             }
-        })
+        }
     }
     
     // MARK: Navigation Bar
@@ -161,7 +161,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
             // Ensure the upload step is on the background thread
             DispatchQueue.global(qos: .userInitiated).async {
                 self?.client.uploadImage(
-                    base64: compressionData,
+                    base64Image: compressionData,
                     name: name,
                     title: self?.titleText ?? "",
                     description: self?.descriptionText ?? "") { [weak self] result in
@@ -172,7 +172,6 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
                             case .error:
                                 ToastManager.showGenericError()
                                 self?.setRightBarItemIdle()
-                                return
                             case .success(let link):
                                 self?.delegate?.imageUploaded(link: link, altText: name)
                                 self?.dismiss(animated: true, completion: nil)
@@ -191,23 +190,4 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         return false
     }
     
-    // MARK: Image Preparation
-    
-    /// Compressed and Encodes in Base64 the provided UIImage.
-    ///
-    /// Process is moved to a background thread in order to prevent UI blocking.
-    ///
-    /// Compression is a value between 0.0 and 1.0. Lower is smaller file size but worse quality.
-    private func compressAndEncodeImage(_ image: UIImage, compression: CGFloat = 0.2, completion: @escaping (Result<String>) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            let data = UIImageJPEGRepresentation(image, compression)
-            
-            guard let base64 = data?.base64EncodedString() else {
-                completion(.error(nil))
-                return
-            }
-            
-            completion(.success(base64))
-        }
-    }        
 }

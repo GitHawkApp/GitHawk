@@ -340,6 +340,7 @@
 		9823B2B81F921AC100DC3C09 /* ImageUpload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9823B2B51F921AC100DC3C09 /* ImageUpload.storyboard */; };
 		9823B2BA1F921AC100DC3C09 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B2B71F921AC100DC3C09 /* ImgurClient.swift */; };
 		9823B2BC1F9224D500DC3C09 /* ImageUploadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B2BB1F9224D500DC3C09 /* ImageUploadTableViewController.swift */; };
+		9823B42B1F973D7300DC3C09 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9823B42A1F973D7300DC3C09 /* Image+Base64.swift */; };
 		98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */; };
 		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
 		986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B871A1F2B87DD00AAB55C /* SearchRepoResult.swift */; };
@@ -685,6 +686,7 @@
 		9823B2B51F921AC100DC3C09 /* ImageUpload.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageUpload.storyboard; sourceTree = "<group>"; };
 		9823B2B71F921AC100DC3C09 /* ImgurClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgurClient.swift; sourceTree = "<group>"; };
 		9823B2BB1F9224D500DC3C09 /* ImageUploadTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadTableViewController.swift; sourceTree = "<group>"; };
+		9823B42A1F973D7300DC3C09 /* Image+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Base64.swift"; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
 		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
 		986B871A1F2B87DD00AAB55C /* SearchRepoResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepoResult.swift; sourceTree = "<group>"; };
@@ -1529,6 +1531,7 @@
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
 				75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */,
 				75A0ACF41F79A82D0062D99A /* AlertAction.swift */,
+				9823B42A1F973D7300DC3C09 /* Image+Base64.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2102,6 +2105,7 @@
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
+				9823B42B1F973D7300DC3C09 /* Image+Base64.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,

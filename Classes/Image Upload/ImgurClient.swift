@@ -11,6 +11,11 @@ import Alamofire
 
 final class ImgurClient {
     
+    enum ImgurError: Error {
+        // missingLink: - Received a valid response, but no link was available in the payload
+        case missingLink
+    }
+    
     static let hostpath = "https://api.imgur.com/3/"
     static let headers: HTTPHeaders = ["Authorization": "Client-ID \(ImgurAPI.clientID)"]
     
@@ -51,9 +56,9 @@ final class ImgurClient {
         }
     }
     
-    func uploadImage(base64: String, name: String, title: String, description: String, completion: @escaping (Result<String>) -> Void) {
+    func uploadImage(base64Image: String, name: String, title: String, description: String, completion: @escaping (Result<String>) -> Void) {
         let params = [
-            "image": base64, // Base64 version of the provided image
+            "image": base64Image,
             "type": "base64",
             "name": name,
             "title": title,
@@ -62,12 +67,12 @@ final class ImgurClient {
         
         request("image", method: .post, parameters: params) { response in
             guard let dict = response.value as? [String: Any], let data = dict["data"] as? [String: Any] else {
-                completion(.error(nil))
+                completion(.error(response.error))
                 return
             }
 
             guard let link = data["link"] as? String else {
-                completion(.error(nil))
+                completion(.error(ImgurError.missingLink))
                 return
             }
 
