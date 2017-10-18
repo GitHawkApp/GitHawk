@@ -45,6 +45,10 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
     return IssueCommentReactionViewModel(models: models)
 }
 
+func commentModelOptions(owner: String, repo: String) -> GitHubMarkdownOptions {
+    return GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+}
+
 func createCommentModel(
     id: String,
     commentFields: CommentFields,
@@ -54,7 +58,8 @@ func createCommentModel(
     repo: String,
     threadState: IssueCommentModel.ThreadState,
     viewerCanUpdate: Bool,
-    viewerCanDelete: Bool
+    viewerCanDelete: Bool,
+    isRoot: Bool
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
         let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
@@ -75,7 +80,7 @@ func createCommentModel(
         editedAt: editedAt
     )
 
-    let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+    let options = commentModelOptions(owner: owner, repo: repo)
     let bodies = CreateCommentModels(markdown: commentFields.body, width: width, options: options)
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)
@@ -88,7 +93,8 @@ func createCommentModel(
         threadState: threadState,
         rawMarkdown: commentFields.body,
         viewerCanUpdate: viewerCanUpdate,
-        viewerCanDelete: viewerCanDelete
+        viewerCanDelete: viewerCanDelete,
+        isRoot: isRoot
     )
 }
 

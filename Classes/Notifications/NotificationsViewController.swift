@@ -90,12 +90,6 @@ TabNavRootViewControllerType {
         BadgeNotifications.update(count: unreadCount)
     }
 
-    func setRightBarItemSpinning() {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activity.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
-    }
-
     private func markAllRead() {
         self.setRightBarItemSpinning()
         self.client.markAllNotifications { success in
