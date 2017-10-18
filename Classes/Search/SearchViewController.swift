@@ -105,7 +105,7 @@ SearchResultSectionControllerDelegate {
         update(animated: false)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
-            guard let state = self?.state, case .loading(_) = state else { return }
+            guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: true)
         }
         state = .loading(request)
