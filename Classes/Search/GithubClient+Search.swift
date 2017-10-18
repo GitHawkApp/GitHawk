@@ -26,7 +26,7 @@ extension GithubClient {
         let query = SearchReposQuery(search: query, before: before)
 
         return fetch(query: query) { (result, error) in
-            guard (error == nil || (error! as NSError).code == -999), result?.errors == nil else {
+            guard errorIsNilOrCancelled(error), result?.errors == nil else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error)
                 return
@@ -70,4 +70,9 @@ extension GithubClient {
         }
     }
     
+}
+
+private func errorIsNilOrCancelled(_ error: Error?) -> Bool {
+    guard let error = error else { return true }
+    return (error as NSError).code == -999
 }
