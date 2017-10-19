@@ -50,11 +50,11 @@ class BookmarkModel: NSObject, NSCoding {
     
     convenience required init?(coder aDecoder: NSCoder) {
         guard let owner = aDecoder.decodeObject(forKey: Keys.owner) as? String else { return nil }
-        guard let number = aDecoder.decodeObject(forKey: Keys.number) as? Int else { return nil }
         guard let name = aDecoder.decodeObject(forKey: Keys.name) as? String else { return nil }
         guard let type = aDecoder.decodeObject(forKey: Keys.type) as? String else { return nil }
         guard let title = aDecoder.decodeObject(forKey: Keys.title) as? String else { return nil }
-        guard let hasIssueEnabled = aDecoder.decodeObject(forKey: Keys.hasIssueEnabled) as? Bool else { return nil }
+        let hasIssueEnabled = aDecoder.decodeBool(forKey: Keys.hasIssueEnabled)
+        let number = aDecoder.decodeInteger(forKey: Keys.number) as Int
         
         self.init(
             type: BookmarkType(rawValue: type)!,
