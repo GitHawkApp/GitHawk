@@ -40,12 +40,20 @@ TabNavRootViewControllerType {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Clear All", comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(BookmarksViewController.onClearAll(sender:))
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
         tableView.reloadData()
+        updateRightBarItem()
     }
     
     override func viewWillLayoutSubviews() {
@@ -53,7 +61,33 @@ TabNavRootViewControllerType {
         tableView.frame = view.bounds
     }
     
+    // MARK: Private API
+    
+    func updateRightBarItem() {
+        navigationItem.rightBarButtonItem?.isEnabled = bookmarkStore.bookmarks.count > 0
+    }
+    
+    @objc private func onClearAll(sender: UIBarButtonItem) {
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Bookmarks", comment: ""),
+            message: NSLocalizedString("Clear all bookmarks?", comment: ""),
+            preferredStyle: .alert
+        )
+        
+        alert.addActions([
+            AlertAction.clearAll({ [weak self] _ in
+                self?.bookmarkStore.clear()
+                self?.tableView.reloadData()
+                self?.updateRightBarItem()
+            }),
+            AlertAction.cancel()
+        ])
+        
+        present(alert, animated: true)
+    }
+    
     // MARK: TabNavRootViewControllerType
+    
     func didSingleTapTab() {
         
     }
