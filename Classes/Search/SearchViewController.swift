@@ -32,7 +32,13 @@ SearchResultSectionControllerDelegate {
         case results([ListDiffable])
         case error
     }
-    private var state: State = .idle
+    private var state: State = .idle {
+        willSet {
+            if case let .loading(request) = state {
+                request?.cancel()
+            }
+        }
+    }
 
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
@@ -178,8 +184,7 @@ SearchResultSectionControllerDelegate {
             return
         }
 
-        if case let .loading(request) = state {
-            request?.cancel()
+        if case .loading = state {
             recentStore.removeLast()
         }
 
@@ -198,10 +203,6 @@ SearchResultSectionControllerDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if case let .loading(request) = state {
-            request?.cancel()
-        }
-
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
         searchBar.resignFirstResponder()
