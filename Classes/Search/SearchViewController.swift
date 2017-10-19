@@ -44,6 +44,7 @@ SearchResultSectionControllerDelegate {
     init(client: GithubClient) {
         self.client = client
         super.init(nibName: nil, bundle: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(SearchViewController.willHideKeyboard), name: .UIKeyboardWillHide, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -80,6 +81,11 @@ SearchResultSectionControllerDelegate {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
         }
+    }
+    
+    @objc
+    private func willHideKeyboard() {
+        searchBar.resignFirstResponder()
     }
 
     // MARK: Data Loading/Paging

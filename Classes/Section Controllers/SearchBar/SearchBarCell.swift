@@ -33,6 +33,8 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
             make.trailing.equalTo(contentView)
             make.centerY.equalTo(contentView)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchBarCell.willHideKeyboard), name: .UIKeyboardWillHide, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +54,11 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     }
 
     // MARK: Private API
+    
+    @objc
+    private func willHideKeyboard() {
+        searchBar.resignFirstResponder()
+    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.didChangeSearchText(cell: self, query: searchText)
