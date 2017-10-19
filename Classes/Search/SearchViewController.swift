@@ -28,7 +28,7 @@ SearchResultSectionControllerDelegate {
 
     enum State {
         case idle
-        case loading(Cancellable)
+        case loading(Cancellable?)
         case results([ListDiffable])
         case error
     }
@@ -92,6 +92,8 @@ SearchResultSectionControllerDelegate {
 
     private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
+        case let .error(error) where isCancellationError(error):
+            self.state = .loading(nil)
         case .error:
             self.state = .error
         case .success(_, let results):
@@ -108,6 +110,8 @@ SearchResultSectionControllerDelegate {
             self?.handle(resultType: resultType, animated: true)
         }
         state = .loading(request)
+
+        update(animated: false)
     }
 
     // MARK: ListAdapterDataSource
@@ -168,13 +172,17 @@ SearchResultSectionControllerDelegate {
     // MARK: UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchTerm(for: searchBar.text) else { return }
+        guard let term = searchTerm(for: searchBar.text) else {
+            state = .idle
+            update(animated: false)
+            return
+        }
+
         if case let .loading(request) = state {
-            request.cancel()
+            request?.cancel()
             recentStore.removeLast()
         }
-        state = .idle
-        update(animated: false)
+
         debouncer.action = { [weak self] in self?.search(term: term) }
     }
 
@@ -191,7 +199,7 @@ SearchResultSectionControllerDelegate {
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if case let .loading(request) = state {
-            request.cancel()
+            request?.cancel()
         }
 
         searchBar.setShowsCancelButton(false, animated: true)

@@ -12,7 +12,7 @@ import Apollo
 extension GithubClient {
     
     enum SearchResultType {
-        case error
+        case error(Error?)
         case success(String?, [SearchRepoResult])
     }
 
@@ -26,9 +26,11 @@ extension GithubClient {
         let query = SearchReposQuery(search: query, before: before)
 
         return fetch(query: query) { (result, error) in
-            guard errorIsNilOrCancelled(error), result?.errors == nil else {
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-                completion(.error)
+            guard error == nil, result?.errors == nil else {
+                if !isCancellationError(error) {
+                    ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
+                }
+                completion(.error(error))
                 return
             }
             
@@ -70,9 +72,4 @@ extension GithubClient {
         }
     }
     
-}
-
-private func errorIsNilOrCancelled(_ error: Error?) -> Bool {
-    guard let error = error else { return true }
-    return (error as NSError).code == -999
 }
