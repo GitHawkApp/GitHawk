@@ -103,8 +103,6 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         recentStore.add(recent: term)
 
-        update(animated: false)
-
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: true)
@@ -261,7 +259,7 @@ SearchResultSectionControllerDelegate {
         update(animated: true)
     }
 
-    // MARK: Private functions
+    // MARK: Private API
 
     private func searchTerm(for searchBarText: String?) -> String? {
         guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
