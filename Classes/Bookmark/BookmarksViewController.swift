@@ -137,15 +137,13 @@ TabNavRootViewControllerType {
         cell?.detailTextLabel?.text = bookmark.title
         cell?.textLabel?.numberOfLines = 0
         cell?.detailTextLabel?.numberOfLines = 0
-        
-        var imageName = ""
-        switch bookmark.type {
-            case .repo: imageName = "repo"
-            case .issue: imageName = "issue-opened"
-            case .pullRequest: imageName = "git-pull-request"
-        }
-    
-        cell?.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        cell?.accessibilityTraits |= UIAccessibilityTraitButton
+        cell?.isAccessibilityElement = true
+        cell?.accessibilityLabel = cell?.contentView.subviews
+            .flatMap { $0.accessibilityLabel }
+            .reduce("", { $0 + ".\n" + $1 })
+
+        cell?.imageView?.image = bookmark.getBookmarkImageIcon()
         cell?.imageView?.tintColor = Styles.Colors.Blue.medium.color
         return cell!
     }

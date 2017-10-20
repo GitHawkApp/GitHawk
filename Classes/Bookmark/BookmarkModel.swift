@@ -99,4 +99,16 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         
         return false
     }
+    
+    // MARK: Helper
+    
+    func getBookmarkImageIcon() -> UIImage? {
+        var imageName = ""
+        switch type {
+            case .repo: imageName = "repo"
+            case .issue: imageName = "issue-opened"
+            case .pullRequest: imageName = "git-pull-request"
+        }
+        return UIImage.init(named: imageName)?.withRenderingMode(.alwaysTemplate)
+    }
 }
