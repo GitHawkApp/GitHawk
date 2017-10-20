@@ -54,10 +54,10 @@ SwipeCollectionViewCellDelegate {
             guard let strongSelf = self, let object = strongSelf.object else { return }
             strongSelf.delegate?.didDelete(recentSectionController: strongSelf, text: object as String)
         }
-        action.image = #imageLiteral(resourceName: "trashcan")
-        action.title = "\(Constants.Strings.delete)"
-        action.backgroundColor = Styles.Colors.Red.light.color
-        action.tintColor = Styles.Colors.Gray.dark.color
+        action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
+        action.backgroundColor = Styles.Colors.Red.medium.color
+        action.textColor = .white
+        action.tintColor = .white
         action.transitionDelegate = ScaleTransition.default
 
         return [action]
