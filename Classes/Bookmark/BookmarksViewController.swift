@@ -37,7 +37,7 @@ TabNavRootViewControllerType {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
@@ -71,8 +71,8 @@ TabNavRootViewControllerType {
     
     @objc private func onClearAll(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(
-            title: NSLocalizedString("Bookmarks", comment: ""),
-            message: NSLocalizedString("Clear all bookmarks?", comment: ""),
+            title: NSLocalizedString("Are you sure?", comment: ""),
+            message: NSLocalizedString("All of your bookmarks will be lost. Do you want to continue?", comment: ""),
             preferredStyle: .alert
         )
         
@@ -155,7 +155,7 @@ TabNavRootViewControllerType {
     override func tableView(_ tableView: UITableView,
                             commit editingStyle: UITableViewCellEditingStyle,
                             forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
+        if (editingStyle == .delete) {
             bookmarkStore.remove(bookmark: getBookmarks()[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -166,6 +166,8 @@ TabNavRootViewControllerType {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let bookmark = getBookmarks()[indexPath.row]
+        let destinationViewController: UIViewController
+        
         switch bookmark.type {
         case .repo:
             let repo = RepositoryDetails(
@@ -173,9 +175,7 @@ TabNavRootViewControllerType {
                 name: bookmark.name,
                 hasIssuesEnabled: bookmark.hasIssueEnabled
             )
-            let repoViewController = RepositoryViewController(client: client, repo: repo)
-            let navigation = UINavigationController(rootViewController: repoViewController)
-            showDetailViewController(navigation, sender: nil)
+            destinationViewController = RepositoryViewController(client: client, repo: repo)
 
         case .issue, .pullRequest:
             let issueModel = IssueDetailsModel(
@@ -183,10 +183,11 @@ TabNavRootViewControllerType {
                 repo: bookmark.name,
                 number: bookmark.number
             )
-            let controller = IssuesViewController(client: client, model: issueModel)
-            let navigation = UINavigationController(rootViewController: controller)
-            showDetailViewController(navigation, sender: nil)
+            destinationViewController = IssuesViewController(client: client, model: issueModel)
+            
         }
+        let navigation = UINavigationController(rootViewController: destinationViewController)
+        showDetailViewController(navigation, sender: nil)
     }
     
     // MARK: UISearchBarDelegate

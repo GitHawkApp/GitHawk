@@ -28,7 +28,7 @@ final class BookmarksStore {
             _bookmarks = bookmarks
         }
         else {
-            _bookmarks = Set<BookmarkModel>()
+            _bookmarks = []
         }
     }
     

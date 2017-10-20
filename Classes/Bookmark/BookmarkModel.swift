@@ -76,9 +76,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
     }
     
     override var hashValue: Int {
-        get {
             return (name + owner + "\(number)").hashValue
-        }
     }
     
     override func isEqual(_ object: Any?) -> Bool {
@@ -92,7 +90,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         let lowerQuery = query.lowercased()
         
         if type.rawValue.contains(lowerQuery) { return true }
-        if String(number).contains(lowerQuery) {return true }
+        if String(number).contains(lowerQuery) { return true }
         if title.lowercased().contains(lowerQuery) { return true }
         if owner.lowercased().contains(lowerQuery) { return true }
         if name.lowercased().contains(lowerQuery) { return true }
