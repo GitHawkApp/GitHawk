@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class SearchRecentCell: SelectableCell {
+final class SearchRecentCell: SwipeSelectableCell {
 
     private let label = UILabel()
 

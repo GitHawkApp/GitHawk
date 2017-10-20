@@ -39,6 +39,11 @@ final class SearchRecentStore {
         save()
     }
 
+    func remove(recent: String) {
+        _recents.remove(recent)
+        save()
+    }
+
     func clear() {
         _recents.removeAllObjects()
         save()
