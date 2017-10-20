@@ -366,6 +366,7 @@
 		98B5A0861F6D0FFE000617D6 /* UINavigationController+Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */; };
 		98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 98F0A0421F27BC4B0062A2CA /* emoji.json */; };
 		C2FAAA639721846A5B477E5C /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */; };
+		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -716,6 +717,7 @@
 		98F0A0421F27BC4B0062A2CA /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
 		B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
+		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
 		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1329,6 +1331,7 @@
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
 				2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */,
+				D8C2AEF41F9AA94600A95945 /* DotListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2082,6 +2085,7 @@
 				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
 				98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
+				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
 				290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */,
