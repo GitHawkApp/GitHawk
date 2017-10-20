@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BookmarkModel: NSObject, NSCoding {
+final class BookmarkModel: NSObject, NSCoding, Filterable {
     
     struct Keys {
         static let owner = "owner"
@@ -84,5 +84,19 @@ class BookmarkModel: NSObject, NSCoding {
     override func isEqual(_ object: Any?) -> Bool {
         let bookmark = (object as? BookmarkModel)
         return hashValue == bookmark?.hashValue
+    }
+    
+    // MARK: Filterable
+    
+    func match(query: String) -> Bool {
+        let lowerQuery = query.lowercased()
+        
+        if type.rawValue.contains(lowerQuery) { return true }
+        if String(number).contains(lowerQuery) {return true }
+        if title.lowercased().contains(lowerQuery) { return true }
+        if owner.lowercased().contains(lowerQuery) { return true }
+        if name.lowercased().contains(lowerQuery) { return true }
+        
+        return false
     }
 }

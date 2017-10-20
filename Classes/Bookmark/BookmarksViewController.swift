@@ -9,17 +9,16 @@
 import UIKit
 
 class BookmarksViewController:
-    UIViewController,
-    UITableViewDelegate,
-    UITableViewDataSource,
+    UITableViewController,
+    UISearchBarDelegate,
     PrimaryViewController,
 TabNavRootViewControllerType {
-    
+  
     private let client: GithubClient
-    private let tableView = UITableView(frame: .zero, style: .plain)
     private let cellIdentifier = "bookmark_cell"
     private let bookmarkStore = BookmarksStore.shared
-
+    private let searchBar = UISearchBar()
+    private var filterdBookmarks: [BookmarkModel]? = nil
     
     // MARK: Init
     
@@ -37,9 +36,13 @@ TabNavRootViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        view.addSubview(tableView)
+        searchBar.delegate = self
+        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchBar.backgroundColor = .clear
+        searchBar.searchBarStyle = .minimal
+        searchBar.sizeToFit()
+        tableView.tableHeaderView = searchBar
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Clear All", comment: ""),
@@ -58,7 +61,6 @@ TabNavRootViewControllerType {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tableView.frame = view.bounds
     }
     
     // MARK: Private API
@@ -86,6 +88,25 @@ TabNavRootViewControllerType {
         present(alert, animated: true)
     }
     
+    func filter(query: String?) {
+        if let query = query {
+            filterdBookmarks = filtered(array: bookmarkStore.bookmarks, query: query)
+        }
+        else {
+            filterdBookmarks = nil
+        }
+        self.tableView.reloadData()
+    }
+    
+    func getBookmark(_ index: Int) -> BookmarkModel {
+        if let bookmarks = filterdBookmarks {
+            return bookmarks[index]
+        }
+        else {
+            return bookmarkStore.bookmarks[index]
+        }
+    }
+    
     // MARK: TabNavRootViewControllerType
     
     func didSingleTapTab() {
@@ -98,18 +119,24 @@ TabNavRootViewControllerType {
     
     // MARK: UITableViewDataSource
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarkStore.bookmarks.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let bookmarks = filterdBookmarks {
+            return bookmarks.count
+        }
+        else {
+            return bookmarkStore.bookmarks.count
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
         
-        let bookmark = bookmarkStore.bookmarks[indexPath.row]
+        let bookmark = getBookmark(indexPath.row)
+        
         let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
         cell?.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
         cell?.detailTextLabel?.text = bookmark.title
@@ -130,9 +157,9 @@ TabNavRootViewControllerType {
     
     // MARK: UITableViewDelegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let bookmark = bookmarkStore.bookmarks[indexPath.row]
+        let bookmark = getBookmark(indexPath.row)
         switch bookmark.type {
         case .repo:
             let repo = RepositoryDetails(owner: bookmark.owner, name: bookmark.name, hasIssuesEnabled: bookmark.hasIssueEnabled)
@@ -146,5 +173,32 @@ TabNavRootViewControllerType {
             let navigation = UINavigationController(rootViewController: controller)
             showDetailViewController(navigation, sender: nil)
         }
+    }
+    
+    // MARK: UISearchBarDelegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        
+        filter(query: term)
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !term.isEmpty else { return }
+        
+        filter(query: term)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        filter(query: nil)
     }
 }
