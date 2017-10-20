@@ -143,7 +143,7 @@ TabNavRootViewControllerType {
             .flatMap { $0.accessibilityLabel }
             .reduce("", { $0 + ".\n" + $1 })
 
-        cell?.imageView?.image = bookmark.getBookmarkImageIcon()
+        cell?.imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
         cell?.imageView?.tintColor = Styles.Colors.Blue.medium.color
         return cell!
     }
@@ -176,7 +176,7 @@ TabNavRootViewControllerType {
                 hasIssuesEnabled: bookmark.hasIssueEnabled
             )
             destinationViewController = RepositoryViewController(client: client, repo: repo)
-
+            
         case .issue, .pullRequest:
             let issueModel = IssueDetailsModel(
                 owner: bookmark.owner,
@@ -184,7 +184,8 @@ TabNavRootViewControllerType {
                 number: bookmark.number
             )
             destinationViewController = IssuesViewController(client: client, model: issueModel)
-            
+        default:
+            return
         }
         let navigation = UINavigationController(rootViewController: destinationViewController)
         showDetailViewController(navigation, sender: nil)

@@ -18,14 +18,8 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         static let title = "title"
         static let hasIssueEnabled = "hasIssueEnabled"
     }
-    
-    enum BookmarkType: String {
-        case repo = "repo"
-        case issue = "issue"
-        case pullRequest = "pullRequest"
-    }
-    
-    let type: BookmarkType
+        
+    let type: NotificationType
     let name: String
     let owner: String
     let number: Int
@@ -33,7 +27,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
     let hasIssueEnabled: Bool
     
     init(
-        type: BookmarkType,
+        type: NotificationType,
         name: String,
         owner: String,
         number: Int = 0,
@@ -57,7 +51,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         let number = aDecoder.decodeInteger(forKey: Keys.number) as Int
         
         self.init(
-            type: BookmarkType(rawValue: type)!,
+            type: NotificationType(rawValue: type)!,
             name: name,
             owner: owner,
             number: number,
@@ -96,17 +90,5 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         if name.lowercased().contains(lowerQuery) { return true }
         
         return false
-    }
-    
-    // MARK: Helper
-    
-    func getBookmarkImageIcon() -> UIImage? {
-        var imageName = ""
-        switch type {
-            case .repo: imageName = "repo"
-            case .issue: imageName = "issue-opened"
-            case .pullRequest: imageName = "git-pull-request"
-        }
-        return UIImage.init(named: imageName)?.withRenderingMode(.alwaysTemplate)
     }
 }
