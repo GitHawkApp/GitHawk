@@ -50,7 +50,7 @@ SwipeCollectionViewCellDelegate {
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
-        let action = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, _ in
+        let action = SwipeAction(style: .destructive, title: Constants.Strings.delete) { [weak self] _, _ in
             guard let strongSelf = self, let object = strongSelf.object else { return }
             strongSelf.delegate?.didDelete(recentSectionController: strongSelf, text: object as String)
         }
@@ -58,7 +58,6 @@ SwipeCollectionViewCellDelegate {
         action.backgroundColor = Styles.Colors.Red.medium.color
         action.textColor = .white
         action.tintColor = .white
-        action.transitionDelegate = ScaleTransition.default
 
         return [action]
     }
