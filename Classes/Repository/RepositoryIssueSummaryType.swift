@@ -14,6 +14,7 @@ protocol RepositoryIssueSummaryType {
     var id: String { get }
     var status: IssueStatus { get }
     var repoEventFields: RepoEventFields { get }
+    var labelableFields: LabelableFields { get }
     var pullRequest: Bool { get }
     var title: String { get }
 
