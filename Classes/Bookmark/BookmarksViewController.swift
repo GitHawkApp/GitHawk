@@ -98,12 +98,12 @@ TabNavRootViewControllerType {
         self.tableView.reloadData()
     }
     
-    func getBookmark(_ index: Int) -> BookmarkModel {
+    func getBookmarks() -> [BookmarkModel] {
         if let bookmarks = filterdBookmarks {
-            return bookmarks[index]
+            return bookmarks
         }
         else {
-            return bookmarkStore.bookmarks[index]
+            return bookmarkStore.bookmarks
         }
     }
     
@@ -120,12 +120,7 @@ TabNavRootViewControllerType {
     // MARK: UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let bookmarks = filterdBookmarks {
-            return bookmarks.count
-        }
-        else {
-            return bookmarkStore.bookmarks.count
-        }
+        return getBookmarks().count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,7 +130,7 @@ TabNavRootViewControllerType {
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
         
-        let bookmark = getBookmark(indexPath.row)
+        let bookmark = getBookmarks()[indexPath.row]
         
         let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
         cell?.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
@@ -155,20 +150,41 @@ TabNavRootViewControllerType {
         return cell!
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return filterdBookmarks != nil ? false : true // avoid swipe to delete when search bar is active
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            bookmarkStore.remove(bookmark: getBookmarks()[indexPath.row])
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     // MARK: UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let bookmark = getBookmark(indexPath.row)
+        let bookmark = getBookmarks()[indexPath.row]
         switch bookmark.type {
         case .repo:
-            let repo = RepositoryDetails(owner: bookmark.owner, name: bookmark.name, hasIssuesEnabled: bookmark.hasIssueEnabled)
+            let repo = RepositoryDetails(
+                owner: bookmark.owner,
+                name: bookmark.name,
+                hasIssuesEnabled: bookmark.hasIssueEnabled
+            )
             let repoViewController = RepositoryViewController(client: client, repo: repo)
             let navigation = UINavigationController(rootViewController: repoViewController)
             showDetailViewController(navigation, sender: nil)
 
         case .issue, .pullRequest:
-            let issueModel = IssueDetailsModel(owner: bookmark.owner, repo: bookmark.name, number: bookmark.number)
+            let issueModel = IssueDetailsModel(
+                owner: bookmark.owner,
+                repo: bookmark.name,
+                number: bookmark.number
+            )
             let controller = IssuesViewController(client: client, model: issueModel)
             let navigation = UINavigationController(rootViewController: controller)
             showDetailViewController(navigation, sender: nil)

@@ -39,6 +39,11 @@ final class BookmarksStore {
         archive()
     }
     
+    func remove(bookmark: BookmarkModel) {
+        _bookmarks.remove(bookmark)
+        archive()
+    }
+    
     func clear() {
         _bookmarks.removeAll()
         archive()
