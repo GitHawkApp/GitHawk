@@ -234,6 +234,8 @@
 		2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980E0911F073E8B000E02C6 /* NotificationSectionController.swift */; };
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
 		2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
+		2982ED8B1F95900F00DBF8EB /* GithubClient+EditComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED8A1F95900F00DBF8EB /* GithubClient+EditComment.swift */; };
+		2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
@@ -580,6 +582,7 @@
 		2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEmoji.swift; sourceTree = "<group>"; };
 		2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTests.swift; sourceTree = "<group>"; };
 		2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+SafeAreaContentView.swift"; sourceTree = "<group>"; };
+		2982ED8A1F95900F00DBF8EB /* GithubClient+EditComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+EditComment.swift"; sourceTree = "<group>"; };
 		298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SlackTextViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringSizing.swift; sourceTree = "<group>"; };
 		298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+BottomBorder.swift"; sourceTree = "<group>"; };
@@ -1374,6 +1377,7 @@
 			isa = PBXGroup;
 			children = (
 				29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */,
+				2982ED8A1F95900F00DBF8EB /* GithubClient+EditComment.swift */,
 			);
 			path = EditComment;
 			sourceTree = "<group>";
@@ -1587,10 +1591,10 @@
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
-				291F99D81F00013C00CFBF78 /* Increment Build Number */,
 				297AE8321EC0D58A00B44A1F /* Resources */,
 				46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */,
 				F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */,
+				294CDE5C1F98DF5A002CF6E4 /* Set Build Number */,
 			);
 			buildRules = (
 			);
@@ -1705,20 +1709,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		291F99D81F00013C00CFBF78 /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT START\"\necho \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT END\"";
-		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1732,6 +1722,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ ! -z \"${DISABLE_APOLLO}\" ]]; then\n  echo \"Stopping Task: Remove 'DISABLE_APOLLO' env variable to continue.\"\n  exit\nfi\n\nPATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
+		};
+		294CDE5C1F98DF5A002CF6E4 /* Set Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/tools/bump_build_number.sh;
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2152,6 +2156,7 @@
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
+				2982ED8B1F95900F00DBF8EB /* GithubClient+EditComment.swift in Sources */,
 				297406981F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift in Sources */,
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
@@ -2235,6 +2240,7 @@
 				293A45801F296BEA00DD1006 /* GithubEmoji.swift in Sources */,
 				293A458C1F296CF300DD1006 /* MMElement+Attributes.swift in Sources */,
 				293A45951F296D8E00DD1006 /* IssueCommentImageModel.swift in Sources */,
+				2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				293A459B1F298E7D00DD1006 /* IssueCommentSummaryModel.swift in Sources */,
 				293A458B1F296CF300DD1006 /* CommentModelsFromMarkdown.swift in Sources */,
 				293A457D1F296BD200DD1006 /* NSAttributedStringSizing.swift in Sources */,

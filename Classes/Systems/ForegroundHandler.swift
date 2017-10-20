@@ -17,7 +17,7 @@ final class ForegroundHandler {
     weak var delegate: ForegroundHandlerDelegate? = nil
 
     private let threshold: CFTimeInterval
-    private var backgrounded: CFTimeInterval = 0
+    private var backgrounded: CFTimeInterval? = nil
 
     init(threshold: TimeInterval) {
         self.threshold = threshold
@@ -25,25 +25,27 @@ final class ForegroundHandler {
         let center = NotificationCenter.default
         center.addObserver(
             self,
-            selector: #selector(ForegroundHandler.onForeground),
+            selector: #selector(ForegroundHandler.didBecomeActive),
             name: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil
         )
         center.addObserver(
             self,
-            selector: #selector(ForegroundHandler.onBackground),
-            name: NSNotification.Name.UIApplicationDidEnterBackground,
+            selector: #selector(ForegroundHandler.willResignActive),
+            name: NSNotification.Name.UIApplicationWillResignActive,
             object: nil
         )
     }
 
     // MARK: Private API
 
-    @objc func onBackground() {
+    @objc func willResignActive() {
         backgrounded = CACurrentMediaTime()
     }
 
-    @objc func onForeground() {
+    @objc func didBecomeActive() {
+        guard let backgrounded = self.backgrounded else { return }
+        self.backgrounded = nil
         if CACurrentMediaTime() - backgrounded > threshold {
             delegate?.didForeground(handler: self)
         }
