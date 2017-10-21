@@ -79,10 +79,43 @@ class FlatCacheTests: XCTestCase {
         cache.set(value: m1)
         cache.set(value: CacheModel(id: "1", value: "foo"))
         XCTAssertEqual(l1.receivedItemQueue.count, 2)
+        XCTAssertEqual(l1.receivedListQueue.count, 0)
         XCTAssertEqual(l1.receivedItemQueue.last?.id, "1")
         XCTAssertEqual(l1.receivedItemQueue.last?.value, "foo")
+        XCTAssertEqual(l2.receivedItemQueue.count, 0)
         XCTAssertEqual(l2.receivedListQueue.count, 0)
+    }
+
+    func test_whenSettingMultipleModels_withListenerOnAll_whenMultipleUpdates_thatListenerReceivesUpdate() {
+        let cache = FlatCache()
+        let l1 = CacheModelListener()
+        let m1 = CacheModel(id: "1", value: "foo")
+        let m2 = CacheModel(id: "2", value: "bar")
+        cache.add(listener: l1, value: m1)
+        cache.add(listener: l1, value: m2)
+        cache.set(values: [m1, m2])
+        XCTAssertEqual(l1.receivedItemQueue.count, 0)
+        XCTAssertEqual(l1.receivedListQueue.count, 1)
+        XCTAssertEqual(l1.receivedListQueue.last?.count, 2)
+        XCTAssertEqual(l1.receivedListQueue.last?.first?.value, "foo")
+        XCTAssertEqual(l1.receivedListQueue.last?.last?.value, "bar")
+    }
+
+    func test_whenSettingTwoModels_withListenerForEach_thatListenersReceiveItemUpdates() {
+        let cache = FlatCache()
+        let l1 = CacheModelListener()
+        let l2 = CacheModelListener()
+        let m1 = CacheModel(id: "1", value: "foo")
+        let m2 = CacheModel(id: "2", value: "bar")
+        cache.add(listener: l1, value: m1)
+        cache.add(listener: l2, value: m2)
+        cache.set(values: [m1, m2])
+        XCTAssertEqual(l1.receivedItemQueue.count, 1)
+        XCTAssertEqual(l1.receivedListQueue.count, 0)
+        XCTAssertEqual(l1.receivedItemQueue.last?.value, "foo")
+        XCTAssertEqual(l2.receivedItemQueue.count, 1)
         XCTAssertEqual(l2.receivedListQueue.count, 0)
+        XCTAssertEqual(l2.receivedItemQueue.last?.value, "bar")
     }
     
 }
