@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireNetworkActivityIndicator (2.1.0):
     - Alamofire (~> 4.1)
-  - Apollo (0.7.0-alpha.9):
-    - Apollo/Core (= 0.7.0-alpha.9)
-  - Apollo/Core (0.7.0-alpha.9)
+  - Apollo (0.7.0):
+    - Apollo/Core (= 0.7.0)
+  - Apollo/Core (0.7.0)
   - FLAnimatedImage (1.0.12)
   - FLEX (2.4.0)
   - HTMLString (4.0.1)
@@ -64,13 +64,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   IGListKit:
-    :commit: 0f04a073194033fbfc6f1d916fad83838042a7c0
+    :commit: 5cf01cc0a7c41d370600df495aff91d1099fa0bc
     :git: https://github.com/Instagram/IGListKit.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
-  Apollo: 472b027285e3bd2a79d37d502e98f6f15a3bc528
+  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
@@ -88,4 +88,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ace2f34a7d73e2c1c9cdfc7471f86b2916e4cc49
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.4.0.beta.1
