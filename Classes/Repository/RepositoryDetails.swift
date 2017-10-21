@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RepositoryDetails {
+struct RepositoryDetails: Codable {
     let owner: String
     let name: String
     let hasIssuesEnabled: Bool

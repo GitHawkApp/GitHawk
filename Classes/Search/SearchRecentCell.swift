@@ -12,18 +12,27 @@ import SnapKit
 final class SearchRecentCell: SwipeSelectableCell {
 
     private let label = UILabel()
+    private let imageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = .white
 
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        contentView.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.left.equalTo(Styles.Sizes.gutter)
+        }
+
         label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(imageView.snp.right)
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
 
@@ -41,8 +50,9 @@ final class SearchRecentCell: SwipeSelectableCell {
 
     // MARK: Public API
 
-    func configure(_ text: String) {
-        label.text = text
+    func configure(viewModel: SearchRecentViewModel) {
+        imageView.image = viewModel.icon
+        label.text = viewModel.displayText
     }
 
 }

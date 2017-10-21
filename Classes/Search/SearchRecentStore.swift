@@ -17,9 +17,13 @@ final class SearchRecentStore {
     private let defaults = UserDefaults.standard
     private var _recents: NSMutableOrderedSet
 
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
+
     init() {
-        if let arr = defaults.object(forKey: Keys.results) as? [String] {
-            _recents = NSMutableOrderedSet(array: arr)
+        if let data = defaults.object(forKey: Keys.results) as? Data,
+            let array = try? decoder.decode([SearchQuery].self, from: data) {
+            _recents = NSMutableOrderedSet(array: array)
         } else {
             _recents = NSMutableOrderedSet()
         }
@@ -27,9 +31,9 @@ final class SearchRecentStore {
 
     // MARK: Public API
 
-    func add(recent: String) {
-        _recents.remove(recent)
-        _recents.insert(recent, at: 0)
+    func add(query: SearchQuery) {
+        _recents.remove(query)
+        _recents.insert(query, at: 0)
 
         // keep recents trimmed
         while _recents.count > 15 {
@@ -49,8 +53,8 @@ final class SearchRecentStore {
         save()
     }
 
-    var recents: [String] {
-        return _recents.array as? [String] ?? []
+    var recents: [SearchQuery] {
+        return _recents.array as? [SearchQuery] ?? []
     }
 
     func removeLast() {
@@ -62,7 +66,10 @@ final class SearchRecentStore {
     // MARK: Private API
 
     func save() {
-        defaults.set(_recents.array, forKey: Keys.results)
+        guard let data = try? encoder.encode(recents) else {
+            return
+        }
+        defaults.set(data, forKey: Keys.results)
     }
 
 }
