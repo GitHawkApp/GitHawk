@@ -222,6 +222,7 @@ SearchResultSectionControllerDelegate {
 
     func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
         searchBar.resignFirstResponder()
+
         if case let .search(text) = viewModel.query {
             didSelectSearch(text: text)
         } else if case let .recentlyViewed(repo) = viewModel.query {
@@ -236,6 +237,9 @@ SearchResultSectionControllerDelegate {
     }
 
     private func didSelectRepo(repo: RepositoryDetails) {
+        recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
+
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
         showDetailViewController(navigation, sender: nil)

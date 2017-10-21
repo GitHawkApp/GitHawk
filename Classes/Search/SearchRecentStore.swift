@@ -54,7 +54,11 @@ final class SearchRecentStore {
     }
 
     var recents: [SearchQuery] {
-        return _recents.array as? [SearchQuery] ?? []
+        guard let values = _recents.array as? [SearchQuery] else { return [] }
+        return values
+            .reduce([], { initialValue, collectionElement in
+                initialValue.contains(collectionElement) ? initialValue : initialValue + [collectionElement]
+            })
     }
 
     func removeLast() {

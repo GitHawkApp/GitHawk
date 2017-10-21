@@ -56,11 +56,7 @@ final class SearchRecentViewModel: NSObject, ListDiffable {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? SearchRecentViewModel else {
-            return false
-        }
-        return displayText == object.displayText
+        return true
     }
 
     // MARK: Private API

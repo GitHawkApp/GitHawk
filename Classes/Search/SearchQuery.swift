@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SearchQuery: Codable {
+enum SearchQuery: Codable, Equatable {
     case search(String), recentlyViewed(RepositoryDetails)
 
     private enum CodingKeys: String, CodingKey {
@@ -41,5 +41,16 @@ enum SearchQuery: Codable {
         case .recentlyViewed(let repo):
             try container.encode(repo, forKey: .recentlyViewed)
         }
+    }
+}
+
+func == (lhs: SearchQuery, rhs: SearchQuery) -> Bool {
+    switch (lhs, rhs) {
+    case (let .search(lhsText), let .search(rhsText)):
+        return lhsText == rhsText
+    case (let .recentlyViewed(lhsRepo), let .recentlyViewed(rhsRepo)):
+        return lhsRepo == rhsRepo
+    default:
+        return false
     }
 }
