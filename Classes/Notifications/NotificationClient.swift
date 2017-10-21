@@ -51,7 +51,8 @@ final class NotificationClient {
         since: Date? = nil,
         page: Int = 1,
         before: Date? = nil,
-        completion: @escaping (Result<([Notification], Int?)>) -> ()
+        width: CGFloat,
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> ()
         ) {
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
@@ -66,27 +67,15 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
-        typealias NotificationsPayload = [[String: Any]]
-
-        let success = { (jsonArr: NotificationsPayload, page: Int?) in
-            var notifications = [Notification]()
-            for json in jsonArr {
-                if let notification = Notification(json: json) {
-                    notifications.append(notification)
-                }
-            }
-
-            completion(.success((notifications, page)))
-        }
-
         githubClient.request(GithubClient.Request(
             path: "notifications",
             method: .get,
             parameters: parameters,
             headers: nil
         ) { (response, nextPage) in
-            if let jsonArr = response.value as? NotificationsPayload {
-                success(jsonArr, nextPage?.next)
+            if let notifications = (response.value as? [[String:Any]])?.flatMap({ Notification(json: $0) }) {
+                let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
+                completion(.success((viewModels, nextPage?.next)))
             } else {
                 completion(.error(response.error))
             }

@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import Apollo
 import AlamofireNetworkActivityIndicator
+import FlatCache
 
 struct GithubClient {
 
@@ -66,6 +67,7 @@ struct GithubClient {
     let apollo: ApolloClient
     let networker: Alamofire.SessionManager
     let userSession: GithubUserSession?
+    let cache = FlatCache()
 
     init(
         sessionManager: GithubSessionManager,

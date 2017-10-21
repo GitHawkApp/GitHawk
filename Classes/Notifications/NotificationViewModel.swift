@@ -8,8 +8,9 @@
 
 import Foundation
 import IGListKit
+import FlatCache
 
-final class NotificationViewModel: ListDiffable {
+final class NotificationViewModel: ListDiffable, Cachable {
 
     enum Identifier {
         case number(Int)

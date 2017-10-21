@@ -131,27 +131,25 @@ TabNavRootViewControllerType {
         updateUnreadState()
     }
 
-    private func handle(result: Result<([Notification], Int?)>, append: Bool, animated: Bool, page: Int) {
+    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
         // in case coming from "mark all" action
         self.resetRightBarItem()
 
         switch result {
         case .success(let notifications, let next):
-            let block = {
-                // disable the page model if there is no next
-                self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
-                self.hasError = false
-
-                self.update(dismissRefresh: !append, animated: animated)
-            }
-
             let width = self.view.bounds.width
 
             if append {
-                self.dataSource.append(width: width, notifications: notifications, completion: block)
+                self.dataSource.append(notifications: notifications)
             } else {
-                self.dataSource.update(width: width, notifications: notifications, completion: block)
+                self.dataSource.update(notifications: notifications)
             }
+
+            // disable the page model if there is no next
+            self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
+            self.hasError = false
+
+            self.update(dismissRefresh: !append, animated: animated)
         case .error:
             ToastManager.showNetworkError()
             self.hasError = true
@@ -161,14 +159,14 @@ TabNavRootViewControllerType {
 
     private func reload() {
         let first = 1
-        client.requestNotifications(all: true, page: first) { result in
+        client.requestNotifications(all: true, page: first, width: view.bounds.width) { result in
             self.handle(result: result, append: false, animated: true, page: first)
         }
     }
 
     private func nextPage() {
         let next = (page?.intValue ?? 0)
-        client.requestNotifications(all: true, page: next) { result in
+        client.requestNotifications(all: true, page: next, width: view.bounds.width) { result in
             self.handle(result: result, append: true, animated: false, page: next)
         }
     }

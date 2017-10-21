@@ -29,25 +29,12 @@ final class NotificationsDataSource {
         }
     }
 
-    func update(width: CGFloat, notifications: [Notification], completion: @escaping () -> ()) {
-        DispatchQueue.global().async {
-            let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
-            NSKeyedArchiver.archiveRootObject(notifications, toFile: self.archivePath)
-            DispatchQueue.main.async {
-                self._notifications = viewModels
-                completion()
-            }
-        }
+    func update(notifications: [NotificationViewModel]) {
+        _notifications = notifications
     }
 
-    func append(width: CGFloat, notifications: [Notification], completion: @escaping () -> ()) {
-        DispatchQueue.global().async {
-            let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
-            DispatchQueue.main.async {
-                self._notifications += viewModels
-                completion()
-            }
-        }
+    func append(notifications: [NotificationViewModel]) {
+        _notifications += notifications
     }
 
     var allNotifications: [NotificationViewModel] {

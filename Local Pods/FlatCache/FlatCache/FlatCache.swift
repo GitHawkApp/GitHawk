@@ -49,8 +49,6 @@ public final class FlatCache {
         case list([Any])
     }
 
-//    static let shared = FlatCache()
-
     private var storage: [FlatCacheKey: Any] = [:]
     private let queue = DispatchQueue(
         label: "com.freetime.FlatCache.queue",
@@ -59,6 +57,8 @@ public final class FlatCache {
     )
 
     private var listeners: [FlatCacheKey: NSHashTable<AnyObject>] = [:]
+
+    public init() { }
 
     public func add<T: Cachable>(listener: FlatCacheListener, value: T) {
         assert(Thread.isMainThread)
@@ -97,7 +97,7 @@ public final class FlatCache {
         }
     }
 
-    func set<T: Cachable>(values: [T]) {
+    public func set<T: Cachable>(values: [T]) {
         assert(Thread.isMainThread)
 
         var listenerHashToValuesMap = [Int: [T]]()
@@ -129,7 +129,7 @@ public final class FlatCache {
         }
     }
 
-    func get<T: Cachable>(id: String) -> T? {
+    public func get<T: Cachable>(id: String) -> T? {
         assert(Thread.isMainThread)
 
         let key = FlatCacheKey(typeName: T.typeName, id: id)
