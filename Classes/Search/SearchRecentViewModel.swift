@@ -9,7 +9,12 @@
 import Foundation
 import IGListKit
 
-final class SearchRecentViewModel: ListDiffable {
+private enum Keys {
+    static let search = "search"
+    static let viewed = "viewed"
+}
+
+final class SearchRecentViewModel: NSObject, ListDiffable {
 
     let query: SearchQuery
 
@@ -17,12 +22,14 @@ final class SearchRecentViewModel: ListDiffable {
         self.query = query
     }
 
-    var displayText: String {
+    var displayText: NSAttributedString {
         switch query {
         case .search(let text):
-            return text
+            return NSAttributedString(string: text, attributes: standardAttributes)
         case .recentlyViewed(let repoDetails):
-            return repoDetails.owner + "/" + repoDetails.name
+            let text = NSMutableAttributedString(string: repoDetails.owner + "/", attributes: standardAttributes)
+            text.append(NSAttributedString(string: repoDetails.name, attributes: boldAttributes))
+            return text
         }
     }
 
@@ -38,11 +45,37 @@ final class SearchRecentViewModel: ListDiffable {
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return icon as NSObjectProtocol
+        var identifier: String
+        switch query {
+        case .recentlyViewed:
+            identifier = Keys.viewed
+        case .search:
+            identifier = Keys.search
+        }
+        return (identifier + displayText.string) as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        return true
+        if self === object { return true }
+        guard let object = object as? SearchRecentViewModel else {
+            return false
+        }
+        return displayText == object.displayText
+    }
+
+    // MARK: Private API
+
+    private var standardAttributes: [NSAttributedStringKey: Any] {
+        return [
+            .font: Styles.Fonts.body,
+            .foregroundColor: Styles.Colors.Gray.dark.color
+        ]
+    }
+
+    private var boldAttributes: [NSAttributedStringKey: Any] {
+        return [
+            .font: Styles.Fonts.bodyBold,
+            .foregroundColor: Styles.Colors.Gray.dark.color
+        ]
     }
 }
-

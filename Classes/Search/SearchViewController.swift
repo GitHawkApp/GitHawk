@@ -221,6 +221,7 @@ SearchResultSectionControllerDelegate {
     // MARK: SearchRecentSectionControllerDelegate
 
     func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        searchBar.resignFirstResponder()
         if case let .search(text) = viewModel.query {
             didSelectSearch(text: text)
         } else if case let .recentlyViewed(repo) = viewModel.query {

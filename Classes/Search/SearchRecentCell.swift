@@ -21,10 +21,12 @@ final class SearchRecentCell: SwipeSelectableCell {
 
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.tintColor = Styles.Colors.Gray.light.color
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
+            make.width.equalTo(Styles.Sizes.icon.width)
         }
 
         label.textColor = Styles.Colors.Gray.dark.color
@@ -32,7 +34,7 @@ final class SearchRecentCell: SwipeSelectableCell {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(imageView.snp.right)
+            make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.gutter)
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
 
@@ -51,8 +53,8 @@ final class SearchRecentCell: SwipeSelectableCell {
     // MARK: Public API
 
     func configure(viewModel: SearchRecentViewModel) {
-        imageView.image = viewModel.icon
-        label.text = viewModel.displayText
+        imageView.image = viewModel.icon.withRenderingMode(.alwaysTemplate)
+        label.attributedText = viewModel.displayText
     }
 
 }

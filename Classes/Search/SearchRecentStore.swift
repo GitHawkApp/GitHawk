@@ -66,7 +66,8 @@ final class SearchRecentStore {
     // MARK: Private API
 
     func save() {
-        guard let data = try? encoder.encode(recents) else {
+        guard let recents = _recents.array as? [SearchQuery],
+            let data = try? encoder.encode(recents) else {
             return
         }
         defaults.set(data, forKey: Keys.results)
