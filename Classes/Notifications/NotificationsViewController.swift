@@ -77,7 +77,8 @@ TabNavRootViewControllerType {
 
     func setupTapToDismissKeyboard() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard(_:)))
-
+        tap.cancelsTouchesInView = false
+        
         view.addGestureRecognizer(tap)
     }
 
