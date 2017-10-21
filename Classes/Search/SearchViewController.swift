@@ -280,6 +280,7 @@ SearchResultSectionControllerDelegate {
 
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
         recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
         searchBar.resignFirstResponder()
     }
 
