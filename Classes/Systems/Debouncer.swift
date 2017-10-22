@@ -18,11 +18,11 @@ class Debouncer {
         }
     }
 
-    init(delay: Double = 0.25) {
+    init(delay: Double = 0.35) {
         self.delay = delay
     }
 
-    convenience init(delay: Double = 0.25, action: @escaping (() -> Void)) {
+    convenience init(delay: Double = 0.35, action: @escaping (() -> Void)) {
         self.init(delay: delay)
         self.action = action
     }
