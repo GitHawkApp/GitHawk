@@ -73,6 +73,7 @@ final class RootNavigationManager: GithubSessionListener {
         tabBarController?.viewControllers = [
             newNotificationsRootViewController(client: client),
             newSearchRootViewController(client: client),
+            newBookmarksRootViewController(client: client),
             settingsRootViewController ?? UIViewController(), // simply satisfying compiler
         ]
     }
