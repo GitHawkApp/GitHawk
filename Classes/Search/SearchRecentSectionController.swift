@@ -12,11 +12,11 @@ import SwipeCellKit
 
 protocol SearchRecentSectionControllerDelegate: class {
     func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel)
-    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: String)
+    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel)
 }
 
 // bridge to NSString for NSObject conformance
-final class SearchRecentSectionController: ListGenericSectionController<SearchRecentViewModel> {
+final class SearchRecentSectionController: ListGenericSectionController<SearchRecentViewModel>, SwipeCollectionViewCellDelegate {
 
     weak var delegate: SearchRecentSectionControllerDelegate? = nil
     lazy var recentStore = SearchRecentStore()
@@ -51,7 +51,7 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
 
         let action = SwipeAction(style: .destructive, title: Constants.Strings.delete) { [weak self] _, _ in
             guard let strongSelf = self, let object = strongSelf.object else { return }
-            strongSelf.delegate?.didDelete(recentSectionController: strongSelf, text: object as String)
+            strongSelf.delegate?.didDelete(recentSectionController: strongSelf, viewModel: object)
         }
         action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
         action.backgroundColor = Styles.Colors.Red.medium.color
@@ -70,7 +70,7 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
     // MARK: Private API
 
     var searchViewModel: SearchRecentViewModel {
-        return object as? SearchRecentViewModel ?? SearchRecentViewModel(query: .search(""))
+        return object ?? SearchRecentViewModel(query: .search(""))
     }
 
 }

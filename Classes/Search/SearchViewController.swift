@@ -284,9 +284,8 @@ SearchResultSectionControllerDelegate {
         searchBar.resignFirstResponder()
     }
 
-<<<<<<< HEAD
-    func didDelete(recentSectionController: SearchRecentSectionController, text: String) {
-        recentStore.remove(recent: text)
+    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        recentStore.remove(query: viewModel.query)
         update(animated: true)
     }
 
@@ -297,7 +296,4 @@ SearchResultSectionControllerDelegate {
             !term.isEmpty else { return nil }
         return term
     }
-
-=======
->>>>>>> 12351ab... Recently Viewed Repos saved in search store
 }

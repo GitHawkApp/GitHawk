@@ -15,7 +15,7 @@ final class SearchRecentStore {
     }
 
     private let defaults = UserDefaults.standard
-    private var _recents: NSMutableOrderedSet
+    private var _recents: [SearchQuery]
 
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -23,55 +23,52 @@ final class SearchRecentStore {
     init() {
         if let data = defaults.object(forKey: Keys.results) as? Data,
             let array = try? decoder.decode([SearchQuery].self, from: data) {
-            _recents = NSMutableOrderedSet(array: array)
+            _recents = array
         } else {
-            _recents = NSMutableOrderedSet()
+            _recents = []
         }
     }
 
     // MARK: Public API
 
     func add(query: SearchQuery) {
-        _recents.remove(query)
+        remove(query: query)
         _recents.insert(query, at: 0)
 
         // keep recents trimmed
         while _recents.count > 15 {
-            _recents.removeObject(at: _recents.count - 1)
+            _recents.removeLast()
         }
 
         save()
     }
 
-    func remove(recent: String) {
-        _recents.remove(recent)
+    func remove(query: SearchQuery) {
+        guard let offset = _recents.index(of: query) else { return }
+        let index = _recents.startIndex.distance(to: offset)
+        _recents.remove(at: index)
         save()
     }
 
     func clear() {
-        _recents.removeAllObjects()
+        _recents.removeAll()
         save()
     }
 
     var recents: [SearchQuery] {
-        guard let values = _recents.array as? [SearchQuery] else { return [] }
-        return values
-            .reduce([], { initialValue, collectionElement in
-                initialValue.contains(collectionElement) ? initialValue : initialValue + [collectionElement]
-            })
+        return _recents
     }
 
     func removeLast() {
         guard !recents.isEmpty else { return }
-        _recents.removeObject(at: _recents.count - 1)
+        _recents.removeLast()
         save()
     }
 
     // MARK: Private API
 
     func save() {
-        guard let recents = _recents.array as? [SearchQuery],
-            let data = try? encoder.encode(recents) else {
+        guard let data = try? encoder.encode(recents) else {
             return
         }
         defaults.set(data, forKey: Keys.results)

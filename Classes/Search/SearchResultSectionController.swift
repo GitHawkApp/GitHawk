@@ -10,6 +10,7 @@ import IGListKit
 
 protocol SearchResultSectionControllerDelegate: class {
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails)
+    
 }
 
 final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
