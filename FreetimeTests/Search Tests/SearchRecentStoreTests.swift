@@ -26,19 +26,19 @@ class SearchRecentStoreTests: XCTestCase {
     }
 
     func test_add_canReorderObjects() {
-        store.add(recent: "samurai jack")
-        store.add(recent: "aku")
-        store.add(recent: "samurai jack")
+        store.add(query: .search("Samurai Jack"))
+        store.add(query: .search("aku"))
+        store.add(query: .search("samurai jack"))
 
-        let expected = "samurai jack"
+        let expected: SearchQuery = .search("samurai jack")
         let actual = store.recents.first
 
         XCTAssertEqual(expected, actual)
     }
 
     func test_clear_removesAllObjects() {
-        store.add(recent: "cat")
-        store.add(recent: "bug")
+        store.add(query: .search("cat"))
+        store.add(query: .search("bug"))
         store.clear()
 
         XCTAssertTrue(store.recents.isEmpty)
@@ -50,8 +50,8 @@ class SearchRecentStoreTests: XCTestCase {
     }
 
     func test_removesLast_removesLastObject() {
-        store.add(recent: "finn")
-        store.add(recent: "jake")
+        store.add(query: .search("finn"))
+        store.add(query: .search("jake"))
         store.removeLast()
 
         let expectedCount = 1
@@ -59,4 +59,15 @@ class SearchRecentStoreTests: XCTestCase {
 
         XCTAssertEqual(expectedCount, actualCount)
     }
+
+    func test_remove() {
+        store.add(query: .search("finn"))
+        store.remove(query: .search("finn"))
+
+        let expectedCount = 0
+        let actualCount = store.recents.count
+
+        XCTAssertEqual(expectedCount, actualCount)
+    }
+
 }
