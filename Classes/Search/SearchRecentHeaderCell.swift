@@ -32,7 +32,7 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
 
-        button.setTitle(NSLocalizedString("Clear", comment: ""), for: .normal)
+        button.setTitle(Constants.Strings.clearAll, for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
         button.titleLabel?.font = Styles.Fonts.button
         button.addTarget(self, action: #selector(SearchRecentHeaderCell.onClear), for: .touchUpInside)

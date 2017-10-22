@@ -139,7 +139,7 @@ struct AlertAction {
     }
     
     static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Clear All", comment: ""), style: .destructive, handler: handler)
+        return UIAlertAction(title: Constants.Strings.clearAll, style: .destructive, handler: handler)
     }
     
     static func bookmark(_ bookmark: BookmarkModel) -> UIAlertAction {
