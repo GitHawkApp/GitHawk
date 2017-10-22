@@ -135,7 +135,7 @@ struct AlertAction {
     }
     
     static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Mark All Read", comment: ""), style: .destructive, handler: handler)
+        return UIAlertAction(title: NSLocalizedString("Mark all Read", comment: ""), style: .destructive, handler: handler)
     }
     
     static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
@@ -143,7 +143,7 @@ struct AlertAction {
     }
     
     static func bookmark(_ bookmark: BookmarkModel) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Add To Bookmark", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: NSLocalizedString("Add to Bookmark", comment: ""), style: .default) { _ in
             BookmarksStore.shared.add(bookmark: bookmark)
         }
     }
