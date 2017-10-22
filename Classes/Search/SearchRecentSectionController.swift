@@ -11,13 +11,12 @@ import IGListKit
 import SwipeCellKit
 
 protocol SearchRecentSectionControllerDelegate: class {
-    func didSelect(recentSectionController: SearchRecentSectionController, text: String)
-    func didDelete(recentSectionController: SearchRecentSectionController, text: String)
+    func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel)
+    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel)
 }
 
 // bridge to NSString for NSObject conformance
-final class SearchRecentSectionController: ListGenericSectionController<NSString>,
-SwipeCollectionViewCellDelegate {
+final class SearchRecentSectionController: ListGenericSectionController<SearchRecentViewModel>, SwipeCollectionViewCellDelegate {
 
     weak var delegate: SearchRecentSectionControllerDelegate? = nil
     lazy var recentStore = SearchRecentStore()
@@ -36,13 +35,13 @@ SwipeCollectionViewCellDelegate {
         guard let cell = collectionContext?.dequeueReusableCell(of: SearchRecentCell.self, for: self, at: index) as? SearchRecentCell
             else { fatalError("Missing context or wrong cell type") }
         cell.delegate = self
-        cell.configure(text)
+        cell.configure(viewModel: searchViewModel)
         return cell
     }
 
     override func didSelectItem(at index: Int) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
-        delegate?.didSelect(recentSectionController: self, text: text)
+        delegate?.didSelect(recentSectionController: self, viewModel: searchViewModel)
     }
 
     // MARK: SwipeCollectionViewCellDelegate
@@ -52,7 +51,7 @@ SwipeCollectionViewCellDelegate {
 
         let action = SwipeAction(style: .destructive, title: Constants.Strings.delete) { [weak self] _, _ in
             guard let strongSelf = self, let object = strongSelf.object else { return }
-            strongSelf.delegate?.didDelete(recentSectionController: strongSelf, text: object as String)
+            strongSelf.delegate?.didDelete(recentSectionController: strongSelf, viewModel: object)
         }
         action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
         action.backgroundColor = Styles.Colors.Red.medium.color
@@ -70,8 +69,8 @@ SwipeCollectionViewCellDelegate {
 
     // MARK: Private API
 
-    var text: String {
-        return (object ?? "") as String
+    var searchViewModel: SearchRecentViewModel {
+        return object ?? SearchRecentViewModel(query: .search(""))
     }
 
 }

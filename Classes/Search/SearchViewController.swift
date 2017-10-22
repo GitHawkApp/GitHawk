@@ -109,7 +109,7 @@ SearchResultSectionControllerDelegate {
     }
 
     func search(term: String) {
-        recentStore.add(recent: term)
+        recentStore.add(query: .search(term))
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
@@ -125,7 +125,7 @@ SearchResultSectionControllerDelegate {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
         case .idle:
-            var recents = recentStore.recents as [ListDiffable]
+            var recents: [ListDiffable] = recentStore.recents.flatMap { SearchRecentViewModel(query: $0) }
             if recents.count > 0 {
                 recents.insert(recentHeaderKey, at: 0)
             }
@@ -151,7 +151,7 @@ SearchResultSectionControllerDelegate {
             return SearchRecentHeaderSectionController(delegate: self)
         } else if object is SearchRepoResult {
             return SearchResultSectionController(client: client, delegate: self)
-        } else if object is String {
+        } else if object is SearchRecentViewModel {
             return SearchRecentSectionController(delegate: self)
         }
 
@@ -220,10 +220,29 @@ SearchResultSectionControllerDelegate {
 
     // MARK: SearchRecentSectionControllerDelegate
 
-    func didSelect(recentSectionController: SearchRecentSectionController, text: String) {
+    func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        searchBar.resignFirstResponder()
+
+        if case let .search(text) = viewModel.query {
+            didSelectSearch(text: text)
+        } else if case let .recentlyViewed(repo) = viewModel.query {
+            didSelectRepo(repo: repo)
+        }
+    }
+
+    private func didSelectSearch(text: String) {
         searchBar.setShowsCancelButton(true, animated: false)
         searchBar.text = text
         search(term: text)
+    }
+
+    private func didSelectRepo(repo: RepositoryDetails) {
+        recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
+
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        let navigation = UINavigationController(rootViewController: repoViewController)
+        showDetailViewController(navigation, sender: nil)
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate
@@ -259,12 +278,14 @@ SearchResultSectionControllerDelegate {
 
     // MARK: SearchResultSectionControllerDelegate
 
-    func didSelect(sectionController: SearchResultSectionController) {
+    func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
+        recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
         searchBar.resignFirstResponder()
     }
 
-    func didDelete(recentSectionController: SearchRecentSectionController, text: String) {
-        recentStore.remove(recent: text)
+    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        recentStore.remove(query: viewModel.query)
         update(animated: true)
     }
 
@@ -275,5 +296,4 @@ SearchResultSectionControllerDelegate {
             !term.isEmpty else { return nil }
         return term
     }
-
 }
