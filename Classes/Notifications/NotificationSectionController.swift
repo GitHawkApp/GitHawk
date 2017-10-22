@@ -43,20 +43,19 @@ SwipeCollectionViewCellDelegate {
             let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? NotificationCell
             else { fatalError("Missing object, cell missing, or incorrect type") }
 
-        if NotificationClient.readOnOpen() {
-            cell.isRead = true
-            client.markNotificationRead(id: object.id, isOpen: true)
-        }
-
         switch object.identifier {
         case .hash(let hash):
+            markReadIfNeeded(cell)
             viewController?.presentCommit(owner: object.owner, repo: object.repo, hash: hash)
         case .number(let number):
             let model = IssueDetailsModel(owner: object.owner, repo: object.repo, number: number)
             let controller = IssuesViewController(
                 client: client.githubClient,
                 model: model,
-                scrollToBottom: true
+                scrollToBottom: true,
+                issueDownloaded: { [weak self] in
+                    self?.markReadIfNeeded(cell)
+                }
             )
             let navigation = UINavigationController(rootViewController: controller)
             viewController?.showDetailViewController(navigation, sender: nil)
@@ -64,6 +63,14 @@ SwipeCollectionViewCellDelegate {
     }
 
     // MARK: Private API
+
+    private func markReadIfNeeded(_ cell: NotificationCell) {
+        guard let object = object else { fatalError("Should have an object") }
+        if NotificationClient.readOnOpen() {
+            cell.isRead = true
+            client.markNotificationRead(id: object.id, isOpen: true)
+        }
+    }
 
     func markRead() {
         guard let object = object else { fatalError("Should have an object") }

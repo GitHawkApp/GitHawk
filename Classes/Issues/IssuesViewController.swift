@@ -49,6 +49,7 @@ IssueCommentSectionControllerDelegate {
 
             // hack required to get textInputBar.contentView + textView laid out correctly
             self.textInputbar.layoutIfNeeded()
+            issueDownloaded?()
         }
     }
     private var sentComments = [ListDiffable]()
@@ -56,15 +57,18 @@ IssueCommentSectionControllerDelegate {
     // set to optimistically change the open/closed status
     // clear when refreshing or on request failure
     private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
+    private let issueDownloaded: (() -> Void)?
 
     init(
         client: GithubClient,
         model: IssueDetailsModel,
-        scrollToBottom: Bool = false
+        scrollToBottom: Bool = false,
+        issueDownloaded: (() -> Void)? = nil
         ) {
         self.client = client
         self.model = model
         self.addCommentClient = AddCommentClient(client: client)
+        self.issueDownloaded = issueDownloaded
 
         // trick into thinking already scrolled to bottom after load
         self.hasScrolledToBottom = !scrollToBottom
