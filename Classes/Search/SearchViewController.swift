@@ -24,14 +24,21 @@ SearchResultSectionControllerDelegate {
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
     private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
     private let recentStore = SearchRecentStore()
+    private let debouncer = Debouncer()
 
     enum State {
         case idle
-        case loading(Cancellable)
+        case loading(Cancellable?)
         case results([ListDiffable])
         case error
     }
-    private var state: State = .idle
+    private var state: State = .idle {
+        willSet {
+            if case let .loading(request) = state {
+                request?.cancel()
+            }
+        }
+    }
 
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
@@ -91,6 +98,8 @@ SearchResultSectionControllerDelegate {
 
     private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
+        case let .error(error) where isCancellationError(error):
+            self.state = .loading(nil)
         case .error:
             self.state = .error
         case .success(_, let results):
@@ -100,15 +109,15 @@ SearchResultSectionControllerDelegate {
     }
 
     func search(term: String) {
-        recentStore.add(recent: term)
-
-        update(animated: false)
+        recentStore.add(query: .search(term))
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: true)
         }
         state = .loading(request)
+
+        update(animated: false)
     }
 
     // MARK: ListAdapterDataSource
@@ -116,7 +125,7 @@ SearchResultSectionControllerDelegate {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
         case .idle:
-            var recents = recentStore.recents as [ListDiffable]
+            var recents: [ListDiffable] = recentStore.recents.flatMap { SearchRecentViewModel(query: $0) }
             if recents.count > 0 {
                 recents.insert(recentHeaderKey, at: 0)
             }
@@ -142,7 +151,7 @@ SearchResultSectionControllerDelegate {
             return SearchRecentHeaderSectionController(delegate: self)
         } else if object is SearchRepoResult {
             return SearchResultSectionController(client: client, delegate: self)
-        } else if object is String {
+        } else if object is SearchRecentViewModel {
             return SearchRecentSectionController(delegate: self)
         }
 
@@ -169,11 +178,17 @@ SearchResultSectionControllerDelegate {
     // MARK: UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            term.isEmpty else { return }
-        
-        state = .idle
-        update(animated: false)
+        guard let term = searchTerm(for: searchBar.text) else {
+            state = .idle
+            update(animated: false)
+            return
+        }
+
+        if case .loading = state {
+            recentStore.removeLast()
+        }
+
+        debouncer.action = { [weak self] in self?.search(term: term) }
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -182,16 +197,12 @@ SearchResultSectionControllerDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            !term.isEmpty else { return }
+
+        guard let term = searchTerm(for: searchBar.text) else { return }
         search(term: term)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if case let .loading(request) = state {
-            request.cancel()
-        }
-
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
         searchBar.resignFirstResponder()
@@ -209,10 +220,29 @@ SearchResultSectionControllerDelegate {
 
     // MARK: SearchRecentSectionControllerDelegate
 
-    func didSelect(recentSectionController: SearchRecentSectionController, text: String) {
+    func didSelect(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        searchBar.resignFirstResponder()
+
+        if case let .search(text) = viewModel.query {
+            didSelectSearch(text: text)
+        } else if case let .recentlyViewed(repo) = viewModel.query {
+            didSelectRepo(repo: repo)
+        }
+    }
+
+    private func didSelectSearch(text: String) {
         searchBar.setShowsCancelButton(true, animated: false)
         searchBar.text = text
         search(term: text)
+    }
+
+    private func didSelectRepo(repo: RepositoryDetails) {
+        recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
+
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        let navigation = UINavigationController(rootViewController: repoViewController)
+        showDetailViewController(navigation, sender: nil)
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate
@@ -248,13 +278,22 @@ SearchResultSectionControllerDelegate {
 
     // MARK: SearchResultSectionControllerDelegate
 
-    func didSelect(sectionController: SearchResultSectionController) {
+    func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
+        recentStore.add(query: .recentlyViewed(repo))
+        update(animated: false)
         searchBar.resignFirstResponder()
     }
 
-    func didDelete(recentSectionController: SearchRecentSectionController, text: String) {
-        recentStore.remove(recent: text)
+    func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
+        recentStore.remove(query: viewModel.query)
         update(animated: true)
     }
-    
+
+    // MARK: Private API
+
+    private func searchTerm(for searchBarText: String?) -> String? {
+        guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !term.isEmpty else { return nil }
+        return term
+    }
 }
