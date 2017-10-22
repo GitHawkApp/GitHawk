@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Freetime
 
 private let viewer = "rnystrom"
 

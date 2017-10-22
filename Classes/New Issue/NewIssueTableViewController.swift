@@ -171,9 +171,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             getMarkdownBlock: getMarkdownBlock,
             repo: repo,
             owner: owner,
-            addBorder: true
+            addBorder: true,
+            supportsImageUpload: true
         )
         textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }
     

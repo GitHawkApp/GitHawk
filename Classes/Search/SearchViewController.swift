@@ -52,6 +52,11 @@ SearchResultSectionControllerDelegate {
     init(client: GithubClient) {
         self.client = client
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default
+            .addObserver(searchBar,
+                         selector: #selector(UISearchBar.resignFirstResponder),
+                         name: .UIKeyboardWillHide,
+                         object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
