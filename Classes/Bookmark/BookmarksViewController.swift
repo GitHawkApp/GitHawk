@@ -45,7 +45,7 @@ TabNavRootViewControllerType {
         tableView.tableHeaderView = searchBar
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Clear All", comment: ""),
+            title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
             style: .plain,
             target: self,
             action: #selector(BookmarksViewController.onClearAll(sender:))
@@ -57,10 +57,6 @@ TabNavRootViewControllerType {
         rz_smoothlyDeselectRows(tableView: tableView)
         tableView.reloadData()
         updateRightBarItem()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
     }
     
     // MARK: Private API
@@ -110,11 +106,11 @@ TabNavRootViewControllerType {
     // MARK: TabNavRootViewControllerType
     
     func didSingleTapTab() {
-        
+        tableView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func didDoubleTapTab() {
-        // TODO: Scroll to top for table view
+        searchBar.becomeFirstResponder()
     }
     
     // MARK: UITableViewDataSource
@@ -164,7 +160,6 @@ TabNavRootViewControllerType {
     // MARK: UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         let bookmark = getBookmarks()[indexPath.row]
         let destinationViewController: UIViewController
         

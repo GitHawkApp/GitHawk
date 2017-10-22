@@ -53,9 +53,10 @@ func newSearchRootViewController(client: GithubClient) -> UIViewController {
 func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     let title = NSLocalizedString("Bookmarks", comment: "")
     let controller = BookmarksViewController(client: client)
+    controller.makeBackBarItemEmpty()
     controller.title = title
     let nav = UINavigationController(rootViewController: controller)
-    nav.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 3)
+    nav.tabBarItem.image = UIImage(named: "bookmark")
     nav.tabBarItem.title = title
     return nav
 }
