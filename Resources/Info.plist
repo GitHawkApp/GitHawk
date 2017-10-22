@@ -41,6 +41,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This enables you to upload and post photos to GitHub.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
