@@ -19,7 +19,8 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
-AttributedStringViewIssueDelegate {
+AttributedStringViewIssueDelegate,
+EditCommentViewControllerDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -40,6 +41,9 @@ AttributedStringViewIssueDelegate {
 
     // set when sending a mutation and override the original issue query reactions
     private var reactionMutation: IssueCommentReactionViewModel? = nil
+
+    // set after succesfully editing the body
+    private var bodyEdits: (markdown: String, models: [ListDiffable])? = nil
 
     init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
         self.model = model
@@ -96,29 +100,43 @@ AttributedStringViewIssueDelegate {
         }
     }
 
-    func edit(sender: UIView) -> UIAlertAction? {
+    func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
-        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.object?.rawMarkdown,
-                let owner = self?.model.owner,
-                let repo = self?.model.repo
+        return UIAlertAction(title: NSLocalizedString("Edit Comment", comment: ""), style: .default, handler: { [weak self] _ in
+            guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
+                let issueModel = self?.model,
+                let client = self?.client,
+                let commentID = self?.object?.number,
+                let isRoot = self?.object?.isRoot
                 else { return }
-            let edit = EditCommentViewController(markdown: markdown, owner: owner, repo: repo)
+            let edit = EditCommentViewController(
+                client: client,
+                markdown: markdown,
+                issueModel: issueModel,
+                commentID: commentID,
+                isRoot: isRoot
+            )
+            edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
+            nav.modalPresentationStyle = .formSheet
             self?.viewController?.present(nav, animated: true, completion: nil)
         })
     }
 
-    @discardableResult
-    private func uncollapse() -> Bool {
-        guard collapsed else { return false }
-        collapsed = false
+    private func clearCollapseCells() {
         // clear any collapse state before updating so we don't have a dangling overlay
         for cell in collectionContext?.visibleCells(for: self) ?? [] {
             if let cell = cell as? CollapsibleCell {
                 cell.setCollapse(visible: false)
             }
         }
+    }
+
+    @discardableResult
+    private func uncollapse() -> Bool {
+        guard collapsed else { return false }
+        collapsed = false
+        clearCollapseCells()
         update(animated: true)
         return true
     }
@@ -176,7 +194,8 @@ AttributedStringViewIssueDelegate {
         guard !hasBeenDeleted else { return [] }
         
         var bodies = [ListDiffable]()
-        for body in object.bodyModels {
+        let bodyModels = bodyEdits?.models ?? object.bodyModels
+        for body in bodyModels {
             bodies.append(body)
             if collapsed && body === object.collapse?.model {
                 break
@@ -282,6 +301,7 @@ AttributedStringViewIssueDelegate {
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
+            editAction(),
             deleteAction(),
             AlertAction.cancel()
         ])
@@ -318,6 +338,24 @@ AttributedStringViewIssueDelegate {
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
         let controller = IssuesViewController(client: client, model: issue)
         viewController?.show(controller, sender: nil)
+    }
+
+    // MARK: EditCommentViewControllerDelegate
+
+    func didEditComment(viewController: EditCommentViewController, markdown: String) {
+        viewController.dismiss(animated: true)
+
+        guard let width = collectionContext?.containerSize.width else { return }
+        let options = commentModelOptions(owner: model.owner, repo: model.repo)
+        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
+        bodyEdits = (markdown, bodyModels)
+        collapsed = false
+        clearCollapseCells()
+        update(animated: true)
+    }
+
+    func didCancel(viewController: EditCommentViewController) {
+        viewController.dismiss(animated: true)
     }
 
 }

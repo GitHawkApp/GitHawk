@@ -10,9 +10,7 @@ import Foundation
 
 struct ShortcutHandler {
 
-    private struct Constants {
-        static let searchViewControllerIndex = 1
-    }
+    static private let searchViewControllerIndex = 1
 
     private enum Items: String {
         case search
@@ -29,7 +27,7 @@ struct ShortcutHandler {
         guard let itemType = Items(rawValue: item.type) else { return false }
         switch itemType {
         case .search:
-            navigationManager.selectViewController(atIndex: Constants.searchViewControllerIndex)
+            navigationManager.selectViewController(atIndex: searchViewControllerIndex)
             return true
         case .switchAccount:
             if let index = item.userInfo?["sessionIndex"] as? Int {
@@ -46,7 +44,7 @@ struct ShortcutHandler {
         // Search
         let searchIcon = UIApplicationShortcutIcon(templateImageName: "search")
         let searchItem = UIApplicationShortcutItem(type: Items.search.rawValue,
-                                                   localizedTitle: NSLocalizedString("Search", comment: ""),
+                                                   localizedTitle: Constants.Strings.search,
                                                    localizedSubtitle: nil,
                                                    icon: searchIcon,
                                                    userInfo: nil)

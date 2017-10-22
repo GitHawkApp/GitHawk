@@ -17,6 +17,16 @@ final class RepositoryCodeBlobViewController: UIViewController {
     private let textView = UITextView()
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
+    private var sharingPayload: Any?
+    private lazy var sharingButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
+        barButtonItem.isEnabled = false
+        
+        return barButtonItem
+    }()
 
     init(client: GithubClient, repo: RepositoryDetails, path: String) {
         self.client = client
@@ -56,6 +66,8 @@ final class RepositoryCodeBlobViewController: UIViewController {
             right: Styles.Sizes.columnSpacing
         )
         scrollView.addSubview(textView)
+        
+        navigationItem.rightBarButtonItem = sharingButton
 
         fetch()
         feedRefresh.beginRefreshing()
@@ -69,10 +81,24 @@ final class RepositoryCodeBlobViewController: UIViewController {
     }
 
     // MARK: Private API
+    
+    func didFetchPayload(_ payload: Any) {
+        sharingPayload = payload
+        sharingButton.isEnabled = true
+    }
 
     @objc
     func onRefresh() {
         fetch()
+    }
+    
+    @objc
+    func onShare(sender: UIBarButtonItem) {
+        guard let payload = sharingPayload else { return }
+        let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
+        activityController.popoverPresentationController?.barButtonItem = sender
+        
+        present(activityController, animated: true)
     }
 
     func fetch() {
@@ -99,6 +125,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     func handle(text: String) {
         emptyView.isHidden = true
+        didFetchPayload(text)
 
         textView.text = text
         let max = CGFloat.greatestFiniteMagnitude

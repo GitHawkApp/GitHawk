@@ -60,12 +60,6 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         // Set title field delegate so return moves to next field
         titleTextField.delegate = self
         
-        // Add borders to imitate UITableView grouped design
-        titleTextField.superview?.addBorder(.bottom)
-        titleTextField.superview?.addBorder(.top)
-        bodyTextField.superview?.addBorder(.bottom)
-        bodyTextField.superview?.addBorder(.top)
-        
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
         
@@ -87,13 +81,6 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
     }
     
     // MARK: Navigation Bar
-    
-    /// Sets the right bar button item to have a spinning activity indicator
-    private func setRightBarItemSpinning() {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activity.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
-    }
     
     /// Sets the right bar button item to have a checkmark, enabling the user to upload the image
     private func setRightBarItemIdle() {

@@ -1,0 +1,6 @@
+framework module FlatCache {
+  umbrella header "FlatCache-umbrella.h"
+
+  export *
+  module * { export * }
+}
