@@ -353,7 +353,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
 
         let localModel = IssueStatusModel(
             status: close ? .closed : .open,
@@ -389,7 +389,7 @@ IssueCommentSectionControllerDelegate {
     }
     
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
         
         let localModel = IssueStatusModel(
             status: currentStatus.status,
