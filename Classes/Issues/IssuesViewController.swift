@@ -153,12 +153,20 @@ IssueCommentSectionControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
+
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(activityName: "viewIssue", activityTitle:
-            issueTitle, url: externalURL)
+        feed.viewDidAppear(animated)
+        let informator = HandoffInformator(
+            activityName: "viewIssue",
+            activityTitle: issueTitle,
+            url: externalURL
+        )
         setupUserActivity(with: informator)
     }
     

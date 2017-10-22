@@ -70,8 +70,12 @@ final class Feed: NSObject, UIScrollViewDelegate {
         if collectionView.superview == nil {
             view.addSubview(collectionView)
         }
+    }
 
-        feedRefresh.beginRefreshing()
+    func viewDidAppear(_ animated: Bool) {
+        if status == .loading {
+            feedRefresh.beginRefreshing()
+        }
     }
 
     func viewWillLayoutSubviews(view: UIView) {
