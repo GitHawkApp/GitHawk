@@ -34,7 +34,10 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
             make.centerY.equalTo(contentView)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SearchBarCell.willHideKeyboard), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(searchBar,
+                                               selector: #selector(SearchBarCell.willHideKeyboard),
+                                               name: .UIKeyboardWillHide,
+                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
