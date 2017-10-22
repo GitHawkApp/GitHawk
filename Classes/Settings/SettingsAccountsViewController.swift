@@ -18,6 +18,11 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         }
     }
     private var userSessions = [GithubUserSession]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = NSLocalizedString("Accounts", comment: "")
+    }
 
     // MARK: Private API
 
