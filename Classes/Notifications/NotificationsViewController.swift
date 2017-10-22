@@ -59,6 +59,8 @@ TabNavRootViewControllerType {
         resetRightBarItem()
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
+
+        setupTapToDismissKeyboard()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +74,17 @@ TabNavRootViewControllerType {
     }
 
     // MARK: Private API
+
+    func setupTapToDismissKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard(_:)))
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard(_ sender: UIGestureRecognizer) {
+        view.endEditing(true)
+    }
 
     func resetRightBarItem() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
