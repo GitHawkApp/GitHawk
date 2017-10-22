@@ -23,7 +23,7 @@ extension NotificationType {
         case .issue, .commit, .repo:
             return NSLocalizedString(self.rawValue, comment: "")
         case .pullRequest:
-            return NSLocalizedString("Pull request", comment: "")
+            return Constants.Strings.pullRequest
         }
     }
 }
