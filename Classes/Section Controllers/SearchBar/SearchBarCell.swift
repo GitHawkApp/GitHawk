@@ -24,7 +24,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
         backgroundColor = .white
 
-        searchBar.returnKeyType = .done
+        searchBar.returnKeyType = .search
         searchBar.enablesReturnKeyAutomatically = false
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
