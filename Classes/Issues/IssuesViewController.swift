@@ -120,7 +120,8 @@ IssueCommentSectionControllerDelegate {
             getMarkdownBlock: getMarkdownBlock,
             repo: model.repo,
             owner: model.owner,
-            addBorder: false
+            addBorder: false,
+            supportsImageUpload: false
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear

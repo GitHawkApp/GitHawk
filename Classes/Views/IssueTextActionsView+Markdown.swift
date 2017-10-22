@@ -15,9 +15,10 @@ extension IssueTextActionsView {
         getMarkdownBlock: @escaping () -> (String),
         repo: String,
         owner: String,
-        addBorder: Bool
+        addBorder: Bool,
+        supportsImageUpload: Bool
         ) -> IssueTextActionsView {
-        let operations: [IssueTextActionOperation] = [
+        var operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak viewController] in
                 let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
                 viewController?.navigationController?.pushViewController(controller, animated: true)
@@ -30,24 +31,12 @@ extension IssueTextActionsView {
             IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
             IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
             IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
-            IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .execute({ [weak viewController] in
-                guard let strongVc = viewController else { return }
-                
-                let imagePicker = UIImagePickerController()
-                imagePicker.delegate = strongVc as? (UINavigationControllerDelegate & UIImagePickerControllerDelegate)
-                imagePicker.modalPresentationStyle = .popover
-                imagePicker.popoverPresentationController?.canOverlapSourceViewRect = true
-                
-                let sourceFrame = viewController?.view.frame ?? .zero
-                let sourceRect = CGRect(origin: CGPoint(x: sourceFrame.midX, y: sourceFrame.minY), size: CGSize(width: 1, height: 1))
-                imagePicker.popoverPresentationController?.sourceView = viewController?.view
-                imagePicker.popoverPresentationController?.sourceRect = sourceRect
-                imagePicker.popoverPresentationController?.permittedArrowDirections = .up
-                
-                strongVc.present(imagePicker, animated: true, completion: nil)
-            }))
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))"))
         ]
+        
+        if supportsImageUpload {
+            operations.append(IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .uploadImage))
+        }
         
         let actions = IssueTextActionsView(operations: operations)
         actions.backgroundColor = Styles.Colors.Gray.lighter.color

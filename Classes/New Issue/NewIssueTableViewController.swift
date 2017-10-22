@@ -42,11 +42,7 @@ protocol NewIssueTableViewControllerDelegate: class {
     func didDismissAfterCreatingIssue(model: IssueDetailsModel)
 }
 
-final class NewIssueTableViewController: UITableViewController,
-    UITextFieldDelegate,
-    UINavigationControllerDelegate,
-    UIImagePickerControllerDelegate,
-    ImageUploadDelegate {
+final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
 
     weak var delegate: NewIssueTableViewControllerDelegate? = nil
 
@@ -181,9 +177,11 @@ final class NewIssueTableViewController: UITableViewController,
             getMarkdownBlock: getMarkdownBlock,
             repo: repo,
             owner: owner,
-            addBorder: true
+            addBorder: true,
+            supportsImageUpload: true
         )
         textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }
     
@@ -200,27 +198,6 @@ final class NewIssueTableViewController: UITableViewController,
     /// Called when editing changed on the title field, enable/disable submit button based on title text
     @IBAction func titleFieldEditingChanged(_ sender: Any) {
         navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
-    }
-    
-    // MARK: UIImagePickerControllerDelegate
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        
-        let username = client.sessionManager.focusedUserSession?.username
-        guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
-        
-        picker.pushViewController(uploadController, animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: ImageUploadDelegate
-    
-    func imageUploaded(link: String, altText: String) {
-        bodyField.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: true)
     }
     
 }

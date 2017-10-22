@@ -15,7 +15,7 @@ extension UIImage {
     /// Process is moved to a background thread in order to prevent UI blocking.
     ///
     /// Compression is a value between 0.0 and 1.0. Lower is smaller file size but worse quality.
-    func compressAndEncode(compression: CGFloat = 0.2, completion: @escaping (Result<String>) -> Void) {
+    func compressAndEncode(compression: CGFloat = 0.65, completion: @escaping (Result<String>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             let data = UIImageJPEGRepresentation(self, compression)
             

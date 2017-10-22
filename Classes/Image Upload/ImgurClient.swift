@@ -16,8 +16,8 @@ final class ImgurClient {
         case missingLink
     }
     
-    static let hostpath = "https://api.imgur.com/3/"
-    static let headers: HTTPHeaders = ["Authorization": "Client-ID \(ImgurAPI.clientID)"]
+    private static let hostpath = "https://api.imgur.com/3/"
+    private static let headers: HTTPHeaders = ["Authorization": "Client-ID \(ImgurAPI.clientID)"]
     
     func request(_ path: String,
                  method: HTTPMethod = .get,
@@ -38,7 +38,10 @@ final class ImgurClient {
                           headers: headers ?? ImgurClient.headers).responseJSON(completionHandler: completion)
     }
     
-    func canUploadImage(completion: @escaping (Bool) -> Void) {
+    func canUploadImage(
+        completion: @escaping (Bool) -> Void
+        ) {
+        
         request("credits") { response in
             guard let dict = response.value as? [String: Any], let data = dict["data"] as? [String: Any] else {
                 completion(false)
@@ -56,7 +59,13 @@ final class ImgurClient {
         }
     }
     
-    func uploadImage(base64Image: String, name: String, title: String, description: String, completion: @escaping (Result<String>) -> Void) {
+    func uploadImage(
+        base64Image: String,
+        name: String,
+        title: String,
+        description: String,
+        completion: @escaping (Result<String>) -> Void
+        ) {
         let params = [
             "image": base64Image,
             "type": "base64",

@@ -128,7 +128,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
             AlertAction.discard { _ in
                 dismissBlock()
             }
-            ])
+        ])
         
         present(alert, animated: true, completion: nil)
     }
@@ -159,25 +159,24 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
             }
             
             // Ensure the upload step is on the background thread
-            DispatchQueue.global(qos: .userInitiated).async {
-                self?.client.uploadImage(
-                    base64Image: compressionData,
-                    name: name,
-                    title: self?.titleText ?? "",
-                    description: self?.descriptionText ?? "") { [weak self] result in
-                        
-                        // UI Work, so ensure it's on the main thread
-                        DispatchQueue.main.async {
-                            switch result {
-                            case .error:
-                                ToastManager.showGenericError()
-                                self?.setRightBarItemIdle()
-                            case .success(let link):
-                                self?.delegate?.imageUploaded(link: link, altText: name)
-                                self?.dismiss(animated: true, completion: nil)
-                            }
-                        }
+            self?.client.uploadImage(
+                base64Image: compressionData,
+                name: name,
+                title: self?.titleText ?? "",
+                description: self?.descriptionText ?? "") { [weak self] result in
+                    
+                switch result {
+                case .error:
+                    print("error")
+                    ToastManager.showGenericError()
+                    self?.setRightBarItemIdle()
+                    
+                case .success(let link):
+                    print("success")
+                    self?.delegate?.imageUploaded(link: link, altText: name)
+                    self?.dismiss(animated: true, completion: nil)
                 }
+                    
             }
         }
     }
