@@ -293,7 +293,9 @@ IssueCommentSectionControllerDelegate {
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
         
-        let alert = UIAlertController.configured(title: issueType, preferredStyle: .actionSheet)
+        let alertTitle = "\(issueType) #\(model.number)"
+        
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
