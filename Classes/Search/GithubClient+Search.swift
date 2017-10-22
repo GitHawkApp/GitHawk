@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Apollo
 
 extension GithubClient {
     
@@ -14,12 +15,18 @@ extension GithubClient {
         case error
         case success(String?, [SearchRepoResult])
     }
-    
-    func search(query: String, before: String? = nil, containerWidth: CGFloat, completion: @escaping (SearchResultType) -> ()) {
+
+    @discardableResult
+    func search(
+        query: String,
+        before: String? = nil,
+        containerWidth: CGFloat,
+        completion: @escaping (SearchResultType) -> ()
+        ) -> Cancellable {
         let query = SearchReposQuery(search: query, before: before)
-        
-        fetch(query: query) { (result, error) in
-            guard error == nil, result?.errors == nil else {
+
+        return fetch(query: query) { (result, error) in
+            guard errorIsNilOrCancelled(error), result?.errors == nil else {
                 ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
                 completion(.error)
                 return
@@ -63,4 +70,9 @@ extension GithubClient {
         }
     }
     
+}
+
+private func errorIsNilOrCancelled(_ error: Error?) -> Bool {
+    guard let error = error else { return true }
+    return (error as NSError).code == -999
 }

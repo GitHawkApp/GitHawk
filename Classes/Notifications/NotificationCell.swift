@@ -28,7 +28,7 @@ final class NotificationCell: SwipeSelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         titleLabel.numberOfLines = 1
         titleLabel.font = Styles.Fonts.title
@@ -72,6 +72,11 @@ final class NotificationCell: SwipeSelectableCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API

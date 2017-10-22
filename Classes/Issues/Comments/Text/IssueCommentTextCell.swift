@@ -19,7 +19,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
         contentView.clipsToBounds = true
 
         contentView.addSubview(textView)
@@ -31,6 +31,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
         textView.reposition(width: contentView.bounds.width)
     }

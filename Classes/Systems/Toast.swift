@@ -174,14 +174,10 @@ private func rubberBandDistance(offset: CGFloat, dimension: CGFloat) -> CGFloat 
     return offset < 0 ? -result : result
 }
 
-private func anchor(view: UIView, viewController: UIViewController?) -> CGPoint {
-    guard let viewController = viewController,
-        let referenceView = viewController.view
-        else { return .zero }
-
+private func anchor(view: UIView, referenceView: UIView) -> CGPoint {
     let safeBottom: CGFloat
     if #available(iOS 11.0, *) {
-        safeBottom = referenceView.safeAreaInsets.bottom + viewController.additionalSafeAreaInsets.bottom
+        safeBottom = referenceView.safeAreaInsets.bottom
     } else {
         safeBottom = 0
     }
@@ -201,28 +197,24 @@ final class ToastManager {
         let animator: UIDynamicAnimator
         let springBehavior: UIAttachmentBehavior
         let configuration: ToastViewConfiguration
-        private weak var viewController: UIViewController? = nil
 
         private var timer: Timer? = nil
 
-        init?(config: ToastViewConfiguration, viewController: UIViewController) {
-            guard let referenceView = viewController.view else { return nil }
-
-            self.viewController = viewController
+        init?(config: ToastViewConfiguration, in baseView: UIView) {
             configuration = config
 
             view = ToastView(configuration: config)
             view.frame = CGRect(origin: .zero, size: view.contentSize())
-            referenceView.addSubview(view)
+            baseView.addSubview(view)
 
-            animator = UIDynamicAnimator(referenceView: referenceView)
+            animator = UIDynamicAnimator(referenceView: baseView)
 
-            let initAnchor = anchor(view: view, viewController: viewController)
+            let initAnchor = anchor(view: view, referenceView: baseView)
 
             // position off screen so it snaps in. must happen before setting up spring
             view.center = initAnchor.applying(CGAffineTransform(
                 translationX: 0,
-                y: referenceView.bounds.height - initAnchor.y + 500
+                y: baseView.bounds.height - initAnchor.y + 500
             ))
 
             springBehavior = UIAttachmentBehavior(item: view, attachedToAnchor: initAnchor)
@@ -250,6 +242,7 @@ final class ToastManager {
         }
 
         func dismiss() {
+            invalidateTimer()
             animator.removeBehavior(springBehavior)
 
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
@@ -261,8 +254,14 @@ final class ToastManager {
         }
 
         func recenter() {
+            // UIDynamics will throw if adding the behavior back when the view has already been removed
+            guard view.superview != nil,
+                let referenceView = animator.referenceView
+                else { return }
+
+            // hack to work around UI bug where behavior will permanently oscillate
             animator.removeBehavior(springBehavior)
-            springBehavior.anchorPoint = anchor(view: view, viewController: viewController)
+            springBehavior.anchorPoint = anchor(view: view, referenceView: referenceView)
             animator.addBehavior(springBehavior)
         }
 
@@ -294,15 +293,15 @@ final class ToastManager {
     public static let shared = ToastManager()
 
     public func show(
-        viewController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController,
+        in view: UIView? = UIApplication.shared.keyWindow,
         config: ToastViewConfiguration
         ) {
-        guard let viewController = viewController else { return }
+        guard let baseView = view else { return }
 
         // get rid of any view if currently displaying
         toast?.dismiss()
 
-        toast = Toast(config: config, viewController: viewController)
+        toast = Toast(config: config, in: baseView)
         toast?.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(ToastManager.onPan(gesture:))))
         toast?.startTimer()
     }
@@ -347,7 +346,9 @@ final class ToastManager {
                     var center = toast.view.center
                     center.y = finalY
                     toast.view.center = center
-                })
+                }) { _ in
+                    toast.view.removeFromSuperview()
+                }
             } else {
                 toast.startTimer()
                 toast.animator.addBehavior(toast.springBehavior)
@@ -361,3 +362,5 @@ final class ToastManager {
     }
 
 }
+
+

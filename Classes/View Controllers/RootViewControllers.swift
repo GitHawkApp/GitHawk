@@ -44,7 +44,7 @@ func newNotificationsRootViewController(client: GithubClient) -> UIViewControlle
 func newSearchRootViewController(client: GithubClient) -> UIViewController {
     let controller = SearchViewController(client: client)
     let nav = UINavigationController(rootViewController: controller)
-    nav.tabBarItem.title = NSLocalizedString("Search", comment: "")
+    nav.tabBarItem.title = Constants.Strings.search
     nav.tabBarItem.image = UIImage(named: "tab-search")
     nav.tabBarItem.selectedImage = UIImage(named: "tab-search-selected")
     return nav

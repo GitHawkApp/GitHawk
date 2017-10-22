@@ -52,6 +52,7 @@ final class SearchNoResultsCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         
         let width: CGFloat = 30
         let height: CGFloat = 12

@@ -39,6 +39,11 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {

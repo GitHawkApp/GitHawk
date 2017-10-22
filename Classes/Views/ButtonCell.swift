@@ -20,7 +20,7 @@ final class ButtonCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         topSeparator = contentView.addBorder(.top)
         bottomSeparator = contentView.addBorder(.bottom)

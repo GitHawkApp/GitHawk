@@ -28,7 +28,10 @@ NewIssueTableViewControllerDelegate {
         if repo.hasIssuesEnabled {
             controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
         }
-        controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests))
+        controllers += [
+            RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
+            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true),
+        ]
         self.controllers = controllers
 
         super.init(nibName: nil, bundle: nil)

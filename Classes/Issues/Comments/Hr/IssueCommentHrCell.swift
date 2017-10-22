@@ -24,7 +24,7 @@ final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         hr.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(hr)
@@ -35,6 +35,11 @@ final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: ListBindable

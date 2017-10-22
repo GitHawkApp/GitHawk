@@ -94,6 +94,9 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
+        // override Feed bg color setting
+        view.backgroundColor = Styles.Colors.background
+
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
@@ -129,7 +132,7 @@ IssueCommentSectionControllerDelegate {
         contentView.addSubview(actions)
         let views = ["actions": actions]
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]-4-|",
+            withVisualFormat: "V:|[actions(30)]-4@999-|",
             options: [],
             metrics: nil,
             views: views
@@ -508,7 +511,8 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             threadState: .single,
             viewerCanUpdate: viewerCanUpdate,
-            viewerCanDelete: viewerCanDelete
+            viewerCanDelete: viewerCanDelete,
+            isRoot: false
             )
             else { return }
         sentComments.append(comment)

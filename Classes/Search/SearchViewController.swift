@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import Apollo
 
 class SearchViewController: UIViewController,
     ListAdapterDataSource,
@@ -26,7 +27,7 @@ SearchResultSectionControllerDelegate {
 
     enum State {
         case idle
-        case loading
+        case loading(Cancellable)
         case results([ListDiffable])
         case error
     }
@@ -53,12 +54,14 @@ SearchResultSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = Styles.Colors.background
+
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
         searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.placeholder = Constants.Strings.search
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
@@ -99,12 +102,13 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         recentStore.add(recent: term)
 
-        state = .loading
         update(animated: false)
 
-        client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+        let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
+            guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: true)
         }
+        state = .loading(request)
     }
 
     // MARK: ListAdapterDataSource
@@ -184,10 +188,14 @@ SearchResultSectionControllerDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if case let .loading(request) = state {
+            request.cancel()
+        }
+
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
         searchBar.resignFirstResponder()
-        
+
         state = .idle
         update(animated: false)
     }
@@ -242,6 +250,11 @@ SearchResultSectionControllerDelegate {
 
     func didSelect(sectionController: SearchResultSectionController) {
         searchBar.resignFirstResponder()
+    }
+
+    func didDelete(recentSectionController: SearchRecentSectionController, text: String) {
+        recentStore.remove(recent: text)
+        update(animated: true)
     }
     
 }

@@ -1,0 +1,9 @@
+query RepoFile($owner: String!, $name: String!, $branchAndPath: String!) {
+  repository(owner: $owner, name: $name) {
+    object(expression: $branchAndPath) {
+      ... on Blob {
+        text
+      }
+    }
+  }
+}
