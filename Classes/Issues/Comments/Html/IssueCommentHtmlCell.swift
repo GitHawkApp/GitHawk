@@ -21,37 +21,46 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
 
-    private static let htmlHead = [
-        "<!DOCTYPE html><html><head><style>",
-        "body{",
-        // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
-        // lint compiled style with http://csslint.net/
-        "font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;",
-        "color: #\(Styles.Colors.Gray.dark);",
-        "padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;",
-        "margin: 0;",
-        "}",
-        "b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}",
-        "i, em{font-style: italic;}",
-        "a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}",
-        "h1{font-size: \(Styles.Sizes.Text.h1);}",
-        "h2{font-size: \(Styles.Sizes.Text.h2);}",
-        "h3{font-size: \(Styles.Sizes.Text.h3);}",
-        "h4{font-size: \(Styles.Sizes.Text.h4);}",
-        "h5{font-size: \(Styles.Sizes.Text.h5);}",
-        "h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}",
-        "dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}",
-        "dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}",
-        "blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}",
-        "pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}",
-        "pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}",
-        "table{border-spacing: 0; border-collapse: collapse;}",
-        "th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}",
-        "th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}",
-        "img{max-width:100%; box-sizing: border-box;}",
-        "</style></head><body>",
-        ].joined(separator: "")
-    private static let htmlTail = "</body></html>"
+    private static let htmlHead = """
+    <!DOCTYPE html><html><head><style>
+    body{
+    // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
+    // lint compiled style with http://csslint.net/
+    font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;
+    color: #\(Styles.Colors.Gray.dark);
+    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;
+    margin: 0;
+    }
+    b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
+    i, em{font-style: italic;}
+    a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}
+    h1{font-size: \(Styles.Sizes.Text.h1);}
+    h2{font-size: \(Styles.Sizes.Text.h2);}
+    h3{font-size: \(Styles.Sizes.Text.h3);}
+    h4{font-size: \(Styles.Sizes.Text.h4);}
+    h5{font-size: \(Styles.Sizes.Text.h5);}
+    h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}
+    dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}
+    dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
+    blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
+    pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
+    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}
+    sub{font-family: -apple-system;}
+    table{border-spacing: 0; border-collapse: collapse;}
+    th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
+    th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
+    img{max-width:100%; box-sizing: border-box;}
+    </style>
+    </head><body>
+    """
+    private static let htmlTail = """
+    <script>
+        document.documentElement.style.webkitUserSelect='none';
+        document.documentElement.style.webkitTouchCallout='none';
+    </script>
+    </body>
+    </html>
+    """
 
     weak var delegate: IssueCommentHtmlCellDelegate? = nil
     weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate? = nil
