@@ -39,5 +39,6 @@ enum Constants {
         static let search = NSLocalizedString("Search", comment: "")
         static let delete = NSLocalizedString("Delete", comment: "")
         static let inbox = NSLocalizedString("Inbox", comment: "")
+        static let archives = NSLocalizedString("Archives", comment: "")
     }
 }

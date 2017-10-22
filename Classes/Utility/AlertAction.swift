@@ -114,8 +114,8 @@ struct AlertAction {
         let issueType = issue ? "Issue" : "Pull Request"
         
         let title = status == .open
-            ? NSLocalizedString("Close \(issueType)", comment: "")
-            : NSLocalizedString("Reopen \(issueType)", comment: "")
+            ? String(format: NSLocalizedString("Close %@", comment: ""), issueType)
+            : String(format: NSLocalizedString("Reopen %@", comment: ""), issueType)
         
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
@@ -124,8 +124,8 @@ struct AlertAction {
         let issueType = issue ? "Issue" : "Pull Request"
         
         let title = locked
-            ? NSLocalizedString("Unlock \(issueType)", comment: "")
-            : NSLocalizedString("Lock \(issueType)", comment: "")
+            ? String(format: NSLocalizedString("Unlock %@", comment: ""), issueType)
+            : String(format: NSLocalizedString("Lock %@", comment: ""), issueType)
         
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }

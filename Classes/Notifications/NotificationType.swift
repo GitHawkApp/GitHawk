@@ -19,8 +19,10 @@ extension NotificationType {
     
     var localizedString: String {
         switch self {
-        case .issue, .commit:
-            return NSLocalizedString(self.rawValue, comment: "")
+        case .issue:
+            return NSLocalizedString("Issue", comment: "")
+        case .commit:
+            return NSLocalizedString("Commit", comment: "")
         case .pullRequest:
             return NSLocalizedString("Pull request", comment: "")
         }
