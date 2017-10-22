@@ -63,6 +63,9 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
         
+        // Set the left button item to cancel
+        setLeftBarItem()
+        
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
             switch result {
@@ -85,18 +88,29 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
     /// Sets the right bar button item to have a checkmark, enabling the user to upload the image
     private func setRightBarItemIdle() {
         let item = UIBarButtonItem(
-            image: UIImage(named: "check"),
-            style: .plain,
+            title: Constants.Strings.upload,
+            style: .done,
             target: self,
-            action: #selector(didPressTick)
+            action: #selector(didPressUpload)
         )
         
-        item.tintColor = Styles.Colors.Green.medium.color
-        item.accessibilityLabel = NSLocalizedString("Upload", comment: "")
+        item.tintColor = Styles.Colors.Blue.medium.color
         navigationItem.rightBarButtonItem = item
     }
     
-    @IBAction func didPressClose() {
+    private func setLeftBarItem() {
+        let item = UIBarButtonItem(
+            title: Constants.Strings.cancel,
+            style: .plain,
+            target: self,
+            action: #selector(didPressCancel)
+        )
+        
+        item.tintColor = Styles.Colors.Blue.medium.color
+        navigationItem.leftBarButtonItem = item
+    }
+    
+    @IBAction func didPressCancel() {
         let dismissBlock = {
             self.dismiss(animated: true)
         }
@@ -120,7 +134,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func didPressTick() {
+    @IBAction func didPressUpload() {
         // Set the right bar item back to the spinner so they can't spam the button, and to indicate something is happening
         setRightBarItemSpinning()
         
