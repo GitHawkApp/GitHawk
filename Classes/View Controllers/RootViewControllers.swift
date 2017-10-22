@@ -50,7 +50,7 @@ func newSearchRootViewController(client: GithubClient) -> UIViewController {
 }
 
 func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
-    let title = NSLocalizedString("Bookmarks", comment: "")
+    let title = Constants.Strings.bookmarks
     let controller = BookmarksViewController(client: client)
     controller.makeBackBarItemEmpty()
     controller.title = title

@@ -42,10 +42,10 @@ struct ShortcutHandler {
         var items: [UIApplicationShortcutItem] = []
 
         // Search
-        let searchIcon = UIApplicationShortcutIcon(templateImageName: "search")
+        let searchIcon = UIApplicationShortcutIcon(templateImageName: Items.search.rawValue)
         let searchItem = UIApplicationShortcutItem(type: Items.search.rawValue,
                                                    localizedTitle: Constants.Strings.search,
-                                                   localizedSubtitle: nil,
+                                                   localizedSubtitle: NSLocalizedString("Search GitHub", comment: ""),
                                                    icon: searchIcon,
                                                    userInfo: nil)
         items.append(searchItem)
