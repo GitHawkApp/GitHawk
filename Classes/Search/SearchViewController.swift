@@ -61,7 +61,7 @@ SearchResultSectionControllerDelegate {
         adapter.dataSource = self
 
         searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString("Search", comment: "")
+        searchBar.placeholder = Constants.Strings.search
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
