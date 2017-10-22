@@ -37,7 +37,7 @@ TabNavRootViewControllerType {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString("\(Constants.Strings.search) \(Constants.Strings.bookmarks)", comment: "")
+        searchBar.placeholder = "\(Constants.Strings.search) \(Constants.Strings.bookmarks)" // Localization is done in the constants.
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
