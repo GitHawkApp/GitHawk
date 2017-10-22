@@ -24,10 +24,11 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
             let object = object else {
                 fatalError("Missing context or object")
         }
-        let height = ceil(object.title.textViewSize(width).height)
-                     + (Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing)
-                     + (object.labels.count > 0 ? RepositorySummaryCell.labelDotSize.height + Styles.Sizes.rowSpacing : 0)
-        return CGSize(width: width, height: height)
+        let height = object.title.textViewSize(width).height
+            + Styles.Fonts.secondary.lineHeight
+            + Styles.Sizes.rowSpacing
+            + (object.labels.count > 0 ? RepositorySummaryCell.labelDotSize.height + Styles.Sizes.rowSpacing : 0)
+        return CGSize(width: width, height: ceil(height))
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
