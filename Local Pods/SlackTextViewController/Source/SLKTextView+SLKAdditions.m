@@ -149,10 +149,7 @@
 }
 
 - (void)slk_setAttributedText:(NSAttributedString *)attributedText {
-    const UITextAutocorrectionType previousAutocorrectionType = self.autocorrectionType;
-    self.autocorrectionType = UITextAutocorrectionTypeNo;
     [self setAttributedText:attributedText];
-    self.autocorrectionType = previousAutocorrectionType;
 }
 
 - (void)slk_clearAllAttributesInRange:(NSRange)range
