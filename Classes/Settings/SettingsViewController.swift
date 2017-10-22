@@ -46,7 +46,7 @@ NewIssueTableViewControllerDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(SettingsViewController.updateBadge),
-            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            name: .UIApplicationDidBecomeActive,
             object: nil
         )
     }
@@ -60,28 +60,24 @@ NewIssueTableViewControllerDelegate {
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? SettingsAccountsViewController,
-            let client = self.client {
-            controller.client = client
-            controller.sessionManager = sessionManager
-        }
-    }
-
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        func deselectRow() { tableView.deselectRow(at: indexPath, animated: true) }
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
             onReviewAccess()
+        } else if cell === accountsCell {
+            deselectRow()
+            onAccounts()
         } else if cell === reportBugCell {
-            tableView.deselectRow(at: indexPath, animated: true)
+            deselectRow()
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
         } else if cell === signOutCell {
-            tableView.deselectRow(at: indexPath, animated: true)
+            deselectRow()
             onSignOut()
         }
     }
@@ -92,6 +88,16 @@ NewIssueTableViewControllerDelegate {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
             else { fatalError("Should always create GitHub issue URL") }
         presentSafari(url: url)
+    }
+    
+    func onAccounts() {
+        if let navigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "accountsNavigationController") as? UINavigationController,
+            let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
+            let client = self.client {
+            accountsController.client = client
+            accountsController.sessionManager = sessionManager
+            self.navigationController?.showDetailViewController(navigationController, sender: self)
+        }
     }
 
     func onReportBug() {
@@ -172,7 +178,7 @@ NewIssueTableViewControllerDelegate {
 
     @IBAction func onSettings(_ sender: Any) {
         guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url)
     }
 
     @IBAction func onMarkRead(_ sender: Any) {
