@@ -120,7 +120,8 @@ IssueCommentSectionControllerDelegate {
             getMarkdownBlock: getMarkdownBlock,
             repo: model.repo,
             owner: model.owner,
-            addBorder: false
+            addBorder: false,
+            supportsImageUpload: false
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
@@ -153,12 +154,20 @@ IssueCommentSectionControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
+
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(activityName: "viewIssue", activityTitle:
-            issueTitle, url: externalURL)
+        feed.viewDidAppear(animated)
+        let informator = HandoffInformator(
+            activityName: "viewIssue",
+            activityTitle: issueTitle,
+            url: externalURL
+        )
         setupUserActivity(with: informator)
     }
     
@@ -525,7 +534,8 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             threadState: .single,
             viewerCanUpdate: viewerCanUpdate,
-            viewerCanDelete: viewerCanDelete
+            viewerCanDelete: viewerCanDelete,
+            isRoot: false
             )
             else { return }
         sentComments.append(comment)

@@ -20,6 +20,7 @@ final class IssueCommentModel: ListDiffable {
     let rawMarkdown: String
     let viewerCanUpdate: Bool
     let viewerCanDelete: Bool
+    let isRoot: Bool
 
     enum ThreadState {
         case single
@@ -37,7 +38,8 @@ final class IssueCommentModel: ListDiffable {
         threadState: ThreadState,
         rawMarkdown: String,
         viewerCanUpdate: Bool,
-        viewerCanDelete: Bool
+        viewerCanDelete: Bool,
+        isRoot: Bool
         ) {
         self.id = id
         self.details = details
@@ -49,6 +51,7 @@ final class IssueCommentModel: ListDiffable {
         self.rawMarkdown = rawMarkdown
         self.viewerCanUpdate = viewerCanUpdate
         self.viewerCanDelete = viewerCanDelete
+        self.isRoot = isRoot
     }
 
     // MARK: ListDiffable

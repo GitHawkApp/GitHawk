@@ -4,6 +4,7 @@ query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size
       nodes {
         ...repoEventFields
         ...nodeFields
+        ...labelableFields
         title
         number
         state
@@ -22,6 +23,7 @@ query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $pag
       nodes {
         ...repoEventFields
         ...nodeFields
+        ...labelableFields
         title
         number
         state

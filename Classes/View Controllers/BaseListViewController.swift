@@ -36,7 +36,7 @@ LoadMoreSectionControllerDelegate {
     private weak var dataSource: BaseListViewControllerDataSource? = nil
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var models = [ListDiffable]()
+    private var _models = [ListDiffable]()
     private var page: PagingType? = nil
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
@@ -66,6 +66,11 @@ LoadMoreSectionControllerDelegate {
         rz_smoothlyDeselectRows(collectionView: feed.collectionView)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        feed.viewDidAppear(animated)
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
@@ -79,6 +84,15 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: Public API
 
+    var models: [ListDiffable] {
+        return _models
+    }
+
+    final func update(models: [ListDiffable], animated: Bool) {
+        self._models = models
+        self.feed.finishLoading(dismissRefresh: true, animated: animated)
+    }
+
     final func update(
         models: [ListDiffable],
         page: PagingType?,
@@ -87,15 +101,16 @@ LoadMoreSectionControllerDelegate {
         completion: (() -> ())? = nil
         ) {
         assert(Thread.isMainThread)
+
         if append {
-            self.models += models
+            self._models += models
         } else {
-            self.models = models
+            self._models = models
         }
 
         self.hasError = false
         self.page = page
-        feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        self.feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
     final func error(
@@ -118,7 +133,7 @@ LoadMoreSectionControllerDelegate {
         assert(Thread.isMainThread)
         guard let dataSource = self.dataSource else { return [] }
 
-        let objects = models
+        let objects = _models
         let hasNoObjects = objects.count == 0
 
         // short-circuit to display empty-error message using the emptyView(...) API

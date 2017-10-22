@@ -7,21 +7,30 @@
 //
 
 import Foundation
+import Apollo
 
 extension GithubClient {
     
     enum SearchResultType {
-        case error
+        case error(Error?)
         case success(String?, [SearchRepoResult])
     }
-    
-    func search(query: String, before: String? = nil, containerWidth: CGFloat, completion: @escaping (SearchResultType) -> ()) {
+
+    @discardableResult
+    func search(
+        query: String,
+        before: String? = nil,
+        containerWidth: CGFloat,
+        completion: @escaping (SearchResultType) -> ()
+        ) -> Cancellable {
         let query = SearchReposQuery(search: query, before: before)
-        
-        fetch(query: query) { (result, error) in
+
+        return fetch(query: query) { (result, error) in
             guard error == nil, result?.errors == nil else {
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-                completion(.error)
+                if !isCancellationError(error) {
+                    ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
+                }
+                completion(.error(error))
                 return
             }
             

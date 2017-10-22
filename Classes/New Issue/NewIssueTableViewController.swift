@@ -110,12 +110,6 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     
     // MARK: Private API
 
-    func setRightBarItemSpinning() {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activity.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
-    }
-
     func setRightBarItemIdle() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Submit", comment: ""),
@@ -146,7 +140,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                ToastManager.showGenericError(viewController: self)
+                ToastManager.showGenericError()
                 return
             }
 
@@ -177,9 +171,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             getMarkdownBlock: getMarkdownBlock,
             repo: repo,
             owner: owner,
-            addBorder: true
+            addBorder: true,
+            supportsImageUpload: true
         )
         textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }
     
