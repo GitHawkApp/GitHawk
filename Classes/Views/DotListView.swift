@@ -49,7 +49,7 @@ class DotListView: UIView, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { fatalError("Missing layout") }
-        let max = Int(bounds.width / layout.itemSize.height + layout.minimumLineSpacing)
+        let max = Int(bounds.width / (layout.itemSize.width + layout.minimumLineSpacing))
         return colors.count <= max ? colors.count : max
     }
     
