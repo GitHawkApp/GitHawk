@@ -14,11 +14,9 @@ final class NotificationSectionController: ListGenericSectionController<Notifica
 SwipeCollectionViewCellDelegate {
 
     private let client: NotificationClient
-    private let dataSource: NotificationsDataSource
 
-    init(client: NotificationClient, dataSource: NotificationsDataSource) {
+    init(client: NotificationClient) {
         self.client = client
-        self.dataSource = dataSource
         super.init()
     }
 
@@ -70,14 +68,11 @@ SwipeCollectionViewCellDelegate {
     func markRead() {
         guard let object = object else { fatalError("Should have an object") }
         client.markNotificationRead(id: object.id, isOpen: false)
-        collectionContext?.performBatch(animated: true, updates: { context in
-            context.reload(self)
-        })
     }
 
     var considerObjectRead: Bool {
         guard let object = object else { fatalError("Should have an object") }
-        return dataSource.isRead(notification: object)
+        return object.read || client.notificationOpened(id: object.id)
     }
 
     // MARK: SwipeCollectionViewCellDelegate

@@ -89,7 +89,7 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
         if let object = model as? ListDiffable, object === searchKey {
-            return SearchBarSectionController(placeholder: NSLocalizedString("Search", comment: ""), delegate: self)
+            return SearchBarSectionController(placeholder: Constants.Strings.search, delegate: self)
         }
         return RepositorySummarySectionController(client: client.githubClient, repo: repo)
     }

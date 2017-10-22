@@ -37,5 +37,7 @@ enum Constants {
         static let bullet = "\u{2022}"
         static let bulletHollow = "\u{25E6}"
         static let search = NSLocalizedString("Search", comment: "")
+        static let delete = NSLocalizedString("Delete", comment: "")
+        static let inbox = NSLocalizedString("Inbox", comment: "")
     }
 }
