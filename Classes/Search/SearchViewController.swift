@@ -202,6 +202,7 @@ SearchResultSectionControllerDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        debouncer.cancel()
 
         guard let term = searchTerm(for: searchBar.text) else { return }
         search(term: term)
