@@ -31,9 +31,6 @@ class DotListView: UIView, UICollectionViewDataSource {
         
         collectionView.dataSource = self
         addSubview(collectionView)
-        collectionView.snp.makeConstraints { (make) in
-            make.edges.equalTo(self)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,6 +39,7 @@ class DotListView: UIView, UICollectionViewDataSource {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        collectionView.frame = bounds
         collectionView.reloadData()
     }
     
