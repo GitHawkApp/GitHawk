@@ -86,13 +86,11 @@ FlatCacheListener {
     }
 
     private func updateUnreadState() {
-        let unreadCount = models.reduce(0) { (total, model) -> Int in
-            if let model = model as? NotificationViewModel {
-                return total + (model.read ? 0 : 1)
-            } else {
-                return total
-            }
-        }
+        // don't update tab bar and badges when not showing only new notifications
+        // prevents archives updating badge and tab #s
+        guard !showRead else { return }
+
+        let unreadCount = models.count
         let hasUnread = unreadCount > 0
         navigationItem.leftBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unreadCount)" : nil
