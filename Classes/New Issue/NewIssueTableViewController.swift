@@ -140,7 +140,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             strongSelf.setRightBarItemIdle()
             
             guard let model = model else {
-                ToastManager.showGenericError(viewController: self)
+                ToastManager.showGenericError()
                 return
             }
 

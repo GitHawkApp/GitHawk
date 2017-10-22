@@ -1588,10 +1588,10 @@
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
-				291F99D81F00013C00CFBF78 /* Increment Build Number */,
 				297AE8321EC0D58A00B44A1F /* Resources */,
 				46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */,
 				F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */,
+				294CDE5C1F98DF5A002CF6E4 /* Set Build Number */,
 			);
 			buildRules = (
 			);
@@ -1706,20 +1706,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		291F99D81F00013C00CFBF78 /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT START\"\necho \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"SCRIPT END\"";
-		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1733,6 +1719,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ ! -z \"${DISABLE_APOLLO}\" ]]; then\n  echo \"Stopping Task: Remove 'DISABLE_APOLLO' env variable to continue.\"\n  exit\nfi\n\nPATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
+		};
+		294CDE5C1F98DF5A002CF6E4 /* Set Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/tools/bump_build_number.sh;
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
