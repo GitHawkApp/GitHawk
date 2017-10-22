@@ -366,6 +366,7 @@
 		29FB94301EE752280016E6D4 /* IssueLabeledCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */; };
 		29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */; };
 		3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */; };
+		45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
 		49D029011F91D9C700E39094 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
@@ -779,6 +780,7 @@
 		35E1CE59E98A2C8E7F451CA6 /* Pods-FreetimeTests.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.testflight.xcconfig"; sourceTree = "<group>"; };
 		3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
+		45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringViewTests.swift; sourceTree = "<group>"; };
 		4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UserActivity.swift"; sourceTree = "<group>"; };
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
@@ -1306,6 +1308,7 @@
 			isa = PBXGroup;
 			children = (
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
+				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */,
@@ -1666,6 +1669,14 @@
 			path = Labeled;
 			sourceTree = "<group>";
 		};
+		45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */ = {
+			isa = PBXGroup;
+			children = (
+				45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */,
+			);
+			path = "Snapshot Tests";
+			sourceTree = "<group>";
+		};
 		7BBFEE551F8A8A0400C68E47 /* SearchBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1995,7 +2006,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/tools/bump_build_number.sh;
+			shellScript = "$SRCROOT/tools/bump_build_number.sh";
 		};
 		295B51391FC2342200C3993B /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2135,6 +2146,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -2156,6 +2168,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2614,6 +2627,7 @@
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				293A459E1F298EE200DD1006 /* IssueCommentHrModel.swift in Sources */,
 				29DA1E8D1F5F8DCF0050C64B /* MarkdownAttribute.swift in Sources */,
+				45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */,
 				49D029011F91D9C700E39094 /* ReactionViewModel.swift in Sources */,
 				293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */,
 				293A45901F296CF300DD1006 /* NSAttributedString+Trim.swift in Sources */,
@@ -2657,6 +2671,7 @@
 /* Begin XCBuildConfiguration section */
 		297AE84F1EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2714,6 +2729,7 @@
 		};
 		297AE8501EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 295B512D1FC2230600C3993B /* FREETIME-RELEASE.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2764,7 +2780,7 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
+			baseConfigurationReference = 94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2789,7 +2805,7 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
+			baseConfigurationReference = EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2846,6 +2862,7 @@
 		};
 		98A8CA991F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2896,7 +2913,7 @@
 		};
 		98A8CA9A1F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
+			baseConfigurationReference = B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -35,7 +35,7 @@ target 'Freetime' do
 end
 
 target 'FreetimeTests' do
-
+	pod 'FBSnapshotTestCase'
 end
 
 post_install do |installer|
