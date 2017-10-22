@@ -11646,9 +11646,9 @@ public final class RepoFilesQuery: GraphQLQuery {
 
 public final class RepoIssuePagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+    "query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
-  public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString) }
+  public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString).appending(LabelableFields.fragmentString) }
 
   public var owner: String
   public var name: String
@@ -11788,6 +11788,8 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
             GraphQLField("author", type: .object(Author.selections)),
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
             GraphQLField("state", type: .nonNull(.scalar(IssueState.self))),
@@ -11799,8 +11801,8 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(createdAt: String, author: Author? = nil, id: GraphQLID, title: String, number: Int, state: IssueState) {
-            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "title": title, "number": number, "state": state])
+          public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, state: IssueState) {
+            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "labels": labels.flatMap { $0.snapshot }, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -11839,6 +11841,16 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// A list of labels associated with the object.
+          public var labels: Label? {
+            get {
+              return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "labels")
             }
           }
 
@@ -11901,6 +11913,15 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
                 snapshot += newValue.snapshot
               }
             }
+
+            public var labelableFields: LabelableFields {
+              get {
+                return LabelableFields(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
           }
 
           public struct Author: GraphQLSelectionSet {
@@ -11945,6 +11966,93 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "login")
+              }
+            }
+          }
+
+          public struct Label: GraphQLSelectionSet {
+            public static let possibleTypes = ["LabelConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(nodes: [Node?]? = nil) {
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// A list of nodes.
+            public var nodes: [Node?]? {
+              get {
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+              }
+              set {
+                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+              }
+            }
+
+            public struct Node: GraphQLSelectionSet {
+              public static let possibleTypes = ["Label"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("color", type: .nonNull(.scalar(String.self))),
+                GraphQLField("name", type: .nonNull(.scalar(String.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(color: String, name: String) {
+                self.init(snapshot: ["__typename": "Label", "color": color, "name": name])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the label color.
+              public var color: String {
+                get {
+                  return snapshot["color"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "color")
+                }
+              }
+
+              /// Identifies the label name.
+              public var name: String {
+                get {
+                  return snapshot["name"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "name")
+                }
               }
             }
           }
@@ -12005,9 +12113,9 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
 
 public final class RepoPullRequestPagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+    "query RepoPullRequestPages($owner: String!, $name: String!, $after: String, $page_size: Int!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    pullRequests(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED, MERGED], after: $after) {\n      __typename\n      nodes {\n        __typename\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        state\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
 
-  public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString) }
+  public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString).appending(LabelableFields.fragmentString) }
 
   public var owner: String
   public var name: String
@@ -12147,6 +12255,8 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
             GraphQLField("author", type: .object(Author.selections)),
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("labels", arguments: ["first": 100], type: .object(Label.selections)),
             GraphQLField("title", type: .nonNull(.scalar(String.self))),
             GraphQLField("number", type: .nonNull(.scalar(Int.self))),
             GraphQLField("state", type: .nonNull(.scalar(PullRequestState.self))),
@@ -12158,8 +12268,8 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(createdAt: String, author: Author? = nil, id: GraphQLID, title: String, number: Int, state: PullRequestState) {
-            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "title": title, "number": number, "state": state])
+          public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, state: PullRequestState) {
+            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "labels": labels.flatMap { $0.snapshot }, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -12198,6 +12308,16 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// A list of labels associated with the object.
+          public var labels: Label? {
+            get {
+              return (snapshot["labels"] as? Snapshot).flatMap { Label(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "labels")
             }
           }
 
@@ -12260,6 +12380,15 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
                 snapshot += newValue.snapshot
               }
             }
+
+            public var labelableFields: LabelableFields {
+              get {
+                return LabelableFields(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
           }
 
           public struct Author: GraphQLSelectionSet {
@@ -12304,6 +12433,93 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "login")
+              }
+            }
+          }
+
+          public struct Label: GraphQLSelectionSet {
+            public static let possibleTypes = ["LabelConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("nodes", type: .list(.object(Node.selections))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(nodes: [Node?]? = nil) {
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// A list of nodes.
+            public var nodes: [Node?]? {
+              get {
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+              }
+              set {
+                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+              }
+            }
+
+            public struct Node: GraphQLSelectionSet {
+              public static let possibleTypes = ["Label"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("color", type: .nonNull(.scalar(String.self))),
+                GraphQLField("name", type: .nonNull(.scalar(String.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(color: String, name: String) {
+                self.init(snapshot: ["__typename": "Label", "color": color, "name": name])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the label color.
+              public var color: String {
+                get {
+                  return snapshot["color"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "color")
+                }
+              }
+
+              /// Identifies the label name.
+              public var name: String {
+                get {
+                  return snapshot["name"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "name")
+                }
               }
             }
           }

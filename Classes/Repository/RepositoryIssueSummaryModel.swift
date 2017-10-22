@@ -18,6 +18,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
     let author: String
     let status: IssueStatus
     let pullRequest: Bool
+    let labels: [RepositoryLabel]
 
     init(
         id: String,
@@ -26,7 +27,8 @@ class RepositoryIssueSummaryModel: ListDiffable {
         created: Date,
         author: String,
         status: IssueStatus,
-        pullRequest: Bool
+        pullRequest: Bool,
+        labels: [RepositoryLabel]
         ) {
         self.id = id
         self.title = title
@@ -35,6 +37,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
         self.author = author
         self.status = status
         self.pullRequest = pullRequest
+        self.labels = labels
     }
 
     // MARK: ListDiffable
