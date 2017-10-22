@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+@testable import Freetime
 
 class ListTestKit: NSObject, ListAdapterDataSource {
 
