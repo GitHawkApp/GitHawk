@@ -9,6 +9,10 @@
 import Foundation
 
 extension ToastManager {
+    
+    private static var window: UIView? {
+        return UIApplication.shared.keyWindow
+    }
 
     private static func provideHapticFeedback() {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
@@ -30,28 +34,28 @@ extension ToastManager {
         )
     }
 
-    static func showRevokeError() {
-        ToastManager.shared.show(config: errorConfig(text: NSLocalizedString("Your access token was revoked.", comment: "")))
+    static func showRevokeError(view: UIView? = window) {
+        ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Your access token was revoked.", comment: "")))
         provideHapticFeedback()
     }
 
-    static func showNetworkError() {
-        ToastManager.shared.show(config: errorConfig(text: NSLocalizedString("Cannot connect to GitHub.", comment: "")))
+    static func showNetworkError(view: UIView? = window) {
+        ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Cannot connect to GitHub.", comment: "")))
         provideHapticFeedback()
     }
 
-    static func showGenericError() {
-        ToastManager.shared.show(config: errorConfig(text: NSLocalizedString("Something went wrong.", comment: "")))
+    static func showGenericError(view: UIView? = window) {
+        ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Something went wrong.", comment: "")))
         provideHapticFeedback()
     }
 
-    static func showPermissionsError() {
-        ToastManager.shared.show(config: errorConfig(text: NSLocalizedString("You must request access.", comment: "")))
+    static func showPermissionsError(view: UIView? = window) {
+        ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("You must request access.", comment: "")))
         provideHapticFeedback()
     }
 
-    static func showError(message: String) {
-        ToastManager.shared.show(config: errorConfig(text: message))
+    static func showError(message: String, view: UIView? = window) {
+        ToastManager.shared.show(in: view, config: errorConfig(text: message))
         provideHapticFeedback()
     }
 

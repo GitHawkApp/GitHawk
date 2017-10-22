@@ -14,11 +14,6 @@ protocol FeedDelegate: class {
     func loadNextPage(feed: Feed) -> Bool
 }
 
-// disables auto scrolling when text views are focused
-private class DisableAutoScrollCollectionView: UICollectionView {
-    override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {}
-}
-
 final class Feed: NSObject, UIScrollViewDelegate {
 
     enum Status {
@@ -45,13 +40,14 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.delegate = delegate
         self.managesLayout = managesLayout
         self.collectionView = collectionView
-            ?? DisableAutoScrollCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+            ?? UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         super.init()
         self.adapter.scrollViewDelegate = self
 
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.backgroundColor = Styles.Colors.background
         self.collectionView.refreshControl = feedRefresh.refreshControl
+        self.collectionView.keyboardDismissMode = .onDrag
         feedRefresh.refreshControl.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
     }
 
@@ -65,6 +61,8 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 
+        view.backgroundColor = .white
+
         refresh()
 
         adapter.collectionView = collectionView
@@ -72,12 +70,17 @@ final class Feed: NSObject, UIScrollViewDelegate {
         if collectionView.superview == nil {
             view.addSubview(collectionView)
         }
+    }
 
-        feedRefresh.beginRefreshing()
+    func viewDidAppear(_ animated: Bool) {
+        if status == .loading {
+            feedRefresh.beginRefreshing()
+        }
     }
 
     func viewWillLayoutSubviews(view: UIView) {
         let bounds = view.bounds
+
         let changed = bounds != collectionView.frame
         if managesLayout && changed {
             collectionView.frame = bounds

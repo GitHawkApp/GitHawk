@@ -10,7 +10,7 @@ pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
 pod 'Apollo', '~> 0.7.0-alpha.5'
 pod 'HTMLString', '~> 4.0.1'
 pod 'NYTPhotoViewer', '~> 1.1.0'
-pod 'SDWebImage', '~> 4.0.0'
+pod 'SDWebImage/GIF', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
 pod 'Tabman', '1.0.1'
 pod 'TUSafariActivity', '~> 1.0.0'
@@ -25,6 +25,7 @@ pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
+pod 'FlatCache', :path => 'Local Pods/FlatCache'
 
 target 'Freetime' do
 

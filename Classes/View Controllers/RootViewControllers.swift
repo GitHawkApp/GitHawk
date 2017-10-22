@@ -30,10 +30,9 @@ func newSettingsRootViewController(
 }
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {
-    let controller = NotificationsViewController(client: client)
+    let controller = NotificationsViewController(client: NotificationClient(githubClient: client), showRead: false)
     let title = NSLocalizedString("Inbox", comment: "")
-    controller.navigationItem.title = title
-    controller.makeBackBarItemEmpty()
+    controller.title = title
     let nav = UINavigationController(rootViewController: controller)
     nav.tabBarItem.title = title
     nav.tabBarItem.image = UIImage(named: "tab-inbox")
@@ -44,8 +43,19 @@ func newNotificationsRootViewController(client: GithubClient) -> UIViewControlle
 func newSearchRootViewController(client: GithubClient) -> UIViewController {
     let controller = SearchViewController(client: client)
     let nav = UINavigationController(rootViewController: controller)
-    nav.tabBarItem.title = NSLocalizedString("Search", comment: "")
+    nav.tabBarItem.title = Constants.Strings.search
     nav.tabBarItem.image = UIImage(named: "tab-search")
     nav.tabBarItem.selectedImage = UIImage(named: "tab-search-selected")
+    return nav
+}
+
+func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
+    let title = NSLocalizedString("Bookmarks", comment: "")
+    let controller = BookmarksViewController(client: client)
+    controller.makeBackBarItemEmpty()
+    controller.title = title
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem.image = UIImage(named: "bookmark")
+    nav.tabBarItem.title = title
     return nav
 }

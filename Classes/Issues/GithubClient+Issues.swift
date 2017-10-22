@@ -69,7 +69,9 @@ extension GithubClient {
                         owner: owner,
                         repo: repo,
                         threadState: .single,
-                        viewerCanUpdate: issueType.viewerCanUpdate
+                        viewerCanUpdate: issueType.viewerCanUpdate,
+                        viewerCanDelete: false, // Root comment can not be deleted
+                        isRoot: true
                     )
 
                     let timeline = issueType.timelineViewModels(owner: owner, repo: repo, width: width)
@@ -177,6 +179,33 @@ extension GithubClient {
             completion: { (response, _) in
                 if response.value != nil {
                     completion(.success(status))
+                } else {
+                    completion(.error(nil))
+                }
+        }))
+    }
+    
+    func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> ()) {
+        request(Request(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
+            // As per documentation this endpoint returns no content, so all we can validate is that
+            // the status code is "204 No Content".
+            if response.response?.statusCode == 204 {
+                completion(.success(true))
+            } else {
+                completion(.error(response.error))
+            }
+        }))
+    }
+    
+    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> ()) {
+        request(Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
+            method: locked ? .put : .delete,
+            completion: { (response, _) in
+                // As per documentation this endpoint returns no content, so all we can validate is that
+                // the status code is "204 No Content".
+                if response.response?.statusCode == 204 {
+                    completion(.success(true))
                 } else {
                     completion(.error(nil))
                 }

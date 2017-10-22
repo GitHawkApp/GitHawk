@@ -12,7 +12,7 @@ import SDWebImage
 import IGListKit
 
 protocol IssueCommentImageCellDelegate: class {
-    func didTapImage(cell: IssueCommentImageCell, image: UIImage)
+    func didTapImage(cell: IssueCommentImageCell, image: UIImage, animatedImageData: Data?)
 }
 
 protocol IssueCommentImageHeightCellDelegate: class {
@@ -27,7 +27,7 @@ UIGestureRecognizerDelegate {
     weak var delegate: IssueCommentImageCellDelegate? = nil
     weak var heightDelegate: IssueCommentImageHeightCellDelegate? = nil
 
-    let imageView = UIImageView()
+    let imageView = FLAnimatedImageView()
 
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let overlay = CreateCollapsibleOverlay()
@@ -37,7 +37,7 @@ UIGestureRecognizerDelegate {
         super.init(frame: frame)
 
         contentView.clipsToBounds = true
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
@@ -62,6 +62,7 @@ UIGestureRecognizerDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 
@@ -71,7 +72,13 @@ UIGestureRecognizerDelegate {
     func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
         guard let image = imageView.image else { return }
-        delegate?.didTapImage(cell: self, image: image)
+
+        // If FLAnimatedImage is nil, access to implicit unwrapped optional will crash
+        if let animatedImage = imageView.animatedImage {
+            delegate?.didTapImage(cell: self, image: image, animatedImageData: animatedImage.data)
+        } else {
+            delegate?.didTapImage(cell: self, image: image, animatedImageData: nil)
+        }
     }
 
     // MARK: ListBindable

@@ -26,12 +26,17 @@ func LayoutCollapsible(layer: CALayer, view: UIView) {
     }
 
     let bounds = view.bounds
+
+    // disable implicit CALayer animations
+    CATransaction.begin()
+    CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
     layer.frame = CGRect(
         x: 0,
         y: bounds.height - CollapseCellMinHeight,
         width: bounds.width,
         height: CollapseCellMinHeight
     )
+    CATransaction.commit()
 }
 
 protocol CollapsibleCell {

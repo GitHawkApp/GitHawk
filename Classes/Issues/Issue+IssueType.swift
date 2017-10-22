@@ -72,7 +72,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     owner: owner,
                     repo: repo,
                     threadState: .single,
-                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate
+                    viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
+                    viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
+                    isRoot: false
                     ) {
                     results.append(model)
 
@@ -85,7 +87,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: unlabeled.createdAt) {
                 let model = IssueLabeledModel(
                     id: unlabeled.fragments.nodeFields.id,
-                    actor: unlabeled.actor?.login ?? Strings.unknown,
+                    actor: unlabeled.actor?.login ?? Constants.Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
                     date: date,
@@ -96,7 +98,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: labeled.createdAt) {
                 let model = IssueLabeledModel(
                     id: labeled.fragments.nodeFields.id,
-                    actor: labeled.actor?.login ?? Strings.unknown,
+                    actor: labeled.actor?.login ?? Constants.Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,
                     date: date,
@@ -107,7 +109,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: closed.createdAt) {
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id, 
-                    actor: closed.actor?.login ?? Strings.unknown,
+                    actor: closed.actor?.login ?? Constants.Strings.unknown,
                     commitHash: closed.closedCommit?.oid,
                     date: date,
                     status: .closed,
@@ -118,7 +120,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: reopened.createdAt) {
                 let model = IssueStatusEventModel(
                     id: reopened.fragments.nodeFields.id,
-                    actor: reopened.actor?.login ?? Strings.unknown,
+                    actor: reopened.actor?.login ?? Constants.Strings.unknown,
                     commitHash: nil,
                     date: date,
                     status: .reopened,
@@ -129,7 +131,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: locked.createdAt) {
                     let model = IssueStatusEventModel(
                         id: locked.fragments.nodeFields.id,
-                        actor: locked.actor?.login ?? Strings.unknown,
+                        actor: locked.actor?.login ?? Constants.Strings.unknown,
                         commitHash: nil,
                         date: date,
                         status: .locked,
@@ -140,7 +142,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: unlocked.createdAt) {
                 let model = IssueStatusEventModel(
                     id: unlocked.fragments.nodeFields.id,
-                    actor: unlocked.actor?.login ?? Strings.unknown,
+                    actor: unlocked.actor?.login ?? Constants.Strings.unknown,
                     commitHash: nil,
                     date: date,
                     status: .unlocked,
@@ -157,7 +159,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         owner: repo.owner.login,
                         repo: repo.name,
                         hash: commitRef.oid,
-                        actor: referenced.actor?.login ?? Strings.unknown,
+                        actor: referenced.actor?.login ?? Constants.Strings.unknown,
                         date: date
                     )
                     results.append(model)
@@ -197,7 +199,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 )
                 let model = IssueRenamedModel(
                     id: rename.fragments.nodeFields.id,
-                    actor: rename.actor?.login ?? Strings.unknown,
+                    actor: rename.actor?.login ?? Constants.Strings.unknown,
                     date: date,
                     titleChangeString: text
                 )
@@ -206,8 +208,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: assigned.createdAt) {
                 let model = IssueRequestModel(
                     id: assigned.fragments.nodeFields.id,
-                    actor: assigned.actor?.login ?? Strings.unknown,
-                    user: assigned.user?.login ?? Strings.unknown,
+                    actor: assigned.actor?.login ?? Constants.Strings.unknown,
+                    user: assigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .assigned
                 )
@@ -216,8 +218,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: unassigned.createdAt) {
                 let model = IssueRequestModel(
                     id: unassigned.fragments.nodeFields.id,
-                    actor: unassigned.actor?.login ?? Strings.unknown,
-                    user: unassigned.user?.login ?? Strings.unknown,
+                    actor: unassigned.actor?.login ?? Constants.Strings.unknown,
+                    user: unassigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .unassigned
                 )
@@ -226,7 +228,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: milestone.createdAt) {
                 let model = IssueMilestoneEventModel(
                     id: milestone.fragments.nodeFields.id,
-                    actor: milestone.actor?.login ?? Strings.unknown,
+                    actor: milestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
                     type: .milestoned
@@ -236,7 +238,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: demilestone.createdAt) {
                 let model = IssueMilestoneEventModel(
                     id: demilestone.fragments.nodeFields.id,
-                    actor: demilestone.actor?.login ?? Strings.unknown,
+                    actor: demilestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
                     type: .demilestoned
@@ -247,7 +249,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let avatarURL = URL(string: urlString) {
                 let model = IssueCommitModel(
                     id: commit.fragments.nodeFields.id,
-                    login: commit.author?.user?.login ?? Strings.unknown,
+                    login: commit.author?.user?.login ?? Constants.Strings.unknown,
                     avatarURL: avatarURL,
                     message: commit.messageHeadline,
                     hash: commit.oid

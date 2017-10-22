@@ -36,10 +36,11 @@ LoadMoreSectionControllerDelegate {
     private weak var dataSource: BaseListViewControllerDataSource? = nil
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var models = [ListDiffable]()
+    private var _models = [ListDiffable]()
     private var page: PagingType? = nil
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
+    private var filterQuery: String? = nil
 
     init(
         emptyErrorMessage: String,
@@ -65,6 +66,11 @@ LoadMoreSectionControllerDelegate {
         rz_smoothlyDeselectRows(collectionView: feed.collectionView)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        feed.viewDidAppear(animated)
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
@@ -78,7 +84,16 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: Public API
 
-    func update(
+    var models: [ListDiffable] {
+        return _models
+    }
+
+    final func update(models: [ListDiffable], animated: Bool) {
+        self._models = models
+        self.feed.finishLoading(dismissRefresh: true, animated: animated)
+    }
+
+    final func update(
         models: [ListDiffable],
         page: PagingType?,
         append: Bool,
@@ -86,18 +101,19 @@ LoadMoreSectionControllerDelegate {
         completion: (() -> ())? = nil
         ) {
         assert(Thread.isMainThread)
+
         if append {
-            self.models += models
+            self._models += models
         } else {
-            self.models = models
+            self._models = models
         }
 
         self.hasError = false
         self.page = page
-        feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        self.feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
-    func error(
+    final func error(
         animated: Bool,
         completion: (() -> ())? = nil
         ) {
@@ -106,13 +122,18 @@ LoadMoreSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
     }
 
+    final func filter(query: String?, animated: Bool) {
+        filterQuery = query
+        feed.adapter.performUpdates(animated: animated)
+    }
+
     // MARK: ListAdapterDataSource
 
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+    final func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         assert(Thread.isMainThread)
         guard let dataSource = self.dataSource else { return [] }
 
-        let objects = models
+        let objects = _models
         let hasNoObjects = objects.count == 0
 
         // short-circuit to display empty-error message using the emptyView(...) API
@@ -134,10 +155,15 @@ LoadMoreSectionControllerDelegate {
             }
         }
 
-        return allObjects
+        // if a query string exists, return matching Filterable objects
+        if let query = filterQuery {
+            return filtered(array: allObjects, query: query)
+        } else {
+            return allObjects
+        }
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+    final func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         assert(Thread.isMainThread)
         guard let object = object as? ListDiffable,
         let dataSource = self.dataSource
@@ -150,25 +176,25 @@ LoadMoreSectionControllerDelegate {
         return dataSource.sectionController(model: object, listAdapter: listAdapter)
     }
 
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+    final func emptyView(for listAdapter: ListAdapter) -> UIView? {
         assert(Thread.isMainThread)
         return nil
     }
 
     // MARK: FeedDelegate
 
-    func loadFromNetwork(feed: Feed) {
+    final func loadFromNetwork(feed: Feed) {
         assert(Thread.isMainThread)
         fetch(page: nil)
     }
 
-    func loadNextPage(feed: Feed) -> Bool {
+    final func loadNextPage(feed: Feed) -> Bool {
         return false
     }
 
     // MARK: LoadMoreSectionControllerDelegate
 
-    func didSelect(sectionController: LoadMoreSectionController) {
+    final func didSelect(sectionController: LoadMoreSectionController) {
         fetch(page: page)
     }
 

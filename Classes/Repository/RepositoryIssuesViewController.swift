@@ -14,11 +14,13 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource {
+class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource, SearchBarSectionControllerDelegate {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
+    private let searchKey: ListDiffable = "searchKey" as ListDiffable
+    private var searchQuery: String = ""
 
     init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
         self.repo = repo
@@ -49,7 +51,7 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
-    // MARK: Overides
+    // MARK: Overrides
 
     override func fetch(page: NSString?) {
         let width = view.bounds.width
@@ -73,13 +75,22 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
         }
     }
 
+    // MARK: SearchBarSectionControllerDelegate
+
+    func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
+        filter(query: query.trimmingCharacters(in: .whitespacesAndNewlines), animated: true)
+    }
+
     // MARK: BaseListViewControllerDataSource
 
     func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
+        return [searchKey]
     }
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        if let object = model as? ListDiffable, object === searchKey {
+            return SearchBarSectionController(placeholder: Constants.Strings.search, delegate: self)
+        }
         return RepositorySummarySectionController(client: client.githubClient, repo: repo)
     }
 
@@ -96,5 +107,4 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
             type: empty
         )
     }
-
 }

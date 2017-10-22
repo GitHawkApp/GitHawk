@@ -54,6 +54,11 @@ ListAdapterDataSource {
         rz_smoothlyDeselectRows(collectionView: feed.collectionView)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        feed.viewDidAppear(animated)
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)

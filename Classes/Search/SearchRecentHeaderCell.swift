@@ -42,11 +42,16 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
             make.centerY.equalTo(label)
         }
 
-        addBorder(.bottom)
+        addBorder(.bottom, useSafeMargins: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Private API

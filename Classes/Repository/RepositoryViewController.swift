@@ -28,7 +28,10 @@ NewIssueTableViewControllerDelegate {
         if repo.hasIssuesEnabled {
             controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
         }
-        controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests))
+        controllers += [
+            RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
+            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true),
+        ]
         self.controllers = controllers
 
         super.init(nibName: nil, bundle: nil)
@@ -62,10 +65,6 @@ NewIssueTableViewControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-        
-        if #available(iOS 11, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -101,7 +100,17 @@ NewIssueTableViewControllerDelegate {
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
             .newIssue(issueController: newIssueViewController)
     }
-
+    
+    func bookmarkAction() -> UIAlertAction? {
+        let bookmarkModel = BookmarkModel(
+            type: .repo,
+            name: repo.name,
+            owner: repo.owner,
+            hasIssueEnabled: repo.hasIssuesEnabled
+        )
+        return AlertAction.bookmark(bookmarkModel)
+    }
+    
     @objc
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -110,6 +119,7 @@ NewIssueTableViewControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         
         alert.addActions([
+            bookmarkAction(),
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: repoUrl),

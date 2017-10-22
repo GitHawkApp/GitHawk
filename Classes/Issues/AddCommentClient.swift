@@ -14,7 +14,8 @@ protocol AddCommentListener: class {
         id: String,
         commentFields: CommentFields,
         reactionFields: ReactionFields,
-        viewerCanUpdate: Bool
+        viewerCanUpdate: Bool,
+        viewerCanDelete: Bool
     )
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String)
 }
@@ -51,7 +52,8 @@ final class AddCommentClient {
                         id: fragments.nodeFields.id,
                         commentFields: fragments.commentFields,
                         reactionFields: fragments.reactionFields,
-                        viewerCanUpdate: fragments.updatableFields.viewerCanUpdate
+                        viewerCanUpdate: fragments.updatableFields.viewerCanUpdate,
+                        viewerCanDelete: fragments.deletableFields.viewerCanDelete
                     )
                 }
             } else {

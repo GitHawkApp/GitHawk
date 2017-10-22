@@ -11,49 +11,62 @@ import SnapKit
 
 final class RepositorySummaryCell: SelectableCell {
     
+    static let labelDotSize = CGSize(width: 10, height: 10)
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
+        bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
     
     private let reasonImageView = UIImageView()
     private let titleView = AttributedStringView()
+    private let detailsStackView = UIStackView()
     private let secondaryLabel = UILabel()
+    private let labelDotView = DotListView(dotSize: RepositorySummaryCell.labelDotSize)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         
-        contentView.backgroundColor = .white
-
+        backgroundColor = .white
+        
+        contentView.addSubview(reasonImageView)
         contentView.addSubview(titleView)
+        contentView.addSubview(detailsStackView)
         
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
         reasonImageView.tintColor = Styles.Colors.Blue.medium.color
-        contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalToSuperview()
             make.left.equalTo(Styles.Sizes.columnSpacing)
         }
-
-        let inset = RepositorySummaryCell.titleInset
         
+        detailsStackView.axis = .vertical
+        detailsStackView.alignment = .leading
+        detailsStackView.distribution = .fill
+        detailsStackView.spacing = Styles.Sizes.rowSpacing
+        detailsStackView.addArrangedSubview(secondaryLabel)
+        detailsStackView.addArrangedSubview(labelDotView)
+        detailsStackView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalTo(reasonImageView.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.right.equalTo(contentView.snp.right).offset(-Styles.Sizes.columnSpacing)
+        }
+
         secondaryLabel.numberOfLines = 1
         secondaryLabel.font = Styles.Fonts.secondary
         secondaryLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(secondaryLabel)
-        secondaryLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
-            make.left.equalTo(inset.left)
-            make.right.equalTo(-inset.right)
+        
+        labelDotView.snp.makeConstraints { make in
+            make.height.equalTo(RepositorySummaryCell.labelDotSize.height)
+            make.left.right.equalTo(detailsStackView)
         }
-                
-        contentView.addBorder(.bottom, left: inset.left)
+        
+        contentView.addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,6 +102,14 @@ final class RepositorySummaryCell: SelectableCell {
 
         reasonImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         reasonImageView.tintColor = tint
+        
+        if model.labels.count > 0 {
+            labelDotView.isHidden = false
+            let colors = model.labels.map { UIColor.fromHex($0.color) }
+            labelDotView.configure(colors: colors)
+        } else {
+            labelDotView.isHidden = true
+        }
     }
     
     override var accessibilityLabel: String? {

@@ -125,8 +125,8 @@
         [newAttributedText appendAttributedString:leftAttributedString];
         [newAttributedText appendAttributedString:attributedText];
         [newAttributedText appendAttributedString:rightAttributedString];
-        
-        [self setAttributedText:newAttributedText];
+
+        [self slk_setAttributedText:newAttributedText];
         range.location += attributedText.length;
         
         return range;
@@ -138,7 +138,7 @@
         
         [mutableAttributeText replaceCharactersInRange:range withAttributedString:attributedText];
     
-        [self setAttributedText:mutableAttributeText];
+        [self slk_setAttributedText:mutableAttributeText];
         range.location += self.attributedText.length;
         
         return range;
@@ -146,6 +146,10 @@
     
     // No text has been inserted, but still return the caret range
     return self.selectedRange;
+}
+
+- (void)slk_setAttributedText:(NSAttributedString *)attributedText {
+    [self setAttributedText:attributedText];
 }
 
 - (void)slk_clearAllAttributesInRange:(NSRange)range

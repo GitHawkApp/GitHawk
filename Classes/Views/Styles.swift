@@ -81,6 +81,7 @@ enum Styles {
 
         static let background = Styles.Colors.Gray.lighter.color
         static let purple = "6f42c1"
+        static let blueGray = "8697af"
 
         enum Red {
             static let medium = "cb2431"
@@ -111,6 +112,7 @@ enum Styles {
             static let medium = "f29d50"
             static let light = "fff5b1"
         }
+
     }
 
     static func setupAppearance() {

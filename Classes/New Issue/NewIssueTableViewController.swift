@@ -91,7 +91,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         
         // Add cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: Constants.Strings.cancel,
             style: .plain,
             target: self,
             action: #selector(onCancel)
@@ -105,16 +105,10 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         setupInputView()
         
         // Update title to use localization
-        title = NSLocalizedString("New Issue", comment: "")
+        title = Constants.Strings.newIssue
     }
     
     // MARK: Private API
-
-    func setRightBarItemSpinning() {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        activity.startAnimating()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
-    }
 
     func setRightBarItemIdle() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -123,7 +117,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onSend)
         )
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
     
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
@@ -177,9 +171,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             getMarkdownBlock: getMarkdownBlock,
             repo: repo,
             owner: owner,
-            addBorder: true
+            addBorder: true,
+            supportsImageUpload: true
         )
         textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }
     

@@ -6,6 +6,7 @@ PODS:
     - Apollo/Core (= 0.7.0-alpha.9)
   - Apollo/Core (0.7.0-alpha.9)
   - FLAnimatedImage (1.0.12)
+  - FlatCache (0.1.0)
   - FLEX (2.4.0)
   - HTMLString (4.0.1)
   - IGListKit (3.1.1):
@@ -23,9 +24,10 @@ PODS:
   - NYTPhotoViewer/Core (1.1.0)
   - Pageboy (2.0.0)
   - PureLayout (3.0.2)
-  - SDWebImage (4.0.0):
-    - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - SDWebImage/GIF (4.0.0):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - SlackTextViewController (1.9.5)
   - SnapKit (4.0.0)
   - SwipeCellKit (1.9.0)
@@ -38,12 +40,13 @@ DEPENDENCIES:
   - Alamofire (~> 4.4.0)
   - AlamofireNetworkActivityIndicator (~> 2.1)
   - Apollo (~> 0.7.0-alpha.5)
+  - FlatCache (from `Local Pods/FlatCache`)
   - FLEX (~> 2.0)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
-  - SDWebImage (~> 4.0.0)
+  - SDWebImage/GIF (~> 4.0.0)
   - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
@@ -51,6 +54,8 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  FlatCache:
+    :path: Local Pods/FlatCache
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
@@ -71,6 +76,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 472b027285e3bd2a79d37d502e98f6f15a3bc528
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FlatCache: f6e7c43738dc29c103812af3bd087801cb7b5bf0
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
@@ -85,6 +91,6 @@ SPEC CHECKSUMS:
   Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 88bf4d401077f3861ff7b3767c5a925d3c6a793e
+PODFILE CHECKSUM: 1d4e7eb0e9920a9c08bd5b01a0db90aa20d1f44a
 
 COCOAPODS: 1.4.0.beta.1

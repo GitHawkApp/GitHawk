@@ -24,7 +24,8 @@ extension UIView {
         left: CGFloat = 0,
         right: CGFloat = 0,
         top: CGFloat = 0,
-        bottom: CGFloat = 0
+        bottom: CGFloat = 0,
+        useSafeMargins: Bool = true
         ) -> UIView {
         let view = UIView()
         view.backgroundColor = Styles.Colors.Gray.border.color
@@ -35,8 +36,13 @@ extension UIView {
             switch position {
             case .top, .bottom:
                 make.height.equalTo(size)
-                make.left.equalTo(left)
-                make.right .equalTo(right)
+                if useSafeMargins, #available(iOS 11.0, *) {
+                    make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(left)
+                    make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).offset(right)
+                } else {
+                    make.left.equalTo(left)
+                    make.right.equalTo(right)
+                }
             case .left, .right:
                 make.width.equalTo(size)
                 make.top.equalTo(top)
@@ -44,10 +50,20 @@ extension UIView {
             }
 
             switch position {
-            case .left: make.left.equalTo(self)
             case .top: make.top.equalTo(self)
-            case .right: make.right.equalTo(self)
             case .bottom: make.bottom.equalTo(self)
+            case .left:
+                if useSafeMargins, #available(iOS 11.0, *) {
+                    make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin)
+                } else {
+                    make.left.equalTo(self)
+                }
+            case .right:
+                if useSafeMargins, #available(iOS 11.0, *) {
+                    make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin)
+                } else {
+                    make.right.equalTo(self)
+                }
             }
         }
         return view

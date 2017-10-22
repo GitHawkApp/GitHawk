@@ -15,9 +15,10 @@ extension IssueTextActionsView {
         getMarkdownBlock: @escaping () -> (String),
         repo: String,
         owner: String,
-        addBorder: Bool
+        addBorder: Bool,
+        supportsImageUpload: Bool
         ) -> IssueTextActionsView {
-        let operations: [IssueTextActionOperation] = [
+        var operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(icon: UIImage(named: "bar-eye"), operation: .execute({ [weak viewController] in
                 let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
                 viewController?.navigationController?.pushViewController(controller, animated: true)
@@ -30,8 +31,13 @@ extension IssueTextActionsView {
             IssueTextActionOperation(icon: UIImage(named: "bar-header"), operation: .line("#")),
             IssueTextActionOperation(icon: UIImage(named: "bar-ul"), operation: .line("- ")),
             IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
-            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))")),
-            ]
+            IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))"))
+        ]
+        
+        if supportsImageUpload {
+            operations.append(IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .uploadImage))
+        }
+        
         let actions = IssueTextActionsView(operations: operations)
         actions.backgroundColor = Styles.Colors.Gray.lighter.color
         if addBorder {

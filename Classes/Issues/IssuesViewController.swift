@@ -94,6 +94,9 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
+        // override Feed bg color setting
+        view.backgroundColor = Styles.Colors.background
+
         // override default SLKTextViewController values
         isInverted = false
         textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
@@ -117,8 +120,11 @@ IssueCommentSectionControllerDelegate {
             getMarkdownBlock: getMarkdownBlock,
             repo: model.repo,
             owner: model.owner,
-            addBorder: false
+            addBorder: false,
+            supportsImageUpload: false
         )
+        // text input bar uses UIVisualEffectView, don't try to match it
+        actions.backgroundColor = .clear
         textActionsController.configure(textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
@@ -127,7 +133,7 @@ IssueCommentSectionControllerDelegate {
         contentView.addSubview(actions)
         let views = ["actions": actions]
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]-4-|",
+            withVisualFormat: "V:|[actions(30)]-4@999-|",
             options: [],
             metrics: nil,
             views: views
@@ -148,12 +154,20 @@ IssueCommentSectionControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
+
+        if #available(iOS 11.0, *) {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let informator = HandoffInformator(activityName: "viewIssue", activityTitle:
-            issueTitle, url: externalURL)
+        feed.viewDidAppear(animated)
+        let informator = HandoffInformator(
+            activityName: "viewIssue",
+            activityTitle: issueTitle,
+            url: externalURL
+        )
         setupUserActivity(with: informator)
     }
     
@@ -214,10 +228,6 @@ IssueCommentSectionControllerDelegate {
         return autocomplete.cellHeight
     }
 
-    override func shouldDisableTypingSuggestionForAutoCompletion() -> Bool {
-        return false
-    }
-
     // MARK: Private API
 
     var externalURL: URL {
@@ -234,8 +244,18 @@ IssueCommentSectionControllerDelegate {
             status != .merged
             else { return nil }
         
-        return AlertAction.toggleIssue(status) { [weak self] _ in
+        return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setStatus(close: status == .open)
+        }
+    }
+    
+    func lockAction() -> UIAlertAction? {
+        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+            return nil
+        }
+        
+        return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
+            self?.setLocked(!locked)
         }
     }
     
@@ -254,6 +274,19 @@ IssueCommentSectionControllerDelegate {
             .view(repo: repoViewController)
     }
 
+    func bookmarkAction() -> UIAlertAction? {
+        guard let current = current else { return nil }
+        let bookmarkModel = BookmarkModel(
+            type: current.pullRequest ? .pullRequest : .issue,
+            name: model.repo,
+            owner: model.owner,
+            number: model.number,
+            title: current.title.attributedText.string
+        )
+        
+        return AlertAction.bookmark(bookmarkModel)
+    }
+    
     @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -262,7 +295,9 @@ IssueCommentSectionControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         
         alert.addActions([
+            bookmarkAction(),
             closeAction(),
+            lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
@@ -318,7 +353,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
 
         let localModel = IssueStatusModel(
             status: close ? .closed : .open,
@@ -327,7 +362,7 @@ IssueCommentSectionControllerDelegate {
         )
         let localEvent = IssueStatusEventModel(
             id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Strings.unknown,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
             commitHash: nil,
             date: Date(),
             status: close ? .closed : .reopened,
@@ -342,6 +377,42 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             number: model.number,
             status: close ? .closed : .open
+        ) { [weak self] result in
+            switch result {
+            case .error:
+                self?.localStatusChange = nil
+                self?.feed.adapter.performUpdates(animated: true)
+                ToastManager.showGenericError()
+            default: break // dont need to handle success since updated optimistically
+            }
+        }
+    }
+    
+    func setLocked(_ locked: Bool) {
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
+        
+        let localModel = IssueStatusModel(
+            status: currentStatus.status,
+            pullRequest: currentStatus.pullRequest,
+            locked: locked
+        )
+        let localEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: locked ? .locked : .unlocked,
+            pullRequest: currentStatus.pullRequest
+        )
+        
+        localStatusChange = (localModel, localEvent)
+        feed.adapter.performUpdates(animated: true)
+        
+        client.setLocked(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            locked: locked
         ) { [weak self] result in
             switch result {
             case .error:
@@ -451,7 +522,8 @@ IssueCommentSectionControllerDelegate {
         id: String,
         commentFields: CommentFields,
         reactionFields: ReactionFields,
-        viewerCanUpdate: Bool
+        viewerCanUpdate: Bool,
+        viewerCanDelete: Bool
         ) {
         guard let comment = createCommentModel(
             id: id,
@@ -461,7 +533,9 @@ IssueCommentSectionControllerDelegate {
             owner: model.owner,
             repo: model.repo,
             threadState: .single,
-            viewerCanUpdate: viewerCanUpdate
+            viewerCanUpdate: viewerCanUpdate,
+            viewerCanDelete: viewerCanDelete,
+            isRoot: false
             )
             else { return }
         sentComments.append(comment)

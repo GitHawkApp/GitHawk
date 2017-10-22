@@ -13,13 +13,14 @@ enum NotificationType: String {
     case issue = "Issue"
     case pullRequest = "PullRequest"
     case commit = "Commit"
+    case repo = "Repository"
 }
 
 extension NotificationType {
     
     var localizedString: String {
         switch self {
-        case .issue, .commit:
+        case .issue, .commit, .repo:
             return NSLocalizedString(self.rawValue, comment: "")
         case .pullRequest:
             return NSLocalizedString("Pull request", comment: "")

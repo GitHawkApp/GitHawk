@@ -57,6 +57,7 @@ class SelectableCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         overlay.layoutOverlay()
     }
     
@@ -96,6 +97,7 @@ class SwipeSelectableCell: SwipeCollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
         overlay.layoutOverlay()
     }
 

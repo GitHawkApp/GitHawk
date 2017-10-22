@@ -29,7 +29,7 @@ final class SearchRepoResultCell: SelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         
-        contentView.backgroundColor = .white
+        backgroundColor = .white
 
         contentView.addSubview(titleLabel)
         contentView.addSubview(languageLabel)

@@ -73,6 +73,7 @@ final class RootNavigationManager: GithubSessionListener {
         tabBarController?.viewControllers = [
             newNotificationsRootViewController(client: client),
             newSearchRootViewController(client: client),
+            newBookmarksRootViewController(client: client),
             settingsRootViewController ?? UIViewController(), // simply satisfying compiler
         ]
     }
@@ -80,6 +81,12 @@ final class RootNavigationManager: GithubSessionListener {
     public func pushLoginViewController(nav: UINavigationController) {
         let login = newLoginViewController()
         nav.pushViewController(login, animated: true)
+    }
+
+    @discardableResult
+    public func selectViewController(atIndex index: Int) -> UIViewController? {
+        tabBarController?.selectedIndex = index
+        return tabBarController?.selectedViewController
     }
 
     // MARK: GithubSessionListener

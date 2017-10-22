@@ -174,88 +174,151 @@ private func rubberBandDistance(offset: CGFloat, dimension: CGFloat) -> CGFloat 
     return offset < 0 ? -result : result
 }
 
-final class ToastManager {
-
-    private final class ToastDynamicItem: NSObject, UIDynamicItem {
-        var center: CGPoint = .zero
-        var bounds: CGRect { return CGRect(x: 0, y: 0, width: 1, height: 1) }
-        var transform: CGAffineTransform = .identity
+private func anchor(view: UIView, referenceView: UIView) -> CGPoint {
+    let safeBottom: CGFloat
+    if #available(iOS 11.0, *) {
+        safeBottom = referenceView.safeAreaInsets.bottom
+    } else {
+        safeBottom = 0
     }
 
-    private let dynamicItem = ToastDynamicItem()
-    private var view: ToastView? = nil
-    private lazy var animator: UIDynamicAnimator? = nil
-    private var springBehavior: UIAttachmentBehavior? = nil
-    private var config: ToastViewConfiguration? = nil
-    private var timer: Timer? = nil
+    let bounds = referenceView.bounds
+    let tabBarHeight: CGFloat = 49
+    return CGPoint(
+        x: bounds.width / 2,
+        y: bounds.height - tabBarHeight - safeBottom - view.bounds.height / 2 - 20
+    )
+}
+
+final class ToastManager {
+
+    private final class Toast {
+        let view: ToastView
+        let animator: UIDynamicAnimator
+        let springBehavior: UIAttachmentBehavior
+        let configuration: ToastViewConfiguration
+
+        private var timer: Timer? = nil
+
+        init?(config: ToastViewConfiguration, in baseView: UIView) {
+            configuration = config
+
+            view = ToastView(configuration: config)
+            view.frame = CGRect(origin: .zero, size: view.contentSize())
+            baseView.addSubview(view)
+
+            animator = UIDynamicAnimator(referenceView: baseView)
+
+            let initAnchor = anchor(view: view, referenceView: baseView)
+
+            // position off screen so it snaps in. must happen before setting up spring
+            view.center = initAnchor.applying(CGAffineTransform(
+                translationX: 0,
+                y: baseView.bounds.height - initAnchor.y + 500
+            ))
+
+            springBehavior = UIAttachmentBehavior(item: view, attachedToAnchor: initAnchor)
+            springBehavior.length = 0
+            springBehavior.damping = 0.8
+            springBehavior.frequency = 1.5
+            animator.addBehavior(springBehavior)
+        }
+
+        // MARK: Public API
+
+        func invalidateTimer() {
+            timer?.invalidate()
+            timer = nil
+        }
+
+        func startTimer() {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(
+                withTimeInterval: configuration.dismissDuration,
+                repeats: false,
+                block: { [weak self] (_) in
+                    self?.dismiss()
+            })
+        }
+
+        func dismiss() {
+            invalidateTimer()
+            animator.removeBehavior(springBehavior)
+
+            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
+                self.view.alpha = 0
+                self.view.center = self.dismissAnchor
+            }, completion: { _ in
+                self.view.removeFromSuperview()
+            })
+        }
+
+        func recenter() {
+            // UIDynamics will throw if adding the behavior back when the view has already been removed
+            guard view.superview != nil,
+                let referenceView = animator.referenceView
+                else { return }
+
+            // hack to work around UI bug where behavior will permanently oscillate
+            animator.removeBehavior(springBehavior)
+            springBehavior.anchorPoint = anchor(view: view, referenceView: referenceView)
+            animator.addBehavior(springBehavior)
+        }
+
+        // MARK: Private API
+
+        private var dismissAnchor: CGPoint {
+            guard let referenceView = animator.referenceView else { return .zero }
+            return CGPoint(
+                x: referenceView.bounds.width / 2,
+                y: referenceView.bounds.height + view.bounds.height / 2 + 100
+            )
+        }
+
+    }
+
+    private var toast: Toast? = nil
+
+    init() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(ToastManager.onOrientation(notification:)),
+            name: NSNotification.Name.UIDeviceOrientationDidChange,
+            object: nil
+        )
+    }
 
     // MARK: Public API
 
     public static let shared = ToastManager()
 
     public func show(
-        viewController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController,
+        in view: UIView? = UIApplication.shared.keyWindow,
         config: ToastViewConfiguration
         ) {
-        guard let viewController = viewController,
-            let referenceView = viewController.view
-            else { return }
+        guard let baseView = view else { return }
 
-        self.config = config
-        startTimer()
+        // get rid of any view if currently displaying
+        toast?.dismiss()
 
-        if let view = self.view {
-            view.removeFromSuperview()
-        }
-
-        let view = ToastView(configuration: config)
-        view.frame = CGRect(origin: .zero, size: view.contentSize())
-        self.view = view
-
-        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(ToastManager.onPan(gesture:))))
-
-        referenceView.addSubview(view)
-
-        self.animator = UIDynamicAnimator(referenceView: referenceView)
-
-        let bounds = referenceView.bounds
-        let tabBarHeight: CGFloat = 49
-
-        let safeAreaInsets: CGFloat
-        if #available(iOS 11.0, *) {
-            safeAreaInsets = referenceView.safeAreaInsets.bottom + viewController.additionalSafeAreaInsets.bottom
-        } else {
-            safeAreaInsets = 0
-        }
-
-        let anchor = CGPoint(
-            x: bounds.width / 2,
-            y: bounds.height - tabBarHeight - safeAreaInsets - view.bounds.height / 2 - 20
-        )
-
-        // position off screen so it snaps in
-        view.center = anchor.applying(CGAffineTransform(translationX: 0, y: bounds.height - anchor.y + 500))
-
-        let springBehavior = UIAttachmentBehavior(item: view, attachedToAnchor: anchor)
-        springBehavior.length = 0
-        springBehavior.damping = 0.8
-        springBehavior.frequency = 1.5
-        self.animator?.addBehavior(springBehavior)
-        self.springBehavior = springBehavior
+        toast = Toast(config: config, in: baseView)
+        toast?.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(ToastManager.onPan(gesture:))))
+        toast?.startTimer()
     }
 
+    // MARK: Private API
+
     @objc func onPan(gesture: UIPanGestureRecognizer) {
-        guard let referenceView = self.animator?.referenceView,
-            let springBehavior = self.springBehavior,
-            let view = self.view
+        guard let toast = self.toast,
+            let referenceView = toast.animator.referenceView
             else { return }
 
         switch gesture.state {
         case .began:
-            timer?.invalidate()
-            animator?.removeBehavior(springBehavior)
+            toast.invalidateTimer()
+            toast.animator.removeBehavior(toast.springBehavior)
         case .changed:
-            let anchor = springBehavior.anchorPoint
+            let anchor = toast.springBehavior.anchorPoint
             let translation = gesture.translation(in: referenceView).y
 
             let y: CGFloat
@@ -268,7 +331,7 @@ final class ToastManager {
             } else {
                 y = translation
             }
-            view.center = CGPoint(
+            toast.view.center = CGPoint(
                 x: anchor.x,
                 y: y + anchor.y
             )
@@ -277,45 +340,25 @@ final class ToastManager {
 
             // if the final destination is beyond the ref view height after 0.3 seconds...
             let duration: TimeInterval = 0.3
-            let finalY = velocity * CGFloat(duration) + view.center.y
-            if finalY - view.bounds.height / 2 > referenceView.bounds.height {
+            let finalY = velocity * CGFloat(duration) + toast.view.center.y
+            if finalY - toast.view.bounds.height / 2 > referenceView.bounds.height {
                 UIView.animate(withDuration: duration, animations: {
-                    var center = view.center
+                    var center = toast.view.center
                     center.y = finalY
-                    view.center = center
-                })
+                    toast.view.center = center
+                }) { _ in
+                    toast.view.removeFromSuperview()
+                }
             } else {
-                startTimer()
-                animator?.addBehavior(springBehavior)
+                toast.startTimer()
+                toast.animator.addBehavior(toast.springBehavior)
             }
         default: break
         }
     }
 
-    func startTimer() {
-        guard let config = self.config else { return }
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(
-            withTimeInterval: config.dismissDuration,
-            repeats: false,
-            block: { [weak self] (_) in
-                self?.dismiss()
-        })
-    }
-
-    func dismiss() {
-        guard let referenceView = self.animator?.referenceView,
-            let springBehavior = self.springBehavior,
-            let view = self.view
-            else { return }
-        var center = springBehavior.anchorPoint
-        center.y = referenceView.bounds.height + view.bounds.height / 2 + 100
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
-            view.alpha = 0
-            view.center = center
-        }, completion: { _ in
-            view.removeFromSuperview()
-        })
+    @objc func onOrientation(notification: NSNotification) {
+        toast?.recenter()
     }
 
 }
