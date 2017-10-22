@@ -251,5 +251,10 @@ SearchResultSectionControllerDelegate {
     func didSelect(sectionController: SearchResultSectionController) {
         searchBar.resignFirstResponder()
     }
+
+    func didDelete(recentSectionController: SearchRecentSectionController, text: String) {
+        recentStore.remove(recent: text)
+        update(animated: true)
+    }
     
 }
