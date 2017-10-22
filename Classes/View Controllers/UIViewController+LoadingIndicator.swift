@@ -16,4 +16,10 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activity)
     }
 
+    func setLeftBarItemSpinning() {
+        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activity.startAnimating()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activity)
+    }
+
 }

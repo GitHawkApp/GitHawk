@@ -46,9 +46,9 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        resetRightBarItem()
+        resetLeftBarItem()
         if !showRead {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: NSLocalizedString("Archives", comment: ""),
                 style: .plain,
                 target: self,
@@ -73,9 +73,9 @@ FlatCacheListener {
         navigationController?.pushViewController(controller, animated: true)
     }
 
-    func resetRightBarItem() {
+    func resetLeftBarItem() {
         if !showRead {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: NSLocalizedString("Mark All", comment: ""),
                 style: .plain,
                 target: self,
@@ -94,13 +94,13 @@ FlatCacheListener {
             }
         }
         let hasUnread = unreadCount > 0
-        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        navigationItem.leftBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unreadCount)" : nil
         BadgeNotifications.update(count: unreadCount)
     }
 
     private func markAllRead() {
-        self.setRightBarItemSpinning()
+        self.setLeftBarItemSpinning()
         self.client.markAllNotifications { success in
             let generator = UINotificationFeedbackGenerator()
             if success {
@@ -151,7 +151,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetRightBarItem()
+        self.resetLeftBarItem()
     }
 
     // MARK: Overrides
@@ -236,7 +236,7 @@ FlatCacheListener {
                     }
                 }
                 self.update(models: models, animated: true)
-                self.resetRightBarItem()
+                self.resetLeftBarItem()
             }
         case .list: break
         }
