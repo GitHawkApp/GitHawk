@@ -8,17 +8,9 @@
 
 import Foundation
 
-protocol NotificationClientListener: class {
-    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool)
-    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool)
-}
-
 final class NotificationClient {
 
-    private class ListenerWrapper: NSObject {
-        weak var listener: NotificationClientListener? = nil
-    }
-    private var listeners = [ListenerWrapper]()
+    private var openedNotificationIDs = Set<String>()
 
     let githubClient: GithubClient
 
@@ -36,12 +28,6 @@ final class NotificationClient {
 
     static func setReadOnOpen(open: Bool) {
         UserDefaults.standard.set(open, forKey: openOnReadKey)
-    }
-
-    func add(listener: NotificationClientListener) {
-        let wrapper = ListenerWrapper()
-        wrapper.listener = listener
-        listeners.append(wrapper)
     }
 
     // https://developer.github.com/v3/activity/notifications/#list-your-notifications
@@ -67,6 +53,8 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
+        let cache = githubClient.cache
+
         githubClient.request(GithubClient.Request(
             path: "notifications",
             method: .get,
@@ -75,6 +63,7 @@ final class NotificationClient {
         ) { (response, nextPage) in
             if let notifications = (response.value as? [[String:Any]])?.flatMap({ Notification(json: $0) }) {
                 let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
+                cache.set(values: viewModels)
                 completion(.success((viewModels, nextPage?.next)))
             } else {
                 completion(.error(response.error))
@@ -94,23 +83,41 @@ final class NotificationClient {
         })
     }
 
+    func notificationOpened(id: String) -> Bool {
+        return openedNotificationIDs.contains(id)
+    }
+
     func markNotificationRead(id: String, isOpen: Bool) {
-        for wrapper in listeners {
-            if let listener = wrapper.listener {
-                listener.willMarkRead(client: self, id: id, isOpen: isOpen)
+        let oldModel = githubClient.cache.get(id: id) as NotificationViewModel?
+
+        if isOpen {
+            openedNotificationIDs.insert(id)
+        } else {
+            // optimistically set the model to read
+            // if the request fails, replace this model w/ the old one.
+            if let old = oldModel {
+                githubClient.cache.set(value: NotificationViewModel(
+                    id: old.id,
+                    title: old.title,
+                    type: old.type,
+                    date: old.date,
+                    read: true,
+                    owner: old.owner,
+                    repo: old.repo,
+                    identifier: old.identifier
+                ))
             }
         }
 
         githubClient.request(GithubClient.Request(
             path: "notifications/threads/\(id)",
-            method: .patch) { (response, _) in
+            method: .patch) { [weak self] (response, _) in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
-                let success = response.response?.statusCode == 205
-                if !success {
-                    for wrapper in self.listeners {
-                        if let listener = wrapper.listener {
-                            listener.didFailToMarkRead(client: self, id: id, isOpen: isOpen)
-                        }
+                if response.response?.statusCode != 205 {
+                    if isOpen {
+                        self?.openedNotificationIDs.remove(id)
+                    } else if let old = oldModel {
+                        self?.githubClient.cache.set(value: old)
                     }
                 }
         })

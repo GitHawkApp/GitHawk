@@ -9,38 +9,33 @@
 import UIKit
 import IGListKit
 import SnapKit
+import FlatCache
 
-class NotificationsViewController: UIViewController,
-    ListAdapterDataSource,
-    SegmentedControlSectionControllerDelegate,
-    SearchBarSectionControllerDelegate,
-    FeedDelegate,
-    NotificationClientListener,
-    NotificationNextPageSectionControllerDelegate,
-FeedSelectionProviding,
+class NotificationsViewController: BaseListViewController<NSNumber>,
+//    NotificationClientListener,
 ForegroundHandlerDelegate,
 RatingSectionControllerDelegate,
 PrimaryViewController,
-TabNavRootViewControllerType {
+TabNavRootViewControllerType,
+BaseListViewControllerDataSource,
+FlatCacheListener {
 
     private let client: NotificationClient
-    private let selection = SegmentedControlModel.forNotifications()
-    private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
-    private let searchKey: ListDiffable = "searchKey" as ListDiffable
-    private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var page: NSNumber? = nil
-    private var searchQuery: String = ""
-    private var hasError = false
-    private let dataSource = NotificationsDataSource()
     private let foreground = ForegroundHandler(threshold: 5 * 60)
+    private let showRead: Bool
 
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
 
-    init(client: GithubClient) {
-        self.client = NotificationClient(githubClient: client)
-        super.init(nibName: nil, bundle: nil)
-        self.client.add(listener: self)
+    init(client: NotificationClient, showRead: Bool) {
+        self.client = client
+        self.showRead = showRead
+
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
+            dataSource: self
+        )
+
         self.foreground.delegate = self
     }
 
@@ -51,42 +46,56 @@ TabNavRootViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataSource.warm(width: view.bounds.width)
-
-        feed.viewDidLoad()
-        feed.adapter.dataSource = self
-
         resetRightBarItem()
+        if !showRead {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: NSLocalizedString("Archives", comment: ""),
+                style: .plain,
+                target: self,
+                action: #selector(NotificationsViewController.onViewAll)
+            )
+        }
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
-    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        feed.viewWillLayoutSubviews(view: view)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.largeTitleDisplayMode = showRead ? .never : .always
+        }
     }
 
     // MARK: Private API
 
+    @objc
+    func onViewAll() {
+        let controller = NotificationsViewController(client: client, showRead: true)
+        controller.title = NSLocalizedString("Archives", comment: "")
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
     func resetRightBarItem() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Mark All", comment: ""),
-            style: .plain,
-            target: self,
-            action: #selector(NotificationsViewController.onMarkAll(sender:))
-        )
+        if !showRead {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: NSLocalizedString("Mark All", comment: ""),
+                style: .plain,
+                target: self,
+                action: #selector(NotificationsViewController.onMarkAll(sender:))
+            )
+        }
         updateUnreadState()
     }
 
     private func updateUnreadState() {
-        let unreadCount = dataSource.unreadNotifications.count
-        navigationItem.rightBarButtonItem?.isEnabled = unreadCount > 0
-        navigationController?.tabBarItem.badgeValue = unreadCount > 0 ? "\(unreadCount)" : nil
+        let unreadCount = models.reduce(0) { (total, model) -> Int in
+            if let model = model as? NotificationViewModel {
+                return total + (model.read ? 0 : 1)
+            } else {
+                return total
+            }
+        }
+        let hasUnread = unreadCount > 0
+        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unreadCount)" : nil
         BadgeNotifications.update(count: unreadCount)
     }
 
@@ -102,7 +111,7 @@ TabNavRootViewControllerType {
             } else {
                 generator.notificationOccurred(.error)
             }
-            self.reload()
+            self.fetch(page: nil)
 
             // "mark all" is an engaging action, system prompt on it
             RatingController.prompt(.system)
@@ -132,167 +141,55 @@ TabNavRootViewControllerType {
     }
 
     private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
-        // in case coming from "mark all" action
-        self.resetRightBarItem()
-
         switch result {
         case .success(let notifications, let next):
-            let width = self.view.bounds.width
-
-            if append {
-                self.dataSource.append(notifications: notifications)
-            } else {
-                self.dataSource.update(notifications: notifications)
-            }
-
-            // disable the page model if there is no next
-            self.page = next != nil ? NSNumber(integerLiteral: next!) : nil
-            self.hasError = false
-
-            self.update(dismissRefresh: !append, animated: animated)
+            notifications.forEach { client.githubClient.cache.add(listener: self, value: $0) }
+            update(models: notifications, page: next as NSNumber?, append: append, animated: animated)
         case .error:
+            error(animated: true)
             ToastManager.showNetworkError()
-            self.hasError = true
-            self.update(dismissRefresh: !append, animated: animated)
         }
+
+        // set after updating so self.models has already been changed
+        self.resetRightBarItem()
     }
 
-    private func reload() {
-        let first = 1
-        client.requestNotifications(all: true, page: first, width: view.bounds.width) { result in
-            self.handle(result: result, append: false, animated: true, page: first)
-        }
-    }
+    // MARK: Overrides
 
-    private func nextPage() {
-        let next = (page?.intValue ?? 0)
-        client.requestNotifications(all: true, page: next, width: view.bounds.width) { result in
-            self.handle(result: result, append: true, animated: false, page: next)
-        }
-    }
-
-    // MARK: ListAdapterDataSource
-
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let selectedModels = selection.unreadSelected ? dataSource.unreadNotifications : dataSource.allNotifications
-
-        if hasError && selectedModels.count == 0 {
-            return []
-        }
-
-        var objects: [ListDiffable] = [searchKey, selection]
-        
-        if let token = ratingToken {
-            objects.append(token)
-        }
-
-        if selectedModels.count == 0 && feed.status == .idle {
-            objects.append(emptyKey)
+    override func fetch(page: NSNumber?) {
+        let width = view.bounds.width
+        if let page = page?.intValue {
+            client.requestNotifications(all: showRead, page: page, width: width) { result in
+                self.handle(result: result, append: true, animated: false, page: page)
+            }
         } else {
-            objects += selectedModels as [ListDiffable]
-
-            // only append paging if there are visible notifications
-            if let page = self.page {
-                objects.append(page)
+            let first = 1
+            client.requestNotifications(all: showRead, page: first, width: width) { result in
+                self.handle(result: result, append: false, animated: true, page: first)
             }
         }
-
-        return filtered(array: objects, query: searchQuery)
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard let object = object as? ListDiffable else { fatalError("Object not diffable") }
+    // MARK: BaseListViewControllerDataSource
 
-        // 28 is the default height of UISegmentedControl
-        let controlHeight = 28 + 2*Styles.Sizes.rowSpacing
+    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
+    }
 
-        if object === page { return NotificationNextPageSectionController(delegate: self) }
-        else if object === emptyKey {
-            return NoNewNotificationSectionController(
-                topInset: controlHeight,
-                topLayoutGuide: topLayoutGuide,
-                bottomLayoutGuide: bottomLayoutGuide
-            )
-        }
-
-        if object === searchKey {
-            return SearchBarSectionController(
-                placeholder: Constants.Strings.search,
-                delegate: self
-            )
-        }
-
-        switch object {
-        case is SegmentedControlModel: return SegmentedControlSectionController(delegate: self, height: controlHeight)
-        case is NotificationViewModel: return NotificationSectionController(client: client, dataSource: dataSource)
+    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        switch model {
+        case is NotificationViewModel: return NotificationSectionController(client: client)
         case is RatingToken: return RatingSectionController(delegate: self)
-        default: fatalError("Unhandled object: \(object)")
+        default: fatalError("Unhandled object: \(model)")
         }
     }
 
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        switch feed.status {
-        case .idle:
-            let emptyView = EmptyView()
-            emptyView.label.text = NSLocalizedString("Cannot load your inbox", comment: "")
-            return emptyView
-        case .loading, .loadingNext:
-            return nil
-        }
-    }
-
-    // MARK: SegmentedControlSectionControllerDelegate
-
-    func didChangeSelection(sectionController: SegmentedControlSectionController, model: SegmentedControlModel) {
-        update(dismissRefresh: false)
-    }
-
-    // MARK: SearchBarSectionControllerDelegate
-
-    func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        self.searchQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        update(dismissRefresh: false)
-    }
-
-    // MARK: FeedDelegate
-
-    func loadFromNetwork(feed: Feed) {
-        reload()
-    }
-
-    func loadNextPage(feed: Feed) -> Bool {
-        return false
-    }
-
-    // MARK: NotificationClientListener
-
-    func willMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
-        dataSource.setOptimisticRead(id: id)
-
-        if !isOpen {
-            update(dismissRefresh: false, animated: true)
-        }
-    }
-
-    func didFailToMarkRead(client: NotificationClient, id: String, isOpen: Bool) {
-        dataSource.removeOptimisticRead(id: id)
-        ToastManager.showGenericError()
-
-        if !isOpen {
-            update(dismissRefresh: false, animated: true)
-        }
-    }
-
-    // MARK: NotificationNextPageSectionControllerDelegate
-
-    func didSelect(notificationSectionController: NotificationNextPageSectionController) {
-        nextPage()
-    }
-    
-    // MARK: FeedSelectionProviding
-    
-    var feedContainsSelection: Bool {
-        return feed.collectionView.indexPathsForSelectedItems?.count != 0
+    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+        return NoNewNotificationSectionController(
+            topInset: 0,
+            topLayoutGuide: topLayoutGuide,
+            bottomLayoutGuide: bottomLayoutGuide
+        )
     }
 
     // MARK: ForegroundHandlerDelegate
@@ -315,5 +212,34 @@ TabNavRootViewControllerType {
     }
 
     func didDoubleTapTab() {}
+
+    // MARK: FlatCacheListener
+
+    func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
+        switch update {
+        case .item(let item):
+            // only handle NotificationViewModels
+            if let notification = item as? NotificationViewModel {
+                var models = [ListDiffable]()
+                // do a pass over each model and search for the updated item
+                for model in self.models {
+                    // if not showing read items and the models match (id only)
+                    if let currentNotification = model as? NotificationViewModel,
+                        currentNotification.id == notification.id {
+                        // swap the model if not read, otherwise exclude it
+                        // this powers the "swipe to archive" feature deleting the cell
+                        if showRead || !notification.read {
+                            models.append(notification)
+                        }
+                    } else {
+                        models.append(model)
+                    }
+                }
+                self.update(models: models, animated: true)
+                self.resetRightBarItem()
+            }
+        case .list: break
+        }
+    }
     
 }

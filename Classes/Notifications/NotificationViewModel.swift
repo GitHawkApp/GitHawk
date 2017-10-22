@@ -27,6 +27,26 @@ final class NotificationViewModel: ListDiffable, Cachable {
     let identifier: Identifier
 
     init(
+    id: String,
+    title: NSAttributedStringSizing,
+    type: NotificationType,
+    date: Date,
+    read: Bool,
+    owner: String,
+    repo: String,
+    identifier: Identifier
+        ) {
+        self.id = id
+        self.title = title
+        self.type = type
+        self.date = date
+        self.read = read
+        self.owner = owner
+        self.repo = repo
+        self.identifier = identifier
+    }
+
+    convenience init(
         id: String,
         title: String,
         type: NotificationType,
@@ -37,22 +57,24 @@ final class NotificationViewModel: ListDiffable, Cachable {
         identifier: Identifier,
         containerWidth: CGFloat
         ) {
-        self.id = id
-        self.type = type
-        self.date = date
-        self.read = read
-        self.owner = owner
-        self.repo = repo
-        self.identifier = identifier
-
         let attributes = [
             NSAttributedStringKey.font: Styles.Fonts.body,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
-        self.title = NSAttributedStringSizing(
+        let title = NSAttributedStringSizing(
             containerWidth: containerWidth,
             attributedText: NSAttributedString(string: title, attributes: attributes),
             inset: NotificationCell.labelInset
+        )
+        self.init(
+            id: id,
+            title: title,
+            type: type,
+            date: date,
+            read: read,
+            owner: owner,
+            repo: repo,
+            identifier: identifier
         )
     }
 
