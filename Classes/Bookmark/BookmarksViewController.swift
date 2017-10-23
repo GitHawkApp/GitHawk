@@ -103,7 +103,7 @@ TabNavRootViewControllerType {
     // MARK: TabNavRootViewControllerType
 
     func didSingleTapTab() {
-        tableView.setContentOffset(CGPoint.zero, animated: true)
+        tableView.scrollToTop(animated: true)
     }
 
     func didDoubleTapTab() {
