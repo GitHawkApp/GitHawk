@@ -116,9 +116,14 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onViewSource() {
-        guard let url = URL(string: Constants.URLs.repository)
-            else { fatalError("Should always create GitHub URL") }
-		presentSafari(url: url)
+        let repo = RepositoryDetails(
+            owner: "rnystrom",
+            name: "GitHawk",
+            hasIssuesEnabled: true
+        )
+        let repoViewController = RepositoryViewController(client: client, repo: repo, defaultPageIndex: .code)
+        let navigation = UINavigationController(rootViewController: repoViewController)
+        showDetailViewController(navigation, sender: nil)
     }
 
     func onSignOut() {

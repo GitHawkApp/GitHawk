@@ -12,6 +12,13 @@ import Pageboy
 import TUSafariActivity
 import SafariServices
 
+enum RepositoryPageIndex: Int {
+    case overview    = 0
+    case issues      = 1
+    case pullRequest = 2
+    case code        = 3
+}
+
 class RepositoryViewController: TabmanViewController,
 PageboyViewControllerDataSource,
 NewIssueTableViewControllerDelegate {
@@ -19,11 +26,13 @@ NewIssueTableViewControllerDelegate {
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
+    private let defaultPageIndex: RepositoryPageIndex
 
-    init(client: GithubClient, repo: RepositoryDetails) {
+    init(client: GithubClient, repo: RepositoryDetails, defaultPageIndex:RepositoryPageIndex = .overview) {
         self.repo = repo
         self.client = client
-
+        self.defaultPageIndex = defaultPageIndex
+        
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {
             controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
@@ -142,7 +151,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
+        return Page.at(index: defaultPageIndex.rawValue)
     }
 
     // MARK: NewIssueTableViewControllerDelegate
