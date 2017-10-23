@@ -28,14 +28,19 @@ SearchResultSectionControllerDelegate {
 
     enum State {
         case idle
-        case loading(Cancellable?, SearchQuery?)
+        case loading(Cancellable, SearchQuery)
         case results([ListDiffable])
         case error
     }
     private var state: State = .idle {
         willSet {
-            if case let .loading(request, _) = state {
-                request?.cancel()
+            // To facilitate side-effect free state transition, we should cancel any on-going networking.
+            // The `loading` => `loading` state transition can only be triggered through search while typing.
+            // In that case, we don't want to store partial searches in the store.
+            guard case let .loading(request, query) = state else { return }
+            request.cancel()
+            if case .loading = newValue {
+                recentStore.remove(query: query)
             }
         }
     }
@@ -136,7 +141,7 @@ SearchResultSectionControllerDelegate {
     private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
         case let .error(error) where isCancellationError(error):
-            self.state = .loading(nil, nil)
+            return
         case .error:
             self.state = .error
         case .success(_, let results):
@@ -221,10 +226,6 @@ SearchResultSectionControllerDelegate {
             state = .idle
             update(animated: false)
             return
-        }
-
-        if case .loading = state {
-            recentStore.removeLast()
         }
 
         debouncer.action = { [weak self] in self?.search(term: term) }
