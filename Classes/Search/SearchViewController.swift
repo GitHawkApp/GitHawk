@@ -28,13 +28,13 @@ SearchResultSectionControllerDelegate {
 
     enum State {
         case idle
-        case loading(Cancellable?)
+        case loading(Cancellable?, SearchQuery?)
         case results([ListDiffable])
         case error
     }
     private var state: State = .idle {
         willSet {
-            if case let .loading(request) = state {
+            if case let .loading(request, _) = state {
                 request?.cancel()
             }
         }
@@ -136,7 +136,7 @@ SearchResultSectionControllerDelegate {
     private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
         case let .error(error) where isCancellationError(error):
-            self.state = .loading(nil)
+            self.state = .loading(nil, nil)
         case .error:
             self.state = .error
         case .success(_, let results):
@@ -146,13 +146,15 @@ SearchResultSectionControllerDelegate {
     }
 
     func search(term: String) {
-        recentStore.add(query: .search(term))
+        let query: SearchQuery = .search(term)
+        guard canSearch(query: query) else { return }
+        recentStore.add(query: query)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
             self?.handle(resultType: resultType, animated: true)
         }
-        state = .loading(request)
+        state = .loading(request, query)
 
         update(animated: false)
     }
@@ -234,7 +236,6 @@ SearchResultSectionControllerDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        debouncer.cancel()
 
         guard let term = searchTerm(for: searchBar.text) else { return }
         search(term: term)
@@ -333,5 +334,13 @@ SearchResultSectionControllerDelegate {
         guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
             !term.isEmpty else { return nil }
         return term
+    }
+
+    private func canSearch(query: SearchQuery) -> Bool {
+        // if making a request where the term is identical to `query`
+        if case let .loading(_, activeQuery) = state, activeQuery == query {
+            return false
+        }
+        return true
     }
 }
