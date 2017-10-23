@@ -21,6 +21,7 @@ func newSettingsRootViewController(
         first.client = client
         first.sessionManager = sessionManager
         first.rootNavigationManager = rootNavigationManager
+        first.makeBackBarItemEmpty()
         nav.tabBarItem.title = NSLocalizedString("Settings", comment: "")
         nav.tabBarItem.image = UIImage(named: "tab-gear")
         nav.tabBarItem.selectedImage = UIImage(named: "tab-gear-selected")
