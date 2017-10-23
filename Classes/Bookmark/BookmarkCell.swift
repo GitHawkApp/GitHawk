@@ -55,15 +55,13 @@ class BookmarkCell: UITableViewCell {
         title.append(NSAttributedString(string: bookmark.name, attributes: nameAttributes))
     
         switch bookmark.type {
-        case .repo:
-            textLabel?.attributedText = title
         case .issue, .pullRequest:
             title.append(NSAttributedString(string: " #\(bookmark.number)", attributes: ownerAttributes))
-            textLabel?.attributedText = title
         default:
             break
         }
         
+        textLabel?.attributedText = title
         detailTextLabel?.text = bookmark.title
         imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
         imageView?.tintColor = Styles.Colors.Blue.medium.color
