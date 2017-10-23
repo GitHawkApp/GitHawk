@@ -86,7 +86,7 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
 
     var baseAttributes: [NSAttributedStringKey: Any] = [
         .foregroundColor: Styles.Colors.Gray.dark.color,
-        .backgroundColor: UIColor.white,
+        .backgroundColor: UIColor.white
         ]
 
     var rowCount = 0

@@ -34,7 +34,7 @@ final class IssueLabelCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(Styles.Sizes.columnSpacing)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,5 +53,5 @@ final class IssueLabelCell: UICollectionViewCell, ListBindable {
         label.text = viewModel.name
         label.textColor = color.textOverlayColor
     }
-    
+
 }

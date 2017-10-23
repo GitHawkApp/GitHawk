@@ -17,8 +17,7 @@ final class GithubUserSession: NSObject, NSCoding {
     }
 
     enum AuthMethod: String {
-        case oauth = "oauth"
-        case pat = "pat" // personal access token
+        case oauth, pat
     }
 
     let token: String

@@ -30,5 +30,5 @@ extension UIMenuController {
 
     @objc
     func _empty() {}
-    
+
 }

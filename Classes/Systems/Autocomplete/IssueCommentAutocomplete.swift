@@ -17,7 +17,7 @@ final class IssueCommentAutocomplete {
 
     let cellHeight = Styles.Sizes.tableCellHeight
 
-    private weak var delegate: IssueCommentAutocompleteDelegate? = nil
+    private weak var delegate: IssueCommentAutocompleteDelegate?
     private let identifier = "identifier"
 
     private var map: [String: AutocompleteType]

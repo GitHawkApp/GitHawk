@@ -128,6 +128,5 @@ extension String {
     public var color: UIColor {
         return UIColor.fromHex(self)
     }
-    
-}
 
+}

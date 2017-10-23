@@ -15,7 +15,7 @@ protocol NotificationNextPageSectionControllerDelegate: class {
 
 final class NotificationNextPageSectionController: ListGenericSectionController<NSNumber> {
 
-    weak var delegate: NotificationNextPageSectionControllerDelegate? = nil
+    weak var delegate: NotificationNextPageSectionControllerDelegate?
 
     init(delegate: NotificationNextPageSectionControllerDelegate) {
         self.delegate = delegate

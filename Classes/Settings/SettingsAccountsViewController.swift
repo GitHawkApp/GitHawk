@@ -18,7 +18,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         }
     }
     private var userSessions = [GithubUserSession]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = NSLocalizedString("Accounts", comment: "")
@@ -40,7 +40,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
             AlertAction.cancel(),
             AlertAction.login({ [weak alert, weak self] _ in
                 alert?.actions.forEach { $0.isEnabled = false }
-                
+
                 let token = alert?.textFields?.first?.text ?? ""
                 self?.client.verifyPersonalAccessToken(token: token) { result in
                     self?.handle(result: result, authMethod: .pat)
@@ -80,7 +80,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
             return (left.username ?? "") < (right.username ?? "")
         })
     }
-    
+
     // MARK: UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

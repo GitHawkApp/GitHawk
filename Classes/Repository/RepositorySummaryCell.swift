@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 final class RepositorySummaryCell: SelectableCell {
-    
+
     static let labelDotSize = CGSize(width: 10, height: 10)
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -18,24 +18,24 @@ final class RepositorySummaryCell: SelectableCell {
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
-    
+
     private let reasonImageView = UIImageView()
     private let titleView = AttributedStringView()
     private let detailsStackView = UIStackView()
     private let secondaryLabel = UILabel()
     private let labelDotView = DotListView(dotSize: RepositorySummaryCell.labelDotSize)
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-        
+
         backgroundColor = .white
-        
+
         contentView.addSubview(reasonImageView)
         contentView.addSubview(titleView)
         contentView.addSubview(detailsStackView)
-        
+
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
         reasonImageView.tintColor = Styles.Colors.Blue.medium.color
@@ -44,7 +44,7 @@ final class RepositorySummaryCell: SelectableCell {
             make.centerY.equalToSuperview()
             make.left.equalTo(Styles.Sizes.columnSpacing)
         }
-        
+
         detailsStackView.axis = .vertical
         detailsStackView.alignment = .leading
         detailsStackView.distribution = .fill
@@ -60,15 +60,15 @@ final class RepositorySummaryCell: SelectableCell {
         secondaryLabel.numberOfLines = 1
         secondaryLabel.font = Styles.Fonts.secondary
         secondaryLabel.textColor = Styles.Colors.Gray.light.color
-        
+
         labelDotView.snp.makeConstraints { make in
             make.height.equalTo(RepositorySummaryCell.labelDotSize.height)
             make.left.right.equalTo(detailsStackView)
         }
-        
+
         contentView.addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -79,10 +79,10 @@ final class RepositorySummaryCell: SelectableCell {
     }
 
     // MARK: Public API
-    
+
     func configure(_ model: RepositoryIssueSummaryModel) {
         titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
-        
+
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
         secondaryLabel.text = String.localizedStringWithFormat(format, model.number, model.created.agoString, model.author)
 
@@ -102,7 +102,7 @@ final class RepositorySummaryCell: SelectableCell {
 
         reasonImageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         reasonImageView.tintColor = tint
-        
+
         if model.labels.count > 0 {
             labelDotView.isHidden = false
             let colors = model.labels.map { UIColor.fromHex($0.color) }
@@ -111,7 +111,7 @@ final class RepositorySummaryCell: SelectableCell {
             labelDotView.isHidden = true
         }
     }
-    
+
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews
@@ -120,5 +120,5 @@ final class RepositorySummaryCell: SelectableCell {
         }
         set { }
     }
-    
+
 }

@@ -53,7 +53,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
                 name: NSNotification.Name.UIApplicationWillEnterForeground,
                 object: nil
         )
-        
+
         contentView.isAccessibilityElement = true
         contentView.accessibilityLabel = NSLocalizedString("You have no new notifications!", comment: "Inbox Zero Accessibility Label")
     }

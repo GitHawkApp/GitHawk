@@ -55,7 +55,7 @@ IssueCommentSectionControllerDelegate {
 
     // set to optimistically change the open/closed status
     // clear when refreshing or on request failure
-    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)? = nil
+    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)?
 
     init(
         client: GithubClient,
@@ -159,7 +159,7 @@ IssueCommentSectionControllerDelegate {
             navigationItem.largeTitleDisplayMode = .never
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         feed.viewDidAppear(animated)
@@ -170,7 +170,7 @@ IssueCommentSectionControllerDelegate {
         )
         setupUserActivity(with: informator)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         invalidateUserActivity()
@@ -233,7 +233,7 @@ IssueCommentSectionControllerDelegate {
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
-    
+
     var issueTitle: String {
         return "\(model.owner)/\(model.repo)#\(model.number)"
     }
@@ -243,25 +243,25 @@ IssueCommentSectionControllerDelegate {
             let status = localStatusChange?.model.status ?? current?.status.status,
             status != .merged
             else { return nil }
-        
+
         return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setStatus(close: status == .open)
         }
     }
-    
+
     func lockAction() -> UIAlertAction? {
         guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
             return nil
         }
-        
+
         return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
             self?.setLocked(!locked)
         }
     }
-    
+
     func viewRepoAction() -> UIAlertAction? {
-        guard let _ = current else { return nil }
-        
+        guard current != nil else { return nil }
+
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
@@ -269,7 +269,7 @@ IssueCommentSectionControllerDelegate {
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         weak var weakSelf = self
-        
+
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
             .view(repo: repoViewController)
     }
@@ -283,17 +283,17 @@ IssueCommentSectionControllerDelegate {
             number: model.number,
             title: current.title.attributedText.string
         )
-        
+
         return AlertAction.bookmark(bookmarkModel)
     }
-    
+
     @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-        
+
         alert.addActions([
             bookmarkAction(),
             closeAction(),
@@ -304,7 +304,7 @@ IssueCommentSectionControllerDelegate {
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.barButtonItem = sender
-        
+
         present(alert, animated: true)
     }
 
@@ -387,10 +387,10 @@ IssueCommentSectionControllerDelegate {
             }
         }
     }
-    
+
     func setLocked(_ locked: Bool) {
         guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
-        
+
         let localModel = IssueStatusModel(
             status: currentStatus.status,
             pullRequest: currentStatus.pullRequest,
@@ -404,10 +404,10 @@ IssueCommentSectionControllerDelegate {
             status: locked ? .locked : .unlocked,
             pullRequest: currentStatus.pullRequest
         )
-        
+
         localStatusChange = (localModel, localEvent)
         feed.adapter.performUpdates(animated: true)
-        
+
         client.setLocked(
             owner: model.owner,
             repo: model.repo,
@@ -432,7 +432,7 @@ IssueCommentSectionControllerDelegate {
         var objects: [ListDiffable] = [
             localStatusChange?.model ?? current.status,
             current.title,
-            current.labels,
+            current.labels
         ]
 
         if let milestone = current.milestone {
@@ -456,7 +456,7 @@ IssueCommentSectionControllerDelegate {
         if let rootComment = current.rootComment {
             objects.append(rootComment)
         }
-        
+
         objects += current.timelineViewModels
         objects += sentComments
 
@@ -560,9 +560,9 @@ IssueCommentSectionControllerDelegate {
         registerPrefixes(forAutoCompletion: autocomplete.prefixes)
         autoCompletionView.reloadData()
     }
-    
+
     // MARK: FeedSelectionProviding
-    
+
     var feedContainsSelection: Bool {
         return feed.collectionView.indexPathsForSelectedItems?.count != 0
     }
@@ -576,7 +576,7 @@ IssueCommentSectionControllerDelegate {
     // MARK: IssueCommentSectionControllerDelegate
 
     func didEdit(sectionController: IssueCommentSectionController) {
-        
+
     }
 
 }

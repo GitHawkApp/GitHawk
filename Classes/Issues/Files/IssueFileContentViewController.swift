@@ -15,7 +15,7 @@ final class IssueFileContentViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let attributeView = AttributedStringView()
     private let feedRefresh = FeedRefresh()
-    private var result: Result<(NSAttributedStringSizing, Content)>? = nil
+    private var result: Result<(NSAttributedStringSizing, Content)>?
 
     init(fullPath: String, client: GithubClient) {
         self.fullPath = fullPath
@@ -25,7 +25,7 @@ final class IssueFileContentViewController: UIViewController {
         scrollView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(IssueFileContentViewController.onRefresh), for: .valueChanged)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -34,7 +34,7 @@ final class IssueFileContentViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        
+
         scrollView.isDirectionalLockEnabled = true
         view.addSubview(scrollView)
 

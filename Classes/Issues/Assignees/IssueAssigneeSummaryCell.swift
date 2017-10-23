@@ -47,7 +47,7 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
             make.top.bottom.right.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

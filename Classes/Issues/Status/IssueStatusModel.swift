@@ -36,4 +36,3 @@ final class IssueStatusModel: ListDiffable {
     }
 
 }
-

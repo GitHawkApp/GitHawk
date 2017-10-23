@@ -16,11 +16,11 @@ final class IssueReviewEmptyTailCell: UICollectionViewCell, ListBindable {
         backgroundColor = .white
         contentView.addBorder(.bottom)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {}

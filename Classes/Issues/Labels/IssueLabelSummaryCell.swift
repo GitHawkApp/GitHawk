@@ -37,7 +37,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
             make.top.bottom.right.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,7 +54,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
         label.text = viewModel.title
         labelDotView.configure(colors: viewModel.colors)
     }
-    
+
     // MARK: - Accessibility
     override var accessibilityLabel: String? {
         get {

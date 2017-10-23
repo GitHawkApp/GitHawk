@@ -15,11 +15,11 @@ enum SearchQuery: Codable, Equatable {
         case search
         case recentlyViewed
     }
-    
+
     enum SearchQueryCodingError: Error {
         case decoding(String)
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         if let value = try? values.decode(String.self, forKey: .search) {
@@ -32,7 +32,7 @@ enum SearchQuery: Codable, Equatable {
         }
         throw SearchQueryCodingError.decoding("Unable to decode SearchQuery! \(dump(values))")
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {

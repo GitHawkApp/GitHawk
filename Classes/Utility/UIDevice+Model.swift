@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIDevice {
-    
+
     // Adapted from https://gist.github.com/JonFir/008771d8482924ed0941
     var modelName: String {
         var systemInfo = utsname()
@@ -19,7 +19,7 @@ extension UIDevice {
             guard let value = element.value as? Int8, value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-        
+
         switch identifier {
         case "iPod5,1":                                 return "iPod Touch 5"
         case "iPod7,1":                                 return "iPod Touch 6"
@@ -50,5 +50,5 @@ extension UIDevice {
         default:                                        return identifier
         }
     }
-    
+
 }
