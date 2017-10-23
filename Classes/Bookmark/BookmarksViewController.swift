@@ -19,7 +19,16 @@ TabNavRootViewControllerType {
     private let bookmarkStore = BookmarksStore.shared
     private let searchBar = UISearchBar()
     private var filterdBookmarks: [BookmarkModel]? = nil
-    
+    private var searchController: UISearchController {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchBar.delegate = self
+        controller.searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
+        controller.searchBar.tintColor = Styles.Colors.Blue.medium.color
+        controller.searchBar.backgroundColor = .clear
+        controller.searchBar.searchBarStyle = .minimal
+        return controller
+    }
+
     // MARK: Init
     
     init(client: GithubClient) {
@@ -36,13 +45,13 @@ TabNavRootViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
-        searchBar.backgroundColor = .clear
-        searchBar.searchBarStyle = .minimal
-        searchBar.sizeToFit()
-        tableView.tableHeaderView = searchBar
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
