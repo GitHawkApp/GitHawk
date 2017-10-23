@@ -120,7 +120,8 @@ IssueCommentSectionControllerDelegate {
             getMarkdownBlock: getMarkdownBlock,
             repo: model.repo,
             owner: model.owner,
-            addBorder: false
+            addBorder: false,
+            supportsImageUpload: false
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
@@ -273,6 +274,19 @@ IssueCommentSectionControllerDelegate {
             .view(repo: repoViewController)
     }
 
+    func bookmarkAction() -> UIAlertAction? {
+        guard let current = current else { return nil }
+        let bookmarkModel = BookmarkModel(
+            type: current.pullRequest ? .pullRequest : .issue,
+            name: model.repo,
+            owner: model.owner,
+            number: model.number,
+            title: current.title.attributedText.string
+        )
+        
+        return AlertAction.bookmark(bookmarkModel)
+    }
+    
     @objc
     func onMore(sender: UIBarButtonItem) {
 		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -281,6 +295,7 @@ IssueCommentSectionControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         
         alert.addActions([
+            bookmarkAction(),
             closeAction(),
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
@@ -338,7 +353,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
 
         let localModel = IssueStatusModel(
             status: close ? .closed : .open,
@@ -374,7 +389,7 @@ IssueCommentSectionControllerDelegate {
     }
     
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
         
         let localModel = IssueStatusModel(
             status: currentStatus.status,

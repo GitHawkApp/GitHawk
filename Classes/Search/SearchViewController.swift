@@ -52,6 +52,11 @@ SearchResultSectionControllerDelegate {
     init(client: GithubClient) {
         self.client = client
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default
+            .addObserver(searchBar,
+                         selector: #selector(UISearchBar.resignFirstResponder),
+                         name: .UIKeyboardWillHide,
+                         object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -73,6 +78,20 @@ SearchResultSectionControllerDelegate {
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillShow(notification:)),
+            name: .UIKeyboardWillShow,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillHide(notification:)),
+            name: .UIKeyboardWillHide,
+            object: nil
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +107,24 @@ SearchResultSectionControllerDelegate {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
         }
+    }
+    // MARK: Notifications
+
+    @objc
+    func onKeyboardWillShow(notification: NSNotification) {
+        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let converted = view.convert(frame, from: nil)
+        let intersection = converted.intersection(frame)
+        let bottomInset = intersection.height - bottomLayoutGuide.length
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        collectionView.contentInset = inset
+        collectionView.scrollIndicatorInsets = inset
+    }
+
+    @objc
+    func onKeyboardWillHide(notification: NSNotification) {
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
     }
 
     // MARK: Data Loading/Paging
@@ -197,6 +234,7 @@ SearchResultSectionControllerDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        debouncer.cancel()
 
         guard let term = searchTerm(for: searchBar.text) else { return }
         search(term: term)

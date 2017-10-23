@@ -13,6 +13,7 @@ enum NotificationType: String {
     case issue = "Issue"
     case pullRequest = "PullRequest"
     case commit = "Commit"
+    case repo = "Repository"
 }
 
 extension NotificationType {
@@ -23,6 +24,8 @@ extension NotificationType {
             return NSLocalizedString("Issue", comment: "")
         case .commit:
             return NSLocalizedString("Commit", comment: "")
+        case .repo:
+            return NSLocalizedString("Repository", comment: "")
         case .pullRequest:
             return NSLocalizedString("Pull request", comment: "")
         }

@@ -20,7 +20,7 @@ final class IssuePatchContentViewController: UIViewController {
         self.client = client
         super.init(nibName: nil, bundle: nil)
 
-        title = file.filename
+        title = file.actualFileName
 
         let width: CGFloat = 0
         let text = NSAttributedStringSizing(

@@ -56,6 +56,7 @@ struct IssueTextActionOperation {
         case line(String)
         case wrap(String, String)
         case execute(() -> ())
+        case uploadImage
     }
 
     let icon: UIImage?

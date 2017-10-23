@@ -46,7 +46,7 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        resetRightBarItem()
+        resetLeftBarItem()
         if !showRead {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: Constants.Strings.archives,
@@ -73,9 +73,9 @@ FlatCacheListener {
         navigationController?.pushViewController(controller, animated: true)
     }
 
-    func resetRightBarItem() {
+    func resetLeftBarItem() {
         if !showRead {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: NSLocalizedString("Mark All", comment: ""),
                 style: .plain,
                 target: self,
@@ -86,21 +86,19 @@ FlatCacheListener {
     }
 
     private func updateUnreadState() {
-        let unreadCount = models.reduce(0) { (total, model) -> Int in
-            if let model = model as? NotificationViewModel {
-                return total + (model.read ? 0 : 1)
-            } else {
-                return total
-            }
-        }
+        // don't update tab bar and badges when not showing only new notifications
+        // prevents archives updating badge and tab #s
+        guard !showRead else { return }
+
+        let unreadCount = models.count
         let hasUnread = unreadCount > 0
-        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        navigationItem.leftBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unreadCount)" : nil
         BadgeNotifications.update(count: unreadCount)
     }
 
     private func markAllRead() {
-        self.setRightBarItemSpinning()
+        self.setLeftBarItemSpinning()
         self.client.markAllNotifications { success in
             let generator = UINotificationFeedbackGenerator()
             if success {
@@ -151,7 +149,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetRightBarItem()
+        self.resetLeftBarItem()
     }
 
     // MARK: Overrides
@@ -236,7 +234,7 @@ FlatCacheListener {
                     }
                 }
                 self.update(models: models, animated: true)
-                self.resetRightBarItem()
+                self.resetLeftBarItem()
             }
         case .list: break
         }

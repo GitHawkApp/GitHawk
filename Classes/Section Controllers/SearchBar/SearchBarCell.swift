@@ -24,6 +24,8 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
         backgroundColor = .white
 
+        searchBar.returnKeyType = .search
+        searchBar.enablesReturnKeyAutomatically = false
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.tintColor = Styles.Colors.Blue.medium.color
@@ -33,6 +35,12 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
             make.trailing.equalTo(contentView)
             make.centerY.equalTo(contentView)
         }
+        
+        NotificationCenter.default
+            .addObserver(searchBar,
+                         selector: #selector(UISearchBar.resignFirstResponder),
+                         name: .UIKeyboardWillHide,
+                         object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,5 +63,9 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.didChangeSearchText(cell: self, query: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

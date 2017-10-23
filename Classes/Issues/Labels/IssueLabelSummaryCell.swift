@@ -10,20 +10,12 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSource, ListBindable {
+final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
 
     static let reuse = "cell"
 
     private let label = UILabel()
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 15, height: 15)
-        layout.minimumLineSpacing = Styles.Sizes.columnSpacing / 2.0
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.register(IssueLabelDotCell.self, forCellWithReuseIdentifier: IssueLabelSummaryCell.reuse)
-        return view
-    }()
+    private let labelDotView = DotListView(dotSize: CGSize(width: 15, height: 15))
     private var colors = [UIColor]()
 
     override init(frame: CGRect) {
@@ -39,11 +31,8 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
             make.left.equalTo(Styles.Sizes.gutter)
         }
 
-        collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
-        collectionView.isUserInteractionEnabled = false
-        contentView.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
+        contentView.addSubview(labelDotView)
+        labelDotView.snp.makeConstraints { make in
             make.left.equalTo(label.snp.right).offset(Styles.Sizes.columnSpacing)
             make.top.bottom.right.equalTo(contentView)
         }
@@ -56,23 +45,6 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-
-        let height = contentView.bounds.height
-        let size = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.itemSize ?? .zero
-        let inset = (height - size.height)/2
-        collectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
-    }
-
-    // MARK: UICollectionViewDataSource
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelSummaryCell.reuse, for: indexPath)
-        cell.backgroundColor = colors[indexPath.item]
-        return cell
     }
 
     // MARK: ListBindable
@@ -80,9 +52,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, UICollectionViewDataSou
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueLabelSummaryModel else { return }
         label.text = viewModel.title
-        colors = viewModel.colors
-        collectionView.reloadData()
-        setNeedsLayout()
+        labelDotView.configure(colors: viewModel.colors)
     }
     
     // MARK: - Accessibility

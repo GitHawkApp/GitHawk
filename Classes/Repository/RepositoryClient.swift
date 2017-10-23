@@ -64,7 +64,8 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
         created: date,
         author: node.repoEventFields.author?.login ?? Constants.Strings.unknown,
         status: node.status,
-        pullRequest: node.pullRequest
+        pullRequest: node.pullRequest,
+        labels: node.labelableFields.issueLabelModels
     )
 }
 
