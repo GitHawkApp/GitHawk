@@ -19,7 +19,7 @@ final class LoadMoreCell: UICollectionViewCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         label.font = Styles.Fonts.button
-        label.textColor = Styles.Colors.Gray.light.color
+        label.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalTo(contentView)
@@ -41,4 +41,14 @@ final class LoadMoreCell: UICollectionViewCell {
         set { }
     }
 
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                label.textColor = Styles.Colors.Gray.light.color
+            } else {
+                label.textColor = Styles.Colors.Gray.medium.color
+            }
+        }
+    }
+    
 }
