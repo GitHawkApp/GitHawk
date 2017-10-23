@@ -31,11 +31,11 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell {
         bottomBorder = contentView.addBorder(.bottom)
         rightBorder = contentView.addBorder(.right)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Public API
 
     func configure(_ model: NSAttributedStringSizing) {

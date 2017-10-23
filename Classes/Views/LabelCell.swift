@@ -10,15 +10,15 @@ import UIKit
 import SnapKit
 
 final class LabelCell: UICollectionViewCell {
-    
+
     let label = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         contentView.backgroundColor = .clear
         accessibilityTraits |= UIAccessibilityTraitStaticText
-        
+
         label.backgroundColor = .clear
         label.textAlignment = .center
         label.font = Styles.Fonts.button
@@ -27,7 +27,7 @@ final class LabelCell: UICollectionViewCell {
             make.center.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,5 +36,5 @@ final class LabelCell: UICollectionViewCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-    
+
 }

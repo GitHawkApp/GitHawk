@@ -26,7 +26,7 @@ protocol ToastViewDelegate: class {}
 
 private final class ToastView: UIView {
 
-    weak var delegate: ToastViewDelegate? = nil
+    weak var delegate: ToastViewDelegate?
 
     private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let label = UILabel()
@@ -103,7 +103,7 @@ private final class ToastView: UIView {
             "button": button,
             "label": label,
             "hintView": hintView,
-            "contentView": contentView,
+            "contentView": contentView
             ]
 
         if configuration.buttonVisible {
@@ -198,7 +198,7 @@ final class ToastManager {
         let springBehavior: UIAttachmentBehavior
         let configuration: ToastViewConfiguration
 
-        private var timer: Timer? = nil
+        private var timer: Timer?
 
         init?(config: ToastViewConfiguration, in baseView: UIView) {
             configuration = config
@@ -277,7 +277,7 @@ final class ToastManager {
 
     }
 
-    private var toast: Toast? = nil
+    private var toast: Toast?
 
     init() {
         NotificationCenter.default.addObserver(
@@ -362,5 +362,3 @@ final class ToastManager {
     }
 
 }
-
-

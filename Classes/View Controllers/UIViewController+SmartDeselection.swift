@@ -42,7 +42,6 @@ extension UIViewController {
         }
     }
 
-
     func rz_smoothlyDeselectRows(collectionView: UICollectionView?) {
         // if part of a split VC and "full screen" in the primary spot, dont deselect
         // also consider if embedded in nav VC

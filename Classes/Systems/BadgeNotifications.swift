@@ -39,7 +39,7 @@ final class BadgeNotifications {
         case enabled
     }
 
-    static func check(callback: @escaping (State) -> ()) {
+    static func check(callback: @escaping (State) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
@@ -54,7 +54,7 @@ final class BadgeNotifications {
         }
     }
 
-    static func configure(application: UIApplication = UIApplication.shared, permissionHandler: ((Bool) -> ())? = nil) {
+    static func configure(application: UIApplication = UIApplication.shared, permissionHandler: ((Bool) -> Void)? = nil) {
         if isEnabled {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge], completionHandler: { (granted, _) in
                 permissionHandler?(granted)

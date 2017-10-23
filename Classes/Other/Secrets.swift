@@ -16,7 +16,7 @@ public enum GithubAPI {
 }
 
 public enum ImgurAPI {
-    
+
     static let clientID = "IMGUR_CLIENT_ID"
-    
+
 }

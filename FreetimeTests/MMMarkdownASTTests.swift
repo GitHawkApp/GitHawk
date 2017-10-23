@@ -65,7 +65,7 @@ final class MMMarkdownASTTests: XCTestCase {
             "- 1.1 _italic_",
             "- 1.2 **bold**",
             "    - 2.1",
-            "- 1.3",
+            "- 1.3"
             ].joined(separator: "\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let result = CreateCommentModels(markdown: md, width: 300, options: options)
@@ -125,29 +125,29 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(comboDetails.repo, "bar")
         XCTAssertEqual(comboDetails.number, 456)
     }
-    
+
     func test_shortenLinks() {
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand])
-        
+
         // Test Same Repository
         let testOne = "https://github.com/owner/repo/issues/123"
         let resultOne = CreateCommentModels(markdown: testOne, width: 300, options: options)
         let textOne = resultOne.first as! NSAttributedStringSizing
         XCTAssertEqual(textOne.attributedText.string, "#123")
         XCTAssertNotNil(textOne.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
-        
+
         let detailsOne = textOne.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue] as! IssueDetailsModel
         XCTAssertEqual(detailsOne.owner, "owner")
         XCTAssertEqual(detailsOne.repo, "repo")
         XCTAssertEqual(detailsOne.number, 123)
-        
+
         // Test Cross Repository
         let testTwo = "https://github.com/differentOwner/differentRepo/issues/321"
         let resultTwo = CreateCommentModels(markdown: testTwo, width: 300, options: options)
         let textTwo = resultTwo.first as! NSAttributedStringSizing
         XCTAssertEqual(textTwo.attributedText.string, "differentOwner/differentRepo#321")
         XCTAssertNotNil(textTwo.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
-        
+
         let detailsTwo = textTwo.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue] as! IssueDetailsModel
         XCTAssertEqual(detailsTwo.owner, "differentOwner")
         XCTAssertEqual(detailsTwo.repo, "differentRepo")

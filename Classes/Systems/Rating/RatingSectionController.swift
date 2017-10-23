@@ -15,7 +15,7 @@ protocol RatingSectionControllerDelegate: class {
 
 final class RatingSectionController: ListSectionController, RatingCellDelegate {
 
-    private weak var delegate: RatingSectionControllerDelegate? = nil
+    private weak var delegate: RatingSectionControllerDelegate?
 
     init(delegate: RatingSectionControllerDelegate) {
         super.init()

@@ -74,10 +74,10 @@ func CreateCommentModels(
         .foregroundColor: Styles.Colors.Gray.dark.color,
         .paragraphStyle: {
             let para = NSMutableParagraphStyle()
-            para.paragraphSpacingBefore = 12;
+            para.paragraphSpacingBefore = 12
             return para
         }(),
-        NSAttributedStringKey.backgroundColor: UIColor.white,
+        NSAttributedStringKey.backgroundColor: UIColor.white
     ]
 
     let seedString = NSMutableAttributedString()
@@ -173,14 +173,14 @@ func createModel(
         guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
             !html.isEmpty
             else { return nil }
-        
+
         let baseURL: URL?
         if options.flavors.contains(.baseURL) {
             baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/master/")
         } else {
             baseURL = nil
         }
-        
+
         return IssueCommentHtmlModel(html: html, baseURL: baseURL)
     case .horizontalRule:
         return IssueCommentHrModel()
@@ -360,27 +360,27 @@ func updateIssueShorthand(
 private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 func shortenGitHubLinks(attributedString: NSAttributedString,
                         options: GitHubMarkdownOptions) -> NSAttributedString {
-    
+
     guard options.flavors.contains(.issueShorthand) else { return attributedString }
-    
+
     let string = attributedString.string
     let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
     let matches = issueURLRegex.matches(in: string, options: [], range: string.nsrange)
-    
+
     for match in matches.reversed() {
         let ownerRange = match.range(at: 1)
         let repoRange = match.range(at: 2)
         let numberRange = match.range(at: 3)
-        
+
         guard let ownerSubstring = string.substring(with: ownerRange),
               let repoSubstring = string.substring(with: repoRange),
               let numberSubstring = string.substring(with: numberRange) else { continue }
-        
+
         var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
-        
+
         // manually disable link shortening for some text (namely code)
         guard attributes[MarkdownAttribute.linkShorteningDisabled] == nil else { continue }
-        
+
         attributes[.foregroundColor] = Styles.Colors.Blue.medium.color
         attributes[MarkdownAttribute.issue] = IssueDetailsModel(
             owner: ownerSubstring,
@@ -388,19 +388,19 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
             number: (numberSubstring as NSString).integerValue
         )
         attributes[MarkdownAttribute.url] = nil
-        
+
         var shortenedText: String
-        
+
         if ownerSubstring == options.owner && repoSubstring == options.repo {
             shortenedText = "#\(numberSubstring)"
         } else {
             shortenedText = "\(ownerSubstring)/\(repoSubstring)#\(numberSubstring)"
         }
-        
+
         let linkAttributedString = NSAttributedString(string: shortenedText, attributes: attributes)
         mutableAttributedString.replaceCharacters(in: match.range, with: linkAttributedString)
     }
-    
+
     return mutableAttributedString
 }
 

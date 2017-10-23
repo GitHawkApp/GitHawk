@@ -38,7 +38,7 @@ final class UserAutocomplete: AutocompleteType {
         cell.configure(state: .user(avatarURL: result.avatarURL, login: result.login))
     }
 
-    func search(word: String, completion: @escaping (Bool) -> ()) {
+    func search(word: String, completion: @escaping (Bool) -> Void) {
         if let cached = cachedResults[word] {
             self.results = cached
             completion(cached.count > 0)

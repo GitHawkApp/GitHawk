@@ -33,7 +33,7 @@ final class EmojiAutocomplete: AutocompleteType {
         cell.configure(state: .emoji(emoji: result.emoji, term: result.term))
     }
 
-    func search(word: String, completion: @escaping (Bool) -> ()) {
+    func search(word: String, completion: @escaping (Bool) -> Void) {
         if let cached = cachedResults[word] {
             self.results = cached
             completion(cached.count > 0)
@@ -49,7 +49,7 @@ final class EmojiAutocomplete: AutocompleteType {
 
         self.results = results
         cachedResults[word] = results
-        
+
         completion(results.count > 0)
     }
 

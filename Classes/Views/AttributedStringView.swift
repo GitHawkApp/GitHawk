@@ -20,10 +20,10 @@ protocol AttributedStringViewIssueDelegate: class {
 
 final class AttributedStringView: UIView {
 
-    weak var delegate: AttributedStringViewDelegate? = nil
-    weak var issueDelegate: AttributedStringViewIssueDelegate? = nil
+    weak var delegate: AttributedStringViewDelegate?
+    weak var issueDelegate: AttributedStringViewIssueDelegate?
 
-    private var text: NSAttributedStringSizing? = nil
+    private var text: NSAttributedStringSizing?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,11 +38,11 @@ final class AttributedStringView: UIView {
         tap.cancelsTouchesInView = false
         addGestureRecognizer(tap)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Public API
 
     func reposition(width: CGFloat) {

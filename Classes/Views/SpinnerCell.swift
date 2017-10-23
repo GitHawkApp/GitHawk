@@ -22,7 +22,7 @@ final class SpinnerCell: UICollectionViewCell {
             make.center.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,5 +31,5 @@ final class SpinnerCell: UICollectionViewCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-    
+
 }

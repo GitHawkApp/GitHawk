@@ -16,7 +16,7 @@ protocol IssueCommitCellDelegate: class {
 
 final class IssueCommitCell: UICollectionViewCell {
 
-    weak var delegate: IssueCommitCellDelegate? = nil
+    weak var delegate: IssueCommitCellDelegate?
 
     private let commitImageView = UIImageView(image: UIImage(named: "git-commit-small")?.withRenderingMode(.alwaysTemplate))
     private let avatarImageView = UIImageView()
@@ -66,7 +66,7 @@ final class IssueCommitCell: UICollectionViewCell {
         messageLabel.lineBreakMode = .byTruncatingMiddle
         messageLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

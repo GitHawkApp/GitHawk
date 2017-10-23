@@ -9,11 +9,11 @@
 import UIKit
 
 extension UINavigationController {
-    
+
     func replaceTopMostViewController(_ newViewController: UIViewController, animated: Bool) {
         var currentViewControllers = viewControllers
         currentViewControllers[viewControllers.count - 1] = newViewController
         setViewControllers(currentViewControllers, animated: animated)
     }
-    
+
 }

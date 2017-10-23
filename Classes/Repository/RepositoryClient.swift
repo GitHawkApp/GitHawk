@@ -102,7 +102,7 @@ final class RepositoryClient {
     private func loadPage<T: GraphQLQuery>(
         query: T,
         containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryPayload>) -> ()
+        completion: @escaping (Result<RepositoryPayload>) -> Void
     ) where T: RepositoryQuery {
         githubClient.fetch(query: query) { (result, error) in
             guard error == nil, result?.errors == nil, let data = result?.data else {
@@ -132,7 +132,7 @@ final class RepositoryClient {
     func loadIssues(
         nextPage: String? = nil,
         containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryPayload>) -> ()
+        completion: @escaping (Result<RepositoryPayload>) -> Void
         ) {
         loadPage(
             query: RepoIssuePagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
@@ -144,7 +144,7 @@ final class RepositoryClient {
     func loadPullRequests(
         nextPage: String? = nil,
         containerWidth: CGFloat,
-        completion: @escaping (Result<RepositoryPayload>) -> ()
+        completion: @escaping (Result<RepositoryPayload>) -> Void
         ) {
         loadPage(
             query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 100),
@@ -154,7 +154,7 @@ final class RepositoryClient {
     }
 
     func fetchReadme(
-        completion: @escaping (Result<String>) -> ()
+        completion: @escaping (Result<String>) -> Void
         ) {
         githubClient.request(GithubClient.Request(
             path: "repos/\(owner)/\(name)/readme",
@@ -169,5 +169,5 @@ final class RepositoryClient {
                 }
         }))
     }
-    
+
 }

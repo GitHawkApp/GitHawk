@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-protocol IssueCommentReactionCellDelegate {
+protocol IssueCommentReactionCellDelegate: class {
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
@@ -22,7 +22,7 @@ UICollectionViewDelegateFlowLayout {
 
     static let reuse = "cell"
 
-    public var delegate: IssueCommentReactionCellDelegate? = nil
+    public weak var delegate: IssueCommentReactionCellDelegate?
 
     private let addButton = ResponderButton()
     private let collectionView: UICollectionView = {
@@ -34,8 +34,8 @@ UICollectionViewDelegateFlowLayout {
         return view
     }()
     private var reactions = [ReactionViewModel]()
-    private var border: UIView? = nil
-    private var queuedOperation: (content: ReactionContent, operation: IssueReactionOperation)? = nil
+    private var border: UIView?
+    private var queuedOperation: (content: ReactionContent, operation: IssueReactionOperation)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,7 +67,7 @@ UICollectionViewDelegateFlowLayout {
 
         border = addBorder(.bottom, useSafeMargins: false)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,7 +109,7 @@ UICollectionViewDelegateFlowLayout {
             (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
             (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
             (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
-            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart)),
+            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart))
         ]
 
         let menu = UIMenuController.shared
@@ -191,7 +191,7 @@ UICollectionViewDelegateFlowLayout {
         // else incr/decr
         if let queued = queuedOperation {
             queuedOperation = nil
-            
+
             switch queued.operation {
             case .add:
                 self.reactions = viewModel.models
