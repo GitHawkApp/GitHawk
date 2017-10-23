@@ -15,7 +15,7 @@ protocol SegmentedControlSectionControllerDelegate: class {
 
 final class SegmentedControlSectionController: ListGenericSectionController<SegmentedControlModel>, SegmentedControlCellDelegate {
 
-    private weak var delegate: SegmentedControlSectionControllerDelegate? = nil
+    private weak var delegate: SegmentedControlSectionControllerDelegate?
     private let height: CGFloat
 
     init(delegate: SegmentedControlSectionControllerDelegate?, height: CGFloat) {
@@ -47,5 +47,5 @@ final class SegmentedControlSectionController: ListGenericSectionController<Segm
         object.selectedIndex = index
         delegate?.didChangeSelection(sectionController: self, model: object)
     }
-    
+
 }

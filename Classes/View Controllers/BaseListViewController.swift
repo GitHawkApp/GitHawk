@@ -33,14 +33,14 @@ LoadMoreSectionControllerDelegate {
 
     // required on init
     private let emptyErrorMessage: String
-    private weak var dataSource: BaseListViewControllerDataSource? = nil
+    private weak var dataSource: BaseListViewControllerDataSource?
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var _models = [ListDiffable]()
-    private var page: PagingType? = nil
+    private var page: PagingType?
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
-    private var filterQuery: String? = nil
+    private var filterQuery: String?
 
     init(
         emptyErrorMessage: String,
@@ -98,7 +98,7 @@ LoadMoreSectionControllerDelegate {
         page: PagingType?,
         append: Bool,
         animated: Bool,
-        completion: (() -> ())? = nil
+        completion: (() -> Void)? = nil
         ) {
         assert(Thread.isMainThread)
 
@@ -115,7 +115,7 @@ LoadMoreSectionControllerDelegate {
 
     final func error(
         animated: Bool,
-        completion: (() -> ())? = nil
+        completion: (() -> Void)? = nil
         ) {
         assert(Thread.isMainThread)
         hasError = true

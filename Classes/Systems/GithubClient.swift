@@ -138,5 +138,5 @@ struct GithubClient {
             resultHandler?(result, error)
         })
     }
-    
+
 }

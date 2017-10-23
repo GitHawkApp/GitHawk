@@ -35,10 +35,10 @@ final class FeedRefresh {
         refreshBegin = CFAbsoluteTimeGetCurrent()
     }
 
-    func endRefreshing(updates: (() -> ())? = nil, completion: (() -> ())? = nil) {
+    func endRefreshing(updates: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         let block = {
             updates?()
-            
+
             CATransaction.begin()
             CATransaction.setCompletionBlock(completion)
             self.refreshControl.endRefreshing()

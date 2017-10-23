@@ -56,7 +56,7 @@ extension SFSafariViewController {
 }
 
 extension URL {
-	
+
 	enum Error: Swift.Error {
 		case failedToCreateURL
 	}

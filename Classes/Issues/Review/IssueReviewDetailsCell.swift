@@ -16,7 +16,7 @@ protocol IssueReviewDetailsCellDelegate: class {
 
 final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
 
-    weak var delegate: IssueReviewDetailsCellDelegate? = nil
+    weak var delegate: IssueReviewDetailsCellDelegate?
 
     let icon = UIImageView()
     let actorButton = UIButton()

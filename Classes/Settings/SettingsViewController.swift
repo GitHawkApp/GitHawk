@@ -14,7 +14,7 @@ NewIssueTableViewControllerDelegate {
 
     // must be injected
     var sessionManager: GithubSessionManager!
-    weak var rootNavigationManager: RootNavigationManager? = nil
+    weak var rootNavigationManager: RootNavigationManager?
 
     var client: GithubClient!
 
@@ -89,7 +89,7 @@ NewIssueTableViewControllerDelegate {
             else { fatalError("Should always create GitHub issue URL") }
         presentSafari(url: url)
     }
-    
+
     func onAccounts() {
         if let navigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "accountsNavigationController") as? UINavigationController,
             let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
@@ -171,7 +171,7 @@ NewIssueTableViewControllerDelegate {
 
     @IBAction func onBackgroundFetchChanged() {
         BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
-        BadgeNotifications.configure() { granted in
+        BadgeNotifications.configure { _ in
             self.updateBadge()
         }
     }
@@ -211,7 +211,7 @@ NewIssueTableViewControllerDelegate {
             apiStatusLabel.textColor = color
         }
     }
-	
+
 	private func style() {
 		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
 			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
@@ -220,9 +220,9 @@ NewIssueTableViewControllerDelegate {
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
     }
-    
+
     // MARK: NewIssueTableViewControllerDelegate
-    
+
     func didDismissAfterCreatingIssue(model: IssueDetailsModel) {
         let issuesViewController = IssuesViewController(client: client, model: model)
         let navigation = UINavigationController(rootViewController: issuesViewController)

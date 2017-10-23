@@ -15,7 +15,7 @@ protocol RatingCellDelegate: class {
 
 final class RatingCell: UICollectionViewCell {
 
-    weak var delegate: RatingCellDelegate? = nil
+    weak var delegate: RatingCellDelegate?
 
     private let titleLabel = UILabel()
     private let detailLabel = UILabel()
@@ -59,7 +59,7 @@ final class RatingCell: UICollectionViewCell {
             make.right.equalTo(-Styles.Sizes.gutter)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

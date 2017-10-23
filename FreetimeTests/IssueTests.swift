@@ -20,7 +20,7 @@ class IssueTests: XCTestCase {
         let body = [
             "this is the first line",
             "![alt text](https://apple.com)",
-            "then some more text",
+            "then some more text"
             ].joined(separator: "\r\n")
         let result = body.substring(with: NSRange(location: 36, length: 17))
         XCTAssertEqual(result, "https://apple.com")
@@ -30,7 +30,7 @@ class IssueTests: XCTestCase {
         let body = [
             "this is the first line",
             "![alt text](https://apple.com)",
-            "then some more text",
+            "then some more text"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -44,7 +44,7 @@ class IssueTests: XCTestCase {
         let body = [
             "![alt text](https://apple.com)",
             "this is the first line",
-            "then some more text",
+            "then some more text"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -57,7 +57,7 @@ class IssueTests: XCTestCase {
         let body = [
             "this is the first line",
             "then some more text",
-            "![alt text](https://apple.com)",
+            "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -68,7 +68,7 @@ class IssueTests: XCTestCase {
 
     func test_whenOnlyOneImage() {
         let body = [
-            "![alt text](https://apple.com)",
+            "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -82,7 +82,7 @@ class IssueTests: XCTestCase {
             "![alt text](https://apple.com)",
             "then some more text",
             "![alt text](https://google.com)",
-            "foo bar baz",
+            "foo bar baz"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -136,7 +136,7 @@ class IssueTests: XCTestCase {
             "```",
             "then some more text",
             "![alt text](https://google.com)",
-            "foo bar baz",
+            "foo bar baz"
             ].joined(separator: "\r\n")
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
         let models = CreateCommentModels(markdown: body, width: 300, options: options)
@@ -173,5 +173,5 @@ class IssueTests: XCTestCase {
         XCTAssertTrue(models[3] is IssueCommentQuoteModel)
         XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "line three")
     }
-    
+
 }

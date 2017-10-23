@@ -74,5 +74,5 @@ ListBindingSectionControllerDataSource {
 
         return cell
     }
-    
+
 }

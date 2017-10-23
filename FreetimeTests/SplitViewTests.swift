@@ -12,7 +12,7 @@ import XCTest
 class RootViewController: UIViewController, PrimaryViewController {}
 
 class SplitViewTests: XCTestCase {
-    
+
     func test_whenSeparating_withPrimaryAndOtherVCs_thatSplitVCIsSeparated_andResultHasNonPrimary() {
         let masterTab = UITabBarController()
 
@@ -118,7 +118,7 @@ class SplitViewTests: XCTestCase {
 
         let delegate = SplitViewControllerDelegate()
 
-        let _ = delegate.splitViewController(split, collapseSecondary: detailNav, onto: masterTab)
+        _ = delegate.splitViewController(split, collapseSecondary: detailNav, onto: masterTab)
 
         let resultTab = split.viewControllers[0] as! UITabBarController
         XCTAssertEqual(resultTab.viewControllers?.count, 2)
@@ -159,7 +159,7 @@ class SplitViewTests: XCTestCase {
 
         let delegate = SplitViewControllerDelegate()
 
-        let _ = delegate.splitViewController(split, collapseSecondary: detailNav, onto: masterTab)
+        _ = delegate.splitViewController(split, collapseSecondary: detailNav, onto: masterTab)
 
         let resultTab = split.viewControllers[0] as! UITabBarController
         XCTAssertEqual(resultTab.viewControllers?.count, 2)
@@ -168,5 +168,5 @@ class SplitViewTests: XCTestCase {
         XCTAssertEqual(rightNav.viewControllers[0], right1)
         XCTAssertEqual(rightNav.viewControllers[1], right2)
     }
-    
+
 }

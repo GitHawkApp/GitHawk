@@ -16,14 +16,14 @@ protocol IssueStatusEventCellDelegate: class {
 
 final class IssueStatusEventCell: UICollectionViewCell {
 
-    weak var delegate: IssueStatusEventCellDelegate? = nil
+    weak var delegate: IssueStatusEventCellDelegate?
 
     private let actorButton = UIButton()
     private let hashButton = UIButton()
     private let statusButton = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
 
-    private var dateConstraint: Constraint? = nil
+    private var dateConstraint: Constraint?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +61,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

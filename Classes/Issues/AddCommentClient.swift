@@ -23,7 +23,7 @@ protocol AddCommentListener: class {
 final class AddCommentClient {
 
     private class ListenerWrapper: NSObject {
-        weak var listener: AddCommentListener? = nil
+        weak var listener: AddCommentListener?
     }
     private var listeners = [ListenerWrapper]()
     private let client: GithubClient

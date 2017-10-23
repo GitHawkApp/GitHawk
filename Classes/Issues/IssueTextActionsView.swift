@@ -55,7 +55,7 @@ struct IssueTextActionOperation {
     enum Operation {
         case line(String)
         case wrap(String, String)
-        case execute(() -> ())
+        case execute(() -> Void)
         case uploadImage
     }
 
@@ -66,7 +66,7 @@ struct IssueTextActionOperation {
 
 final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    weak var delegate: IssueTextActionsViewDelegate? = nil
+    weak var delegate: IssueTextActionsViewDelegate?
 
     private let operations: [IssueTextActionOperation]
     private let identifier = "cell"
@@ -131,5 +131,5 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
             height: height
         )
     }
-    
+
 }

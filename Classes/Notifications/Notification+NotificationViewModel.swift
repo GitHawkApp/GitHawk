@@ -56,7 +56,7 @@ func CreateViewModels(
 func CreateNotificationViewModels(
     containerWidth: CGFloat,
     notifications: [Notification],
-    completion: @escaping ([NotificationViewModel]) -> ()
+    completion: @escaping ([NotificationViewModel]) -> Void
     ) {
     DispatchQueue.global().async {
         var viewModels = [NotificationViewModel]()

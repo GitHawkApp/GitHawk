@@ -10,12 +10,12 @@ import IGListKit
 
 protocol SearchResultSectionControllerDelegate: class {
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails)
-    
+
 }
 
 final class SearchResultSectionController: ListGenericSectionController<SearchRepoResult> {
 
-    private weak var delegate: SearchResultSectionControllerDelegate? = nil
+    private weak var delegate: SearchResultSectionControllerDelegate?
     private let client: GithubClient
 
     init(client: GithubClient, delegate: SearchResultSectionControllerDelegate) {

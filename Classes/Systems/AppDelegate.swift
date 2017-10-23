@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // initialize a webview at the start so webview startup later on isn't so slow
-        let _ = UIWebView()
+        _ = UIWebView()
         RatingController.applicationDidLaunch()
         flexController.configureWindow(window)
         window?.backgroundColor = Styles.Colors.background
@@ -65,5 +65,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         BadgeNotifications.fetch(application: application, handler: completionHandler)
     }
-    
+
 }

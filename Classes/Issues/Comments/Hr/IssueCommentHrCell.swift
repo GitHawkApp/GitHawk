@@ -19,7 +19,7 @@ final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
         right: Styles.Sizes.gutter
     )
 
-    let hr = UIView();
+    let hr = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

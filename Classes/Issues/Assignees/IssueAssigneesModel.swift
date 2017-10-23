@@ -12,8 +12,7 @@ import IGListKit
 final class IssueAssigneesModel: ListDiffable {
 
     enum Assignment: String {
-        case assigned = "assigned"
-        case reviewRequested = "reviewRequested"
+        case assigned, reviewRequested
     }
 
     let users: [IssueAssigneeViewModel]

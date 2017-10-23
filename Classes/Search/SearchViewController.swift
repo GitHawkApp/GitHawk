@@ -213,7 +213,7 @@ SearchResultSectionControllerDelegate {
     }
 
     // MARK: UISearchBarDelegate
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let term = searchTerm(for: searchBar.text) else {
             state = .idle
@@ -248,7 +248,7 @@ SearchResultSectionControllerDelegate {
         state = .idle
         update(animated: false)
     }
-    
+
     // MARK: SearchEmptyViewDelegate
 
     func didTap(emptyView: SearchEmptyView) {
@@ -291,7 +291,7 @@ SearchResultSectionControllerDelegate {
             message: NSLocalizedString("Remove all recent searches?", comment: ""),
             preferredStyle: .alert
         )
-        
+
         alert.addActions([
             AlertAction.clearAll({ [weak self] _ in
                 guard let strongSelf = self else { return }
@@ -300,7 +300,7 @@ SearchResultSectionControllerDelegate {
             }),
             AlertAction.cancel()
         ])
-        
+
         present(alert, animated: true)
     }
 

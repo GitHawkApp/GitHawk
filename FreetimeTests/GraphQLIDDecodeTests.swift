@@ -10,10 +10,10 @@ import XCTest
 @testable import Freetime
 
 class GraphQLIDDecodeTests: XCTestCase {
-    
+
     func test_whenDecodingIssueComment_thatNumberReturned() {
         let result = GraphQLIDDecode(id: "MDEyOklzc3VlQ29tbWVudDMzMTY2OTI5OA==", separator: "IssueComment")
         XCTAssertEqual(result, 331669298)
     }
-    
+
 }

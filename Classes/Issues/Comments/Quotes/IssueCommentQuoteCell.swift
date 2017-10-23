@@ -33,7 +33,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
 
         contentView.addSubview(textView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,7 +53,7 @@ final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, Collapsib
         }
     }
 
-    //MARK: ListBindable
+    // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentQuoteModel else { return }
