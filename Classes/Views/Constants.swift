@@ -41,5 +41,7 @@ enum Constants {
         static let delete = NSLocalizedString("Delete", comment: "")
         static let inbox = NSLocalizedString("Inbox", comment: "")
         static let upload = NSLocalizedString("Upload", comment: "")
+        static let bookmark = NSLocalizedString("Bookmark", comment: "")
+        static let removeBookmark = NSLocalizedString("Remove Bookmark", comment: "")
     }
 }

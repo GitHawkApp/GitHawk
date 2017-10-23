@@ -56,4 +56,12 @@ final class BookmarkStoreTests: XCTestCase {
         
         XCTAssert(BookmarksStore.shared.bookmarks.count == 0)
     }
+    
+    func test_containsBookmark() {
+        let b1 = BookmarkModel(type: .repo, name: "GitHawk", owner: "rizwankce")
+        
+        BookmarksStore.shared.add(bookmark: b1)
+        
+        XCTAssert(BookmarksStore.shared.contains(bookmark: b1))
+    }
 }
