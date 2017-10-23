@@ -28,7 +28,7 @@ final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, Collaps
             make.centerY.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,5 +51,5 @@ final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, Collaps
     func setCollapse(visible: Bool) {
         overlay.isHidden = !visible
     }
-    
+
 }

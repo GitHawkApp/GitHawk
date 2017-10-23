@@ -51,5 +51,5 @@ final class ShowMoreDetailsLabel: UILabel {
 
     @objc
     func empty() {}
-    
+
 }

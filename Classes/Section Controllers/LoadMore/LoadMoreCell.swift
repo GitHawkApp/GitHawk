@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class LoadMoreCell: UICollectionViewCell {
-    
+
     private let label = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         label.font = Styles.Fonts.button
@@ -26,7 +26,7 @@ final class LoadMoreCell: UICollectionViewCell {
         }
         label.text = NSLocalizedString("Load More", comment: "")
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,10 +35,10 @@ final class LoadMoreCell: UICollectionViewCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-    
+
     override var accessibilityLabel: String? {
         get { return NSLocalizedString("Load More", comment: "") }
         set { }
     }
-    
+
 }

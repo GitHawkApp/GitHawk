@@ -13,7 +13,7 @@ final class IssueCommentPhoto: NSObject, NYTPhoto {
 
     let image: UIImage?
     let imageData: Data?
-    
+
     init(image: UIImage, data: Data?) {
         self.image = image
         self.imageData = data

@@ -19,9 +19,9 @@ final class RootNavigationManager: GithubSessionListener {
     weak private var rootViewController: UISplitViewController?
 
     // keep alive between switching accounts
-    private var settingsRootViewController: UIViewController? = nil
+    private var settingsRootViewController: UIViewController?
 
-    private var lastClient: GithubClient? = nil
+    private var lastClient: GithubClient?
 
     init(
         sessionManager: GithubSessionManager,
@@ -32,7 +32,7 @@ final class RootNavigationManager: GithubSessionListener {
         rootViewController.delegate = splitDelegate
         rootViewController.preferredDisplayMode = .allVisible
         sessionManager.addListener(listener: self)
-        
+
         self.tabBarController?.tabBar.tintColor = Styles.Colors.Blue.medium.color
         self.tabBarController?.tabBar.unselectedItemTintColor = Styles.Colors.Gray.light.color
         self.tabBarController?.delegate = self.tabDelegate
@@ -46,7 +46,7 @@ final class RootNavigationManager: GithubSessionListener {
         let login = newLoginViewController()
         login.modalPresentationStyle = .formSheet
 
-        let block: () -> () = { root.present(login, animated: animated) }
+        let block: () -> Void = { root.present(login, animated: animated) }
 
         if let presented = root.presentedViewController {
             presented.dismiss(animated: animated, completion: block)
@@ -74,7 +74,7 @@ final class RootNavigationManager: GithubSessionListener {
             newNotificationsRootViewController(client: client),
             newSearchRootViewController(client: client),
             newBookmarksRootViewController(client: client),
-            settingsRootViewController ?? UIViewController(), // simply satisfying compiler
+            settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
     }
 
@@ -140,7 +140,7 @@ final class RootNavigationManager: GithubSessionListener {
     private var detailNavigationController: UINavigationController? {
         return rootViewController?.viewControllers.last as? UINavigationController
     }
-    
+
     private var tabBarController: UITabBarController? {
         return rootViewController?.viewControllers.first as? UITabBarController
     }
@@ -155,4 +155,3 @@ final class RootNavigationManager: GithubSessionListener {
     }
 
 }
-

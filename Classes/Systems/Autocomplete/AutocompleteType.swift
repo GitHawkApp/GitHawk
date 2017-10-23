@@ -16,7 +16,7 @@ protocol AutocompleteType {
 
     func configure(cell: AutocompleteCell, index: Int)
 
-    func search(word: String, completion: @escaping (Bool) -> ())
+    func search(word: String, completion: @escaping (Bool) -> Void)
 
     func accept(index: Int) -> String?
 

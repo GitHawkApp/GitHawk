@@ -14,4 +14,3 @@ func DateDetailsFormatter() -> DateFormatter {
     dateFormatter.timeStyle = .long
     return dateFormatter
 }
-

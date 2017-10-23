@@ -37,11 +37,9 @@ func IssueLocalReaction(
     let operation: IssueReactionOperation
 
     var prev: (index: Int, model: ReactionViewModel)? = nil
-    for (i, model) in base.models.enumerated() {
-        if model.content == content {
-            prev = (i, model)
-            break
-        }
+    for (i, model) in base.models.enumerated() where model.content == content {
+        prev = (i, model)
+        break
     }
 
     var models = base.models

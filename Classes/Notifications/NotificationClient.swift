@@ -38,13 +38,13 @@ final class NotificationClient {
         page: Int = 1,
         before: Date? = nil,
         width: CGFloat,
-        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> ()
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
         var parameters: [String: Any] = [
             "all": all ? "true" : "false",
             "participating": participating ? "true" : "false",
             "page": page,
-            "per_page": "100",
+            "per_page": "100"
             ]
         if let since = since {
             parameters["since"] = GithubAPIDateFormatter().string(from: since)
@@ -71,7 +71,7 @@ final class NotificationClient {
         })
     }
 
-    typealias MarkAllCompletion = (Bool) -> ()
+    typealias MarkAllCompletion = (Bool) -> Void
     func markAllNotifications(completion: MarkAllCompletion? = nil) {
         githubClient.request(GithubClient.Request(
             path: "notifications",

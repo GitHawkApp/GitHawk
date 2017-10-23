@@ -18,7 +18,7 @@ protocol GithubSessionListener: class {
 final class GithubSessionManager: NSObject, ListDiffable {
 
     private class ListenerWrapper: NSObject {
-        weak var listener: GithubSessionListener? = nil
+        weak var listener: GithubSessionListener?
     }
     private var listeners = [ListenerWrapper]()
 

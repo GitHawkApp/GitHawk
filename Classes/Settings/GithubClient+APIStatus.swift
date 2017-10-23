@@ -11,12 +11,10 @@ import Foundation
 extension GithubClient {
 
     enum APIStatus: String {
-        case good = "good"
-        case minor = "minor"
-        case major = "major"
+        case good, minor, major
     }
 
-    func fetchAPIStatus(completion: @escaping (Result<APIStatus>) -> ()) {
+    func fetchAPIStatus(completion: @escaping (Result<APIStatus>) -> Void) {
         request(Request(
             url: "https://status.github.com/api/status.json",
             method: .get,

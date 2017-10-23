@@ -10,7 +10,7 @@ import XCTest
 @testable import Freetime
 
 class DateDisplayTests: XCTestCase {
-    
+
     func test_whenDateFuture() {
         let result = Date(timeIntervalSinceNow: 10).agoString
         XCTAssertEqual(result, "in the future")
@@ -95,5 +95,5 @@ class DateDisplayTests: XCTestCase {
         let result = Date(timeIntervalSinceNow: -62207999).agoString
         XCTAssertEqual(result, "2 years ago")
     }
-    
+
 }

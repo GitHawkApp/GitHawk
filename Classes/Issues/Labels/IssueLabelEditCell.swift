@@ -26,7 +26,7 @@ final class IssueLabelEditCell: SelectableCell, ListBindable {
             make.centerY.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

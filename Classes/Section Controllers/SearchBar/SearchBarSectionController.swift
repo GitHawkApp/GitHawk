@@ -15,7 +15,7 @@ protocol SearchBarSectionControllerDelegate: class {
 
 final class SearchBarSectionController: ListSectionController, SearchBarCellDelegate {
 
-    private weak var delegate: SearchBarSectionControllerDelegate? = nil
+    private weak var delegate: SearchBarSectionControllerDelegate?
     private let placeholder: String
     private var query = ""
 

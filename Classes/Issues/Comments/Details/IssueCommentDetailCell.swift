@@ -18,7 +18,7 @@ protocol IssueCommentDetailCellDelegate: class {
 
 final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
-    weak var delegate: IssueCommentDetailCellDelegate? = nil
+    weak var delegate: IssueCommentDetailCellDelegate?
 
     private let authorBackgroundView = UIView()
     private let imageView = UIImageView()
@@ -27,7 +27,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     private let editedLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
     private var login = ""
-    private var border: UIView? = nil
+    private var border: UIView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,7 +93,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.top.left.right.equalTo(contentView)
             make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
-        
+
         editedLabel.font = Styles.Fonts.secondary
         editedLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(editedLabel)
@@ -107,7 +107,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -143,15 +143,15 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
-        
+
         if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
             editedLabel.isHidden = false
-            
+
             let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
             let editedByOwner = NSLocalizedString("Edited", comment: "")
             let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
             editedLabel.text = "\(Constants.Strings.bullet) " + String.localizedStringWithFormat(format, editedLogin)
-            
+
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
             editedLabel.detailText = String.localizedStringWithFormat(detailFormat, editedLogin, editedDate.agoString)
         } else {

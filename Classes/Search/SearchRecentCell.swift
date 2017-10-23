@@ -40,7 +40,7 @@ final class SearchRecentCell: SwipeSelectableCell {
 
         addBorder(.bottom, left: Styles.Sizes.gutter)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

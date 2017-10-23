@@ -45,4 +45,3 @@ final class IssueStatusEventSectionController: ListGenericSectionController<Issu
     }
 
 }
-

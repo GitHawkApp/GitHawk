@@ -28,7 +28,7 @@ final class IssueCommentUnsupportedCell: UICollectionViewCell, ListBindable {
             make.center.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

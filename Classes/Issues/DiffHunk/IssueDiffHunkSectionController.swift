@@ -65,4 +65,3 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
     }
 
 }
-

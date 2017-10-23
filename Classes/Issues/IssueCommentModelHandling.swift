@@ -74,4 +74,3 @@ func ExtraCommentCellConfigure(
         cell.delegate = attributedDelegate
     }
 }
-

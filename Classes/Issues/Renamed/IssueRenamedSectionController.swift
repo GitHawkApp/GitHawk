@@ -33,5 +33,5 @@ final class IssueRenamedSectionController: ListGenericSectionController<IssueRen
         guard let actor = object?.actor else { return }
         viewController?.presentProfile(login: actor)
     }
-    
+
 }
