@@ -35,13 +35,8 @@ TabNavRootViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
-        searchBar.backgroundColor = .clear
-        searchBar.searchBarStyle = .minimal
-        searchBar.sizeToFit()
-        tableView.tableHeaderView = searchBar
+        configureSearchBar()
+        configureTableView()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
@@ -103,7 +98,7 @@ TabNavRootViewControllerType {
     // MARK: TabNavRootViewControllerType
 
     func didSingleTapTab() {
-        tableView.setContentOffset(CGPoint.zero, animated: true)
+        tableView.scrollToTop(animated: true)
     }
 
     func didDoubleTapTab() {
@@ -207,5 +202,22 @@ TabNavRootViewControllerType {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         filter(query: nil)
+    }
+
+    // MARK: - Private API
+
+    private func configureSearchBar() {
+        searchBar.delegate = self
+        searchBar.placeholder = "\(Constants.Strings.search) \(Constants.Strings.bookmarks)" // Localization is done in the constants.
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchBar.backgroundColor = .clear
+        searchBar.searchBarStyle = .minimal
+        searchBar.sizeToFit()
+    }
+
+    private func configureTableView() {
+        tableView.tableHeaderView = searchBar
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 1.0))
+        tableView.backgroundColor = Styles.Colors.background
     }
 }

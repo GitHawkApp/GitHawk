@@ -23,7 +23,7 @@ enum Constants {
         static let cancel = NSLocalizedString("Cancel", comment: "")
         static let yes = NSLocalizedString("Yes", comment: "")
         static let no = NSLocalizedString("No", comment: "")
-        static let signin = NSLocalizedString("Sign In", comment: "")
+        static let signin = NSLocalizedString("Sign in", comment: "")
         static let signout = NSLocalizedString("Sign out", comment: "")
         static let open = NSLocalizedString("Open", comment: "")
         static let close = NSLocalizedString("Close", comment: "")
@@ -43,5 +43,6 @@ enum Constants {
         static let upload = NSLocalizedString("Upload", comment: "")
         static let bookmark = NSLocalizedString("Bookmark", comment: "")
         static let removeBookmark = NSLocalizedString("Remove Bookmark", comment: "")
+        static let bookmarks = NSLocalizedString("Bookmarks", comment: "")
     }
 }

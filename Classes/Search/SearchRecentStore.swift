@@ -59,12 +59,6 @@ final class SearchRecentStore {
         return _recents
     }
 
-    func removeLast() {
-        guard !recents.isEmpty else { return }
-        _recents.removeLast()
-        save()
-    }
-
     // MARK: Private API
 
     func save() {
