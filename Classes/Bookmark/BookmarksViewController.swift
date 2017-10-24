@@ -69,6 +69,7 @@ TabNavRootViewControllerType {
         alert.addActions([
             AlertAction.clearAll({ [weak self] _ in
                 self?.bookmarkStore.clear()
+                self?.filterdBookmarks?.removeAll()
                 self?.tableView.reloadData()
                 self?.updateRightBarItem()
             }),
@@ -146,6 +147,7 @@ TabNavRootViewControllerType {
         guard editingStyle == .delete else { return }
         bookmarkStore.remove(bookmark: getBookmarks()[indexPath.row])
         tableView.deleteRows(at: [indexPath], with: .automatic)
+        updateRightBarItem()
     }
 
     // MARK: UITableViewDelegate
