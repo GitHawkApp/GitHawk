@@ -200,15 +200,10 @@ TabNavRootViewControllerType {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right, !isSearchActive else { return nil }
 
-        let action = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, index in
+        let action = DeleteSwipeAction { [weak self] _, index in
             guard let strongSelf = self else { return }
             strongSelf.bookmarkStore.remove(bookmark: strongSelf.bookmarks[index.row])
         }
-
-        action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
-        action.backgroundColor = Styles.Colors.Red.medium.color
-        action.textColor = .white
-        action.tintColor = .white
 
         return [action]
     }

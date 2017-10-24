@@ -389,6 +389,8 @@
 		DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6D21F983BB900241271 /* SignatureTests.swift */; };
 		DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */; };
 		DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6DB1F99414E00241271 /* IsCancellationError.swift */; };
+		DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */; };
+		DC6339391F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6339381F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift */; };
 		DC7857101F97F546009BADDA /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78570F1F97F546009BADDA /* Debouncer.swift */; };
 /* End PBXBuildFile section */
 
@@ -762,6 +764,8 @@
 		DC60C6D21F983BB900241271 /* SignatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureTests.swift; sourceTree = "<group>"; };
 		DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelCellTests.swift; sourceTree = "<group>"; };
 		DC60C6DB1F99414E00241271 /* IsCancellationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsCancellationError.swift; sourceTree = "<group>"; };
+		DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeAction.swift; sourceTree = "<group>"; };
+		DC6339381F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+SafeAreaContentView.swift"; sourceTree = "<group>"; };
 		DC78570F1F97F546009BADDA /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1386,6 +1390,7 @@
 				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
 				2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */,
 				D8C2AEF41F9AA94600A95945 /* DotListView.swift */,
+				DC6339381F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1607,6 +1612,7 @@
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
 				DC60C6DB1F99414E00241271 /* IsCancellationError.swift */,
 				49FFF4331F9FC83200335568 /* HapticFeedback.swift */,
+				DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2195,6 +2201,7 @@
 				2919294B1F3EAD890012067B /* IssueViewFilesCell.swift in Sources */,
 				291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
+				DC6339391F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
@@ -2293,6 +2300,7 @@
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
+				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
