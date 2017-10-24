@@ -44,6 +44,8 @@ TabNavRootViewControllerType {
             target: self,
             action: #selector(BookmarksViewController.onClearAll(sender:))
         )
+        
+        tableView.register(BookmarkCell.self, forCellReuseIdentifier: BookmarkCell.cellIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -112,28 +114,13 @@ TabNavRootViewControllerType {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-
-        if cell == nil {
-            cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: cellIdentifier)
-        }
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.cellIdentifier, for: indexPath) as? BookmarkCell
+        else { fatalError("Wrong cell type") }
+    
         let bookmark = getBookmarks()[indexPath.row]
-
-        let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
-        cell?.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
-        cell?.detailTextLabel?.text = bookmark.title
-        cell?.textLabel?.numberOfLines = 0
-        cell?.detailTextLabel?.numberOfLines = 0
-        cell?.accessibilityTraits |= UIAccessibilityTraitButton
-        cell?.isAccessibilityElement = true
-        cell?.accessibilityLabel = cell?.contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("", { $0 + ".\n" + $1 })
-
-        cell?.imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
-        cell?.imageView?.tintColor = Styles.Colors.Blue.medium.color
-        return cell!
+        cell.configure(bookmark: bookmark)
+    
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
