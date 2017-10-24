@@ -63,7 +63,7 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
 
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .selection
+        options.expansionStyle = .destructive
         return options
     }
 

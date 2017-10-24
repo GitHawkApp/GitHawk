@@ -18,8 +18,16 @@ extension UITableView {
     
     func setGestureEnabled(_ enabled: Bool) {
         gestureRecognizers?.forEach {
-            guard $0 != panGestureRecognizer else { return }
-            
+            guard $0 != panGestureRecognizer else {
+                return
+            }
+
+            guard let recognizer = NSClassFromString("UISwipeDismissalGestureRecognizer"), !$0.isKind(of: recognizer) else {
+                // Always be false or you can not trigger swipe action's callback
+                $0.isEnabled = false
+                return
+            }
+
             $0.isEnabled = enabled
         }
     }
@@ -36,7 +44,15 @@ extension UICollectionView {
 
     func setGestureEnabled(_ enabled: Bool) {
         gestureRecognizers?.forEach {
-            guard $0 != panGestureRecognizer else { return }
+            guard $0 != panGestureRecognizer else {
+                return
+            }
+
+            guard let recognizer = NSClassFromString("UISwipeDismissalGestureRecognizer"), !$0.isKind(of: recognizer) else {
+                // Always be false or you can not trigger swipe action's callback
+                $0.isEnabled = false
+                return
+            }
 
             $0.isEnabled = enabled
         }

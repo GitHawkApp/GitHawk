@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import SwipeCellKit
 
 class BookmarksViewController: UITableViewController,
     UISearchBarDelegate,
     PrimaryViewController,
+    SwipeTableViewCellDelegate,
 TabNavRootViewControllerType {
 
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
     private let bookmarkStore = BookmarksStore.shared
-    private var filterdBookmarks: [BookmarkModel]?
+
     private var searchController: UISearchController {
         let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.delegate = self
@@ -25,6 +27,10 @@ TabNavRootViewControllerType {
         controller.searchBar.backgroundColor = .clear
         controller.searchBar.searchBarStyle = .minimal
         return controller
+    private var filteredBookmarks: [BookmarkModel]?
+
+    private var isSearchActive: Bool {
+        return filteredBookmarks != nil
     }
 
     // MARK: Init
@@ -88,15 +94,15 @@ TabNavRootViewControllerType {
 
     func filter(query: String?) {
         if let query = query {
-            filterdBookmarks = filtered(array: bookmarkStore.bookmarks, query: query)
+            filteredBookmarks = filtered(array: bookmarkStore.bookmarks, query: query)
         } else {
-            filterdBookmarks = nil
+            filteredBookmarks = nil
         }
         self.tableView.reloadData()
     }
 
-    func getBookmarks() -> [BookmarkModel] {
-        if let bookmarks = filterdBookmarks {
+    var bookmarks: [BookmarkModel] {
+        if let bookmarks = filteredBookmarks {
             return bookmarks
         } else {
             return bookmarkStore.bookmarks
@@ -116,50 +122,27 @@ TabNavRootViewControllerType {
     // MARK: UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getBookmarks().count
+        return bookmarks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-
-        if cell == nil {
-            cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: cellIdentifier)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? SwipeSelectableTableCell else {
+            fatalError("Unable to dequeue the expected cell type")
         }
 
-        let bookmark = getBookmarks()[indexPath.row]
-
-        let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
-        cell?.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
-        cell?.detailTextLabel?.text = bookmark.title
-        cell?.textLabel?.numberOfLines = 0
-        cell?.detailTextLabel?.numberOfLines = 0
-        cell?.accessibilityTraits |= UIAccessibilityTraitButton
-        cell?.isAccessibilityElement = true
-        cell?.accessibilityLabel = cell?.contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("", { $0 + ".\n" + $1 })
-
-        cell?.imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
-        cell?.imageView?.tintColor = Styles.Colors.Blue.medium.color
-        return cell!
+        let bookmark = bookmarks[indexPath.row]
+        configure(cell: cell, with: bookmark)
+        return cell
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return filterdBookmarks != nil ? false : true // avoid swipe to delete when search bar is active
-    }
-
-    override func tableView(_ tableView: UITableView,
-                            commit editingStyle: UITableViewCellEditingStyle,
-                            forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        bookmarkStore.remove(bookmark: getBookmarks()[indexPath.row])
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Styles.Sizes.tableCellHeightLarge
     }
 
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let bookmark = getBookmarks()[indexPath.row]
+        let bookmark = bookmarks[indexPath.row]
         let destinationViewController: UIViewController
 
         switch bookmark.type {
@@ -212,6 +195,30 @@ TabNavRootViewControllerType {
         filter(query: nil)
     }
 
+    // MARK: - SwipeTableViewCellDelegate
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right, !isSearchActive else { return nil }
+
+        let action = SwipeAction(style: .destructive, title: "Delete") { [weak self] _, index in
+            guard let strongSelf = self else { return }
+            strongSelf.bookmarkStore.remove(bookmark: strongSelf.bookmarks[index.row])
+        }
+
+        action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
+        action.backgroundColor = Styles.Colors.Red.medium.color
+        action.textColor = .white
+        action.tintColor = .white
+
+        return [action]
+    }
+
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive
+        return options
+    }
+
     // MARK: - Private API
 
     private func configureSearchBar() {
@@ -227,5 +234,24 @@ TabNavRootViewControllerType {
     private func configureTableView() {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 1.0))
         tableView.backgroundColor = Styles.Colors.background
+        tableView.register(SwipeSelectableTableCell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+
+    private func configure(cell: SwipeSelectableTableCell, with bookmark: BookmarkModel) {
+        let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
+        cell.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
+        cell.detailTextLabel?.text = bookmark.title
+        cell.textLabel?.numberOfLines = 0
+        cell.detailTextLabel?.numberOfLines = 0
+        cell.accessibilityTraits |= UIAccessibilityTraitButton
+        cell.isAccessibilityElement = true
+        cell.accessibilityLabel = cell.contentView.subviews
+            .flatMap { $0.accessibilityLabel }
+            .reduce("", { $0 + ".\n" + $1 })
+
+        cell.imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
+        cell.imageView?.tintColor = Styles.Colors.Blue.medium.color
+
+        cell.delegate = self
     }
 }
