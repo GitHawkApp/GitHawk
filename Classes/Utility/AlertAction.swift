@@ -122,7 +122,6 @@ struct AlertAction {
         let title = locked
             ? NSLocalizedString("Unlock", comment: "")
             : NSLocalizedString("Lock", comment: "")
-        
 
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
