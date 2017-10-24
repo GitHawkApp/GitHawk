@@ -246,6 +246,7 @@ IssueCommentSectionControllerDelegate {
 
         return AlertAction.toggleIssue(status) { [weak self] _ in
             self?.setStatus(close: status == .open)
+            Haptic.triggerNotification(.success)
         }
     }
 
@@ -256,6 +257,7 @@ IssueCommentSectionControllerDelegate {
 
         return AlertAction.toggleLocked(locked) { [weak self] _ in
             self?.setLocked(!locked)
+            Haptic.triggerNotification(.success)
         }
     }
 

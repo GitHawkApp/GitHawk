@@ -141,6 +141,7 @@ struct AlertAction {
     static func bookmark(_ bookmark: BookmarkModel) -> UIAlertAction {
         return UIAlertAction(title: NSLocalizedString("Bookmark", comment: ""), style: .default) { _ in
             BookmarksStore.shared.add(bookmark: bookmark)
+            Haptic.triggerNotification(.success)
         }
     }
 }
