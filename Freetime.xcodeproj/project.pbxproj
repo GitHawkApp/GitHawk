@@ -391,6 +391,7 @@
 		DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6DB1F99414E00241271 /* IsCancellationError.swift */; };
 		DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */; };
 		DC6339391F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6339381F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift */; };
+		DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */; };
 		DC7857101F97F546009BADDA /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78570F1F97F546009BADDA /* Debouncer.swift */; };
 /* End PBXBuildFile section */
 
@@ -766,6 +767,7 @@
 		DC60C6DB1F99414E00241271 /* IsCancellationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsCancellationError.swift; sourceTree = "<group>"; };
 		DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeAction.swift; sourceTree = "<group>"; };
 		DC6339381F9F5ACB00402A8D /* UITableViewCell+SafeAreaContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+SafeAreaContentView.swift"; sourceTree = "<group>"; };
+		DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryAttributedString.swift; sourceTree = "<group>"; };
 		DC78570F1F97F546009BADDA /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1613,6 +1615,7 @@
 				DC60C6DB1F99414E00241271 /* IsCancellationError.swift */,
 				49FFF4331F9FC83200335568 /* HapticFeedback.swift */,
 				DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */,
+				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2168,6 +2171,7 @@
 				29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */,
 				29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */,
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
+				DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,

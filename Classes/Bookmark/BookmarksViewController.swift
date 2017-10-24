@@ -235,8 +235,7 @@ TabNavRootViewControllerType {
     }
 
     private func configure(cell: SwipeSelectableTableCell, with bookmark: BookmarkModel) {
-        let titleLabel = "\(bookmark.owner)/\(bookmark.name)"
-        cell.textLabel?.text = bookmark.type == .repo ? titleLabel : titleLabel + " #\(bookmark.number)"
+        cell.textLabel?.attributedText = titleLabel(for: bookmark)
         cell.detailTextLabel?.text = bookmark.title
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.numberOfLines = 0
@@ -250,5 +249,21 @@ TabNavRootViewControllerType {
         cell.imageView?.tintColor = Styles.Colors.Blue.medium.color
 
         cell.delegate = self
+    }
+
+    private func titleLabel(for bookmark: BookmarkModel) -> NSAttributedString {
+        let repositoryText = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: bookmark.owner, name: bookmark.name))
+        switch bookmark.type {
+        case .issue, .pullRequest:
+            let bookmarkText = NSAttributedString(string: "#\(bookmark.number)", attributes: [
+                .font: Styles.Fonts.body,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ]
+            )
+            repositoryText.append(bookmarkText)
+        default:
+            break
+        }
+        return repositoryText
     }
 }
