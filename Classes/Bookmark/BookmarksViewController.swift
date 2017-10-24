@@ -34,6 +34,7 @@ TabNavRootViewControllerType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         configureSearchBar()
         configureTableView()
 
@@ -207,7 +208,7 @@ TabNavRootViewControllerType {
 
     private func configureSearchBar() {
         searchBar.delegate = self
-        searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
+        searchBar.placeholder = "\(Constants.Strings.search) \(Constants.Strings.bookmarks)" // Localization is done in the constants.
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
