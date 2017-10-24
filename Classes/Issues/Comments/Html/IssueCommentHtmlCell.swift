@@ -62,8 +62,8 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     </html>
     """
 
-    weak var delegate: IssueCommentHtmlCellDelegate? = nil
-    weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate? = nil
+    weak var delegate: IssueCommentHtmlCellDelegate?
+    weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate?
 
     @objc private let webView = UIWebView()
     private var body = ""
@@ -110,7 +110,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
         guard let viewModel = viewModel as? IssueCommentHtmlModel else { return }
         body = viewModel.html
         webViewBaseURL = viewModel.baseURL
-        
+
         let html = IssueCommentHtmlCell.htmlHead + body + IssueCommentHtmlCell.htmlTail
         webView.loadHTMLString(html, baseURL: webViewBaseURL)
     }
@@ -119,11 +119,11 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         guard let url = request.url else { return true }
-        
+
         if let baseURL = webViewBaseURL, url == baseURL {
             return true
         }
-        
+
         let htmlLoad = url.absoluteString == "about:blank"
         if !htmlLoad {
             navigationDelegate?.webViewWantsNavigate(cell: self, url: url)

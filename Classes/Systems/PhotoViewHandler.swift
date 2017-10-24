@@ -13,8 +13,8 @@ final class PhotoViewHandler: NSObject,
     IssueCommentImageCellDelegate,
 NYTPhotosViewControllerDelegate {
 
-    private weak var viewController: UIViewController? = nil
-    private weak var referenceImageView: UIImageView? = nil
+    private weak var viewController: UIViewController?
+    private weak var referenceImageView: UIImageView?
 
     init(viewController: UIViewController?) {
         self.viewController = viewController
@@ -37,4 +37,3 @@ NYTPhotosViewControllerDelegate {
     }
 
 }
-

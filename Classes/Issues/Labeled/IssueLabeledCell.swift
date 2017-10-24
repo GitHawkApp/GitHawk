@@ -16,7 +16,7 @@ protocol IssueLabeledCellDelegate: class {
 
 final class IssueLabeledCell: UICollectionViewCell {
 
-    weak var delegate: IssueLabeledCellDelegate? = nil
+    weak var delegate: IssueLabeledCellDelegate?
 
     private let descriptionButton = UIButton()
     private let labelButton = UIButton()

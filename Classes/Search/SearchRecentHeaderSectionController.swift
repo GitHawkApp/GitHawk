@@ -15,7 +15,7 @@ protocol SearchRecentHeaderSectionControllerDelegate: class {
 
 final class SearchRecentHeaderSectionController: ListSectionController, SearchRecentHeaderCellDelegate {
 
-    weak var delegate: SearchRecentHeaderSectionControllerDelegate? = nil
+    weak var delegate: SearchRecentHeaderSectionControllerDelegate?
 
     init(delegate: SearchRecentHeaderSectionControllerDelegate) {
         self.delegate = delegate

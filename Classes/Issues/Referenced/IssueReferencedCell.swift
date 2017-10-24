@@ -55,7 +55,7 @@ final class IssueReferencedCell: UICollectionViewCell {
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -70,7 +70,7 @@ final class IssueReferencedCell: UICollectionViewCell {
     func configure(_ model: IssueReferencedModel) {
         let titleAttributes = [
             NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let title = NSMutableAttributedString(string: model.title, attributes: titleAttributes)
         let numberAttributes = [

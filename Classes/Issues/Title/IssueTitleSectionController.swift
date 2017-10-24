@@ -26,4 +26,3 @@ final class IssueTitleSectionController: ListGenericSectionController<NSAttribut
     }
 
 }
-

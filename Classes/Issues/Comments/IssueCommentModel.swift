@@ -64,5 +64,4 @@ final class IssueCommentModel: ListDiffable {
         return true
     }
 
-
 }

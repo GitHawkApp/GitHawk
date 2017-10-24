@@ -30,7 +30,7 @@ NewIssueTableViewControllerDelegate {
         }
         controllers += [
             RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true),
+            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true)
         ]
         self.controllers = controllers
 
@@ -86,7 +86,7 @@ NewIssueTableViewControllerDelegate {
     var repoUrl: URL {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
-    
+
     func newIssueAction() -> UIAlertAction? {
         guard let newIssueViewController = NewIssueTableViewController.create(
             client: client,
@@ -97,14 +97,14 @@ NewIssueTableViewControllerDelegate {
             ToastManager.showGenericError()
             return nil
         }
-        
+
         newIssueViewController.delegate = self
         weak var weakSelf = self
-        
+
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
             .newIssue(issueController: newIssueViewController)
     }
-    
+
     func bookmarkAction() -> UIAlertAction? {
         let bookmarkModel = BookmarkModel(
             type: .repo,
@@ -114,24 +114,24 @@ NewIssueTableViewControllerDelegate {
         )
         return AlertAction.bookmark(bookmarkModel)
     }
-    
+
     @objc
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
-        
+
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-        
+
         alert.addActions([
             bookmarkAction(),
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: repoUrl),
             AlertAction(alertBuilder).view(owner: URL(string: "https://github.com/\(repo.owner)")!),
-            AlertAction.cancel(),
+            AlertAction.cancel()
         ])
         alert.popoverPresentationController?.barButtonItem = sender
-        
+
         present(alert, animated: true)
     }
 

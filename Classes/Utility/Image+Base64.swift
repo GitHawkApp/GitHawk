@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIImage {
-    
+
     /// Compressed and Encodes in Base64 the given image.
     ///
     /// Process is moved to a background thread in order to prevent UI blocking.
@@ -18,14 +18,14 @@ extension UIImage {
     func compressAndEncode(compression: CGFloat = 0.65, completion: @escaping (Result<String>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             let data = UIImageJPEGRepresentation(self, compression)
-            
+
             guard let base64 = data?.base64EncodedString() else {
                 completion(.error(nil))
                 return
             }
-            
+
             completion(.success(base64))
         }
     }
-    
+
 }

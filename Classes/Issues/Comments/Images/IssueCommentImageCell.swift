@@ -24,8 +24,8 @@ ListBindable,
 CollapsibleCell,
 UIGestureRecognizerDelegate {
 
-    weak var delegate: IssueCommentImageCellDelegate? = nil
-    weak var heightDelegate: IssueCommentImageHeightCellDelegate? = nil
+    weak var delegate: IssueCommentImageCellDelegate?
+    weak var heightDelegate: IssueCommentImageHeightCellDelegate?
 
     let imageView = FLAnimatedImageView()
 
@@ -55,7 +55,7 @@ UIGestureRecognizerDelegate {
         tapGesture.delegate = self
         contentView.addGestureRecognizer(tapGesture)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -89,7 +89,7 @@ UIGestureRecognizerDelegate {
         spinner.startAnimating()
 
         let imageURL = viewModel.url
-        imageView.sd_setImage(with: imageURL) { [weak self] (image, error, type, url) in
+        imageView.sd_setImage(with: imageURL) { [weak self] (image, _, _, url) in
             guard let strongSelf = self else { return }
             strongSelf.imageView.backgroundColor = .clear
             strongSelf.spinner.stopAnimating()
@@ -146,5 +146,5 @@ UIGestureRecognizerDelegate {
         let location = gestureRecognizer.location(in: imageView)
         return imageBounds.contains(location)
     }
-    
+
 }

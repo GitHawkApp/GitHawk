@@ -16,7 +16,7 @@ extension NSAttributedString {
         modifiedString.trimCharactersInSet(charSet: charSet)
         return NSAttributedString(attributedString: modifiedString)
     }
-    
+
 }
 
 extension NSMutableAttributedString {

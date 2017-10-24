@@ -33,11 +33,11 @@ extension IssueTextActionsView {
             IssueTextActionOperation(icon: UIImage(named: "bar-indent"), operation: .line("  ")),
             IssueTextActionOperation(icon: UIImage(named: "bar-link"), operation: .wrap("[", "](\(UITextView.cursorToken))"))
         ]
-        
+
         if supportsImageUpload {
             operations.append(IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .uploadImage))
         }
-        
+
         let actions = IssueTextActionsView(operations: operations)
         actions.backgroundColor = Styles.Colors.Gray.lighter.color
         if addBorder {
@@ -48,4 +48,3 @@ extension IssueTextActionsView {
     }
 
 }
-

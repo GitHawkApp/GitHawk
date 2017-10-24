@@ -68,8 +68,8 @@ ListBindingSectionControllerDataSource {
             issueAttributedDelegate: nil,
             imageHeightDelegate: imageCache
         )
-        
+
         return cell
     }
-    
+
 }

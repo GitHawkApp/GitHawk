@@ -13,7 +13,7 @@ final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
 
     // width is unused since the full size of the image is stored
     private static let cache = WidthCache<URL, CGSize>()
-    private weak var sectionController: ListSectionController? = nil
+    private weak var sectionController: ListSectionController?
 
     init(sectionController: ListSectionController) {
         self.sectionController = sectionController
@@ -43,4 +43,3 @@ final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
     }
 
 }
-

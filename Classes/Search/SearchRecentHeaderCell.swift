@@ -15,7 +15,7 @@ protocol SearchRecentHeaderCellDelegate: class {
 
 final class SearchRecentHeaderCell: UICollectionViewCell {
 
-    weak var delegate: SearchRecentHeaderCellDelegate? = nil
+    weak var delegate: SearchRecentHeaderCellDelegate?
 
     private let label = UILabel()
     private let button = UIButton()
@@ -44,7 +44,7 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
 
         addBorder(.bottom, useSafeMargins: false)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

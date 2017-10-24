@@ -12,10 +12,8 @@ extension String {
 
     func valueForQuery(key: String) -> String? {
         guard let items = URLComponents(string: self)?.queryItems else { return nil }
-        for item in items {
-            if item.name == key {
-                return item.value
-            }
+        for item in items where item.name == key {
+            return item.value
         }
         return nil
     }
