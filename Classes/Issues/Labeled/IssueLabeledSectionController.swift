@@ -45,4 +45,3 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
     }
 
 }
-

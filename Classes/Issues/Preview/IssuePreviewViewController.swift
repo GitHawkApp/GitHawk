@@ -17,7 +17,7 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
     private let markdown: String
     private let owner: String
     private let repo: String
-    private var model: IssuePreviewModel? = nil
+    private var model: IssuePreviewModel?
 
     init(
         markdown: String,
@@ -30,7 +30,7 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Preview", comment: "")
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

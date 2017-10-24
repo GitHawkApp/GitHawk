@@ -44,27 +44,21 @@ class SearchRecentStoreTests: XCTestCase {
         XCTAssertTrue(store.recents.isEmpty)
     }
 
-    func test_removesLast_doesntCrashOnEmpty() {
-        XCTAssertTrue(store.recents.isEmpty)
-        store.removeLast()
-    }
-
-    func test_removesLast_removesLastObject() {
-        store.add(query: .search("finn"))
-        store.add(query: .search("jake"))
-        store.removeLast()
-
-        let expectedCount = 1
-        let actualCount = store.recents.count
-
-        XCTAssertEqual(expectedCount, actualCount)
-    }
-
     func test_remove() {
         store.add(query: .search("finn"))
         store.remove(query: .search("finn"))
 
         let expectedCount = 0
+        let actualCount = store.recents.count
+
+        XCTAssertEqual(expectedCount, actualCount)
+    }
+
+    func test_remove_takesNoAction_ifNotPresent() {
+        store.add(query: .search("finn"))
+        store.remove(query: .search("jake"))
+
+        let expectedCount = 1
         let actualCount = store.recents.count
 
         XCTAssertEqual(expectedCount, actualCount)

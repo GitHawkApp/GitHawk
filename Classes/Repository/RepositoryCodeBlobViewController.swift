@@ -24,7 +24,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
             target: self,
             action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
-        
+
         return barButtonItem
     }()
 
@@ -66,7 +66,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
             right: Styles.Sizes.columnSpacing
         )
         scrollView.addSubview(textView)
-        
+
         navigationItem.rightBarButtonItem = sharingButton
 
         fetch()
@@ -81,7 +81,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     }
 
     // MARK: Private API
-    
+
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
         sharingButton.isEnabled = true
@@ -91,13 +91,13 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func onRefresh() {
         fetch()
     }
-    
+
     @objc
     func onShare(sender: UIBarButtonItem) {
         guard let payload = sharingPayload else { return }
         let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
         activityController.popoverPresentationController?.barButtonItem = sender
-        
+
         present(activityController, animated: true)
     }
 

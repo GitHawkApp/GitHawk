@@ -17,18 +17,18 @@ final class SearchRepoResultCell: SelectableCell {
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
-    
+
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let languageLabel = UILabel()
     private let languageColorView = UIView()
     private let starsLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-        
+
         backgroundColor = .white
 
         contentView.addSubview(titleLabel)
@@ -54,7 +54,7 @@ final class SearchRepoResultCell: SelectableCell {
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
         }
-        
+
         let languageColorWidth: CGFloat = 8
         languageColorView.layer.cornerRadius = languageColorWidth / 2
         languageColorView.snp.makeConstraints { make in
@@ -79,14 +79,14 @@ final class SearchRepoResultCell: SelectableCell {
             make.right.lessThanOrEqualTo(starsLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
             make.left.equalTo(titleLabel)
         }
-        
+
         addBorder(.bottom, left: SearchRepoResultCell.labelInset.left)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure(result: SearchRepoResult) {
         let ownerAttributes = [
             NSAttributedStringKey.font: Styles.Fonts.body,
@@ -101,11 +101,11 @@ final class SearchRepoResultCell: SelectableCell {
         titleLabel.attributedText = title
 
         descriptionLabel.text = result.description
-        
+
         if let primaryLanguage = result.primaryLanguage {
             languageLabel.isHidden = false
             languageLabel.text = primaryLanguage.name
-            
+
             if let color = result.primaryLanguage?.color {
                 languageColorView.isHidden = false
                 languageColorView.backgroundColor = color
@@ -116,11 +116,11 @@ final class SearchRepoResultCell: SelectableCell {
             languageLabel.isHidden = true
             languageColorView.isHidden = true
         }
-        
+
         let starsCount = NumberFormatter.localizedString(from: NSNumber(value: result.stars), number: .decimal)
         starsLabel.text = "\u{2605}\(starsCount)"
     }
-    
+
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews
@@ -129,5 +129,5 @@ final class SearchRepoResultCell: SelectableCell {
         }
         set { }
     }
-    
+
 }

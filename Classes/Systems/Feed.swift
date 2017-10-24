@@ -26,7 +26,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
     let collectionView: UICollectionView
 
     public private(set) var status: Status = .idle
-    private weak var delegate: FeedDelegate? = nil
+    private weak var delegate: FeedDelegate?
     private let feedRefresh = FeedRefresh()
     private let managesLayout: Bool
 
@@ -90,7 +90,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
         }
     }
 
-    func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> ())? = nil) {
+    func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> Void)? = nil) {
         status = .idle
 
         adapter.performUpdates(animated: animated) { _ in
@@ -136,4 +136,3 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
 }
-

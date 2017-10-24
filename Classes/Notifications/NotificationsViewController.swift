@@ -122,14 +122,14 @@ FlatCacheListener {
             message: NSLocalizedString("Mark all notifications as read?", comment: ""),
             preferredStyle: .alert
         )
-        
+
         alert.addActions([
             AlertAction.markAll({ [weak self] _ in
                 self?.markAllRead()
             }),
             AlertAction.cancel()
         ])
-        
+
         present(alert, animated: true)
     }
 
@@ -239,5 +239,5 @@ FlatCacheListener {
         case .list: break
         }
     }
-    
+
 }

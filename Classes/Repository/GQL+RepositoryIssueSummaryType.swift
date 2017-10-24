@@ -9,7 +9,7 @@
 import Foundation
 
 extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummaryType {
-    
+
     var labelableFields: LabelableFields {
         return fragments.labelableFields
     }
@@ -32,11 +32,11 @@ extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummary
 }
 
 extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: RepositoryIssueSummaryType {
-    
+
     var labelableFields: LabelableFields {
         return fragments.labelableFields
     }
-    
+
     var repoEventFields: RepoEventFields {
         return fragments.repoEventFields
     }
@@ -52,5 +52,5 @@ extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: Repository
         case .merged: return .merged
         }
     }
-    
+
 }

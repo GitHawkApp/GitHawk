@@ -20,7 +20,7 @@ extension UIViewController {
 }
 
 extension UIAlertController {
-	
+
 	static func configured(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle) -> UIAlertController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
 		alertController.view.tintColor = Styles.Colors.Blue.medium.color

@@ -14,7 +14,7 @@ extension GithubClient {
         owner: String,
         repo: String,
         number: Int,
-        completion: @escaping (Result<[File]>) -> ()
+        completion: @escaping (Result<[File]>) -> Void
         ) {
         request(Request(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/files",
@@ -35,7 +35,7 @@ extension GithubClient {
 
     func fetchContents(
         contentsURLString: String,
-        completion: @escaping (Result<(NSAttributedStringSizing, Content)>) -> ()
+        completion: @escaping (Result<(NSAttributedStringSizing, Content)>) -> Void
         ) {
         request(Request(url: contentsURLString, completion: { (response, _) in
             if let json = response.value as? [String: Any] {
@@ -67,5 +67,5 @@ extension GithubClient {
             }
         }))
     }
-    
+
 }

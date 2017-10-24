@@ -17,7 +17,7 @@ enum NotificationType: String {
 }
 
 extension NotificationType {
-    
+
     var localizedString: String {
         switch self {
         case .issue:
@@ -27,7 +27,7 @@ extension NotificationType {
         case .repo:
             return NSLocalizedString("Repository", comment: "")
         case .pullRequest:
-            return NSLocalizedString("Pull request", comment: "")
+            return Constants.Strings.pullRequest
         }
     }
 }

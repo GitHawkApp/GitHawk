@@ -16,7 +16,7 @@ protocol EditCommentViewControllerDelegate: class {
 
 class EditCommentViewController: UIViewController {
 
-    weak var delegate: EditCommentViewControllerDelegate? = nil
+    weak var delegate: EditCommentViewControllerDelegate?
 
     private let commentID: Int
     private let client: GithubClient
@@ -188,4 +188,3 @@ class EditCommentViewController: UIViewController {
     }
 
 }
-

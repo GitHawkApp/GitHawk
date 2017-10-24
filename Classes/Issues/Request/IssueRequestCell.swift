@@ -16,7 +16,7 @@ protocol IssueRequestCellDelegate: class {
 
 final class IssueRequestCell: UICollectionViewCell {
 
-    weak var delegate: IssueRequestCellDelegate? = nil
+    weak var delegate: IssueRequestCellDelegate?
 
     private let actorButton = UIButton()
     private let userButton = UIButton()
@@ -47,7 +47,7 @@ final class IssueRequestCell: UICollectionViewCell {
             make.left.equalTo(userButton.snp.right).offset(Styles.Sizes.inlineSpacing)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

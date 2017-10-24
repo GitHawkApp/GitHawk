@@ -10,7 +10,7 @@ import Foundation
 
 final class BookmarksStore {
     static let shared = BookmarksStore()
-    
+
     private let archivePath: String = {
         return FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)
@@ -20,43 +20,42 @@ final class BookmarksStore {
             .path
     }()
     private var _bookmarks: Set<BookmarkModel>
-    
+
     // MARK: Init
-    
+
     init() {
         if let bookmarks = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? Set<BookmarkModel> {
             _bookmarks = bookmarks
-        }
-        else {
+        } else {
             _bookmarks = []
         }
     }
-    
+
     // MARK: Public API
-    
+
     func add(bookmark: BookmarkModel) {
         _bookmarks.insert(bookmark)
         archive()
     }
-    
+
     func remove(bookmark: BookmarkModel) {
         _bookmarks.remove(bookmark)
         archive()
     }
-    
+
     func clear() {
         _bookmarks.removeAll()
         archive()
     }
-    
+
     var bookmarks: [BookmarkModel] {
         return Array(_bookmarks)
     }
 
     // MARK: Private API
-    
+
     func archive() {
         NSKeyedArchiver.archiveRootObject(_bookmarks, toFile: self.archivePath)
     }
-    
+
 }

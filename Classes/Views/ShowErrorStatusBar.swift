@@ -11,8 +11,7 @@ import Foundation
 func ShowErrorStatusBar(graphQLErrors: [Error]?, networkError: Error?) {
     if networkError != nil {
         ToastManager.showNetworkError()
-    }
-    else if graphQLErrors != nil && graphQLErrors!.count > 0 {
+    } else if graphQLErrors != nil && graphQLErrors!.count > 0 {
         ToastManager.showGenericError()
     }
 }

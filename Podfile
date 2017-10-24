@@ -14,6 +14,7 @@ pod 'SDWebImage/GIF', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
 pod 'Tabman', '1.0.1'
 pod 'TUSafariActivity', '~> 1.0.0'
+pod 'SwiftLint'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
