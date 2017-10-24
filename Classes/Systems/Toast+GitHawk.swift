@@ -9,7 +9,7 @@
 import Foundation
 
 extension ToastManager {
-    
+
     private static var window: UIView? {
         return UIApplication.shared.keyWindow
     }

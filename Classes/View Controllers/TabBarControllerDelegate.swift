@@ -11,7 +11,7 @@ import UIKit
 final class TabBarControllerDelegate: NSObject, UITabBarControllerDelegate {
 
     private var tapCount = 0
-    private weak var previousSelectedViewController: UIViewController? = nil
+    private weak var previousSelectedViewController: UIViewController?
 
     func tabBarController(
         _ tabBarController: UITabBarController,

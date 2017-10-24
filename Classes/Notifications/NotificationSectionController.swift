@@ -85,7 +85,7 @@ SwipeCollectionViewCellDelegate {
         guard orientation == .right, !considerObjectRead else { return nil }
 
         let title = NSLocalizedString("Read", comment: "")
-        let action = SwipeAction(style: .destructive, title: title) { [weak self] (action, _) in
+        let action = SwipeAction(style: .destructive, title: title) { [weak self] (_, _) in
             // swiping-read is an engaging action, system prompt on it
             RatingController.prompt(.system)
 

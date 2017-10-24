@@ -16,7 +16,7 @@ UICollectionViewDelegateFlowLayout {
 
     static let inset = UIEdgeInsets(top: 0, left: 4, bottom: Styles.Sizes.rowSpacing, right: 4)
 
-    weak var delegate: AttributedStringViewDelegate? = nil
+    weak var delegate: AttributedStringViewDelegate?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,7 +27,7 @@ UICollectionViewDelegateFlowLayout {
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     private let identifier = "cell"
-    private var model: IssueCommentTableModel? = nil
+    private var model: IssueCommentTableModel?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

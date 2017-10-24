@@ -15,7 +15,7 @@ struct GithubLanguage {
 }
 
 class SearchRepoResult: ListDiffable {
-    
+
     let id: String
     let owner: String
     let name: String
@@ -23,7 +23,7 @@ class SearchRepoResult: ListDiffable {
     let stars: Int
     let hasIssuesEnabled: Bool
     let primaryLanguage: GithubLanguage?
-    
+
     init(
         id: String,
         owner: String,
@@ -41,11 +41,11 @@ class SearchRepoResult: ListDiffable {
         self.hasIssuesEnabled = hasIssuesEnabled
         self.primaryLanguage = primaryLanguage
     }
-    
+
     func diffIdentifier() -> NSObjectProtocol {
         return id as NSObjectProtocol
     }
-    
+
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? SearchRepoResult else { return false }

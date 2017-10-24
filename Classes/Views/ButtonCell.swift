@@ -14,8 +14,8 @@ final class ButtonCell: SelectableCell {
     let label = UILabel()
 
     private let disclosureImageView = UIImageView()
-    private var topSeparator: UIView? = nil
-    private var bottomSeparator: UIView? = nil
+    private var topSeparator: UIView?
+    private var bottomSeparator: UIView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,7 +42,7 @@ final class ButtonCell: SelectableCell {
             make.right.equalTo(-Styles.Sizes.gutter)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

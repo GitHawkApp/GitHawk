@@ -14,10 +14,10 @@ protocol ForegroundHandlerDelegate: class {
 
 final class ForegroundHandler {
 
-    weak var delegate: ForegroundHandlerDelegate? = nil
+    weak var delegate: ForegroundHandlerDelegate?
 
     private let threshold: CFTimeInterval
-    private var backgrounded: CFTimeInterval? = nil
+    private var backgrounded: CFTimeInterval?
 
     init(threshold: TimeInterval) {
         self.threshold = threshold

@@ -20,7 +20,7 @@ struct HandoffInformator: UserActivitySupporting {
 }
 
 extension UIViewController {
-    
+
     func setupUserActivity(with informator: HandoffInformator) {
         let activity = NSUserActivity(activityType: "\(Bundle.main.bundleIdentifier ?? "").\(informator.activityTitle)")
         activity.title = NSLocalizedString(informator.activityTitle, comment: "")
@@ -29,11 +29,11 @@ extension UIViewController {
         self.userActivity = activity
         self.userActivity?.becomeCurrent()
     }
-    
+
     func resignUserActivity() {
         userActivity?.resignCurrent()
     }
-    
+
     func invalidateUserActivity() {
         userActivity?.invalidate()
     }

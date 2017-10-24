@@ -45,7 +45,7 @@ final class WriteButton: UIView {
         layer.shadowOpacity = 0.35
         layer.shadowOffset = CGSize(width: 0, height: 4)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

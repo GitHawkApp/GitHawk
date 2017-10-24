@@ -15,7 +15,7 @@ protocol SegmentedControlCellDelegate: class {
 
 final class SegmentedControlCell: UICollectionViewCell {
 
-    weak var delegate: SegmentedControlCellDelegate? = nil
+    weak var delegate: SegmentedControlCellDelegate?
 
     private let segmentedControl = UISegmentedControl(frame: .zero)
 
@@ -30,7 +30,7 @@ final class SegmentedControlCell: UICollectionViewCell {
             make.centerY.equalTo(contentView)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,5 +47,5 @@ final class SegmentedControlCell: UICollectionViewCell {
     @objc private func didSelect(sender: Any) {
         delegate?.didChangeSelection(cell: self, index: segmentedControl.selectedSegmentIndex)
     }
-    
+
 }

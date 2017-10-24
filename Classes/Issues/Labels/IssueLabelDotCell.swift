@@ -11,10 +11,10 @@ import UIKit
 final class IssueLabelDotCell: UICollectionViewCell {
 
     static let reuse = "cell"
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = bounds.width/2
     }
-    
+
 }

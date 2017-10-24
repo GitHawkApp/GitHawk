@@ -15,7 +15,7 @@ protocol LabelsViewControllerDelegate: class {
 final class LabelsViewController: UITableViewController {
 
     private let minContentHeight: CGFloat = 200
-    private weak var delegate: LabelsViewControllerDelegate? = nil
+    private weak var delegate: LabelsViewControllerDelegate?
     private var labels = [RepositoryLabel]()
     private var selectedLabels = Set<String>()
     private var client: GithubClient!
@@ -40,7 +40,7 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        client.fetch(query: request) { [weak self] (result, error) in
+        client.fetch(query: request) { [weak self] (result, _) in
             self?.feedRefresh.endRefreshing()
             if let nodes = result?.data?.repository?.labels?.nodes {
                 var labels = [RepositoryLabel]()

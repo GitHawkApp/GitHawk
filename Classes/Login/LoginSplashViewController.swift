@@ -23,7 +23,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
 
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    private weak var safariController: SFSafariViewController? = nil
+    private weak var safariController: SFSafariViewController?
 
     @available(iOS 11.0, *)
     private var authSession: SFAuthenticationSession? {
@@ -35,7 +35,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         }
     }
     private var _authSession: Any?
-    
+
     var state: State = .idle {
         didSet {
             let hideSpinner: Bool
@@ -92,14 +92,14 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         alert.addTextField { (textField) in
             textField.placeholder = NSLocalizedString("Personal Access Token", comment: "")
         }
-        
+
         alert.addActions([
             AlertAction.cancel(),
             AlertAction.login({ [weak alert, weak self] _ in
                 alert?.actions.forEach { $0.isEnabled = false }
-                
+
                 self?.state = .fetchingToken
-                
+
                 let token = alert?.textFields?.first?.text ?? ""
                 self?.client.verifyPersonalAccessToken(token: token) { result in
                     self?.handle(result: result, authMethod: .pat)

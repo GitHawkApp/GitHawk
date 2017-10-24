@@ -22,7 +22,7 @@ final class IssueRenamedCell: UICollectionViewCell {
         right: Styles.Sizes.eventGutter
     )
 
-    weak var delegate: IssueRenamedCellDelegate? = nil
+    weak var delegate: IssueRenamedCellDelegate?
 
     private let actorLabel = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
@@ -49,7 +49,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
         contentView.addSubview(titleView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

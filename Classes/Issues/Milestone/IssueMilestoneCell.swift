@@ -23,7 +23,7 @@ final class IssueMilestoneCell: SelectableCell {
             make.left.equalTo(Styles.Sizes.gutter)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

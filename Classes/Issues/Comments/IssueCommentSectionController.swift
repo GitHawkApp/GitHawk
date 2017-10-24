@@ -27,7 +27,7 @@ EditCommentViewControllerDelegate {
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
-    private weak var delegate: IssueCommentSectionControllerDelegate? = nil
+    private weak var delegate: IssueCommentSectionControllerDelegate?
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -40,10 +40,10 @@ EditCommentViewControllerDelegate {
     }()
 
     // set when sending a mutation and override the original issue query reactions
-    private var reactionMutation: IssueCommentReactionViewModel? = nil
+    private var reactionMutation: IssueCommentReactionViewModel?
 
     // set after succesfully editing the body
-    private var bodyEdits: (markdown: String, models: [ListDiffable])? = nil
+    private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
     init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
         self.model = model
@@ -76,26 +76,26 @@ EditCommentViewControllerDelegate {
             let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
         else { return nil }
         weak var weakSelf = self
-        
+
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
-    
+
     func deleteAction() -> UIAlertAction? {
         guard object?.viewerCanDelete == true else { return nil }
-        
+
         return AlertAction.delete { [weak self] _ in
             let title = NSLocalizedString("Are you sure?", comment: "")
             let message = NSLocalizedString("Deleting this comment is irreversible, do you want to continue?", comment: "")
             let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
-            
+
             alert.addActions([
                 AlertAction.cancel(),
                 AlertAction.delete { [weak self] _ in
                     self?.deleteComment()
                 }
             ])
-            
+
             self?.viewController?.present(alert, animated: true)
         }
     }
@@ -162,11 +162,11 @@ EditCommentViewControllerDelegate {
             }
         }
     }
-    
+
     /// Deletes the comment and optimistically removes it from the feed
     private func deleteComment() {
         guard let number = object?.number else { return }
-        
+
         // Optimistically delete the comment
         hasBeenDeleted = true
         update(animated: true, completion: nil)
@@ -192,7 +192,7 @@ EditCommentViewControllerDelegate {
         ) -> [ListDiffable] {
         guard let object = self.object else { return [] }
         guard !hasBeenDeleted else { return [] }
-        
+
         var bodies = [ListDiffable]()
         let bodyModels = bodyEdits?.models ?? object.bodyModels
         for body in bodyModels {

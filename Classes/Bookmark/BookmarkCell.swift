@@ -38,7 +38,6 @@ class BookmarkCell: UITableViewCell {
         }
         set { }
     }
-
     
     // MARK: Public API
     

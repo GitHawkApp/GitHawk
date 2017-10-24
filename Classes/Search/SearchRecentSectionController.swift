@@ -18,7 +18,7 @@ protocol SearchRecentSectionControllerDelegate: class {
 // bridge to NSString for NSObject conformance
 final class SearchRecentSectionController: ListGenericSectionController<SearchRecentViewModel>, SwipeCollectionViewCellDelegate {
 
-    weak var delegate: SearchRecentSectionControllerDelegate? = nil
+    weak var delegate: SearchRecentSectionControllerDelegate?
     lazy var recentStore = SearchRecentStore()
 
     init(delegate: SearchRecentSectionControllerDelegate) {
@@ -74,4 +74,3 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
     }
 
 }
-

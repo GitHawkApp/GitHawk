@@ -11,7 +11,7 @@ import UIKit
 enum IssueSignatureType {
     case bugReport
     case sentWithGitHawk
-    
+
     var addition: String {
         switch self {
         case .bugReport:
@@ -20,7 +20,7 @@ enum IssueSignatureType {
             #else
                 let testFlight = "false"
             #endif
-            
+
             return [
                 "\n",
                 "<details>",
@@ -44,51 +44,51 @@ protocol NewIssueTableViewControllerDelegate: class {
 
 final class NewIssueTableViewController: UITableViewController, UITextFieldDelegate {
 
-    weak var delegate: NewIssueTableViewControllerDelegate? = nil
+    weak var delegate: NewIssueTableViewControllerDelegate?
 
     @IBOutlet var titleField: UITextField!
     @IBOutlet var bodyField: UITextView!
-    
+
     private var client: GithubClient!
     private var owner: String!
     private var repo: String!
     private var signature: IssueSignatureType?
     private let textActionsController = TextActionsController()
-    
+
     private var titleText: String? {
         guard let raw = titleField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
         if raw.isEmpty { return nil }
         return raw
     }
-    
+
     private var bodyText: String? {
         let raw = bodyField.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty { return nil }
         return raw
     }
-    
+
     static func create(client: GithubClient,
                        owner: String,
                        repo: String,
                        signature: IssueSignatureType? = nil) -> NewIssueTableViewController? {
         let storyboard = UIStoryboard(name: "NewIssue", bundle: nil)
-        
+
         let viewController = storyboard.instantiateInitialViewController() as? NewIssueTableViewController
         viewController?.hidesBottomBarWhenPushed = true
         viewController?.client = client
         viewController?.owner = owner
         viewController?.repo = repo
         viewController?.signature = signature
-        
+
         return viewController
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Add send button
         setRightBarItemIdle()
-        
+
         // Add cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: Constants.Strings.cancel,
@@ -96,18 +96,18 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             target: self,
             action: #selector(onCancel)
         )
-        
+
         // Make the return button move on to description field
         titleField.delegate = self
-        
+
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
         setupInputView()
-        
+
         // Update title to use localization
         title = Constants.Strings.newIssue
     }
-    
+
     // MARK: Private API
 
     func setRightBarItemIdle() {
@@ -119,7 +119,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         )
         navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
-    
+
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc
     func onSend() {
@@ -131,14 +131,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         titleField.resignFirstResponder()
         bodyField.resignFirstResponder()
         setRightBarItemSpinning()
-        
+
         let signature = self.signature?.addition ?? ""
-        
+
         client.createIssue(owner: owner, repo: repo, title: titleText, body: (bodyText ?? "") + signature) { [weak self] model in
             guard let strongSelf = self else { return }
 
             strongSelf.setRightBarItemIdle()
-            
+
             guard let model = model else {
                 ToastManager.showGenericError()
                 return
@@ -161,7 +161,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
                                        comment: "New Issue - Cancel w/ Unsaved Changes Message")
         )
     }
-    
+
     func setupInputView() {
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.bodyField.text ?? ""
@@ -178,20 +178,20 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }
-    
+
     // MARK: UITextFieldDelegate
-    
+
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyField.becomeFirstResponder()
         return false
     }
-    
+
     // MARK: Actions
-    
+
     /// Called when editing changed on the title field, enable/disable submit button based on title text
     @IBAction func titleFieldEditingChanged(_ sender: Any) {
         navigationItem.rightBarButtonItem?.isEnabled = titleText != nil
     }
-    
+
 }

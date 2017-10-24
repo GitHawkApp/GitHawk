@@ -56,7 +56,7 @@ final class RatingController {
 
     class func prompt(_ type: Prompt) {
         guard canPrompt(.system) else { return }
-        
+
         switch type {
         case .system: requestSystem()
         case .inFeed: openAppStore()
@@ -114,5 +114,5 @@ final class RatingController {
             // limit all types of prompts to at least 1mo intervals
             && lastPrompt.timeIntervalSinceNow < interval
     }
-    
+
 }

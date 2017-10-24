@@ -17,7 +17,7 @@ LabelsViewControllerDelegate {
     private var expanded = false
     private let issueModel: IssueDetailsModel
     private let client: GithubClient
-    private var labelsOverride: [RepositoryLabel]? = nil
+    private var labelsOverride: [RepositoryLabel]?
 
     init(issueModel: IssueDetailsModel, client: GithubClient) {
         self.issueModel = issueModel
@@ -77,7 +77,7 @@ LabelsViewControllerDelegate {
         case is RepositoryLabel: cellClass = IssueLabelCell.self
         default: cellClass = IssueLabelEditCell.self
         }
-        
+
         guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
             else { fatalError("Cell not bindable") }
         return cell
