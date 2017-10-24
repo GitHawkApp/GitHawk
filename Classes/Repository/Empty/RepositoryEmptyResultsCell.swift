@@ -11,18 +11,18 @@ import SnapKit
 import IGListKit
 
 final class RepositoryEmptyResultsCell: UICollectionViewCell {
-    
+
     private let icon = UIImageView()
     private let label = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         accessibilityTraits |= UIAccessibilityTraitStaticText
         isAccessibilityElement = true
 
         let tint = Styles.Colors.Gray.light.color
-        
+
         icon.tintColor = tint
         icon.contentMode = .scaleAspectFit
         contentView.addSubview(icon)
@@ -43,7 +43,7 @@ final class RepositoryEmptyResultsCell: UICollectionViewCell {
             make.top.equalTo(icon.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,7 +52,7 @@ final class RepositoryEmptyResultsCell: UICollectionViewCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-    
+
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews
@@ -68,5 +68,5 @@ final class RepositoryEmptyResultsCell: UICollectionViewCell {
         icon.image = type.icon?.withRenderingMode(.alwaysTemplate)
         label.text = type.text
     }
-    
+
 }

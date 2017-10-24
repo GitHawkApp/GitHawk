@@ -16,7 +16,7 @@ extension GithubClient {
         owner: String,
         repo: String,
         path: String,
-        completion: @escaping (Result<[RepositoryFile]>) -> ()
+        completion: @escaping (Result<[RepositoryFile]>) -> Void
         ) {
         let query = RepoFilesQuery(owner: owner, name: repo, branchAndPath: "\(fixedBranch):\(path)")
         fetch(query: query) { (result, error) in
@@ -56,7 +56,7 @@ extension GithubClient {
         owner: String,
         repo: String,
         path: String,
-        completion: @escaping (FileResult) -> ()
+        completion: @escaping (FileResult) -> Void
         ) {
         let query = RepoFileQuery(owner: owner, name: repo, branchAndPath: "\(fixedBranch):\(path)")
         fetch(query: query) { (result, error) in

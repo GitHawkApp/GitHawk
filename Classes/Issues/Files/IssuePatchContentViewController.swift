@@ -51,5 +51,5 @@ final class IssuePatchContentViewController: UIViewController {
         super.viewWillLayoutSubviews()
         scrollView.frame = view.bounds
     }
-    
+
 }

@@ -55,6 +55,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
+    // FIXME: Super high cyclo complexity
+    // swiftlint:disable cyclomatic_complexity
     func timelineViewModels(
         owner: String,
         repo: String,
@@ -323,6 +325,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
         return (results, mentionedUsers)
     }
+    // swiftlint:enable cyclomatic_complexity
 
     private func diffHunkModel(thread: Timeline.Node.AsPullRequestReviewThread) -> ListDiffable? {
         guard let node = thread.comments.nodes?.first, let firstComment = node else { return nil }

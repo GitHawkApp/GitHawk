@@ -16,5 +16,5 @@ extension UIFont {
             else { return self }
         return UIFont(descriptor: descriptor, size: 0)
     }
-    
+
 }

@@ -27,10 +27,6 @@ class Debouncer {
         self.action = action
     }
 
-    func cancel() {
-        timer?.invalidate()
-    }
-
     private func debounce() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(

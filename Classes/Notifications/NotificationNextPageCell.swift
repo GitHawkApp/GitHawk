@@ -41,7 +41,7 @@ final class NotificationNextPageCell: UICollectionViewCell {
         let format = NSLocalizedString("Load page %i", comment: "")
         label.text = String(format: format, page)
     }
-    
+
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews

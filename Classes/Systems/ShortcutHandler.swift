@@ -11,9 +11,11 @@ import Foundation
 struct ShortcutHandler {
 
     static private let searchViewControllerIndex = 1
+    static private let bookmarksViewControllerIndex = 2
 
     private enum Items: String {
         case search
+        case bookmarks
         case switchAccount
     }
 
@@ -29,6 +31,9 @@ struct ShortcutHandler {
         case .search:
             navigationManager.selectViewController(atIndex: searchViewControllerIndex)
             return true
+        case .bookmarks:
+            navigationManager.selectViewController(atIndex: bookmarksViewControllerIndex)
+            return true
         case .switchAccount:
             if let index = item.userInfo?["sessionIndex"] as? Int {
                 let session = sessionManager.userSessions[index]
@@ -42,14 +47,21 @@ struct ShortcutHandler {
         var items: [UIApplicationShortcutItem] = []
 
         // Search
-        let searchIcon = UIApplicationShortcutIcon(templateImageName: "search")
+        let searchIcon = UIApplicationShortcutIcon(templateImageName: Items.search.rawValue)
         let searchItem = UIApplicationShortcutItem(type: Items.search.rawValue,
                                                    localizedTitle: Constants.Strings.search,
-                                                   localizedSubtitle: nil,
-                                                   icon: searchIcon,
-                                                   userInfo: nil)
+                                                   localizedSubtitle: NSLocalizedString("Search GitHub", comment: ""),
+                                                   icon: searchIcon)
         items.append(searchItem)
 
+        // Bookmarks
+        let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmarks")
+        let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
+                                                   localizedTitle: Constants.Strings.bookmark,
+                                                   localizedSubtitle: nil,
+                                                   icon: bookmarkIcon)
+        items.append(bookmarkItem)
+        
         // Switchuser
         if sessionManager.userSessions.count >= 2 {
             let userSession = sessionManager.userSessions[1]

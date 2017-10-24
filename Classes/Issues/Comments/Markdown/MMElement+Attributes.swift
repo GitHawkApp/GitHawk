@@ -29,45 +29,45 @@ func PushAttributes(
     case .strikethrough: newAttributes = [
         .strikethroughStyle: NSUnderlineStyle.styleSingle.rawValue,
         .strikethroughColor: current[.foregroundColor]
-            ?? Styles.Colors.Gray.dark.color,
+            ?? Styles.Colors.Gray.dark.color
         ]
     case .strong: newAttributes = [
-        .font: currentFont.addingTraits(traits: .traitBold),
+        .font: currentFont.addingTraits(traits: .traitBold)
         ]
     case .em: newAttributes = [
-        .font: currentFont.addingTraits(traits: .traitItalic),
+        .font: currentFont.addingTraits(traits: .traitItalic)
         ]
     case .codeSpan: newAttributes = [
         .font: Styles.Fonts.code,
         NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         MarkdownAttribute.usernameDisabled: true,
-        MarkdownAttribute.linkShorteningDisabled: true,
+        MarkdownAttribute.linkShorteningDisabled: true
         ]
     case .link: newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,
-        MarkdownAttribute.url: element.href ?? "",
+        MarkdownAttribute.url: element.href ?? ""
         ]
     case .header:
         switch element.level {
         case 1: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h1),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h1)
             ]
         case 2: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h2),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h2)
             ]
         case 3: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h3),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h3)
             ]
         case 4: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h4),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h4)
             ]
         case 5: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5)
             ]
         default: newAttributes = [
             .foregroundColor: Styles.Colors.Gray.medium.color,
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6),
+            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6)
             ]
         }
     case .bulletedList, .numberedList:
@@ -82,7 +82,7 @@ func PushAttributes(
         }
         newAttributes = [.paragraphStyle: paragraphStyleCopy]
     case .blockquote: newAttributes = [
-        .foregroundColor: Styles.Colors.Gray.medium.color,
+        .foregroundColor: Styles.Colors.Gray.medium.color
         ]
     case .mailTo: newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,

@@ -12,7 +12,7 @@ final class IssueFilesViewController: UITableViewController {
 
     private var model: IssueDetailsModel!
     private var client: GithubClient!
-    private var result: Result<[File]>? = nil
+    private var result: Result<[File]>?
     private let feedRefresh = FeedRefresh()
 
     override func viewDidLoad() {

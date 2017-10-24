@@ -17,7 +17,7 @@ extension GithubClient {
         commentID: Int,
         body: String,
         isRoot: Bool,
-        completion: @escaping (Result<Bool>) -> ()
+        completion: @escaping (Result<Bool>) -> Void
         ) {
         let path = isRoot
             // https://developer.github.com/v3/issues/#edit-an-issue

@@ -31,5 +31,5 @@ final class IssueMilestoneModel: ListDiffable {
         return number == object.number
             && title == object.title
     }
-    
+
 }

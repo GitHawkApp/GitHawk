@@ -12,7 +12,7 @@ import IGListKit
 final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
 
     private static let cache = WidthCache<String, CGSize>()
-    private weak var sectionController: ListSectionController? = nil
+    private weak var sectionController: ListSectionController?
 
     init(sectionController: ListSectionController) {
         self.sectionController = sectionController
@@ -41,4 +41,3 @@ final class WebviewCellHeightCache: IssueCommentHtmlCellDelegate {
     }
 
 }
-

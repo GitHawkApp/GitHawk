@@ -30,15 +30,15 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
         // do not display reactions for 0 count
         let count = group.users.totalCount
         guard count > 0 else { continue }
-        
+
         let nodes: [String] = {
             guard let filtered = group.users.nodes?.filter({ $0?.login != nil }) as? [ReactionFields.ReactionGroup.User.Node] else {
                 return []
             }
-            
+
             return filtered.map({ $0.login })
         }()
-        
+
         models.append(ReactionViewModel(content: group.content, count: count, viewerDidReact: group.viewerHasReacted, users: nodes))
     }
 
@@ -52,7 +52,7 @@ func commentModelOptions(owner: String, repo: String) -> GitHubMarkdownOptions {
 func createCommentModel(
     id: String,
     commentFields: CommentFields,
-    reactionFields: ReactionFields, 
+    reactionFields: ReactionFields,
     width: CGFloat,
     owner: String,
     repo: String,
@@ -70,7 +70,7 @@ func createCommentModel(
         guard let editedDate = commentFields.lastEditedAt else { return nil }
         return GithubAPIDateFormatter().date(from: editedDate)
     }()
-    
+
     let details = IssueCommentDetailsViewModel(
         date: date,
         login: author.login,
