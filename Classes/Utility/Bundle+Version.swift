@@ -9,20 +9,20 @@
 import Foundation
 
 extension Bundle {
-    
+
     var versionNumber: String? {
         return infoDictionary?["CFBundleShortVersionString"] as? String
     }
-    
+
     var buildNumber: String? {
         return infoDictionary?["CFBundleVersion"] as? String
     }
-    
+
     var prettyVersionString: String {
         let ver = versionNumber ?? Constants.Strings.unknown
         let build = buildNumber ?? "0"
         let format = NSLocalizedString("Version %@ (%@)", comment: "")
         return  String.localizedStringWithFormat(format, ver, build)
     }
-    
+
 }

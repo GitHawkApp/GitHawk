@@ -9,7 +9,7 @@
 import Foundation
 
 final class BookmarkModel: NSObject, NSCoding, Filterable {
-    
+
     private enum Keys: String {
         case owner
         case number
@@ -18,14 +18,14 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         case title
         case hasIssueEnabled
     }
-    
+
     let type: NotificationType
     let name: String
     let owner: String
     let number: Int
     let title: String
     let hasIssueEnabled: Bool
-    
+
     init(
         type: NotificationType,
         name: String,
@@ -41,7 +41,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         self.title = title
         self.hasIssueEnabled = hasIssueEnabled
     }
-    
+
     convenience required init?(coder aDecoder: NSCoder) {
         guard let owner = aDecoder.decodeObject(forKey: Keys.owner.rawValue) as? String else { return nil }
         guard let name = aDecoder.decodeObject(forKey: Keys.name.rawValue) as? String else { return nil }
@@ -49,7 +49,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         guard let title = aDecoder.decodeObject(forKey: Keys.title.rawValue) as? String else { return nil }
         let hasIssueEnabled = aDecoder.decodeBool(forKey: Keys.hasIssueEnabled.rawValue)
         let number = aDecoder.decodeInteger(forKey: Keys.number.rawValue) as Int
-        
+
         self.init(
             type: NotificationType(rawValue: type)!,
             name: name,
@@ -59,7 +59,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
             hasIssueEnabled: hasIssueEnabled
         )
     }
-    
+
     func encode(with aCoder: NSCoder) {
         aCoder.encode(owner, forKey: Keys.owner.rawValue)
         aCoder.encode(number, forKey: Keys.number.rawValue)
@@ -68,27 +68,27 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         aCoder.encode(title, forKey: Keys.title.rawValue)
         aCoder.encode(hasIssueEnabled, forKey: Keys.hasIssueEnabled.rawValue)
     }
-    
+
     override var hashValue: Int {
         return "\(name)\(owner)\(number)".hashValue
     }
-    
+
     override func isEqual(_ object: Any?) -> Bool {
         let bookmark = (object as? BookmarkModel)
         return hashValue == bookmark?.hashValue
     }
-    
+
     // MARK: Filterable
-    
+
     func match(query: String) -> Bool {
         let lowerQuery = query.lowercased()
-        
+
         if type.rawValue.contains(lowerQuery) { return true }
         if String(number).contains(lowerQuery) { return true }
         if title.lowercased().contains(lowerQuery) { return true }
         if owner.lowercased().contains(lowerQuery) { return true }
         if name.lowercased().contains(lowerQuery) { return true }
-        
+
         return false
     }
 }

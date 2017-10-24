@@ -10,7 +10,7 @@ import Foundation
 import Apollo
 
 extension GithubClient {
-    
+
     enum SearchResultType {
         case error(Error?)
         case success(String?, [SearchRepoResult])
@@ -21,7 +21,7 @@ extension GithubClient {
         query: String,
         before: String? = nil,
         containerWidth: CGFloat,
-        completion: @escaping (SearchResultType) -> ()
+        completion: @escaping (SearchResultType) -> Void
         ) -> Cancellable {
         let query = SearchReposQuery(search: query, before: before)
 
@@ -33,10 +33,10 @@ extension GithubClient {
                 completion(.error(error))
                 return
             }
-            
+
             DispatchQueue.global().async {
                 var builder = [SearchRepoResult]()
-                
+
                 result?.data?.search.nodes?.forEach {
                     guard let repo = $0?.asRepository else { return }
 
@@ -58,7 +58,7 @@ extension GithubClient {
                     )
                     builder.append(model)
                 }
-                
+
                 DispatchQueue.main.async {
                     let nextPage: String?
                     if let pageInfo = result?.data?.search.pageInfo, pageInfo.hasNextPage {
@@ -71,5 +71,5 @@ extension GithubClient {
             }
         }
     }
-    
+
 }

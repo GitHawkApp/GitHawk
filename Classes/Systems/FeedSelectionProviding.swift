@@ -10,8 +10,8 @@ import Foundation
 
 /// Specifies that the provider contains a feed and whether or not it currently contains a selection
 protocol FeedSelectionProviding {
-    
+
     /// Returns true when a selection has been made, false otherwise
     var feedContainsSelection: Bool { get }
-    
+
 }

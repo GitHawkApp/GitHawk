@@ -17,12 +17,12 @@ extension GithubClient {
 
     func requestAccessToken(
         code: String,
-        completion: @escaping (Result<AccessTokenUser>) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> Void
         ) {
         let parameters = [
             "code": code,
             "client_id": GithubAPI.clientID,
-            "client_secret": GithubAPI.clientSecret,
+            "client_secret": GithubAPI.clientSecret
         ]
         let headers = [
             "Accept": "application/json"
@@ -52,7 +52,7 @@ extension GithubClient {
 
     func verifyPersonalAccessToken(
         token: String,
-        completion: @escaping (Result<AccessTokenUser>) -> ()
+        completion: @escaping (Result<AccessTokenUser>) -> Void
         ) {
         let headers = [
             "Accept": "application/json",

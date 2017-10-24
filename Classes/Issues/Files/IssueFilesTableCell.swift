@@ -18,7 +18,7 @@ final class IssueFilesTableCell: StyledTableCell {
     func configure(path: String, additions: Int, deletions: Int) {
         let changeString = NSMutableAttributedString()
         var attributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.secondaryBold,
+            .font: Styles.Fonts.secondaryBold
         ]
 
         if additions > 0 {

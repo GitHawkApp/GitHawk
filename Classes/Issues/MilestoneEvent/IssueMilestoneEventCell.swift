@@ -15,7 +15,7 @@ protocol IssueMilestoneEventCellDelegate: class {
 
 final class IssueMilestoneEventCell: UICollectionViewCell {
 
-    weak var delegate: IssueMilestoneEventCellDelegate? = nil
+    weak var delegate: IssueMilestoneEventCellDelegate?
 
     private let actorButton = UIButton()
     private let label = UILabel()

@@ -15,7 +15,7 @@ protocol SearchBarCellDelegate: class {
 
 final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
 
-    weak var delegate: SearchBarCellDelegate? = nil
+    weak var delegate: SearchBarCellDelegate?
 
     private let searchBar = UISearchBar(frame: .zero)
 
@@ -35,14 +35,14 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
             make.trailing.equalTo(contentView)
             make.centerY.equalTo(contentView)
         }
-        
+
         NotificationCenter.default
             .addObserver(searchBar,
                          selector: #selector(UISearchBar.resignFirstResponder),
                          name: .UIKeyboardWillHide,
                          object: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,7 +64,7 @@ final class SearchBarCell: UICollectionViewCell, UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.didChangeSearchText(cell: self, query: searchText)
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }

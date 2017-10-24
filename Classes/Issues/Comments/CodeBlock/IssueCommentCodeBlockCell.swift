@@ -44,7 +44,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
 
         scrollView.addSubview(textView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,7 +52,7 @@ final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, Colla
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-        
+
         // size the scrollview to the width of the cell but match its height to its content size
         // that way when the cell is collapsed, the scroll view isn't vertically scrollable
         let inset = IssueCommentCodeBlockCell.scrollViewInset

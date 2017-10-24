@@ -17,7 +17,7 @@ enum NotificationType: String {
 }
 
 extension NotificationType {
-    
+
     var localizedString: String {
         switch self {
         case .issue, .commit, .repo:

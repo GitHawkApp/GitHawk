@@ -16,7 +16,7 @@ protocol IssueReferencedCommitCellDelegate: class {
 
 final class IssueReferencedCommitCell: UICollectionViewCell {
 
-    weak var delegate: IssueReferencedCommitCellDelegate? = nil
+    weak var delegate: IssueReferencedCommitCellDelegate?
 
     private let nameButton = UIButton()
     private let referencedButton = UIButton()
@@ -49,7 +49,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
             make.centerY.equalTo(referencedButton)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,7 +78,7 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
 
         let referenceAttributes = [
             NSAttributedStringKey.font: Styles.Fonts.secondary,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         let title = NSMutableAttributedString(
             string: NSLocalizedString("referenced ", comment: ""),

@@ -41,7 +41,7 @@ extension GithubClient {
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (Result<IssueResult>) -> ()
+        completion: @escaping (Result<IssueResult>) -> Void
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -51,7 +51,6 @@ extension GithubClient {
             page_size: 100,
             before: prependResult?.minStartCursor
         )
-
 
         fetch(query: query) { (result, error) in
             let repository = result?.data?.repository
@@ -137,7 +136,7 @@ extension GithubClient {
         subjectID: String,
         content: ReactionContent,
         isAdd: Bool,
-        completion: @escaping (IssueCommentReactionViewModel?) -> ()
+        completion: @escaping (IssueCommentReactionViewModel?) -> Void
         ) {
         if isAdd {
             perform(mutation: AddReactionMutation(subject_id: subjectID, content: content)) { (result, error) in
@@ -161,8 +160,7 @@ extension GithubClient {
     }
 
     enum CloseStatus: String {
-        case closed = "closed"
-        case open = "open"
+        case closed, open
     }
 
     func setStatus(
@@ -170,7 +168,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         status: CloseStatus,
-        completion: @escaping (Result<CloseStatus>) -> ()
+        completion: @escaping (Result<CloseStatus>) -> Void
         ) {
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
@@ -184,8 +182,8 @@ extension GithubClient {
                 }
         }))
     }
-    
-    func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> ()) {
+
+    func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> Void) {
         request(Request(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
             // As per documentation this endpoint returns no content, so all we can validate is that
             // the status code is "204 No Content".
@@ -196,8 +194,8 @@ extension GithubClient {
             }
         }))
     }
-    
-    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> ()) {
+
+    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> Void) {
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
             method: locked ? .put : .delete,
@@ -211,5 +209,5 @@ extension GithubClient {
                 }
         }))
     }
-    
+
 }
