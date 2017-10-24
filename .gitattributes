@@ -1,1 +1,1 @@
-*.strings diff -text
+*.strings diff=astextplain
