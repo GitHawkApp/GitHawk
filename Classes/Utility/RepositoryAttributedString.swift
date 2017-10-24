@@ -9,21 +9,17 @@
 import Foundation
 
 func RepositoryAttributedString(owner: String, name: String) -> NSAttributedString {
-    let text = NSMutableAttributedString(string: owner + "/", attributes: ownerAttributes)
-    text.append(NSAttributedString(string: name, attributes: nameAttributes))
-    return text
-}
-
-private var ownerAttributes: [NSAttributedStringKey: Any] {
-    return [
+    let ownerAttributes: [NSAttributedStringKey: Any] = [
         .font: Styles.Fonts.body,
         .foregroundColor: Styles.Colors.Gray.dark.color
     ]
-}
 
-private var nameAttributes: [NSAttributedStringKey: Any] {
-    return [
+    let nameAttributes: [NSAttributedStringKey: Any] = [
         .font: Styles.Fonts.bodyBold,
         .foregroundColor: Styles.Colors.Gray.dark.color
     ]
+
+    let text = NSMutableAttributedString(string: owner + "/", attributes: ownerAttributes)
+    text.append(NSAttributedString(string: name, attributes: nameAttributes))
+    return text
 }
