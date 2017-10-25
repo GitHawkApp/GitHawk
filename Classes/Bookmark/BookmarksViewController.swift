@@ -207,7 +207,6 @@ TabNavRootViewControllerType {
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
             tableView.tableHeaderView = searchController.searchBar
         }
