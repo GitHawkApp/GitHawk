@@ -16,8 +16,16 @@ TabNavRootViewControllerType {
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
     private let bookmarkStore = BookmarksStore.shared
-    private let searchBar = UISearchBar()
     private var filterdBookmarks: [BookmarkModel]?
+    private var searchController: UISearchController {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchBar.delegate = self
+        controller.searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
+        controller.searchBar.tintColor = Styles.Colors.Blue.medium.color
+        controller.searchBar.backgroundColor = .clear
+        controller.searchBar.searchBarStyle = .minimal
+        return controller
+    }
 
     // MARK: Init
 
@@ -37,7 +45,7 @@ TabNavRootViewControllerType {
 
         configureSearchBar()
         configureTableView()
-
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
             style: .plain,
@@ -102,7 +110,7 @@ TabNavRootViewControllerType {
     }
 
     func didDoubleTapTab() {
-        searchBar.becomeFirstResponder()
+        searchController.searchBar.becomeFirstResponder()
     }
 
     // MARK: UITableViewDataSource
@@ -207,16 +215,16 @@ TabNavRootViewControllerType {
     // MARK: - Private API
 
     private func configureSearchBar() {
-        searchBar.delegate = self
-        searchBar.placeholder = "\(Constants.Strings.search) \(Constants.Strings.bookmarks)" // Localization is done in the constants.
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
-        searchBar.backgroundColor = .clear
-        searchBar.searchBarStyle = .minimal
-        searchBar.sizeToFit()
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
     }
 
     private func configureTableView() {
-        tableView.tableHeaderView = searchBar
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 1.0))
         tableView.backgroundColor = Styles.Colors.background
     }
