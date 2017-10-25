@@ -20,6 +20,9 @@ class RepositoryIssueSummaryModel: ListDiffable {
     let pullRequest: Bool
     let labels: [RepositoryLabel]
 
+    // quicker comparison for diffing rather than scanning the labels array
+    private let labelSummary: String
+
     init(
         id: String,
         title: NSAttributedStringSizing,
@@ -38,6 +41,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
         self.status = status
         self.pullRequest = pullRequest
         self.labels = labels
+        self.labelSummary = labels.reduce("", { $0 + $1.name })
     }
 
     // MARK: ListDiffable
@@ -56,6 +60,6 @@ class RepositoryIssueSummaryModel: ListDiffable {
             && author == object.author
             && created == object.created
             && title.attributedText.string == object.title.attributedText.string
-            && labels == object.labels
+            && labelSummary == object.labelSummary
     }
 }
