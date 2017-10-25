@@ -49,21 +49,17 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
-        let action = SwipeAction(style: .destructive, title: Constants.Strings.delete) { [weak self] _, _ in
+        let action = DeleteSwipeAction { [weak self] _, _ in
             guard let strongSelf = self, let object = strongSelf.object else { return }
             strongSelf.delegate?.didDelete(recentSectionController: strongSelf, viewModel: object)
         }
-        action.image = #imageLiteral(resourceName: "trashcan").withRenderingMode(.alwaysTemplate)
-        action.backgroundColor = Styles.Colors.Red.medium.color
-        action.textColor = .white
-        action.tintColor = .white
 
         return [action]
     }
 
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
         var options = SwipeTableOptions()
-        options.expansionStyle = .selection
+        options.expansionStyle = .destructive
         return options
     }
 

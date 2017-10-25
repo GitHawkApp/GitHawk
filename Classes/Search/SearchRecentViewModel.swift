@@ -27,9 +27,7 @@ final class SearchRecentViewModel: NSObject, ListDiffable {
         case .search(let text):
             return NSAttributedString(string: text, attributes: standardAttributes)
         case .recentlyViewed(let repoDetails):
-            let text = NSMutableAttributedString(string: repoDetails.owner + "/", attributes: standardAttributes)
-            text.append(NSAttributedString(string: repoDetails.name, attributes: boldAttributes))
-            return text
+            return RepositoryAttributedString(owner: repoDetails.owner, name: repoDetails.name)
         }
     }
 
@@ -64,13 +62,6 @@ final class SearchRecentViewModel: NSObject, ListDiffable {
     private var standardAttributes: [NSAttributedStringKey: Any] {
         return [
             .font: Styles.Fonts.body,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-    }
-
-    private var boldAttributes: [NSAttributedStringKey: Any] {
-        return [
-            .font: Styles.Fonts.bodyBold,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ]
     }

@@ -88,17 +88,7 @@ final class SearchRepoResultCell: SelectableCell {
     }
 
     func configure(result: SearchRepoResult) {
-        let ownerAttributes = [
-            NSAttributedStringKey.font: Styles.Fonts.body,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-        let title = NSMutableAttributedString(string: result.owner + "/", attributes: ownerAttributes)
-        let nameAttributes = [
-            NSAttributedStringKey.font: Styles.Fonts.bodyBold,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-        title.append(NSAttributedString(string: result.name, attributes: nameAttributes))
-        titleLabel.attributedText = title
+        titleLabel.attributedText = RepositoryAttributedString(owner: result.owner, name: result.name)
 
         descriptionLabel.text = result.description
 
