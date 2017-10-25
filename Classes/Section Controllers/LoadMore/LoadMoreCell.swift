@@ -41,4 +41,14 @@ final class LoadMoreCell: UICollectionViewCell {
         set { }
     }
 
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                label.alpha = 0.5
+            } else {
+                label.alpha = 1
+            }
+        }
+    }
+    
 }
