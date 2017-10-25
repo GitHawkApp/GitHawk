@@ -47,7 +47,11 @@ final class ForegroundHandler {
         guard let backgrounded = self.backgrounded else { return }
         self.backgrounded = nil
         if CACurrentMediaTime() - backgrounded > threshold {
-            delegate?.didForeground(handler: self)
+            // there seems to be a bug where refreshing while still becoming active messes up the iOS 11 header and
+            // refresh control. put an artificial delay to let the system cool down?
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                self.delegate?.didForeground(handler: self)
+            })
         }
     }
 
