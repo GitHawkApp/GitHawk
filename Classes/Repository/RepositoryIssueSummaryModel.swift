@@ -56,5 +56,6 @@ class RepositoryIssueSummaryModel: ListDiffable {
             && author == object.author
             && created == object.created
             && title.attributedText.string == object.title.attributedText.string
+            && labels == object.labels
     }
 }
