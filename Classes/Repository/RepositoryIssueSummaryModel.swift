@@ -41,7 +41,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
         self.status = status
         self.pullRequest = pullRequest
         self.labels = labels
-        self.labelSummary = labels.reduce("", { $0.name })
+        self.labelSummary = labels.reduce("", { $0 + $1.name })
     }
 
     // MARK: ListDiffable
