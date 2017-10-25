@@ -110,22 +110,18 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
     }
 
-    static func toggleIssue(_ status: IssueStatus, issue: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let issueType = issue ? "Issue" : "Pull Request"
-
+    static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let title = status == .open
-            ? NSLocalizedString("Close \(issueType)", comment: "")
-            : NSLocalizedString("Reopen \(issueType)", comment: "")
-
+            ? NSLocalizedString("Close", comment: "")
+            : NSLocalizedString("Reopen", comment: "")
+        
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
-
-    static func toggleLocked(_ locked: Bool, issue: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let issueType = issue ? "Issue" : "Pull Request"
-
+    
+    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let title = locked
-            ? NSLocalizedString("Unlock \(issueType)", comment: "")
-            : NSLocalizedString("Lock \(issueType)", comment: "")
+            ? NSLocalizedString("Unlock", comment: "")
+            : NSLocalizedString("Lock", comment: "")
 
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
@@ -151,10 +147,10 @@ struct AlertAction {
         ) { _ in
             if isNewBookmark {
                 BookmarksStore.shared.add(bookmark: bookmark)
-            }
-            else {
+            } else {
                 BookmarksStore.shared.remove(bookmark: bookmark)
             }
+            Haptic.triggerNotification(.success)
         }
     }
 }

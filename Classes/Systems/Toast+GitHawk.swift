@@ -14,8 +14,8 @@ extension ToastManager {
         return UIApplication.shared.keyWindow
     }
 
-    private static func provideHapticFeedback() {
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
+    private static func triggerHaptic() {
+        Haptic.triggerNotification(.error)
     }
 
     static func errorConfig(text: String) -> ToastViewConfiguration {
@@ -36,27 +36,27 @@ extension ToastManager {
 
     static func showRevokeError(view: UIView? = window) {
         ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Your access token was revoked.", comment: "")))
-        provideHapticFeedback()
+        triggerHaptic()
     }
 
     static func showNetworkError(view: UIView? = window) {
         ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Cannot connect to GitHub.", comment: "")))
-        provideHapticFeedback()
+        triggerHaptic()
     }
 
     static func showGenericError(view: UIView? = window) {
         ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("Something went wrong.", comment: "")))
-        provideHapticFeedback()
+        triggerHaptic()
     }
 
     static func showPermissionsError(view: UIView? = window) {
         ToastManager.shared.show(in: view, config: errorConfig(text: NSLocalizedString("You must request access.", comment: "")))
-        provideHapticFeedback()
+        triggerHaptic()
     }
 
     static func showError(message: String, view: UIView? = window) {
         ToastManager.shared.show(in: view, config: errorConfig(text: message))
-        provideHapticFeedback()
+        triggerHaptic()
     }
 
 }

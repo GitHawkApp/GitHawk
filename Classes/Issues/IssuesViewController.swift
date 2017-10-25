@@ -244,8 +244,9 @@ IssueCommentSectionControllerDelegate {
             status != .merged
             else { return nil }
 
-        return AlertAction.toggleIssue(status, issue: current?.pullRequest != true) { [weak self] _ in
+        return AlertAction.toggleIssue(status) { [weak self] _ in
             self?.setStatus(close: status == .open)
+            Haptic.triggerNotification(.success)
         }
     }
 
@@ -254,8 +255,9 @@ IssueCommentSectionControllerDelegate {
             return nil
         }
 
-        return AlertAction.toggleLocked(locked, issue: current?.pullRequest != true) { [weak self] _ in
+        return AlertAction.toggleLocked(locked) { [weak self] _ in
             self?.setLocked(!locked)
+            Haptic.triggerNotification(.success)
         }
     }
 
@@ -289,7 +291,13 @@ IssueCommentSectionControllerDelegate {
 
     @objc
     func onMore(sender: UIBarButtonItem) {
-		let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        let issueType = current?.pullRequest == true
+            ? Constants.Strings.pullRequest
+            : Constants.Strings.issue
+        
+        let alertTitle = "\(issueType) #\(model.number)"
+        
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
