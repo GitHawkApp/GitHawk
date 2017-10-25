@@ -27,6 +27,8 @@ TabNavRootViewControllerType {
         controller.searchBar.backgroundColor = .clear
         controller.searchBar.searchBarStyle = .minimal
         return controller
+    }
+    
     private var filteredBookmarks: [BookmarkModel]?
 
     private var isSearchActive: Bool {
