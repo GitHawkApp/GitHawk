@@ -160,6 +160,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
     @objc
     func onCancel() {
+        titleField.resignFirstResponder()
+        bodyField.resignFirstResponder()
         cancelAction_onCancel(
             texts: [titleText, bodyText],
             title: NSLocalizedString("Unsaved Changes", comment: "New Issue - Cancel w/ Unsaved Changes Title"),
