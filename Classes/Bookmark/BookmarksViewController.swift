@@ -17,7 +17,7 @@ TabNavRootViewControllerType {
 
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
-    private let bookmarkStore = BookmarksStore.shared
+    private let bookmarkStore:BookmarksStore
 
     private var searchController: UISearchController {
         let controller = UISearchController(searchResultsController: nil)
@@ -39,6 +39,8 @@ TabNavRootViewControllerType {
 
     init(client: GithubClient) {
         self.client = client
+        self.bookmarkStore = BookmarksStore(client.userSession?.token)
+
         super.init(nibName: nil, bundle: nil)
     }
 

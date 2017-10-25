@@ -286,7 +286,16 @@ IssueCommentSectionControllerDelegate {
             title: current.title.attributedText.string
         )
 
-        return AlertAction.bookmark(bookmarkModel)
+        let store = BookmarksStore(client.userSession?.token)
+        let isNewBookmark = !store.contains(bookmark: bookmarkModel)
+        return AlertAction.toggleBookmark(isNewBookmark) { _ in
+            if isNewBookmark {
+                store.add(bookmark: bookmarkModel)
+            } else {
+                store.remove(bookmark: bookmarkModel)
+            }
+            Haptic.triggerNotification(.success)
+        }
     }
 
     @objc

@@ -138,19 +138,8 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.clearAll, style: .destructive, handler: handler)
     }
 
-    static func bookmark(_ bookmark: BookmarkModel) -> UIAlertAction {
-        let isNewBookmark = !BookmarksStore.shared.contains(bookmark: bookmark)
+    static func toggleBookmark(_ isNewBookmark: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
         let title = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
-        return UIAlertAction(
-            title: title,
-            style: isNewBookmark ? .default : .destructive
-        ) { _ in
-            if isNewBookmark {
-                BookmarksStore.shared.add(bookmark: bookmark)
-            } else {
-                BookmarksStore.shared.remove(bookmark: bookmark)
-            }
-            Haptic.triggerNotification(.success)
-        }
+        return UIAlertAction(title: title, style: isNewBookmark ? .default : .destructive, handler: handler)
     }
 }
