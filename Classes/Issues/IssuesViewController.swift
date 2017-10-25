@@ -303,12 +303,12 @@ IssueCommentSectionControllerDelegate {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
 
         alert.addActions([
-            bookmarkAction(),
             closeAction(),
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
+            bookmarkAction(),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.barButtonItem = sender

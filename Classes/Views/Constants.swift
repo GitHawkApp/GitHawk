@@ -44,6 +44,7 @@ enum Constants {
         static let pullRequest = NSLocalizedString("Pull Request", comment: "")
         static let issue = NSLocalizedString("Issue", comment: "")
         static let bookmark = NSLocalizedString("Bookmark", comment: "")
+        static let removeBookmark = NSLocalizedString("Remove Bookmark", comment: "")
         static let bookmarks = NSLocalizedString("Bookmarks", comment: "")
     }
 }

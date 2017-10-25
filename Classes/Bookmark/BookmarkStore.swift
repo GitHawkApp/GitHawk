@@ -43,6 +43,10 @@ final class BookmarksStore {
         archive()
     }
 
+    func contains(bookmark: BookmarkModel) -> Bool {
+        return _bookmarks.contains(bookmark)
+    }
+
     func clear() {
         _bookmarks.removeAll()
         archive()
