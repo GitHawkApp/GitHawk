@@ -55,7 +55,8 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     controller.makeBackBarItemEmpty()
     controller.title = title
     let nav = UINavigationController(rootViewController: controller)
-    nav.tabBarItem.image = UIImage(named: "bookmark")
+    nav.tabBarItem.image = UIImage(named: "tab-bookmark")
+    nav.tabBarItem.selectedImage = UIImage(named: "tab-bookmark-selected")
     nav.tabBarItem.title = title
     return nav
 }
