@@ -107,6 +107,12 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         // Update title to use localization
         title = Constants.Strings.newIssue
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        titleField.becomeFirstResponder()
+    }
 
     // MARK: Private API
 
