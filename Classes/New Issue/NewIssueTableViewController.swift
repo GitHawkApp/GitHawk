@@ -114,6 +114,11 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         titleField.becomeFirstResponder()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(false)
+    }
+
     // MARK: Private API
 
     func setRightBarItemIdle() {
