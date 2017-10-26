@@ -99,16 +99,11 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! StyledTableCell
 
         let file = files[indexPath.row]
-        cell.textLabel?.text = file.name
-
-        let imageName = file.isDirectory ? "file-directory" : "file"
-        cell.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        cell.imageView?.tintColor = Styles.Colors.blueGray.color
-        cell.accessoryType = file.isDirectory ? .disclosureIndicator : .none
-
+        cell.setup(with: file)
+        
         return cell
     }
 
