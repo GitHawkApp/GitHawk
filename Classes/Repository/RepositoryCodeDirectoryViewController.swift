@@ -113,6 +113,9 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
             .flatMap { $0.accessibilityLabel }
             .reduce("") { "\($0).\n\($1)" }
             .appending(".\n\(fileType)")
+        cell.accessibilityHint = file.isDirectory
+            ? NSLocalizedString("Shows the contents of the directory", comment: "")
+            : NSLocalizedString("Shows the contents of the file", comment: "")
 
         let imageName = file.isDirectory ? "file-directory" : "file"
         cell.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
