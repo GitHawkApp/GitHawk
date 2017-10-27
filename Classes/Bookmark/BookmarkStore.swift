@@ -32,8 +32,7 @@ final class BookmarksStore {
 
     // MARK: Init
 
-    init(_ userToken: String?) {
-        guard let userToken = userToken else { fatalError() }
+    init(_ userToken: String) {
         token = userToken
         refresh()
     }

@@ -106,23 +106,14 @@ NewIssueTableViewControllerDelegate {
     }
 
     func bookmarkAction() -> UIAlertAction? {
+        guard let store = client.bookmarksStore else { return nil }
         let bookmarkModel = BookmarkModel(
             type: .repo,
             name: repo.name,
             owner: repo.owner,
             hasIssueEnabled: repo.hasIssuesEnabled
         )
-        let store = BookmarksStore(client.userSession?.token)
-        let isNewBookmark = !store.contains(bookmark: bookmarkModel)
-        return AlertAction.toggleBookmark(isNewBookmark) { _ in
-            if isNewBookmark {
-                store.add(bookmark: bookmarkModel)
-            }
-            else {
-                store.remove(bookmark: bookmarkModel)
-            }
-            Haptic.triggerNotification(.success)
-        }
+        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
 
     @objc
