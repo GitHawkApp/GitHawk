@@ -57,7 +57,7 @@ struct ShortcutHandler {
         // Bookmarks
         let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmarks")
         let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
-                                                   localizedTitle: Constants.Strings.bookmark,
+                                                   localizedTitle: Constants.Strings.bookmarks,
                                                    localizedSubtitle: nil,
                                                    icon: bookmarkIcon)
         items.append(bookmarkItem)
