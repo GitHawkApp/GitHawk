@@ -125,7 +125,7 @@ IssueCommentSectionControllerDelegate {
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
-        textActionsController.configure(textView: textView, actions: actions)
+        textActionsController.configure(client: client, textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
         // i'm not sure exactly what these would be in SnapKit (would pref SK tho)

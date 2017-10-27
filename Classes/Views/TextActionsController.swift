@@ -16,10 +16,12 @@ final class TextActionsController: NSObject,
 
     private weak var textView: UITextView?
     weak var viewController: UIViewController?
+    private var client: GithubClient?
 
     // MARK: Public API
 
-    func configure(textView: UITextView, actions: IssueTextActionsView) {
+    func configure(client: GithubClient, textView: UITextView, actions: IssueTextActionsView) {
+        self.client = client
         self.textView = textView
         actions.delegate = self
     }
@@ -59,8 +61,7 @@ final class TextActionsController: NSObject,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
 
-//        let username = client.sessionManager.focusedUserSession?.username
-        let username = "Sherlouk"
+        let username = client?.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
         guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
 
         picker.pushViewController(uploadController, animated: true)
