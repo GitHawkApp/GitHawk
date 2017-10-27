@@ -72,9 +72,7 @@ IssueCommentSectionControllerDelegate {
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        self.title = issueTitle
         self.hidesBottomBarWhenPushed = true
-
         self.addCommentClient.addListener(listener: self)
 
         // not registered until request is finished and self.registerPrefixes(...) is called
@@ -90,6 +88,8 @@ IssueCommentSectionControllerDelegate {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
+
+        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)")
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -165,7 +165,7 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidAppear(animated)
         let informator = HandoffInformator(
             activityName: "viewIssue",
-            activityTitle: issueTitle,
+            activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
             url: externalURL
         )
         setupUserActivity(with: informator)
@@ -232,10 +232,6 @@ IssueCommentSectionControllerDelegate {
 
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
-    }
-
-    var issueTitle: String {
-        return "\(model.owner)/\(model.repo)#\(model.number)"
     }
 
     func closeAction() -> UIAlertAction? {
