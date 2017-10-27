@@ -13,7 +13,8 @@ class BookmarksViewController: UITableViewController,
     UISearchResultsUpdating,
     PrimaryViewController,
     SwipeTableViewCellDelegate,
-TabNavRootViewControllerType {
+    TabNavRootViewControllerType,
+BookmarksStoreListner {
 
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
@@ -31,6 +32,7 @@ TabNavRootViewControllerType {
     init(client: GithubClient) {
         self.client = client
         super.init(nibName: nil, bundle: nil)
+        self.client.bookmarksStore?.add(listener: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,8 +58,7 @@ TabNavRootViewControllerType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
-        tableView.reloadData()
-        updateRightBarItem()
+        reloadBookmarks()
     }
 
     // MARK: Private API
@@ -77,8 +78,7 @@ TabNavRootViewControllerType {
             AlertAction.clearAll({ [weak self] _ in
                 self?.client.bookmarksStore?.clear()
                 self?.filteredBookmarks?.removeAll()
-                self?.tableView.reloadData()
-                self?.updateRightBarItem()
+                self?.reloadBookmarks()
             }),
             AlertAction.cancel()
         ])
@@ -92,7 +92,7 @@ TabNavRootViewControllerType {
         } else {
             filteredBookmarks = nil
         }
-        self.tableView.reloadData()
+        reloadBookmarks()
     }
 
     var bookmarks: [BookmarkModel] {
@@ -101,6 +101,11 @@ TabNavRootViewControllerType {
         } else {
             return client.bookmarksStore?.bookmarks ?? []
         }
+    }
+
+    func reloadBookmarks() {
+        tableView.reloadData()
+        updateRightBarItem()
     }
 
     // MARK: TabNavRootViewControllerType
@@ -248,5 +253,10 @@ TabNavRootViewControllerType {
             break
         }
         return repositoryText
+    }
+
+    // MARK: BookmarkStoreListener
+    func bookmarksDidUpdate() {
+        reloadBookmarks()
     }
 }
