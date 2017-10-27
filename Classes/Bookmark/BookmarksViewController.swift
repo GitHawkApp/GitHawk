@@ -10,7 +10,7 @@ import UIKit
 import SwipeCellKit
 
 class BookmarksViewController: UITableViewController,
-    UISearchBarDelegate,
+    UISearchResultsUpdating,
     PrimaryViewController,
     SwipeTableViewCellDelegate,
 TabNavRootViewControllerType {
@@ -19,15 +19,7 @@ TabNavRootViewControllerType {
     private let cellIdentifier = "bookmark_cell"
     private let bookmarkStore:BookmarksStore
 
-    private var searchController: UISearchController {
-        let controller = UISearchController(searchResultsController: nil)
-        controller.searchBar.delegate = self
-        controller.searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
-        controller.searchBar.tintColor = Styles.Colors.Blue.medium.color
-        controller.searchBar.backgroundColor = .clear
-        controller.searchBar.searchBarStyle = .minimal
-        return controller
-    }
+    private var searchController: UISearchController = UISearchController(searchResultsController:nil)
     
     private var filteredBookmarks: [BookmarkModel]?
 
@@ -173,31 +165,12 @@ TabNavRootViewControllerType {
         showDetailViewController(navigation, sender: nil)
     }
 
-    // MARK: UISearchBarDelegate
+    // MARK: UISearchResultsUpdating
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let term = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
-
-        filter(query: term)
-    }
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        guard let term = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            !term.isEmpty else { return }
-
-        filter(query: term)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        filter(query: nil)
+        filter(query: !term.isEmpty ? term : nil)
     }
 
     // MARK: - SwipeTableViewCellDelegate
@@ -223,10 +196,19 @@ TabNavRootViewControllerType {
     // MARK: - Private API
 
     private func configureSearchBar() {
+
+        searchController.searchBar.placeholder = NSLocalizedString(Constants.Strings.search, comment: "")
+        searchController.searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchController.searchBar.backgroundColor = .clear
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.sizeToFit()
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+       
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
         } else {
             tableView.tableHeaderView = searchController.searchBar
         }
