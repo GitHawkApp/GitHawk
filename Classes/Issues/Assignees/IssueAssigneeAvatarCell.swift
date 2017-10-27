@@ -21,6 +21,9 @@ final class IssueAssigneeAvatarCell: UICollectionViewCell {
         imageView.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
+        if #available(iOS 11, *) {
+            imageView.accessibilityIgnoresInvertColors = true
+        }
         contentView.addSubview(imageView)
     }
 
