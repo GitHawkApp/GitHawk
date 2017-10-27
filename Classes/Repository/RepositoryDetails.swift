@@ -8,14 +8,16 @@
 
 import Foundation
 
-struct RepositoryDetails: Codable, Equatable {
+struct RepositoryDetails: Codable {
     let owner: String
     let name: String
     let hasIssuesEnabled: Bool
 }
 
-func == (lhs: RepositoryDetails, rhs: RepositoryDetails) -> Bool {
-    return lhs.owner == rhs.owner &&
-        lhs.name == rhs.name &&
-        lhs.hasIssuesEnabled == rhs.hasIssuesEnabled
+extension RepositoryDetails: Equatable {
+    static func == (lhs: RepositoryDetails, rhs: RepositoryDetails) -> Bool {
+        return lhs.owner == rhs.owner &&
+            lhs.name == rhs.name &&
+            lhs.hasIssuesEnabled == rhs.hasIssuesEnabled
+    }
 }
