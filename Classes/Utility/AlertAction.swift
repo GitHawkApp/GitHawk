@@ -138,8 +138,4 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.clearAll, style: .destructive, handler: handler)
     }
 
-    static func toggleBookmark(_ isNewBookmark: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
-        return UIAlertAction(title: title, style: isNewBookmark ? .default : .destructive, handler: handler)
-    }
 }

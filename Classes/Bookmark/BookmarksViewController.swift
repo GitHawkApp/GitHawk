@@ -17,7 +17,6 @@ TabNavRootViewControllerType {
 
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
-    private let bookmarkStore:BookmarksStore
 
     private var searchController: UISearchController = UISearchController(searchResultsController:nil)
     
@@ -31,8 +30,6 @@ TabNavRootViewControllerType {
 
     init(client: GithubClient) {
         self.client = client
-        self.bookmarkStore = BookmarksStore(client.userSession?.token)
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -66,7 +63,7 @@ TabNavRootViewControllerType {
     // MARK: Private API
 
     func updateRightBarItem() {
-        navigationItem.rightBarButtonItem?.isEnabled = bookmarkStore.bookmarks.count > 0
+        navigationItem.rightBarButtonItem?.isEnabled = client.bookmarksStore?.bookmarks.count ?? 0 > 0
     }
 
     @objc private func onClearAll(sender: UIBarButtonItem) {
@@ -78,7 +75,7 @@ TabNavRootViewControllerType {
 
         alert.addActions([
             AlertAction.clearAll({ [weak self] _ in
-                self?.bookmarkStore.clear()
+                self?.client.bookmarksStore?.clear()
                 self?.filteredBookmarks?.removeAll()
                 self?.tableView.reloadData()
                 self?.updateRightBarItem()
@@ -91,7 +88,7 @@ TabNavRootViewControllerType {
 
     func filter(query: String?) {
         if let query = query {
-            filteredBookmarks = filtered(array: bookmarkStore.bookmarks, query: query)
+            filteredBookmarks = filtered(array: client.bookmarksStore?.bookmarks ?? [], query: query)
         } else {
             filteredBookmarks = nil
         }
@@ -102,7 +99,7 @@ TabNavRootViewControllerType {
         if let bookmarks = filteredBookmarks {
             return bookmarks
         } else {
-            return bookmarkStore.bookmarks
+            return client.bookmarksStore?.bookmarks ?? []
         }
     }
 
@@ -180,7 +177,7 @@ TabNavRootViewControllerType {
 
         let action = DeleteSwipeAction { [weak self] _, index in
             guard let strongSelf = self else { return }
-            strongSelf.bookmarkStore.remove(bookmark: strongSelf.bookmarks[index.row])
+            strongSelf.client.bookmarksStore?.remove(bookmark: strongSelf.bookmarks[index.row])
             strongSelf.updateRightBarItem()
         }
 
