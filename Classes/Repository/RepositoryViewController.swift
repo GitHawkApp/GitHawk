@@ -106,13 +106,14 @@ NewIssueTableViewControllerDelegate {
     }
 
     func bookmarkAction() -> UIAlertAction? {
+        guard let store = client.bookmarksStore else { return nil }
         let bookmarkModel = BookmarkModel(
             type: .repo,
             name: repo.name,
             owner: repo.owner,
             hasIssueEnabled: repo.hasIssuesEnabled
         )
-        return AlertAction.bookmark(bookmarkModel)
+        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
 
     @objc

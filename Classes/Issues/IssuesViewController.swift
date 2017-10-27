@@ -72,9 +72,7 @@ IssueCommentSectionControllerDelegate {
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: UICollectionViewFlowLayout())!
 
-        self.title = issueTitle
         self.hidesBottomBarWhenPushed = true
-
         self.addCommentClient.addListener(listener: self)
 
         // not registered until request is finished and self.registerPrefixes(...) is called
@@ -90,6 +88,8 @@ IssueCommentSectionControllerDelegate {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
+
+        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)")
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -125,7 +125,7 @@ IssueCommentSectionControllerDelegate {
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
-        textActionsController.configure(textView: textView, actions: actions)
+        textActionsController.configure(client: client, textView: textView, actions: actions)
 
         // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
         // i'm not sure exactly what these would be in SnapKit (would pref SK tho)
@@ -165,7 +165,7 @@ IssueCommentSectionControllerDelegate {
         feed.viewDidAppear(animated)
         let informator = HandoffInformator(
             activityName: "viewIssue",
-            activityTitle: issueTitle,
+            activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",
             url: externalURL
         )
         setupUserActivity(with: informator)
@@ -234,10 +234,6 @@ IssueCommentSectionControllerDelegate {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
 
-    var issueTitle: String {
-        return "\(model.owner)/\(model.repo)#\(model.number)"
-    }
-
     func closeAction() -> UIAlertAction? {
         guard current?.viewerCanUpdate == true,
             let status = localStatusChange?.model.status ?? current?.status.status,
@@ -277,7 +273,9 @@ IssueCommentSectionControllerDelegate {
     }
 
     func bookmarkAction() -> UIAlertAction? {
-        guard let current = current else { return nil }
+        guard let current = current,
+            let store = client.bookmarksStore
+            else { return nil }
         let bookmarkModel = BookmarkModel(
             type: current.pullRequest ? .pullRequest : .issue,
             name: model.repo,
@@ -285,8 +283,7 @@ IssueCommentSectionControllerDelegate {
             number: model.number,
             title: current.title.attributedText.string
         )
-
-        return AlertAction.bookmark(bookmarkModel)
+        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
 
     @objc

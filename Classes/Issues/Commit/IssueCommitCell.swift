@@ -45,6 +45,9 @@ final class IssueCommitCell: UICollectionViewCell {
             target: self,
             action: #selector(IssueCommitCell.onAvatar))
         )
+        if #available(iOS 11, *) {
+            avatarImageView.accessibilityIgnoresInvertColors = true
+        }
         contentView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

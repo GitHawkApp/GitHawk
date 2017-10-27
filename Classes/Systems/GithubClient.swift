@@ -68,6 +68,7 @@ struct GithubClient {
     let networker: Alamofire.SessionManager
     let userSession: GithubUserSession?
     let cache = FlatCache()
+    let bookmarksStore: BookmarksStore?
 
     init(
         sessionManager: GithubSessionManager,
@@ -79,6 +80,12 @@ struct GithubClient {
         self.apollo = apollo
         self.networker = networker
         self.userSession = userSession
+
+        if let token = userSession?.token {
+            self.bookmarksStore = BookmarksStore(token)
+        } else {
+            self.bookmarksStore = nil
+        }
     }
 
     @discardableResult

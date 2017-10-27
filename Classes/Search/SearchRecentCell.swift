@@ -21,7 +21,7 @@ final class SearchRecentCell: SwipeSelectableCell {
 
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.tintColor = Styles.Colors.Gray.light.color
+        imageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

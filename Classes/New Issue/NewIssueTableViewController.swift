@@ -106,12 +106,13 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
         // Update title to use localization
         title = Constants.Strings.newIssue
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
         titleField.becomeFirstResponder()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(false)
     }
 
     // MARK: Private API
@@ -160,6 +161,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
     @objc
     func onCancel() {
+        titleField.resignFirstResponder()
+        bodyField.resignFirstResponder()
         cancelAction_onCancel(
             texts: [titleText, bodyText],
             title: NSLocalizedString("Unsaved Changes", comment: "New Issue - Cancel w/ Unsaved Changes Title"),
@@ -180,7 +183,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             addBorder: true,
             supportsImageUpload: true
         )
-        textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.configure(client: client, textView: bodyField, actions: actions)
         textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }

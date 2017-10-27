@@ -14,7 +14,12 @@ protocol ImageUploadDelegate: class {
 
 class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate {
 
-    @IBOutlet private var previewImageView: UIImageView!
+    @IBOutlet private var previewImageView: UIImageView! {
+        didSet {
+            guard #available(iOS 11, *) else { return }
+            previewImageView.accessibilityIgnoresInvertColors = true
+        }
+    }
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var bodyTextField: UITextView!
 
