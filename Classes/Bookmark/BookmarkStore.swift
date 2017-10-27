@@ -9,26 +9,33 @@
 import Foundation
 
 final class BookmarksStore {
-    static let shared = BookmarksStore()
 
-    private let archivePath: String = {
-        return FileManager.default
-            .urls(for: .documentDirectory, in: .userDomainMask)
-            // crash intentionally on startup if doesn't exist
-            .first!
-            .appendingPathComponent("bookmarks")
-            .path
-    }()
-    private var _bookmarks: Set<BookmarkModel>
+    private let fileManager = FileManager.default
+    private var documentDirectory: FileManager.SearchPathDirectory {
+        return .documentDirectory
+    }
+
+    private var archivePath: String {
+        guard let path = NSSearchPathForDirectoriesInDomains(documentDirectory, .userDomainMask, true).first else {
+            fatalError("App document directory cannot be found")
+        }
+
+        let folder = URL(fileURLWithPath: path).appendingPathComponent("com.whoisryannystrom.freetime.bookmarks")
+        if !fileManager.fileExists(atPath: folder.path) {
+            try? fileManager.createDirectory(at: folder, withIntermediateDirectories: false, attributes: nil)
+        }
+        return folder.appendingPathComponent(token).path
+    }
+
+    private var token: String
+    private var _bookmarks: Set<BookmarkModel> = []
 
     // MARK: Init
 
-    init() {
-        if let bookmarks = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? Set<BookmarkModel> {
-            _bookmarks = bookmarks
-        } else {
-            _bookmarks = []
-        }
+    init(_ userToken: String?) {
+        guard let userToken = userToken else { fatalError() }
+        token = userToken
+        refresh()
     }
 
     // MARK: Public API
@@ -53,13 +60,31 @@ final class BookmarksStore {
     }
 
     var bookmarks: [BookmarkModel] {
+        refresh()
         return Array(_bookmarks)
     }
 
     // MARK: Private API
-
-    func archive() {
-        NSKeyedArchiver.archiveRootObject(_bookmarks, toFile: self.archivePath)
+    
+    func refresh() {
+        if let bookmarks = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? Set<BookmarkModel> {
+            _bookmarks = bookmarks
+        }
     }
 
+    func archive() {
+        NSKeyedArchiver.archiveRootObject(_bookmarks, toFile: archivePath)
+    }
+
+    func clearStorage() {
+        do {
+            try FileManager.default.removeItem(atPath: archivePath)
+        } catch {
+            print("Can not delete bookmarks file")
+        }
+    }
+
+    var bookmarkPath: String {
+        return archivePath
+    }
 }
