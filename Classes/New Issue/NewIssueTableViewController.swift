@@ -180,7 +180,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             addBorder: true,
             supportsImageUpload: true
         )
-        textActionsController.configure(textView: bodyField, actions: actions)
+        textActionsController.configure(client: client, textView: bodyField, actions: actions)
         textActionsController.viewController = self
         bodyField.inputAccessoryView = actions
     }

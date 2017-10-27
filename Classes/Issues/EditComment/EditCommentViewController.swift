@@ -108,7 +108,7 @@ class EditCommentViewController: UIViewController {
             addBorder: true,
             supportsImageUpload: false
         )
-        textActionsController.configure(textView: textView, actions: actions)
+        textActionsController.configure(client: client, textView: textView, actions: actions)
         textView.inputAccessoryView = actions
     }
 
