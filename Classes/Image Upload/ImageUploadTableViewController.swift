@@ -12,7 +12,7 @@ protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
 }
 
-class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate {
+class ImageUploadTableViewController: UITableViewController {
 
     @IBOutlet private var previewImageView: UIImageView! {
         didSet {
@@ -22,6 +22,9 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
     }
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private var bodyTextField: UITextView!
+    
+    private var bodyPlaceholder: String?
+    private var bodyTextColor: UIColor?
 
     private var image: UIImage! // Set through the create function
     private var username: String?
@@ -71,6 +74,13 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         // Set the left button item to cancel
         setLeftBarItem()
 
+        // Save placeholder and text color for body field
+        bodyPlaceholder = bodyTextField.text
+        bodyTextColor = bodyTextField.textColor
+        
+        // Set body field delegate so placeholder appears and disappears when needed
+        bodyTextField.delegate = self
+        
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
             switch result {
@@ -186,13 +196,35 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
             }
         }
     }
+    
+}
 
-    // MARK: UITextFieldDelegate
+// MARK: UITextFieldDelegate
 
+extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyTextField.becomeFirstResponder()
         return false
     }
+}
 
+// MARK: UITextViewDelegate
+
+extension ImageUploadTableViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == bodyPlaceholder {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = bodyPlaceholder
+            textView.textColor = bodyTextColor
+        }
+        textView.resignFirstResponder()
+    }
 }
