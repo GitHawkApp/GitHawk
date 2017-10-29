@@ -24,6 +24,9 @@ FlatCacheListener {
     private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let showRead: Bool
 
+    // todo
+    private var notificationIDs = [String]()
+
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
 
@@ -82,19 +85,17 @@ FlatCacheListener {
                 action: #selector(NotificationsViewController.onMarkAll(sender:))
             )
         }
-        updateUnreadState()
     }
 
-    private func updateUnreadState() {
+    private func updateUnreadState(count: Int) {
         // don't update tab bar and badges when not showing only new notifications
         // prevents archives updating badge and tab #s
         guard !showRead else { return }
 
-        let unreadCount = models.count
-        let hasUnread = unreadCount > 0
+        let hasUnread = count > 0
         navigationItem.leftBarButtonItem?.isEnabled = hasUnread
-        navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unreadCount)" : nil
-        BadgeNotifications.update(count: unreadCount)
+        navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
+        BadgeNotifications.update(count: count)
     }
 
     private func markAllRead() {
@@ -133,16 +134,15 @@ FlatCacheListener {
         present(alert, animated: true)
     }
 
-    private func update(dismissRefresh: Bool, animated: Bool = true) {
-        feed.finishLoading(dismissRefresh: dismissRefresh, animated: animated)
-        updateUnreadState()
-    }
-
     private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
         switch result {
         case .success(let notifications, let next):
-            notifications.forEach { client.githubClient.cache.add(listener: self, value: $0) }
-            update(models: notifications, page: next as NSNumber?, append: append, animated: animated)
+            var ids = [String]()
+            notifications.forEach {
+                client.githubClient.cache.add(listener: self, value: $0)
+                ids.append($0.id)
+            }
+            rebuildAndUpdate(ids: ids, page: next as NSNumber?, animated: animated)
         case .error:
             error(animated: true)
             ToastManager.showNetworkError()
@@ -152,18 +152,31 @@ FlatCacheListener {
         self.resetLeftBarItem()
     }
 
+    private func rebuildAndUpdate(
+        ids: [String],
+        page: NSNumber?,
+        animated: Bool
+        ) {
+        if page == nil {
+            notificationIDs = ids
+        } else {
+            notificationIDs += ids
+        }
+        update(page: page, animated: animated)
+    }
+
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
         let width = view.bounds.width
         if let page = page?.intValue {
-            client.requestNotifications(all: showRead, page: page, width: width) { result in
-                self.handle(result: result, append: true, animated: false, page: page)
+            client.requestNotifications(all: showRead, page: page, width: width) { [weak self] result in
+                self?.handle(result: result, append: true, animated: false, page: page)
             }
         } else {
             let first = 1
-            client.requestNotifications(all: showRead, page: first, width: width) { result in
-                self.handle(result: result, append: false, animated: true, page: first)
+            client.requestNotifications(all: showRead, page: first, width: width) { [weak self] result in
+                self?.handle(result: result, append: false, animated: true, page: first)
             }
         }
     }
@@ -172,6 +185,24 @@ FlatCacheListener {
 
     func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
         return []
+    }
+
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        var models = [NotificationViewModel]()
+
+        for id in notificationIDs {
+            if let model = client.githubClient.cache.get(id: id) as NotificationViewModel?,
+                (showRead || !model.read) {
+                // swap the model if not read, otherwise exclude it
+                // this powers the "swipe to archive" feature deleting the cell
+                models.append(model)
+            }
+        }
+
+        // every time the list is updated, update bar items and badges
+        updateUnreadState(count: models.count)
+
+        return models
     }
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
@@ -200,7 +231,7 @@ FlatCacheListener {
 
     func ratingNeedsDismiss(sectionController: RatingSectionController) {
         ratingToken = nil
-        feed.adapter.performUpdates(animated: true)
+        update(animated: true)
     }
 
     // MARK: TabNavRootViewControllerType
@@ -214,30 +245,7 @@ FlatCacheListener {
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
-        switch update {
-        case .item(let item):
-            // only handle NotificationViewModels
-            if let notification = item as? NotificationViewModel {
-                var models = [ListDiffable]()
-                // do a pass over each model and search for the updated item
-                for model in self.models {
-                    // if not showing read items and the models match (id only)
-                    if let currentNotification = model as? NotificationViewModel,
-                        currentNotification.id == notification.id {
-                        // swap the model if not read, otherwise exclude it
-                        // this powers the "swipe to archive" feature deleting the cell
-                        if showRead || !notification.read {
-                            models.append(notification)
-                        }
-                    } else {
-                        models.append(model)
-                    }
-                }
-                self.update(models: models, animated: true)
-                self.resetLeftBarItem()
-            }
-        case .list: break
-        }
+        self.update(animated: true)
     }
 
 }
