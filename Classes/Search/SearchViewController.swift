@@ -53,6 +53,7 @@ SearchResultSectionControllerDelegate {
         view.backgroundColor = Styles.Colors.background
         return view
     }()
+    private var originalContentInset: UIEdgeInsets = .zero
 
     init(client: GithubClient) {
         self.client = client
@@ -119,18 +120,23 @@ SearchResultSectionControllerDelegate {
     @objc
     func onKeyboardWillShow(notification: NSNotification) {
         guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        originalContentInset = collectionView.contentInset
+
         let converted = view.convert(frame, from: nil)
         let intersection = converted.intersection(frame)
         let bottomInset = intersection.height - bottomLayoutGuide.length
-        let inset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+
+        var inset = originalContentInset
+        inset.bottom = bottomInset
         collectionView.contentInset = inset
         collectionView.scrollIndicatorInsets = inset
     }
 
     @objc
     func onKeyboardWillHide(notification: NSNotification) {
-        collectionView.contentInset = .zero
-        collectionView.scrollIndicatorInsets = .zero
+        collectionView.contentInset = originalContentInset
+        collectionView.scrollIndicatorInsets = originalContentInset
     }
 
     // MARK: Data Loading/Paging
