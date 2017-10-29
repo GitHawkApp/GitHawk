@@ -35,7 +35,7 @@ fragment closableFields on Closable {
 }
 
 fragment labelableFields on Labelable {
-  labels(first: 100) {
+  labels(first: 30) {
     nodes {
       color
       name

@@ -44,7 +44,7 @@ final class NotificationClient {
             "all": all ? "true" : "false",
             "participating": participating ? "true" : "false",
             "page": page,
-            "per_page": "100"
+            "per_page": "50"
             ]
         if let since = since {
             parameters["since"] = GithubAPIDateFormatter().string(from: since)

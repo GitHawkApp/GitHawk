@@ -48,7 +48,7 @@ extension GithubClient {
             owner: owner,
             repo: repo,
             number: number,
-            page_size: 100,
+            page_size: 30,
             before: prependResult?.minStartCursor
         )
 
