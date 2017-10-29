@@ -3,7 +3,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     name
     hasIssuesEnabled
     viewerCanAdminister
-    mentionableUsers(first: 100) {
+    mentionableUsers(first: 20) {
       nodes {
         avatarUrl
         login
