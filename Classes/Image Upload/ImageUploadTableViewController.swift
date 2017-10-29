@@ -12,7 +12,7 @@ protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
 }
 
-class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate {
+class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet private var previewImageView: UIImageView! {
         didSet {
@@ -26,6 +26,8 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
     private var image: UIImage! // Set through the create function
     private var username: String?
     private weak var delegate: ImageUploadDelegate?
+
+    private var placeholderLabel : UILabel! // for label 
 
     private var compressionData: String?
     private lazy var client = ImgurClient()
@@ -64,7 +66,15 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
 
         // Set title field delegate so return moves to next field
         titleTextField.delegate = self
+        bodyTextField.delegate = self
 
+        placeholderLabel.text = "Optional"
+        placeholderLabel.sizeToFit()
+        bodyTextField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (bodyTextField.font?.pointSize)! / 2)
+        placeholderLabel.textColor = UIColor.lightGray
+        placeholderLabel.isHidden = !bodyTextField.text.isEmpty
+        
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
 
@@ -193,6 +203,10 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyTextField.becomeFirstResponder()
         return false
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !bodyTextField.text.isEmpty
     }
 
 }
