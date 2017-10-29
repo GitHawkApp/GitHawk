@@ -14,7 +14,7 @@ class BookmarksViewController: UITableViewController,
     PrimaryViewController,
     SwipeTableViewCellDelegate,
     TabNavRootViewControllerType,
-BookmarksStoreListner {
+BookmarksStoreListener {
 
     private let client: GithubClient
     private let cellIdentifier = "bookmark_cell"
