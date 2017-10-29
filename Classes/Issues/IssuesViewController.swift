@@ -62,10 +62,6 @@ FlatCacheListener {
 
     private var sentComments = [ListDiffable]()
 
-    // set to optimistically change the open/closed status
-    // clear when refreshing or on request failure
-    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)?
-
     init(
         client: GithubClient,
         model: IssueDetailsModel,
@@ -245,7 +241,7 @@ FlatCacheListener {
 
     func closeAction() -> UIAlertAction? {
         guard result?.viewerCanUpdate == true,
-            let status = localStatusChange?.model.status ?? result?.status.status,
+            let status = result?.status.status,
             status != .merged
             else { return nil }
 
@@ -256,7 +252,7 @@ FlatCacheListener {
     }
 
     func lockAction() -> UIAlertAction? {
-        guard result?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? result?.status.locked else {
+        guard result?.viewerCanUpdate == true, let locked = result?.status.locked else {
             return nil
         }
 
@@ -323,11 +319,6 @@ FlatCacheListener {
     }
 
     func fetch(previous: Bool) {
-        // on head load, reset all optimistic state
-        if !previous {
-            localStatusChange = nil
-        }
-
         client.fetch(
             owner: model.owner,
             repo: model.repo,
@@ -384,40 +375,6 @@ FlatCacheListener {
             number: model.number,
             close: close
         )
-
-//        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
-//
-//        let localModel = IssueStatusModel(
-//            status: close ? .closed : .open,
-//            pullRequest: currentStatus.pullRequest,
-//            locked: currentStatus.locked
-//        )
-//        let localEvent = IssueStatusEventModel(
-//            id: UUID().uuidString,
-//            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-//            commitHash: nil,
-//            date: Date(),
-//            status: close ? .closed : .reopened,
-//            pullRequest: currentStatus.pullRequest
-//        )
-//
-//        localStatusChange = (localModel, localEvent)
-//        feed.adapter.performUpdates(animated: true)
-//
-//        client.setStatus(
-//            owner: model.owner,
-//            repo: model.repo,
-//            number: model.number,
-//            status: close ? .closed : .open
-//        ) { [weak self] result in
-//            switch result {
-//            case .error:
-//                self?.localStatusChange = nil
-//                self?.feed.adapter.performUpdates(animated: true)
-//                ToastManager.showGenericError()
-//            default: break // dont need to handle success since updated optimistically
-//            }
-//        }
     }
 
     func setLocked(_ locked: Bool) {
@@ -437,7 +394,7 @@ FlatCacheListener {
         guard let current = self.result else { return [] }
 
         var objects: [ListDiffable] = [
-            localStatusChange?.model ?? current.status,
+            current.status,
             current.title,
             current.labels
         ]
@@ -466,10 +423,6 @@ FlatCacheListener {
 
         objects += current.timelineViewModels
         objects += sentComments
-
-        if let event = localStatusChange?.event {
-            objects.append(event)
-        }
 
         return objects
     }
