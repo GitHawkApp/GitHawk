@@ -375,39 +375,49 @@ FlatCacheListener {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: close ? .closed : .open,
-            pullRequest: currentStatus.pullRequest,
-            locked: currentStatus.locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: close ? .closed : .reopened,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
+        guard let previous = result else { return }
 
         client.setStatus(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            status: close ? .closed : .open
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+            close: close
+        )
+
+//        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
+//
+//        let localModel = IssueStatusModel(
+//            status: close ? .closed : .open,
+//            pullRequest: currentStatus.pullRequest,
+//            locked: currentStatus.locked
+//        )
+//        let localEvent = IssueStatusEventModel(
+//            id: UUID().uuidString,
+//            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
+//            commitHash: nil,
+//            date: Date(),
+//            status: close ? .closed : .reopened,
+//            pullRequest: currentStatus.pullRequest
+//        )
+//
+//        localStatusChange = (localModel, localEvent)
+//        feed.adapter.performUpdates(animated: true)
+//
+//        client.setStatus(
+//            owner: model.owner,
+//            repo: model.repo,
+//            number: model.number,
+//            status: close ? .closed : .open
+//        ) { [weak self] result in
+//            switch result {
+//            case .error:
+//                self?.localStatusChange = nil
+//                self?.feed.adapter.performUpdates(animated: true)
+//                ToastManager.showGenericError()
+//            default: break // dont need to handle success since updated optimistically
+//            }
+//        }
     }
 
     func setLocked(_ locked: Bool) {

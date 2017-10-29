@@ -163,26 +163,44 @@ extension GithubClient {
         }
     }
 
-    enum CloseStatus: String {
-        case closed, open
-    }
-
     func setStatus(
+        previous: IssueResult,
         owner: String,
         repo: String,
         number: Int,
-        status: CloseStatus,
-        completion: @escaping (Result<CloseStatus>) -> Void
+        close: Bool
         ) {
+        let newStatus = IssueStatusModel(
+            status: close ? .closed : .open,
+            pullRequest: previous.status.pullRequest,
+            locked: previous.status.locked
+        )
+        let newEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: userSession?.username ?? Constants.Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: close ? .closed : .reopened,
+            pullRequest: previous.pullRequest
+        )
+        let optimisticResult = previous.updated(
+            status: newStatus,
+            timelinePages: previous.timelinePages(appending: newEvent)
+        )
+
+        let cache = self.cache
+
+        // optimistically update the cache, listeners can react as appropriate
+        cache.set(value: optimisticResult)
+
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
-            parameters: [ "state": status.rawValue ],
+            parameters: [ "state": newStatus.status.rawValue ],
             completion: { (response, _) in
-                if response.value != nil {
-                    completion(.success(status))
-                } else {
-                    completion(.error(nil))
+                if response.value == nil {
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
                 }
         }))
     }
