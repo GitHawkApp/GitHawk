@@ -22,7 +22,6 @@ struct IssueResult: Cachable {
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
     let milestone: IssueMilestoneModel?
-    let mentionableUsers: [AutocompleteUser]
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool

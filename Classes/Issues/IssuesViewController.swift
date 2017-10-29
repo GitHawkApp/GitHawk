@@ -37,11 +37,12 @@ IssueCommentSectionControllerDelegate {
         managesLayout: false
         ) }()
 
-    private var current: IssueResult? = nil {
+    private var resultID: String? = nil {
         didSet {
             let hidden: Bool
-            if let current = self.current {
-                hidden = current.status.locked && !current.viewerCanUpdate
+            if let id = resultID,
+                let result = self.client.cache.get(id: id) as IssueResult? {
+                hidden = result.status.locked && !result.viewerCanUpdate
             } else {
                 hidden = true
             }
@@ -51,6 +52,27 @@ IssueCommentSectionControllerDelegate {
             self.textInputbar.layoutIfNeeded()
         }
     }
+
+    var result: IssueResult? {
+        guard let id = resultID else { return nil }
+        return client.cache.get(id: id) as IssueResult?
+    }
+
+//    private var current: IssueResult? = nil {
+//        didSet {
+//            let hidden: Bool
+//            if let current = self.current {
+//                hidden = current.status.locked && !current.viewerCanUpdate
+//            } else {
+//                hidden = true
+//            }
+//            self.setTextInputbarHidden(hidden, animated: true)
+//
+//            // hack required to get textInputBar.contentView + textView laid out correctly
+//            self.textInputbar.layoutIfNeeded()
+//        }
+//    }
+
     private var sentComments = [ListDiffable]()
 
     // set to optimistically change the open/closed status
@@ -193,7 +215,7 @@ IssueCommentSectionControllerDelegate {
 
         super.didPressRightButton(sender)
 
-        if let id = current?.id,
+        if let id = resultID,
             let text = text {
             addCommentClient.addComment(
                 subjectId: id,
@@ -235,8 +257,8 @@ IssueCommentSectionControllerDelegate {
     }
 
     func closeAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true,
-            let status = localStatusChange?.model.status ?? current?.status.status,
+        guard result?.viewerCanUpdate == true,
+            let status = localStatusChange?.model.status ?? result?.status.status,
             status != .merged
             else { return nil }
 
@@ -247,7 +269,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func lockAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+        guard result?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? result?.status.locked else {
             return nil
         }
 
@@ -258,12 +280,12 @@ IssueCommentSectionControllerDelegate {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard current != nil else { return nil }
+        guard result != nil else { return nil }
 
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
-            hasIssuesEnabled: current?.hasIssuesEnabled ?? false
+            hasIssuesEnabled: result?.hasIssuesEnabled ?? false
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         weak var weakSelf = self
@@ -273,22 +295,22 @@ IssueCommentSectionControllerDelegate {
     }
 
     func bookmarkAction() -> UIAlertAction? {
-        guard let current = current,
+        guard let result = result,
             let store = client.bookmarksStore
             else { return nil }
         let bookmarkModel = BookmarkModel(
-            type: current.pullRequest ? .pullRequest : .issue,
+            type: result.pullRequest ? .pullRequest : .issue,
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: current.title.attributedText.string
+            title: result.title.attributedText.string
         )
         return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
 
     @objc
     func onMore(sender: UIBarButtonItem) {
-        let issueType = current?.pullRequest == true
+        let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
         
@@ -324,19 +346,18 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             number: model.number,
             width: view.bounds.width,
-            prependResult: previous ? current : nil
+            prependResult: previous ? result : nil
         ) { [weak self] resultType in
-
             switch resultType {
-            case .success(let result):
+            case .success(let resultID, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
                 if previous {
                     self?.sentComments.removeAll()
                 }
 
-                self?.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self?.current = result
+                self?.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                self?.resultID = resultID
             default: break
             }
             self?.feed.finishLoading(dismissRefresh: true) {
@@ -358,7 +379,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
 
         let localModel = IssueStatusModel(
             status: close ? .closed : .open,
@@ -394,7 +415,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
+        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
 
         let localModel = IssueStatusModel(
             status: currentStatus.status,
@@ -432,7 +453,7 @@ IssueCommentSectionControllerDelegate {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        guard let current = self.current else { return [] }
+        guard let current = self.result else { return [] }
 
         var objects: [ListDiffable] = [
             localStatusChange?.model ?? current.status,

@@ -41,7 +41,7 @@ extension GithubClient {
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (Result<IssueResult>) -> Void
+        completion: @escaping (Result<(String, [AutocompleteUser])>) -> Void
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -51,6 +51,8 @@ extension GithubClient {
             page_size: 100,
             before: prependResult?.minStartCursor
         )
+
+        let cache = self.cache
 
         fetch(query: query) { (result, error) in
             let repository = result?.data?.repository
@@ -114,7 +116,6 @@ extension GithubClient {
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
-                        mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
@@ -122,7 +123,10 @@ extension GithubClient {
                     )
 
                     DispatchQueue.main.async {
-                        completion(.success(issueResult))
+                        // update the cache so all listeners receive the new model
+                        cache.set(value: issueResult)
+
+                        completion(.success((issueResult.id, mentionableUsers)))
                     }
                 }
             } else {
