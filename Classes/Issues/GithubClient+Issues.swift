@@ -199,7 +199,37 @@ extension GithubClient {
         }))
     }
 
-    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> Void) {
+    func setLocked(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        locked: Bool,
+        completion: ((Result<Bool>) -> Void)? = nil
+        ) {
+        let newStatus = IssueStatusModel(
+            status: previous.status.status,
+            pullRequest: previous.status.pullRequest,
+            locked: locked
+        )
+        let newEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: userSession?.username ?? Constants.Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: locked ? .locked : .unlocked,
+            pullRequest: previous.pullRequest
+        )
+        let optimisticResult = previous.updated(
+            status: newStatus,
+            timelinePages: previous.timelinePages(appending: newEvent)
+        )
+
+        let cache = self.cache
+
+        // optimistically update the cache, listeners can react as appropriate
+        cache.set(value: optimisticResult)
+
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
             method: locked ? .put : .delete,
@@ -207,9 +237,11 @@ extension GithubClient {
                 // As per documentation this endpoint returns no content, so all we can validate is that
                 // the status code is "204 No Content".
                 if response.response?.statusCode == 204 {
-                    completion(.success(true))
+                    completion?(.success(true))
                 } else {
-                    completion(.error(nil))
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
+                    completion?(.error(nil))
                 }
         }))
     }

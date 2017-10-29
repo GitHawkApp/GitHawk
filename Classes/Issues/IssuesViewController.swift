@@ -411,39 +411,14 @@ FlatCacheListener {
     }
 
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? result?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: currentStatus.status,
-            pullRequest: currentStatus.pullRequest,
-            locked: locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: locked ? .locked : .unlocked,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
-
+        guard let previous = result else { return }
         client.setLocked(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
             locked: locked
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+        )
     }
 
     // MARK: ListAdapterDataSource
