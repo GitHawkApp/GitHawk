@@ -41,7 +41,7 @@ extension GithubClient {
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (Result<(String, [AutocompleteUser])>) -> Void
+        completion: @escaping (Result<(IssueResult, [AutocompleteUser])>) -> Void
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -126,7 +126,7 @@ extension GithubClient {
                         // update the cache so all listeners receive the new model
                         cache.set(value: issueResult)
 
-                        completion(.success((issueResult.id, mentionableUsers)))
+                        completion(.success((issueResult, mentionableUsers)))
                     }
                 }
             } else {

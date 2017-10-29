@@ -12,6 +12,7 @@ import TUSafariActivity
 import SafariServices
 import SlackTextViewController
 import SnapKit
+import FlatCache
 
 final class IssuesViewController: SLKTextViewController,
     ListAdapterDataSource,
@@ -20,7 +21,8 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueCommentSectionControllerDelegate {
+IssueCommentSectionControllerDelegate,
+FlatCacheListener {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -57,21 +59,6 @@ IssueCommentSectionControllerDelegate {
         guard let id = resultID else { return nil }
         return client.cache.get(id: id) as IssueResult?
     }
-
-//    private var current: IssueResult? = nil {
-//        didSet {
-//            let hidden: Bool
-//            if let current = self.current {
-//                hidden = current.status.locked && !current.viewerCanUpdate
-//            } else {
-//                hidden = true
-//            }
-//            self.setTextInputbarHidden(hidden, animated: true)
-//
-//            // hack required to get textInputBar.contentView + textView laid out correctly
-//            self.textInputbar.layoutIfNeeded()
-//        }
-//    }
 
     private var sentComments = [ListDiffable]()
 
@@ -348,22 +335,31 @@ IssueCommentSectionControllerDelegate {
             width: view.bounds.width,
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
+            guard let strongSelf = self else { return }
+
+            let isFirstUpdate = strongSelf.resultID == nil
+
             switch resultType {
-            case .success(let resultID, let mentionableUsers):
+            case .success(let result, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
                 if previous {
-                    self?.sentComments.removeAll()
+                    strongSelf.sentComments.removeAll()
                 }
 
-                self?.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
-                self?.resultID = resultID
+                strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                strongSelf.client.cache.add(listener: strongSelf, value: result)
+                strongSelf.resultID = result.id
             default: break
             }
-            self?.feed.finishLoading(dismissRefresh: true) {
-                if self?.hasScrolledToBottom != true {
-                    self?.hasScrolledToBottom = true
-                    self?.feed.collectionView.slk_scrollToBottom(animated: true)
+
+            // subsequent updates are handled by the FlatCacheListener
+            if isFirstUpdate {
+                strongSelf.feed.finishLoading(dismissRefresh: true) {
+                    if strongSelf.hasScrolledToBottom != true {
+                        strongSelf.hasScrolledToBottom = true
+                        strongSelf.feed.collectionView.slk_scrollToBottom(animated: true)
+                    }
                 }
             }
         }
@@ -603,6 +599,17 @@ IssueCommentSectionControllerDelegate {
 
     func didEdit(sectionController: IssueCommentSectionController) {
 
+    }
+
+    // MARK: FlatCacheListener
+
+    func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
+        switch update {
+        case .item(let item):
+            guard item is IssueResult else { break }
+            feed.finishLoading(dismissRefresh: true)
+        case .list: break
+        }
     }
 
 }
