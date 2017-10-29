@@ -122,6 +122,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
         cell.imageView?.tintColor = Styles.Colors.blueGray.color
         cell.accessoryType = file.isDirectory ? .disclosureIndicator : .none
         
+        
         return cell
     }
 
