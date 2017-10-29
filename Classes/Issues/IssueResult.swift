@@ -8,10 +8,11 @@
 
 import Foundation
 import IGListKit
+import FlatCache
 
-struct IssueResult {
+struct IssueResult: Cachable {
 
-    let subjectId: String
+    let id: String
     let pullRequest: Bool
 
     let status: IssueStatusModel

@@ -193,10 +193,10 @@ IssueCommentSectionControllerDelegate {
 
         super.didPressRightButton(sender)
 
-        if let subjectId = current?.subjectId,
+        if let id = current?.id,
             let text = text {
             addCommentClient.addComment(
-                subjectId: subjectId,
+                subjectId: id,
                 body: text
             )
         }
