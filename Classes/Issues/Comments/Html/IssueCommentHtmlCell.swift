@@ -17,6 +17,14 @@ protocol IssueCommentHtmlCellNavigationDelegate: class {
     func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL)
 }
 
+private final class IssueCommentHtmlCellWebView: UIWebView {
+
+    override var safeAreaInsets: UIEdgeInsets {
+        return .zero
+    }
+
+}
+
 final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
 
     private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
@@ -65,7 +73,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     weak var delegate: IssueCommentHtmlCellDelegate?
     weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate?
 
-    @objc private let webView = UIWebView()
+    @objc private let webView = IssueCommentHtmlCellWebView()
     private var body = ""
     var webViewBaseURL: URL?
 
@@ -101,7 +109,9 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-        webView.frame = contentView.bounds
+        if webView.frame != contentView.bounds {
+            webView.frame = contentView.bounds
+        }
     }
 
     // MARK: ListBindable
