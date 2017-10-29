@@ -127,23 +127,14 @@ IssueCommentSectionControllerDelegate {
         actions.backgroundColor = .clear
         textActionsController.configure(client: client, textView: textView, actions: actions)
 
-        // using visual format re: https://github.com/slackhq/SlackTextViewController/issues/596
-        // i'm not sure exactly what these would be in SnapKit (would pref SK tho)
         let contentView = textInputbar.contentView
         contentView.addSubview(actions)
-        let views = ["actions": actions]
-        contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[actions(30)]-4@999-|",
-            options: [],
-            metrics: nil,
-            views: views
-        ))
-        contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[actions]|",
-            options: [],
-            metrics: nil,
-            views: views
-        ))
+        actions.snp.makeConstraints { (make) in
+            make.height.equalTo(30)
+            make.top.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-4).priority(999)
+            make.left.right.equalTo(contentView)
+        }
         self.textInputbar.layoutIfNeeded()
 
         let rightItem = UIBarButtonItem(
