@@ -99,28 +99,10 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! StyledTableCell
 
         let file = files[indexPath.row]
-        cell.textLabel?.text = file.name
-        
-        cell.isAccessibilityElement = true
-        cell.accessibilityTraits |= UIAccessibilityTraitButton
-        let fileType = file.isDirectory
-            ? NSLocalizedString("Directory", comment: "Used to specify the code cell is a directory.")
-            : NSLocalizedString("File", comment: "Used to specify the code cell is a file.")
-        cell.accessibilityLabel = cell.contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("") { "\($0).\n\($1)" }
-            .appending(".\n\(fileType)")
-        cell.accessibilityHint = file.isDirectory
-            ? NSLocalizedString("Shows the contents of the directory", comment: "")
-            : NSLocalizedString("Shows the contents of the file", comment: "")
-
-        let imageName = file.isDirectory ? "file-directory" : "file"
-        cell.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        cell.imageView?.tintColor = Styles.Colors.blueGray.color
-        cell.accessoryType = file.isDirectory ? .disclosureIndicator : .none
+        cell.setup(with: file)
 
         return cell
     }
