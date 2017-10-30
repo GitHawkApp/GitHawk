@@ -344,6 +344,7 @@
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
+		656585CF1FA7227F00ED83BE /* BookmarksStoreListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656585CE1FA7227F00ED83BE /* BookmarksStoreListenerTests.swift */; };
 		65E63B981F977A1F00ECD884 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */; };
 		65E63B9A1F977B1D00ECD884 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B991F977B1D00ECD884 /* BookmarkStore.swift */; };
 		65E63B9C1F977B4600ECD884 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */; };
@@ -720,6 +721,7 @@
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		656585CE1FA7227F00ED83BE /* BookmarksStoreListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksStoreListenerTests.swift; sourceTree = "<group>"; };
 		65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		65E63B991F977B1D00ECD884 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
 		65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
@@ -1225,6 +1227,7 @@
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 				65E63B9D1F978B8900ECD884 /* BookmarkStoreTests.swift */,
+				656585CE1FA7227F00ED83BE /* BookmarksStoreListenerTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -2401,6 +2404,7 @@
 				293A45791F296B7E00DD1006 /* MMMarkdownASTTests.swift in Sources */,
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
+				656585CF1FA7227F00ED83BE /* BookmarksStoreListenerTests.swift in Sources */,
 				294B11251F7B40CA00E04F2D /* IssueDetailsModel.swift in Sources */,
 				293A45941F296D5B00DD1006 /* CollapsibleCell.swift in Sources */,
 				293A45961F298C9500DD1006 /* UIColor+Hex.swift in Sources */,
