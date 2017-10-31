@@ -58,6 +58,7 @@ SwipeCollectionViewCellDelegate {
                 model: model,
                 scrollToBottom: true
             )
+            controller.navigationItem.configure(viewController?.splitViewController?.displayModeButtonItem)
             let navigation = UINavigationController(rootViewController: controller)
             viewController?.showDetailViewController(navigation, sender: nil)
         }
