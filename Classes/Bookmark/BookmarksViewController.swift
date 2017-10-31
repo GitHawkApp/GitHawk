@@ -158,6 +158,7 @@ TabNavRootViewControllerType {
         default:
             return
         }
+        destinationViewController.navigationItem.configure(splitViewController?.displayModeButtonItem)
         let navigation = UINavigationController(rootViewController: destinationViewController)
         showDetailViewController(navigation, sender: nil)
     }

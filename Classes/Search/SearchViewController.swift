@@ -288,6 +288,7 @@ SearchResultSectionControllerDelegate {
         update(animated: false)
 
         let repoViewController = RepositoryViewController(client: client, repo: repo)
+        repoViewController.navigationItem.configure(splitViewController?.displayModeButtonItem)
         let navigation = UINavigationController(rootViewController: repoViewController)
         showDetailViewController(navigation, sender: nil)
     }
