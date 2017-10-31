@@ -39,6 +39,7 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;
     margin: 0;
     }
+    * { font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px; }
     b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
     i, em{font-style: italic;}
     a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}
@@ -53,7 +54,8 @@ final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewD
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
     pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}
-    sub{font-family: -apple-system;}
+    sub{font-size: \(Styles.Sizes.Text.secondary)px;}
+    sub a{font-size: \(Styles.Sizes.Text.secondary)px;}
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
