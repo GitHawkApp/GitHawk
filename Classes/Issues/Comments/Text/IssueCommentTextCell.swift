@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTextCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleCell {
 
     static let inset = Styles.Sizes.textCellInset
 

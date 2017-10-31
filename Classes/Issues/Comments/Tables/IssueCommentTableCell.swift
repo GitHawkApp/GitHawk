@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTableCell: UICollectionViewCell,
+final class IssueCommentTableCell: DoubleTappableCell,
     ListBindable,
     UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {

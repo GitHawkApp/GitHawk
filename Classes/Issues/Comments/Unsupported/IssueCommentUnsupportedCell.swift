@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentUnsupportedCell: UICollectionViewCell, ListBindable {
+final class IssueCommentUnsupportedCell: DoubleTappableCell, ListBindable {
 
     let label = UILabel()
 
