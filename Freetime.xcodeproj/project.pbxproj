@@ -344,6 +344,7 @@
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
+		65E0E6EF1FA892FC00989DCB /* UINavigationItem+DisplayModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E0E6EE1FA892FC00989DCB /* UINavigationItem+DisplayModeButton.swift */; };
 		65E63B981F977A1F00ECD884 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */; };
 		65E63B9A1F977B1D00ECD884 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B991F977B1D00ECD884 /* BookmarkStore.swift */; };
 		65E63B9C1F977B4600ECD884 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */; };
@@ -720,6 +721,7 @@
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		65E0E6EE1FA892FC00989DCB /* UINavigationItem+DisplayModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+DisplayModeButton.swift"; sourceTree = "<group>"; };
 		65E63B971F977A1F00ECD884 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		65E63B991F977B1D00ECD884 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
 		65E63B9B1F977B4600ECD884 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
@@ -1349,6 +1351,7 @@
 				294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */,
 				294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */,
 				29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */,
+				65E0E6EE1FA892FC00989DCB /* UINavigationItem+DisplayModeButton.swift */,
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
 				292CD3D51F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift */,
 				29AF1E851F8AADD00008A0EF /* UIViewController+CancelAction.swift */,
@@ -2288,6 +2291,7 @@
 				DC7857101F97F546009BADDA /* Debouncer.swift in Sources */,
 				98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */,
 				29DA1E881F5E2B8A0050C64B /* SearchRecentHeaderCell.swift in Sources */,
+				65E0E6EF1FA892FC00989DCB /* UINavigationItem+DisplayModeButton.swift in Sources */,
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
