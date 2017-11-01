@@ -99,7 +99,9 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! StyledTableCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? StyledTableCell else {
+            fatalError("Could not dequeueCell with identifier: \(cellIdentifier)")
+        }
 
         let file = files[indexPath.row]
         cell.setup(with: file)
