@@ -65,6 +65,7 @@ NewIssueTableViewControllerDelegate {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
+        navigationItem.configure(title: repo.name, subtitle: repo.owner)
     }
 
     override func viewSafeAreaInsetsDidChange() {
