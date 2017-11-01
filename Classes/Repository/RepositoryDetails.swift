@@ -12,6 +12,11 @@ struct RepositoryDetails: Codable {
     let owner: String
     let name: String
     let hasIssuesEnabled: Bool
+
+    var ownerURL: URL {
+        return URL(string: "https://github.com/\(owner)")!
+    }
+
 }
 
 extension RepositoryDetails: Equatable {

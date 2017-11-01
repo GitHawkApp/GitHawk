@@ -122,8 +122,7 @@ NewIssueTableViewControllerDelegate {
         alert.addActions([
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
-            AlertAction(alertBuilder).openInSafari(url: repoUrl),
-            AlertAction(alertBuilder).view(owner: URL(string: "https://github.com/\(repo.owner)")!),
+            AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
             bookmarkAction(),
             AlertAction.cancel()
         ])
