@@ -261,11 +261,10 @@ FlatCacheListener {
             name: model.repo,
             hasIssuesEnabled: result?.hasIssuesEnabled ?? false
         )
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        weak var weakSelf = self
 
+        weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(repo: repoViewController)
+            .view(client: client, repo: repo)
     }
 
     func bookmarkAction() -> UIAlertAction? {
@@ -299,7 +298,6 @@ FlatCacheListener {
             closeAction(),
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
-            AlertAction(alertBuilder).openInSafari(url: externalURL),
             viewRepoAction(),
             bookmarkAction(),
             AlertAction.cancel()
