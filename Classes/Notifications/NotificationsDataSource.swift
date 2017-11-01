@@ -24,7 +24,7 @@ final class NotificationsDataSource {
     // MARK: Public API
 
     func warm(width: CGFloat) {
-        if let archive = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? [Notification] {
+        if let archive = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? [NotificationResponse] {
             _notifications = CreateViewModels(containerWidth: width, notifications: archive)
         }
     }

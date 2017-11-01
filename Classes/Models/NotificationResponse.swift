@@ -1,5 +1,5 @@
 import Foundation
-final class Notification: NSObject, NSCoding {
+final class NotificationResponse: NSObject, NSCoding {
   enum Keys {
     static let reason = "reason"
     static let updated_at = "updated_at"

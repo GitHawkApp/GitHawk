@@ -61,7 +61,7 @@ final class NotificationClient {
             parameters: parameters,
             headers: nil
         ) { (response, nextPage) in
-            if let notifications = (response.value as? [[String:Any]])?.flatMap({ Notification(json: $0) }) {
+            if let notifications = (response.value as? [[String:Any]])?.flatMap({ NotificationResponse(json: $0) }) {
                 let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
                 cache.set(values: viewModels)
                 completion(.success((viewModels, nextPage?.next)))
