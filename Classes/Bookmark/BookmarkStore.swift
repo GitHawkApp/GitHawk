@@ -75,7 +75,7 @@ final class BookmarksStore {
 
     var bookmarks: [BookmarkModel] {
         refresh()
-        return Array(_bookmarks)
+        return Array(_bookmarks.sorted(by: { "\($0.owner)\($0.name)\($0.number)" > "\($1.owner)\($1.name)\($1.number)"}))
     }
 
     // MARK: Private API
