@@ -67,6 +67,8 @@ SearchResultSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        makeBackBarItemEmpty()
+
         view.backgroundColor = Styles.Colors.background
 
         view.addSubview(collectionView)
