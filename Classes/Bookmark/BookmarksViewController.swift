@@ -207,13 +207,8 @@ BookmarksStoreListener {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
-       
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.searchController = searchController
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-        }
+
+        tableView.tableHeaderView = searchController.searchBar
     }
 
     private func configureTableView() {

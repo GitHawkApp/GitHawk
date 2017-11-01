@@ -58,11 +58,6 @@ FlatCacheListener {
         }
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
-
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.largeTitleDisplayMode = showRead ? .never : .always
-        }
     }
 
     // MARK: Private API

@@ -150,10 +150,6 @@ FlatCacheListener {
         )
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         navigationItem.rightBarButtonItem = rightItem
-
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
