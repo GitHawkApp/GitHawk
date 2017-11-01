@@ -8,7 +8,15 @@
 
 import Foundation
 
+public protocol BookmarksStoreListener: class {
+    func bookmarksDidUpdate()
+}
+
 final class BookmarksStore {
+
+    private class ListenerWrapper: NSObject {
+        weak var listener: BookmarksStoreListener?
+    }
 
     private let fileManager = FileManager.default
     private var documentDirectory: FileManager.SearchPathDirectory {
@@ -29,6 +37,7 @@ final class BookmarksStore {
 
     private var token: String
     private var _bookmarks: Set<BookmarkModel> = []
+    private var listeners: [ListenerWrapper] = []
 
     // MARK: Init
 
@@ -38,6 +47,12 @@ final class BookmarksStore {
     }
 
     // MARK: Public API
+
+    func add(listener: BookmarksStoreListener) {
+        let wrapper = ListenerWrapper()
+        wrapper.listener = listener
+        listeners.append(wrapper)
+    }
 
     func add(bookmark: BookmarkModel) {
         _bookmarks.insert(bookmark)
@@ -73,6 +88,11 @@ final class BookmarksStore {
 
     func archive() {
         NSKeyedArchiver.archiveRootObject(_bookmarks, toFile: archivePath)
+        for wrapper in listeners {
+            if let listener = wrapper.listener {
+                listener.bookmarksDidUpdate()
+            }
+        }
     }
 
     func clearStorage() {
