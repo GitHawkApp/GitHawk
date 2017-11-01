@@ -12,6 +12,7 @@ import TUSafariActivity
 import SafariServices
 import SlackTextViewController
 import SnapKit
+import FlatCache
 
 final class IssuesViewController: SLKTextViewController,
     ListAdapterDataSource,
@@ -20,7 +21,8 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueCommentSectionControllerDelegate {
+IssueCommentSectionControllerDelegate,
+FlatCacheListener {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -37,11 +39,12 @@ IssueCommentSectionControllerDelegate {
         managesLayout: false
         ) }()
 
-    private var current: IssueResult? = nil {
+    private var resultID: String? = nil {
         didSet {
             let hidden: Bool
-            if let current = self.current {
-                hidden = current.status.locked && !current.viewerCanUpdate
+            if let id = resultID,
+                let result = self.client.cache.get(id: id) as IssueResult? {
+                hidden = result.status.locked && !result.viewerCanUpdate
             } else {
                 hidden = true
             }
@@ -51,11 +54,13 @@ IssueCommentSectionControllerDelegate {
             self.textInputbar.layoutIfNeeded()
         }
     }
-    private var sentComments = [ListDiffable]()
 
-    // set to optimistically change the open/closed status
-    // clear when refreshing or on request failure
-    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)?
+    var result: IssueResult? {
+        guard let id = resultID else { return nil }
+        return client.cache.get(id: id) as IssueResult?
+    }
+
+    private var sentComments = [ListDiffable]()
 
     init(
         client: GithubClient,
@@ -184,10 +189,10 @@ IssueCommentSectionControllerDelegate {
 
         super.didPressRightButton(sender)
 
-        if let subjectId = current?.subjectId,
+        if let id = resultID,
             let text = text {
             addCommentClient.addComment(
-                subjectId: subjectId,
+                subjectId: id,
                 body: text
             )
         }
@@ -226,8 +231,8 @@ IssueCommentSectionControllerDelegate {
     }
 
     func closeAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true,
-            let status = localStatusChange?.model.status ?? current?.status.status,
+        guard result?.viewerCanUpdate == true,
+            let status = result?.status.status,
             status != .merged
             else { return nil }
 
@@ -238,7 +243,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func lockAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+        guard result?.viewerCanUpdate == true, let locked = result?.status.locked else {
             return nil
         }
 
@@ -249,12 +254,12 @@ IssueCommentSectionControllerDelegate {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard current != nil else { return nil }
+        guard result != nil else { return nil }
 
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
-            hasIssuesEnabled: current?.hasIssuesEnabled ?? false
+            hasIssuesEnabled: result?.hasIssuesEnabled ?? false
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         weak var weakSelf = self
@@ -264,22 +269,22 @@ IssueCommentSectionControllerDelegate {
     }
 
     func bookmarkAction() -> UIAlertAction? {
-        guard let current = current,
+        guard let result = result,
             let store = client.bookmarksStore
             else { return nil }
         let bookmarkModel = BookmarkModel(
-            type: current.pullRequest ? .pullRequest : .issue,
+            type: result.pullRequest ? .pullRequest : .issue,
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: current.title.attributedText.string
+            title: result.title.attributedText.string
         )
         return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
 
     @objc
     func onMore(sender: UIBarButtonItem) {
-        let issueType = current?.pullRequest == true
+        let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
         
@@ -305,35 +310,38 @@ IssueCommentSectionControllerDelegate {
     }
 
     func fetch(previous: Bool) {
-        // on head load, reset all optimistic state
-        if !previous {
-            localStatusChange = nil
-        }
-
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
             width: view.bounds.width,
-            prependResult: previous ? current : nil
+            prependResult: previous ? result : nil
         ) { [weak self] resultType in
+            guard let strongSelf = self else { return }
+
+            let isFirstUpdate = strongSelf.resultID == nil
 
             switch resultType {
-            case .success(let result):
+            case .success(let result, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
                 if previous {
-                    self?.sentComments.removeAll()
+                    strongSelf.sentComments.removeAll()
                 }
 
-                self?.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self?.current = result
+                strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                strongSelf.client.cache.add(listener: strongSelf, value: result)
+                strongSelf.resultID = result.id
             default: break
             }
-            self?.feed.finishLoading(dismissRefresh: true) {
-                if self?.hasScrolledToBottom != true {
-                    self?.hasScrolledToBottom = true
-                    self?.feed.collectionView.slk_scrollToBottom(animated: true)
+
+            // subsequent updates are handled by the FlatCacheListener
+            if isFirstUpdate {
+                strongSelf.feed.finishLoading(dismissRefresh: true) {
+                    if strongSelf.hasScrolledToBottom != true {
+                        strongSelf.hasScrolledToBottom = true
+                        strongSelf.feed.collectionView.slk_scrollToBottom(animated: true)
+                    }
                 }
             }
         }
@@ -349,84 +357,35 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: close ? .closed : .open,
-            pullRequest: currentStatus.pullRequest,
-            locked: currentStatus.locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: close ? .closed : .reopened,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
+        guard let previous = result else { return }
 
         client.setStatus(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            status: close ? .closed : .open
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+            close: close
+        )
     }
 
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: currentStatus.status,
-            pullRequest: currentStatus.pullRequest,
-            locked: locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: locked ? .locked : .unlocked,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
-
+        guard let previous = result else { return }
         client.setLocked(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
             locked: locked
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+        )
     }
 
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        guard let current = self.current else { return [] }
+        guard let current = self.result else { return [] }
 
         var objects: [ListDiffable] = [
-            localStatusChange?.model ?? current.status,
+            current.status,
             current.title,
             current.labels
         ]
@@ -455,10 +414,6 @@ IssueCommentSectionControllerDelegate {
 
         objects += current.timelineViewModels
         objects += sentComments
-
-        if let event = localStatusChange?.event {
-            objects.append(event)
-        }
 
         return objects
     }
@@ -573,6 +528,17 @@ IssueCommentSectionControllerDelegate {
 
     func didEdit(sectionController: IssueCommentSectionController) {
 
+    }
+
+    // MARK: FlatCacheListener
+
+    func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
+        switch update {
+        case .item(let item):
+            guard item is IssueResult else { break }
+            feed.finishLoading(dismissRefresh: true)
+        case .list: break
+        }
     }
 
 }
