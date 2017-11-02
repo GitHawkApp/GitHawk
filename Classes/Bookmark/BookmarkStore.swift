@@ -36,7 +36,7 @@ final class BookmarksStore {
     }
 
     private var token: String
-    private var _bookmarks: Set<BookmarkModel> = []
+    private var _bookmarks: NSMutableOrderedSet = []
     private var listeners: [ListenerWrapper] = []
 
     // MARK: Init
@@ -55,7 +55,7 @@ final class BookmarksStore {
     }
 
     func add(bookmark: BookmarkModel) {
-        _bookmarks.insert(bookmark)
+        _bookmarks.add(bookmark)
         archive()
     }
 
@@ -69,19 +69,23 @@ final class BookmarksStore {
     }
 
     func clear() {
-        _bookmarks.removeAll()
+        _bookmarks.removeAllObjects()
         archive()
     }
 
     var bookmarks: [BookmarkModel] {
         refresh()
-        return Array(_bookmarks.sorted(by: { "\($0.owner)\($0.name)\($0.number)" > "\($1.owner)\($1.name)\($1.number)"}))
+        guard let bookmarks = _bookmarks.array as? [BookmarkModel] else {
+            return []
+        }
+
+        return bookmarks
     }
 
     // MARK: Private API
     
     func refresh() {
-        if let bookmarks = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? Set<BookmarkModel> {
+        if let bookmarks = NSKeyedUnarchiver.unarchiveObject(withFile: archivePath) as? NSMutableOrderedSet {
             _bookmarks = bookmarks
         }
     }

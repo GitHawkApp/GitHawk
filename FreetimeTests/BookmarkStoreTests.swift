@@ -81,8 +81,8 @@ final class BookmarkStoreTests: XCTestCase {
         store.add(bookmark: b1)
         store.add(bookmark: b2)
 
-        XCTAssert(store.bookmarks[0] == b2)
-        XCTAssert(store.bookmarks[1] == b1)
+        XCTAssert(store.bookmarks[0] == b1)
+        XCTAssert(store.bookmarks[1] == b2)
     }
 
     func test_bookmarksMixedTypes() {
@@ -94,8 +94,8 @@ final class BookmarkStoreTests: XCTestCase {
         store.add(bookmark: b2)
         store.add(bookmark: b3)
 
-        XCTAssert(store.bookmarks[0].type == .pullRequest)
+        XCTAssert(store.bookmarks[0].type == .repo)
         XCTAssert(store.bookmarks[1].type == .issue)
-        XCTAssert(store.bookmarks[2].type == .repo)
+        XCTAssert(store.bookmarks[2].type == .pullRequest)
     }
 }
