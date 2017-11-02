@@ -27,7 +27,7 @@ class BookmarkCell: SwipeSelectableTableCell {
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         titleLabel.numberOfLines = 0
