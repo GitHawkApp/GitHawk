@@ -21,7 +21,7 @@ class DoubleTappableCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        doubleTapGesture.addTarget(self, action: #selector(doubleTapAction))
+        doubleTapGesture.addTarget(self, action: #selector(onDoubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         doubleTapGesture.delegate = self
         addGestureRecognizer(doubleTapGesture)
@@ -33,7 +33,7 @@ class DoubleTappableCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: Private API
     
-    @objc private func doubleTapAction() {
+    @objc private func onDoubleTap() {
         doubleTapDelegate?.didDoubleTap(cell: self)
     }
     
