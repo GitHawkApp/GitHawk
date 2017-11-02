@@ -321,13 +321,18 @@ FlatCacheListener {
             case .success(let result, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
-                if previous {
+                if !previous {
                     strongSelf.sentComments.removeAll()
                 }
 
                 strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
+
+                if !previous {
+                    strongSelf.client.fetchPRComments(previous: result, owner: strongSelf.model.owner, repo: strongSelf.model.repo, number: strongSelf.model.number, width: strongSelf.view.bounds.width)
+                }
+
             default: break
             }
 

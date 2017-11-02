@@ -39,17 +39,17 @@ struct IssueResult: Cachable {
         return minStartCursor != nil
     }
 
-    func timelinePages(appending: ListDiffable) -> [IssueTimelinePage] {
+    func timelinePages(appending: [ListDiffable]) -> [IssueTimelinePage] {
         let newPage: IssueTimelinePage
         if let lastPage = timelinePages.last {
             newPage = IssueTimelinePage(
                 startCursor: lastPage.startCursor,
-                viewModels: lastPage.viewModels + [appending]
+                viewModels: lastPage.viewModels + appending
             )
         } else {
             newPage = IssueTimelinePage(
                 startCursor: nil,
-                viewModels: [appending]
+                viewModels: appending
             )
         }
 
