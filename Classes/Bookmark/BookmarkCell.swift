@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import SnapKit
 
 class BookmarkCell: SwipeSelectableTableCell {
 
     static var cellIdentifier: String {
         return "bookmark_cell"
     }
+
+    private let reasonImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let secondaryLabel = UILabel()
+    private let detailsStackView = UIStackView()
 
     // MARK: Init
 
@@ -24,8 +30,37 @@ class BookmarkCell: SwipeSelectableTableCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-        textLabel?.numberOfLines = 0
-        detailTextLabel?.numberOfLines = 0
+        titleLabel.numberOfLines = 0
+        secondaryLabel.numberOfLines = 0
+
+        backgroundColor = .white
+
+        contentView.addSubview(reasonImageView)
+        contentView.addSubview(detailsStackView)
+
+        reasonImageView.backgroundColor = .clear
+        reasonImageView.contentMode = .scaleAspectFit
+        reasonImageView.tintColor = Styles.Colors.Blue.medium.color
+        reasonImageView.snp.makeConstraints { make in
+            make.size.equalTo(Styles.Sizes.icon)
+            make.centerY.equalToSuperview()
+            make.left.equalTo(Styles.Sizes.columnSpacing)
+        }
+
+        detailsStackView.axis = .vertical
+        detailsStackView.alignment = .leading
+        detailsStackView.distribution = .fill
+        detailsStackView.spacing = Styles.Sizes.rowSpacing
+        detailsStackView.addArrangedSubview(titleLabel)
+        detailsStackView.addArrangedSubview(secondaryLabel)
+        detailsStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalTo(reasonImageView.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.right.equalTo(contentView.snp.right).offset(-Styles.Sizes.columnSpacing)
+        }
+
+        addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
     }
 
     // MARK: - Accessibility
@@ -42,10 +77,9 @@ class BookmarkCell: SwipeSelectableTableCell {
     // MARK: Public API
 
     func configure(bookmark: BookmarkModel) {
-        textLabel?.attributedText = titleLabel(for: bookmark)
-        detailTextLabel?.text = bookmark.title
-        imageView?.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
-        imageView?.tintColor = Styles.Colors.Blue.medium.color
+        titleLabel.attributedText = titleLabel(for: bookmark)
+        secondaryLabel.text = bookmark.title
+        reasonImageView.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
     }
 
     private func titleLabel(for bookmark: BookmarkModel) -> NSAttributedString {

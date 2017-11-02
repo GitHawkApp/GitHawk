@@ -123,7 +123,7 @@ BookmarksStoreListener {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.cellIdentifier) as? BookmarkCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.cellIdentifier, for: indexPath) as? BookmarkCell else {
             fatalError("Unable to dequeue the expected cell type")
         }
 
@@ -131,10 +131,6 @@ BookmarksStoreListener {
         cell.configure(bookmark: bookmark)
         cell.delegate = self
         return cell
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Styles.Sizes.tableCellHeightLarge
     }
 
     // MARK: UITableViewDelegate
@@ -227,6 +223,8 @@ BookmarksStoreListener {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 1.0))
         tableView.backgroundColor = Styles.Colors.background
         tableView.register(BookmarkCell.self, forCellReuseIdentifier: BookmarkCell.cellIdentifier)
+        tableView.estimatedRowHeight = Styles.Sizes.tableCellHeightLarge
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     // MARK: BookmarkStoreListener
