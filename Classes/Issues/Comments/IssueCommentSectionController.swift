@@ -299,7 +299,10 @@ EditCommentViewControllerDelegate {
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
         guard let login = object?.details.login else { return }
 
-        let alert = UIAlertController.configured(title: "\(login)'s comment", preferredStyle: .actionSheet)
+        let alert = UIAlertController.configured(
+            title: String.localizedStringWithFormat(NSLocalizedString("%@'s comment", comment: ""), login),
+            preferredStyle: .actionSheet
+        )
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
