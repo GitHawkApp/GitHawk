@@ -297,7 +297,11 @@ EditCommentViewControllerDelegate {
     // MARK: IssueCommentDetailCellDelegate
 
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        guard let login = object?.details.login else { return }
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
         let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
 
         let alert = UIAlertController.configured(
