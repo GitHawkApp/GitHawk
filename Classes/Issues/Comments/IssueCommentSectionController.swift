@@ -319,7 +319,11 @@ EditCommentViewControllerDelegate {
     }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
-        guard let login = object?.details.login else { return }
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
         viewController?.presentProfile(login: login)
     }
 
