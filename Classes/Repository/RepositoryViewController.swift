@@ -30,7 +30,7 @@ NewIssueTableViewControllerDelegate {
         }
         controllers += [
             RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true)
+            RepositoryCodeDirectoryViewController(client: client, repo: repo, branch: repo.defaultBranch, path: "", isRoot: true)
         ]
         self.controllers = controllers
 
@@ -108,7 +108,8 @@ NewIssueTableViewControllerDelegate {
             type: .repo,
             name: repo.name,
             owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled
+            hasIssueEnabled: repo.hasIssuesEnabled,
+            defaultBranch: repo.defaultBranch
         )
         return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }

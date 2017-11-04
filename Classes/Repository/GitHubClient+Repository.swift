@@ -8,17 +8,16 @@
 
 import Foundation
 
-private let fixedBranch = "master"
-
 extension GithubClient {
 
     func fetchFiles(
         owner: String,
         repo: String,
+        branch: String,
         path: String,
         completion: @escaping (Result<[RepositoryFile]>) -> Void
         ) {
-        let query = RepoFilesQuery(owner: owner, name: repo, branchAndPath: "\(fixedBranch):\(path)")
+        let query = RepoFilesQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
         fetch(query: query) { (result, error) in
             if let models = result?.data?.repository?.object?.asTree?.entries {
                 // trees A-Z first, then blobs A-Z
@@ -55,10 +54,11 @@ extension GithubClient {
     func fetchFile(
         owner: String,
         repo: String,
+        branch: String,
         path: String,
         completion: @escaping (FileResult) -> Void
         ) {
-        let query = RepoFileQuery(owner: owner, name: repo, branchAndPath: "\(fixedBranch):\(path)")
+        let query = RepoFileQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
         fetch(query: query) { (result, error) in
             if let blob = result?.data?.repository?.object?.asBlob {
                 if let text = blob.text, !text.isEmpty {

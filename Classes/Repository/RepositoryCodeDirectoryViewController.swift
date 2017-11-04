@@ -12,6 +12,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let client: GithubClient
+    private let branch: String
     private let path: String
     private let repo: RepositoryDetails
     private let cellIdentifier = "cell"
@@ -19,9 +20,10 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     private var files = [RepositoryFile]()
     private let isRoot: Bool
 
-    init(client: GithubClient, repo: RepositoryDetails, path: String, isRoot: Bool) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String, isRoot: Bool) {
         self.client = client
         self.repo = repo
+        self.branch = branch
         self.path = path
         self.isRoot = isRoot
         super.init(nibName: nil, bundle: nil)
@@ -75,7 +77,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     // MARK: Private API
 
     func fetch() {
-        client.fetchFiles(owner: repo.owner, repo: repo.name, path: path) { [weak self] (result) in
+        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
             switch result {
             case .error:
                 ToastManager.showGenericError()
@@ -120,11 +122,12 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
             controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
+                branch: branch,
                 path: newPath,
                 isRoot: false
             )
         } else {
-            controller = RepositoryCodeBlobViewController(client: client, repo: repo, path: newPath)
+            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: newPath)
         }
         navigationController?.pushViewController(controller, animated: true)
     }

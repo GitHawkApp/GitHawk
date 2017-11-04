@@ -119,7 +119,8 @@ extension GithubClient {
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
-                        viewerCanAdminister: canAdmin
+                        viewerCanAdminister: canAdmin,
+                        defaultBranch: repository?.defaultBranchRef?.name ?? "master"
                     )
 
                     DispatchQueue.main.async {
