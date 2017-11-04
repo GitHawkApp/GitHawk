@@ -102,7 +102,7 @@ EditCommentViewControllerDelegate {
 
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
-        return UIAlertAction(title: NSLocalizedString("Edit Comment", comment: ""), style: .default, handler: { [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
             guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
                 let issueModel = self?.model,
                 let client = self?.client,
@@ -297,7 +297,17 @@ EditCommentViewControllerDelegate {
     // MARK: IssueCommentDetailCellDelegate
 
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
+        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
+
+        let alert = UIAlertController.configured(
+            title: .localizedStringWithFormat(alertTitle, login),
+            preferredStyle: .actionSheet
+        )
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
@@ -309,7 +319,11 @@ EditCommentViewControllerDelegate {
     }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
-        guard let login = object?.details.login else { return }
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
         viewController?.presentProfile(login: login)
     }
 
