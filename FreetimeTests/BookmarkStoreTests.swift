@@ -73,4 +73,29 @@ final class BookmarkStoreTests: XCTestCase {
         XCTAssert(store2.bookmarks.count == 1)
         XCTAssert(store1.bookmarkPath != store2.bookmarkPath)
     }
+
+    func test_bookmarksOrder() {
+        let b1 = BookmarkModel(type: .repo, name: "GitHawk", owner: "rizwankce")
+        let b2 = BookmarkModel(type: .repo, name: "GitHawk", owner: "rnystrom")
+
+        store.add(bookmark: b1)
+        store.add(bookmark: b2)
+
+        XCTAssert(store.bookmarks[0] == b1)
+        XCTAssert(store.bookmarks[1] == b2)
+    }
+
+    func test_bookmarksMixedTypes() {
+        let b1 = BookmarkModel(type: .repo, name: "GitHawk", owner: "rizwankce")
+        let b2 = BookmarkModel(type: .issue, name: "GitHawk", owner: "rizwankce", number: 10, title: "Issue")
+        let b3 = BookmarkModel(type: .pullRequest, name: "GitHawk", owner: "rizwankce", number: 11, title: "Pull request")
+
+        store.add(bookmark: b1)
+        store.add(bookmark: b2)
+        store.add(bookmark: b3)
+
+        XCTAssert(store.bookmarks[0].type == .repo)
+        XCTAssert(store.bookmarks[1].type == .issue)
+        XCTAssert(store.bookmarks[2].type == .pullRequest)
+    }
 }
