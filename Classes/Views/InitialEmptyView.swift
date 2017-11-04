@@ -1,5 +1,5 @@
 //
-//  SearchEmptyView.swift
+//  InitialEmptyView.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 9/4/17.
@@ -9,21 +9,22 @@
 import UIKit
 import SnapKit
 
-protocol SearchEmptyViewDelegate: class {
-    func didTap(emptyView: SearchEmptyView)
+protocol InitialEmptyViewDelegate: class {
+    func didTap(emptyView: InitialEmptyView)
 }
 
-final class SearchEmptyView: UIView {
+final class InitialEmptyView: UIView {
 
-    weak var delegate: SearchEmptyViewDelegate?
+    weak var delegate: InitialEmptyViewDelegate?
 
-    private let imageView = UIImageView(image: UIImage(named: "search-large")?.withRenderingMode(.alwaysTemplate))
+    private let imageView = UIImageView()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(imageName: String, title: String, description: String) {
+        super.init(frame: .zero)
 
+        imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = Styles.Colors.Gray.border.color
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
@@ -32,7 +33,7 @@ final class SearchEmptyView: UIView {
         }
 
         titleLabel.font = Styles.Fonts.title
-        titleLabel.text = NSLocalizedString("Search GitHub", comment: "")
+        titleLabel.text = title
         titleLabel.textColor = Styles.Colors.Gray.light.color
         titleLabel.backgroundColor = .clear
         addSubview(titleLabel)
@@ -44,7 +45,7 @@ final class SearchEmptyView: UIView {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         descriptionLabel.font = Styles.Fonts.body
-        descriptionLabel.text = NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")
+        descriptionLabel.text = description
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
         descriptionLabel.backgroundColor = .clear
         addSubview(descriptionLabel)
@@ -53,7 +54,7 @@ final class SearchEmptyView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
 
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SearchEmptyView.onTap)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(InitialEmptyView.onTap)))
     }
 
     required init?(coder aDecoder: NSCoder) {

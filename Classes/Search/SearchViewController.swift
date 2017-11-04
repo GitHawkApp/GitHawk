@@ -14,7 +14,7 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-SearchEmptyViewDelegate,
+InitialEmptyViewDelegate,
 SearchRecentSectionControllerDelegate,
 SearchRecentHeaderSectionControllerDelegate,
 TabNavRootViewControllerType,
@@ -214,7 +214,11 @@ SearchResultSectionControllerDelegate {
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch state {
         case .idle:
-            let view = SearchEmptyView()
+            let view = InitialEmptyView(
+                imageName: "search-large",
+                title: NSLocalizedString("Search GitHub", comment: ""),
+                description: NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")
+            )
             view.delegate = self
             return view
         case .loading:
@@ -260,9 +264,9 @@ SearchResultSectionControllerDelegate {
         update(animated: false)
     }
 
-    // MARK: SearchEmptyViewDelegate
+    // MARK: InitialEmptyViewDelegate
 
-    func didTap(emptyView: SearchEmptyView) {
+    func didTap(emptyView: InitialEmptyView) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }

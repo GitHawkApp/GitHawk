@@ -3,7 +3,7 @@
 import Apollo
 
 /// Emojis that can be attached to Issues, Pull Requests and Comments.
-public enum ReactionContent: String, Apollo.JSONDecodable, Apollo.JSONEncodable {
+public enum ReactionContent: String {
   /// Represents the 👍 emoji.
   case thumbsUp = "THUMBS_UP"
   /// Represents the 👎 emoji.
@@ -18,8 +18,10 @@ public enum ReactionContent: String, Apollo.JSONDecodable, Apollo.JSONEncodable 
   case heart = "HEART"
 }
 
+extension ReactionContent: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+
 /// The possible states of a pull request review.
-public enum PullRequestReviewState: String, Apollo.JSONDecodable, Apollo.JSONEncodable {
+public enum PullRequestReviewState: String {
   /// A review that has not yet been submitted.
   case pending = "PENDING"
   /// An informational review.
@@ -32,16 +34,20 @@ public enum PullRequestReviewState: String, Apollo.JSONDecodable, Apollo.JSONEnc
   case dismissed = "DISMISSED"
 }
 
+extension PullRequestReviewState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+
 /// The possible states of an issue.
-public enum IssueState: String, Apollo.JSONDecodable, Apollo.JSONEncodable {
+public enum IssueState: String {
   /// An issue that is still open
   case `open` = "OPEN"
   /// An issue that has been closed
   case closed = "CLOSED"
 }
 
+extension IssueState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+
 /// The possible states of a pull request.
-public enum PullRequestState: String, Apollo.JSONDecodable, Apollo.JSONEncodable {
+public enum PullRequestState: String {
   /// A pull request that is still open.
   case `open` = "OPEN"
   /// A pull request that has been closed without being merged.
@@ -49,6 +55,8 @@ public enum PullRequestState: String, Apollo.JSONDecodable, Apollo.JSONEncodable
   /// A pull request that has been closed by being merged.
   case merged = "MERGED"
 }
+
+extension PullRequestState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
 
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationString =

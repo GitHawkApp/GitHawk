@@ -1,5 +1,5 @@
 //
-//  MockSearchEmptyViewDelegate.swift
+//  MockInitialEmptyViewDelegate.swift
 //  FreetimeTests
 //
 //  Created by Hesham Salman on 10/18/17.
@@ -10,9 +10,9 @@ import Foundation
 import XCTest
 
 @testable import Freetime
-class MockSearchEmptyViewDelegate: SearchEmptyViewDelegate {
+class MockInitialEmptyViewDelegate: InitialEmptyViewDelegate {
     var didTap = false
-    func didTap(emptyView: SearchEmptyView) {
+    func didTap(emptyView: InitialEmptyView) {
         didTap = true
     }
 }
