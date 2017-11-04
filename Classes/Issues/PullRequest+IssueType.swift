@@ -201,7 +201,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,
                     details: details,
-                    bodyModels: bodies
+                    bodyModels: bodies,
+                    commentCount: review.comments.totalCount
                 )
                 results.append(model)
             } else if let referenced = node.asReferencedEvent,

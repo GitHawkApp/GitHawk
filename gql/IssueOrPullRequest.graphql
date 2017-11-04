@@ -237,6 +237,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               state
               submittedAt
               author {login}
+              comments { totalCount }
             }
             ... on ReferencedEvent {
               createdAt

@@ -14,11 +14,13 @@ final class IssueReviewModel: ListDiffable {
     let id: String
     let details: IssueReviewDetailsModel
     let bodyModels: [ListDiffable]
+    let commentCount: Int
 
-    init(id: String, details: IssueReviewDetailsModel, bodyModels: [ListDiffable]) {
+    init(id: String, details: IssueReviewDetailsModel, bodyModels: [ListDiffable], commentCount: Int) {
         self.id = id
         self.details = details
         self.bodyModels = bodyModels
+        self.commentCount = commentCount
     }
 
     // MARK: ListDiffable
