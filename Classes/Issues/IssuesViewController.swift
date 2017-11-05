@@ -267,7 +267,7 @@ FlatCacheListener {
         guard let result = result,
             let store = client.bookmarksStore
             else { return nil }
-        let bookmarkModel = BookmarkModel(
+        let bookmark = Bookmark(
             type: result.pullRequest ? .pullRequest : .issue,
             name: model.repo,
             owner: model.owner,
@@ -275,7 +275,7 @@ FlatCacheListener {
             title: result.title.attributedText.string,
             defaultBranch: result.defaultBranch
         )
-        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
+        return AlertAction.toggleBookmark(store: store, model: bookmark)
     }
 
     @objc

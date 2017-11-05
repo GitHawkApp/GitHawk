@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchRecentStore: Store {
+class SearchRecentStore: Store {
     typealias Model = SearchQuery
 
     let key = "com.freetime.SearchRecentStore.results"
@@ -30,7 +30,7 @@ struct SearchRecentStore: Store {
 
     // MARK: Public API
 
-    mutating func add(_ value: SearchQuery) {
+    func add(_ value: SearchQuery) {
         remove(value)
         values.insert(value, at: 0)
 

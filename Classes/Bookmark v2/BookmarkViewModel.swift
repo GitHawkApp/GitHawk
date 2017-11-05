@@ -27,8 +27,7 @@ class BookmarkViewModel: NSObject, ListDiffable {
                 ]
             )
             repositoryText.append(bookmarkText)
-        default:
-            break
+        default: break
         }
         return repositoryText
     }

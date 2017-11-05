@@ -37,12 +37,15 @@ final class BookmarkCell: SwipeSelectableCell {
         detailStackView.axis = .vertical
         detailStackView.alignment = .leading
         detailStackView.distribution = .fill
+        detailStackView.spacing = Styles.Sizes.rowSpacing
         detailStackView.addArrangedSubview(titleLabel)
         detailStackView.addArrangedSubview(secondaryLabel)
+        contentView.addSubview(detailStackView)
         detailStackView.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.right.equalTo(contentView.snp.trailing).offset(-Styles.Sizes.columnSpacing)
+            make.width.equalTo(contentView).offset(-Styles.Sizes.icon.width - Styles.Sizes.columnSpacing * 2 - Styles.Sizes.gutter)
         }
 
         addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
@@ -56,5 +59,15 @@ final class BookmarkCell: SwipeSelectableCell {
         titleLabel.attributedText = viewModel.repositoryName
         secondaryLabel.text = viewModel.bookmarkTitle
         imageView.image = viewModel.icon
+    }
+
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
     }
 }

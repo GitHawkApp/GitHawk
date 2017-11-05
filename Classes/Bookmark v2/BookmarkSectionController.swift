@@ -18,7 +18,6 @@ protocol BookmarkSectionControllerDelegate: class {
 final class BookmarkSectionController: ListGenericSectionController<BookmarkViewModel>, SwipeCollectionViewCellDelegate {
 
     weak var delegate: BookmarkSectionControllerDelegate?
-    lazy var store = BookmarkStore()
 
     init(delegate: BookmarkSectionControllerDelegate) {
         self.delegate = delegate
@@ -27,6 +26,7 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
+        
         return CGSize(width: width, height: Styles.Sizes.tableCellHeightLarge)
     }
 

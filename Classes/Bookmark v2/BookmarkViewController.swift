@@ -6,4 +6,278 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import IGListKit
+import Apollo
+
+// TODO:
+//  - Search/Filtering
+//  - Clear All
+//  - Delete all of the old files
+//  - Wire this bad boy up ✔️
+//  - Take care of the hacks made in our local SwipeCellKit
+//  - Delete the duped cells
+
+class BookmarkViewController: UIViewController,
+    ListAdapterDataSource,
+    PrimaryViewController,
+    UISearchBarDelegate,
+BookmarkSectionControllerDelegate,
+InitialEmptyViewDelegate,
+TabNavRootViewControllerType {
+
+    private let client: GithubClient
+
+    private let searchBar = UISearchBar()
+    private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = CGSize(width: 100, height: 40)
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.alwaysBounceVertical = true
+        view.backgroundColor = Styles.Colors.background
+        return view
+    }()
+    private var originalContentInset: UIEdgeInsets = .zero
+
+    var bookmarkStore: BookmarkStore
+
+    // MARK: - Initialization
+
+    init(client: GithubClient) {
+        self.client = client
+        bookmarkStore = BookmarkStore(token: client.userSession?.token ?? "")
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        makeBackBarItemEmpty()
+
+        view.backgroundColor = Styles.Colors.background
+
+        view.addSubview(collectionView)
+        adapter.collectionView = collectionView
+        adapter.dataSource = self
+
+        searchBar.delegate = self
+        searchBar.placeholder = Constants.Strings.search
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchBar.backgroundColor = .clear
+        searchBar.searchBarStyle = .minimal
+        navigationItem.titleView = searchBar
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(onClearAll(sender:))
+        )
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillShow(notification:)),
+            name: .UIKeyboardWillShow,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillHide(notification:)),
+            name: .UIKeyboardWillHide,
+            object: nil
+        )
+
+        nc.addObserver(
+            searchBar,
+            selector: #selector(UISearchBar.resignFirstResponder),
+            name: .UIKeyboardWillHide,
+            object: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        rz_smoothlyDeselectRows(collectionView: collectionView)
+        update(animated: animated)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        let bounds = view.bounds
+        if bounds != collectionView.frame {
+            collectionView.frame = bounds
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+
+    // MARK: Notifications
+
+    @objc
+    func onKeyboardWillShow(notification: NSNotification) {
+        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        originalContentInset = collectionView.contentInset
+
+        let converted = view.convert(frame, from: nil)
+        let intersection = converted.intersection(frame)
+        let bottomInset = intersection.height - bottomLayoutGuide.length
+
+        var inset = originalContentInset
+        inset.bottom = bottomInset
+        collectionView.contentInset = inset
+        collectionView.scrollIndicatorInsets = inset
+    }
+
+    @objc
+    func onKeyboardWillHide(notification: NSNotification) {
+        collectionView.contentInset = originalContentInset
+        collectionView.scrollIndicatorInsets = originalContentInset
+    }
+
+    private func update(animated: Bool) {
+        adapter.performUpdates(animated: animated)
+    }
+
+    func search(term: String) {
+        // TODO:
+    }
+
+    // MARK: - BookmarkSectionControllerDelegate
+
+    func didSelect(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        let bookmark = viewModel.bookmark
+        let destinationViewController: UIViewController
+
+        switch bookmark.type {
+        case .repo:
+            let repo = RepositoryDetails(
+                owner: bookmark.owner,
+                name: bookmark.name,
+                defaultBranch: bookmark.defaultBranch,
+                hasIssuesEnabled: bookmark.hasIssueEnabled
+            )
+            destinationViewController = RepositoryViewController(client: client, repo: repo)
+
+        case .issue, .pullRequest:
+            let issueModel = IssueDetailsModel(
+                owner: bookmark.owner,
+                repo: bookmark.name,
+                number: bookmark.number
+            )
+            destinationViewController = IssuesViewController(client: client, model: issueModel)
+        default:
+            return
+        }
+        let navigation = UINavigationController(rootViewController: destinationViewController)
+        showDetailViewController(navigation, sender: nil)
+    }
+
+    func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        bookmarkStore.remove(viewModel.bookmark)
+        update(animated: true)
+    }
+
+    // MARK: - ListAdapterDataSource
+
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        let bookmarks: [ListDiffable] = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+        return bookmarks
+    }
+
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        guard object is ListDiffable else { fatalError() }
+
+        return BookmarkSectionController(delegate: self)
+    }
+
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        guard bookmarkStore.values.isEmpty else { return nil }
+
+        let view = InitialEmptyView(
+            imageName: "bookmarks-large",
+            title: NSLocalizedString("Add Bookmarks", comment: ""),
+            description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")
+        )
+        view.delegate = self
+        return view
+    }
+
+    // MARK: - UISearchBarDelegate
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let term = searchTerm(for: searchBar.text) else { return }
+
+        search(term: term)
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
+        guard let term = searchTerm(for: searchBar.text) else { return }
+        search(term: term)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+
+        update(animated: false)
+    }
+
+    // MARK: - InitialEmptyViewDelegate
+
+    func didTap(emptyView: InitialEmptyView) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+    // MARK: - TabNavRootViewControllerType
+
+    func didSingleTapTab() {
+        collectionView.scrollToTop(animated: true)
+    }
+
+    func didDoubleTapTab() {
+        searchBar.becomeFirstResponder()
+    }
+
+    // MARK: - Private API
+
+    private func searchTerm(for searchBarText: String?) -> String? {
+        guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
+            !term.isEmpty else { return nil }
+        return term
+    }
+
+    @objc private func onClearAll(sender: UIBarButtonItem) {
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Are you sure?", comment: ""),
+            message: NSLocalizedString("All of your bookmarks will be lost. Do you want to continue?", comment: ""),
+            preferredStyle: .alert
+        )
+
+        alert.addActions([
+            AlertAction.clearAll { [weak self] _ in
+                self?.bookmarkStore.clear()
+                self?.update(animated: false)
+            },
+            AlertAction.cancel()
+        ])
+
+        present(alert, animated: true)
+    }
+
+}

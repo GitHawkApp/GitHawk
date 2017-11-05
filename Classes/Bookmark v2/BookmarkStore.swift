@@ -8,25 +8,35 @@
 
 import Foundation
 
-struct BookmarkStore: Store {
+class BookmarkStore: Store {
 
     typealias Model = Bookmark
 
     let key: String = "com.freetime.BookmarkStore.bookmark"
 
-    var values: [Bookmark]
+    var values: [Bookmark] {
+        get {
+            guard let data = defaults.object(forKey: key) as? Data,
+                let array = try? decoder.decode([Bookmark].self, from: data) else {
+                    return []
+            }
+            return array
+        }
+
+        set {
+            guard let data = try? encoder.encode(newValue) else { return }
+            defaults.set(data, forKey: key)
+        }
+    }
     let defaults = UserDefaults.standard
 
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
 
-    init() {
-        guard let data = defaults.object(forKey: key) as? Data,
-            let array = try? decoder.decode([Bookmark].self, from: data) else {
-            values = []
-            return
-        }
-        values = array
+    let token: String
+
+    init(token: String) {
+        self.token = token
     }
 
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Store {
+protocol Store: AnyObject {
     associatedtype Model: Codable, Equatable
 
     var key: String { get }
@@ -19,26 +19,28 @@ protocol Store {
 
     var values: [Model] { get set }
 
-    mutating func add(_ value: Model)
-    mutating func remove(_ value: Model)
-    mutating func clear()
+    func add(_ value: Model)
+    func remove(_ value: Model)
+    func clear()
+
     func save()
+    func contains(_ value: Model) -> Bool
 }
 
 extension Store {
-    mutating func add(_ value: Model) {
+    func add(_ value: Model) {
         guard !values.contains(value) else { return }
         values.insert(value, at: 0)
     }
 
-    mutating func remove(_ value: Model) {
+    func remove(_ value: Model) {
         guard let offset = values.index(of: value) else { return }
         let index = values.startIndex.distance(to: offset)
         values.remove(at: index)
         save()
     }
 
-    mutating func clear() {
+    func clear() {
         values.removeAll()
         save()
     }
@@ -46,5 +48,9 @@ extension Store {
     func save() {
         guard let data = try? encoder.encode(values) else { return }
         defaults.set(data, forKey: key)
+    }
+
+    func contains(_ value: Model) -> Bool {
+        return values.contains(value)
     }
 }
