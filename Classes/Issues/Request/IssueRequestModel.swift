@@ -75,7 +75,12 @@ final class IssueRequestModel: ListDiffable {
         self.attributedText = NSAttributedStringSizing(
             containerWidth: width,
             attributedText: attributedText,
-            inset: UIEdgeInsets(top: 0, left: Styles.Sizes.eventGutter, bottom: 0, right: Styles.Sizes.eventGutter),
+            inset: UIEdgeInsets(
+                top: 0,
+                left: Styles.Sizes.eventGutter,
+                bottom: 0,
+                right: Styles.Sizes.eventGutter
+            ),
             backgroundColor: Styles.Colors.background
         )
     }
