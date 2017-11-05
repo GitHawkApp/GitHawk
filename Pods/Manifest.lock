@@ -32,7 +32,7 @@ PODS:
   - SnapKit (4.0.0)
   - SwiftLint (0.23.1)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.0.1):
+  - Tabman (1.0.5):
     - Pageboy (~> 2.0.0)
     - PureLayout (~> 3.0.0)
   - TUSafariActivity (1.0.4)
@@ -52,7 +52,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
-  - Tabman (= 1.0.1)
+  - Tabman (= 1.0.5)
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
@@ -91,9 +91,9 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
+  Tabman: 9f87244fdbbd070fe6a518f445880b2b4a56ea1b
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 527cbfc893f5a36df17a5a6f114380a5ceccbab5
+PODFILE CHECKSUM: 4a864aaeb993f16d6af262e16552acdd76ae8b53
 
 COCOAPODS: 1.4.0.beta.1
