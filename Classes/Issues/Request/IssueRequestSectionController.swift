@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueRequestSectionController: ListGenericSectionController<IssueRequestModel>, IssueRequestCellDelegate {
+final class IssueRequestSectionController: ListGenericSectionController<IssueRequestModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
@@ -21,20 +21,8 @@ final class IssueRequestSectionController: ListGenericSectionController<IssueReq
             let object = self.object
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(object)
-        cell.delegate = self
+        cell.delegate = viewController
         return cell
-    }
-
-    // MARK: IssueRequestCellDelegate
-
-    func didTapActor(cell: IssueRequestCell) {
-        guard let actor = object?.actor else { return }
-        viewController?.presentProfile(login: actor)
-    }
-
-    func didTapUser(cell: IssueRequestCell) {
-        guard let user = object?.actor else { return }
-        viewController?.presentProfile(login: user)
     }
 
 }
