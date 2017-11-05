@@ -72,13 +72,19 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         aCoder.encode(hasIssueEnabled, forKey: Keys.hasIssueEnabled.rawValue)
     }
 
-    override var hashValue: Int {
+    override var hash: Int {
         return "\(name)\(owner)\(number)".hashValue
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        let bookmark = (object as? BookmarkModel)
-        return hashValue == bookmark?.hashValue
+        guard let object = object as? BookmarkModel else { return false }
+        if self === object { return true }
+        return owner == object.owner
+        && number == object.number
+        && name == object.name
+        && type == object.type
+        && title == object.title
+        && hasIssueEnabled == object.hasIssueEnabled
     }
 
     // MARK: Filterable
