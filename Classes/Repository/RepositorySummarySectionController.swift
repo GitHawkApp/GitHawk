@@ -45,8 +45,6 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
         guard let number = self.object?.number else { return }
         let issueModel = IssueDetailsModel(owner: repo.owner, repo: repo.name, number: number)
         let controller = IssuesViewController(client: client, model: issueModel)
-//        let navController = UINavigationController(rootViewController: controller)
-//        viewController?.showDetailViewController(navController, sender: nil)
         viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 

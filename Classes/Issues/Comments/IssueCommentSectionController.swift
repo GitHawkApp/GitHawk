@@ -10,10 +10,6 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 
-protocol IssueCommentSectionControllerDelegate: class {
-    func didEdit(sectionController: IssueCommentSectionController)
-}
-
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
@@ -27,7 +23,6 @@ EditCommentViewControllerDelegate {
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
-    private weak var delegate: IssueCommentSectionControllerDelegate?
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -45,10 +40,9 @@ EditCommentViewControllerDelegate {
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
-    init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
+    init(model: IssueDetailsModel, client: GithubClient) {
         self.model = model
         self.client = client
-        self.delegate = delegate
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
@@ -72,8 +66,9 @@ EditCommentViewControllerDelegate {
     // MARK: Private API
 
     func shareAction(sender: UIView) -> UIAlertAction? {
+        let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
         guard let number = object?.number,
-            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
+            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)\(attribute)\(number)")
         else { return nil }
         weak var weakSelf = self
 
@@ -204,7 +199,7 @@ EditCommentViewControllerDelegate {
 
         return [ object.details ]
             + bodies
-            + [ reactionMutation ?? object.reactions ]
+            + (object.asReviewComment ? [] : [ reactionMutation ?? object.reactions ])
     }
 
     func sectionController(

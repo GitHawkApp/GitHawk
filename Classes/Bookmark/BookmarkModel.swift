@@ -25,6 +25,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
     let number: Int
     let title: String
     let hasIssueEnabled: Bool
+    let defaultBranch: String
 
     init(
         type: NotificationType,
@@ -32,7 +33,8 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         owner: String,
         number: Int = 0,
         title: String = "",
-        hasIssueEnabled: Bool = false
+        hasIssueEnabled: Bool = false,
+        defaultBranch: String = "master"
     ) {
         self.type = type
         self.name = name
@@ -40,6 +42,7 @@ final class BookmarkModel: NSObject, NSCoding, Filterable {
         self.number = number
         self.title = title
         self.hasIssueEnabled = hasIssueEnabled
+        self.defaultBranch = defaultBranch
     }
 
     convenience required init?(coder aDecoder: NSCoder) {

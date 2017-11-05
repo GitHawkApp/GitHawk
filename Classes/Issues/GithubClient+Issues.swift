@@ -119,7 +119,8 @@ extension GithubClient {
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
-                        viewerCanAdminister: canAdmin
+                        viewerCanAdminister: canAdmin,
+                        defaultBranch: repository?.defaultBranchRef?.name ?? "master"
                     )
 
                     DispatchQueue.main.async {
@@ -185,7 +186,7 @@ extension GithubClient {
         )
         let optimisticResult = previous.updated(
             status: newStatus,
-            timelinePages: previous.timelinePages(appending: newEvent)
+            timelinePages: previous.timelinePages(appending: [newEvent])
         )
 
         let cache = self.cache
@@ -240,7 +241,7 @@ extension GithubClient {
         )
         let optimisticResult = previous.updated(
             status: newStatus,
-            timelinePages: previous.timelinePages(appending: newEvent)
+            timelinePages: previous.timelinePages(appending: [newEvent])
         )
 
         let cache = self.cache

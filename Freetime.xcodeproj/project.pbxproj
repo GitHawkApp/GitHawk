@@ -248,6 +248,9 @@
 		29973E561F68BFDE0004B693 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29973E551F68BFDE0004B693 /* Signature.swift */; };
 		29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */; };
 		299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */; };
+		299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */; };
+		299A04A91FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */; };
+		299A04AA1FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
 		299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */; };
 		299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
@@ -625,6 +628,9 @@
 		29973E551F68BFDE0004B693 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
 		29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+APIStatus.swift"; sourceTree = "<group>"; };
 		299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialEmptyView.swift; sourceTree = "<group>"; };
+		299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewViewCommentsCell.swift; sourceTree = "<group>"; };
+		299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+PullRequestReviewComments.swift"; sourceTree = "<group>"; };
+		299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestReviewCommentsViewController.swift; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
 		299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Paging.swift"; sourceTree = "<group>"; };
 		299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
@@ -870,6 +876,7 @@
 				299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */,
 				292CD3CD1F0DB8E700D3D57B /* IssueReviewModel.swift */,
 				292CD3CB1F0DB89600D3D57B /* IssueReviewSectionController.swift */,
+				299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -1248,6 +1255,7 @@
 				98B5A07E1F6C73A2000617D6 /* New Issue */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				297AE8611EC0D5C100B44A1F /* Other */,
+				299A04A61FAE94B4003C2450 /* PullReqeustReviews */,
 				986B872E1F2CA8E800AAB55C /* Repository */,
 				986B87171F2B873200AAB55C /* Search */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
@@ -1442,6 +1450,15 @@
 				298BA0961EC947F100B01946 /* SegmentedControlSectionController.swift */,
 			);
 			path = SegmentedControl;
+			sourceTree = "<group>";
+		};
+		299A04A61FAE94B4003C2450 /* PullReqeustReviews */ = {
+			isa = PBXGroup;
+			children = (
+				299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */,
+				299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */,
+			);
+			path = PullReqeustReviews;
 			sourceTree = "<group>";
 		};
 		29AF1E801F8AAB1D0008A0EF /* EditComment */ = {
@@ -2025,7 +2042,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
 		F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2100,6 +2117,7 @@
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
+				299A04AA1FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
 				297403D91F18545A00ABA95A /* IssueAssigneesSectionController.swift in Sources */,
 				49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */,
@@ -2250,6 +2268,7 @@
 				295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */,
 				29A195111EC7AC9500C3E289 /* NotificationRepoCell.swift in Sources */,
 				29D548CB1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift in Sources */,
+				299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */,
 				291929691F40EEBD0012067B /* NotificationsDataSource.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
@@ -2293,6 +2312,7 @@
 				296CD8291F0141A6001190B9 /* Samples.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
+				299A04A91FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */,
 				986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */,
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,

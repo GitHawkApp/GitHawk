@@ -41,7 +41,13 @@ final class SearchResultSectionController: ListGenericSectionController<SearchRe
 
     override func didSelectItem(at index: Int) {
         guard let object = object else { return }
-        let repo = RepositoryDetails(owner: object.owner, name: object.name, hasIssuesEnabled: object.hasIssuesEnabled)
+        
+        let repo = RepositoryDetails(
+            owner: object.owner,
+            name: object.name,
+            defaultBranch: object.defaultBranch,
+            hasIssuesEnabled: object.hasIssuesEnabled
+        )
 
         delegate?.didSelect(sectionController: self, repo: repo)
 

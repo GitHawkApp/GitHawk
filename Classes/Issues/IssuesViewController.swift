@@ -21,7 +21,6 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueCommentSectionControllerDelegate,
 FlatCacheListener {
 
     private let client: GithubClient
@@ -250,12 +249,13 @@ FlatCacheListener {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard result != nil else { return nil }
-
+        guard let result = result else { return nil }
+        
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
-            hasIssuesEnabled: result?.hasIssuesEnabled ?? false
+            defaultBranch: result.defaultBranch,
+            hasIssuesEnabled: result.hasIssuesEnabled
         )
 
         weak var weakSelf = self
@@ -272,7 +272,8 @@ FlatCacheListener {
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.attributedText.string
+            title: result.title.attributedText.string,
+            defaultBranch: result.defaultBranch
         )
         return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }
@@ -319,13 +320,18 @@ FlatCacheListener {
             case .success(let result, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
-                if previous {
+                if !previous {
                     strongSelf.sentComments.removeAll()
                 }
 
                 strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
+
+//                if !previous {
+//                    strongSelf.client.fetchPRComments(previous: result, owner: strongSelf.model.owner, repo: strongSelf.model.repo, number: strongSelf.model.number, width: strongSelf.view.bounds.width)
+//                }
+
             default: break
             }
 
@@ -419,13 +425,13 @@ FlatCacheListener {
 
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client, delegate: self)
+        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
         case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController(client: client)
+        case is IssueReviewModel: return IssueReviewSectionController(model: model, client: client)
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
@@ -516,12 +522,6 @@ FlatCacheListener {
 
     func didSelect(sectionController: IssueNeckLoadSectionController) {
         fetch(previous: true)
-    }
-
-    // MARK: IssueCommentSectionControllerDelegate
-
-    func didEdit(sectionController: IssueCommentSectionController) {
-
     }
 
     // MARK: FlatCacheListener
