@@ -9,16 +9,16 @@
 import UIKit
 
 extension NotificationType {
+    var icon: UIImage {
+        let image: UIImage
 
-    var icon: UIImage? {
-        let name: String
         switch self {
-        case .repo: name = "repo"
-        case .commit: name = "git-commit"
-        case .issue: name = "issue-opened"
-        case .pullRequest: name = "git-pull-request"
+        case .repo: image = #imageLiteral(resourceName: "repo")
+        case .commit: image = #imageLiteral(resourceName: "git-commit")
+        case .issue: image = #imageLiteral(resourceName: "issue-opened")
+        case .pullRequest: image = #imageLiteral(resourceName: "git-pull-request")
         }
-        return UIImage(named: name)
-    }
 
+        return image
+    }
 }

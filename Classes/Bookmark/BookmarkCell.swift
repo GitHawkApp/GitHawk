@@ -79,7 +79,7 @@ class BookmarkCell: SwipeSelectableTableCell {
     func configure(bookmark: BookmarkModel) {
         titleLabel.attributedText = titleLabel(for: bookmark)
         secondaryLabel.text = bookmark.title
-        reasonImageView.image = bookmark.type.icon?.withRenderingMode(.alwaysTemplate)
+        reasonImageView.image = bookmark.type.icon.withRenderingMode(.alwaysTemplate)
     }
 
     private func titleLabel(for bookmark: BookmarkModel) -> NSAttributedString {
