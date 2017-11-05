@@ -94,7 +94,8 @@ func createCommentModel(
         rawMarkdown: commentFields.body,
         viewerCanUpdate: viewerCanUpdate,
         viewerCanDelete: viewerCanDelete,
-        isRoot: isRoot
+        isRoot: isRoot,
+        number: GraphQLIDDecode(id: id, separator: "IssueComment")
     )
 }
 

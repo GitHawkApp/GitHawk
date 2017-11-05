@@ -12,7 +12,8 @@ import IGListKit
 final class IssueReviewSectionController: ListBindingSectionController<IssueReviewModel>,
     ListBindingSectionControllerDataSource,
 IssueReviewDetailsCellDelegate,
-AttributedStringViewIssueDelegate {
+AttributedStringViewIssueDelegate,
+IssueReviewViewCommentsCellDelegate {
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -23,10 +24,14 @@ AttributedStringViewIssueDelegate {
     private lazy var photoHandler: PhotoViewHandler = {
         return PhotoViewHandler(viewController: self.viewController)
     }()
+
+    private let model: IssueDetailsModel
+    private let viewCommentsModel = "viewComments" as ListDiffable
     private let tailModel = "tail" as ListDiffable
     private let client: GithubClient
 
-    init(client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient) {
+        self.model = model
         self.client = client
         super.init()
         self.inset = Styles.Sizes.listInsetLarge
@@ -40,7 +45,9 @@ AttributedStringViewIssueDelegate {
         viewModelsFor object: Any
         ) -> [ListDiffable] {
         guard let object = self.object else { fatalError("Wrong model object") }
-        return [object.details] + object.bodyModels + [tailModel]
+        return [object.details]
+            + object.bodyModels
+            + [object.commentCount > 0 ? viewCommentsModel : tailModel]
     }
 
     func sectionController(
@@ -55,6 +62,8 @@ AttributedStringViewIssueDelegate {
         let height: CGFloat
         if viewModel === tailModel {
             height = Styles.Sizes.rowSpacing
+        } else if viewModel === viewCommentsModel {
+            height = Styles.Sizes.tableCellHeight
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
@@ -78,6 +87,11 @@ AttributedStringViewIssueDelegate {
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
+            return cell
+        } else if viewModel === viewCommentsModel {
+            guard let cell = context.dequeueReusableCell(of: IssueReviewViewCommentsCell.self, for: self, at: index) as? IssueReviewViewCommentsCell
+                else { fatalError("Cell not bindable") }
+            cell.delegate = self
             return cell
         }
 
@@ -118,6 +132,13 @@ AttributedStringViewIssueDelegate {
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
         let controller = IssuesViewController(client: client, model: issue)
         viewController?.show(controller, sender: nil)
+    }
+
+    // MARK: IssueReviewViewCommentsCellDelegate
+
+    func didTapViewComments(cell: IssueReviewViewCommentsCell) {
+        let controller = PullRequestReviewCommentsViewController(model: model, client: client)
+        viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 
 }
