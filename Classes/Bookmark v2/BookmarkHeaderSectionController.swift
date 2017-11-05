@@ -1,23 +1,22 @@
 //
-//  SearchRecentHeaderSectionController.swift
+//  BookmarkHeaderSectionController.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 9/4/17.
+//  Created by Hesham Salman on 11/5/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
 import IGListKit
 
-protocol SearchRecentHeaderSectionControllerDelegate: class {
-    func didTapClear(sectionController: SearchRecentHeaderSectionController)
+protocol BookmarkHeaderSectionControllerDelegate: class {
+    func didTapClear(sectionController: BookmarkHeaderSectionController)
 }
 
-final class SearchRecentHeaderSectionController: ListSectionController, ClearAllHeaderCellDelegate {
+final class BookmarkHeaderSectionController: ListSectionController, ClearAllHeaderCellDelegate {
 
-    weak var delegate: SearchRecentHeaderSectionControllerDelegate?
+    weak var delegate: BookmarkHeaderSectionControllerDelegate?
 
-    init(delegate: SearchRecentHeaderSectionControllerDelegate) {
+    init(delegate: BookmarkHeaderSectionControllerDelegate) {
         self.delegate = delegate
         super.init()
     }
@@ -31,7 +30,7 @@ final class SearchRecentHeaderSectionController: ListSectionController, ClearAll
         guard let cell = collectionContext?.dequeueReusableCell(of: ClearAllHeaderCell.self, for: self, at: index) as? ClearAllHeaderCell
             else { fatalError("Missing context or wrong cell type") }
         cell.delegate = self
-        cell.configure(title: NSLocalizedString("Recent Searches", comment: "").uppercased(with: Locale.current))
+        cell.configure(title: Constants.Strings.bookmarks.uppercased(with: Locale.current))
         return cell
     }
 
@@ -40,5 +39,4 @@ final class SearchRecentHeaderSectionController: ListSectionController, ClearAll
     func didSelectClear(cell: ClearAllHeaderCell) {
         delegate?.didTapClear(sectionController: self)
     }
-
 }

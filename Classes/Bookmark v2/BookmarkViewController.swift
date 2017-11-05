@@ -22,11 +22,13 @@ class BookmarkViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
+BookmarkHeaderSectionControllerDelegate,
 BookmarkSectionControllerDelegate,
 InitialEmptyViewDelegate,
 TabNavRootViewControllerType {
 
     private let client: GithubClient
+    private let headerKey = "com.freetime.BookmarkViewController.bookmark-header-key" as ListDiffable
 
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
@@ -73,13 +75,6 @@ TabNavRootViewControllerType {
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString(Constants.Strings.clearAll, comment: ""),
-            style: .plain,
-            target: self,
-            action: #selector(onClearAll(sender:))
-        )
 
         let nc = NotificationCenter.default
         nc.addObserver(
@@ -188,14 +183,23 @@ TabNavRootViewControllerType {
     // MARK: - ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let bookmarks: [ListDiffable] = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+        var bookmarks: [ListDiffable] = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+        if !bookmarks.isEmpty {
+            bookmarks.insert(headerKey, at: 0)
+        }
         return bookmarks
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard object is ListDiffable else { fatalError() }
+        guard let object = object as? ListDiffable else { fatalError() }
 
-        return BookmarkSectionController(delegate: self)
+        if object === headerKey {
+            return BookmarkHeaderSectionController(delegate: self)
+        } else if object is BookmarkViewModel {
+            return BookmarkSectionController(delegate: self)
+        }
+
+        fatalError("Could not find section controller for object")
     }
 
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
@@ -237,6 +241,26 @@ TabNavRootViewControllerType {
         update(animated: false)
     }
 
+    // MARK: - BookmarkHeaderSectionControllerDelegate
+
+    func didTapClear(sectionController: BookmarkHeaderSectionController) {
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Are you sure?", comment: ""),
+            message: NSLocalizedString("All of your bookmarks will be lost. Do you want to continue?", comment: ""),
+            preferredStyle: .alert
+        )
+
+        alert.addActions([
+            AlertAction.clearAll { [weak self] _ in
+                self?.bookmarkStore.clear()
+                self?.update(animated: false)
+            },
+            AlertAction.cancel()
+        ])
+
+        present(alert, animated: true)
+    }
+
     // MARK: - InitialEmptyViewDelegate
 
     func didTap(emptyView: InitialEmptyView) {
@@ -260,24 +284,6 @@ TabNavRootViewControllerType {
         guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
             !term.isEmpty else { return nil }
         return term
-    }
-
-    @objc private func onClearAll(sender: UIBarButtonItem) {
-        let alert = UIAlertController.configured(
-            title: NSLocalizedString("Are you sure?", comment: ""),
-            message: NSLocalizedString("All of your bookmarks will be lost. Do you want to continue?", comment: ""),
-            preferredStyle: .alert
-        )
-
-        alert.addActions([
-            AlertAction.clearAll { [weak self] _ in
-                self?.bookmarkStore.clear()
-                self?.update(animated: false)
-            },
-            AlertAction.cancel()
-        ])
-
-        present(alert, animated: true)
     }
 
 }
