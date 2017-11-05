@@ -99,7 +99,7 @@ TabNavRootViewControllerType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(collectionView: collectionView)
-        update(animated: animated)
+        update(animated: false)
     }
 
     override func viewWillLayoutSubviews() {
