@@ -41,6 +41,9 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
+        if #available(iOS 11, *) {
+            imageView.accessibilityIgnoresInvertColors = true
+        }
         imageView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(IssueCommentDetailCell.onTapAvatar))
