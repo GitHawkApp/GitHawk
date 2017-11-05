@@ -20,7 +20,7 @@ final class BookmarkStoreTests: XCTestCase {
 
     override func tearDown() {
         super.tearDown()
-        store.clear()
+        store.clearStorage()
     }
 
     func test_addBookMark() {
@@ -72,6 +72,9 @@ final class BookmarkStoreTests: XCTestCase {
         XCTAssert(store1.bookmarks.count == 1)
         XCTAssert(store2.bookmarks.count == 1)
         XCTAssert(store1.bookmarkPath != store2.bookmarkPath)
+
+        store1.clearStorage()
+        store2.clearStorage()
     }
 
     func test_bookmarksOrder() {
