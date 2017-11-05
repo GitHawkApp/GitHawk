@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/uias/Pageboy.svg?branch=master)](https://travis-ci.org/uias/Pageboy)
 [![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Pageboy.svg)]()
+[![Platforms](https://img.shields.io/cocoapods/p/Pageboy.svg)]()
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![codecov](https://codecov.io/gh/uias/Pageboy/branch/master/graph/badge.svg)](https://codecov.io/gh/uias/Pageboy)
 [![GitHub release](https://img.shields.io/github/release/uias/Pageboy.svg)](https://github.com/uias/Pageboy/releases)
@@ -21,7 +22,7 @@
 - [x] Support for custom page transitions.
 
 ## Requirements
-Pageboy requires iOS 8.0 and Swift 4.0 or above.
+Pageboy requires iOS 8.0 / tvOS 10.0 and Swift 4.0 or above.
 
 For Swift 3.x support, please use the latest [1.x release](https://github.com/uias/Pageboy/releases/tag/1.4.1) (For 1.x legacy API docs, see [here](https://github.com/uias/Pageboy/blob/1.4.0/README.md)).
 
@@ -29,7 +30,7 @@ For Swift 3.x support, please use the latest [1.x release](https://github.com/ui
 ### CocoaPods
 Pageboy is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 ```ruby
-pod 'Pageboy' ~> 2.0
+pod 'Pageboy', '~> 2.0'
 ```
 And run `pod install`.
 
@@ -125,7 +126,7 @@ func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            currentPageIndex: PageboyViewController.PageIndex)
 ```
 
-## Additional functionality
+## Other useful stuff
 
 - `reloadPages` - Reload the view controllers in the page view controller. (Refreshes the data source).
 
@@ -139,6 +140,11 @@ func pageboyViewController(_ pageboyViewController: PageboyViewController,
                                animated: Bool,
                                completion: PageTransitionCompletion? = nil)
 	```
+- `isScrollEnabled` - Whether or not scrolling is allowed on the page view controller.
+- `isInfiniteScrollEnabled` - Whether the page view controlelr should infinitely scroll at the end of page ranges.
+- `currentViewController` - The currently visible view controller if it exists.
+- `currentPosition` - The exact current relative position of the page view controller.
+- `currentIndex` - The index of the currently visible page.
 
 ### Transitioning
 Pageboy also provides custom animated transition support. This can be customised via the `.transition` property on `PageboyViewController`. 
