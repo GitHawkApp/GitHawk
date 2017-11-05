@@ -12,19 +12,18 @@ import XCTest
 @testable import Freetime
 class InitialEmptyViewTests: XCTestCase {
 
-    var InitialEmptyView: InitialEmptyView!
+    var initialEmptyView: InitialEmptyView!
     var mockDelegate: MockInitialEmptyViewDelegate!
 
     override func setUp() {
         super.setUp()
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         mockDelegate = MockInitialEmptyViewDelegate()
-        InitialEmptyView = InitialEmptyView(frame: frame)
-        InitialEmptyView.delegate = mockDelegate
+        initialEmptyView = InitialEmptyView(imageName: "repo", title: "repo", description: "repo")
+        initialEmptyView.delegate = mockDelegate
     }
 
     func test_onTap() {
-        InitialEmptyView.onTap()
+        initialEmptyView.onTap()
         XCTAssertTrue(mockDelegate.didTap)
     }
 
