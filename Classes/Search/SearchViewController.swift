@@ -143,8 +143,10 @@ SearchResultSectionControllerDelegate {
 
     // MARK: Data Loading/Paging
 
-    private func update(animated: Bool) {
-        adapter.performUpdates(animated: animated)
+    private func update(animated: Bool, completion: (() -> ())? = nil) {
+        adapter.performUpdates(animated: animated) { _ in
+            completion?()
+        }
     }
 
     private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
@@ -287,11 +289,14 @@ SearchResultSectionControllerDelegate {
 
     private func didSelectRepo(repo: RepositoryDetails) {
         recentStore.add(query: .recentlyViewed(repo))
-        update(animated: false)
 
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
-        let navigation = UINavigationController(rootViewController: repoViewController)
-        showDetailViewController(navigation, sender: nil)
+        // push after update since IGListKit disables animations until finished
+        update(animated: false) { [weak self] in
+            guard let strongSelf = self else { return }
+            let repoViewController = RepositoryViewController(client: strongSelf.client, repo: repo)
+            let navigation = UINavigationController(rootViewController: repoViewController)
+            strongSelf.showDetailViewController(navigation, sender: nil)
+        }
     }
 
     // MARK: SearchRecentHeaderSectionControllerDelegate
