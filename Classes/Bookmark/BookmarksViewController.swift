@@ -144,6 +144,7 @@ BookmarksStoreListener {
             let repo = RepositoryDetails(
                 owner: bookmark.owner,
                 name: bookmark.name,
+                defaultBranch: bookmark.defaultBranch,
                 hasIssuesEnabled: bookmark.hasIssueEnabled
             )
             destinationViewController = RepositoryViewController(client: client, repo: repo)

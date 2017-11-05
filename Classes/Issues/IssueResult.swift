@@ -25,6 +25,7 @@ struct IssueResult: Cachable {
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool
     let viewerCanAdminister: Bool
+    let defaultBranch: String
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })
@@ -73,7 +74,8 @@ struct IssueResult: Cachable {
         timelinePages: [IssueTimelinePage]? = nil,
         viewerCanUpdate: Bool? = nil,
         hasIssuesEnabled: Bool? = nil,
-        viewerCanAdminister: Bool? = nil
+        viewerCanAdminister: Bool? = nil,
+        defaultBranch: String? = nil
         ) -> IssueResult {
         return IssueResult(
             id: id ?? self.id,
@@ -88,7 +90,8 @@ struct IssueResult: Cachable {
             timelinePages: timelinePages ?? self.timelinePages,
             viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
             hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
-            viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister
+            viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister,
+            defaultBranch: defaultBranch ?? self.defaultBranch
         )
     }
 
@@ -98,4 +101,3 @@ struct IssueTimelinePage {
     let startCursor: String?
     let viewModels: [ListDiffable]
 }
-

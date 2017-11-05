@@ -11,6 +11,7 @@ import UIKit
 final class RepositoryCodeBlobViewController: UIViewController {
 
     private let client: GithubClient
+    private let branch: String
     private let path: String
     private let repo: RepositoryDetails
     private let scrollView = UIScrollView()
@@ -28,9 +29,10 @@ final class RepositoryCodeBlobViewController: UIViewController {
         return barButtonItem
     }()
 
-    init(client: GithubClient, repo: RepositoryDetails, path: String) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String) {
         self.client = client
         self.repo = repo
+        self.branch = branch
         self.path = path
         super.init(nibName: nil, bundle: nil)
         self.title = path
@@ -102,7 +104,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     }
 
     func fetch() {
-        client.fetchFile(owner: repo.owner, repo: repo.name, path: path) { [weak self] (result) in
+        client.fetchFile(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
             self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):

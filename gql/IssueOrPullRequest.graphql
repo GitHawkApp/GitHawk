@@ -9,6 +9,9 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         login
       }
     }
+    defaultBranchRef {
+      name
+    }
     issueOrPullRequest(number: $number) {
       ... on Issue {
         timeline(last: $page_size, before: $before) {

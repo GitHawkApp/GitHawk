@@ -250,12 +250,13 @@ FlatCacheListener {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard result != nil else { return nil }
-
+        guard let result = result else { return nil }
+        
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
-            hasIssuesEnabled: result?.hasIssuesEnabled ?? false
+            defaultBranch: result.defaultBranch,
+            hasIssuesEnabled: result.hasIssuesEnabled
         )
 
         weak var weakSelf = self
@@ -272,7 +273,8 @@ FlatCacheListener {
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.attributedText.string
+            title: result.title.attributedText.string,
+            defaultBranch: result.defaultBranch
         )
         return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
     }

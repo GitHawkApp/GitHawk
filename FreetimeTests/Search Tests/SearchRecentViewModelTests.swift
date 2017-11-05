@@ -21,7 +21,7 @@ class SearchRecentViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         searchQuery = SearchQuery.search("Pythonic")
-        let kickstarter = RepositoryDetails(owner: "Kickstarter", name: "ios-oss", hasIssuesEnabled: true)
+        let kickstarter = RepositoryDetails(owner: "Kickstarter", name: "ios-oss", defaultBranch: "master", hasIssuesEnabled: true)
         recentlyViewedQuery = SearchQuery.recentlyViewed(kickstarter)
 
         searchViewModel = SearchRecentViewModel(query: searchQuery)
