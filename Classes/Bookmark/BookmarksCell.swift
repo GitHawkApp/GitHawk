@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class BookmarkCell: SwipeSelectableTableCell {
+class BookmarksCell: SwipeSelectableTableCell {
 
     static var cellIdentifier: String {
         return "bookmark_cell"

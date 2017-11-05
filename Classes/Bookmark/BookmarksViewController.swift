@@ -138,7 +138,7 @@ InitialEmptyViewDelegate {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.cellIdentifier, for: indexPath) as? BookmarkCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarksCell.cellIdentifier, for: indexPath) as? BookmarksCell else {
             fatalError("Unable to dequeue the expected cell type")
         }
 
@@ -234,7 +234,7 @@ InitialEmptyViewDelegate {
     private func configureTableView() {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 1.0))
         tableView.backgroundColor = Styles.Colors.background
-        tableView.register(BookmarkCell.self, forCellReuseIdentifier: BookmarkCell.cellIdentifier)
+        tableView.register(BookmarksCell.self, forCellReuseIdentifier: BookmarksCell.cellIdentifier)
         tableView.estimatedRowHeight = Styles.Sizes.tableCellHeightLarge
         tableView.rowHeight = UITableViewAutomaticDimension
     }
