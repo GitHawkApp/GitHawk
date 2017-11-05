@@ -14,10 +14,11 @@ class BookmarksViewController: UITableViewController,
     PrimaryViewController,
     SwipeTableViewCellDelegate,
     TabNavRootViewControllerType,
-BookmarksStoreListener {
+BookmarksStoreListener,
+InitialEmptyViewDelegate {
 
     private let client: GithubClient
-    private var searchController: UISearchController = UISearchController(searchResultsController:nil)
+    private var searchController = UISearchController(searchResultsController:nil)
     private var filteredBookmarks: [BookmarkModel]?
 
     private var isSearchActive: Bool {
@@ -103,6 +104,20 @@ BookmarksStoreListener {
 
     func reloadBookmarks() {
         tableView.reloadData()
+
+        if tableView.numberOfSections == 0 || tableView.numberOfRows(inSection: 0) == 0 {
+            let view = InitialEmptyView(
+                imageName: "bookmarks-large",
+                title: NSLocalizedString("Add Bookmarks", comment: ""),
+                description: NSLocalizedString("Bookmark your favorite issues,\npull requests, and repositories.", comment: "")
+            )
+            view.delegate = self
+            tableView.backgroundView = view
+        } else {
+            tableView.backgroundView?.removeFromSuperview()
+            tableView.backgroundView = nil
+        }
+
         updateRightBarItem()
     }
 
@@ -210,6 +225,7 @@ BookmarksStoreListener {
         searchController.searchBar.sizeToFit()
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
 
         tableView.tableHeaderView = searchController.searchBar
@@ -229,4 +245,12 @@ BookmarksStoreListener {
         guard !isSearchActive, !isSwipeToDeleteActive else { return }
         reloadBookmarks()
     }
+
+    // MARK: InitialEmptyViewDelegate
+
+    func didTap(emptyView: InitialEmptyView) {
+        searchController.searchBar.resignFirstResponder()
+        searchController.searchBar.setShowsCancelButton(false, animated: true)
+    }
+
 }
