@@ -40,6 +40,8 @@ EditCommentViewControllerDelegate {
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
+    private let tailModel = "tailModel" as ListDiffable
+
     init(model: IssueDetailsModel, client: GithubClient) {
         self.model = model
         self.client = client
@@ -197,9 +199,15 @@ EditCommentViewControllerDelegate {
             }
         }
 
+        // if this is a PR comment, if this is the tail model, append an empty space cell at the end so there's a divider
+        // otherwise append reactions
+        let tail: [ListDiffable] = object.asReviewComment
+            ? (object.threadState == .tail ? [tailModel] : [])
+            : [ reactionMutation ?? object.reactions ]
+
         return [ object.details ]
             + bodies
-            + (object.asReviewComment ? [] : [ reactionMutation ?? object.reactions ])
+            + tail
     }
 
     func sectionController(
@@ -207,7 +215,8 @@ EditCommentViewControllerDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.containerSize.width,
+            let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
         let height: CGFloat
@@ -217,6 +226,8 @@ EditCommentViewControllerDelegate {
             height = 40.0
         } else if viewModel is IssueCommentDetailsViewModel {
             height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
+        } else if viewModel === tailModel {
+            height = Styles.Sizes.rowSpacing
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
@@ -234,7 +245,15 @@ EditCommentViewControllerDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell & ListBindable {
-        guard let context = self.collectionContext else { fatalError("Collection context must be set") }
+        guard let context = self.collectionContext,
+            let viewModel = viewModel as? ListDiffable
+            else { fatalError("Collection context must be set") }
+
+        if viewModel === tailModel {
+            guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
+                else { fatalError("Cell not bindable") }
+            return cell
+        }
 
         let cellClass: AnyClass
         switch viewModel {
