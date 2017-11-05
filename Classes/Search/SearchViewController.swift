@@ -287,7 +287,10 @@ SearchResultSectionControllerDelegate {
 
     private func didSelectRepo(repo: RepositoryDetails) {
         recentStore.add(query: .recentlyViewed(repo))
-        update(animated: false)
+
+        // always animate this transition b/c IGListKit disables global animations
+        // otherwise pushing the next view controller wont be animated
+        update(animated: true)
 
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
