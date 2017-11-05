@@ -10,14 +10,6 @@ import UIKit
 import IGListKit
 import Apollo
 
-// TODO:
-//  - Search/Filtering
-//  - Clear All
-//  - Delete all of the old files
-//  - Wire this bad boy up ✔️
-//  - Take care of the hacks made in our local SwipeCellKit
-//  - Delete the duped cells
-
 class BookmarkViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
@@ -43,6 +35,13 @@ TabNavRootViewControllerType {
     private var originalContentInset: UIEdgeInsets = .zero
 
     var bookmarkStore: BookmarkStore
+
+    enum State {
+        case idle
+        case filtering(String)
+    }
+
+    var state: State = .idle
 
     // MARK: - Initialization
 
@@ -141,8 +140,17 @@ TabNavRootViewControllerType {
         adapter.performUpdates(animated: animated)
     }
 
-    func search(term: String) {
-        // TODO:
+    func filter(term: String?) {
+        defer {
+            update(animated: false)
+        }
+
+        guard let term = term?.trimmingCharacters(in: .whitespacesAndNewlines), !term.isEmpty else {
+            state = .idle
+            return
+        }
+
+        state = .filtering(term)
     }
 
     // MARK: - BookmarkSectionControllerDelegate
@@ -183,10 +191,19 @@ TabNavRootViewControllerType {
     // MARK: - ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var bookmarks: [ListDiffable] = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+        var bookmarks: [ListDiffable]
+        switch state {
+        case .idle:
+            bookmarks = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+        case .filtering(let term):
+            bookmarks = filtered(array: bookmarkStore.values, query: term)
+                .flatMap { BookmarkViewModel(bookmark: $0) }
+        }
+
         if !bookmarks.isEmpty {
             bookmarks.insert(headerKey, at: 0)
         }
+
         return bookmarks
     }
 
@@ -217,9 +234,7 @@ TabNavRootViewControllerType {
     // MARK: - UISearchBarDelegate
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let term = searchTerm(for: searchBar.text) else { return }
-
-        search(term: term)
+        filter(term: searchBar.text)
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -228,12 +243,11 @@ TabNavRootViewControllerType {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
-        guard let term = searchTerm(for: searchBar.text) else { return }
-        search(term: term)
+        filter(term: searchBar.text)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        state = .idle
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.text = ""
         searchBar.resignFirstResponder()
@@ -276,14 +290,6 @@ TabNavRootViewControllerType {
 
     func didDoubleTapTab() {
         searchBar.becomeFirstResponder()
-    }
-
-    // MARK: - Private API
-
-    private func searchTerm(for searchBarText: String?) -> String? {
-        guard let term = searchBarText?.trimmingCharacters(in: .whitespacesAndNewlines),
-            !term.isEmpty else { return nil }
-        return term
     }
 
 }
