@@ -40,6 +40,9 @@ UIGestureRecognizerDelegate {
         backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
+        if #available(iOS 11, *) {
+            imageView.accessibilityIgnoresInvertColors = true
+        }
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
