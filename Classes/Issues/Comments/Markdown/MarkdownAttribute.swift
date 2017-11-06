@@ -15,4 +15,5 @@ enum MarkdownAttribute {
     static let usernameDisabled = NSAttributedStringKey(rawValue: "com.freetime.Markdown.username-disabled-name")
     static let linkShorteningDisabled = NSAttributedStringKey(rawValue: "com.freetime.Markdown.link-shortening-disabled-name")
     static let issue = NSAttributedStringKey(rawValue: "com.freetime.Markdown.issue")
+    static let details = NSAttributedStringKey(rawValue: "com.freetime.Markdown.details")
 }

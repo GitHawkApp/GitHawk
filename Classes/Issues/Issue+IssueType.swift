@@ -211,7 +211,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: assigned.actor?.login ?? Constants.Strings.unknown,
                     user: assigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
-                    event: .assigned
+                    event: .assigned,
+                    width: width
                 )
                 results.append(model)
             } else if let unassigned = node.asUnassignedEvent,
@@ -221,7 +222,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: unassigned.actor?.login ?? Constants.Strings.unknown,
                     user: unassigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
-                    event: .unassigned
+                    event: .unassigned,
+                    width: width
                 )
                 results.append(model)
             } else if let milestone = node.asMilestonedEvent,
