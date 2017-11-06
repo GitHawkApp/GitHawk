@@ -14,7 +14,9 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource, SearchBarSectionControllerDelegate {
+class RepositoryIssuesViewController: BaseListViewController<NSString>,
+BaseListViewControllerDataSource,
+SearchBarSectionControllerDelegate {
 
     private var models = [ListDiffable]()
     private let repo: RepositoryDetails
