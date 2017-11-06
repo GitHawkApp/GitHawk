@@ -14,7 +14,6 @@ extension AlertAction {
         store: BookmarkStore,
         model: Bookmark
         ) -> UIAlertAction {
-        var store = store
         let isNewBookmark = !store.contains(model)
         let title = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
         return UIAlertAction(title: title, style: isNewBookmark ? .default : .destructive, handler: { _ in

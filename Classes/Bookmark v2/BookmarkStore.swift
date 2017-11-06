@@ -8,26 +8,30 @@
 
 import Foundation
 
+protocol BookmarkListener: class {
+    func didUpdateBookmarks()
+}
+
 class BookmarkStore: Store {
 
     typealias Model = Bookmark
 
-    let key: String = "com.freetime.BookmarkStore.bookmark"
+    private class ListenerWrapper {
+        weak var listener: BookmarkListener?
 
-    var values: [Bookmark] {
-        get {
-            guard let data = defaults.object(forKey: key) as? Data,
-                let array = try? decoder.decode([Bookmark].self, from: data) else {
-                    return []
-            }
-            return array
-        }
-
-        set {
-            guard let data = try? encoder.encode(newValue) else { return }
-            defaults.set(data, forKey: key)
+        init(listener: BookmarkListener) {
+            self.listener = listener
         }
     }
+
+    private var listeners: [ListenerWrapper] = []
+
+    private let _key = "com.freetime.BookmarkStore.bookmark"
+    var key: String {
+        return token + _key
+    }
+
+    var values: [Bookmark]
     let defaults = UserDefaults.standard
 
     let encoder = JSONEncoder()
@@ -37,6 +41,23 @@ class BookmarkStore: Store {
 
     init(token: String) {
         self.token = token
+        guard let data = defaults.object(forKey: token + _key) as? Data,
+            let array = try? decoder.decode([Bookmark].self, from: data) else {
+            self.values = []
+            return
+        }
+        self.values = array
+    }
+
+    func add(listener: BookmarkListener) {
+        let wrapper = ListenerWrapper(listener: listener)
+        listeners.append(wrapper)
+    }
+
+    func save() {
+        guard let data = try? encoder.encode(values) else { return }
+        defaults.set(data, forKey: key)
+        listeners.forEach { $0.listener?.didUpdateBookmarks() }
     }
 
 }

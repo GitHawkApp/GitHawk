@@ -21,46 +21,39 @@ class BookmarkViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        issue = Bookmark(type: .issue, name: "IGListKit on Bookmarks", owner: "rizwankce")
-        issueModel = BookmarkViewModel(bookmark: issue)
+        issue = Bookmark(type: .issue, name: "IGListKit on Bookmarks", owner: "rizwankce", title: "Bookmarks view controller not using IGLK")
+        issueModel = BookmarkViewModel(bookmark: issue, width: 0)
 
         other = Bookmark(type: .commit, name: "Implemented Bookmark ViewModel", owner: "heshamsalman")
-        otherModel = BookmarkViewModel(bookmark: other)
+        otherModel = BookmarkViewModel(bookmark: other, width: 0)
     }
 
-    func test_repositoryName_issue() {
-        let expected = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: issue.owner, name: issue.name))
-        expected.append(
+    func test_bookmarkText_issue() {
+        let string = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: issue.owner, name: issue.name))
+        string.append(
                 NSAttributedString(string: "#\(issue.number)", attributes: [
                     .font: Styles.Fonts.body,
                     .foregroundColor: Styles.Colors.Gray.dark.color
                     ]
                 )
         )
-        let actual = issueModel.repositoryName
+        string.append(NSAttributedString(string: "\n" + issue.title, attributes: [
+            .font: Styles.Fonts.secondary,
+            .foregroundColor: Styles.Colors.Gray.dark.color
+            ])
+        )
+        let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
+        let actual = issueModel.text
 
-        XCTAssertEqual(expected, actual)
+        XCTAssertEqual(expected.attributedText, actual.attributedText)
     }
 
-    func test_repositoryName_other() {
-        let expected = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: other.owner, name: other.name))
-        let actual = otherModel.repositoryName
+    func test_bookmarkText_other() {
+        let string = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: other.owner, name: other.name))
+        let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
+        let actual = otherModel.text
 
-        XCTAssertEqual(expected, actual)
-    }
-
-    func test_bookmarkTitle_issue() {
-        let expected = issue.title
-        let actual = issueModel.bookmarkTitle
-
-        XCTAssertEqual(expected, actual)
-    }
-
-    func test_bookmarkTitle_other() {
-        let expected = other.title
-        let actual = otherModel.bookmarkTitle
-
-        XCTAssertEqual(expected, actual)
+        XCTAssertEqual(expected.attributedText, actual.attributedText)
     }
 
     func test_icon_issue() {

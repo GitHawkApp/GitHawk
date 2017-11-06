@@ -31,6 +31,7 @@ extension Store {
     func add(_ value: Model) {
         guard !values.contains(value) else { return }
         values.insert(value, at: 0)
+        save()
     }
 
     func remove(_ value: Model) {

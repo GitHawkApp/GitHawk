@@ -15,6 +15,7 @@ class BookmarkViewController: UIViewController,
     PrimaryViewController,
     UISearchBarDelegate,
 BookmarkHeaderSectionControllerDelegate,
+BookmarkListener,
 BookmarkSectionControllerDelegate,
 InitialEmptyViewDelegate,
 TabNavRootViewControllerType {
@@ -45,8 +46,10 @@ TabNavRootViewControllerType {
 
     init(client: GithubClient) {
         self.client = client
-        bookmarkStore = BookmarkStore(token: client.userSession?.token ?? "")
+        guard let store = client.bookmarksStore else { fatalError("Client does not have a bookmark store") }
+        self.bookmarkStore = store
         super.init(nibName: nil, bundle: nil)
+        store.add(listener: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -290,6 +293,12 @@ TabNavRootViewControllerType {
 
     func didDoubleTapTab() {
         searchBar.becomeFirstResponder()
+    }
+
+    // MARK: - BookmarkListener
+
+    func didUpdateBookmarks() {
+        update(animated: true)
     }
 
 }
