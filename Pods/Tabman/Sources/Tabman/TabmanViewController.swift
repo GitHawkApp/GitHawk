@@ -40,11 +40,12 @@ open class TabmanViewController: PageboyViewController, PageboyViewControllerDel
     
     /// Internal store for bar component transitions.
     internal var barTransitionStore = TabmanBarTransitionStore()
+    /// Collection of cached insets for view controllers per page index.
+    internal var viewControllerInsets: [PageIndex : UIEdgeInsets] = [:]
     
-    internal var viewControllerInsets: [Int : UIEdgeInsets] = [:]
-    
-    /// Whether any UICollectionView / UITableView in child view controllers should be 
+    /// Whether any UIScrollView in child view controllers should be
     /// automatically insetted to display below the TabmanBar.
+    /// NOTE: This needs to be set before a dataSource is set, defaults to true.
     public var automaticallyAdjustsChildScrollViewInsets: Bool = true {
         didSet {
             if automaticallyAdjustsScrollViewInsets {
@@ -75,10 +76,10 @@ open class TabmanViewController: PageboyViewController, PageboyViewControllerDel
         insetChildViewControllerIfNeeded(self.currentViewController)
         reloadBarWithCurrentPosition()
         
-        activeTabmanBar?.extendBackgroundForStatusBarIfNeeded(location: bar.location,
-                                                              topLayoutGuide: self.topLayoutGuide,
-                                                              appearance: bar.appearance ?? .defaultAppearance)
-
+        let appearance = bar.appearance ?? .defaultAppearance
+        activeTabmanBar?.extendBackgroundForSystemAreasIfNeeded(for: bar.location,
+                                                                in: self,
+                                                                appearance: appearance)
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -200,7 +201,7 @@ internal extension TabmanViewController {
     /// - Parameter location: The new location.
     func updateBar(withLocation location: TabmanBar.Location) {
         guard self.embeddingView == nil else {
-            self.embedBar(inView: self.embeddingView!)
+            self.embedBar(in: self.embeddingView!)
             return
         }
         

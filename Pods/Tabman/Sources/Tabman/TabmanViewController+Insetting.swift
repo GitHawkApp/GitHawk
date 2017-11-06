@@ -13,8 +13,16 @@ internal extension TabmanViewController {
     
     /// Reload the required bar insets for the current bar.
     func reloadRequiredBarInsets() {
-        self.bar.requiredInsets = TabmanBar.Insets(topLayoutGuide: self.topLayoutGuide.length,
-                                                   bottomLayoutGuide: self.bottomLayoutGuide.length,
+        
+        var layoutInsets: UIEdgeInsets = .zero
+        if #available(iOS 11, *) {
+            layoutInsets = view.safeAreaInsets
+        } else {
+            layoutInsets.top = topLayoutGuide.length
+            layoutInsets.bottom = bottomLayoutGuide.length
+        }
+        
+        self.bar.requiredInsets = TabmanBar.Insets(safeAreaInsets: layoutInsets,
                                                    bar: self.calculateRequiredBarInsets())
     }
     
@@ -60,6 +68,8 @@ internal extension TabmanViewController {
         var scrollViews = [UIScrollView?]()
         if let tableViewController = childViewController as? UITableViewController { // UITableViewController
             scrollViews.append(tableViewController.tableView)
+        } else if let collectionViewController = childViewController as? UICollectionViewController { // UICollectionViewController
+            scrollViews.append(collectionViewController.collectionView)
         } else if let subviews = childViewController.view?.subviews { // standard subview filtering
             scrollViews.append(contentsOf: subviews.map({ $0 as? UIScrollView }))
         }
@@ -69,11 +79,13 @@ internal extension TabmanViewController {
             guard let scrollView = scrollView else { continue }
             guard !scrollView.isBeingInteracted else { continue }
             
-            var requiredContentInset = self.bar.requiredInsets.barInsets
+            if #available(iOS 11.0, *) {
+                scrollView.contentInsetAdjustmentBehavior = .never
+            }
+            
+            var requiredContentInset = self.bar.requiredInsets.all
             let currentContentInset = self.viewControllerInsets[scrollView.hash] ?? .zero
             
-            requiredContentInset.top += self.topLayoutGuide.length
-            requiredContentInset.bottom += self.bottomLayoutGuide.length
             self.viewControllerInsets[scrollView.hash] = requiredContentInset
             
             // take account of custom top / bottom insets
@@ -90,16 +102,26 @@ internal extension TabmanViewController {
             requiredContentInset.right = currentContentInset.right
             
             // ensure scroll view is either at top or full height before doing automatic insetting
-            if requiredContentInset.top > 0.0 {
-                guard scrollView.frame.minY == 0.0 else { continue }
-            }
-            if requiredContentInset.bottom > 0.0 {
-                guard let scrollViewSuperview = scrollView.superview, scrollViewSuperview.bounds.maxY - scrollView.frame.maxY == 0.0 else { continue }
+            var isValidLayout = true
+            checkIsNotEmbeddedViewController(childViewController, {
+                if requiredContentInset.top > 0.0 {
+                    isValidLayout = scrollView.frame.minY == 0.0
+                }
+                if requiredContentInset.bottom > 0.0 {
+                    guard let scrollViewSuperview = scrollView.superview else {
+                        return
+                    }
+                    isValidLayout = (scrollViewSuperview.bounds.maxY - scrollView.frame.maxY) == 0.0
+                }
+            })
+            
+            guard isValidLayout else {
+                continue
             }
             
             // dont update if we dont need to
             if scrollView.contentInset != requiredContentInset {
-                
+            
                 scrollView.contentInset = requiredContentInset
                 scrollView.scrollIndicatorInsets = requiredContentInset
                 
@@ -107,6 +129,17 @@ internal extension TabmanViewController {
                 contentOffset.y = -requiredContentInset.top
                 scrollView.contentOffset = contentOffset
             }
+        }
+    }
+    
+    /// Check whether a view controller is not an 'embedded' view controller type (i.e. UITableViewController)
+    ///
+    /// - Parameters:
+    ///   - viewController: The view controller.
+    ///   - success: Execution if view controller is not embedded type.
+    private func checkIsNotEmbeddedViewController(_ viewController: UIViewController, _ success: () -> Void) {
+        if !(viewController is UITableViewController) && !(viewController is UICollectionViewController) {
+            success()
         }
     }
 }

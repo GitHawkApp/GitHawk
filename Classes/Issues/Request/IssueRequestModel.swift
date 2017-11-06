@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import IGListKit
 
 final class IssueRequestModel: ListDiffable {
@@ -23,13 +23,66 @@ final class IssueRequestModel: ListDiffable {
     let user: String
     let date: Date
     let event: Event
+    let attributedText: NSAttributedStringSizing
 
-    init(id: String, actor: String, user: String, date: Date, event: Event) {
+    init(id: String, actor: String, user: String, date: Date, event: Event, width: CGFloat) {
         self.id = id
         self.actor = actor
         self.user = user
         self.date = date
         self.event = event
+
+        let attributedText = NSMutableAttributedString()
+        attributedText.append(NSAttributedString(
+            string: actor,
+            attributes: [
+                .font: Styles.Fonts.secondaryBold,
+                .foregroundColor: Styles.Colors.Gray.dark.color,
+                MarkdownAttribute.username: actor
+            ]
+        ))
+
+        let phrase: String
+        switch event {
+        case .assigned: phrase = NSLocalizedString(" assigned", comment: "")
+        case .unassigned: phrase = NSLocalizedString(" unassigned", comment: "")
+        case .reviewRequested: phrase = NSLocalizedString(" requested", comment: "")
+        case .reviewRequestRemoved: phrase = NSLocalizedString(" removed", comment: "")
+        }
+        attributedText.append(NSAttributedString(
+            string: phrase,
+            attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Gray.medium.color
+            ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: " \(user)",
+            attributes: [
+                .font: Styles.Fonts.secondaryBold,
+                .foregroundColor: Styles.Colors.Gray.dark.color,
+                MarkdownAttribute.username: user
+            ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: " \(date.agoString)",
+            attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
+            ]
+        ))
+        self.attributedText = NSAttributedStringSizing(
+            containerWidth: width,
+            attributedText: attributedText,
+            inset: UIEdgeInsets(
+                top: 0,
+                left: Styles.Sizes.eventGutter,
+                bottom: 0,
+                right: Styles.Sizes.eventGutter
+            ),
+            backgroundColor: Styles.Colors.background
+        )
     }
 
     // MARK: ListDiffable

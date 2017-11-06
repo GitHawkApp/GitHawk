@@ -12,7 +12,7 @@ pod 'HTMLString', '~> 4.0.1'
 pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'SDWebImage/GIF', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
-pod 'Tabman', '1.0.1'
+pod 'Tabman', '1.0.5'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
 

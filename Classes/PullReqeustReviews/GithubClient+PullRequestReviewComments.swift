@@ -43,50 +43,64 @@ extension GithubClient {
                     var comments = [ReviewComment]()
                 }
 
-                var threadIDs = [Int]()
-                var threads = [Int: Thread]()
+                DispatchQueue.global().async {
+                    var threadIDs = [Int]()
+                    var threads = [Int: Thread]()
 
-                for json in jsonArr {
-                    guard let id = json["id"] as? Int,
-                        let reviewComment = createReviewCommentModel(id: id, json: json)
-                        else { continue }
-
-                    if let replyID = json["in_reply_to_id"] as? Int {
-                        // this should exist since the root will always be posted before the reply
-                        // payload is delivered sorted by creation date descending
-                        threads[replyID]?.comments.append(reviewComment)
-                    } else {
-                        guard let diffHunk = json["diff_hunk"] as? String,
-                            let path = json["path"] as? String
+                    for json in jsonArr {
+                        guard let id = json["id"] as? Int,
+                            let reviewComment = createReviewCommentModel(id: id, json: json)
                             else { continue }
 
-                        threads[id] = Thread(
-                            hunk: diffHunk,
-                            path: path,
-                            comments: [reviewComment]
-                        )
+                        if let replyID = json["in_reply_to_id"] as? Int {
+                            // this should exist since the root will always be posted before the reply
+                            // payload is delivered sorted by creation date descending
+                            threads[replyID]?.comments.append(reviewComment)
+                        } else {
+                            guard let diffHunk = json["diff_hunk"] as? String,
+                                let path = json["path"] as? String
+                                else { continue }
 
-                        // create diff hunk and root comment
-                        // append to threads and threadIDs
-                        threadIDs.append(id)
+                            threads[id] = Thread(
+                                hunk: diffHunk,
+                                path: path,
+                                comments: [reviewComment]
+                            )
+
+                            // create diff hunk and root comment
+                            // append to threads and threadIDs
+                            threadIDs.append(id)
+                        }
+                    }
+
+                    var models = [ListDiffable]()
+                    for id in threadIDs {
+                        guard let thread = threads[id] else { continue }
+
+                        let code = CreateDiffString(code: thread.hunk, limit: true)
+                        let text = NSAttributedStringSizing(
+                            containerWidth: 0,
+                            attributedText: code,
+                            inset: IssueDiffHunkPreviewCell.textViewInset
+                        )
+                        models.append(IssueDiffHunkModel(path: thread.path, preview: text))
+
+                        for (i, comment) in thread.comments.enumerated() {
+                            models.append(createReviewComment(
+                                owner: owner,
+                                repo: repo,
+                                model: comment,
+                                viewer: viewerUsername,
+                                width: width,
+                                isLast: i == thread.comments.count - 1
+                            ))
+                        }
+                    }
+
+                    DispatchQueue.main.async {
+                        completion(.success((models, nextPage?.next)))
                     }
                 }
-
-                var models = [ListDiffable]()
-                for id in threadIDs {
-                    guard let thread = threads[id] else { continue }
-
-                    let code = CreateDiffString(code: thread.hunk, limit: true)
-                    let text = NSAttributedStringSizing(
-                        containerWidth: 0,
-                        attributedText: code,
-                        inset: IssueDiffHunkPreviewCell.textViewInset
-                    )
-                    models.append(IssueDiffHunkModel(path: thread.path, preview: text))
-                    let reviewComments: [ListDiffable] = thread.comments.map { createReviewComment(owner: owner, repo: repo, model: $0, viewer: viewerUsername, width: width) }
-                    models += reviewComments
-                }
-                completion(.success((models, nextPage?.next)))
         }))
     }
 
@@ -114,7 +128,8 @@ private func createReviewComment(
     repo: String,
     model: GithubClient.ReviewComment,
     viewer: String?,
-    width: CGFloat
+    width: CGFloat,
+    isLast: Bool
     ) -> IssueCommentModel {
     let details = IssueCommentDetailsViewModel(
         date: model.created,
@@ -135,7 +150,7 @@ private func createReviewComment(
         bodyModels: bodies,
         reactions: reactions,
         collapse: nil,
-        threadState: .neck,
+        threadState: isLast ? .tail : .neck,
         rawMarkdown: model.body,
         viewerCanUpdate: false,
         viewerCanDelete: false,
