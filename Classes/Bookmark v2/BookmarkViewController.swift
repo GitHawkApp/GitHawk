@@ -25,9 +25,7 @@ TabNavRootViewControllerType {
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: 100, height: 40)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
@@ -99,7 +97,7 @@ TabNavRootViewControllerType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(collectionView: collectionView)
-        update(animated: false)
+        update(animated: animated)
     }
 
     override func viewWillLayoutSubviews() {
@@ -142,7 +140,7 @@ TabNavRootViewControllerType {
 
     func filter(term: String?) {
         defer {
-            update(animated: false)
+            update(animated: true)
         }
 
         guard let term = term?.trimmingCharacters(in: .whitespacesAndNewlines), !term.isEmpty else {
@@ -194,10 +192,12 @@ TabNavRootViewControllerType {
         var bookmarks: [ListDiffable]
         switch state {
         case .idle:
-            bookmarks = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0) }
+            bookmarks = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0, width: view.bounds.width) }
         case .filtering(let term):
             bookmarks = filtered(array: bookmarkStore.values, query: term)
-                .flatMap { BookmarkViewModel(bookmark: $0) }
+                .flatMap { bookmark in
+                    BookmarkViewModel(bookmark: bookmark, width: view.bounds.width)
+            }
         }
 
         if !bookmarks.isEmpty {
@@ -252,7 +252,7 @@ TabNavRootViewControllerType {
         searchBar.text = ""
         searchBar.resignFirstResponder()
 
-        update(animated: false)
+        update(animated: true)
     }
 
     // MARK: - BookmarkHeaderSectionControllerDelegate

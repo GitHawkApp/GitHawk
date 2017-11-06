@@ -12,13 +12,12 @@ import IGListKit
 class BookmarkViewModel: NSObject, ListDiffable {
 
     let bookmark: Bookmark
+    var text: NSAttributedStringSizing
 
-    init(bookmark: Bookmark) {
+    init(bookmark: Bookmark, width: CGFloat) {
         self.bookmark = bookmark
-    }
-
-    var repositoryName: NSAttributedString {
         let repositoryText = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: bookmark.owner, name: bookmark.name))
+
         switch bookmark.type {
         case .issue, .pullRequest:
             let bookmarkText = NSAttributedString(string: "#\(bookmark.number)", attributes: [
@@ -29,11 +28,19 @@ class BookmarkViewModel: NSObject, ListDiffable {
             repositoryText.append(bookmarkText)
         default: break
         }
-        return repositoryText
-    }
 
-    var bookmarkTitle: String {
-        return bookmark.title
+        if !bookmark.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            repositoryText.append(NSAttributedString(string: "\n" + bookmark.title, attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            )
+        }
+        text = NSAttributedStringSizing(
+            containerWidth: width,
+            attributedText: repositoryText,
+            inset: BookmarkCell.titleInset
+        )
     }
 
     var icon: UIImage {

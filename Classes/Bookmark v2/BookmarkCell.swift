@@ -11,15 +11,29 @@ import SnapKit
 
 final class BookmarkCell: SwipeSelectableCell {
 
+    static let titleInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter * 2 + Styles.Sizes.icon.width,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.eventGutter
+    )
+
+    private static let compactInset = UIEdgeInsets(
+        top: 17.5,
+        left: Styles.Sizes.gutter * 2 + Styles.Sizes.icon.width,
+        bottom: 17.5,
+        right: Styles.Sizes.eventGutter
+    )
+
     private let imageView = UIImageView()
-    private let titleLabel = UILabel()
-    private let secondaryLabel = UILabel()
-    private let detailStackView = UIStackView()
+    private let textView = AttributedStringView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = .white
+
+        contentView.clipsToBounds = true
 
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -31,22 +45,7 @@ final class BookmarkCell: SwipeSelectableCell {
             make.width.equalTo(Styles.Sizes.icon.width)
         }
 
-        titleLabel.numberOfLines = 0
-        secondaryLabel.numberOfLines = 0
-
-        detailStackView.axis = .vertical
-        detailStackView.alignment = .leading
-        detailStackView.distribution = .fill
-        detailStackView.spacing = Styles.Sizes.rowSpacing
-        detailStackView.addArrangedSubview(titleLabel)
-        detailStackView.addArrangedSubview(secondaryLabel)
-        contentView.addSubview(detailStackView)
-        detailStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
-            make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.width.equalTo(contentView).offset(-Styles.Sizes.icon.width - Styles.Sizes.columnSpacing * 2 - Styles.Sizes.gutter)
-        }
+        addSubview(textView)
 
         addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
     }
@@ -55,19 +54,18 @@ final class BookmarkCell: SwipeSelectableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(viewModel: BookmarkViewModel) {
-        titleLabel.attributedText = viewModel.repositoryName
-        secondaryLabel.text = viewModel.bookmarkTitle
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+        textView.reposition(width: contentView.bounds.width)
+    }
+
+    func configure(viewModel: BookmarkViewModel, height: CGFloat) {
+        if height == Styles.Sizes.tableCellHeightLarge {
+            viewModel.text = NSAttributedStringSizing(containerWidth: contentView.bounds.width, attributedText: viewModel.text.attributedText, inset: BookmarkCell.compactInset)
+        }
+        textView.configureAndSizeToFit(text: viewModel.text, width: contentView.bounds.width)
         imageView.image = viewModel.icon
     }
 
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
 }
