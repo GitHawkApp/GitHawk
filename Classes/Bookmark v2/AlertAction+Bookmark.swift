@@ -11,16 +11,16 @@ import Foundation
 extension AlertAction {
 
     static func toggleBookmark(
-        store: BookmarksStore,
-        model: BookmarkModel
+        store: BookmarkStore,
+        model: Bookmark
         ) -> UIAlertAction {
-        let isNewBookmark = !store.contains(bookmark: model)
+        let isNewBookmark = !store.contains(model)
         let title = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
         return UIAlertAction(title: title, style: isNewBookmark ? .default : .destructive, handler: { _ in
             if isNewBookmark {
-                store.add(bookmark: model)
+                store.add(model)
             } else {
-                store.remove(bookmark: model)
+                store.remove(model)
             }
             Haptic.triggerNotification(.success)
         })

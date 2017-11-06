@@ -9,13 +9,13 @@
 import UIKit
 import SnapKit
 
-protocol SearchRecentHeaderCellDelegate: class {
-    func didSelectClear(cell: SearchRecentHeaderCell)
+protocol ClearAllHeaderCellDelegate: class {
+    func didSelectClear(cell: ClearAllHeaderCell)
 }
 
-final class SearchRecentHeaderCell: UICollectionViewCell {
+final class ClearAllHeaderCell: UICollectionViewCell {
 
-    weak var delegate: SearchRecentHeaderCellDelegate?
+    weak var delegate: ClearAllHeaderCellDelegate?
 
     private let label = UILabel()
     private let button = UIButton()
@@ -23,7 +23,6 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.text = NSLocalizedString("Recent Searches", comment: "").uppercased(with: Locale.current)
         label.font = Styles.Fonts.secondary
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
@@ -35,7 +34,7 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
         button.setTitle(Constants.Strings.clearAll, for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
         button.titleLabel?.font = Styles.Fonts.button
-        button.addTarget(self, action: #selector(SearchRecentHeaderCell.onClear), for: .touchUpInside)
+        button.addTarget(self, action: #selector(ClearAllHeaderCell.onClear), for: .touchUpInside)
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
@@ -52,6 +51,10 @@ final class SearchRecentHeaderCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
+    }
+
+    func configure(title text: String) {
+        label.text = text
     }
 
     // MARK: Private API

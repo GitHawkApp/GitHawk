@@ -23,7 +23,7 @@ SearchResultSectionControllerDelegate {
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
     private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
-    private let recentStore = SearchRecentStore()
+    private var recentStore = SearchRecentStore()
     private let debouncer = Debouncer()
 
     enum State {
@@ -40,7 +40,7 @@ SearchResultSectionControllerDelegate {
             guard case let .loading(request, query) = state else { return }
             request.cancel()
             if case .loading = newValue {
-                recentStore.remove(query: query)
+                recentStore.remove(query)
             }
         }
     }
@@ -162,7 +162,7 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
-        recentStore.add(query: query)
+        recentStore.add(query)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
@@ -178,7 +178,7 @@ SearchResultSectionControllerDelegate {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
         case .idle:
-            var recents: [ListDiffable] = recentStore.recents.flatMap { SearchRecentViewModel(query: $0) }
+            var recents: [ListDiffable] = recentStore.values.flatMap { SearchRecentViewModel(query: $0) }
             if recents.count > 0 {
                 recents.insert(recentHeaderKey, at: 0)
             }
@@ -186,7 +186,7 @@ SearchResultSectionControllerDelegate {
         case .error, .loading:
             return []
         case .results(let models):
-            return models.count > 0 ? models : [noResultsKey]
+            return models.isEmpty ? [noResultsKey] : models
         }
     }
 
@@ -290,7 +290,7 @@ SearchResultSectionControllerDelegate {
     }
 
     private func didSelectRepo(repo: RepositoryDetails) {
-        recentStore.add(query: .recentlyViewed(repo))
+        recentStore.add(.recentlyViewed(repo))
 
         // always animate this transition b/c IGListKit disables global animations
         // otherwise pushing the next view controller wont be animated
@@ -335,13 +335,13 @@ SearchResultSectionControllerDelegate {
     // MARK: SearchResultSectionControllerDelegate
 
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
-        recentStore.add(query: .recentlyViewed(repo))
+        recentStore.add(.recentlyViewed(repo))
         update(animated: false)
         searchBar.resignFirstResponder()
     }
 
     func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
-        recentStore.remove(query: viewModel.query)
+        recentStore.remove(viewModel.query)
         update(animated: true)
     }
 

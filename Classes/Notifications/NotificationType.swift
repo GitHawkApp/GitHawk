@@ -27,3 +27,5 @@ extension NotificationType {
         }
     }
 }
+
+extension NotificationType: Codable { }
