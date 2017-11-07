@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class BookmarkViewModel: NSObject, ListDiffable {
+final class BookmarkViewModel: ListDiffable {
 
     let bookmark: Bookmark
     var text: NSAttributedStringSizing
