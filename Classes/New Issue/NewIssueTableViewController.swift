@@ -128,8 +128,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
-    @objc
-    func onSend() {
+    @objc func onSend() {
         guard let titleText = titleText else {
             ToastManager.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
@@ -159,8 +158,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     }
 
     /// Ensures there are no unsaved changes before dismissing the view controller. Will prompt user if unsaved changes.
-    @objc
-    func onCancel() {
+    @objc func onCancel() {
         titleField.resignFirstResponder()
         bodyField.resignFirstResponder()
         cancelAction_onCancel(

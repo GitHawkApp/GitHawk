@@ -89,8 +89,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
         }
     }
 
-    @objc
-    func onRefresh() {
+    @objc func onRefresh() {
         fetch()
     }
 

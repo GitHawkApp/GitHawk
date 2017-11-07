@@ -63,8 +63,7 @@ final class InitialEmptyView: UIView {
 
     // MARK: Private API
 
-    @objc
-    func onTap() {
+    @objc func onTap() {
         delegate?.didTap(emptyView: self)
     }
 

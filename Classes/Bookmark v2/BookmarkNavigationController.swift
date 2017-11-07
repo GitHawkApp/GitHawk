@@ -50,16 +50,14 @@ final class BookmarkNavigationController {
 
     // MARK: Private API
 
-    @objc
-    func add(sender: UIBarButtonItem) {
+    @objc func add(sender: UIBarButtonItem) {
         Haptic.triggerSelection()
         sender.action = #selector(BookmarkNavigationController.remove(sender:))
         sender.image = UIImage(named: "nav-bookmark-selected")
         store.add(model)
     }
 
-    @objc
-    func remove(sender: UIBarButtonItem) {
+    @objc func remove(sender: UIBarButtonItem) {
         sender.action = #selector(BookmarkNavigationController.add(sender:))
         sender.image = UIImage(named: "nav-bookmark")
         store.remove(model)

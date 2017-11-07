@@ -67,8 +67,7 @@ final class AttributedStringView: UIView {
 
     // MARK: Private API
 
-    @objc
-    func onTap(recognizer: UITapGestureRecognizer) {
+    @objc func onTap(recognizer: UITapGestureRecognizer) {
         guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
         if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
             delegate?.didTapURL(view: self, url: url)
@@ -91,8 +90,7 @@ final class AttributedStringView: UIView {
         }
     }
 
-    @objc
-    func showDetailsInMenu(details: String, point: CGPoint) {
+    @objc func showDetailsInMenu(details: String, point: CGPoint) {
         becomeFirstResponder()
         let menu = UIMenuController.shared
         menu.menuItems = [
@@ -102,7 +100,6 @@ final class AttributedStringView: UIView {
         menu.setMenuVisible(true, animated: true)
     }
 
-    @objc
-    func empty() {}
+    @objc func empty() {}
 
 }

@@ -48,8 +48,7 @@ final class IssueReviewViewCommentsCell: UICollectionViewCell, ListBindable {
 
     // MARK: Private API
 
-    @objc
-    func onButton() {
+    @objc func onButton() {
         delegate?.didTapViewComments(cell: self)
     }
 

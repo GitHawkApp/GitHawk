@@ -61,13 +61,11 @@ final class IssueReferencedCommitCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onName() {
+    @objc func onName() {
         delegate?.didTapActor(cell: self)
     }
 
-    @objc
-    func onHash() {
+    @objc func onHash() {
         delegate?.didTapHash(cell: self)
     }
 

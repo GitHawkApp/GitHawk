@@ -51,8 +51,7 @@ final class IssueMilestoneEventCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onActor() {
+    @objc func onActor() {
         delegate?.didTapActor(cell: self)
     }
 

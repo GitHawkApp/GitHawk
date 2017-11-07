@@ -28,7 +28,6 @@ extension UIMenuController {
         setMenuVisible(true, animated: true)
     }
 
-    @objc
-    func _empty() {}
+    @objc func _empty() {}
 
 }
