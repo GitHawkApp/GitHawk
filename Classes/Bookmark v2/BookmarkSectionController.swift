@@ -25,9 +25,15 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width, let object = object else { fatalError("Missing context") }
+        guard let width = collectionContext?.containerSize.width,
+            let object = object else {
+            fatalError("Missing context")
+        }
 
-        return CGSize(width: width, height: max(object.text.textViewSize(width).height, Styles.Sizes.tableCellHeightLarge))
+        return CGSize(
+            width: width,
+            height: max(object.text.textViewSize(width).height, Styles.Sizes.tableCellHeightLarge)
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -47,7 +53,7 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
         delegate?.didSelect(bookmarkSectionController: self, viewModel: object)
     }
 
-    // MARK: - SwipeCollectionViewCellDelegate
+    // MARK: SwipeCollectionViewCellDelegate
 
     func collectionView(_ collectionView: UICollectionView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }

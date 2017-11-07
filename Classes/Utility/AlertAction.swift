@@ -21,7 +21,7 @@ struct AlertAction {
     let title: String?
     let style: UIAlertActionStyle
 
-    // MARK: - Init
+    // MARK: Init
 
     init(_ builder: AlertActionBuilder) {
         rootViewController = builder.rootViewController
@@ -29,7 +29,7 @@ struct AlertAction {
         style = builder.style ?? .default
     }
 
-    // MARK: - Public
+    // MARK: Public
 
     func get(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: self.title, style: self.style, handler: handler)
@@ -66,7 +66,7 @@ struct AlertAction {
         }
     }
 
-    // MARK: - Static
+    // MARK: Static
 
     static func cancel(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: handler)

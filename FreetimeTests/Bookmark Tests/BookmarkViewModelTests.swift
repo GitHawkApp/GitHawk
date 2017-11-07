@@ -56,17 +56,4 @@ class BookmarkViewModelTests: XCTestCase {
         XCTAssertEqual(expected.attributedText, actual.attributedText)
     }
 
-    func test_icon_issue() {
-        let expected = issue.type.icon.withRenderingMode(.alwaysTemplate)
-        let actual = issueModel.icon
-
-        XCTAssertEqual(expected, actual)
-    }
-
-    func test_icon_other() {
-        let expected = other.type.icon.withRenderingMode(.alwaysTemplate)
-        let actual = otherModel.icon
-
-        XCTAssertEqual(expected, actual)
-    }
 }

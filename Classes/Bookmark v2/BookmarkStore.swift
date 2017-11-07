@@ -8,7 +8,11 @@
 
 import Foundation
 
-class BookmarkStore: Store {
+protocol BookmarkListener: class {
+    func didUpdateBookmarks()
+}
+
+final class BookmarkStore: Store {
 
     typealias Model = Bookmark
 

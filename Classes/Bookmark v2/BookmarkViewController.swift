@@ -42,7 +42,7 @@ TabNavRootViewControllerType {
 
     var state: State = .idle
 
-    // MARK: - Initialization
+    // MARK: Initialization
 
     init(client: GithubClient) {
         self.client = client
@@ -56,7 +56,7 @@ TabNavRootViewControllerType {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - View Lifecycle
+    // MARK: View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +154,7 @@ TabNavRootViewControllerType {
         state = .filtering(term)
     }
 
-    // MARK: - BookmarkSectionControllerDelegate
+    // MARK: BookmarkSectionControllerDelegate
 
     func didSelect(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
         let bookmark = viewModel.bookmark
@@ -189,7 +189,7 @@ TabNavRootViewControllerType {
         update(animated: true)
     }
 
-    // MARK: - ListAdapterDataSource
+    // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var bookmarks: [ListDiffable]
@@ -234,7 +234,7 @@ TabNavRootViewControllerType {
         return view
     }
 
-    // MARK: - UISearchBarDelegate
+    // MARK: UISearchBarDelegate
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filter(term: searchBar.text)
@@ -258,7 +258,7 @@ TabNavRootViewControllerType {
         update(animated: true)
     }
 
-    // MARK: - BookmarkHeaderSectionControllerDelegate
+    // MARK: BookmarkHeaderSectionControllerDelegate
 
     func didTapClear(sectionController: BookmarkHeaderSectionController) {
         let alert = UIAlertController.configured(
@@ -278,14 +278,14 @@ TabNavRootViewControllerType {
         present(alert, animated: true)
     }
 
-    // MARK: - InitialEmptyViewDelegate
+    // MARK: InitialEmptyViewDelegate
 
     func didTap(emptyView: InitialEmptyView) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
 
-    // MARK: - TabNavRootViewControllerType
+    // MARK: TabNavRootViewControllerType
 
     func didSingleTapTab() {
         collectionView.scrollToTop(animated: true)
@@ -295,7 +295,7 @@ TabNavRootViewControllerType {
         searchBar.becomeFirstResponder()
     }
 
-    // MARK: - StoreListener
+    // MARK: StoreListener
 
     func didUpdateStore() {
         update(animated: true)

@@ -20,7 +20,7 @@ class AlertActionBuilder {
     var title: String?
     var style: UIAlertActionStyle?
 
-    // MARK: - Init
+    // MARK: Init
 
     init(_ buildClosure: BuilderClosure) {
         buildClosure(self)
