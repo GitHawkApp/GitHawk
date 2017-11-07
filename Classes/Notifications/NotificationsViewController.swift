@@ -78,6 +78,7 @@ FlatCacheListener {
                 action: #selector(NotificationsViewController.onMarkAll(sender:))
             )
         }
+        updateUnreadState(count: notificationIDs.count)
     }
 
     private func updateUnreadState(count: Int) {
