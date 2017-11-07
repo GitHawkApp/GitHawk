@@ -264,14 +264,7 @@ FlatCacheListener {
                 return
         }
 
-        if !store.contains(bookmark) {
-            store.add(bookmark)
-            sender.image = UIImage(named: "nav-bookmark-selected")
-        } else {
-            store.remove(bookmark)
-            sender.image = UIImage(named: "nav-bookmark")
-        }
-        Haptic.triggerNotification(.success)
+        BookmarkAction.toggleBookmark(store: store, model: bookmark, sender: sender)
     }
 
     func closeAction() -> UIAlertAction? {
