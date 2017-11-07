@@ -30,6 +30,7 @@ FlatCacheListener {
     private var hasScrolledToBottom = false
     private let viewFilesModel = "view_files" as ListDiffable
     private let textActionsController = TextActionsController()
+    private var bookmarkNavController: BookmarkNavigationController? = nil
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -44,6 +45,17 @@ FlatCacheListener {
             if let id = resultID,
                 let result = self.client.cache.get(id: id) as IssueResult? {
                 hidden = result.status.locked && !result.viewerCanUpdate
+
+                let bookmark = Bookmark(
+                    type: result.pullRequest ? .pullRequest : .issue,
+                    name: self.model.repo,
+                    owner: self.model.owner,
+                    number: self.model.number,
+                    title: result.title.attributedText.string,
+                    defaultBranch: result.defaultBranch
+                )
+                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
+                self.configureNavigationItems()
             } else {
                 hidden = true
             }
@@ -241,30 +253,12 @@ FlatCacheListener {
         )
     }
 
-    func configureBookmarkButton() {
-        guard let store = client.bookmarksStore,
-            let bookmark = bookmark else { return }
-
-        let isNewBookmark = !store.contains(bookmark)
-        let bookmarkItem = UIBarButtonItem(
-            image: isNewBookmark ? UIImage(named: "nav-bookmark") : UIImage(named: "nav-bookmark-selected"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.toggleBookmark(sender:))
-        )
-        bookmarkItem.accessibilityLabel = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
-        navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
-    }
-
-    @objc
-    func toggleBookmark(sender: UIBarButtonItem) {
-        guard let store = client.bookmarksStore,
-            let bookmark = bookmark else {
-                ToastManager.showGenericError()
-                return
+    func configureNavigationItems() {
+        var items = [moreOptionsItem]
+        if let bookmarkItem = bookmarkNavController?.navigationItem {
+            items.append(bookmarkItem)
         }
-
-        BookmarkAction.toggleBookmark(store: store, model: bookmark, sender: sender)
+        navigationItem.rightBarButtonItems = items
     }
 
     func closeAction() -> UIAlertAction? {
@@ -353,17 +347,11 @@ FlatCacheListener {
                 strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
-
-//                if !previous {
-//                    strongSelf.client.fetchPRComments(previous: result, owner: strongSelf.model.owner, repo: strongSelf.model.repo, number: strongSelf.model.number, width: strongSelf.view.bounds.width)
-//                }
-
             default: break
             }
 
             // subsequent updates are handled by the FlatCacheListener
             if isFirstUpdate {
-                strongSelf.configureBookmarkButton()
                 strongSelf.feed.finishLoading(dismissRefresh: true) {
                     if strongSelf.hasScrolledToBottom != true {
                         strongSelf.hasScrolledToBottom = true

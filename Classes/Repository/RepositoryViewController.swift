@@ -19,6 +19,7 @@ NewIssueTableViewControllerDelegate {
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
+    private var bookmarkNavController: BookmarkNavigationController? = nil
 
     var moreOptionsItem: UIBarButtonItem {
         let rightItem = UIBarButtonItem(
@@ -34,6 +35,15 @@ NewIssueTableViewControllerDelegate {
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
+
+        let bookmark = Bookmark(
+            type: .repo,
+            name: repo.name,
+            owner: repo.owner,
+            hasIssueEnabled: repo.hasIssuesEnabled,
+            defaultBranch: repo.defaultBranch
+        )
+        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
 
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {
@@ -85,41 +95,12 @@ NewIssueTableViewControllerDelegate {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
 
-    var bookmark: Bookmark {
-        return Bookmark(
-            type: .repo,
-            name: repo.name,
-            owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled,
-            defaultBranch: repo.defaultBranch
-        )
-    }
-
     func configureNavigationItems() {
-        guard let store = client.bookmarksStore else {
-            navigationItem.rightBarButtonItem = moreOptionsItem
-            return
+        var items = [moreOptionsItem]
+        if let bookmarkItem = bookmarkNavController?.navigationItem {
+            items.append(bookmarkItem)
         }
-
-        let isNewBookmark = !store.contains(bookmark)
-        let bookmarkItem = UIBarButtonItem(
-            image: isNewBookmark ? UIImage(named: "nav-bookmark") : UIImage(named: "nav-bookmark-selected"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.toggleBookmark(sender:))
-        )
-        bookmarkItem.accessibilityLabel = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
-        navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
-    }
-
-    @objc
-    func toggleBookmark(sender: UIBarButtonItem) {
-        guard let store = client.bookmarksStore else {
-            ToastManager.showGenericError()
-            return
-        }
-
-        BookmarkAction.toggleBookmark(store: store, model: bookmark, sender: sender)
+        navigationItem.rightBarButtonItems = items
     }
 
     func newIssueAction() -> UIAlertAction? {
