@@ -148,7 +148,7 @@ FlatCacheListener {
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: false
+            supportsImageUpload: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
