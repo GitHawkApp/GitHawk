@@ -52,6 +52,7 @@ final class BookmarkNavigationController {
 
     @objc
     func add(sender: UIBarButtonItem) {
+        Haptic.triggerNotification(.success)
         sender.image = UIImage(named: "nav-bookmark-selected")
         store.add(model)
     }
