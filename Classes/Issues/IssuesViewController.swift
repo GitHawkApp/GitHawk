@@ -252,14 +252,17 @@ FlatCacheListener {
             target: self,
             action: #selector(IssuesViewController.toggleBookmark(sender:))
         )
-        bookmarkItem.accessibilityLabel = NSLocalizedString("Bookmark", comment: "")
+        bookmarkItem.accessibilityLabel = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
         navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
     }
 
     @objc
     func toggleBookmark(sender: UIBarButtonItem) {
         guard let store = client.bookmarksStore,
-            let bookmark = bookmark else { return }
+            let bookmark = bookmark else {
+                ToastManager.showGenericError()
+                return
+        }
 
         if !store.contains(bookmark) {
             store.add(bookmark)

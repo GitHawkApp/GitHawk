@@ -20,6 +20,17 @@ NewIssueTableViewControllerDelegate {
     private let client: GithubClient
     private let controllers: [UIViewController]
 
+    var moreOptionsItem: UIBarButtonItem {
+        let rightItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        return rightItem
+    }
+
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
@@ -57,14 +68,7 @@ NewIssueTableViewControllerDelegate {
             appearance.indicator.color = Styles.Colors.Blue.medium.color
         })
 
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
-        navigationItem.rightBarButtonItem = rightItem
+        configureNavigationItems()
         navigationItem.configure(title: repo.name, subtitle: repo.owner)
     }
 
@@ -79,6 +83,50 @@ NewIssueTableViewControllerDelegate {
 
     var repoUrl: URL {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    }
+
+    var bookmark: Bookmark {
+        return Bookmark(
+            type: .repo,
+            name: repo.name,
+            owner: repo.owner,
+            hasIssueEnabled: repo.hasIssuesEnabled,
+            defaultBranch: repo.defaultBranch
+        )
+    }
+
+    func configureNavigationItems() {
+        guard let store = client.bookmarksStore else {
+            navigationItem.rightBarButtonItem = moreOptionsItem
+            return
+        }
+
+        let isNewBookmark = !store.contains(bookmark)
+        let bookmarkItem = UIBarButtonItem(
+            image: isNewBookmark ? UIImage(named: "nav-bookmark") : UIImage(named: "nav-bookmark-selected"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.toggleBookmark(sender:))
+        )
+        bookmarkItem.accessibilityLabel = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
+        navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
+    }
+
+    @objc
+    func toggleBookmark(sender: UIBarButtonItem) {
+        guard let store = client.bookmarksStore else {
+            ToastManager.showGenericError()
+            return
+        }
+
+        if !store.contains(bookmark) {
+            store.add(bookmark)
+            sender.image = UIImage(named: "nav-bookmark-selected")
+        } else {
+            store.remove(bookmark)
+            sender.image = UIImage(named: "nav-bookmark")
+        }
+        Haptic.triggerNotification(.success)
     }
 
     func newIssueAction() -> UIAlertAction? {
@@ -99,18 +147,6 @@ NewIssueTableViewControllerDelegate {
             .newIssue(issueController: newIssueViewController)
     }
 
-    func bookmarkAction() -> UIAlertAction? {
-        guard let store = client.bookmarksStore else { return nil }
-        let bookmark = Bookmark(
-            type: .repo,
-            name: repo.name,
-            owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled,
-            defaultBranch: repo.defaultBranch
-        )
-        return AlertAction.toggleBookmark(store: store, model: bookmark)
-    }
-
     @objc
     func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -122,7 +158,6 @@ NewIssueTableViewControllerDelegate {
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
-            bookmarkAction(),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.barButtonItem = sender
