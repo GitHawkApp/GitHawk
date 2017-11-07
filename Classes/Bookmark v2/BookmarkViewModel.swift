@@ -9,14 +9,21 @@
 import Foundation
 import IGListKit
 
-class BookmarkViewModel: NSObject, ListDiffable {
+final class BookmarkViewModel: NSObject, ListDiffable {
 
     let bookmark: Bookmark
     var text: NSAttributedStringSizing
+    private let _diffIdentifier: NSObjectProtocol
 
     init(bookmark: Bookmark, width: CGFloat) {
         self.bookmark = bookmark
-        let repositoryText = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: bookmark.owner, name: bookmark.name))
+
+        let repositoryText = NSMutableAttributedString(
+            attributedString: RepositoryAttributedString(
+                owner: bookmark.owner,
+                name: bookmark.name
+            )
+        )
 
         switch bookmark.type {
         case .issue, .pullRequest:
@@ -36,21 +43,23 @@ class BookmarkViewModel: NSObject, ListDiffable {
                 ])
             )
         }
+
         text = NSAttributedStringSizing(
             containerWidth: width,
             attributedText: repositoryText,
             inset: BookmarkCell.titleInset
         )
+        _diffIdentifier = "#\(bookmark.number) - \(bookmark.name) - \(bookmark.owner) - \(bookmark.title)" as NSObjectProtocol
     }
 
     var icon: UIImage {
         return bookmark.type.icon.withRenderingMode(.alwaysTemplate)
     }
 
-    // MARK: - ListDiffable
+    // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return "#\(bookmark.number) - \(bookmark.name) - \(bookmark.owner) - \(bookmark.title)" as NSObjectProtocol
+        return _diffIdentifier
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {

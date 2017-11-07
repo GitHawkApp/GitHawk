@@ -12,7 +12,7 @@ protocol BookmarkListener: class {
     func didUpdateBookmarks()
 }
 
-class BookmarkStore: Store {
+final class BookmarkStore: Store {
 
     typealias Model = Bookmark
 
