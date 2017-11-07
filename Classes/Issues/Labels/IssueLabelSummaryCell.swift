@@ -55,7 +55,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
         labelDotView.configure(colors: viewModel.colors)
     }
 
-    // MARK: - Accessibility
+    // MARK: Accessibility
     override var accessibilityLabel: String? {
         get {
             return contentView.subviews

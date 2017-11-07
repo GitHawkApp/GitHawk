@@ -65,7 +65,7 @@ final class BookmarkCell: SwipeSelectableCell {
             viewModel.text = NSAttributedStringSizing(containerWidth: contentView.bounds.width, attributedText: viewModel.text.attributedText, inset: BookmarkCell.compactInset)
         }
         textView.configureAndSizeToFit(text: viewModel.text, width: contentView.bounds.width)
-        imageView.image = viewModel.icon
+        imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
     }
 
 }
