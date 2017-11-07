@@ -9,12 +9,14 @@
 import Foundation
 
 class SearchRecentStore: Store {
+
     typealias Model = SearchQuery
 
     let key = "com.freetime.SearchRecentStore.results"
 
     let defaults = UserDefaults.standard
     var values: [SearchQuery]
+    var listeners: [ListenerWrapper] = []
 
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
