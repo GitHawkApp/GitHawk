@@ -52,10 +52,6 @@ final class BookmarkViewModel: ListDiffable {
         _diffIdentifier = "#\(bookmark.number) - \(bookmark.name) - \(bookmark.owner) - \(bookmark.title)" as NSObjectProtocol
     }
 
-    var icon: UIImage {
-        return bookmark.type.icon.withRenderingMode(.alwaysTemplate)
-    }
-
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
