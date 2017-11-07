@@ -15,7 +15,7 @@ class BookmarkViewController: UIViewController,
     PrimaryViewController,
     UISearchBarDelegate,
 BookmarkHeaderSectionControllerDelegate,
-BookmarkListener,
+StoreListener,
 BookmarkSectionControllerDelegate,
 InitialEmptyViewDelegate,
 TabNavRootViewControllerType {
@@ -295,9 +295,9 @@ TabNavRootViewControllerType {
         searchBar.becomeFirstResponder()
     }
 
-    // MARK: BookmarkListener
+    // MARK: StoreListener
 
-    func didUpdateBookmarks() {
+    func didUpdateStore() {
         update(animated: true)
     }
 

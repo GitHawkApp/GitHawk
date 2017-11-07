@@ -16,15 +16,7 @@ final class BookmarkStore: Store {
 
     typealias Model = Bookmark
 
-    private class ListenerWrapper {
-        weak var listener: BookmarkListener?
-
-        init(listener: BookmarkListener) {
-            self.listener = listener
-        }
-    }
-
-    private var listeners: [ListenerWrapper] = []
+    var listeners: [ListenerWrapper] = []
 
     private let _key = "com.freetime.BookmarkStore.bookmark"
     var key: String {
@@ -47,17 +39,6 @@ final class BookmarkStore: Store {
             return
         }
         self.values = array
-    }
-
-    func add(listener: BookmarkListener) {
-        let wrapper = ListenerWrapper(listener: listener)
-        listeners.append(wrapper)
-    }
-
-    func save() {
-        guard let data = try? encoder.encode(values) else { return }
-        defaults.set(data, forKey: key)
-        listeners.forEach { $0.listener?.didUpdateBookmarks() }
     }
 
 }
