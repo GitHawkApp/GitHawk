@@ -31,11 +31,11 @@ final class BookmarkNavigationController {
         if store.contains(model) {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
-            selector = #selector(BookmarkNavigationController.remove)
+            selector = #selector(BookmarkNavigationController.remove(sender:))
         } else {
             imageName = "nav-bookmark"
             accessibilityLabel = Constants.Strings.bookmark
-            selector = #selector(BookmarkNavigationController.add)
+            selector = #selector(BookmarkNavigationController.add(sender:))
         }
 
         let item = UIBarButtonItem(
@@ -51,12 +51,14 @@ final class BookmarkNavigationController {
     // MARK: Private API
 
     @objc
-    func add() {
+    func add(sender: UIBarButtonItem) {
+        sender.image = UIImage(named: "nav-bookmark-selected")
         store.add(model)
     }
 
     @objc
-    func remove() {
+    func remove(sender: UIBarButtonItem) {
+        sender.image = UIImage(named: "nav-bookmark")
         store.remove(model)
     }
 
