@@ -59,6 +59,17 @@ FlatCacheListener {
         return client.cache.get(id: id) as IssueResult?
     }
 
+    var moreOptionsItem: UIBarButtonItem {
+        let rightItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        return rightItem
+    }
+
     private var sentComments = [ListDiffable]()
 
     init(
@@ -141,14 +152,7 @@ FlatCacheListener {
         }
         self.textInputbar.layoutIfNeeded()
 
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
-        navigationItem.rightBarButtonItem = rightItem
+        navigationItem.rightBarButtonItem = moreOptionsItem
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -225,6 +229,44 @@ FlatCacheListener {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
 
+    var bookmark: Bookmark? {
+        guard let result = result else { return nil }
+        return Bookmark(
+            type: result.pullRequest ? .pullRequest : .issue,
+            name: model.repo,
+            owner: model.owner,
+            number: model.number,
+            title: result.title.attributedText.string,
+            defaultBranch: result.defaultBranch
+        )
+    }
+
+    func configureBookmarkButton() {
+        guard let store = client.bookmarksStore,
+            let bookmark = bookmark else { return }
+
+        let isNewBookmark = !store.contains(bookmark)
+        let bookmarkItem = UIBarButtonItem(
+            image: isNewBookmark ? UIImage(named: "nav-bookmark") : UIImage(named: "nav-bookmark-selected"),
+            style: .plain,
+            target: self,
+            action: #selector(IssuesViewController.toggleBookmark(sender:))
+        )
+        bookmarkItem.accessibilityLabel = isNewBookmark ? Constants.Strings.bookmark : Constants.Strings.removeBookmark
+        navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
+    }
+
+    @objc
+    func toggleBookmark(sender: UIBarButtonItem) {
+        guard let store = client.bookmarksStore,
+            let bookmark = bookmark else {
+                ToastManager.showGenericError()
+                return
+        }
+
+        BookmarkAction.toggleBookmark(store: store, model: bookmark, sender: sender)
+    }
+
     func closeAction() -> UIAlertAction? {
         guard result?.viewerCanUpdate == true,
             let status = result?.status.status,
@@ -263,21 +305,6 @@ FlatCacheListener {
             .view(client: client, repo: repo)
     }
 
-    func bookmarkAction() -> UIAlertAction? {
-        guard let result = result,
-            let store = client.bookmarksStore
-            else { return nil }
-        let bookmark = Bookmark(
-            type: result.pullRequest ? .pullRequest : .issue,
-            name: model.repo,
-            owner: model.owner,
-            number: model.number,
-            title: result.title.attributedText.string,
-            defaultBranch: result.defaultBranch
-        )
-        return AlertAction.toggleBookmark(store: store, model: bookmark)
-    }
-
     @objc
     func onMore(sender: UIBarButtonItem) {
         let issueType = result?.pullRequest == true
@@ -296,7 +323,6 @@ FlatCacheListener {
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
             viewRepoAction(),
-            bookmarkAction(),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.barButtonItem = sender
@@ -337,6 +363,7 @@ FlatCacheListener {
 
             // subsequent updates are handled by the FlatCacheListener
             if isFirstUpdate {
+                strongSelf.configureBookmarkButton()
                 strongSelf.feed.finishLoading(dismissRefresh: true) {
                     if strongSelf.hasScrolledToBottom != true {
                         strongSelf.hasScrolledToBottom = true
