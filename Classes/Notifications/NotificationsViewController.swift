@@ -62,8 +62,7 @@ FlatCacheListener {
 
     // MARK: Private API
 
-    @objc
-    func onViewAll() {
+    @objc func onViewAll() {
         let controller = NotificationsViewController(client: client, showRead: true)
         controller.title = NSLocalizedString("Archives", comment: "")
         navigationController?.pushViewController(controller, animated: true)

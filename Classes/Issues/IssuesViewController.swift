@@ -256,8 +256,7 @@ FlatCacheListener {
         navigationItem.rightBarButtonItems = [moreOptionsItem, bookmarkItem]
     }
 
-    @objc
-    func toggleBookmark(sender: UIBarButtonItem) {
+    @objc func toggleBookmark(sender: UIBarButtonItem) {
         guard let store = client.bookmarksStore,
             let bookmark = bookmark else {
                 ToastManager.showGenericError()
@@ -305,8 +304,7 @@ FlatCacheListener {
             .view(client: client, repo: repo)
     }
 
-    @objc
-    func onMore(sender: UIBarButtonItem) {
+    @objc func onMore(sender: UIBarButtonItem) {
         let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue

@@ -112,8 +112,7 @@ class EditCommentViewController: UIViewController {
         textView.inputAccessoryView = actions
     }
 
-    @objc
-    func onCancel() {
+    @objc func onCancel() {
         textView.resignFirstResponder()
 
         let dismissBlock = { [weak self] in
@@ -140,8 +139,7 @@ class EditCommentViewController: UIViewController {
         }
     }
 
-    @objc
-    func onSave() {
+    @objc func onSave() {
         setRightBarItemSpinning()
         textView.isEditable = false
         textView.resignFirstResponder()
@@ -173,16 +171,14 @@ class EditCommentViewController: UIViewController {
 
     // MARK: Notifications
 
-    @objc
-    func onKeyboardWillShow(notification: NSNotification) {
+    @objc func onKeyboardWillShow(notification: NSNotification) {
         guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         let inset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
         textView.contentInset = inset
         textView.scrollIndicatorInsets = inset
     }
 
-    @objc
-    func onKeyboardWillHide(notification: NSNotification) {
+    @objc func onKeyboardWillHide(notification: NSNotification) {
         textView.contentInset = .zero
         textView.scrollIndicatorInsets = .zero
     }

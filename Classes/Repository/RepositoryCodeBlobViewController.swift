@@ -89,13 +89,11 @@ final class RepositoryCodeBlobViewController: UIViewController {
         sharingButton.isEnabled = true
     }
 
-    @objc
-    func onRefresh() {
+    @objc func onRefresh() {
         fetch()
     }
 
-    @objc
-    func onShare(sender: UIBarButtonItem) {
+    @objc func onShare(sender: UIBarButtonItem) {
         guard let payload = sharingPayload else { return }
         let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
         activityController.popoverPresentationController?.barButtonItem = sender
