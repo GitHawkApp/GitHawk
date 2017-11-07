@@ -115,8 +115,7 @@ TabNavRootViewControllerType {
 
     // MARK: Notifications
 
-    @objc
-    func onKeyboardWillShow(notification: NSNotification) {
+    @objc func onKeyboardWillShow(notification: NSNotification) {
         guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
         originalContentInset = collectionView.contentInset
@@ -131,8 +130,7 @@ TabNavRootViewControllerType {
         collectionView.scrollIndicatorInsets = inset
     }
 
-    @objc
-    func onKeyboardWillHide(notification: NSNotification) {
+    @objc func onKeyboardWillHide(notification: NSNotification) {
         collectionView.contentInset = originalContentInset
         collectionView.scrollIndicatorInsets = originalContentInset
     }

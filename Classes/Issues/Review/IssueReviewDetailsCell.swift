@@ -67,8 +67,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
 
     // MARK: Private API
 
-    @objc
-    func onActorTapped() {
+    @objc func onActorTapped() {
         delegate?.didTapActor(cell: self)
     }
 

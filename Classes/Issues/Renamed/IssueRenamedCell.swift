@@ -62,8 +62,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onActor() {
+    @objc func onActor() {
         delegate?.didTapActor(cell: self)
     }
 

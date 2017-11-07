@@ -59,8 +59,7 @@ final class ClearAllHeaderCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onClear() {
+    @objc func onClear() {
         delegate?.didSelectClear(cell: self)
     }
 
