@@ -29,13 +29,13 @@ final class BookmarkNavigationController {
         let selector: Selector
 
         if store.contains(model) {
-            imageName = "nav-bookmark"
-            accessibilityLabel = Constants.Strings.bookmark
-            selector = #selector(BookmarkNavigationController.add)
-        } else {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
             selector = #selector(BookmarkNavigationController.remove)
+        } else {
+            imageName = "nav-bookmark"
+            accessibilityLabel = Constants.Strings.bookmark
+            selector = #selector(BookmarkNavigationController.add)
         }
 
         let item = UIBarButtonItem(
