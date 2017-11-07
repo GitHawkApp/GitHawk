@@ -73,13 +73,11 @@ final class IssueStatusEventCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onActor() {
+    @objc func onActor() {
         delegate?.didTapActor(cell: self)
     }
 
-    @objc
-    func onHash() {
+    @objc func onHash() {
         delegate?.didTapHash(cell: self)
     }
 

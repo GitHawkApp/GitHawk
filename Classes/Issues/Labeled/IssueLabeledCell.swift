@@ -60,13 +60,11 @@ final class IssueLabeledCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onActor() {
+    @objc func onActor() {
         delegate?.didTapActor(cell: self)
     }
 
-    @objc
-    func onLabel() {
+    @objc func onLabel() {
         delegate?.didTapLabel(cell: self)
     }
 

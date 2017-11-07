@@ -114,8 +114,7 @@ final class IssueReactionCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func showMenu(recognizer: UITapGestureRecognizer) {
+    @objc func showMenu(recognizer: UITapGestureRecognizer) {
         guard recognizer.state == .began,
             !detailText.isEmpty else { return }
 
@@ -129,8 +128,7 @@ final class IssueReactionCell: UICollectionViewCell {
         menu.setMenuVisible(true, animated: true)
     }
 
-    @objc
-    func empty() {}
+    @objc func empty() {}
 
     // MARK: Accessibility
 

@@ -299,8 +299,7 @@ FlatCacheListener {
             .view(client: client, repo: repo)
     }
 
-    @objc
-    func onMore(sender: UIBarButtonItem) {
+    @objc func onMore(sender: UIBarButtonItem) {
         let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
