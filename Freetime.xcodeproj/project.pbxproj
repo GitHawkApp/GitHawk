@@ -162,6 +162,7 @@
 		29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */; };
 		29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */; };
 		29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */; };
+		294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */; };
 		294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */; };
 		294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */; };
 		294563EA1EE4EEF000DBCD35 /* IssueStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */; };
@@ -347,7 +348,6 @@
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
-		6587E39D1FB1DC7200117B53 /* BookmarkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587E39C1FB1DC7200117B53 /* BookmarkAction.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
@@ -536,6 +536,7 @@
 		29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSplashViewController.swift; sourceTree = "<group>"; };
 		29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+QueryItemValue.swift"; sourceTree = "<group>"; };
 		29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+AccessToken.swift"; sourceTree = "<group>"; };
+		294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkNavigationController.swift; sourceTree = "<group>"; };
 		294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusModel.swift; sourceTree = "<group>"; };
 		294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusSectionController.swift; sourceTree = "<group>"; };
 		294563E91EE4EEF000DBCD35 /* IssueStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusCell.swift; sourceTree = "<group>"; };
@@ -732,7 +733,6 @@
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6587E39C1FB1DC7200117B53 /* BookmarkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkAction.swift; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
@@ -1385,10 +1385,10 @@
 		297AE86C1EC0D5C200B44A1F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */,
 				292EB8441FAFAD130080A90D /* AttributedStringCell.swift */,
 				299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */,
 				29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */,
+				29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */,
 				29C167661ECA005500439D62 /* Constants.swift */,
 				29A195031EC74C4800C3E289 /* Date+Display.swift */,
 				29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */,
@@ -1720,7 +1720,7 @@
 				DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */,
 				DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */,
 				DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */,
-				6587E39C1FB1DC7200117B53 /* BookmarkAction.swift */,
+				294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */,
 			);
 			path = "Bookmark v2";
 			sourceTree = "<group>";
@@ -2118,6 +2118,7 @@
 				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */,
+				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,
 				29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */,
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */,
@@ -2366,7 +2367,6 @@
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
-				6587E39D1FB1DC7200117B53 /* BookmarkAction.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
