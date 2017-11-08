@@ -39,7 +39,7 @@ UIGestureRecognizerDelegate {
         contentView.clipsToBounds = true
         backgroundColor = .white
 
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .top
         if #available(iOS 11, *) {
             imageView.accessibilityIgnoresInvertColors = true
         }
