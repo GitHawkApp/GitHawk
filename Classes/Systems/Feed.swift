@@ -40,7 +40,11 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.delegate = delegate
         self.managesLayout = managesLayout
         self.collectionView = collectionView
-            ?? UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+            ?? UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout(
+                stickyHeaders: false,
+                topContentInset: 0,
+                stretchToEdge: false
+            ))
         super.init()
         self.adapter.scrollViewDelegate = self
 
