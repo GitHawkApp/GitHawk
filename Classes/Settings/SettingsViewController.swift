@@ -20,7 +20,7 @@ NewIssueTableViewControllerDelegate {
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
-    @IBOutlet weak var githubStatusCell: UITableViewCell!
+    @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
