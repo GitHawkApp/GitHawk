@@ -31,7 +31,7 @@ TabNavRootViewControllerType {
         view.backgroundColor = Styles.Colors.background
         return view
     }()
-    private var originalContentInset: UIEdgeInsets = .zero
+    private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
 
     var bookmarkStore: BookmarkStore
 
@@ -61,6 +61,11 @@ TabNavRootViewControllerType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        keyboardAdjuster = ScrollViewKeyboardAdjuster(
+            scrollView: collectionView,
+            viewController: self
+        )
+
         makeBackBarItemEmpty()
 
         view.backgroundColor = Styles.Colors.background
@@ -76,25 +81,7 @@ TabNavRootViewControllerType {
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
 
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillShow(notification:)),
-            name: .UIKeyboardWillShow,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillHide(notification:)),
-            name: .UIKeyboardWillHide,
-            object: nil
-        )
-
-        nc.addObserver(
-            searchBar,
-            selector: #selector(UISearchBar.resignFirstResponder),
-            name: .UIKeyboardWillHide,
-            object: nil)
+        searchBar.resignWhenKeyboardHides()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -111,28 +98,6 @@ TabNavRootViewControllerType {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
         }
-    }
-
-    // MARK: Notifications
-
-    @objc func onKeyboardWillShow(notification: NSNotification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        originalContentInset = collectionView.contentInset
-
-        let converted = view.convert(frame, from: nil)
-        let intersection = converted.intersection(frame)
-        let bottomInset = intersection.height - bottomLayoutGuide.length
-
-        var inset = originalContentInset
-        inset.bottom = bottomInset
-        collectionView.contentInset = inset
-        collectionView.scrollIndicatorInsets = inset
-    }
-
-    @objc func onKeyboardWillHide(notification: NSNotification) {
-        collectionView.contentInset = originalContentInset
-        collectionView.scrollIndicatorInsets = originalContentInset
     }
 
     private func update(animated: Bool) {

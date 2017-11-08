@@ -1,0 +1,68 @@
+//
+//  ScrollViewKeyboardAdjuster.swift
+//  Freetime
+//
+//  Created by Ryan Nystrom on 11/7/17.
+//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//
+
+import UIKit
+
+final class ScrollViewKeyboardAdjuster {
+
+    private let scrollView: UIScrollView
+    private var originalContentInset: UIEdgeInsets = .zero
+    private weak var viewController: UIViewController?
+
+    init(scrollView: UIScrollView, viewController: UIViewController) {
+        self.scrollView = scrollView
+        self.viewController = viewController
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillShow(notification:)),
+            name: .UIKeyboardWillShow,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onKeyboardWillHide(notification:)),
+            name: .UIKeyboardWillHide,
+            object: nil
+        )
+    }
+
+    // MARK: Notifications
+
+    @objc func onKeyboardWillShow(notification: NSNotification) {
+        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
+            let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
+            let viewController = self.viewController
+            else { return }
+
+        var inset = scrollView.contentInset
+        originalContentInset = inset
+
+        let converted = viewController.view.convert(frame, from: nil)
+        let intersection = converted.intersection(frame)
+        let bottomInset = intersection.height - viewController.bottomLayoutGuide.length
+
+        inset.bottom = bottomInset
+
+        UIView.animate(withDuration: duration, delay: 0, options: [.beginFromCurrentState], animations: {
+            self.scrollView.contentInset = inset
+            self.scrollView.scrollIndicatorInsets = inset
+        })
+    }
+
+    @objc func onKeyboardWillHide(notification: NSNotification) {
+        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
+            else { return }
+        UIView.animate(withDuration: duration, delay: 0, options: [.beginFromCurrentState], animations: {
+            self.scrollView.contentInset = self.originalContentInset
+            self.scrollView.scrollIndicatorInsets = self.originalContentInset
+        })
+    }
+
+}

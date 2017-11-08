@@ -173,6 +173,8 @@
 		2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */; };
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
+		294A3D761FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */; };
+		294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */; };
 		294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */; };
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
@@ -547,6 +549,8 @@
 		2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrCell.swift; sourceTree = "<group>"; };
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
 		294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlCell.swift; sourceTree = "<group>"; };
+		294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewKeyboardAdjuster.swift; sourceTree = "<group>"; };
+		294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Keyboard.swift"; sourceTree = "<group>"; };
 		294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavRootViewControllerType.swift; sourceTree = "<group>"; };
 		294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToTop.swift"; sourceTree = "<group>"; };
@@ -1329,6 +1333,7 @@
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
 				290744B01F250A1D00FD9E48 /* Autocomplete */,
 				291929661F3FF9C50012067B /* BadgeNotifications.swift */,
+				DC78570F1F97F546009BADDA /* Debouncer.swift */,
 				29C167791ECA14F700439D62 /* Feed.swift */,
 				54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */,
 				29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */,
@@ -1345,6 +1350,8 @@
 				2980033A1F51E82400BE90F4 /* Rating */,
 				293189271F5391F700EF0911 /* Result.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
+				294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */,
+				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */,
@@ -1352,8 +1359,6 @@
 				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
-				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
-				DC78570F1F97F546009BADDA /* Debouncer.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1417,6 +1422,7 @@
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */,
+				294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */,
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
@@ -2345,6 +2351,7 @@
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
 				986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */,
+				294A3D761FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift in Sources */,
 				986B87251F2B990A00AAB55C /* SearchRepoResultCell.swift in Sources */,
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
@@ -2356,6 +2363,7 @@
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				DCA5ED0E1FAED91F0072F074 /* BookmarkViewController.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
+				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
 				293971891F904C82002FAC4B /* Toast.swift in Sources */,
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
