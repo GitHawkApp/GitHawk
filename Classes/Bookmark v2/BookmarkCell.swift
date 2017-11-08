@@ -13,20 +13,13 @@ final class BookmarkCell: SwipeSelectableCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.gutter * 2 + Styles.Sizes.icon.width,
+        left: Styles.Sizes.gutter + Styles.Sizes.icon.width + Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.eventGutter
-    )
-
-    private static let compactInset = UIEdgeInsets(
-        top: 17.5,
-        left: Styles.Sizes.gutter * 2 + Styles.Sizes.icon.width,
-        bottom: 17.5,
-        right: Styles.Sizes.eventGutter
+        right: Styles.Sizes.gutter
     )
 
     private let imageView = UIImageView()
-    private let textView = AttributedStringView()
+    private let textLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,9 +38,16 @@ final class BookmarkCell: SwipeSelectableCell {
             make.width.equalTo(Styles.Sizes.icon.width)
         }
 
-        addSubview(textView)
+        textLabel.numberOfLines = 0
 
-        addBorder(.bottom, left: RepositorySummaryCell.titleInset.left)
+        addSubview(textLabel)
+        textLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
+            make.right.equalTo(Styles.Sizes.gutter)
+        }
+
+        addBorder(.bottom, left: Styles.Sizes.gutter)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,15 +57,11 @@ final class BookmarkCell: SwipeSelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-        textView.reposition(width: contentView.bounds.width)
     }
 
     func configure(viewModel: BookmarkViewModel, height: CGFloat) {
-        if height == Styles.Sizes.tableCellHeightLarge {
-            viewModel.text = NSAttributedStringSizing(containerWidth: contentView.bounds.width, attributedText: viewModel.text.attributedText, inset: BookmarkCell.compactInset)
-        }
-        textView.configureAndSizeToFit(text: viewModel.text, width: contentView.bounds.width)
         imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
+        textLabel.attributedText = viewModel.text.attributedText
     }
 
 }
