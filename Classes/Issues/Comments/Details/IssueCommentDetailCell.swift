@@ -77,15 +77,16 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
 
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: Styles.Sizes.gutter)
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
         moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
-            make.size.equalTo(Styles.Sizes.icon)
+            make.size.equalTo(Styles.Sizes.buttonMin)
             make.centerY.equalTo(imageView)
-            make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
+            make.right.equalTo(contentView)
         }
 
         border = addBorder(.top, useSafeMargins: false)
