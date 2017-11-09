@@ -275,6 +275,7 @@
 		29A5AF411F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */; };
 		29A5AF431F926C600065D529 /* Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF421F926C600065D529 /* Filterable.swift */; };
 		29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */; };
+		29AAB7171FB4A2AE001D5E6A /* BoundedImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */; };
 		29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
 		29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */; };
 		29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */; };
@@ -659,6 +660,7 @@
 		29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RepositoryIssueSummaryModel+Filterable.swift"; sourceTree = "<group>"; };
 		29A5AF421F926C600065D529 /* Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filterable.swift; sourceTree = "<group>"; };
 		29A5AF441F9298360065D529 /* GitHubClient+Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Repository.swift"; sourceTree = "<group>"; };
+		29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedImageSize.swift; sourceTree = "<group>"; };
 		29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerDelegate.swift; sourceTree = "<group>"; };
 		29AF1E811F8AAB2B0008A0EF /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
 		29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+GitHawk.swift"; sourceTree = "<group>"; };
@@ -1420,6 +1422,7 @@
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2104,6 +2107,7 @@
 				2919295A1F3FB1D20012067B /* Content.swift in Sources */,
 				297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */,
 				29A195041EC74C4800C3E289 /* Date+Display.swift in Sources */,
+				29AAB7171FB4A2AE001D5E6A /* BoundedImageSize.swift in Sources */,
 				29A4768E1ED07A23005D0953 /* DateDetailsFormatter.swift in Sources */,
 				29AF1E8C1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift in Sources */,
 				291929611F3FD2960012067B /* DiffString.swift in Sources */,

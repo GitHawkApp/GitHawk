@@ -39,14 +39,11 @@ UIGestureRecognizerDelegate {
         contentView.clipsToBounds = true
         backgroundColor = .white
 
-        imageView.contentMode = .top
+        imageView.contentMode = .scaleAspectFit
         if #available(iOS 11, *) {
             imageView.accessibilityIgnoresInvertColors = true
         }
         contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
-        }
 
         spinner.hidesWhenStopped = true
         contentView.addSubview(spinner)
@@ -67,6 +64,12 @@ UIGestureRecognizerDelegate {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
+
+        var frame = bounds
+        if let size = imageView.image?.size {
+            frame.size = BoundedImageSize(originalSize: size, containerWidth: frame.width)
+        }
+        imageView.frame = frame
     }
 
     // MARK: Private API
@@ -87,6 +90,7 @@ UIGestureRecognizerDelegate {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        imageView.image = nil
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
 
@@ -99,6 +103,9 @@ UIGestureRecognizerDelegate {
             if let size = image?.size {
                 strongSelf.heightDelegate?.imageDidFinishLoad(cell: strongSelf, url: imageURL, size: size)
             }
+
+            // forces the image view to lay itself out using the original image size
+            strongSelf.setNeedsLayout()
         }
     }
 
