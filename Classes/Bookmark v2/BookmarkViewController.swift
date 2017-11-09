@@ -26,11 +26,7 @@ TabNavRootViewControllerType {
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout(
-            stickyHeaders: false,
-            topContentInset: 0,
-            stretchToEdge: false
-        ))
+        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
