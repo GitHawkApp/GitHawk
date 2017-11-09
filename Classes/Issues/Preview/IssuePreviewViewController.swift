@@ -12,10 +12,7 @@ import SnapKit
 
 final class IssuePreviewViewController: UIViewController, ListAdapterDataSource {
 
-    private let collectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: ListCollectionViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
-    )
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: nil)
     private let markdown: String
     private let owner: String
