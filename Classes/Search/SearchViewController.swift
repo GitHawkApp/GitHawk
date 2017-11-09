@@ -25,6 +25,7 @@ SearchResultSectionControllerDelegate {
     private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
     private var recentStore = SearchRecentStore()
     private let debouncer = Debouncer()
+    private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
 
     enum State {
         case idle
@@ -53,7 +54,6 @@ SearchResultSectionControllerDelegate {
         view.backgroundColor = Styles.Colors.background
         return view
     }()
-    private var originalContentInset: UIEdgeInsets = .zero
 
     init(client: GithubClient) {
         self.client = client
@@ -66,6 +66,11 @@ SearchResultSectionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        keyboardAdjuster = ScrollViewKeyboardAdjuster(
+            scrollView: collectionView,
+            viewController: self
+        )
 
         makeBackBarItemEmpty()
 
@@ -82,25 +87,7 @@ SearchResultSectionControllerDelegate {
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
 
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillShow(notification:)),
-            name: .UIKeyboardWillShow,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillHide(notification:)),
-            name: .UIKeyboardWillHide,
-            object: nil
-        )
-        
-        nc.addObserver(
-            searchBar,
-            selector: #selector(UISearchBar.resignFirstResponder),
-            name: .UIKeyboardWillHide,
-            object: nil)
+        searchBar.resignWhenKeyboardHides()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -116,27 +103,6 @@ SearchResultSectionControllerDelegate {
             collectionView.frame = bounds
             collectionView.collectionViewLayout.invalidateLayout()
         }
-    }
-    // MARK: Notifications
-
-    @objc func onKeyboardWillShow(notification: NSNotification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        originalContentInset = collectionView.contentInset
-
-        let converted = view.convert(frame, from: nil)
-        let intersection = converted.intersection(frame)
-        let bottomInset = intersection.height - bottomLayoutGuide.length
-
-        var inset = originalContentInset
-        inset.bottom = bottomInset
-        collectionView.contentInset = inset
-        collectionView.scrollIndicatorInsets = inset
-    }
-
-    @objc func onKeyboardWillHide(notification: NSNotification) {
-        collectionView.contentInset = originalContentInset
-        collectionView.scrollIndicatorInsets = originalContentInset
     }
 
     // MARK: Data Loading/Paging
