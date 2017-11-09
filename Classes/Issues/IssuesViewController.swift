@@ -72,12 +72,10 @@ FlatCacheListener {
     }
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
+        let rightBtn = UIButton(frame: Styles.Sizes.barButton)
+        rightBtn.setImage(UIImage(named: "bullets-hollow")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        rightBtn.addTarget(self, action: #selector(IssuesViewController.onMore(sender:)), for: .touchUpInside)
+        let rightItem = UIBarButtonItem(customView: rightBtn)
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         return rightItem
     }
@@ -299,7 +297,7 @@ FlatCacheListener {
             .view(client: client, repo: repo)
     }
 
-    @objc func onMore(sender: UIBarButtonItem) {
+    @objc func onMore(sender: UIButton) {
         let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
@@ -314,12 +312,16 @@ FlatCacheListener {
         alert.addActions([
             closeAction(),
             lockAction(),
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
+            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
+                $0.popoverPresentationController?.sourceView = sender
+                $0.popoverPresentationController?.sourceRect = sender.bounds
+            },
             viewRepoAction(),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
-
+        alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
         present(alert, animated: true)
     }
 
