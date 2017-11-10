@@ -37,11 +37,8 @@ final class BookmarkNavigationController {
             accessibilityLabel = Constants.Strings.bookmark
             selector = #selector(BookmarkNavigationController.add(sender:))
         }
-
-        let itemBtn = UIButton(frame: Styles.Sizes.barButton)
-        itemBtn.setImage(UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate), for: .normal)
-        itemBtn.addTarget(self, action: selector, for: .touchUpInside)
-        let item = UIBarButtonItem(customView: itemBtn)
+        
+        let item = UIBarButtonItem(image: UIImage(named: imageName), target: self, action: selector)
         item.accessibilityLabel = accessibilityLabel
         return item
     }

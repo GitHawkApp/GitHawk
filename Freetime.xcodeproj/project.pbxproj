@@ -384,6 +384,8 @@
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
 		C2FAAA639721846A5B477E5C /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */; };
 		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
+		D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */; };
+		D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */; };
 		DC3238911F9B9E1A007DD924 /* SearchRecentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */; };
 		DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238921F9BA29D007DD924 /* SearchQuery.swift */; };
 		DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */; };
@@ -774,6 +776,8 @@
 		B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
 		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
+		D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+SourceView.swift"; sourceTree = "<group>"; };
+		D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+TightSpacing.swift"; sourceTree = "<group>"; };
 		DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentViewModel.swift; sourceTree = "<group>"; };
 		DC3238921F9BA29D007DD924 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRecentStoreTests.swift; sourceTree = "<group>"; };
@@ -1385,6 +1389,7 @@
 				292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */,
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
 				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
+				D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1429,6 +1434,7 @@
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */,
+				D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2367,6 +2373,7 @@
 				298BA09A1EC947FC00B01946 /* SegmentedControlModel.swift in Sources */,
 				DCA5ED0E1FAED91F0072F074 /* BookmarkViewController.swift in Sources */,
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
+				D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */,
 				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
 				293971891F904C82002FAC4B /* Toast.swift in Sources */,
@@ -2408,6 +2415,7 @@
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
 				292CD3D61F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift in Sources */,
+				D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */,
 				29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,

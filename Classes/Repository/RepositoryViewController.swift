@@ -22,10 +22,7 @@ NewIssueTableViewControllerDelegate {
     private var bookmarkNavController: BookmarkNavigationController? = nil
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightBtn = UIButton(frame: Styles.Sizes.barButton)
-        rightBtn.setImage(UIImage(named: "bullets-hollow")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        rightBtn.addTarget(self, action: #selector(IssuesViewController.onMore(sender:)), for: .touchUpInside)
-        let rightItem = UIBarButtonItem(customView: rightBtn)
+        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         return rightItem
     }
@@ -128,14 +125,12 @@ NewIssueTableViewControllerDelegate {
         alert.addActions([
             repo.hasIssuesEnabled ? newIssueAction() : nil,
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
-                $0.popoverPresentationController?.sourceView = sender
-                $0.popoverPresentationController?.sourceRect = sender.bounds
+                $0.popoverPresentationController?.setSourceView(sender)
             },
             AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.sourceView = sender
-        alert.popoverPresentationController?.sourceRect = sender.bounds
+        alert.popoverPresentationController?.setSourceView(sender)
 
         present(alert, animated: true)
     }

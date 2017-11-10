@@ -72,10 +72,7 @@ FlatCacheListener {
     }
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightBtn = UIButton(frame: Styles.Sizes.barButton)
-        rightBtn.setImage(UIImage(named: "bullets-hollow")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        rightBtn.addTarget(self, action: #selector(IssuesViewController.onMore(sender:)), for: .touchUpInside)
-        let rightItem = UIBarButtonItem(customView: rightBtn)
+        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(IssuesViewController.onMore(sender:)))
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         return rightItem
     }
@@ -313,14 +310,12 @@ FlatCacheListener {
             closeAction(),
             lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
-                $0.popoverPresentationController?.sourceView = sender
-                $0.popoverPresentationController?.sourceRect = sender.bounds
+                $0.popoverPresentationController?.setSourceView(sender)
             },
             viewRepoAction(),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.sourceView = sender
-        alert.popoverPresentationController?.sourceRect = sender.bounds
+        alert.popoverPresentationController?.setSourceView(sender)
         
         present(alert, animated: true)
     }
