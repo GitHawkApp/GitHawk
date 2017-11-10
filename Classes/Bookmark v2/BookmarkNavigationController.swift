@@ -37,29 +37,24 @@ final class BookmarkNavigationController {
             accessibilityLabel = Constants.Strings.bookmark
             selector = #selector(BookmarkNavigationController.add(sender:))
         }
-
-        let item = UIBarButtonItem(
-            image: UIImage(named: imageName),
-            style: .plain,
-            target: self,
-            action: selector
-        )
+        
+        let item = UIBarButtonItem(image: UIImage(named: imageName), target: self, action: selector)
         item.accessibilityLabel = accessibilityLabel
         return item
     }
 
     // MARK: Private API
 
-    @objc func add(sender: UIBarButtonItem) {
+    @objc func add(sender: UIButton) {
         Haptic.triggerSelection()
-        sender.action = #selector(BookmarkNavigationController.remove(sender:))
-        sender.image = UIImage(named: "nav-bookmark-selected")
+        sender.addTarget(self, action: #selector(BookmarkNavigationController.remove(sender:)), for: .touchUpInside)
+        sender.setImage(UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate), for: .normal)
         store.add(model)
     }
 
-    @objc func remove(sender: UIBarButtonItem) {
-        sender.action = #selector(BookmarkNavigationController.add(sender:))
-        sender.image = UIImage(named: "nav-bookmark")
+    @objc func remove(sender: UIButton) {
+        sender.addTarget(self, action: #selector(BookmarkNavigationController.add(sender:)), for: .touchUpInside)
+        sender.setImage(UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
         store.remove(model)
     }
 

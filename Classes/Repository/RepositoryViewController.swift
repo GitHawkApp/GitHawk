@@ -22,12 +22,7 @@ NewIssueTableViewControllerDelegate {
     private var bookmarkNavController: BookmarkNavigationController? = nil
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
+        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
         rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
         return rightItem
     }
@@ -121,7 +116,7 @@ NewIssueTableViewControllerDelegate {
             .newIssue(issueController: newIssueViewController)
     }
 
-    @objc func onMore(sender: UIBarButtonItem) {
+    @objc func onMore(sender: UIButton) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         weak var weakSelf = self
@@ -129,11 +124,13 @@ NewIssueTableViewControllerDelegate {
 
         alert.addActions([
             repo.hasIssuesEnabled ? newIssueAction() : nil,
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
             AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
+        alert.popoverPresentationController?.setSourceView(sender)
 
         present(alert, animated: true)
     }
