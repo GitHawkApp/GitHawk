@@ -194,12 +194,16 @@ extension GithubClient {
         // optimistically update the cache, listeners can react as appropriate
         cache.set(value: optimisticResult)
 
+        let stateString = close ? "closed" : "open"
+
+        // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
-            parameters: [ "state": newStatus.status.rawValue ],
+            parameters: [ "state": stateString ],
             completion: { (response, _) in
-                if response.value == nil {
+                // rewind to a previous object if response isn't a success
+                if response.response?.statusCode != 200 {
                     cache.set(value: previous)
                     ToastManager.showGenericError()
                 }
