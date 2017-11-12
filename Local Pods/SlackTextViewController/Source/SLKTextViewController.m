@@ -888,7 +888,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     if (self.isTextInputbarHidden == hidden) {
         return;
     }
-    
+
+    _textInputbar.alpha = hidden ? 0 : 1;
     _textInputbar.hidden = hidden;
     
     __weak typeof(self) weakSelf = self;
