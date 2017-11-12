@@ -69,7 +69,9 @@ NewIssueTableViewControllerDelegate {
 
         makeBackBarItemEmpty()
 
+//        automaticallyAdjustsChildScrollViewInsets = false
         dataSource = self
+        delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
         bar.appearance = TabmanBar.Appearance({ appearance in
             appearance.text.font = Styles.Fonts.button
@@ -80,13 +82,6 @@ NewIssueTableViewControllerDelegate {
 
         configureNavigationItems()
         navigationItem.configure(title: repo.name, subtitle: repo.owner)
-    }
-
-    override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-        }
-        setNeedsScrollViewInsetUpdate()
     }
 
     // MARK: Private API
@@ -158,5 +153,38 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         show(issuesViewController, sender: self)
     }
+
+    // MARK: PageboyViewControllerDelegate
+
+//    override func pageboyViewController(
+//        _ pageboyViewController: PageboyViewController,
+//        willScrollToPageAt index: PageboyViewController.PageIndex,
+//        direction: PageboyViewController.NavigationDirection,
+//        animated: Bool
+//        ) {
+//        super.pageboyViewController(
+//            pageboyViewController,
+//            willScrollToPageAt: index,
+//            direction: direction,
+//            animated: animated
+//        )
+//
+//        return
+//
+//        // hack to fix Tabman not applying top (nav bar) and bottom (tab bar) insets simultaneously
+//        var inset: UIEdgeInsets
+//        if #available(iOS 11.0, *) {
+//            inset = view.safeAreaInsets
+//        } else {
+//            inset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomLayoutGuide.length, right: 0)
+//        }
+//        inset.top += bar.requiredInsets.bar
+//        for view in controllers[index].view.subviews {
+//            if let scrollView = view as? UIScrollView {
+//                scrollView.contentInset = inset
+//                scrollView.scrollIndicatorInsets = inset
+//            }
+//        }
+//    }
 
 }

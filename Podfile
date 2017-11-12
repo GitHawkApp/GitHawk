@@ -12,7 +12,6 @@ pod 'HTMLString', '~> 4.0.1'
 pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'SDWebImage/GIF', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
-pod 'Tabman', '1.0.5'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
 
@@ -27,6 +26,7 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
+pod 'Tabman', :path => 'Local Pods/Tabman'
 
 target 'Freetime' do
 
