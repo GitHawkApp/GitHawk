@@ -68,6 +68,7 @@ NewIssueTableViewControllerDelegate {
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
+            deselectRow()
             onReviewAccess()
         } else if cell === accountsCell {
             deselectRow()
@@ -91,7 +92,12 @@ NewIssueTableViewControllerDelegate {
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
             else { fatalError("Should always create GitHub issue URL") }
-        presentSafari(url: url)
+        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
+        if #available(iOS 11.0, *) {
+            UIApplication.shared.open(url, options: [:])
+        } else {
+            presentSafari(url: url)
+        }
     }
 
     func onAccounts() {
