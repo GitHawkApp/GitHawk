@@ -92,7 +92,7 @@ FlatCacheListener {
         self.hasScrolledToBottom = !scrollToBottom
 
         // force unwrap, this absolutely must work
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())!
+        super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
 
         self.hidesBottomBarWhenPushed = true
         self.addCommentClient.addListener(listener: self)

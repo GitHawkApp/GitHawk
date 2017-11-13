@@ -229,6 +229,7 @@
 		297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86E1EC0D5C200B44A1F /* Assets.xcassets */; };
 		297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */; };
 		297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297AE8711EC0D5C200B44A1F /* Main.storyboard */; };
+		297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
@@ -616,6 +617,7 @@
 		297AE8701EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		297AE8721EC0D5C200B44A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		297AE8731EC0D5C200B44A1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IGListCollectionViewLayout+GitHawk.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
@@ -1435,6 +1437,7 @@
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */,
 				D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */,
+				297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2282,6 +2285,7 @@
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
 				29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */,
+				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
 				2919295B1F3FB1D20012067B /* Link.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
