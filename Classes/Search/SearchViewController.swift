@@ -101,8 +101,7 @@ SearchResultSectionControllerDelegate {
         let bounds = view.bounds
         if bounds != collectionView.frame {
             collectionView.frame = bounds
-            let context = collectionView.collectionViewLayout.invalidationContext(forBoundsChange: .zero)
-            collectionView.collectionViewLayout.invalidateLayout(with: context)
+            collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
 

@@ -86,8 +86,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
             collectionView.frame = bounds
         }
         if changed {
-            let context = collectionView.collectionViewLayout.invalidationContext(forBoundsChange: .zero)
-            collectionView.collectionViewLayout.invalidateLayout(with: context)
+            collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
 
