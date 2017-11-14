@@ -32,6 +32,10 @@ FlatCacheListener {
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
 
+    // must fetch collaborator info from API before showing editing controls
+    private var viewerIsCollaborator = false
+    private let collaboratorKey = "collaborator" as ListDiffable
+
     lazy private var feed: Feed = { Feed(
         viewController: self,
         delegate: self,
@@ -321,6 +325,22 @@ FlatCacheListener {
     }
 
     func fetch(previous: Bool) {
+        if !previous {
+            client.fetchViewerCollaborator(
+                owner: model.owner,
+                repo: model.repo
+            ) { [weak self] (result) in
+                switch result {
+                case .success(let isCollab):
+                    self?.viewerIsCollaborator = isCollab
+                    // avoid finishLoading() so empty view doesn't appear
+                    self?.feed.adapter.performUpdates(animated: true)
+                case .error:
+                    ToastManager.showGenericError()
+                }
+            }
+        }
+
         client.fetch(
             owner: model.owner,
             repo: model.repo,
@@ -415,6 +435,10 @@ FlatCacheListener {
             objects.append(viewFilesModel)
         }
 
+        if viewerIsCollaborator {
+            objects.append(collaboratorKey)
+        }
+
         if current.hasPreviousPage {
             objects.append(IssueNeckLoadModel())
         }
@@ -430,8 +454,12 @@ FlatCacheListener {
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? ListDiffable, object === viewFilesModel {
+        guard let object = object as? ListDiffable else { fatalError("Must be diffable") }
+
+        if object === viewFilesModel {
             return IssueViewFilesSectionController(issueModel: model, client: client)
+        } else if object === collaboratorKey, let id = resultID {
+            return IssueManagingSectionController(id: id, model: model, client: client)
         }
 
         switch object {
