@@ -147,8 +147,10 @@ FlatCacheListener {
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        
         textActionsController.configure(client: client, textView: textView, actions: actions)
-
+        textActionsController.viewController = self
+        
         let contentView = textInputbar.contentView
         contentView.addSubview(actions)
         actions.snp.makeConstraints { (make) in
