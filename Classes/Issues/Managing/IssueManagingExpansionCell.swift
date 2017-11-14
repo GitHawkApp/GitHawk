@@ -33,7 +33,7 @@ final class IssueManagingExpansionCell: SelectableCell, ListBindable {
         contentView.addSubview(chevron)
         chevron.snp.makeConstraints { make in
             make.centerY.equalTo(label).offset(1)
-            make.left.equalTo(label.snp.right).offset(3 + Styles.Sizes.rowSpacing)
+            make.left.equalTo(label.snp.right).offset(Styles.Sizes.rowSpacing-3)
         }
     }
 
