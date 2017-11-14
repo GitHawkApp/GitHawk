@@ -26,7 +26,7 @@ TabNavRootViewControllerType {
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let view = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
@@ -96,7 +96,7 @@ TabNavRootViewControllerType {
         let bounds = view.bounds
         if bounds != collectionView.frame {
             collectionView.frame = bounds
-            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
 

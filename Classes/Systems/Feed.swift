@@ -40,7 +40,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.delegate = delegate
         self.managesLayout = managesLayout
         self.collectionView = collectionView
-            ?? UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+            ?? UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
         super.init()
         self.adapter.scrollViewDelegate = self
 
@@ -86,7 +86,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
             collectionView.frame = bounds
         }
         if changed {
-            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
 
