@@ -19,6 +19,10 @@ LabelsViewControllerDelegate {
             label: NSLocalizedString("Labels", comment: ""),
             imageName: "tag"
         )
+        static let milestone = IssueManagingActionModel(
+            label: NSLocalizedString("Milestone", comment: ""),
+            imageName: "milestone"
+        )
     }
 
     private let id: String
@@ -42,7 +46,7 @@ LabelsViewControllerDelegate {
         return client.cache.get(id: id)
     }
 
-    func editLabels(cell: UICollectionViewCell) {
+    func newLabelsController() -> UIViewController {
         guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
             else { fatalError("Missing labels view controller") }
         controller.configure(
@@ -52,6 +56,22 @@ LabelsViewControllerDelegate {
             repo: model.repo,
             delegate: self
         )
+        return controller
+    }
+
+    func newMilestonesController() -> UIViewController {
+        guard let controller = UIStoryboard(name: "Milestone", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
+            else { fatalError("Missing labels view controller") }
+        controller.configure(
+            client: client,
+            owner: model.owner,
+            repo: model.repo,
+            selectedNumber: issueResult?.milestone?.number
+        )
+        return controller
+    }
+
+    func present(controller: UIViewController, from cell: UICollectionViewCell) {
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .popover
         nav.popoverPresentationController?.sourceView = cell
@@ -67,7 +87,8 @@ LabelsViewControllerDelegate {
         ) -> [ListDiffable] {
         return [IssueManagingModel(expanded: expanded)]
             + (expanded ? [
-                    Action.labels
+                    Action.labels,
+                    Action.milestone,
                     ] : [])
     }
 
@@ -123,7 +144,11 @@ LabelsViewControllerDelegate {
             cell.animate(expanded: expanded)
             update(animated: true)
         } else if viewModel === Action.labels {
-            editLabels(cell: cell)
+            let controller = newLabelsController()
+            present(controller: controller, from: cell)
+        } else if viewModel === Action.milestone {
+            let controller = newMilestonesController()
+            present(controller: controller, from: cell)
         }
     }
 
