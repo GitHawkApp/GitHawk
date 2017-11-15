@@ -15,7 +15,10 @@ ListBindingSectionControllerSelectionDelegate,
 LabelsViewControllerDelegate {
 
     private enum Action {
-        static let labels = NSLocalizedString("Edit Labels", comment: "") as ListDiffable
+        static let labels = IssueManagingActionModel(
+            label: NSLocalizedString("Labels", comment: ""),
+            imageName: "tag"
+        )
     }
 
     private let id: String
@@ -28,6 +31,7 @@ LabelsViewControllerDelegate {
         self.model = model
         self.client = client
         super.init()
+        inset = Styles.Sizes.listInsetTight
         selectionDelegate = self
         dataSource = self
     }
@@ -72,9 +76,18 @@ LabelsViewControllerDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let containerWidth = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        switch viewModel {
+        case is IssueManagingModel:
+            let width = floor(containerWidth / 2)
+            return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        default:
+            // justify-align cells to a max of 4-per-row
+            let itemsPerRow = CGFloat(min(self.viewModels.count - 1, 4))
+            let width = floor(containerWidth / itemsPerRow)
+            return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        }
     }
 
     func sectionController(

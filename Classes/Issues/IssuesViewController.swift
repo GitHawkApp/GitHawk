@@ -415,11 +415,14 @@ FlatCacheListener {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.result else { return [] }
 
-        var objects: [ListDiffable] = [
-            current.status,
-            current.title,
-            current.labels
-        ]
+        var objects: [ListDiffable] = [current.status]
+
+        if viewerIsCollaborator {
+            objects.append(collaboratorKey)
+        }
+
+        objects.append(current.title)
+        objects.append(current.labels)
 
         if let milestone = current.milestone {
             objects.append(milestone)
@@ -433,10 +436,6 @@ FlatCacheListener {
 
         if current.pullRequest {
             objects.append(viewFilesModel)
-        }
-
-        if viewerIsCollaborator {
-            objects.append(collaboratorKey)
         }
 
         if current.hasPreviousPage {
