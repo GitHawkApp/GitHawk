@@ -19,7 +19,7 @@ final class IssueStatusSectionController: ListGenericSectionController<IssueStat
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(width: floor(width / 2), height: Styles.Sizes.labelEventHeight)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

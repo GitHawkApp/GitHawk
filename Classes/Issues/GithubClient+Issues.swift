@@ -111,7 +111,7 @@ extension GithubClient {
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
-                        labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),
+                        labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
@@ -267,6 +267,54 @@ extension GithubClient {
                     completion?(.error(nil))
                 }
         }))
+    }
+
+    func fetchViewerCollaborator(
+        owner: String,
+        repo: String,
+        completion: @escaping (Result<Bool>) -> Void
+        ) {
+        guard let viewer = userSession?.username else {
+            completion(.error(nil))
+            return
+        }
+
+        // https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+        request(Request(
+            path: "repos/\(owner)/\(repo)/collaborators/\(viewer)",
+            headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
+            completion: { (response, _) in
+                // documentation states that collab = 204
+                completion(.success(response.response?.statusCode == 204))
+        }))
+    }
+
+    func mutateLabels(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        labels: [RepositoryLabel]
+        ) {
+        let optimistic = previous.updated(labels: IssueLabelsModel(labels: labels))
+
+        let cache = self.cache
+        cache.set(value: optimistic)
+
+        request(GithubClient.Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)",
+            method: .patch,
+            parameters: ["labels": labels.map { $0.name }]
+        ) { (response, _) in
+            if let statusCode = response.response?.statusCode, statusCode != 200 {
+                cache.set(value: previous)
+                if statusCode == 403 {
+                    ToastManager.showPermissionsError()
+                } else {
+                    ToastManager.showGenericError()
+                }
+            }
+        })
     }
 
 }
