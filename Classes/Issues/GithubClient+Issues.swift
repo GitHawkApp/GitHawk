@@ -97,9 +97,19 @@ extension GithubClient {
                         viewModels: timeline.models
                     )
 
-                    let milestoneModel: IssueMilestoneModel?
+                    let milestoneModel: Milestone?
                     if let milestone = issueType.milestoneFields {
-                        milestoneModel = IssueMilestoneModel(number: milestone.number, title: milestone.title)
+                        let dueOn: Date?
+                        if let date = milestone.dueOn {
+                            dueOn = GithubAPIDateFormatter().date(from: date)
+                        } else {
+                            dueOn = nil
+                        }
+                        milestoneModel = Milestone(
+                            number: milestone.number,
+                            title: milestone.title,
+                            dueOn: dueOn
+                        )
                     } else {
                         milestoneModel = nil
                     }

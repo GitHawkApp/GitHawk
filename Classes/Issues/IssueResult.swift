@@ -18,9 +18,11 @@ struct IssueResult: Cachable {
     let title: NSAttributedStringSizing
     let labels: IssueLabelsModel
     let assignee: IssueAssigneesModel
+    // optional models
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
-    let milestone: IssueMilestoneModel?
+    let milestone: Milestone?
+    // end optionals
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool
@@ -68,9 +70,6 @@ struct IssueResult: Cachable {
         title: NSAttributedStringSizing? = nil,
         labels: IssueLabelsModel? = nil,
         assignee: IssueAssigneesModel? = nil,
-        rootComment: IssueCommentModel? = nil,
-        reviewers: IssueAssigneesModel? = nil,
-        milestone: IssueMilestoneModel? = nil,
         timelinePages: [IssueTimelinePage]? = nil,
         viewerCanUpdate: Bool? = nil,
         hasIssuesEnabled: Bool? = nil,
@@ -84,14 +83,36 @@ struct IssueResult: Cachable {
             title: title ?? self.title,
             labels: labels ?? self.labels,
             assignee: assignee ?? self.assignee,
-            rootComment: rootComment ?? self.rootComment,
-            reviewers: reviewers ?? self.reviewers,
-            milestone: milestone ?? self.milestone,
+            rootComment: self.rootComment,
+            reviewers: self.reviewers,
+            milestone: self.milestone,
             timelinePages: timelinePages ?? self.timelinePages,
             viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
             hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
             viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister,
             defaultBranch: defaultBranch ?? self.defaultBranch
+        )
+    }
+
+    func withMilestone(
+        _ milestone: Milestone?,
+        timelinePages: [IssueTimelinePage]? = nil
+        ) -> IssueResult {
+        return IssueResult(
+            id: self.id,
+            pullRequest: self.pullRequest,
+            status: self.status,
+            title: self.title,
+            labels: self.labels,
+            assignee: self.assignee,
+            rootComment: self.rootComment,
+            reviewers: self.reviewers,
+            milestone: milestone,
+            timelinePages: timelinePages ?? self.timelinePages,
+            viewerCanUpdate: self.viewerCanUpdate,
+            hasIssuesEnabled: self.hasIssuesEnabled,
+            viewerCanAdminister: self.viewerCanAdminister,
+            defaultBranch: self.defaultBranch
         )
     }
 

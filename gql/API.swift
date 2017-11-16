@@ -4855,6 +4855,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               GraphQLField("number", type: .nonNull(.scalar(Int.self))),
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("url", type: .nonNull(.scalar(String.self))),
+              GraphQLField("dueOn", type: .scalar(String.self)),
             ]
 
             public var snapshot: Snapshot
@@ -4863,8 +4864,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(number: Int, title: String, url: String) {
-              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url])
+            public init(number: Int, title: String, url: String, dueOn: String? = nil) {
+              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
             }
 
             public var __typename: String {
@@ -4903,6 +4904,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "url")
+              }
+            }
+
+            /// Identifies the due date of the milestone.
+            public var dueOn: String? {
+              get {
+                return snapshot["dueOn"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "dueOn")
               }
             }
 
@@ -10514,6 +10525,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               GraphQLField("number", type: .nonNull(.scalar(Int.self))),
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("url", type: .nonNull(.scalar(String.self))),
+              GraphQLField("dueOn", type: .scalar(String.self)),
             ]
 
             public var snapshot: Snapshot
@@ -10522,8 +10534,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(number: Int, title: String, url: String) {
-              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url])
+            public init(number: Int, title: String, url: String, dueOn: String? = nil) {
+              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
             }
 
             public var __typename: String {
@@ -10562,6 +10574,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "url")
+              }
+            }
+
+            /// Identifies the due date of the milestone.
+            public var dueOn: String? {
+              get {
+                return snapshot["dueOn"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "dueOn")
               }
             }
 
@@ -14762,7 +14784,7 @@ public struct HeadPaging: GraphQLFragment {
 
 public struct MilestoneFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment milestoneFields on Milestone {\n  __typename\n  number\n  title\n  url\n}"
+    "fragment milestoneFields on Milestone {\n  __typename\n  number\n  title\n  url\n  dueOn\n}"
 
   public static let possibleTypes = ["Milestone"]
 
@@ -14771,6 +14793,7 @@ public struct MilestoneFields: GraphQLFragment {
     GraphQLField("number", type: .nonNull(.scalar(Int.self))),
     GraphQLField("title", type: .nonNull(.scalar(String.self))),
     GraphQLField("url", type: .nonNull(.scalar(String.self))),
+    GraphQLField("dueOn", type: .scalar(String.self)),
   ]
 
   public var snapshot: Snapshot
@@ -14779,8 +14802,8 @@ public struct MilestoneFields: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(number: Int, title: String, url: String) {
-    self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url])
+  public init(number: Int, title: String, url: String, dueOn: String? = nil) {
+    self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
   }
 
   public var __typename: String {
@@ -14819,6 +14842,16 @@ public struct MilestoneFields: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "url")
+    }
+  }
+
+  /// Identifies the due date of the milestone.
+  public var dueOn: String? {
+    get {
+      return snapshot["dueOn"] as? String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "dueOn")
     }
   }
 }

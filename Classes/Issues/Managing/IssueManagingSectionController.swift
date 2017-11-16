@@ -12,12 +12,17 @@ import IGListKit
 final class IssueManagingSectionController: ListBindingSectionController<NSString>,
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate,
-LabelsViewControllerDelegate {
+LabelsViewControllerDelegate,
+MilestonesViewControllerDelegate {
 
     private enum Action {
         static let labels = IssueManagingActionModel(
             label: NSLocalizedString("Labels", comment: ""),
             imageName: "tag"
+        )
+        static let milestone = IssueManagingActionModel(
+            label: NSLocalizedString("Milestone", comment: ""),
+            imageName: "milestone"
         )
     }
 
@@ -42,7 +47,7 @@ LabelsViewControllerDelegate {
         return client.cache.get(id: id)
     }
 
-    func editLabels(cell: UICollectionViewCell) {
+    func newLabelsController() -> UIViewController {
         guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
             else { fatalError("Missing labels view controller") }
         controller.configure(
@@ -52,6 +57,23 @@ LabelsViewControllerDelegate {
             repo: model.repo,
             delegate: self
         )
+        return controller
+    }
+
+    func newMilestonesController() -> UIViewController {
+        guard let controller = UIStoryboard(name: "Milestones", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
+            else { fatalError("Missing labels view controller") }
+        controller.configure(
+            client: client,
+            owner: model.owner,
+            repo: model.repo,
+            selected: issueResult?.milestone,
+            delegate: self
+        )
+        return controller
+    }
+
+    func present(controller: UIViewController, from cell: UICollectionViewCell) {
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .popover
         nav.popoverPresentationController?.sourceView = cell
@@ -67,7 +89,8 @@ LabelsViewControllerDelegate {
         ) -> [ListDiffable] {
         return [IssueManagingModel(expanded: expanded)]
             + (expanded ? [
-                    Action.labels
+                    Action.labels,
+                    Action.milestone,
                     ] : [])
     }
 
@@ -123,7 +146,11 @@ LabelsViewControllerDelegate {
             cell.animate(expanded: expanded)
             update(animated: true)
         } else if viewModel === Action.labels {
-            editLabels(cell: cell)
+            let controller = newLabelsController()
+            present(controller: controller, from: cell)
+        } else if viewModel === Action.milestone {
+            let controller = newMilestonesController()
+            present(controller: controller, from: cell)
         }
     }
 
@@ -137,6 +164,19 @@ LabelsViewControllerDelegate {
             repo: model.repo,
             number: model.number,
             labels: selectedLabels
+        )
+    }
+
+    // MARK: MilestonesViewControllerDelegate
+
+    func didDismiss(controller: MilestonesViewController, selected: Milestone?) {
+        guard let previous = issueResult else { return }
+        client.setMilestone(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            milestone: selected
         )
     }
 
