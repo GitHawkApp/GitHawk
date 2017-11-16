@@ -29,7 +29,7 @@ final class BookmarkViewModel: ListDiffable {
         case .issue, .pullRequest:
             let bookmarkText = NSAttributedString(string: "#\(bookmark.number)", attributes: [
                 .font: Styles.Fonts.body,
-                .foregroundColor: Styles.Colors.Gray.dark.color
+                .foregroundColor: Styles.Colors.Gray.medium.color
                 ]
             )
             repositoryText.append(bookmarkText)
@@ -39,7 +39,7 @@ final class BookmarkViewModel: ListDiffable {
         if !bookmark.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             repositoryText.append(NSAttributedString(string: "\n" + bookmark.title, attributes: [
                 .font: Styles.Fonts.secondary,
-                .foregroundColor: Styles.Colors.Gray.dark.color
+                .foregroundColor: Styles.Colors.Gray.medium.color
                 ])
             )
         }

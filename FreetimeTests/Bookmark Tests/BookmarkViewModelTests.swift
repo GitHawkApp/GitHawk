@@ -33,13 +33,13 @@ class BookmarkViewModelTests: XCTestCase {
         string.append(
                 NSAttributedString(string: "#\(issue.number)", attributes: [
                     .font: Styles.Fonts.body,
-                    .foregroundColor: Styles.Colors.Gray.dark.color
+                    .foregroundColor: Styles.Colors.Gray.medium.color
                     ]
                 )
         )
         string.append(NSAttributedString(string: "\n" + issue.title, attributes: [
             .font: Styles.Fonts.secondary,
-            .foregroundColor: Styles.Colors.Gray.dark.color
+            .foregroundColor: Styles.Colors.Gray.medium.color
             ])
         )
         let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
