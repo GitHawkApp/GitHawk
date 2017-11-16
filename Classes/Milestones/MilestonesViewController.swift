@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol MilestonesViewControllerDelegate: class {
+    func didDismiss(controller: MilestonesViewController, selected: Milestone?)
+}
+
 final class MilestonesViewController: UITableViewController {
 
-    private var selectedNumber: Int?
+    private weak var delegate: MilestonesViewControllerDelegate?
+    private var selected: Milestone?
     private var owner: String!
     private var repo: String!
     private var milestones = [Milestone]()
@@ -29,14 +34,26 @@ final class MilestonesViewController: UITableViewController {
 
     // MARK: Public API
 
-    func configure(client: GithubClient, owner: String, repo: String, selectedNumber: Int?) {
+    func configure(
+        client: GithubClient,
+        owner: String,
+        repo: String,
+        selected: Milestone?,
+        delegate: MilestonesViewControllerDelegate
+        ) {
         self.client = client
         self.owner = owner
         self.repo = repo
-        self.selectedNumber = selectedNumber
+        self.selected = selected
+        self.delegate = delegate
     }
 
     // MARK: Private API
+
+    @IBAction func onDone(_ sender: Any) {
+        delegate?.didDismiss(controller: self, selected: selected)
+        dismiss(animated: true)
+    }
 
     @objc func onRefresh() {
         fetch()
@@ -68,7 +85,7 @@ final class MilestonesViewController: UITableViewController {
             cell.configure(
                 title: milestone.title,
                 date: milestone.dueOn,
-                showCheckmark: milestone.number == selectedNumber
+                showCheckmark: milestone == selected
             )
         }
         return cell
@@ -79,10 +96,10 @@ final class MilestonesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let milestone = milestones[indexPath.row]
-        if milestone.number == selectedNumber {
-            selectedNumber = nil
+        if milestone == selected {
+            selected = nil
         } else {
-            selectedNumber = milestone.number
+            selected = milestone
         }
         tableView.reloadData()
     }

@@ -12,7 +12,8 @@ import IGListKit
 final class IssueManagingSectionController: ListBindingSectionController<NSString>,
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate,
-LabelsViewControllerDelegate {
+LabelsViewControllerDelegate,
+MilestonesViewControllerDelegate {
 
     private enum Action {
         static let labels = IssueManagingActionModel(
@@ -60,13 +61,14 @@ LabelsViewControllerDelegate {
     }
 
     func newMilestonesController() -> UIViewController {
-        guard let controller = UIStoryboard(name: "Milestone", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
+        guard let controller = UIStoryboard(name: "Milestones", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
             else { fatalError("Missing labels view controller") }
         controller.configure(
             client: client,
             owner: model.owner,
             repo: model.repo,
-            selectedNumber: issueResult?.milestone?.number
+            selected: issueResult?.milestone,
+            delegate: self
         )
         return controller
     }
@@ -162,6 +164,19 @@ LabelsViewControllerDelegate {
             repo: model.repo,
             number: model.number,
             labels: selectedLabels
+        )
+    }
+
+    // MARK: MilestonesViewControllerDelegate
+
+    func didDismiss(controller: MilestonesViewController, selected: Milestone?) {
+        guard let previous = issueResult else { return }
+        client.setMilestone(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            milestone: selected
         )
     }
 

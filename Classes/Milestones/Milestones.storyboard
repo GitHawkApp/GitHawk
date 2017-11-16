@@ -13,12 +13,18 @@
         <scene sceneID="boX-IL-987">
             <objects>
                 <tableViewController title="Milestones" id="dwv-IG-ztB" customClass="MilestonesViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vE5-Kj-Dlq">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vE5-Kj-Dlq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.73725490199999999" green="0.73333333329999995" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96470588235294119" green="0.97254901960784312" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="QbW-bM-C3u">
+                            <rect key="frame" x="0.0" y="83" width="375" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="cell" rowHeight="55" id="8OT-Eu-rxQ" customClass="MilestoneCell" customModule="Freetime" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="55"/>
@@ -58,6 +64,13 @@
                             <outlet property="delegate" destination="dwv-IG-ztB" id="0Jn-bD-MUZ"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Milestones" id="lcH-p7-yKl">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="9Bh-2X-HJh">
+                            <connections>
+                                <action selector="onDone:" destination="dwv-IG-ztB" id="ajG-Wx-YS5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcg-qO-yPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

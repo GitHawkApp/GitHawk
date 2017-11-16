@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueMilestoneSectionController: ListGenericSectionController<IssueMilestoneModel> {
+final class IssueMilestoneSectionController: ListGenericSectionController<Milestone> {
 
     private let issueModel: IssueDetailsModel
 

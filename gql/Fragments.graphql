@@ -80,6 +80,7 @@ fragment milestoneFields on Milestone {
   number
   title
   url
+  dueOn
 }
 
 fragment repoEventFields on Comment {
