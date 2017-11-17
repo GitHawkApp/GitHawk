@@ -294,10 +294,13 @@ extension GithubClient {
             path: "repos/\(owner)/\(repo)/collaborators/\(viewer)/permission",
             headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
             completion: { (response, _) in
-                // documentation states that collab = 204
-                if let json = response.value as? [String: Any],
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let json = response.value as? [String: Any],
                     let permission = json["permission"] as? String {
-                    completion(.success(permission == "admin" || permission == "write"))
+                    completion(.success((permission == "admin" || permission == "write")))
+                } else if statusCode == 403 {
+                    completion(.success(false))
                 } else {
                     completion(.error(response.error))
                 }
