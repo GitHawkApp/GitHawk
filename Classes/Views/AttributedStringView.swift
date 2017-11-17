@@ -37,10 +37,17 @@ final class AttributedStringView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(AttributedStringView.onTap(recognizer:)))
         tap.cancelsTouchesInView = false
         addGestureRecognizer(tap)
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(AttributedStringView.onLong(recognizer:)))
+        long.cancelsTouchesInView = false
+        addGestureRecognizer(long)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
     // MARK: Public API
@@ -60,8 +67,7 @@ final class AttributedStringView: UIView {
 
     // MARK: Private API
 
-    @objc
-    func onTap(recognizer: UITapGestureRecognizer) {
+    @objc func onTap(recognizer: UITapGestureRecognizer) {
         guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
         if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
             delegate?.didTapURL(view: self, url: url)
@@ -73,5 +79,27 @@ final class AttributedStringView: UIView {
             issueDelegate?.didTapIssue(view: self, issue: issue)
         }
     }
+
+    @objc func onLong(recognizer: UILongPressGestureRecognizer) {
+        guard recognizer.state == .began else { return }
+
+        let point = recognizer.location(in: self)
+        guard let attributes = text?.attributes(point: point) else { return }
+        if let details = attributes[MarkdownAttribute.details] as? String {
+            showDetailsInMenu(details: details, point: point)
+        }
+    }
+
+    @objc func showDetailsInMenu(details: String, point: CGPoint) {
+        becomeFirstResponder()
+        let menu = UIMenuController.shared
+        menu.menuItems = [
+            UIMenuItem(title: details, action: #selector(AttributedStringView.empty))
+        ]
+        menu.setTargetRect(CGRect(origin: point, size: CGSize(width: 1, height: 1)), in: self)
+        menu.setMenuVisible(true, animated: true)
+    }
+
+    @objc func empty() {}
 
 }

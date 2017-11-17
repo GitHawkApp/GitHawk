@@ -114,33 +114,3 @@ class SwipeSelectableCell: SwipeCollectionViewCell {
     }
 
 }
-
-class SwipeSelectableTableCell: SwipeTableViewCell {
-
-    private lazy var overlay: UIView = {
-        return self.contentView.addOverlay()
-    }()
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        overlay.prepareOverlayForReuse()
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-        overlay.layoutOverlay()
-    }
-
-    override var isSelected: Bool {
-        didSet {
-            overlay.showOverlay(show: isSelected)
-        }
-    }
-
-    override var isHighlighted: Bool {
-        didSet {
-            overlay.showOverlay(show: isHighlighted)
-        }
-    }
-}

@@ -10,10 +10,6 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 
-protocol IssueCommentSectionControllerDelegate: class {
-    func didEdit(sectionController: IssueCommentSectionController)
-}
-
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
@@ -28,7 +24,6 @@ DoubleTappableCellDelegate {
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
-    private weak var delegate: IssueCommentSectionControllerDelegate?
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -46,10 +41,11 @@ DoubleTappableCellDelegate {
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
-    init(model: IssueDetailsModel, client: GithubClient, delegate: IssueCommentSectionControllerDelegate) {
+    private let tailModel = "tailModel" as ListDiffable
+
+    init(model: IssueDetailsModel, client: GithubClient) {
         self.model = model
         self.client = client
-        self.delegate = delegate
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
@@ -73,8 +69,9 @@ DoubleTappableCellDelegate {
     // MARK: Private API
 
     func shareAction(sender: UIView) -> UIAlertAction? {
+        let attribute = object?.asReviewComment == true ? "#discussion_r" : "#issuecomment-"
         guard let number = object?.number,
-            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)#issuecomment-\(number)")
+            let url = URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)\(attribute)\(number)")
         else { return nil }
         weak var weakSelf = self
 
@@ -103,7 +100,7 @@ DoubleTappableCellDelegate {
 
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
-        return UIAlertAction(title: NSLocalizedString("Edit Comment", comment: ""), style: .default, handler: { [weak self] _ in
+        return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
             guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
                 let issueModel = self?.model,
                 let client = self?.client,
@@ -203,9 +200,15 @@ DoubleTappableCellDelegate {
             }
         }
 
+        // if this is a PR comment, if this is the tail model, append an empty space cell at the end so there's a divider
+        // otherwise append reactions
+        let tail: [ListDiffable] = object.asReviewComment
+            ? (object.threadState == .tail ? [tailModel] : [])
+            : [ reactionMutation ?? object.reactions ]
+
         return [ object.details ]
             + bodies
-            + [ reactionMutation ?? object.reactions ]
+            + tail
     }
 
     func sectionController(
@@ -213,7 +216,8 @@ DoubleTappableCellDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.containerSize.width,
+            let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
         let height: CGFloat
@@ -223,6 +227,8 @@ DoubleTappableCellDelegate {
             height = 40.0
         } else if viewModel is IssueCommentDetailsViewModel {
             height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
+        } else if viewModel === tailModel {
+            height = Styles.Sizes.rowSpacing
         } else {
             height = BodyHeightForComment(
                 viewModel: viewModel,
@@ -240,7 +246,15 @@ DoubleTappableCellDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell & ListBindable {
-        guard let context = self.collectionContext else { fatalError("Collection context must be set") }
+        guard let context = self.collectionContext,
+            let viewModel = viewModel as? ListDiffable
+            else { fatalError("Collection context must be set") }
+
+        if viewModel === tailModel {
+            guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
+                else { fatalError("Cell not bindable") }
+            return cell
+        }
 
         let cellClass: AnyClass
         switch viewModel {
@@ -317,7 +331,17 @@ DoubleTappableCellDelegate {
     // MARK: IssueCommentDetailCellDelegate
 
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
+        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
+
+        let alert = UIAlertController.configured(
+            title: .localizedStringWithFormat(alertTitle, login),
+            preferredStyle: .actionSheet
+        )
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
@@ -329,7 +353,11 @@ DoubleTappableCellDelegate {
     }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
-        guard let login = object?.details.login else { return }
+        guard let login = object?.details.login else {
+            ToastManager.showGenericError()
+            return
+        }
+
         viewController?.presentProfile(login: login)
     }
 

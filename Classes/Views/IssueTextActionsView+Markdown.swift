@@ -35,7 +35,7 @@ extension IssueTextActionsView {
         ]
 
         if supportsImageUpload {
-            operations.append(IssueTextActionOperation(icon: UIImage(named: "cloud-upload"), operation: .uploadImage))
+            operations.append(IssueTextActionOperation(icon: UIImage(named: "bar-upload"), operation: .uploadImage))
         }
 
         let actions = IssueTextActionsView(operations: operations)

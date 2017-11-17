@@ -29,13 +29,23 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d7E-xB-fht">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="119"/>
-                                                    <color key="backgroundColor" red="0.89019607840000003" green="0.89411764709999997" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMZ-yn-I5R">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                                    <connections>
+                                                        <action selector="didPressPreviewImage" destination="fex-dK-757" eventType="touchUpInside" id="pwI-Uk-KaF"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="d7E-xB-fht" secondAttribute="trailing" id="F9E-yZ-i7g"/>
+                                                <constraint firstAttribute="bottom" secondItem="QMZ-yn-I5R" secondAttribute="bottom" id="Fmb-hc-AHA"/>
+                                                <constraint firstItem="QMZ-yn-I5R" firstAttribute="top" secondItem="ItG-Cs-Vvc" secondAttribute="top" id="KlE-Ji-6ip"/>
+                                                <constraint firstAttribute="trailing" secondItem="QMZ-yn-I5R" secondAttribute="trailing" id="UCJ-Bc-EPi"/>
                                                 <constraint firstItem="d7E-xB-fht" firstAttribute="top" secondItem="ItG-Cs-Vvc" secondAttribute="top" id="btV-c5-F3E"/>
                                                 <constraint firstAttribute="bottom" secondItem="d7E-xB-fht" secondAttribute="bottom" id="nUu-rr-Mtx"/>
+                                                <constraint firstItem="QMZ-yn-I5R" firstAttribute="leading" secondItem="ItG-Cs-Vvc" secondAttribute="leading" id="tuK-sS-ye4"/>
                                                 <constraint firstItem="d7E-xB-fht" firstAttribute="leading" secondItem="ItG-Cs-Vvc" secondAttribute="leading" id="yN6-YO-3wb"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -51,7 +61,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IrO-7N-7EE">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Optional" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IrO-7N-7EE">
                                                     <rect key="frame" x="16" y="8" width="343" height="27"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -77,11 +87,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iqO-9E-R2C">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iqO-9E-R2C" customClass="SLKTextView">
                                                     <rect key="frame" x="16" y="8" width="343" height="133.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Optional"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </textView>
                                             </subviews>
                                             <constraints>

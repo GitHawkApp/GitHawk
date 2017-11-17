@@ -18,6 +18,9 @@ query SearchRepos($search: String!, $before: String) {
         stargazers {
           totalCount
         }
+        defaultBranchRef {
+          name
+        }
       }
     }
 

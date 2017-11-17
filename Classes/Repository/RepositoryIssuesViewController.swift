@@ -14,8 +14,11 @@ enum RepositoryIssuesType {
     case pullRequests
 }
 
-class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseListViewControllerDataSource, SearchBarSectionControllerDelegate {
+class RepositoryIssuesViewController: BaseListViewController<NSString>,
+BaseListViewControllerDataSource,
+SearchBarSectionControllerDelegate {
 
+    private var models = [ListDiffable]()
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
@@ -60,12 +63,12 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
             case .error:
                 self?.error(animated: true)
             case .success(let payload):
-                self?.update(
-                    models: payload.models,
-                    page: payload.nextPage as NSString?,
-                    append: page != nil,
-                    animated: true
-                )
+                if page != nil {
+                    self?.models += payload.models as [ListDiffable]
+                } else {
+                    self?.models = payload.models
+                }
+                self?.update(page: payload.nextPage as NSString?, animated: true)
             }
         }
 
@@ -85,6 +88,10 @@ class RepositoryIssuesViewController: BaseListViewController<NSString>, BaseList
 
     func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
         return [searchKey]
+    }
+
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        return models
     }
 
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {

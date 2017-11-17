@@ -39,10 +39,10 @@ CollapsibleCell {
         backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView)
+        if #available(iOS 11, *) {
+            imageView.accessibilityIgnoresInvertColors = true
         }
+        contentView.addSubview(imageView)
 
         spinner.hidesWhenStopped = true
         contentView.addSubview(spinner)
@@ -64,12 +64,17 @@ CollapsibleCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
+
+        var frame = bounds
+        if let size = imageView.image?.size {
+            frame.size = BoundedImageSize(originalSize: size, containerWidth: frame.width)
+        }
+        imageView.frame = frame
     }
 
     // MARK: Private API
 
-    @objc
-    func onTap(recognizer: UITapGestureRecognizer) {
+    @objc func onTap(recognizer: UITapGestureRecognizer) {
         // action will only trigger if shouldBegin returns true
         guard let image = imageView.image else { return }
 
@@ -85,6 +90,7 @@ CollapsibleCell {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentImageModel else { return }
+        imageView.image = nil
         imageView.backgroundColor = Styles.Colors.Gray.lighter.color
         spinner.startAnimating()
 
@@ -97,6 +103,9 @@ CollapsibleCell {
             if let size = image?.size {
                 strongSelf.heightDelegate?.imageDidFinishLoad(cell: strongSelf, url: imageURL, size: size)
             }
+
+            // forces the image view to lay itself out using the original image size
+            strongSelf.setNeedsLayout()
         }
     }
 

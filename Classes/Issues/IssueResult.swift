@@ -8,24 +8,26 @@
 
 import Foundation
 import IGListKit
+import FlatCache
 
-struct IssueResult {
+struct IssueResult: Cachable {
 
-    let subjectId: String
+    let id: String
     let pullRequest: Bool
-
     let status: IssueStatusModel
     let title: NSAttributedStringSizing
     let labels: IssueLabelsModel
     let assignee: IssueAssigneesModel
+    // optional models
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
-    let milestone: IssueMilestoneModel?
-    let mentionableUsers: [AutocompleteUser]
+    let milestone: Milestone?
+    // end optionals
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
     let hasIssuesEnabled: Bool
     let viewerCanAdminister: Bool
+    let defaultBranch: String
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })
@@ -37,6 +39,81 @@ struct IssueResult {
 
     var hasPreviousPage: Bool {
         return minStartCursor != nil
+    }
+
+    func timelinePages(appending: [ListDiffable]) -> [IssueTimelinePage] {
+        let newPage: IssueTimelinePage
+        if let lastPage = timelinePages.last {
+            newPage = IssueTimelinePage(
+                startCursor: lastPage.startCursor,
+                viewModels: lastPage.viewModels + appending
+            )
+        } else {
+            newPage = IssueTimelinePage(
+                startCursor: nil,
+                viewModels: appending
+            )
+        }
+
+        let count = timelinePages.count
+        if count > 0 {
+            return timelinePages[0..<count - 1] + [newPage]
+        } else {
+            return [newPage]
+        }
+    }
+
+    func updated(
+        id: String? = nil,
+        pullRequest: Bool? = nil,
+        status: IssueStatusModel? = nil,
+        title: NSAttributedStringSizing? = nil,
+        labels: IssueLabelsModel? = nil,
+        assignee: IssueAssigneesModel? = nil,
+        timelinePages: [IssueTimelinePage]? = nil,
+        viewerCanUpdate: Bool? = nil,
+        hasIssuesEnabled: Bool? = nil,
+        viewerCanAdminister: Bool? = nil,
+        defaultBranch: String? = nil
+        ) -> IssueResult {
+        return IssueResult(
+            id: id ?? self.id,
+            pullRequest: pullRequest ?? self.pullRequest,
+            status: status ?? self.status,
+            title: title ?? self.title,
+            labels: labels ?? self.labels,
+            assignee: assignee ?? self.assignee,
+            rootComment: self.rootComment,
+            reviewers: self.reviewers,
+            milestone: self.milestone,
+            timelinePages: timelinePages ?? self.timelinePages,
+            viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
+            hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
+            viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister,
+            defaultBranch: defaultBranch ?? self.defaultBranch
+        )
+    }
+
+    func withMilestone(
+        _ milestone: Milestone?,
+        timelinePages: [IssueTimelinePage]? = nil
+        ) -> IssueResult {
+        return IssueResult(
+            id: self.id,
+            pullRequest: self.pullRequest,
+            status: self.status,
+            title: self.title,
+            labels: self.labels,
+            assignee: self.assignee,
+            rootComment: self.rootComment,
+            reviewers: self.reviewers,
+            milestone: milestone,
+            timelinePages: timelinePages ?? self.timelinePages,
+            viewerCanUpdate: self.viewerCanUpdate,
+            hasIssuesEnabled: self.hasIssuesEnabled,
+            viewerCanAdminister: self.viewerCanAdminister,
+            defaultBranch: self.defaultBranch
+        )
     }
 
 }

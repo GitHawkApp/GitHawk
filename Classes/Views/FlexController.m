@@ -15,9 +15,12 @@
 @implementation FlexController
 
 - (void)configureWindow:(UIWindow *)window {
+#if DEBUG || TESTFLIGHT
+    [FLEXManager sharedManager].simulatorShortcutsEnabled = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
     tap.numberOfTouchesRequired = 3;
     [window addGestureRecognizer:tap];
+#endif
 }
 
 - (void)onTap:(UITapGestureRecognizer *)recognizer {

@@ -11,13 +11,20 @@ import Foundation
 struct RepositoryDetails: Codable {
     let owner: String
     let name: String
+    let defaultBranch: String
     let hasIssuesEnabled: Bool
+
+    var ownerURL: URL {
+        return URL(string: "https://github.com/\(owner)")!
+    }
+
 }
 
 extension RepositoryDetails: Equatable {
     static func == (lhs: RepositoryDetails, rhs: RepositoryDetails) -> Bool {
         return lhs.owner == rhs.owner &&
             lhs.name == rhs.name &&
+            lhs.defaultBranch == rhs.defaultBranch &&
             lhs.hasIssuesEnabled == rhs.hasIssuesEnabled
     }
 }

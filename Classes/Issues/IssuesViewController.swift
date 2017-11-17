@@ -12,6 +12,7 @@ import TUSafariActivity
 import SafariServices
 import SlackTextViewController
 import SnapKit
+import FlatCache
 
 final class IssuesViewController: SLKTextViewController,
     ListAdapterDataSource,
@@ -20,7 +21,7 @@ final class IssuesViewController: SLKTextViewController,
     IssueCommentAutocompleteDelegate,
 FeedSelectionProviding,
 IssueNeckLoadSectionControllerDelegate,
-IssueCommentSectionControllerDelegate {
+FlatCacheListener {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -29,6 +30,11 @@ IssueCommentSectionControllerDelegate {
     private var hasScrolledToBottom = false
     private let viewFilesModel = "view_files" as ListDiffable
     private let textActionsController = TextActionsController()
+    private var bookmarkNavController: BookmarkNavigationController? = nil
+
+    // must fetch collaborator info from API before showing editing controls
+    private var viewerIsCollaborator = false
+    private let collaboratorKey = "collaborator" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -37,11 +43,23 @@ IssueCommentSectionControllerDelegate {
         managesLayout: false
         ) }()
 
-    private var current: IssueResult? = nil {
+    private var resultID: String? = nil {
         didSet {
             let hidden: Bool
-            if let current = self.current {
-                hidden = current.status.locked && !current.viewerCanUpdate
+            if let id = resultID,
+                let result = self.client.cache.get(id: id) as IssueResult? {
+                hidden = result.status.locked && !result.viewerCanUpdate
+
+                let bookmark = Bookmark(
+                    type: result.pullRequest ? .pullRequest : .issue,
+                    name: self.model.repo,
+                    owner: self.model.owner,
+                    number: self.model.number,
+                    title: result.title.attributedText.string,
+                    defaultBranch: result.defaultBranch
+                )
+                self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
+                self.configureNavigationItems()
             } else {
                 hidden = true
             }
@@ -51,11 +69,19 @@ IssueCommentSectionControllerDelegate {
             self.textInputbar.layoutIfNeeded()
         }
     }
-    private var sentComments = [ListDiffable]()
 
-    // set to optimistically change the open/closed status
-    // clear when refreshing or on request failure
-    private var localStatusChange: (model: IssueStatusModel, event: IssueStatusEventModel)?
+    var result: IssueResult? {
+        guard let id = resultID else { return nil }
+        return client.cache.get(id: id) as IssueResult?
+    }
+
+    var moreOptionsItem: UIBarButtonItem {
+        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(IssuesViewController.onMore(sender:)))
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        return rightItem
+    }
+
+    private var sentComments = [ListDiffable]()
 
     init(
         client: GithubClient,
@@ -70,7 +96,7 @@ IssueCommentSectionControllerDelegate {
         self.hasScrolledToBottom = !scrollToBottom
 
         // force unwrap, this absolutely must work
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())!
+        super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
 
         self.hidesBottomBarWhenPushed = true
         self.addCommentClient.addListener(listener: self)
@@ -121,12 +147,14 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: false
+            supportsImageUpload: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        
         textActionsController.configure(client: client, textView: textView, actions: actions)
-
+        textActionsController.viewController = self
+        
         let contentView = textInputbar.contentView
         contentView.addSubview(actions)
         actions.snp.makeConstraints { (make) in
@@ -137,18 +165,7 @@ IssueCommentSectionControllerDelegate {
         }
         self.textInputbar.layoutIfNeeded()
 
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
-        navigationItem.rightBarButtonItem = rightItem
-
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
+        navigationItem.rightBarButtonItem = moreOptionsItem
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -184,10 +201,10 @@ IssueCommentSectionControllerDelegate {
 
         super.didPressRightButton(sender)
 
-        if let subjectId = current?.subjectId,
+        if let id = resultID,
             let text = text {
             addCommentClient.addComment(
-                subjectId: subjectId,
+                subjectId: id,
                 body: text
             )
         }
@@ -225,9 +242,29 @@ IssueCommentSectionControllerDelegate {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
 
+    var bookmark: Bookmark? {
+        guard let result = result else { return nil }
+        return Bookmark(
+            type: result.pullRequest ? .pullRequest : .issue,
+            name: model.repo,
+            owner: model.owner,
+            number: model.number,
+            title: result.title.attributedText.string,
+            defaultBranch: result.defaultBranch
+        )
+    }
+
+    func configureNavigationItems() {
+        var items = [moreOptionsItem]
+        if let bookmarkItem = bookmarkNavController?.navigationItem {
+            items.append(bookmarkItem)
+        }
+        navigationItem.rightBarButtonItems = items
+    }
+
     func closeAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true,
-            let status = localStatusChange?.model.status ?? current?.status.status,
+        guard result?.viewerCanUpdate == true,
+            let status = result?.status.status,
             status != .merged
             else { return nil }
 
@@ -238,7 +275,7 @@ IssueCommentSectionControllerDelegate {
     }
 
     func lockAction() -> UIAlertAction? {
-        guard current?.viewerCanUpdate == true, let locked = localStatusChange?.model.locked ?? current?.status.locked else {
+        guard result?.viewerCanUpdate == true, let locked = result?.status.locked else {
             return nil
         }
 
@@ -249,37 +286,22 @@ IssueCommentSectionControllerDelegate {
     }
 
     func viewRepoAction() -> UIAlertAction? {
-        guard current != nil else { return nil }
-
+        guard let result = result else { return nil }
+        
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
-            hasIssuesEnabled: current?.hasIssuesEnabled ?? false
+            defaultBranch: result.defaultBranch,
+            hasIssuesEnabled: result.hasIssuesEnabled
         )
-        let repoViewController = RepositoryViewController(client: client, repo: repo)
+
         weak var weakSelf = self
-
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(repo: repoViewController)
+            .view(client: client, repo: repo)
     }
 
-    func bookmarkAction() -> UIAlertAction? {
-        guard let current = current,
-            let store = client.bookmarksStore
-            else { return nil }
-        let bookmarkModel = BookmarkModel(
-            type: current.pullRequest ? .pullRequest : .issue,
-            name: model.repo,
-            owner: model.owner,
-            number: model.number,
-            title: current.title.attributedText.string
-        )
-        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
-    }
-
-    @objc
-    func onMore(sender: UIBarButtonItem) {
-        let issueType = current?.pullRequest == true
+    @objc func onMore(sender: UIButton) {
+        let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
         
@@ -293,21 +315,32 @@ IssueCommentSectionControllerDelegate {
         alert.addActions([
             closeAction(),
             lockAction(),
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
-            AlertAction(alertBuilder).openInSafari(url: externalURL),
+            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
             viewRepoAction(),
-            bookmarkAction(),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
-
+        alert.popoverPresentationController?.setSourceView(sender)
+        
         present(alert, animated: true)
     }
 
     func fetch(previous: Bool) {
-        // on head load, reset all optimistic state
         if !previous {
-            localStatusChange = nil
+            client.fetchViewerCollaborator(
+                owner: model.owner,
+                repo: model.repo
+            ) { [weak self] (result) in
+                switch result {
+                case .success(let isCollab):
+                    self?.viewerIsCollaborator = isCollab
+                    // avoid finishLoading() so empty view doesn't appear
+                    self?.feed.adapter.performUpdates(animated: true)
+                case .error:
+                    ToastManager.showGenericError()
+                }
+            }
         }
 
         client.fetch(
@@ -315,25 +348,33 @@ IssueCommentSectionControllerDelegate {
             repo: model.repo,
             number: model.number,
             width: view.bounds.width,
-            prependResult: previous ? current : nil
+            prependResult: previous ? result : nil
         ) { [weak self] resultType in
+            guard let strongSelf = self else { return }
+
+            let isFirstUpdate = strongSelf.resultID == nil
 
             switch resultType {
-            case .success(let result):
+            case .success(let result, let mentionableUsers):
                 // clear pending comments since they should now be part of the payload
                 // only clear when doing a refresh load
-                if previous {
-                    self?.sentComments.removeAll()
+                if !previous {
+                    strongSelf.sentComments.removeAll()
                 }
 
-                self?.autocomplete.add(UserAutocomplete(mentionableUsers: result.mentionableUsers))
-                self?.current = result
+                strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                strongSelf.client.cache.add(listener: strongSelf, value: result)
+                strongSelf.resultID = result.id
             default: break
             }
-            self?.feed.finishLoading(dismissRefresh: true) {
-                if self?.hasScrolledToBottom != true {
-                    self?.hasScrolledToBottom = true
-                    self?.feed.collectionView.slk_scrollToBottom(animated: true)
+
+            // subsequent updates are handled by the FlatCacheListener
+            if isFirstUpdate {
+                strongSelf.feed.finishLoading(dismissRefresh: true) {
+                    if strongSelf.hasScrolledToBottom != true {
+                        strongSelf.hasScrolledToBottom = true
+                        strongSelf.feed.collectionView.slk_scrollToBottom(animated: true)
+                    }
                 }
             }
         }
@@ -349,87 +390,41 @@ IssueCommentSectionControllerDelegate {
     }
 
     func setStatus(close: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: close ? .closed : .open,
-            pullRequest: currentStatus.pullRequest,
-            locked: currentStatus.locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: close ? .closed : .reopened,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
+        guard let previous = result else { return }
 
         client.setStatus(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            status: close ? .closed : .open
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+            close: close
+        )
     }
 
     func setLocked(_ locked: Bool) {
-        guard let currentStatus = localStatusChange?.model ?? current?.status else { return }
-
-        let localModel = IssueStatusModel(
-            status: currentStatus.status,
-            pullRequest: currentStatus.pullRequest,
-            locked: locked
-        )
-        let localEvent = IssueStatusEventModel(
-            id: UUID().uuidString,
-            actor: client.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown,
-            commitHash: nil,
-            date: Date(),
-            status: locked ? .locked : .unlocked,
-            pullRequest: currentStatus.pullRequest
-        )
-
-        localStatusChange = (localModel, localEvent)
-        feed.adapter.performUpdates(animated: true)
-
+        guard let previous = result else { return }
         client.setLocked(
+            previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
             locked: locked
-        ) { [weak self] result in
-            switch result {
-            case .error:
-                self?.localStatusChange = nil
-                self?.feed.adapter.performUpdates(animated: true)
-                ToastManager.showGenericError()
-            default: break // dont need to handle success since updated optimistically
-            }
-        }
+        )
     }
 
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        guard let current = self.current else { return [] }
+        guard let current = self.result else { return [] }
 
-        var objects: [ListDiffable] = [
-            localStatusChange?.model ?? current.status,
-            current.title,
-            current.labels
-        ]
+        var objects: [ListDiffable] = [current.status]
+
+        if viewerIsCollaborator {
+            objects.append(collaboratorKey)
+        }
+
+        objects.append(current.title)
+        objects.append(current.labels)
 
         if let milestone = current.milestone {
             objects.append(milestone)
@@ -456,27 +451,27 @@ IssueCommentSectionControllerDelegate {
         objects += current.timelineViewModels
         objects += sentComments
 
-        if let event = localStatusChange?.event {
-            objects.append(event)
-        }
-
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? ListDiffable, object === viewFilesModel {
+        guard let object = object as? ListDiffable else { fatalError("Must be diffable") }
+
+        if object === viewFilesModel {
             return IssueViewFilesSectionController(issueModel: model, client: client)
+        } else if object === collaboratorKey, let id = resultID {
+            return IssueManagingSectionController(id: id, model: model, client: client)
         }
 
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client, delegate: self)
+        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
         case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController(client: client)
+        case is IssueReviewModel: return IssueReviewSectionController(model: model, client: client)
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
@@ -485,7 +480,7 @@ IssueCommentSectionControllerDelegate {
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
-        case is IssueMilestoneModel: return IssueMilestoneSectionController(issueModel: model)
+        case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -569,10 +564,15 @@ IssueCommentSectionControllerDelegate {
         fetch(previous: true)
     }
 
-    // MARK: IssueCommentSectionControllerDelegate
+    // MARK: FlatCacheListener
 
-    func didEdit(sectionController: IssueCommentSectionController) {
-
+    func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
+        switch update {
+        case .item(let item):
+            guard item is IssueResult else { break }
+            feed.finishLoading(dismissRefresh: true)
+        case .list: break
+        }
     }
 
 }

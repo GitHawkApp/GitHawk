@@ -187,6 +187,10 @@ open class PageboyViewController: UIViewController {
     public var isDragging: Bool {
             return self.pageViewController?.scrollView?.isDragging ?? false
     }
+    // Wether the user isn't dragging (touch up) but page view controller is still moving.
+    public var isDecelerating: Bool {
+        return self.pageViewController?.scrollView?.isDecelerating ?? false
+    }
     /// Whether user interaction is enabled on the page view controller.
     ///
     /// Default is TRUE
@@ -274,7 +278,11 @@ open class PageboyViewController: UIViewController {
             return self.pageViewController?.viewControllers?.last
         }
     }
-    
+    /// Whether the page view controller position is currently resting on a page index.
+    internal var isPositionedOnPageIndex: Bool {
+        let currentPosition = navigationOrientation == .horizontal ? self.currentPosition?.x : self.currentPosition?.y
+        return currentPosition?.truncatingRemainder(dividingBy: 1) == 0
+    }
     
     /// Auto Scroller for automatic time-based page transitions.
     public let autoScroller = PageboyAutoScroller()
@@ -316,7 +324,8 @@ open class PageboyViewController: UIViewController {
         
         // guard against any current transition operation
         guard self.isScrollingAnimated == false else { return false }
-        guard self.isTracking == false else { return false }
+        guard !(self.isTracking && self.isDragging && self.isDecelerating) else { return false }
+        guard self.isPositionedOnPageIndex else { return false }
         guard let pageViewController = self.pageViewController else { return false }
         
         let rawIndex = self.indexValue(for: page)
@@ -369,15 +378,16 @@ open class PageboyViewController: UIViewController {
                                    with: direction,
                                    animated: animated,
                                    completion: transitionCompletion)
-            self.pageViewController?.setViewControllers([viewController],
-                                                        direction: direction.pageViewControllerNavDirection,
-                                                        animated: false,
-                                                        completion:
-                { (finished) in
-                    guard animated == false else { return }
-                    transitionCompletion(finished)
-            })
-            
+            DispatchQueue.main.async {
+                self.pageViewController?.setViewControllers([viewController],
+                                                            direction: direction.pageViewControllerNavDirection,
+                                                            animated: false,
+                                                            completion:
+                    { (finished) in
+                        guard animated == false else { return }
+                        transitionCompletion(finished)
+                })
+            }
             return true
             
         } else {
@@ -388,5 +398,4 @@ open class PageboyViewController: UIViewController {
             return false
         }
     }
-    
 }

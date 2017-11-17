@@ -15,6 +15,7 @@ final class FeedRefresh {
     private var refreshBegin: TimeInterval = -1
 
     init() {
+        refreshControl.layer.zPosition = -1
         refreshControl.addTarget(self, action: #selector(FeedRefresh.setRefreshing), for: .valueChanged)
     }
 

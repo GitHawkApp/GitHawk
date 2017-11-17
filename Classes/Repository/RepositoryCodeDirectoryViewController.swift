@@ -12,6 +12,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let client: GithubClient
+    private let branch: String
     private let path: String
     private let repo: RepositoryDetails
     private let cellIdentifier = "cell"
@@ -19,9 +20,10 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     private var files = [RepositoryFile]()
     private let isRoot: Bool
 
-    init(client: GithubClient, repo: RepositoryDetails, path: String, isRoot: Bool) {
+    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String, isRoot: Bool) {
         self.client = client
         self.repo = repo
+        self.branch = branch
         self.path = path
         self.isRoot = isRoot
         super.init(nibName: nil, bundle: nil)
@@ -75,7 +77,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     // MARK: Private API
 
     func fetch() {
-        client.fetchFiles(owner: repo.owner, repo: repo.name, path: path) { [weak self] (result) in
+        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
             switch result {
             case .error:
                 ToastManager.showGenericError()
@@ -87,8 +89,7 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
         }
     }
 
-    @objc
-    func onRefresh() {
+    @objc func onRefresh() {
         fetch()
     }
 
@@ -99,28 +100,12 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? StyledTableCell else {
+            fatalError("Could not dequeueCell with identifier: \(cellIdentifier)")
+        }
 
         let file = files[indexPath.row]
-        cell.textLabel?.text = file.name
-        
-        cell.isAccessibilityElement = true
-        cell.accessibilityTraits |= UIAccessibilityTraitButton
-        let fileType = file.isDirectory
-            ? NSLocalizedString("Directory", comment: "Used to specify the code cell is a directory.")
-            : NSLocalizedString("File", comment: "Used to specify the code cell is a file.")
-        cell.accessibilityLabel = cell.contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("") { "\($0).\n\($1)" }
-            .appending(".\n\(fileType)")
-        cell.accessibilityHint = file.isDirectory
-            ? NSLocalizedString("Shows the contents of the directory", comment: "")
-            : NSLocalizedString("Shows the contents of the file", comment: "")
-
-        let imageName = file.isDirectory ? "file-directory" : "file"
-        cell.imageView?.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        cell.imageView?.tintColor = Styles.Colors.blueGray.color
-        cell.accessoryType = file.isDirectory ? .disclosureIndicator : .none
+        cell.setup(with: file)
 
         return cell
     }
@@ -136,11 +121,12 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
             controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
+                branch: branch,
                 path: newPath,
                 isRoot: false
             )
         } else {
-            controller = RepositoryCodeBlobViewController(client: client, repo: repo, path: newPath)
+            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: newPath)
         }
         navigationController?.pushViewController(controller, animated: true)
     }

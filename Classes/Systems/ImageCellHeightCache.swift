@@ -23,8 +23,7 @@ final class ImageCellHeightCache: IssueCommentImageHeightCellDelegate {
 
     func height(model: IssueCommentImageModel, width: CGFloat) -> CGFloat {
         guard let size = ImageCellHeightCache.cache.data(key: model.url, width: 0) else { return 200 }
-        let ratio = size.width / size.height
-        return ceil(width / ratio)
+        return BoundedImageSize(originalSize: size, containerWidth: width).height
     }
 
     // MARK: IssueCommentImageHeightCellDelegate

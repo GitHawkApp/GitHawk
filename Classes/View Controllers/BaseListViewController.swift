@@ -13,6 +13,8 @@ import IGListKit
 protocol BaseListViewControllerDataSource: class {
     // models that stick to the head of the list. not displayed on an empty error
     func headModels(listAdapter: ListAdapter) -> [ListDiffable]
+    // the core "body" models in the list
+    func models(listAdapter: ListAdapter) -> [ListDiffable]
     // section controllers for models in the list
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController
     // a section controller for empty lists w/out error
@@ -36,7 +38,6 @@ LoadMoreSectionControllerDelegate {
     private weak var dataSource: BaseListViewControllerDataSource?
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var _models = [ListDiffable]()
     private var page: PagingType?
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
@@ -84,29 +85,16 @@ LoadMoreSectionControllerDelegate {
 
     // MARK: Public API
 
-    var models: [ListDiffable] {
-        return _models
-    }
-
-    final func update(models: [ListDiffable], animated: Bool) {
-        self._models = models
+    final func update(animated: Bool) {
         self.feed.finishLoading(dismissRefresh: true, animated: animated)
     }
 
     final func update(
-        models: [ListDiffable],
         page: PagingType?,
-        append: Bool,
         animated: Bool,
         completion: (() -> Void)? = nil
         ) {
         assert(Thread.isMainThread)
-
-        if append {
-            self._models += models
-        } else {
-            self._models = models
-        }
 
         self.hasError = false
         self.page = page
@@ -133,7 +121,7 @@ LoadMoreSectionControllerDelegate {
         assert(Thread.isMainThread)
         guard let dataSource = self.dataSource else { return [] }
 
-        let objects = _models
+        let objects = dataSource.models(listAdapter: listAdapter)
         let hasNoObjects = objects.count == 0
 
         // short-circuit to display empty-error message using the emptyView(...) API

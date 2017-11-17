@@ -20,6 +20,7 @@ NewIssueTableViewControllerDelegate {
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
+    @IBOutlet weak var githubStatusCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
@@ -67,10 +68,14 @@ NewIssueTableViewControllerDelegate {
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
+            deselectRow()
             onReviewAccess()
         } else if cell === accountsCell {
             deselectRow()
             onAccounts()
+        } else if cell === githubStatusCell {
+            deselectRow()
+            onGitHubStatus()
         } else if cell === reportBugCell {
             deselectRow()
             onReportBug()
@@ -87,7 +92,12 @@ NewIssueTableViewControllerDelegate {
     func onReviewAccess() {
         guard let url = URL(string: "https://github.com/settings/connections/applications/\(GithubAPI.clientID)")
             else { fatalError("Should always create GitHub issue URL") }
-        presentSafari(url: url)
+        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
+        if #available(iOS 11.0, *) {
+            UIApplication.shared.open(url, options: [:])
+        } else {
+            presentSafari(url: url)
+        }
     }
 
     func onAccounts() {
@@ -98,6 +108,12 @@ NewIssueTableViewControllerDelegate {
             accountsController.sessionManager = sessionManager
             self.navigationController?.showDetailViewController(navigationController, sender: self)
         }
+    }
+    
+    func onGitHubStatus() {
+        guard let url = URL(string: "https://status.github.com/messages")
+            else { fatalError("Should always create GitHub Status URL") }
+        presentSafari(url: url)
     }
 
     func onReportBug() {
@@ -142,8 +158,7 @@ NewIssueTableViewControllerDelegate {
         sessionManager.logout()
     }
 
-    @objc
-    func updateBadge() {
+    @objc func updateBadge() {
         BadgeNotifications.check { state in
             let authorized: Bool
             let enabled: Bool

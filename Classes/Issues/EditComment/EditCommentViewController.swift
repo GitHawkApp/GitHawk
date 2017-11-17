@@ -25,6 +25,7 @@ class EditCommentViewController: UIViewController {
     private let issueModel: IssueDetailsModel
     private let isRoot: Bool
     private let originalMarkdown: String
+    private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
 
     init(
         client: GithubClient,
@@ -49,6 +50,11 @@ class EditCommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        keyboardAdjuster = ScrollViewKeyboardAdjuster(
+            scrollView: textView,
+            viewController: self
+        )
+
         textView.githawkConfigure(inset: true)
         view.addSubview(textView)
         textView.snp.makeConstraints { make in
@@ -64,20 +70,6 @@ class EditCommentViewController: UIViewController {
             action: #selector(EditCommentViewController.onCancel)
         )
         setRightBarItemIdle()
-
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(EditCommentViewController.onKeyboardWillShow(notification:)),
-            name: NSNotification.Name.UIKeyboardWillShow,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(EditCommentViewController.onKeyboardWillHide(notification:)),
-            name: NSNotification.Name.UIKeyboardWillHide,
-            object: nil
-        )
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -106,14 +98,16 @@ class EditCommentViewController: UIViewController {
             repo: issueModel.repo,
             owner: issueModel.repo,
             addBorder: true,
-            supportsImageUpload: false
+            supportsImageUpload: true
         )
+        
         textActionsController.configure(client: client, textView: textView, actions: actions)
+        textActionsController.viewController = self
+        
         textView.inputAccessoryView = actions
     }
 
-    @objc
-    func onCancel() {
+    @objc func onCancel() {
         textView.resignFirstResponder()
 
         let dismissBlock = { [weak self] in
@@ -140,8 +134,7 @@ class EditCommentViewController: UIViewController {
         }
     }
 
-    @objc
-    func onSave() {
+    @objc func onSave() {
         setRightBarItemSpinning()
         textView.isEditable = false
         textView.resignFirstResponder()
@@ -169,22 +162,6 @@ class EditCommentViewController: UIViewController {
     func error() {
         setRightBarItemIdle()
         ToastManager.showGenericError()
-    }
-
-    // MARK: Notifications
-
-    @objc
-    func onKeyboardWillShow(notification: NSNotification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-        let inset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
-        textView.contentInset = inset
-        textView.scrollIndicatorInsets = inset
-    }
-
-    @objc
-    func onKeyboardWillHide(notification: NSNotification) {
-        textView.contentInset = .zero
-        textView.scrollIndicatorInsets = .zero
     }
 
 }

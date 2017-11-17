@@ -21,6 +21,7 @@ final class IssueCommentModel: ListDiffable {
     let viewerCanUpdate: Bool
     let viewerCanDelete: Bool
     let isRoot: Bool
+    let asReviewComment: Bool
 
     enum ThreadState {
         case single
@@ -39,7 +40,9 @@ final class IssueCommentModel: ListDiffable {
         rawMarkdown: String,
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool,
-        isRoot: Bool
+        isRoot: Bool,
+        number: Int?,
+        asReviewComment: Bool = false
         ) {
         self.id = id
         self.details = details
@@ -47,11 +50,12 @@ final class IssueCommentModel: ListDiffable {
         self.reactions = reactions
         self.collapse = collapse
         self.threadState = threadState
-        self.number = GraphQLIDDecode(id: id, separator: "IssueComment")
+        self.number = number
         self.rawMarkdown = rawMarkdown
         self.viewerCanUpdate = viewerCanUpdate
         self.viewerCanDelete = viewerCanDelete
         self.isRoot = isRoot
+        self.asReviewComment = asReviewComment
     }
 
     // MARK: ListDiffable

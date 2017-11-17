@@ -41,7 +41,7 @@ extension GithubClient {
         number: Int,
         width: CGFloat,
         prependResult: IssueResult?,
-        completion: @escaping (Result<IssueResult>) -> Void
+        completion: @escaping (Result<(IssueResult, [AutocompleteUser])>) -> Void
         ) {
 
         let query = IssueOrPullRequestQuery(
@@ -51,6 +51,8 @@ extension GithubClient {
             page_size: 30,
             before: prependResult?.minStartCursor
         )
+
+        let cache = self.cache
 
         fetch(query: query) { (result, error) in
             let repository = result?.data?.repository
@@ -95,9 +97,19 @@ extension GithubClient {
                         viewModels: timeline.models
                     )
 
-                    let milestoneModel: IssueMilestoneModel?
+                    let milestoneModel: Milestone?
                     if let milestone = issueType.milestoneFields {
-                        milestoneModel = IssueMilestoneModel(number: milestone.number, title: milestone.title)
+                        let dueOn: Date?
+                        if let date = milestone.dueOn {
+                            dueOn = GithubAPIDateFormatter().date(from: date)
+                        } else {
+                            dueOn = nil
+                        }
+                        milestoneModel = Milestone(
+                            number: milestone.number,
+                            title: milestone.title,
+                            dueOn: dueOn
+                        )
                     } else {
                         milestoneModel = nil
                     }
@@ -105,24 +117,27 @@ extension GithubClient {
                     let canAdmin = repository?.viewerCanAdminister ?? false
 
                     let issueResult = IssueResult(
-                        subjectId: issueType.id,
+                        id: issueType.id,
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, width: width),
-                        labels: IssueLabelsModel(viewerCanUpdate: issueType.viewerCanUpdate, labels: issueType.labelableFields.issueLabelModels),
+                        labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
-                        mentionableUsers: mentionableUsers,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
-                        viewerCanAdminister: canAdmin
+                        viewerCanAdminister: canAdmin,
+                        defaultBranch: repository?.defaultBranchRef?.name ?? "master"
                     )
 
                     DispatchQueue.main.async {
-                        completion(.success(issueResult))
+                        // update the cache so all listeners receive the new model
+                        cache.set(value: issueResult)
+
+                        completion(.success((issueResult, mentionableUsers)))
                     }
                 }
             } else {
@@ -159,26 +174,48 @@ extension GithubClient {
         }
     }
 
-    enum CloseStatus: String {
-        case closed, open
-    }
-
     func setStatus(
+        previous: IssueResult,
         owner: String,
         repo: String,
         number: Int,
-        status: CloseStatus,
-        completion: @escaping (Result<CloseStatus>) -> Void
+        close: Bool
         ) {
+        let newStatus = IssueStatusModel(
+            status: close ? .closed : .open,
+            pullRequest: previous.status.pullRequest,
+            locked: previous.status.locked
+        )
+        let newEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: userSession?.username ?? Constants.Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: close ? .closed : .reopened,
+            pullRequest: previous.pullRequest
+        )
+        let optimisticResult = previous.updated(
+            status: newStatus,
+            timelinePages: previous.timelinePages(appending: [newEvent])
+        )
+
+        let cache = self.cache
+
+        // optimistically update the cache, listeners can react as appropriate
+        cache.set(value: optimisticResult)
+
+        let stateString = close ? "closed" : "open"
+
+        // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
-            parameters: [ "state": status.rawValue ],
+            parameters: [ "state": stateString ],
             completion: { (response, _) in
-                if response.value != nil {
-                    completion(.success(status))
-                } else {
-                    completion(.error(nil))
+                // rewind to a previous object if response isn't a success
+                if response.response?.statusCode != 200 {
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
                 }
         }))
     }
@@ -195,7 +232,37 @@ extension GithubClient {
         }))
     }
 
-    func setLocked(owner: String, repo: String, number: Int, locked: Bool, completion: @escaping (Result<Bool>) -> Void) {
+    func setLocked(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        locked: Bool,
+        completion: ((Result<Bool>) -> Void)? = nil
+        ) {
+        let newStatus = IssueStatusModel(
+            status: previous.status.status,
+            pullRequest: previous.status.pullRequest,
+            locked: locked
+        )
+        let newEvent = IssueStatusEventModel(
+            id: UUID().uuidString,
+            actor: userSession?.username ?? Constants.Strings.unknown,
+            commitHash: nil,
+            date: Date(),
+            status: locked ? .locked : .unlocked,
+            pullRequest: previous.pullRequest
+        )
+        let optimisticResult = previous.updated(
+            status: newStatus,
+            timelinePages: previous.timelinePages(appending: [newEvent])
+        )
+
+        let cache = self.cache
+
+        // optimistically update the cache, listeners can react as appropriate
+        cache.set(value: optimisticResult)
+
         request(Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
             method: locked ? .put : .delete,
@@ -203,11 +270,61 @@ extension GithubClient {
                 // As per documentation this endpoint returns no content, so all we can validate is that
                 // the status code is "204 No Content".
                 if response.response?.statusCode == 204 {
-                    completion(.success(true))
+                    completion?(.success(true))
                 } else {
-                    completion(.error(nil))
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
+                    completion?(.error(nil))
                 }
         }))
+    }
+
+    func fetchViewerCollaborator(
+        owner: String,
+        repo: String,
+        completion: @escaping (Result<Bool>) -> Void
+        ) {
+        guard let viewer = userSession?.username else {
+            completion(.error(nil))
+            return
+        }
+
+        // https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+        request(Request(
+            path: "repos/\(owner)/\(repo)/collaborators/\(viewer)",
+            headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
+            completion: { (response, _) in
+                // documentation states that collab = 204
+                completion(.success(response.response?.statusCode == 204))
+        }))
+    }
+
+    func mutateLabels(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        labels: [RepositoryLabel]
+        ) {
+        let optimistic = previous.updated(labels: IssueLabelsModel(labels: labels))
+
+        let cache = self.cache
+        cache.set(value: optimistic)
+
+        request(GithubClient.Request(
+            path: "repos/\(owner)/\(repo)/issues/\(number)",
+            method: .patch,
+            parameters: ["labels": labels.map { $0.name }]
+        ) { (response, _) in
+            if let statusCode = response.response?.statusCode, statusCode != 200 {
+                cache.set(value: previous)
+                if statusCode == 403 {
+                    ToastManager.showPermissionsError()
+                } else {
+                    ToastManager.showGenericError()
+                }
+            }
+        })
     }
 
 }

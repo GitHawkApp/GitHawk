@@ -14,7 +14,7 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-SearchEmptyViewDelegate,
+InitialEmptyViewDelegate,
 SearchRecentSectionControllerDelegate,
 SearchRecentHeaderSectionControllerDelegate,
 TabNavRootViewControllerType,
@@ -23,8 +23,9 @@ SearchResultSectionControllerDelegate {
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
     private let recentHeaderKey = "com.freetime.SearchViewController.recent-header-key" as ListDiffable
-    private let recentStore = SearchRecentStore()
+    private var recentStore = SearchRecentStore()
     private let debouncer = Debouncer()
+    private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
 
     enum State {
         case idle
@@ -40,7 +41,7 @@ SearchResultSectionControllerDelegate {
             guard case let .loading(request, query) = state else { return }
             request.cancel()
             if case .loading = newValue {
-                recentStore.remove(query: query)
+                recentStore.remove(query)
             }
         }
     }
@@ -48,12 +49,11 @@ SearchResultSectionControllerDelegate {
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let view = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
     }()
-    private var originalContentInset: UIEdgeInsets = .zero
 
     init(client: GithubClient) {
         self.client = client
@@ -66,6 +66,13 @@ SearchResultSectionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        keyboardAdjuster = ScrollViewKeyboardAdjuster(
+            scrollView: collectionView,
+            viewController: self
+        )
+
+        makeBackBarItemEmpty()
 
         view.backgroundColor = Styles.Colors.background
 
@@ -80,25 +87,7 @@ SearchResultSectionControllerDelegate {
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
 
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillShow(notification:)),
-            name: .UIKeyboardWillShow,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(onKeyboardWillHide(notification:)),
-            name: .UIKeyboardWillHide,
-            object: nil
-        )
-        
-        nc.addObserver(
-            searchBar,
-            selector: #selector(UISearchBar.resignFirstResponder),
-            name: .UIKeyboardWillHide,
-            object: nil)
+        searchBar.resignWhenKeyboardHides()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -112,31 +101,8 @@ SearchResultSectionControllerDelegate {
         let bounds = view.bounds
         if bounds != collectionView.frame {
             collectionView.frame = bounds
-            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
-    }
-    // MARK: Notifications
-
-    @objc
-    func onKeyboardWillShow(notification: NSNotification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        originalContentInset = collectionView.contentInset
-
-        let converted = view.convert(frame, from: nil)
-        let intersection = converted.intersection(frame)
-        let bottomInset = intersection.height - bottomLayoutGuide.length
-
-        var inset = originalContentInset
-        inset.bottom = bottomInset
-        collectionView.contentInset = inset
-        collectionView.scrollIndicatorInsets = inset
-    }
-
-    @objc
-    func onKeyboardWillHide(notification: NSNotification) {
-        collectionView.contentInset = originalContentInset
-        collectionView.scrollIndicatorInsets = originalContentInset
     }
 
     // MARK: Data Loading/Paging
@@ -160,7 +126,7 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
-        recentStore.add(query: query)
+        recentStore.add(query)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
@@ -176,7 +142,7 @@ SearchResultSectionControllerDelegate {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
         case .idle:
-            var recents: [ListDiffable] = recentStore.recents.flatMap { SearchRecentViewModel(query: $0) }
+            var recents: [ListDiffable] = recentStore.values.flatMap { SearchRecentViewModel(query: $0) }
             if recents.count > 0 {
                 recents.insert(recentHeaderKey, at: 0)
             }
@@ -184,7 +150,7 @@ SearchResultSectionControllerDelegate {
         case .error, .loading:
             return []
         case .results(let models):
-            return models.count > 0 ? models : [noResultsKey]
+            return models.isEmpty ? [noResultsKey] : models
         }
     }
 
@@ -212,7 +178,11 @@ SearchResultSectionControllerDelegate {
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         switch state {
         case .idle:
-            let view = SearchEmptyView()
+            let view = InitialEmptyView(
+                imageName: "search-large",
+                title: NSLocalizedString("Search GitHub", comment: ""),
+                description: NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")
+            )
             view.delegate = self
             return view
         case .loading:
@@ -258,9 +228,9 @@ SearchResultSectionControllerDelegate {
         update(animated: false)
     }
 
-    // MARK: SearchEmptyViewDelegate
+    // MARK: InitialEmptyViewDelegate
 
-    func didTap(emptyView: SearchEmptyView) {
+    func didTap(emptyView: InitialEmptyView) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
@@ -284,8 +254,11 @@ SearchResultSectionControllerDelegate {
     }
 
     private func didSelectRepo(repo: RepositoryDetails) {
-        recentStore.add(query: .recentlyViewed(repo))
-        update(animated: false)
+        recentStore.add(.recentlyViewed(repo))
+
+        // always animate this transition b/c IGListKit disables global animations
+        // otherwise pushing the next view controller wont be animated
+        update(animated: true)
 
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
@@ -326,13 +299,13 @@ SearchResultSectionControllerDelegate {
     // MARK: SearchResultSectionControllerDelegate
 
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
-        recentStore.add(query: .recentlyViewed(repo))
-        update(animated: false)
+        recentStore.add(.recentlyViewed(repo))
+        update(animated: true)
         searchBar.resignFirstResponder()
     }
 
     func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
-        recentStore.remove(query: viewModel.query)
+        recentStore.remove(viewModel.query)
         update(animated: true)
     }
 

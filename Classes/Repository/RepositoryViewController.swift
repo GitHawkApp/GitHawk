@@ -19,10 +19,26 @@ NewIssueTableViewControllerDelegate {
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
+    private var bookmarkNavController: BookmarkNavigationController? = nil
+
+    var moreOptionsItem: UIBarButtonItem {
+        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
+        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        return rightItem
+    }
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
+
+        let bookmark = Bookmark(
+            type: .repo,
+            name: repo.name,
+            owner: repo.owner,
+            hasIssueEnabled: repo.hasIssuesEnabled,
+            defaultBranch: repo.defaultBranch
+        )
+        self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
 
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {
@@ -30,7 +46,7 @@ NewIssueTableViewControllerDelegate {
         }
         controllers += [
             RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-            RepositoryCodeDirectoryViewController(client: client, repo: repo, path: "", isRoot: true)
+            RepositoryCodeDirectoryViewController(client: client, repo: repo, branch: repo.defaultBranch, path: "", isRoot: true)
         ]
         self.controllers = controllers
 
@@ -48,7 +64,9 @@ NewIssueTableViewControllerDelegate {
 
         makeBackBarItemEmpty()
 
+//        automaticallyAdjustsChildScrollViewInsets = false
         dataSource = self
+        delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
         bar.appearance = TabmanBar.Appearance({ appearance in
             appearance.text.font = Styles.Fonts.button
@@ -57,34 +75,22 @@ NewIssueTableViewControllerDelegate {
             appearance.indicator.color = Styles.Colors.Blue.medium.color
         })
 
-        let rightItem = UIBarButtonItem(
-            image: UIImage(named: "bullets-hollow"),
-            style: .plain,
-            target: self,
-            action: #selector(IssuesViewController.onMore(sender:))
-        )
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
-        navigationItem.rightBarButtonItem = rightItem
-        
-        if #available(iOS 11.0, *) {
-            navigationItem.largeTitleDisplayMode = .never
-        }
-    }
-
-    override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-        } else {
-            // Fallback on earlier versions
-        }
-        setNeedsScrollViewInsetUpdate()
-        print("safe area insets changed")
+        configureNavigationItems()
+        navigationItem.configure(title: repo.name, subtitle: repo.owner)
     }
 
     // MARK: Private API
 
     var repoUrl: URL {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+    }
+
+    func configureNavigationItems() {
+        var items = [moreOptionsItem]
+        if let bookmarkItem = bookmarkNavController?.navigationItem {
+            items.append(bookmarkItem)
+        }
+        navigationItem.rightBarButtonItems = items
     }
 
     func newIssueAction() -> UIAlertAction? {
@@ -105,19 +111,7 @@ NewIssueTableViewControllerDelegate {
             .newIssue(issueController: newIssueViewController)
     }
 
-    func bookmarkAction() -> UIAlertAction? {
-        guard let store = client.bookmarksStore else { return nil }
-        let bookmarkModel = BookmarkModel(
-            type: .repo,
-            name: repo.name,
-            owner: repo.owner,
-            hasIssueEnabled: repo.hasIssuesEnabled
-        )
-        return AlertAction.toggleBookmark(store: store, model: bookmarkModel)
-    }
-
-    @objc
-    func onMore(sender: UIBarButtonItem) {
+    @objc func onMore(sender: UIButton) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         weak var weakSelf = self
@@ -125,13 +119,13 @@ NewIssueTableViewControllerDelegate {
 
         alert.addActions([
             repo.hasIssuesEnabled ? newIssueAction() : nil,
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.barButtonItem = sender },
-            AlertAction(alertBuilder).openInSafari(url: repoUrl),
-            AlertAction(alertBuilder).view(owner: URL(string: "https://github.com/\(repo.owner)")!),
-            bookmarkAction(),
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
+            AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
             AlertAction.cancel()
         ])
-        alert.popoverPresentationController?.barButtonItem = sender
+        alert.popoverPresentationController?.setSourceView(sender)
 
         present(alert, animated: true)
     }
@@ -156,5 +150,38 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         show(issuesViewController, sender: self)
     }
+
+    // MARK: PageboyViewControllerDelegate
+
+//    override func pageboyViewController(
+//        _ pageboyViewController: PageboyViewController,
+//        willScrollToPageAt index: PageboyViewController.PageIndex,
+//        direction: PageboyViewController.NavigationDirection,
+//        animated: Bool
+//        ) {
+//        super.pageboyViewController(
+//            pageboyViewController,
+//            willScrollToPageAt: index,
+//            direction: direction,
+//            animated: animated
+//        )
+//
+//        return
+//
+//        // hack to fix Tabman not applying top (nav bar) and bottom (tab bar) insets simultaneously
+//        var inset: UIEdgeInsets
+//        if #available(iOS 11.0, *) {
+//            inset = view.safeAreaInsets
+//        } else {
+//            inset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomLayoutGuide.length, right: 0)
+//        }
+//        inset.top += bar.requiredInsets.bar
+//        for view in controllers[index].view.subviews {
+//            if let scrollView = view as? UIScrollView {
+//                scrollView.contentInset = inset
+//                scrollView.scrollIndicatorInsets = inset
+//            }
+//        }
+//    }
 
 }

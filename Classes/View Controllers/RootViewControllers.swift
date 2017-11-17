@@ -51,7 +51,7 @@ func newSearchRootViewController(client: GithubClient) -> UIViewController {
 
 func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     let title = Constants.Strings.bookmarks
-    let controller = BookmarksViewController(client: client)
+    let controller = BookmarkViewController(client: client)
     controller.makeBackBarItemEmpty()
     controller.title = title
     let nav = UINavigationController(rootViewController: controller)

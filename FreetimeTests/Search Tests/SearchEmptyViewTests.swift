@@ -1,5 +1,5 @@
 //
-//  SearchEmptyViewTests.swift
+//  InitialEmptyViewTests.swift
 //  FreetimeTests
 //
 //  Created by Hesham Salman on 10/18/17.
@@ -10,21 +10,20 @@ import Foundation
 import XCTest
 
 @testable import Freetime
-class SearchEmptyViewTests: XCTestCase {
+class InitialEmptyViewTests: XCTestCase {
 
-    var searchEmptyView: SearchEmptyView!
-    var mockDelegate: MockSearchEmptyViewDelegate!
+    var initialEmptyView: InitialEmptyView!
+    var mockDelegate: MockInitialEmptyViewDelegate!
 
     override func setUp() {
         super.setUp()
-        let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        mockDelegate = MockSearchEmptyViewDelegate()
-        searchEmptyView = SearchEmptyView(frame: frame)
-        searchEmptyView.delegate = mockDelegate
+        mockDelegate = MockInitialEmptyViewDelegate()
+        initialEmptyView = InitialEmptyView(imageName: "repo", title: "repo", description: "repo")
+        initialEmptyView.delegate = mockDelegate
     }
 
     func test_onTap() {
-        searchEmptyView.onTap()
+        initialEmptyView.onTap()
         XCTAssertTrue(mockDelegate.didTap)
     }
 

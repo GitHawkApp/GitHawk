@@ -26,7 +26,7 @@ extension String {
 
 func CreateViewModels(
     containerWidth: CGFloat,
-    notifications: [Notification]) -> [NotificationViewModel] {
+    notifications: [NotificationResponse]) -> [NotificationViewModel] {
     var viewModels = [NotificationViewModel]()
 
     let df = GithubAPIDateFormatter()
@@ -55,7 +55,7 @@ func CreateViewModels(
 
 func CreateNotificationViewModels(
     containerWidth: CGFloat,
-    notifications: [Notification],
+    notifications: [NotificationResponse],
     completion: @escaping ([NotificationViewModel]) -> Void
     ) {
     DispatchQueue.global().async {

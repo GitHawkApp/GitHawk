@@ -88,8 +88,7 @@ final class IssueCommitCell: UICollectionViewCell {
 
     // MARK: Private API
 
-    @objc
-    func onAvatar() {
+    @objc func onAvatar() {
         delegate?.didTapAvatar(cell: self)
     }
 

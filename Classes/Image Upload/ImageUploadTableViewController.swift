@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SlackTextViewController
+import NYTPhotoViewer
 
 protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
 }
 
-class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate {
+class ImageUploadTableViewController: UITableViewController {
 
     @IBOutlet private var previewImageView: UIImageView! {
         didSet {
@@ -21,7 +23,10 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextField: UITextView!
+    @IBOutlet private var bodyTextField: SLKTextView!
+    
+    private var bodyPlaceholder: String?
+    private var bodyTextColor: UIColor?
 
     private var image: UIImage! // Set through the create function
     private var username: String?
@@ -70,7 +75,7 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
 
         // Set the left button item to cancel
         setLeftBarItem()
-
+        
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
             switch result {
@@ -186,13 +191,19 @@ class ImageUploadTableViewController: UITableViewController, UITextFieldDelegate
             }
         }
     }
+    
+    @IBAction func didPressPreviewImage() {
+        let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
+        present(previewViewController, animated: true, completion: nil)
+    }
+}
 
-    // MARK: UITextFieldDelegate
+// MARK: UITextFieldDelegate
 
+extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyTextField.becomeFirstResponder()
         return false
     }
-
 }

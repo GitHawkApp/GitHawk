@@ -16,8 +16,6 @@ final class EmptyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = Styles.Colors.background
-
         label.backgroundColor = .clear
         label.textAlignment = .center
         label.font = Styles.Fonts.body

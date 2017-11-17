@@ -21,7 +21,7 @@ struct AlertAction {
     let title: String?
     let style: UIAlertActionStyle
 
-    // MARK: - Init
+    // MARK: Init
 
     init(_ builder: AlertActionBuilder) {
         rootViewController = builder.rootViewController
@@ -29,7 +29,7 @@ struct AlertAction {
         style = builder.style ?? .default
     }
 
-    // MARK: - Public
+    // MARK: Public
 
     func get(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: self.title, style: self.style, handler: handler)
@@ -38,49 +38,35 @@ struct AlertAction {
     func share(_ items: [Any],
                activities: [UIActivity]?,
                buildActivityBlock: ((UIActivityViewController) -> Void)?) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Share...", comment: ""), style: .default) { _ in
-            guard let rootViewController = self.rootViewController else { return }
-
+        return UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
             buildActivityBlock?(activityController)
-
-            rootViewController.present(activityController, animated: true)
+            self.rootViewController?.present(activityController, animated: true)
         }
     }
 
-    func openInSafari(url: URL) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Open in Safari", comment: ""), style: .default) { _ in
-            guard let rootViewController = self.rootViewController else { return }
-
-            let safariController = SFSafariViewController(url: url)
-            rootViewController.present(safariController, animated: true)
+    func view(client: GithubClient, repo: RepositoryDetails) -> UIAlertAction {
+        return UIAlertAction(title: String.localizedStringWithFormat("View %@", repo.name), style: .default) { _ in
+            let repoViewController = RepositoryViewController(client: client, repo: repo)
+            self.rootViewController?.show(repoViewController, sender: nil)
         }
     }
 
-    func view(repo repoViewController: RepositoryViewController) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("View Repository", comment: ""), style: .default) { _ in
-            guard let rootViewController = self.rootViewController else { return }
-            rootViewController.show(repoViewController, sender: nil)
-        }
-    }
-
-    func view(owner ownerUrl: URL) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("View Owner's Profile", comment: ""), style: .default) { _ in
-            guard let rootViewController = self.rootViewController else { return }
-            rootViewController.presentSafari(url: ownerUrl)
+    func view(owner: String, url: URL) -> UIAlertAction {
+        return UIAlertAction(title: String.localizedStringWithFormat("View @%@", owner), style: .default) { _ in
+            self.rootViewController?.presentSafari(url: url)
         }
     }
 
     func newIssue(issueController: NewIssueTableViewController) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
-            guard let rootViewController = self.rootViewController else { return }
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
-            rootViewController.present(nav, animated: true)
+            self.rootViewController?.present(nav, animated: true)
         }
     }
 
-    // MARK: - Static
+    // MARK: Static
 
     static func cancel(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.cancel, style: .cancel, handler: handler)

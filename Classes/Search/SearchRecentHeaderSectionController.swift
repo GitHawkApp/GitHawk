@@ -13,7 +13,7 @@ protocol SearchRecentHeaderSectionControllerDelegate: class {
     func didTapClear(sectionController: SearchRecentHeaderSectionController)
 }
 
-final class SearchRecentHeaderSectionController: ListSectionController, SearchRecentHeaderCellDelegate {
+final class SearchRecentHeaderSectionController: ListSectionController, ClearAllHeaderCellDelegate {
 
     weak var delegate: SearchRecentHeaderSectionControllerDelegate?
 
@@ -28,15 +28,16 @@ final class SearchRecentHeaderSectionController: ListSectionController, SearchRe
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: SearchRecentHeaderCell.self, for: self, at: index) as? SearchRecentHeaderCell
+        guard let cell = collectionContext?.dequeueReusableCell(of: ClearAllHeaderCell.self, for: self, at: index) as? ClearAllHeaderCell
             else { fatalError("Missing context or wrong cell type") }
         cell.delegate = self
+        cell.configure(title: NSLocalizedString("Recent Searches", comment: "").uppercased(with: Locale.current))
         return cell
     }
 
-    // MARK: SearchRecentHeaderCellDelegate
+    // MARK: ClearAllHeaderCellDelegate
 
-    func didSelectClear(cell: SearchRecentHeaderCell) {
+    func didSelectClear(cell: ClearAllHeaderCell) {
         delegate?.didTapClear(sectionController: self)
     }
 
