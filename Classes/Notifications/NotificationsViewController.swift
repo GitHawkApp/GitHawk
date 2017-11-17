@@ -49,8 +49,8 @@ FlatCacheListener {
 
         resetLeftBarItem()
         if !showRead {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Archives", comment: ""),
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: Constants.Strings.archives,
                 style: .plain,
                 target: self,
                 action: #selector(NotificationsViewController.onViewAll)
@@ -64,7 +64,7 @@ FlatCacheListener {
 
     @objc func onViewAll() {
         let controller = NotificationsViewController(client: client, showRead: true)
-        controller.title = NSLocalizedString("Archives", comment: "")
+        controller.title = Constants.Strings.archives
         navigationController?.pushViewController(controller, animated: true)
     }
 

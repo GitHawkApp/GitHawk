@@ -40,6 +40,7 @@ enum Constants {
         static let clearAll = NSLocalizedString("Clear All", comment: "")
         static let delete = NSLocalizedString("Delete", comment: "")
         static let inbox = NSLocalizedString("Inbox", comment: "")
+        static let archives = NSLocalizedString("Archives", comment: "")
         static let upload = NSLocalizedString("Upload", comment: "")
         static let pullRequest = NSLocalizedString("Pull Request", comment: "")
         static let issue = NSLocalizedString("Issue", comment: "")
