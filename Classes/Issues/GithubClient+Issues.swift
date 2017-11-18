@@ -334,7 +334,41 @@ extension GithubClient {
         number: Int,
         labels: [RepositoryLabel]
         ) {
-        let optimistic = previous.updated(labels: IssueLabelsModel(labels: labels))
+        guard let actor = userSession?.username else { return }
+
+        let oldLabelNames = Set<String>(previous.labels.labels.map { $0.name })
+        let newLabelNames = Set<String>(labels.map { $0.name })
+
+        var newEvents = [IssueLabeledModel]()
+        for newLabel in labels {
+            if !oldLabelNames.contains(newLabel.name) {
+                newEvents.append(IssueLabeledModel(
+                    id: UUID().uuidString,
+                    actor: actor,
+                    title: newLabel.name,
+                    color: newLabel.color,
+                    date: Date(),
+                    type: .added
+                ))
+            }
+        }
+        for oldLabel in previous.labels.labels {
+            if !newLabelNames.contains(oldLabel.name) {
+                newEvents.append(IssueLabeledModel(
+                    id: UUID().uuidString,
+                    actor: actor,
+                    title: oldLabel.name,
+                    color: oldLabel.color,
+                    date: Date(),
+                    type: .removed
+                ))
+            }
+        }
+
+        let optimistic = previous.updated(
+            labels: IssueLabelsModel(labels: labels),
+            timelinePages: previous.timelinePages(appending: newEvents)
+        )
 
         let cache = self.cache
         cache.set(value: optimistic)
