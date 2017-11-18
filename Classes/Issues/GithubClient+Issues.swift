@@ -279,10 +279,30 @@ extension GithubClient {
         }))
     }
 
+    enum CollaboratorPermission: String {
+        case admin = "admin"
+        case write = "write"
+        case read = "read"
+        case none
+
+        static func from(_ str: String) -> CollaboratorPermission {
+            return CollaboratorPermission(rawValue: str) ?? .none
+        }
+
+        var canManage: Bool {
+            switch self {
+            case .admin, .write:
+                return true
+            case .read, .none:
+                return false
+            }
+        }
+    }
+
     func fetchViewerCollaborator(
         owner: String,
         repo: String,
-        completion: @escaping (Result<Bool>) -> Void
+        completion: @escaping (Result<CollaboratorPermission>) -> Void
         ) {
         guard let viewer = userSession?.username else {
             completion(.error(nil))
@@ -298,9 +318,9 @@ extension GithubClient {
                 if statusCode == 200,
                     let json = response.value as? [String: Any],
                     let permission = json["permission"] as? String {
-                    completion(.success((permission == "admin" || permission == "write")))
+                    completion(.success(CollaboratorPermission.from(permission)))
                 } else if statusCode == 403 {
-                    completion(.success(false))
+                    completion(.success(.none))
                 } else {
                     completion(.error(response.error))
                 }
