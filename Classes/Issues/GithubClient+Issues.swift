@@ -280,9 +280,9 @@ extension GithubClient {
     }
 
     enum CollaboratorPermission: String {
-        case admin = "admin"
-        case write = "write"
-        case read = "read"
+        case admin
+        case write
+        case read
         case none
 
         static func from(_ str: String) -> CollaboratorPermission {
