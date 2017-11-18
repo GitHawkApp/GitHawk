@@ -25,8 +25,8 @@ final class SearchRecentCell: SwipeSelectableCell {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.width.equalTo(Styles.Sizes.icon.width)
+            make.left.equalTo(Styles.Sizes.columnSpacing)
+            make.size.equalTo(Styles.Sizes.icon)
         }
 
         label.textColor = Styles.Colors.Gray.dark.color
@@ -34,7 +34,7 @@ final class SearchRecentCell: SwipeSelectableCell {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.gutter)
+            make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
         }
 
