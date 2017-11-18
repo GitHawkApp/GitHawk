@@ -279,23 +279,51 @@ extension GithubClient {
         }))
     }
 
+    enum CollaboratorPermission: String {
+        case admin
+        case write
+        case read
+        case none
+
+        static func from(_ str: String) -> CollaboratorPermission {
+            return CollaboratorPermission(rawValue: str) ?? .none
+        }
+
+        var canManage: Bool {
+            switch self {
+            case .admin, .write:
+                return true
+            case .read, .none:
+                return false
+            }
+        }
+    }
+
     func fetchViewerCollaborator(
         owner: String,
         repo: String,
-        completion: @escaping (Result<Bool>) -> Void
+        completion: @escaping (Result<CollaboratorPermission>) -> Void
         ) {
         guard let viewer = userSession?.username else {
             completion(.error(nil))
             return
         }
 
-        // https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-collaborator
+        // https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
         request(Request(
-            path: "repos/\(owner)/\(repo)/collaborators/\(viewer)",
+            path: "repos/\(owner)/\(repo)/collaborators/\(viewer)/permission",
             headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
             completion: { (response, _) in
-                // documentation states that collab = 204
-                completion(.success(response.response?.statusCode == 204))
+                let statusCode = response.response?.statusCode
+                if statusCode == 200,
+                    let json = response.value as? [String: Any],
+                    let permission = json["permission"] as? String {
+                    completion(.success(CollaboratorPermission.from(permission)))
+                } else if statusCode == 403 {
+                    completion(.success(.none))
+                } else {
+                    completion(.error(response.error))
+                }
         }))
     }
 

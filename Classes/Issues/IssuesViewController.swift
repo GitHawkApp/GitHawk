@@ -333,8 +333,8 @@ FlatCacheListener {
                 repo: model.repo
             ) { [weak self] (result) in
                 switch result {
-                case .success(let isCollab):
-                    self?.viewerIsCollaborator = isCollab
+                case .success(let permission):
+                    self?.viewerIsCollaborator = permission.canManage
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: true)
                 case .error:
