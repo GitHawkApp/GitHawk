@@ -81,7 +81,7 @@ SearchResultSectionControllerDelegate {
         adapter.dataSource = self
 
         searchBar.delegate = self
-        searchBar.placeholder = Constants.Strings.search
+        searchBar.placeholder = Constants.Strings.searchGitHub
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
@@ -180,7 +180,7 @@ SearchResultSectionControllerDelegate {
         case .idle:
             let view = InitialEmptyView(
                 imageName: "search-large",
-                title: NSLocalizedString("Search GitHub", comment: ""),
+                title: Constants.Strings.searchGitHub,
                 description: NSLocalizedString("Find your favorite repositories.\nRecent searches are saved.", comment: "")
             )
             view.delegate = self
