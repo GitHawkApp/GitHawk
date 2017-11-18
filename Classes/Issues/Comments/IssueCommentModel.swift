@@ -51,7 +51,7 @@ final class IssueCommentModel: ListDiffable {
         self.collapse = collapse
         self.threadState = threadState
         self.number = number
-        self.rawMarkdown = rawMarkdown
+        self.rawMarkdown = (rawMarkdown.isEmpty && isRoot) ? "*\(Constants.Strings.noDescriptionProvided)*" : rawMarkdown
         self.viewerCanUpdate = viewerCanUpdate
         self.viewerCanDelete = viewerCanDelete
         self.isRoot = isRoot
