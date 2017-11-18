@@ -281,7 +281,8 @@ DoubleTappableCellDelegate {
             cell.delegate = self
         }
         
-        if !(viewController is PullRequestReviewCommentsViewController),
+        if let object = self.object,
+            !object.asReviewComment,
             let cell = cell as? DoubleTappableCell {
             cell.doubleTapDelegate = self
         }
