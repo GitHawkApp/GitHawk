@@ -46,5 +46,6 @@ enum Constants {
         static let bookmark = NSLocalizedString("Bookmark", comment: "")
         static let removeBookmark = NSLocalizedString("Remove Bookmark", comment: "")
         static let bookmarks = NSLocalizedString("Bookmarks", comment: "")
+        static let noDescriptionProvided = NSLocalizedString("No description provided.", comment: "Used when a root comment does not have any contents.")
     }
 }
