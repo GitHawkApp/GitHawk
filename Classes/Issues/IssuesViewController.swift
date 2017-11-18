@@ -434,12 +434,12 @@ FlatCacheListener {
             objects.append(viewFilesModel)
         }
 
-        if current.hasPreviousPage {
-            objects.append(IssueNeckLoadModel())
-        }
-
         if let rootComment = current.rootComment {
             objects.append(rootComment)
+        }
+
+        if current.hasPreviousPage {
+            objects.append(IssueNeckLoadModel())
         }
 
         objects += current.timelineViewModels
