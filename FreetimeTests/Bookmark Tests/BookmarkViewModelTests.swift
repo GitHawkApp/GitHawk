@@ -28,26 +28,6 @@ class BookmarkViewModelTests: XCTestCase {
         otherModel = BookmarkViewModel(bookmark: other, width: 0)
     }
 
-    func test_bookmarkText_issue() {
-        let string = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: issue.owner, name: issue.name))
-        string.append(
-                NSAttributedString(string: "#\(issue.number)", attributes: [
-                    .font: Styles.Fonts.body,
-                    .foregroundColor: Styles.Colors.Gray.medium.color
-                    ]
-                )
-        )
-        string.append(NSAttributedString(string: "\n" + issue.title, attributes: [
-            .font: Styles.Fonts.secondary,
-            .foregroundColor: Styles.Colors.Gray.medium.color
-            ])
-        )
-        let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
-        let actual = issueModel.text
-
-        XCTAssertEqual(expected.attributedText, actual.attributedText)
-    }
-
     func test_bookmarkText_other() {
         let string = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: other.owner, name: other.name))
         let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
