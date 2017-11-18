@@ -27,10 +27,10 @@ FlatCacheListener {
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
-    private var hasScrolledToBottom = false
     private let viewFilesModel = "view_files" as ListDiffable
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var needsScrollToBottom = false
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -81,8 +81,6 @@ FlatCacheListener {
         return rightItem
     }
 
-    private var sentComments = [ListDiffable]()
-
     init(
         client: GithubClient,
         model: IssueDetailsModel,
@@ -91,9 +89,7 @@ FlatCacheListener {
         self.client = client
         self.model = model
         self.addCommentClient = AddCommentClient(client: client)
-
-        // trick into thinking already scrolled to bottom after load
-        self.hasScrolledToBottom = !scrollToBottom
+        self.needsScrollToBottom = scrollToBottom
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
@@ -356,12 +352,6 @@ FlatCacheListener {
 
             switch resultType {
             case .success(let result, let mentionableUsers):
-                // clear pending comments since they should now be part of the payload
-                // only clear when doing a refresh load
-                if !previous {
-                    strongSelf.sentComments.removeAll()
-                }
-
                 strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
@@ -370,12 +360,16 @@ FlatCacheListener {
 
             // subsequent updates are handled by the FlatCacheListener
             if isFirstUpdate {
-                strongSelf.feed.finishLoading(dismissRefresh: true) {
-                    if strongSelf.hasScrolledToBottom != true {
-                        strongSelf.hasScrolledToBottom = true
-                        strongSelf.feed.collectionView.slk_scrollToBottom(animated: true)
-                    }
-                }
+                strongSelf.updateAndScrollIfNeeded()
+            }
+        }
+    }
+
+    func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
+        feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
+            if self?.needsScrollToBottom == true {
+                self?.needsScrollToBottom = false
+                self?.feed.collectionView.slk_scrollToBottom(animated: true)
             }
         }
     }
@@ -449,7 +443,6 @@ FlatCacheListener {
         }
 
         objects += current.timelineViewModels
-        objects += sentComments
 
         return objects
     }
@@ -516,7 +509,8 @@ FlatCacheListener {
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool
         ) {
-        guard let comment = createCommentModel(
+        guard let previous = result,
+            let comment = createCommentModel(
             id: id,
             commentFields: commentFields,
             reactionFields: reactionFields,
@@ -529,12 +523,13 @@ FlatCacheListener {
             isRoot: false
             )
             else { return }
-        sentComments.append(comment)
 
-        let collectionView = feed.collectionView
-        feed.adapter.performUpdates(animated: false, completion: { _ in
-            collectionView.slk_scrollToBottom(animated: true)
-        })
+        needsScrollToBottom = true
+
+        let newResult = previous.updated(
+            timelinePages: previous.timelinePages(appending: [comment])
+        )
+        self.client.cache.set(value: newResult)
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
@@ -570,7 +565,7 @@ FlatCacheListener {
         switch update {
         case .item(let item):
             guard item is IssueResult else { break }
-            feed.finishLoading(dismissRefresh: true)
+            updateAndScrollIfNeeded()
         case .list: break
         }
     }
