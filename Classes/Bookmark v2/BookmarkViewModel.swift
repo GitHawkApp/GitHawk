@@ -19,32 +19,6 @@ final class BookmarkViewModel: ListDiffable {
     init(bookmark: Bookmark, width: CGFloat) {
         self.bookmark = bookmark
 
-//        let repositoryText = NSMutableAttributedString(
-//            attributedString: RepositoryAttributedString(
-//                owner: bookmark.owner,
-//                name: bookmark.name
-//            )
-//        )
-
-//        switch bookmark.type {
-//        case .issue, .pullRequest:
-//            let bookmarkText = NSAttributedString(string: "#\(bookmark.number)", attributes: [
-//                .font: Styles.Fonts.body,
-//                .foregroundColor: Styles.Colors.Gray.light.color
-//                ]
-//            )
-//            repositoryText.append(bookmarkText)
-//        default: break
-//        }
-
-//        if !bookmark.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//            repositoryText.append(NSAttributedString(string: "\n" + bookmark.title, attributes: [
-//                .font: Styles.Fonts.secondary,
-//                .foregroundColor: Styles.Colors.Gray.medium.color
-//                ])
-//            )
-//        }
-
         let attributes: [NSAttributedStringKey: Any] = [
             .font: Styles.Fonts.body,
             .foregroundColor: Styles.Colors.Gray.dark.color
