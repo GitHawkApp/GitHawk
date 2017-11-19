@@ -198,6 +198,7 @@
 		295B51321FC2230700C3993B /* FREETIME-DEBUG.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */; };
 		295B513C1FC2491800C3993B /* DoubleTappableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85B05C01FBFA66200489349 /* DoubleTappableCell.swift */; };
 		295B51351FC2306300C3993B /* SECRETS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B51341FC2306300C3993B /* SECRETS.xcconfig */; };
+		295B51381FC230DE00C3993B /* Secrets.m in Sources */ = {isa = PBXBuildFile; fileRef = 295B51371FC230DE00C3993B /* Secrets.m */; };
 		295C31C71F09E62600521CED /* NotificationNextPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31C61F09E62600521CED /* NotificationNextPageCell.swift */; };
 		295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */; };
 		295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31CC1F0AA55400521CED /* IssueStatusEvent.swift */; };
@@ -231,7 +232,6 @@
 		297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */; };
 		297AE8791EC0D5C200B44A1F /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE85F1EC0D5C100B44A1F /* App.swift */; };
 		297AE87A1EC0D5C200B44A1F /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8601EC0D5C100B44A1F /* Authorization.swift */; };
-		297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8631EC0D5C100B44A1F /* Secrets.swift */; };
 		297AE87E1EC0D5C200B44A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8671EC0D5C200B44A1F /* AppDelegate.swift */; };
 		297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */; };
 		297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */; };
@@ -592,6 +592,8 @@
 		295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "FREETIME-TESTFLIGHT.xcconfig"; sourceTree = "<group>"; };
 		295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "FREETIME-DEBUG.xcconfig"; sourceTree = "<group>"; };
 		295B51341FC2306300C3993B /* SECRETS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SECRETS.xcconfig; sourceTree = "<group>"; };
+		295B51361FC230DE00C3993B /* Secrets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Secrets.h; sourceTree = "<group>"; };
+		295B51371FC230DE00C3993B /* Secrets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Secrets.m; sourceTree = "<group>"; };
 		295C31C61F09E62600521CED /* NotificationNextPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNextPageCell.swift; sourceTree = "<group>"; };
 		295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNextPageSectionController.swift; sourceTree = "<group>"; };
 		295C31CC1F0AA55400521CED /* IssueStatusEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatusEvent.swift; sourceTree = "<group>"; };
@@ -633,7 +635,6 @@
 		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		297AE85F1EC0D5C100B44A1F /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		297AE8601EC0D5C100B44A1F /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
-		297AE8631EC0D5C100B44A1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		297AE8671EC0D5C200B44A1F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingIndicator.swift"; sourceTree = "<group>"; };
@@ -1315,7 +1316,6 @@
 				297AE85E1EC0D5C100B44A1F /* Models */,
 				98B5A07E1F6C73A2000617D6 /* New Issue */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
-				297AE8611EC0D5C100B44A1F /* Other */,
 				299A04A61FAE94B4003C2450 /* PullReqeustReviews */,
 				986B872E1F2CA8E800AAB55C /* Repository */,
 				986B87171F2B873200AAB55C /* Search */,
@@ -1360,14 +1360,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		297AE8611EC0D5C100B44A1F /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				297AE8631EC0D5C100B44A1F /* Secrets.swift */,
-			);
-			path = Other;
-			sourceTree = "<group>";
-		};
 		297AE8641EC0D5C100B44A1F /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1403,6 +1395,8 @@
 				293189271F5391F700EF0911 /* Result.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */,
+				295B51361FC230DE00C3993B /* Secrets.h */,
+				295B51371FC230DE00C3993B /* Secrets.m */,
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
@@ -2270,6 +2264,7 @@
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
+				295B51381FC230DE00C3993B /* Secrets.m in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -2473,7 +2468,6 @@
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
-				297AE87C1EC0D5C200B44A1F /* Secrets.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */,
 				2982ED8B1F95900F00DBF8EB /* GithubClient+EditComment.swift in Sources */,
