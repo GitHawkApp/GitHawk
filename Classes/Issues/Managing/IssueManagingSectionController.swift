@@ -136,12 +136,12 @@ MilestonesViewControllerDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)
             else { return }
-
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
         if let cell = cell as? IssueManagingExpansionCell {
             expanded = !expanded
