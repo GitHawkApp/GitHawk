@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentCodeBlockCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, CollapsibleCell {
 
     static let scrollViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,

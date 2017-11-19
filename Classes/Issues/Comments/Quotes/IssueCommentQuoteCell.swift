@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentQuoteCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentQuoteCell: DoubleTappableCell, ListBindable, CollapsibleCell {
 
     static let borderWidth: CGFloat = 2
     static func inset(quoteLevel: Int) -> UIEdgeInsets {

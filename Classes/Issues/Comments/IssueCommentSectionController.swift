@@ -16,7 +16,8 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
 AttributedStringViewIssueDelegate,
-EditCommentViewControllerDelegate {
+EditCommentViewControllerDelegate,
+DoubleTappableCellDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -279,6 +280,12 @@ EditCommentViewControllerDelegate {
             cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
+        
+        if let object = self.object,
+            !object.asReviewComment,
+            let cell = cell as? DoubleTappableCell {
+            cell.doubleTapDelegate = self
+        }
 
         ExtraCommentCellConfigure(
             cell: cell,
@@ -306,6 +313,21 @@ EditCommentViewControllerDelegate {
         default: break
         }
         uncollapse()
+    }
+    
+    // MARK: DoubleTappableCellDelegate
+    
+    func didDoubleTap(cell: DoubleTappableCell) {
+        guard let reactionCell = collectionContext?.cellForItem(at: numberOfItems() - 1, sectionController: self) as? IssueCommentReactionCell else {
+            return
+        }
+        
+        let reaction = ReactionContent.thumbsUp
+        guard let reactions = reactionMutation ?? self.object?.reactions,
+            !reactions.viewerDidReact(reaction: reaction)
+            else { return }
+        
+        react(cell: reactionCell, content: reaction, isAdd: true)
     }
 
     // MARK: IssueCommentDetailCellDelegate

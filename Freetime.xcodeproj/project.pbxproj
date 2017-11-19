@@ -394,6 +394,7 @@
 		98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */; };
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
 		C2FAAA639721846A5B477E5C /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */; };
+		D85B05C11FBFA66300489349 /* DoubleTappableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85B05C01FBFA66200489349 /* DoubleTappableCell.swift */; };
 		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
 		D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */; };
 		D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */; };
@@ -797,6 +798,7 @@
 		98F9F4021F9CD006005A0266 /* Image+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+Base64.swift"; sourceTree = "<group>"; };
 		B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
+		D85B05C01FBFA66200489349 /* DoubleTappableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleTappableCell.swift; sourceTree = "<group>"; };
 		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
 		D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+SourceView.swift"; sourceTree = "<group>"; };
 		D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+TightSpacing.swift"; sourceTree = "<group>"; };
@@ -1472,6 +1474,7 @@
 				D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */,
 				297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */,
 				297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */,
+				D85B05C01FBFA66200489349 /* DoubleTappableCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2195,6 +2198,7 @@
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
+				D85B05C11FBFA66300489349 /* DoubleTappableCell.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				2993046D1FBA8DCA007B9737 /* IssueManagingModel.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,

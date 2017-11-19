@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentSummaryCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentSummaryCell: DoubleTappableCell, ListBindable, CollapsibleCell {
 
     let label = UILabel()
     let overlay = CreateCollapsibleOverlay()

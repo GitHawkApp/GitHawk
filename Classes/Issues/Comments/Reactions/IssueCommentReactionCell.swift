@@ -15,7 +15,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
 
-final class IssueCommentReactionCell: UICollectionViewCell,
+final class IssueCommentReactionCell: DoubleTappableCell,
 ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
