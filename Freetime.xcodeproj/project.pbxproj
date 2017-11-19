@@ -1816,6 +1816,7 @@
 				F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */,
 				294CDE5C1F98DF5A002CF6E4 /* Set Build Number */,
 				DCF1A6481F9E3E1F00A7A4A0 /* SwiftLint */,
+				295B51391FC2342200C3993B /* Run Fabric */,
 			);
 			buildRules = (
 			);
@@ -1959,6 +1960,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = $SRCROOT/tools/bump_build_number.sh;
+		};
+		295B51391FC2342200C3993B /* Run Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Fabric";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 45ebb3c197db95937d23c07145bb2da8226cd851 5a7c91261f303a0c7b657c8f26d0c46275893eb555f601427d7538e9a67c3b3d";
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

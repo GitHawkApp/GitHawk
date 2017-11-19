@@ -14,6 +14,8 @@ pod 'SDWebImage/GIF', '~> 4.0.0'
 pod 'SnapKit', '~> 4.0.0'
 pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
+pod 'Fabric'
+pod 'Crashlytics'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
