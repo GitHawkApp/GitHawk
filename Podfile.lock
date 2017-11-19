@@ -5,6 +5,9 @@ PODS:
   - Apollo (0.7.0):
     - Apollo/Core (= 0.7.0)
   - Apollo/Core (0.7.0)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
+  - Fabric (1.7.2)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
@@ -41,6 +44,8 @@ DEPENDENCIES:
   - Alamofire (~> 4.4.0)
   - AlamofireNetworkActivityIndicator (~> 2.1)
   - Apollo (~> 0.7.0-alpha.5)
+  - Crashlytics
+  - Fabric
   - FlatCache (from `Local Pods/FlatCache`)
   - FLEX (~> 2.0)
   - HTMLString (~> 4.0.1)
@@ -79,6 +84,8 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
@@ -96,6 +103,6 @@ SPEC CHECKSUMS:
   Tabman: c8bae06c9de5cbc6a33b52d036103d5afcf444e0
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 88c61fbbe68e771361df0308108e4edbfe4f81cf
+PODFILE CHECKSUM: 5b843ef17ef209463a7436d7508c411700032f14
 
 COCOAPODS: 1.4.0.beta.1
