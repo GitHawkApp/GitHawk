@@ -77,6 +77,13 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         super.init()
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(NSAttributedStringSizing.onMemoryWarning),
+            name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+            object: nil
+        )
+
         computeSize(containerWidth)
     }
 
@@ -170,6 +177,10 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         _textSize[width] = size
 
         return size
+    }
+
+    @objc func onMemoryWarning() {
+        _contents.removeAll()
     }
 
     // MARK: ListDiffable
