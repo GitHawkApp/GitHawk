@@ -76,6 +76,5 @@ _site/
 .jekyll-metadata
 
 # secrets
-tools/env-variables.sh
 Resources/*.xcconfig
 
