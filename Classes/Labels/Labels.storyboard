@@ -54,7 +54,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Labels" id="aTv-cp-0zu">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="VEL-fa-t0u">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="VEL-fa-t0u">
                             <connections>
                                 <action selector="onDone" destination="i6k-yB-d8o" id="EoD-LI-SRg"/>
                             </connections>
