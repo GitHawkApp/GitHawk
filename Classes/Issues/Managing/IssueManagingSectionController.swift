@@ -30,6 +30,7 @@ MilestonesViewControllerDelegate {
     private let model: IssueDetailsModel
     private let client: GithubClient
     private var expanded = false
+    private var updating = false
 
     init(id: String, model: IssueDetailsModel, client: GithubClient) {
         self.id = id
@@ -135,16 +136,21 @@ MilestonesViewControllerDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
-        guard let viewModel = viewModel as? ListDiffable,
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        
+        guard updating == false,
+            let viewModel = viewModel as? ListDiffable,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)
             else { return }
-
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
         if let cell = cell as? IssueManagingExpansionCell {
             expanded = !expanded
             cell.animate(expanded: expanded)
-            update(animated: true)
+
+            updating = true
+            update(animated: true, completion: { [weak self] _ in
+                self?.updating = false
+            })
         } else if viewModel === Action.labels {
             let controller = newLabelsController()
             present(controller: controller, from: cell)
