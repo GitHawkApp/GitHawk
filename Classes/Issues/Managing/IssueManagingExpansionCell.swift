@@ -78,7 +78,10 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
     // MARK: Private API
 
     private func rotateChevron(expanded: Bool) {
-        chevron.transform = expanded ? CGAffineTransform(rotationAngle: CGFloat.pi) : .identity
+        // nudging the angles let's us control the animation direction
+        chevron.transform = expanded
+            ? CGAffineTransform(rotationAngle: CGFloat.pi + 0.00001)
+            : CGAffineTransform(rotationAngle: -0.00001)
     }
 
     // MARK: ListBindable
