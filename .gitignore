@@ -77,4 +77,4 @@ _site/
 
 # secrets
 Resources/env-variables.sh
-
+Resources/*.xcconfig
