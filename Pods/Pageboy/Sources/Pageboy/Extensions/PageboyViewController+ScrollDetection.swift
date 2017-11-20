@@ -370,3 +370,11 @@ internal extension PageboyViewController.NavigationDirection {
         return  position > previousPosition ? .forward : .reverse
     }
 }
+
+internal extension UIScrollView {
+    
+    /// Whether the scroll view can be assumed to be interactively scrolling
+    var isProbablyActiveInScroll: Bool {
+        return self.isTracking || self.isDragging || self.isDecelerating
+    }
+}

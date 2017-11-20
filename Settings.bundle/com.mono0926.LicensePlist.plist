@@ -96,7 +96,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Pageboy</string>
 			<key>Title</key>
-			<string>Pageboy (2.0.2)</string>
+			<string>Pageboy (2.0.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -152,7 +152,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Tabman</string>
 			<key>Title</key>
-			<string>Tabman (1.0.5)</string>
+			<string>Tabman (1.0.6)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

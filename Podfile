@@ -16,6 +16,7 @@ pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'Tabman', '~> 1.0'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
@@ -28,7 +29,6 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
-pod 'Tabman', :path => 'Local Pods/Tabman'
 
 target 'Freetime' do
 

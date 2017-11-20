@@ -309,7 +309,7 @@ open class PageboyViewController: UIViewController {
     }
     
     
-    // MARK: Scrolling
+    // MARK: Updating
     
     /// Scroll the page view controller to a new page.
     ///
@@ -321,12 +321,18 @@ open class PageboyViewController: UIViewController {
     public func scrollToPage(_ page: Page,
                              animated: Bool,
                              completion: PageScrollCompletion? = nil) -> Bool {
+        guard let pageViewController = self.pageViewController else {
+            return false
+        }
+        
+        // guard against any active interactive scrolling
+        guard pageViewController.scrollView?.isProbablyActiveInScroll == false &&
+            self.isPositionedOnPageIndex else {
+            return false
+        }
         
         // guard against any current transition operation
         guard self.isScrollingAnimated == false else { return false }
-        guard !(self.isTracking && self.isDragging && self.isDecelerating) else { return false }
-        guard self.isPositionedOnPageIndex else { return false }
-        guard let pageViewController = self.pageViewController else { return false }
         
         let rawIndex = self.indexValue(for: page)
         if rawIndex != self.currentIndex {
@@ -368,26 +374,19 @@ open class PageboyViewController: UIViewController {
                                                              animated: animated)
                     }
                 }
+                
                 self.autoScroller.didFinishScrollIfEnabled()
                 completion?(viewController, animated, finished)
                 self.isScrollingAnimated = false
             }
             
-            self.performTransition(from: currentIndex ?? 0,
-                                   to: rawIndex,
-                                   with: direction,
-                                   animated: animated,
-                                   completion: transitionCompletion)
-            DispatchQueue.main.async {
-                self.pageViewController?.setViewControllers([viewController],
-                                                            direction: direction.pageViewControllerNavDirection,
-                                                            animated: false,
-                                                            completion:
-                    { (finished) in
-                        guard animated == false else { return }
-                        transitionCompletion(finished)
-                })
-            }
+            updateViewControllers(to: [viewController],
+                                  from: currentIndex ?? 0,
+                                  to: rawIndex,
+                                  direction: direction,
+                                  animated: animated,
+                                  completion: transitionCompletion)
+            
             return true
             
         } else {
@@ -397,5 +396,35 @@ open class PageboyViewController: UIViewController {
             
             return false
         }
+    }
+    
+    private var isUpdatingViewControllers: Bool = false
+    internal func updateViewControllers(to viewControllers: [UIViewController],
+                                       from fromIndex: PageIndex = 0,
+                                       to toIndex: PageIndex = 0,
+                                       direction: NavigationDirection = .forward,
+                                       animated: Bool,
+                                       completion: TransitionOperation.Completion?) {
+        guard let pageViewController = self.pageViewController, !isUpdatingViewControllers else {
+            return
+        }
+        
+        isUpdatingViewControllers = true
+        performTransition(from: fromIndex,
+                          to: toIndex,
+                          with: direction,
+                          animated: animated,
+                          completion: completion ?? { _ in })
+        pageViewController.setViewControllers(viewControllers,
+                                              direction: direction.pageViewControllerNavDirection,
+                                              animated: false,
+                                              completion:
+            { (finished) in
+                self.isUpdatingViewControllers = false
+                
+                if !animated {
+                    completion?(finished)
+                }
+        })
     }
 }
