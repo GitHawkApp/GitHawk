@@ -29,7 +29,6 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
-# pod 'Tabman', :path => 'Local Pods/Tabman'
 
 target 'Freetime' do
 
