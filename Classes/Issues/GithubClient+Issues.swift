@@ -389,4 +389,87 @@ extension GithubClient {
         })
     }
 
+    func addAssignees(
+        previous: IssueResult,
+        owner: String,
+        repo: String,
+        number: Int,
+        assignees: [IssueAssigneeViewModel]
+        ) {
+        guard let actor = userSession?.username else { return }
+
+        let oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
+        let newAssignees = Set<String>(assignees.map { $0.login })
+
+        var newEvents = [IssueRequestModel]()
+        var added = [String]()
+        var removed = [String]()
+
+        for old in oldAssigness {
+            if !newAssignees.contains(old) {
+                removed.append(old)
+                newEvents.append(IssueRequestModel(
+                    id: UUID().uuidString,
+                    actor: actor,
+                    user: old,
+                    date: Date(),
+                    event: .unassigned,
+                    width: 0 // will be inflated when asked
+                    ))
+            }
+        }
+        for new in newAssignees {
+            if !oldAssigness.contains(new) {
+                added.append(new)
+                newEvents.append(IssueRequestModel(
+                    id: UUID().uuidString,
+                    actor: actor,
+                    user: new,
+                    date: Date(),
+                    event: .assigned,
+                    width: 0 // will be inflated when asked
+                ))
+            }
+        }
+
+        let optimistic = previous.updated(
+            assignee: IssueAssigneesModel(users: assignees, type: .assigned),
+            timelinePages: previous.timelinePages(appending: newEvents)
+        )
+
+        let cache = self.cache
+        cache.set(value: optimistic)
+
+        let path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
+
+        let handler: (Int, Int?) -> Void = { (expect, status) in
+            if status != expect {
+                cache.set(value: previous)
+                ToastManager.showGenericError()
+            }
+        }
+
+        // https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+        if added.count > 0 {
+            request(GithubClient.Request(
+                path: path,
+                method: .post,
+                parameters: ["assignees": added]
+            ) { (response, _) in
+                handler(201, response.response?.statusCode)
+            })
+        }
+
+        // https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+        if removed.count > 0 {
+            request(GithubClient.Request(
+                path: path,
+                method: .delete,
+                parameters: ["assignees": removed]
+            ) { (response, _) in
+                handler(200, response.response?.statusCode)
+            })
+        }
+    }
+
 }
