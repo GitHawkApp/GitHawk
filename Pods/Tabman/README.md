@@ -4,8 +4,9 @@
 
 [![Build Status](https://travis-ci.org/uias/Tabman.svg?branch=master)](https://travis-ci.org/uias/Tabman)
 [![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Tabman.svg)](https://cocoapods.org/pods/Tabman)
+[![Platforms](https://img.shields.io/cocoapods/p/Tabman.svg)](https://cocoapods.org/pods/Tabman)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CocoaPods](https://img.shields.io/cocoapods/v/Tabman.svg)]()
 [![codecov](https://codecov.io/gh/uias/Tabman/branch/master/graph/badge.svg)](https://codecov.io/gh/uias/Tabman)
 [![GitHub release](https://img.shields.io/github/release/uias/Tabman.svg)](https://github.com/uias/Tabman/releases)
 
@@ -57,7 +58,7 @@ github "uias/Tabman" ~> 1.0
 - [PureLayout](https://www.github.com/PureLayout/PureLayout) by PureLayout
 
 ### Example
-A nice pretty example project is available to take a look at some of the features that `Tabman` offers. To run the example, simply clone the repo, run 
+An example project is available to take a look at some of the features that **Tabman** offers. To run the example, simply clone the repo, run 
 
 ```ogdl
 carthage bootstrap --platform ios
@@ -106,7 +107,7 @@ func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyVie
 3) All done! 🎉
 
 ### Page View Controller
-As Tabman is based on [Pageboy](github.com/uias/Pageboy), all the extras and niceities in a `PageboyViewController` are available in a`TabmanViewController`. Including:
+As Tabman is based on **[Pageboy](github.com/uias/Pageboy)**, all the extras and niceities in a `PageboyViewController` are available in a`TabmanViewController`. Including:
 
 - Simplified data source management.
 - Enhanced delegation; featuring exact relative positional data and reliable updates.
@@ -114,17 +115,20 @@ As Tabman is based on [Pageboy](github.com/uias/Pageboy), all the extras and nic
 - Automatic timer-based page transitioning.
 - Support for custom page transitions.
 
-Read up on the `Pageboy` documentation [here](https://github.com/uias/Pageboy#usage).
+Read up on the **Pageboy** documentation [here](https://github.com/uias/Pageboy#usage).
 
-## Child Content Insetting
-Tabman will automatically inset any `UIScrollView` that if finds within the child view controllers provided by the `PageboyViewControllerDataSource`. This behaviour can easily be disabled:
+### Child Content Insetting
+Tabman will automatically attempt to inset any `UIScrollView` that if finds within it's child view controllers. This is enabled by default:
 
 ```swift
-tabmanViewController.automaticallyAdjustsChildScrollViewInsets = false
+.automaticallyAdjustsChildScrollViewInsets = true
 ```
 
-A `requiredInsets` property is also available on `TabmanBarConfig` which provides any insets required to inset content correctly for the visible `TabmanBar` manually.
+*The values used for insetting the child content are also available for manual use at `bar.requiredInsets`. Additionally, `additionalSafeAreaInsets` are also configured to allow for content to be pinned to the safe areas when running iOS 11.*
 
+Automatic insetting support is available for any `UIScrollView` derived class such as `UITableView` and also view controllers such as `UITableViewController` and `UICollectionViewController`.
+
+**Troubleshooting** - If you are having issues with the automatic insetting behaviour of Tabman, please check out the [Automatic Insetting Troubleshooting Guide](Docs/TROUBLESHOOTING.md#automatic-insetting). If you still are having issues, please raise an [issue](https://github.com/uias/Tabman/issues/new).
 
 ## Customization
 The `TabmanBar` in Tabman can be completely customized to your liking, by simply modifying the available properties in the `.bar` `TabmanBar.Config` object.
@@ -164,6 +168,10 @@ tabViewController.bar.appearance = TabmanBar.Appearance({ (appearance) in
 
 For more advanced customisation, including defining your own indicator and bar styles please read [here](Docs/ADVANCED_CUSTOMISATION.md).
 
+## Troubleshooting
+If you are encountering issues with Tabman, please check out the [Troubleshooting Guide](Docs/TROUBLESHOOTING.md).
+
+If you're still having problems, feel free to raise an [issue](https://github.com/uias/Tabman/issues/new).
 
 ## About
 - Created by [Merrick Sapsford](https://github.com/msaps) ([@MerrickSapsford](https://twitter.com/MerrickSapsford))
