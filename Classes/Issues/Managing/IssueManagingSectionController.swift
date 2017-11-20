@@ -13,7 +13,8 @@ final class IssueManagingSectionController: ListBindingSectionController<NSStrin
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate,
 LabelsViewControllerDelegate,
-MilestonesViewControllerDelegate {
+MilestonesViewControllerDelegate,
+PeopleViewControllerDelegate {
 
     private enum Action {
         static let labels = IssueManagingActionModel(
@@ -23,6 +24,10 @@ MilestonesViewControllerDelegate {
         static let milestone = IssueManagingActionModel(
             label: NSLocalizedString("Milestone", comment: ""),
             imageName: "milestone"
+        )
+        static let assignees = IssueManagingActionModel(
+            label: NSLocalizedString("Assignees", comment: ""),
+            imageName: "person"
         )
     }
 
@@ -63,13 +68,27 @@ MilestonesViewControllerDelegate {
 
     func newMilestonesController() -> UIViewController {
         guard let controller = UIStoryboard(name: "Milestones", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
-            else { fatalError("Missing labels view controller") }
+            else { fatalError("Missing milestones view controller") }
         controller.configure(
             client: client,
             owner: model.owner,
             repo: model.repo,
             selected: issueResult?.milestone,
             delegate: self
+        )
+        return controller
+    }
+
+    func newAssigneesController() -> UIViewController {
+        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateInitialViewController() as? PeopleViewController
+            else { fatalError("Missing people view controller") }
+        controller.configure(
+            selections: issueResult?.assignee.users.map { $0.login } ?? [],
+            type: .assignee,
+            client: client,
+            delegate: self,
+            owner: model.owner,
+            repo: model.repo
         )
         return controller
     }
@@ -92,6 +111,7 @@ MilestonesViewControllerDelegate {
             + (expanded ? [
                     Action.labels,
                     Action.milestone,
+                    Action.assignees,
                     ] : [])
     }
 
@@ -157,6 +177,9 @@ MilestonesViewControllerDelegate {
         } else if viewModel === Action.milestone {
             let controller = newMilestonesController()
             present(controller: controller, from: cell)
+        } else if viewModel === Action.assignees {
+            let controller = newAssigneesController()
+            present(controller: controller, from: cell)
         }
     }
 
@@ -183,6 +206,24 @@ MilestonesViewControllerDelegate {
             repo: model.repo,
             number: model.number,
             milestone: selected
+        )
+    }
+
+    // MARK: PeopleViewControllerDelegate
+
+    func didDismiss(controller: PeopleViewController, selections: [User]) {
+        guard let previous = issueResult else { return }
+        var assignees = [IssueAssigneeViewModel]()
+        for user in selections {
+            guard let url = URL(string: user.avatar_url) else { continue }
+            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: url))
+        }
+        client.addAssignees(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            assignees: assignees
         )
     }
 
