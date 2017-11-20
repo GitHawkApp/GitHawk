@@ -139,7 +139,7 @@ DoubleTappableCellDelegate {
         return true
     }
 
-    private func react(cell: IssueCommentReactionCell, content: ReactionContent, isAdd: Bool) {
+    private func react(cell: IssueCommentReactionCell?, content: ReactionContent, isAdd: Bool) {
         guard let object = self.object else { return }
 
         let previousReaction = reactionMutation
@@ -150,7 +150,9 @@ DoubleTappableCellDelegate {
             add: isAdd
         )
         reactionMutation = result.viewModel
-        cell.perform(operation: result.operation, content: content)
+
+        cell?.perform(operation: result.operation, content: content)
+
         update(animated: true)
         generator.impactOccurred()
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
@@ -318,16 +320,16 @@ DoubleTappableCellDelegate {
     // MARK: DoubleTappableCellDelegate
     
     func didDoubleTap(cell: DoubleTappableCell) {
-        guard let reactionCell = collectionContext?.cellForItem(at: numberOfItems() - 1, sectionController: self) as? IssueCommentReactionCell else {
-            return
-        }
-        
         let reaction = ReactionContent.thumbsUp
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
             else { return }
         
-        react(cell: reactionCell, content: reaction, isAdd: true)
+        react(
+            cell: collectionContext?.cellForItem(at: numberOfItems() - 1, sectionController: self) as? IssueCommentReactionCell,
+            content: reaction,
+            isAdd: true
+        )
     }
 
     // MARK: IssueCommentDetailCellDelegate
