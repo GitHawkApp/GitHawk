@@ -55,7 +55,7 @@ final class LabelsViewController: UITableViewController {
     }
 
     func update(labels: [RepositoryLabel]) {
-        self.labels = labels
+        self.labels = labels.sorted { $0.name < $1.name }
         tableView.reloadData()
         tableView.layoutIfNeeded()
 
