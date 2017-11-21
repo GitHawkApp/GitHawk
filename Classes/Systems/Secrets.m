@@ -8,20 +8,18 @@
 
 #import "Secrets.h"
 
-#define STRINGIFY(x) @#x
-
 @implementation Secrets
 
 + (NSString *)githubClientID {
-    return STRINGIFY(GITHUB_CLIENT_ID);
+    return GITHUB_CLIENT_ID;
 }
 
 + (NSString *)githubClientSecret {
-    return STRINGIFY(GITHUB_CLIENT_SECRET);
+    return GITHUB_CLIENT_SECRET;
 }
 
 + (NSString *)imgurClientID {
-    return STRINGIFY(IMGUR_CLIENT_ID);
+    return GITHUB_CLIENT_SECRET;
 }
 
 @end

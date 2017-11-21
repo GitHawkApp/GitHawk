@@ -2023,7 +2023,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# check if in buddy build environment\nif [[ -z \"$BUDDYBUILD_IPA_PATH\" ]]; then\nexport GITHUB_CLIENT_ID=\"CHANGE_ME\"\nexport GITHUB_CLIENT_SECRET=\"CHANGE_ME\"\nexport IMGUR_CLIENT_ID=\"CHANGE_ME\"\nfi\n\n# assert that all keys are setup\n[ -z \"$GITHUB_CLIENT_ID\" ] && echo \"Need to set GITHUB_CLIENT_ID\" && exit 1;\n[ -z \"$GITHUB_CLIENT_SECRET\" ] && echo \"Need to set GITHUB_CLIENT_SECRET\" && exit 1;\n[ -z \"$IMGUR_CLIENT_ID\" ] && echo \"Need to set IMGUR_CLIENT_ID\" && exit 1;\n\n# setup debug, testflight, and release consts\nSECRETS_PATH=\"Resources/SECRETS.xcconfig\"\nDEBUG_PATH=\"Resources/FREETIME-DEBUG.xcconfig\"\nTESTFLIGHT_PATH=\"Resources/FREETIME-TESTFLIGHT.xcconfig\"\nRELEASE_PATH=\"Resources/FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_TESTFLIGHT=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\n# function to write config files\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \"#include \\\"SECRETS.xcconfig\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = GITHUB_CLIENT_ID=\\$(GITHUB_CLIENT_ID) GITHUB_CLIENT_SECRET=\\$(GITHUB_CLIENT_SECRET) IMGUR_CLIENT_ID=\\$(IMGUR_CLIENT_ID)\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\n# write the secrets config\nif [ ! -f \"$SECRETS_PATH\" ]; then\necho \"GITHUB_CLIENT_ID=\\\"$GITHUB_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\necho \"GITHUB_CLIENT_SECRET=\\\"$GITHUB_CLIENT_SECRET\\\"\" >> \"$SECRETS_PATH\"\necho \"IMGUR_CLIENT_ID=\\\"$IMGUR_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\nfi\n\n# write each config file\nif [ ! -f \"$DEBUG_PATH\" ]; then\nwriteTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\nfi\n\nif [ ! -f \"$TESTFLIGHT_PATH\" ]; then\nwriteTemplate \"$TESTFLIGHT_PATH\" \"$PODS_TESTFLIGHT\"\nfi\n\nif [ ! -f \"$RELEASE_PATH\" ]; then\nwriteTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\nfi\n";
+			shellScript = "# check if in buddy build environment\nif [[ -z \"$BUDDYBUILD_IPA_PATH\" ]]; then\nexport GITHUB_CLIENT_ID=\"CHANGE_ME\"\nexport GITHUB_CLIENT_SECRET=\"CHANGE_ME\"\nexport IMGUR_CLIENT_ID=\"CHANGE_ME\"\nfi\n\n# assert that all keys are setup\n[ -z \"$GITHUB_CLIENT_ID\" ] && echo \"Need to set GITHUB_CLIENT_ID\" && exit 1;\n[ -z \"$GITHUB_CLIENT_SECRET\" ] && echo \"Need to set GITHUB_CLIENT_SECRET\" && exit 1;\n[ -z \"$IMGUR_CLIENT_ID\" ] && echo \"Need to set IMGUR_CLIENT_ID\" && exit 1;\n\n# setup debug, testflight, and release consts\nSECRETS_PATH=\"Resources/SECRETS.xcconfig\"\nDEBUG_PATH=\"Resources/FREETIME-DEBUG.xcconfig\"\nTESTFLIGHT_PATH=\"Resources/FREETIME-TESTFLIGHT.xcconfig\"\nRELEASE_PATH=\"Resources/FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_TESTFLIGHT=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\n# function to write config files\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \"#include \\\"SECRETS.xcconfig\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = GITHUB_CLIENT_ID=@\\\\\\\"\\$(GITHUB_CLIENT_ID)\\\\\\\" GITHUB_CLIENT_SECRET=@\\\\\\\"\\$(GITHUB_CLIENT_SECRET)\\\\\\\" IMGUR_CLIENT_ID=@\\\\\\\"\\$(IMGUR_CLIENT_ID)\\\\\\\"\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\n# write the secrets config\nif [ ! -f \"$SECRETS_PATH\" ]; then\necho \"GITHUB_CLIENT_ID=\\\"$GITHUB_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\necho \"GITHUB_CLIENT_SECRET=\\\"$GITHUB_CLIENT_SECRET\\\"\" >> \"$SECRETS_PATH\"\necho \"IMGUR_CLIENT_ID=\\\"$IMGUR_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\nfi\n\n# write each config file\nif [ ! -f \"$DEBUG_PATH\" ]; then\nwriteTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\nfi\n\nif [ ! -f \"$TESTFLIGHT_PATH\" ]; then\nwriteTemplate \"$TESTFLIGHT_PATH\" \"$PODS_TESTFLIGHT\"\nfi\n\nif [ ! -f \"$RELEASE_PATH\" ]; then\nwriteTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\nfi\n";
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2764,7 +2764,7 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */;
+			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2789,7 +2789,7 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */;
+			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2896,7 +2896,7 @@
 		};
 		98A8CA9A1F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */;
+			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
