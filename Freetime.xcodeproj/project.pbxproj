@@ -373,6 +373,7 @@
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
+		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
@@ -785,6 +786,7 @@
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
+		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
@@ -1750,6 +1752,7 @@
 				DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */,
 				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
 				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
+				5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2470,6 +2473,7 @@
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
+				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
 				DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
