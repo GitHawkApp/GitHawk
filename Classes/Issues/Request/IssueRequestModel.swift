@@ -76,9 +76,9 @@ final class IssueRequestModel: ListDiffable {
             containerWidth: width,
             attributedText: attributedText,
             inset: UIEdgeInsets(
-                top: Styles.Sizes.rowSpacing,
+                top: Styles.Sizes.inlineSpacing,
                 left: Styles.Sizes.eventGutter,
-                bottom: Styles.Sizes.rowSpacing,
+                bottom: Styles.Sizes.inlineSpacing,
                 right: Styles.Sizes.eventGutter
             ),
             backgroundColor: Styles.Colors.background
