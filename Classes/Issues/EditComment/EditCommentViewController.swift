@@ -77,6 +77,14 @@ class EditCommentViewController: UIViewController {
         textView.becomeFirstResponder()
     }
 
+    // MARK: Accessibility
+
+    override func accessibilityPerformMagicTap() -> Bool {
+        guard !textView.text.isEmpty else { return false}
+        onSave()
+        return true
+    }
+
     // MARK: Private API
 
     func setRightBarItemIdle() {
