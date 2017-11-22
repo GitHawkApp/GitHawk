@@ -1837,8 +1837,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
 			buildPhases = (
-				D803031CFB0CF7AEEF2F2B69 /* [CP] Check Pods Manifest.lock */,
 				295B513D1FC250DF00C3993B /* Generate Secrets Xcconfig */,
+				D803031CFB0CF7AEEF2F2B69 /* [CP] Check Pods Manifest.lock */,
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
