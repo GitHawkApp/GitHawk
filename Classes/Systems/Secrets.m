@@ -19,7 +19,7 @@
 }
 
 + (NSString *)imgurClientID {
-    return GITHUB_CLIENT_SECRET;
+    return IMGUR_CLIENT_ID;
 }
 
 @end
