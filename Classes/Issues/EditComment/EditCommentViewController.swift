@@ -14,7 +14,7 @@ protocol EditCommentViewControllerDelegate: class {
     func didCancel(viewController: EditCommentViewController)
 }
 
-class EditCommentViewController: UIViewController {
+class EditCommentViewController: UIViewController, UITextViewDelegate {
 
     weak var delegate: EditCommentViewControllerDelegate?
 
@@ -41,6 +41,7 @@ class EditCommentViewController: UIViewController {
         self.originalMarkdown = markdown
         super.init(nibName: nil, bundle: nil)
         textView.text = markdown
+        textView.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -162,6 +163,11 @@ class EditCommentViewController: UIViewController {
     func error() {
         setRightBarItemIdle()
         ToastManager.showGenericError()
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        guard textView === self.textView else { return }
+        navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
     }
 
 }
