@@ -78,3 +78,7 @@ _site/
 # secrets
 Resources/*.xcconfig
 
+
+
+# FBSnapshotTestCase Failure Diffs
+FailureDiffs/

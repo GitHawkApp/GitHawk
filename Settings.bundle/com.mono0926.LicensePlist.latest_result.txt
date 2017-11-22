@@ -132,6 +132,11 @@ body: MIT License
 
 Copyrig…
 
+name: FBSnapshotTestCase, nameSpecified: 
+body: BSD License
+
+For the…
+
 add-version-numbers: true
 
 LicensePlist Version: 1.4.5

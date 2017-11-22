@@ -24,7 +24,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Apollo</string>
 			<key>Title</key>
-			<string>Apollo (0.7.0)</string>
+			<string>Apollo</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -41,6 +41,14 @@
 			<string>com.mono0926.LicensePlist/Fabric</string>
 			<key>Title</key>
 			<string>Fabric (1.7.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/FBSnapshotTestCase</string>
+			<key>Title</key>
+			<string>FBSnapshotTestCase (2.1.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -96,7 +104,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Pageboy</string>
 			<key>Title</key>
-			<string>Pageboy (2.0.4)</string>
+			<string>Pageboy (2.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -136,7 +144,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SwiftLint</string>
 			<key>Title</key>
-			<string>SwiftLint (0.23.1)</string>
+			<string>SwiftLint (0.24.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -152,7 +160,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Tabman</string>
 			<key>Title</key>
-			<string>Tabman (1.0.6)</string>
+			<string>Tabman (1.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
