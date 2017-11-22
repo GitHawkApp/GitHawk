@@ -63,9 +63,7 @@ class SelectableCell: UICollectionViewCell {
 
     override var accessibilityLabel: String? {
         get {
-            return contentView.subviews
-                .flatMap { $0.accessibilityLabel }
-                .reduce("", { "\($0 ?? "").\n\($1)" })
+            return AccessibilityHelper.generatedLabel(forCell: self)
         }
         set { }
     }

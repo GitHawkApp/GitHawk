@@ -106,9 +106,8 @@ final class NotificationCell: SwipeSelectableCell {
         textLabel.attributedText = viewModel.title.attributedText
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon.withRenderingMode(.alwaysTemplate)
-        accessibilityLabel = contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("", { "\($0).\n\($1)" })
+        accessibilityLabel = AccessibilityHelper
+            .generatedLabel(forCell: self)
             .appending(".\n\(viewModel.type.localizedString)")
     }
 

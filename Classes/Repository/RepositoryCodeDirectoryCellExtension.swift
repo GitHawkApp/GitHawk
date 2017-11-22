@@ -16,9 +16,8 @@ extension StyledTableCell {
         let fileType = file.isDirectory
             ? NSLocalizedString("Directory", comment: "Used to specify the code cell is a directory.")
             : NSLocalizedString("File", comment: "Used to specify the code cell is a file.")
-        accessibilityLabel = contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("") { "\($0).\n\($1)" }
+        accessibilityLabel = AccessibilityHelper
+            .generatedLabel(forCell: self)
             .appending(".\n\(fileType)")
         accessibilityHint = file.isDirectory
             ? NSLocalizedString("Shows the contents of the directory", comment: "")
