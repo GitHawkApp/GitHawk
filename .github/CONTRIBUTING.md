@@ -12,7 +12,7 @@ In order to compile and run GitHawk locally, you will need to provide your own c
 
 If you have build errors, make sure the `.xcconfig` files are generated your project config looks like the image below.
 
-<img src="Design/config-setup.png" />
+<img src="../Design/config-setup.png" />
 
 Finally, you will also need to install `apollo-codegen`, this is a command line tool which is required to create the GraphQL models! This can be done easily by running `npm install`.
 
