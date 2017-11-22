@@ -80,7 +80,7 @@ class EditCommentViewController: UIViewController {
     // MARK: Accessibility
 
     override func accessibilityPerformMagicTap() -> Bool {
-        guard !textView.text.isEmpty else { return false}
+        guard !textView.text.isEmpty else { return false }
         onSave()
         return true
     }
