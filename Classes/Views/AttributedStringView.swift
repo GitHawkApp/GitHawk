@@ -50,6 +50,15 @@ final class AttributedStringView: UIView {
         return true
     }
 
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return text?.attributedText.string
+        }
+        set { }
+    }
+
     // MARK: Public API
 
     func reposition(width: CGFloat) {

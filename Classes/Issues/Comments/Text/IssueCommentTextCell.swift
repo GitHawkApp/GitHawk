@@ -18,6 +18,7 @@ final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleC
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
 
         backgroundColor = .white
         contentView.clipsToBounds = true
@@ -34,6 +35,17 @@ final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleC
         layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
         textView.reposition(width: contentView.bounds.width)
+    }
+
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return contentView.subviews
+                .flatMap { $0.accessibilityLabel }
+                .reduce("", { "\($0 ?? "").\n\($1)" })
+        }
+        set { }
     }
 
     // MARK: ListBindable
