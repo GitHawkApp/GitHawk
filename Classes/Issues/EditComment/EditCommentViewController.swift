@@ -166,7 +166,6 @@ class EditCommentViewController: UIViewController, UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        guard textView === self.textView else { return }
         navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
     }
 
