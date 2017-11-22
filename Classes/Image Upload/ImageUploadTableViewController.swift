@@ -155,10 +155,21 @@ class ImageUploadTableViewController: UITableViewController {
         }
 
         // Check that we have enough "tokens" to actually upload the image
-        client.canUploadImage { [weak self] success in
+        client.canUploadImage { [weak self] error in
             // Ensure that we do have enough tokens, otherwise remove the upload button
-            guard success else {
-                ToastManager.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
+            if let error = error as? ImgurClient.ImgurError {
+                
+                switch error {
+                case .endpointError(let response):
+                    ToastManager.showError(message: response)
+                    
+                case .rateLimitExceeded:
+                    ToastManager.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
+                    
+                default:
+                    ToastManager.showGenericError()
+                }
+                
                 self?.navigationItem.rightBarButtonItem = nil
                 return
             }
