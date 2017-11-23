@@ -2084,7 +2084,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FAILED=false\n\nif [ -z \"$BUDDYBUILD_BUILD_NUMBER\" ]; then\n  exit 0\nfi\n\nif [ -z \"$GITHUB_CLIENT_ID\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"$GITHUB_CLIENT_SECRET\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"$IMGUR_CLIENT_ID\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:19:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi";
+			shellScript = "FAILED=false\n\nif [ -z \"$BUDDYBUILD_BUILD_NUMBER\" ]; then\n  echo \"Script is not being run on CI\"\n  exit 0\nfi\n\nif [ -z \"$GITHUB_CLIENT_ID\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"$GITHUB_CLIENT_SECRET\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"$IMGUR_CLIENT_ID\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:19:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi\n\necho \"All env values found!\"";
 		};
 		AF1FC06013FAAFD132676B25 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
