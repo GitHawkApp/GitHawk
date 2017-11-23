@@ -36,24 +36,23 @@ final class IssueReferencedCell: UICollectionViewCell {
             make.top.equalTo(referencedLabel)
         }
 
-        statusButton.setupAsLabel(icon: false)
-        contentView.addSubview(statusButton)
-        statusButton.snp.makeConstraints { make in
-            make.right.equalTo(-Styles.Sizes.eventGutter)
-            make.top.equalTo(referencedLabel.snp.bottom).offset(2)
-        }
-
         titleLabel.numberOfLines = 1
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(referencedLabel)
-            make.right.lessThanOrEqualTo(statusButton.snp.left).offset(-Styles.Sizes.columnSpacing/2)
-            make.centerY.equalTo(statusButton)
-        }
-
         // always collapse and truncate
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalTo(referencedLabel)
+            make.right.lessThanOrEqualTo(-Styles.Sizes.gutter - Styles.Sizes.icon.width)
+            make.top.equalTo(referencedLabel.snp.bottom).offset(2)
+        }
+
+        statusButton.setupAsLabel(icon: false)
+        contentView.addSubview(statusButton)
+        statusButton.snp.makeConstraints { make in
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
+            make.centerY.equalTo(titleLabel).offset(-1)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
