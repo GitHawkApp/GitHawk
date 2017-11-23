@@ -51,7 +51,7 @@ final class IssueReferencedCell: UICollectionViewCell {
         contentView.addSubview(statusButton)
         statusButton.snp.makeConstraints { make in
             make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
-            make.centerY.equalTo(titleLabel).offset(-2)
+            make.centerY.equalTo(titleLabel).offset(-1)
         }
     }
 
