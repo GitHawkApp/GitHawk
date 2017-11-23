@@ -89,12 +89,20 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                   title
                   number
                   closed
+                  repository {
+                    name
+                    owner{login}
+                  }
                 }
                 ... on PullRequest {
                   title
                   number
                   closed
                   merged
+                  repository {
+                    name
+                    owner{login}
+                  }
                 }
               }
             }
@@ -266,12 +274,20 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
                   title
                   number
                   closed
+                  repository {
+                    name
+                    owner{login}
+                  }
                 }
                 ... on PullRequest {
                   title
                   number
                   closed
                   merged
+                  repository {
+                    name
+                    owner{login}
+                  }
                 }
               }
             }
