@@ -101,9 +101,6 @@
 		292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
 		292FCB2C1EE054900026635E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
 		292FF8A71F2EA860009E63F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Constants.swift */; };
-		292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD82C1F01476D001190B9 /* authorizations.json */; };
-		292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8241F014130001190B9 /* _graphql.json */; };
-		292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 296CD8251F014130001190B9 /* _notifications.json */; };
 		292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */; };
 		292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */; };
 		292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AF1F2FDC33009E63F7 /* IssueTextActionsView.swift */; };
@@ -217,7 +214,6 @@
 		296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */; };
 		296B4E321F7C80A200C16887 /* GraphQLIDDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */; };
 		296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */; };
-		296CD8291F0141A6001190B9 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CD8281F0141A6001190B9 /* Samples.swift */; };
 		2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
 		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
 		297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297403D01F184F8D00ABA95A /* IssueAssigneesModel.swift */; };
@@ -619,10 +615,6 @@
 		2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LabelableFields+IssueLabelModel.swift"; sourceTree = "<group>"; };
 		296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLIDDecode.swift; sourceTree = "<group>"; };
 		296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLIDDecodeTests.swift; sourceTree = "<group>"; };
-		296CD8241F014130001190B9 /* _graphql.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = _graphql.json; sourceTree = "<group>"; };
-		296CD8251F014130001190B9 /* _notifications.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = _notifications.json; sourceTree = "<group>"; };
-		296CD8281F0141A6001190B9 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
-		296CD82C1F01476D001190B9 /* authorizations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = authorizations.json; sourceTree = "<group>"; };
 		2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
 		2971722C1F069E96005E43AC /* SpinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerCell.swift; sourceTree = "<group>"; };
 		297403D01F184F8D00ABA95A /* IssueAssigneesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueAssigneesModel.swift; sourceTree = "<group>"; };
@@ -1235,17 +1227,6 @@
 			path = Markdown;
 			sourceTree = "<group>";
 		};
-		296CD8231F014130001190B9 /* Sample */ = {
-			isa = PBXGroup;
-			children = (
-				296CD82C1F01476D001190B9 /* authorizations.json */,
-				296CD8241F014130001190B9 /* _graphql.json */,
-				296CD8251F014130001190B9 /* _notifications.json */,
-				296CD8281F0141A6001190B9 /* Samples.swift */,
-			);
-			path = Sample;
-			sourceTree = "<group>";
-		};
 		297403CF1F184F8400ABA95A /* Assignees */ = {
 			isa = PBXGroup;
 			children = (
@@ -1290,7 +1271,6 @@
 				D0DC03D1591A6020CACD44F4 /* Pods */,
 				297AE8351EC0D58A00B44A1F /* Products */,
 				297AE86D1EC0D5C200B44A1F /* Resources */,
-				296CD8231F014130001190B9 /* Sample */,
 				2930F2701F894AA10082BA26 /* Settings.bundle */,
 			);
 			sourceTree = "<group>";
@@ -1952,17 +1932,14 @@
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
 				292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */,
 				29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */,
-				292FF8A91F2FC3E5009E63F7 /* _graphql.json in Resources */,
 				2930F2711F894AA10082BA26 /* Settings.bundle in Resources */,
 				98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */,
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
 				295B51401FC26AE300C3993B /* People.storyboard in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
 				98F9F3FF1F9CCFFE005A0266 /* ImageUpload.storyboard in Resources */,
-				292FF8AA1F2FC3E5009E63F7 /* _notifications.json in Resources */,
 				295B51301FC2230700C3993B /* FREETIME-RELEASE.xcconfig in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
-				292FF8A81F2FC3E5009E63F7 /* authorizations.json in Resources */,
 				98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */,
 				292FA3371FBCDA8800BBB0BB /* Milestones.storyboard in Resources */,
 			);
@@ -2487,7 +2464,6 @@
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
 				292FA33B1FBCDF8F00BBB0BB /* MilestonesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
-				296CD8291F0141A6001190B9 /* Samples.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
 				299A04A91FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift in Sources */,
