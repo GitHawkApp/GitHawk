@@ -26,7 +26,7 @@ final class ImgurClient {
     }
 
     private static let hostpath = "https://api.imgur.com/3/"
-    private static let headers: HTTPHeaders = ["Authorization": "Client-ID \(Secrets.imgurClientID())"]
+    private static let headers: HTTPHeaders = ["Authorization": "Client-ID \(Secrets.Imgur.clientId)"]
 
     func request(_ path: String,
                  method: HTTPMethod = .get,
