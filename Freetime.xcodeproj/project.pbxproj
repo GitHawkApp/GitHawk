@@ -387,6 +387,8 @@
 		986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */; };
 		986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */; };
 		9870B9031FC73EE70009719C /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9870B9021FC73EE70009719C /* Secrets.swift */; };
+		9870B9051FC74D170009719C /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
+		9870B9061FC74D1F0009719C /* CommitDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294AF7F01FC674A400854790 /* CommitDetails.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
@@ -2561,6 +2563,7 @@
 				DC60C6CB1F98341900241271 /* SearchEmptyViewTests.swift in Sources */,
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
+				9870B9061FC74D1F0009719C /* CommitDetails.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				293A459C1F298E9700DD1006 /* IssueCommentTextCell.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
@@ -2585,6 +2588,7 @@
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
 				294B11251F7B40CA00E04F2D /* IssueDetailsModel.swift in Sources */,
+				9870B9051FC74D170009719C /* Accessibility.swift in Sources */,
 				293A45941F296D5B00DD1006 /* CollapsibleCell.swift in Sources */,
 				293A45961F298C9500DD1006 /* UIColor+Hex.swift in Sources */,
 				293A459D1F298EDB00DD1006 /* IssueCommentQuoteCell.swift in Sources */,
