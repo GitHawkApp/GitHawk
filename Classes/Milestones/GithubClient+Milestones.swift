@@ -58,7 +58,8 @@ extension GithubClient {
             actor: userSession?.username ?? Constants.Strings.unknown,
             milestone: eventTitle,
             date: Date(),
-            type: type
+            type: type,
+            width: 0 // pay perf cost when asked
         )
 
         let optimisticResult = previous.withMilestone(

@@ -264,7 +264,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: milestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
-                    type: .milestoned
+                    type: .milestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let demilestone = node.asDemilestonedEvent,
@@ -274,7 +275,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: demilestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
-                    type: .demilestoned
+                    type: .demilestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let commit = node.asCommit,
