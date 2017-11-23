@@ -160,7 +160,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         repo: repo.name,
                         hash: commitRef.oid,
                         actor: referenced.actor?.login ?? Constants.Strings.unknown,
-                        date: date
+                        date: date,
+                        width: width
                     )
                     results.append(model)
                 } else if let issueReference = referenced.subject.asIssue,

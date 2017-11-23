@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel>, IssueReferencedCommitCellDelegate {
+final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
@@ -21,20 +21,8 @@ final class IssueReferencedCommitSectionController: ListGenericSectionController
         let object = self.object
             else { fatalError("Missing context, model, or cell wrong type") }
         cell.configure(object)
-        cell.delegate = self
+        cell.delegate = viewController
         return cell
-    }
-
-    // MARK: IssueReferencedCommitCellDelegate
-
-    func didTapHash(cell: IssueReferencedCommitCell) {
-        guard let object = self.object else { return }
-        viewController?.presentCommit(owner: object.owner, repo: object.repo, hash: object.hash)
-    }
-
-    func didTapActor(cell: IssueReferencedCommitCell) {
-        guard let actor = object?.actor else { return }
-        viewController?.presentProfile(login: actor)
     }
 
 }

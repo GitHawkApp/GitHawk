@@ -179,6 +179,7 @@
 		294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */; };
 		294A3D761FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */; };
 		294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */; };
+		294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294AF7F01FC674A400854790 /* CommitDetails.swift */; };
 		294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */; };
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
@@ -580,6 +581,7 @@
 		294967521EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlCell.swift; sourceTree = "<group>"; };
 		294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewKeyboardAdjuster.swift; sourceTree = "<group>"; };
 		294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Keyboard.swift"; sourceTree = "<group>"; };
+		294AF7F01FC674A400854790 /* CommitDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitDetails.swift; sourceTree = "<group>"; };
 		294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavRootViewControllerType.swift; sourceTree = "<group>"; };
 		294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToTop.swift"; sourceTree = "<group>"; };
@@ -1366,8 +1368,10 @@
 			children = (
 				297AE85F1EC0D5C100B44A1F /* App.swift */,
 				297AE8601EC0D5C100B44A1F /* Authorization.swift */,
+				294AF7F01FC674A400854790 /* CommitDetails.swift */,
 				291929581F3FB1D20012067B /* Content.swift */,
 				291929411F3EA8CD0012067B /* File.swift */,
+				7BF2239C1F91056C006CC9A2 /* File+Filename.swift */,
 				2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */,
 				291929591F3FB1D20012067B /* Link.swift */,
 				29C9FDBA1EC65FEE00EE3A52 /* NotificationResponse.swift */,
@@ -1377,7 +1381,6 @@
 				29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */,
 				29C9FDC31EC65FEE00EE3A52 /* Subject.swift */,
 				29C9FDC41EC65FEE00EE3A52 /* User.swift */,
-				7BF2239C1F91056C006CC9A2 /* File+Filename.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2436,6 +2439,7 @@
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
+				294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
