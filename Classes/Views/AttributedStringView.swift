@@ -8,10 +8,11 @@
 
 import UIKit
 
-protocol AttributedStringViewDelegate: class {
-    func didTapURL(view: AttributedStringView, url: URL)
-    func didTapUsername(view: AttributedStringView, username: String)
-    func didTapEmail(view: AttributedStringView, email: String)
+@objc protocol AttributedStringViewDelegate: class {
+    @objc optional func didTapURL(view: AttributedStringView, url: URL)
+    @objc optional func didTapUsername(view: AttributedStringView, username: String)
+    @objc optional func didTapEmail(view: AttributedStringView, email: String)
+    @objc optional func didTapLabel(view: AttributedStringView, label: String)
 }
 
 protocol AttributedStringViewIssueDelegate: class {
@@ -70,13 +71,15 @@ final class AttributedStringView: UIView {
     @objc func onTap(recognizer: UITapGestureRecognizer) {
         guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
         if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
-            delegate?.didTapURL(view: self, url: url)
+            delegate?.didTapURL?(view: self, url: url)
         } else if let usernameString = attributes[MarkdownAttribute.username] as? String {
-            delegate?.didTapUsername(view: self, username: usernameString)
+            delegate?.didTapUsername?(view: self, username: usernameString)
         } else if let emailString = attributes[MarkdownAttribute.email] as? String {
-            delegate?.didTapEmail(view: self, email: emailString)
+            delegate?.didTapEmail?(view: self, email: emailString)
         } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
             issueDelegate?.didTapIssue(view: self, issue: issue)
+        } else if let label = attributes[MarkdownAttribute.label] as? String {
+            delegate?.didTapLabel?(view: self, label: label)
         }
     }
 

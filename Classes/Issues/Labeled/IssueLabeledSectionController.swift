@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, IssueLabeledCellDelegate {
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, AttributedStringViewDelegate {
 
     private let issueModel: IssueDetailsModel
 
@@ -32,15 +32,13 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
         return cell
     }
 
-    // MARK: IssueLabeledCellDelegate
-
-    func didTapActor(cell: IssueLabeledCell) {
-        guard let actor = object?.actor else { return }
-        viewController?.presentProfile(login: actor)
+    // MARK: AttributedStringViewDelegate
+    
+    func didTapUsername(view: AttributedStringView, username: String) {
+        viewController?.presentProfile(login: username)
     }
-
-    func didTapLabel(cell: IssueLabeledCell) {
-        guard let label = object?.title else { return }
+    
+    func didTapLabel(view: AttributedStringView, label: String) {
         viewController?.presentLabels(owner: issueModel.owner, repo: issueModel.repo, label: label)
     }
 

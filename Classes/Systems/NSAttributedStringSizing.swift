@@ -63,7 +63,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = lineFragmentPadding
 
-        layoutManager = NSLayoutManager()
+        layoutManager = LabelLayoutManager()
         layoutManager.allowsNonContiguousLayout = allowsNonContiguousLayout
         layoutManager.hyphenationFactor = hyphenationFactor
         layoutManager.showsInvisibleCharacters = showsInvisibleCharacters
@@ -182,4 +182,45 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         return true
     }
 
+}
+
+class LabelLayoutManager: NSLayoutManager {
+    
+    override func fillBackgroundRectArray(_ rectArray: UnsafePointer<CGRect>, count rectCount: Int, forCharacterRange charRange: NSRange, color: UIColor) {
+        
+        // Get the attributes for the backgroundColor attribute
+        var range = charRange
+        let attributes = textStorage?.attributes(at: charRange.location, effectiveRange: &range)
+        
+        // Ensure that this is one of our labels we're dealing with, ignore basic backgroundColor attributes
+        guard attributes?[MarkdownAttribute.label] != nil else {
+            super.fillBackgroundRectArray(rectArray, count: rectCount, forCharacterRange: charRange, color: color)
+            return
+        }
+        
+        // Define label rectangle and rounded path
+        let cornerRadius: CGFloat = 2
+        let rect = rectArray[0].insetBy(dx: -2, dy: 2)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+        
+        // Define the CoreGraphics context
+        let context = UIGraphicsGetCurrentContext()
+        context?.setAllowsAntialiasing(true)
+        context?.setShouldAntialias(true)
+        context?.setLineWidth(cornerRadius * 2)
+        context?.setLineJoin(.round)
+        
+        // Draw the label background
+        context?.addPath(path.cgPath)
+        context?.drawPath(using: .fillStroke)
+        
+        // Add a small inset box-shadow to the label
+        UIColor.black.withAlphaComponent(0.2).set()
+        context?.fill(CGRect(x: rect.minX, y: rect.maxY + (cornerRadius / 2), width: rect.width, height: 1))
+        
+        // Reset color as per Apple docs
+        color.set()
+        
+    }
+    
 }

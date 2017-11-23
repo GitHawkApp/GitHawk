@@ -9,95 +9,78 @@
 import UIKit
 import SnapKit
 
-protocol IssueLabeledCellDelegate: class {
-    func didTapActor(cell: IssueLabeledCell)
-    func didTapLabel(cell: IssueLabeledCell)
-}
-
-final class IssueLabeledCell: UICollectionViewCell {
-
-    weak var delegate: IssueLabeledCellDelegate?
-
-    private let descriptionButton = UIButton()
-    private let labelButton = UIButton()
-    private let dateLabel = ShowMoreDetailsLabel()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        descriptionButton.addTarget(self, action: #selector(IssueLabeledCell.onActor), for: .touchUpInside)
-        contentView.addSubview(descriptionButton)
-        descriptionButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.eventGutter)
-            make.centerY.equalTo(contentView)
-        }
-
-        labelButton.setupAsLabel(icon: false)
-        labelButton.addTarget(self, action: #selector(IssueLabeledCell.onLabel), for: .touchUpInside)
-        contentView.addSubview(labelButton)
-        labelButton.snp.makeConstraints { make in
-            make.left.equalTo(descriptionButton.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(descriptionButton)
-        }
-
-        dateLabel.font = Styles.Fonts.secondary
-        dateLabel.textColor = Styles.Colors.Gray.medium.color
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(labelButton.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(contentView)
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-    }
-
-    // MARK: Private API
-
-    @objc func onActor() {
-        delegate?.didTapActor(cell: self)
-    }
-
-    @objc func onLabel() {
-        delegate?.didTapLabel(cell: self)
-    }
+final class IssueLabeledCell: AttributedStringCell {
 
     // MARK: Public API
 
     func configure(_ model: IssueLabeledModel) {
-        let actorAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
-        ]
-        let actor = NSAttributedString(string: model.actor, attributes: actorAttributes)
 
-        let actionString: String
-        switch model.type {
-        case .added: actionString = NSLocalizedString(" added", comment: "")
-        case .removed: actionString = NSLocalizedString(" removed", comment: "")
-        }
+        // Actor
+        
+        let actorAttributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            MarkdownAttribute.username: model.actor
+        ]
+        
+        let attributedString = NSMutableAttributedString(string: model.actor, attributes: actorAttributes)
+        
+        // Action
+        
         let actionAttributes = [
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
             NSAttributedStringKey.font: Styles.Fonts.secondary
         ]
-        let action = NSAttributedString(string: actionString, attributes: actionAttributes)
-        let descriptionText = NSMutableAttributedString(attributedString: actor)
-        descriptionText.append(action)
-        descriptionButton.setAttributedTitle(descriptionText, for: .normal)
-
-        let color = UIColor.fromHex(model.color)
-        labelButton.backgroundColor = color
-
-        labelButton.setTitle(model.title, for: .normal)
-        labelButton.setTitleColor(color.textOverlayColor, for: .normal)
-
-        dateLabel.setText(date: model.date)
+        
+        let actionString: String
+        
+        switch model.type {
+        case .added: actionString = NSLocalizedString(" added  ", comment: "")
+        case .removed: actionString = NSLocalizedString(" removed  ", comment: "")
+        }
+        
+        attributedString.append(NSAttributedString(string: actionString, attributes: actionAttributes))
+        
+        // Label
+        
+        let labelColor = model.color.color
+        
+        let labelAttributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            NSAttributedStringKey.backgroundColor: labelColor,
+            NSAttributedStringKey.foregroundColor: labelColor.textOverlayColor ?? .black,
+            MarkdownAttribute.label: model.title
+        ]
+        
+        attributedString.append(NSAttributedString(string: model.title, attributes: labelAttributes))
+        
+        // Date
+        
+        let dateAttributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
+            MarkdownAttribute.details: DateDetailsFormatter().string(from: model.date)
+        ]
+        
+        attributedString.append(NSAttributedString(string: "  \(model.date.agoString)", attributes: dateAttributes))
+        
+        // Set
+        
+        let centerVertical = (Styles.Sizes.labelEventHeight - Styles.Fonts.secondaryBold.lineHeight) / 2
+        let inset = UIEdgeInsets(
+            top: centerVertical,
+            left: Styles.Sizes.eventGutter,
+            bottom: centerVertical,
+            right: Styles.Sizes.eventGutter
+        )
+        
+        set(attributedText: NSAttributedStringSizing(
+            containerWidth: 0,
+            attributedText: attributedString,
+            inset: inset,
+            backgroundColor: Styles.Colors.Gray.lighter.color
+        ))
+        
     }
 
 }
