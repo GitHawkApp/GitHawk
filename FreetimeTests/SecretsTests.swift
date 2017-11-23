@@ -21,6 +21,10 @@ class SecretsTests: XCTestCase {
         XCTAssertNotEqual(Secrets.GitHub.clientId, "")
         XCTAssertNotEqual(Secrets.GitHub.clientSecret, "")
         XCTAssertNotEqual(Secrets.Imgur.clientId, "")
+        
+        XCTAssertNotEqual(Secrets.GitHub.clientId, "{GITHUBID}")
+        XCTAssertNotEqual(Secrets.GitHub.clientSecret, "{GITHUBSECRET}")
+        XCTAssertNotEqual(Secrets.Imgur.clientId, "{IMGURID}")
     }
     
 }
