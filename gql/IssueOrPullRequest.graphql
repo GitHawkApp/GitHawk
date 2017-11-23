@@ -80,6 +80,24 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               actor {login}
               createdAt
             }
+            ... on CrossReferencedEvent {
+              ...nodeFields
+              actor {login}
+              createdAt
+              source {
+                ... on Issue {
+                  title
+                  number
+                  closed
+                }
+                ... on PullRequest {
+                  title
+                  number
+                  closed
+                  merged
+                }
+              }
+            }
             ... on ReferencedEvent {
               createdAt
               ...nodeFields
@@ -238,6 +256,24 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               submittedAt
               author {login}
               comments { totalCount }
+            }
+            ... on CrossReferencedEvent {
+              ...nodeFields
+              actor {login}
+              createdAt
+              source {
+                ... on Issue {
+                  title
+                  number
+                  closed
+                }
+                ... on PullRequest {
+                  title
+                  number
+                  closed
+                  merged
+                }
+              }
             }
             ... on ReferencedEvent {
               createdAt
