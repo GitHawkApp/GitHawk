@@ -25,6 +25,7 @@ enum Secrets {
         
         guard let value = processInfo.environment[named] else {
             print("‼️ Missing Environment Variable: '\(named)'")
+            print(processInfo.arguments)
             return ""
         }
         
