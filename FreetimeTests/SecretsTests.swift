@@ -18,6 +18,7 @@ class SecretsTests: XCTestCase {
         // This test will fail locally if you haven't provided the keys, follow the steps in the
         // repo to define these or ignore these tests by de-selecting them via your scheme.
         
+        XCTFail(Secrets.GitHub.clientId)
         XCTAssertNotEqual(Secrets.GitHub.clientId, "")
         XCTAssertNotEqual(Secrets.GitHub.clientSecret, "")
         XCTAssertNotEqual(Secrets.Imgur.clientId, "")
