@@ -38,9 +38,7 @@ final class GithubSessionManager: NSObject, ListDiffable {
         // if a migration occurs, immediately save to disk
         var migrated = false
 
-        if let sample = sampleUserSession() {
-            _userSessions.add(sample)
-        } else if let v1data = defaults.object(forKey: Keys.v1.session) as? Data,
+        if let v1data = defaults.object(forKey: Keys.v1.session) as? Data,
             let session = NSKeyedUnarchiver.unarchiveObject(with: v1data) as? GithubUserSession {
             _userSessions.add(session)
 
