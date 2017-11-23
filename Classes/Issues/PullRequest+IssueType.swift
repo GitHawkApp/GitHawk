@@ -43,7 +43,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         var models = [IssueAssigneeViewModel]()
         for node in reviewRequests?.nodes ?? [] {
             guard let node = node,
-                let reviewer = node.reviewer,
+                let reviewer = node.requestedReviewer?.asUser,
                 let url = URL(string: reviewer.avatarUrl)
                 else { continue }
             models.append(IssueAssigneeViewModel(login: reviewer.login, avatarURL: url))
@@ -277,7 +277,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueRequestModel(
                     id: reviewRequested.fragments.nodeFields.id,
                     actor: reviewRequested.actor?.login ?? Constants.Strings.unknown,
-                    user: reviewRequested.subject.login,
+                    user: reviewRequested.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequested,
                     width: width
@@ -288,7 +288,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueRequestModel(
                     id: reviewRequestRemoved.fragments.nodeFields.id,
                     actor: reviewRequestRemoved.actor?.login ?? Constants.Strings.unknown,
-                    user: reviewRequestRemoved.subject.login,
+                    user: reviewRequestRemoved.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequestRemoved,
                     width: width

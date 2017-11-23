@@ -283,13 +283,21 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
               ...nodeFields
               createdAt
               actor{login}
-              subject{login}
+              requestedReviewer{
+                ... on Actor {
+                  login
+                }
+              }
             }
             ... on ReviewRequestRemovedEvent {
               ...nodeFields
               createdAt
               actor{login}
-              subject{login}
+              requestedReviewer {
+                ... on Actor {
+                  login
+                }
+              }
             }
             ...on MilestonedEvent {
               ...nodeFields
@@ -307,9 +315,11 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         }
         reviewRequests(first: $page_size) {
           nodes {
-            reviewer {
-              login
-              avatarUrl
+            requestedReviewer {
+              ... on Actor {
+                login
+                avatarUrl
+              }
             }
           }
         }
