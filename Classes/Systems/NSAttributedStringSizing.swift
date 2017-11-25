@@ -130,7 +130,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private var _contents = [CGFloat: CGImage]()
+    private var _contents = [String: CGImage]()
     func contents(_ width: CGFloat) -> CGImage? {
         if let contents = _contents[width] {
             return contents
@@ -148,6 +148,8 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
 
+        // keep only one bitmap at a time
+        _contents.removeAll()
         _contents[width] = contents
 
         return contents
