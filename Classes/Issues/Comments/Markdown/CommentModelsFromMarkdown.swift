@@ -456,7 +456,10 @@ func addCheckmarkAttachments(
         let checked = string.substring(with: match.range) == checkedIdentifier
         let attachment = NSTextAttachment()
         let appendDisabled = viewerCanUpdate ? "" : "-disabled"
-        attachment.image = UIImage(named: (checked ? "checked" : "unchecked") + appendDisabled)
+        guard let image = UIImage(named: (checked ? "checked" : "unchecked") + appendDisabled) else { continue }
+        attachment.image = image
+        // nudge bounds to align better with baseline text
+        attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
         result.replaceCharacters(in: match.range, with: NSAttributedString(attachment: attachment))
     }
     return result
