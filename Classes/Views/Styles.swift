@@ -97,7 +97,7 @@ enum Styles {
 
         enum Blue {
             static let medium = "0366d6"
-            static let light = "f1f8ff"
+            static let light = "."
         }
 
         enum Gray {
