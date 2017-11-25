@@ -81,7 +81,12 @@ func createCommentModel(
     )
 
     let options = commentModelOptions(owner: owner, repo: repo)
-    let bodies = CreateCommentModels(markdown: commentFields.body, width: width, options: options)
+    let bodies = CreateCommentModels(
+        markdown: commentFields.body,
+        width: width,
+        options: options,
+        viewerCanUpdate: viewerCanUpdate
+    )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)
     return IssueCommentModel(
