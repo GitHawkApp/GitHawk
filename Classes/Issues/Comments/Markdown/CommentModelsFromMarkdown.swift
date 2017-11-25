@@ -406,8 +406,8 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
     return mutableAttributedString
 }
 
-private let checkedIdentifier = "[*~CHECKED~*]"
-private let uncheckedIdentifier = "[*~UNCHECKED~*]"
+private let checkedIdentifier = ">/CHECKED>/"
+private let uncheckedIdentifier = ">/UNCHECKED>/"
 private let checkmarkRegex = try! NSRegularExpression(pattern: "^- (\\[([ |x])\\])", options: [.anchorsMatchLines])
 private func annotateCheckmarks(markdown: String) -> String {
     let matches = checkmarkRegex.matches(in: markdown, options: [], range: markdown.nsrange)
@@ -417,6 +417,20 @@ private func annotateCheckmarks(markdown: String) -> String {
         result.replaceCharacters(in: match.range(at: 1), with: checked ? checkedIdentifier : uncheckedIdentifier)
     }
     return result as String
+}
+
+private let checkmarkIdentifierRegex = try! NSRegularExpression(pattern: "(\(checkedIdentifier)|\(uncheckedIdentifier))", options: [])
+func addCheckmarkAttachments(attributedString: NSAttributedString) -> NSAttributedString {
+    let string = attributedString.string
+    let matches = checkmarkIdentifierRegex.matches(in: string, options: [], range: string.nsrange)
+    let result = NSMutableAttributedString(attributedString: attributedString)
+    for match in matches.reversed() {
+        let checked = string.substring(with: match.range) == checkedIdentifier
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(named: checked ? "checked" : "unchecked")
+        result.replaceCharacters(in: match.range, with: NSAttributedString(attachment: attachment))
+    }
+    return result
 }
 
 func createTextModelUpdatingGitHubFeatures(
@@ -429,10 +443,11 @@ func createTextModelUpdatingGitHubFeatures(
     let usernames = updateUsernames(attributedString: attributedString, options: options)
     let issues = updateIssueShorthand(attributedString: usernames, options: options)
     let shorten = shortenGitHubLinks(attributedString: issues, options: options)
+    let checkmarked = addCheckmarkAttachments(attributedString: shorten)
 
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: shorten,
+        attributedText: checkmarked,
         inset: inset
     )
 }
