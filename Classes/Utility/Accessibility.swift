@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 private protocol ContentViewContaining {
     var contentView: UIView { get }

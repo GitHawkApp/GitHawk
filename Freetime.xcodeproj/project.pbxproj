@@ -100,7 +100,6 @@
 		292FCB1F1EDFCD750026635E /* IssueCommentReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1E1EDFCD750026635E /* IssueCommentReactionViewModel.swift */; };
 		292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB201EDFCF870026635E /* IssueReactionCell.swift */; };
 		292FCB2C1EE054900026635E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
-		292FF8A71F2EA860009E63F7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Constants.swift */; };
 		292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */; };
 		292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */; };
 		292FF8B01F2FDC33009E63F7 /* IssueTextActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FF8AF1F2FDC33009E63F7 /* IssueTextActionsView.swift */; };
@@ -127,33 +126,7 @@
 		293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295091EC7AFA500D46CD2 /* ListTestKit.swift */; };
 		293A45791F296B7E00DD1006 /* MMMarkdownASTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295F52A81EF1B9E2000B53CF /* MMMarkdownASTTests.swift */; };
 		293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */; };
-		293A457D1F296BD200DD1006 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		293A457E1F296BD500DD1006 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB2B1EE054900026635E /* API.swift */; };
-		293A457F1F296BE200DD1006 /* Date+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195031EC74C4800C3E289 /* Date+Display.swift */; };
-		293A45801F296BEA00DD1006 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
-		293A45821F296CA000DD1006 /* IssueCommentQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */; };
-		293A45831F296CAF00DD1006 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
-		293A45851F296CE200DD1006 /* IssueCommentCodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACB1EDFCC510026635E /* IssueCommentCodeBlockModel.swift */; };
-		293A458B1F296CF300DD1006 /* CommentModelsFromMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */; };
-		293A458C1F296CF300DD1006 /* MMElement+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BC91EF6233200C1E848 /* MMElement+Attributes.swift */; };
-		293A458D1F296CF300DD1006 /* MMElement+CodeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */; };
-		293A458E1F296CF300DD1006 /* MMElement+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCD1EF624F500C1E848 /* MMElement+Image.swift */; };
-		293A458F1F296CF300DD1006 /* MMElement+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297406A01F0EE51E003A6BFB /* MMElement+Table.swift */; };
-		293A45901F296CF300DD1006 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
-		293A45911F296CF300DD1006 /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
-		293A45921F296CF300DD1006 /* UIFont+MutableTraits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */; };
-		293A45931F296D4E00DD1006 /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
-		293A45941F296D5B00DD1006 /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACC1EDFCC510026635E /* CollapsibleCell.swift */; };
-		293A45951F296D8E00DD1006 /* IssueCommentImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAD21EDFCC510026635E /* IssueCommentImageModel.swift */; };
-		293A45961F298C9500DD1006 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
-		293A45971F298D4B00DD1006 /* IssueCommentTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069A1F0EDC7C003A6BFB /* IssueCommentTableModel.swift */; };
-		293A45981F298D5700DD1006 /* IssueCommentTableCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */; };
-		293A45991F298D8400DD1006 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
-		293A459B1F298E7D00DD1006 /* IssueCommentSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE21EDFCC510026635E /* IssueCommentSummaryModel.swift */; };
-		293A459C1F298E9700DD1006 /* IssueCommentTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCAE41EDFCC510026635E /* IssueCommentTextCell.swift */; };
-		293A459D1F298EDB00DD1006 /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
-		293A459E1F298EE200DD1006 /* IssueCommentHrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674B1EF9716400B1CF1A /* IssueCommentHrModel.swift */; };
-		293A459F1F298EED00DD1006 /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
 		293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293A45A11F29954000DD1006 /* IssueCommitModel.swift */; };
 		293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293A45A31F2995CE00DD1006 /* IssueCommitCell.swift */; };
 		293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */; };
@@ -181,7 +154,6 @@
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
 		294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */; };
-		294B11251F7B40CA00E04F2D /* IssueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929461F3EAB250012067B /* IssueDetailsModel.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
 		295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840681EE8A328007723C6 /* IssueStatusEventSectionController.swift */; };
@@ -191,12 +163,6 @@
 		295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */; };
 		295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
 		295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */; };
-		295B51301FC2230700C3993B /* FREETIME-RELEASE.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B512D1FC2230600C3993B /* FREETIME-RELEASE.xcconfig */; };
-		295B51311FC2230700C3993B /* FREETIME-TESTFLIGHT.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */; };
-		295B51321FC2230700C3993B /* FREETIME-DEBUG.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */; };
-		295B51351FC2306300C3993B /* SECRETS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 295B51341FC2306300C3993B /* SECRETS.xcconfig */; };
-		295B51381FC230DE00C3993B /* Secrets.m in Sources */ = {isa = PBXBuildFile; fileRef = 295B51371FC230DE00C3993B /* Secrets.m */; };
-		295B513C1FC2491800C3993B /* DoubleTappableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85B05C01FBFA66200489349 /* DoubleTappableCell.swift */; };
 		295B51401FC26AE300C3993B /* People.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295B513F1FC26AE300C3993B /* People.storyboard */; };
 		295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295B51411FC26B8100C3993B /* PeopleCell.swift */; };
 		295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295B51431FC26C5400C3993B /* PeopleViewController.swift */; };
@@ -213,7 +179,6 @@
 		2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A9331EE2118E0066509C /* ResponderButton.swift */; };
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */; };
-		296B4E321F7C80A200C16887 /* GraphQLIDDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */; };
 		296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */; };
 		2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
 		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
@@ -252,7 +217,6 @@
 		2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */; };
 		2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		2982ED8B1F95900F00DBF8EB /* GithubClient+EditComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED8A1F95900F00DBF8EB /* GithubClient+EditComment.swift */; };
-		2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982ED791F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift */; };
 		298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */; };
 		298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */; };
 		298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BA0951EC947F100B01946 /* SegmentedControlCell.swift */; };
@@ -338,11 +302,8 @@
 		29DA1E881F5E2B8A0050C64B /* ClearAllHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */; };
 		29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E891F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift */; };
 		29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */; };
-		29DA1E8D1F5F8DCF0050C64B /* MarkdownAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
-		29EDFE7D1F65C583005BCCEB /* SplitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */; };
-		29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */; };
 		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
 		29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
@@ -366,7 +327,6 @@
 		45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
-		49D029011F91D9C700E39094 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCB1C1EDFCD3D0026635E /* ReactionViewModel.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
@@ -391,6 +351,8 @@
 		986B87381F2CB29700AAB55C /* RepositorySummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */; };
 		986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */; };
 		986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */; };
+		9870B9031FC73EE70009719C /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9870B9021FC73EE70009719C /* Secrets.swift */; };
+		9870B9081FC74E300009719C /* SecretsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9870B9071FC74E300009719C /* SecretsTests.swift */; };
 		98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */; };
 		98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD11F1A158D005BA24F /* LabelCell.swift */; };
 		98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835BD31F1A17EE005BA24F /* Bundle+Version.swift */; };
@@ -593,12 +555,6 @@
 		295840D71EEA0686007723C6 /* IssueCommentQuoteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentQuoteModel.swift; sourceTree = "<group>"; };
 		295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentQuoteCell.swift; sourceTree = "<group>"; };
 		295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetails.swift; sourceTree = "<group>"; };
-		295B512D1FC2230600C3993B /* FREETIME-RELEASE.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "FREETIME-RELEASE.xcconfig"; sourceTree = "<group>"; };
-		295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "FREETIME-TESTFLIGHT.xcconfig"; sourceTree = "<group>"; };
-		295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "FREETIME-DEBUG.xcconfig"; sourceTree = "<group>"; };
-		295B51341FC2306300C3993B /* SECRETS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SECRETS.xcconfig; sourceTree = "<group>"; };
-		295B51361FC230DE00C3993B /* Secrets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Secrets.h; sourceTree = "<group>"; };
-		295B51371FC230DE00C3993B /* Secrets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Secrets.m; sourceTree = "<group>"; };
 		295B513F1FC26AE300C3993B /* People.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = People.storyboard; sourceTree = "<group>"; };
 		295B51411FC26B8100C3993B /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
 		295B51431FC26C5400C3993B /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
@@ -803,6 +759,8 @@
 		986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositorySummaryCell.swift; sourceTree = "<group>"; };
 		986B873B1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GQL+RepositoryIssueSummaryType.swift"; sourceTree = "<group>"; };
 		986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryClient.swift; sourceTree = "<group>"; };
+		9870B9021FC73EE70009719C /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		9870B9071FC74E300009719C /* SecretsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsTests.swift; sourceTree = "<group>"; };
 		98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		98835BD11F1A158D005BA24F /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		98835BD31F1A17EE005BA24F /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
@@ -1308,6 +1266,7 @@
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
+				9870B9071FC74E300009719C /* SecretsTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -1405,8 +1364,6 @@
 				293189271F5391F700EF0911 /* Result.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */,
-				295B51361FC230DE00C3993B /* Secrets.h */,
-				295B51371FC230DE00C3993B /* Secrets.m */,
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
@@ -1415,6 +1372,7 @@
 				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
+				9870B9021FC73EE70009719C /* Secrets.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1496,13 +1454,9 @@
 		297AE86D1EC0D5C200B44A1F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				295B51341FC2306300C3993B /* SECRETS.xcconfig */,
 				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
 				98F0A0421F27BC4B0062A2CA /* emoji.json */,
 				29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */,
-				295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */,
-				295B512D1FC2230600C3993B /* FREETIME-RELEASE.xcconfig */,
-				295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */,
 				297AE8731EC0D5C200B44A1F /* Info.plist */,
 				297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */,
 				29A195061EC7601000C3E289 /* Localizable.stringsdict */,
@@ -1834,7 +1788,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
 			buildPhases = (
-				295B513D1FC250DF00C3993B /* Generate Secrets Xcconfig */,
+				9870B9041FC740460009719C /* Validate API Keys */,
 				D803031CFB0CF7AEEF2F2B69 /* [CP] Check Pods Manifest.lock */,
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
@@ -1931,10 +1885,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */,
-				295B51311FC2230700C3993B /* FREETIME-TESTFLIGHT.xcconfig in Resources */,
 				2919294F1F3F76A20012067B /* Files.storyboard in Resources */,
-				295B51321FC2230700C3993B /* FREETIME-DEBUG.xcconfig in Resources */,
-				295B51351FC2306300C3993B /* SECRETS.xcconfig in Resources */,
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
 				292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */,
 				29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */,
@@ -1944,7 +1895,6 @@
 				295B51401FC26AE300C3993B /* People.storyboard in Resources */,
 				29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */,
 				98F9F3FF1F9CCFFE005A0266 /* ImageUpload.storyboard in Resources */,
-				295B51301FC2230700C3993B /* FREETIME-RELEASE.xcconfig in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 				98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */,
 				292FA3371FBCDA8800BBB0BB /* Milestones.storyboard in Resources */,
@@ -1989,7 +1939,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/tools/bump_build_number.sh";
+			shellScript = $SRCROOT/tools/bump_build_number.sh;
 		};
 		295B51391FC2342200C3993B /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2004,20 +1954,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 45ebb3c197db95937d23c07145bb2da8226cd851 5a7c91261f303a0c7b657c8f26d0c46275893eb555f601427d7538e9a67c3b3d";
-		};
-		295B513D1FC250DF00C3993B /* Generate Secrets Xcconfig */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Secrets Xcconfig";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# check if in buddy build environment\nif [[ -z \"$BUDDYBUILD_IPA_PATH\" ]]; then\nexport GITHUB_CLIENT_ID=\"CHANGE_ME\"\nexport GITHUB_CLIENT_SECRET=\"CHANGE_ME\"\nexport IMGUR_CLIENT_ID=\"CHANGE_ME\"\nfi\n\n# assert that all keys are setup\n[ -z \"$GITHUB_CLIENT_ID\" ] && echo \"Need to set GITHUB_CLIENT_ID\" && exit 1;\n[ -z \"$GITHUB_CLIENT_SECRET\" ] && echo \"Need to set GITHUB_CLIENT_SECRET\" && exit 1;\n[ -z \"$IMGUR_CLIENT_ID\" ] && echo \"Need to set IMGUR_CLIENT_ID\" && exit 1;\n\n# setup debug, testflight, and release consts\nSECRETS_PATH=\"Resources/SECRETS.xcconfig\"\nDEBUG_PATH=\"Resources/FREETIME-DEBUG.xcconfig\"\nTESTFLIGHT_PATH=\"Resources/FREETIME-TESTFLIGHT.xcconfig\"\nRELEASE_PATH=\"Resources/FREETIME-RELEASE.xcconfig\"\nPODS_DEBUG=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig\\\"\"\nPODS_TESTFLIGHT=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig\\\"\"\nPODS_RELEASE=\"#include \\\"Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig\\\"\"\n\n# function to write config files\nfunction writeTemplate {\n    echo \"$2\" >> \"$1\"\n    echo \"#include \\\"SECRETS.xcconfig\\\"\" >> \"$1\"\n    echo \" \" >> \"$1\"\n    echo \"GLOBAL_CONSTANTS = GITHUB_CLIENT_ID=@\\\\\\\"\\$(GITHUB_CLIENT_ID)\\\\\\\" GITHUB_CLIENT_SECRET=@\\\\\\\"\\$(GITHUB_CLIENT_SECRET)\\\\\\\" IMGUR_CLIENT_ID=@\\\\\\\"\\$(IMGUR_CLIENT_ID)\\\\\\\"\" >> \"$1\"\n    echo \"GCC_PREPROCESSOR_DEFINITIONS = \\$(inherited) \\$(GLOBAL_CONSTANTS)\" >> \"$1\"\n}\n\n# write the secrets config\nif [ ! -f \"$SECRETS_PATH\" ]; then\necho \"GITHUB_CLIENT_ID=\\\"$GITHUB_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\necho \"GITHUB_CLIENT_SECRET=\\\"$GITHUB_CLIENT_SECRET\\\"\" >> \"$SECRETS_PATH\"\necho \"IMGUR_CLIENT_ID=\\\"$IMGUR_CLIENT_ID\\\"\" >> \"$SECRETS_PATH\"\nfi\n\n# write each config file\nif [ ! -f \"$DEBUG_PATH\" ]; then\nwriteTemplate \"$DEBUG_PATH\" \"$PODS_DEBUG\"\nfi\n\nif [ ! -f \"$TESTFLIGHT_PATH\" ]; then\nwriteTemplate \"$TESTFLIGHT_PATH\" \"$PODS_TESTFLIGHT\"\nfi\n\nif [ ! -f \"$RELEASE_PATH\" ]; then\nwriteTemplate \"$RELEASE_PATH\" \"$PODS_RELEASE\"\nfi\n";
 		};
 		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2086,7 +2022,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		96C731F68491692BBBF5E151 /* [CP] Copy Pods Resources */ = {
@@ -2103,6 +2039,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9870B9041FC740460009719C /* Validate API Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Validate API Keys";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FAILED=false\n\nif [ -z \"${BUDDYBUILD_BUILD_NUMBER}\" ]; then\n  echo \"Script is not being run on CI\"\n  exit 0\nfi\n\nif [ -z \"${GITHUB_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"${GITHUB_CLIENT_SECRET}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"${IMGUR_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:16:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nsed -i \".tmp\" \"s|{GITHUBID}|${GITHUB_CLIENT_ID}|g; s|{GITHUBSECRET}|${GITHUB_CLIENT_SECRET}|g; s|{IMGURID}|${IMGUR_CLIENT_ID}|g\" \"${SRCROOT}/Classes/Systems/Secrets.swift\"\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi\n\necho \"All env values found!\"";
 		};
 		AF1FC06013FAAFD132676B25 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2173,7 +2123,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DCF1A6481F9E3E1F00A7A4A0 /* SwiftLint */ = {
@@ -2284,7 +2234,6 @@
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
-				295B51381FC230DE00C3993B /* Secrets.m in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -2346,6 +2295,7 @@
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
+				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
@@ -2566,60 +2516,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				293A45821F296CA000DD1006 /* IssueCommentQuoteModel.swift in Sources */,
 				293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */,
-				293A45971F298D4B00DD1006 /* IssueCommentTableModel.swift in Sources */,
 				293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */,
 				49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */,
 				DC60C6CE1F98346400241271 /* MockSearchEmptyViewDelegate.swift in Sources */,
-				293A457F1F296BE200DD1006 /* Date+Display.swift in Sources */,
-				293A45911F296CF300DD1006 /* String+NSRange.swift in Sources */,
-				293A45921F296CF300DD1006 /* UIFont+MutableTraits.swift in Sources */,
-				293A45831F296CAF00DD1006 /* Styles.swift in Sources */,
 				DC60C6CB1F98341900241271 /* SearchEmptyViewTests.swift in Sources */,
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
-				293A459C1F298E9700DD1006 /* IssueCommentTextCell.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
-				292FF8A71F2EA860009E63F7 /* Constants.swift in Sources */,
-				29EDFE7E1F65C688005BCCEB /* SplitPlaceholderViewController.swift in Sources */,
-				293A458D1F296CF300DD1006 /* MMElement+CodeBlock.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
-				293A45851F296CE200DD1006 /* IssueCommentCodeBlockModel.swift in Sources */,
-				293A45981F298D5700DD1006 /* IssueCommentTableCollectionCell.swift in Sources */,
-				293A459F1F298EED00DD1006 /* IssueCommentHtmlModel.swift in Sources */,
-				293A45801F296BEA00DD1006 /* GithubEmoji.swift in Sources */,
-				293A458C1F296CF300DD1006 /* MMElement+Attributes.swift in Sources */,
-				293A45951F296D8E00DD1006 /* IssueCommentImageModel.swift in Sources */,
-				2982ED8F1F97B5F500DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				DC5C02C71F9C71C400E80B9F /* SearchRecentViewModelTests.swift in Sources */,
-				293A459B1F298E7D00DD1006 /* IssueCommentSummaryModel.swift in Sources */,
 				DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */,
-				293A458B1F296CF300DD1006 /* CommentModelsFromMarkdown.swift in Sources */,
-				293A457D1F296BD200DD1006 /* NSAttributedStringSizing.swift in Sources */,
-				296B4E321F7C80A200C16887 /* GraphQLIDDecode.swift in Sources */,
 				293A45791F296B7E00DD1006 /* MMMarkdownASTTests.swift in Sources */,
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
-				294B11251F7B40CA00E04F2D /* IssueDetailsModel.swift in Sources */,
-				293A45941F296D5B00DD1006 /* CollapsibleCell.swift in Sources */,
-				293A45961F298C9500DD1006 /* UIColor+Hex.swift in Sources */,
-				293A459D1F298EDB00DD1006 /* IssueCommentQuoteCell.swift in Sources */,
-				293A458E1F296CF300DD1006 /* MMElement+Image.swift in Sources */,
-				293A458F1F296CF300DD1006 /* MMElement+Table.swift in Sources */,
+				9870B9081FC74E300009719C /* SecretsTests.swift in Sources */,
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
-				293A459E1F298EE200DD1006 /* IssueCommentHrModel.swift in Sources */,
-				29DA1E8D1F5F8DCF0050C64B /* MarkdownAttribute.swift in Sources */,
 				45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */,
-				49D029011F91D9C700E39094 /* ReactionViewModel.swift in Sources */,
 				293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */,
-				293A45901F296CF300DD1006 /* NSAttributedString+Trim.swift in Sources */,
-				295B513C1FC2491800C3993B /* DoubleTappableCell.swift in Sources */,
 				DCA5ED191FAEF32F0072F074 /* BookmarkViewModelTests.swift in Sources */,
-				293A45931F296D4E00DD1006 /* IssueCommentCodeBlockCell.swift in Sources */,
-				29EDFE7D1F65C583005BCCEB /* SplitViewControllerDelegate.swift in Sources */,
-				293A45991F298D8400DD1006 /* AttributedStringView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2655,7 +2571,6 @@
 /* Begin XCBuildConfiguration section */
 		297AE84F1EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512F1FC2230600C3993B /* FREETIME-DEBUG.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2713,7 +2628,6 @@
 		};
 		297AE8501EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512D1FC2230600C3993B /* FREETIME-RELEASE.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2846,7 +2760,6 @@
 		};
 		98A8CA991F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295B512E1FC2230600C3993B /* FREETIME-TESTFLIGHT.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

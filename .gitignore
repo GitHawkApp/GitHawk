@@ -77,7 +77,7 @@ _site/
 
 # secrets
 Resources/*.xcconfig
-
+*Secrets.swift*
 
 
 # FBSnapshotTestCase Failure Diffs
