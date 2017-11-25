@@ -61,10 +61,12 @@ func CreateCommentModels(
     width: CGFloat,
     options: GitHubMarkdownOptions
     ) -> [ListDiffable] {
+
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
+    let replaceCheckmarks = annotateCheckmarks(markdown: replaceHTMLentities)
 
-    guard let document = createCommentAST(markdown: replaceHTMLentities)
+    guard let document = createCommentAST(markdown: replaceCheckmarks)
         else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
@@ -402,6 +404,19 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
     }
 
     return mutableAttributedString
+}
+
+private let checkedIdentifier = "[*~CHECKED~*]"
+private let uncheckedIdentifier = "[*~UNCHECKED~*]"
+private let checkmarkRegex = try! NSRegularExpression(pattern: "^- (\\[([ |x])\\])", options: [.anchorsMatchLines])
+private func annotateCheckmarks(markdown: String) -> String {
+    let matches = checkmarkRegex.matches(in: markdown, options: [], range: markdown.nsrange)
+    let result = NSMutableString(string: markdown)
+    for match in matches.reversed() {
+        let checked = markdown.substring(with: match.range(at: 2)) == "x"
+        result.replaceCharacters(in: match.range(at: 1), with: checked ? checkedIdentifier : uncheckedIdentifier)
+    }
+    return result as String
 }
 
 func createTextModelUpdatingGitHubFeatures(
