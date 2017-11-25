@@ -132,7 +132,8 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     private var _contents = [String: CGImage]()
     func contents(_ width: CGFloat) -> CGImage? {
-        if let contents = _contents[width] {
+        let key = "\(width)"
+        if let contents = _contents[key] {
             return contents
         }
 
@@ -150,7 +151,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         // keep only one bitmap at a time
         _contents.removeAll()
-        _contents[width] = contents
+        _contents[key] = contents
 
         return contents
     }
