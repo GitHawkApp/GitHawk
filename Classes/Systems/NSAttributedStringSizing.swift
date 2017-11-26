@@ -198,7 +198,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
 }
 
-class LabelLayoutManager: NSLayoutManager {
+final class LabelLayoutManager: NSLayoutManager {
     
     override func fillBackgroundRectArray(_ rectArray: UnsafePointer<CGRect>, count rectCount: Int, forCharacterRange charRange: NSRange, color: UIColor) {
         
@@ -214,7 +214,7 @@ class LabelLayoutManager: NSLayoutManager {
         
         // Define label rectangle and rounded path
         let cornerRadius: CGFloat = 2
-        let rect = rectArray[0].insetBy(dx: -2, dy: 2)
+        let rect = rectArray[0].insetBy(dx: -2, dy: 1)
         let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         
         // Define the CoreGraphics context
@@ -228,9 +228,15 @@ class LabelLayoutManager: NSLayoutManager {
         context?.addPath(path.cgPath)
         context?.drawPath(using: .fillStroke)
         
-        // Add a small inset box-shadow to the label
-        UIColor.black.withAlphaComponent(0.2).set()
-        context?.fill(CGRect(x: rect.minX, y: rect.maxY + (cornerRadius / 2), width: rect.width, height: 1))
+        // Add a small border around the label
+        let borderWidth = 1 / UIScreen.main.scale
+        let strokeRect = rect.insetBy(dx: -2, dy: -borderWidth)
+        let strokePath = UIBezierPath(roundedRect: strokeRect, cornerRadius: cornerRadius)
+        
+        Styles.Colors.Gray.border.color.set()
+        context?.setLineWidth(borderWidth)
+        context?.addPath(strokePath.cgPath)
+        context?.drawPath(using: .stroke)
         
         // Reset color as per Apple docs
         color.set()

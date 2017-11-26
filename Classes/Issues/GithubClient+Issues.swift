@@ -348,7 +348,9 @@ extension GithubClient {
                     title: newLabel.name,
                     color: newLabel.color,
                     date: Date(),
-                    type: .added
+                    type: .added,
+                    repoOwner: owner,
+                    repoName: repo
                 ))
             }
         }
@@ -360,7 +362,9 @@ extension GithubClient {
                     title: oldLabel.name,
                     color: oldLabel.color,
                     date: Date(),
-                    type: .removed
+                    type: .removed,
+                    repoOwner: owner,
+                    repoName: repo
                 ))
             }
         }
