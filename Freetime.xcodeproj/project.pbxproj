@@ -1250,7 +1250,6 @@
 			isa = PBXGroup;
 			children = (
 				DCA5ED171FAEF3220072F074 /* Bookmark Tests */,
-				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */,
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */,
@@ -1263,10 +1262,11 @@
 				DC60C6CC1F98344B00241271 /* Mocks */,
 				49D028FF1F91D90C00E39094 /* ReactionTests.swift */,
 				DC60C6CF1F9836C500241271 /* Search Tests */,
+				9870B9071FC74E300009719C /* SecretsTests.swift */,
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
+				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
-				9870B9071FC74E300009719C /* SecretsTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
