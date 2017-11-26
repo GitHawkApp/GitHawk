@@ -18,6 +18,8 @@ final class IssueFileCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        backgroundColor = .white
+
         disclosure.tintColor = Styles.Colors.Gray.light.color
         disclosure.contentMode = .scaleAspectFit
         contentView.addSubview(disclosure)
