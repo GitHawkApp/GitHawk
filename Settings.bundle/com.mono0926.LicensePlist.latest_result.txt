@@ -22,6 +22,9 @@ body: Fabric: Copyright 20…
 name: HTMLString, nameSpecified: 
 body: The MIT License (MIT…
 
+name: Highlightr, nameSpecified: 
+body: Copyright (c) 2016 I…
+
 name: IGListKit, nameSpecified: 
 body: BSD License
 
@@ -88,6 +91,9 @@ body: Fabric: Copyright 20…
 
 name: HTMLString, nameSpecified: 
 body: The MIT License (MIT…
+
+name: Highlightr, nameSpecified: 
+body: Copyright (c) 2016 I…
 
 name: IGListKit, nameSpecified: 
 body: BSD License

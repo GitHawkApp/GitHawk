@@ -21,14 +21,23 @@ func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBl
     inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
     inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
 
-    let attributes: [NSAttributedStringKey: Any] = [
-        .foregroundColor: Styles.Colors.Gray.dark.color,
-        .font: Styles.Fonts.code
-    ]
+    let attributedString: NSAttributedString
+    if let language = element.language,
+        let highlighted = GithubHighlighting.highlight(text, as: language) {
+        attributedString = highlighted
+    } else {
+        attributedString = NSAttributedString(
+            string: text,
+            attributes: [
+                .foregroundColor: Styles.Colors.Gray.dark.color,
+                .font: Styles.Fonts.code
+            ]
+        )
+    }
 
     let stringSizing = NSAttributedStringSizing(
         containerWidth: 0,
-        attributedText: NSAttributedString(string: text, attributes: attributes),
+        attributedText: attributedString,
         inset: inset,
         backgroundColor: Styles.Colors.Gray.lighter.color
     )
