@@ -34,12 +34,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
         backgroundColor = .white
 
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = Styles.Colors.Gray.lighter.color
-        imageView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        imageView.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
-        imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
-        imageView.clipsToBounds = true
+        imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
         if #available(iOS 11, *) {
             imageView.accessibilityIgnoresInvertColors = true

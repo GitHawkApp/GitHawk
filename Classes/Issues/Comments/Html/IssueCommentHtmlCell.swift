@@ -25,7 +25,7 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 
 }
 
-final class IssueCommentHtmlCell: UICollectionViewCell, ListBindable, UIWebViewDelegate {
+final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDelegate {
 
     private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
 

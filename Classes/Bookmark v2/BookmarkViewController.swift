@@ -75,7 +75,7 @@ TabNavRootViewControllerType {
         adapter.dataSource = self
 
         searchBar.delegate = self
-        searchBar.placeholder = Constants.Strings.search
+        searchBar.placeholder = Constants.Strings.searchBookmarks
         searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal

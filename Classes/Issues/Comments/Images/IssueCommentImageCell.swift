@@ -19,10 +19,9 @@ protocol IssueCommentImageHeightCellDelegate: class {
     func imageDidFinishLoad(cell: IssueCommentImageCell, url: URL, size: CGSize)
 }
 
-final class IssueCommentImageCell: UICollectionViewCell,
+final class IssueCommentImageCell: DoubleTappableCell,
 ListBindable,
-CollapsibleCell,
-UIGestureRecognizerDelegate {
+CollapsibleCell {
 
     weak var delegate: IssueCommentImageCellDelegate?
     weak var heightDelegate: IssueCommentImageHeightCellDelegate?
@@ -52,6 +51,7 @@ UIGestureRecognizerDelegate {
         }
 
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(IssueCommentImageCell.onTap(recognizer:)))
+        tapGesture.require(toFail: doubleTapGesture)
         tapGesture.delegate = self
         contentView.addGestureRecognizer(tapGesture)
     }

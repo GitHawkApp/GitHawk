@@ -6,7 +6,9 @@ This project is continuing to develop rapidly and new features are constantly be
 
 In order to compile and run GitHawk locally, you will need to provide your own client ID and secret keys from GitHub. You can get these by [registering](https://github.com/settings/applications/new) a new OAuth application. The "Authorization callback URL" must be set to `freetime://`, otherwise you're free to fill it in yourself!
 
-Once you have your client ID and secret you can populate these values into the [Secrets.swift](https://github.com/rnystrom/GitHawk/blob/master/Classes/Other/Secrets.swift) file. You should **never** commit these changes!
+**Build** the Xcode project once to generate new config files. Open `Resources/SECRETS.xcconfig` and fill in your API keys.
+
+> **Note:** If you plan on doing any image upload work, you'll need an [Imgur API key](https://apidocs.imgur.com/) too.
 
 Finally, you will also need to install `apollo-codegen`, this is a command line tool which is required to create the GraphQL models! This can be done easily by running `npm install`.
 

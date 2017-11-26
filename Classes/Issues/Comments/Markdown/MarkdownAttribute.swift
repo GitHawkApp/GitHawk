@@ -17,4 +17,5 @@ enum MarkdownAttribute {
     static let issue = NSAttributedStringKey(rawValue: "com.freetime.Markdown.issue")
     static let details = NSAttributedStringKey(rawValue: "com.freetime.Markdown.details")
     static let label = NSAttributedStringKey(rawValue: "com.freetime.Markdown.label")
+    static let commit = NSAttributedStringKey(rawValue: "com.freetime.Markdown.commit")
 }

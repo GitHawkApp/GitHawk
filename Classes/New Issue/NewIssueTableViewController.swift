@@ -115,6 +115,14 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
         view.endEditing(false)
     }
 
+    // MARK: Accessibility
+
+    override func accessibilityPerformMagicTap() -> Bool {
+        guard let _ = titleText else { return false }
+        onSend()
+        return true
+    }
+
     // MARK: Private API
 
     func setRightBarItemIdle() {

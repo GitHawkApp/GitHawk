@@ -74,3 +74,11 @@ node_modules
 _site/
 .sass-cache/
 .jekyll-metadata
+
+# secrets
+Resources/*.xcconfig
+*Secrets.swift*
+
+
+# FBSnapshotTestCase Failure Diffs
+FailureDiffs/

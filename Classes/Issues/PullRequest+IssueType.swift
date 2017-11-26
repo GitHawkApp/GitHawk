@@ -43,7 +43,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         var models = [IssueAssigneeViewModel]()
         for node in reviewRequests?.nodes ?? [] {
             guard let node = node,
-                let reviewer = node.reviewer,
+                let reviewer = node.requestedReviewer?.asUser,
                 let url = URL(string: reviewer.avatarUrl)
                 else { continue }
             models.append(IssueAssigneeViewModel(login: reviewer.login, avatarURL: url))
@@ -205,6 +205,36 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     commentCount: review.comments.totalCount
                 )
                 results.append(model)
+            } else if let referenced = node.asCrossReferencedEvent,
+                let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
+                let id = referenced.fragments.nodeFields.id
+                if let issueReference = referenced.source.asIssue,
+                    // do not ref the current issue
+                    issueReference.number != number {
+                    let model = IssueReferencedModel(
+                        id: id,
+                        owner: issueReference.repository.owner.login,
+                        repo: issueReference.repository.name,
+                        number: issueReference.number,
+                        pullRequest: false,
+                        state: issueReference.closed ? .closed : .open,
+                        date: date,
+                        title: issueReference.title
+                    )
+                    results.append(model)
+                } else if let prReference = referenced.source.asPullRequest {
+                    let model = IssueReferencedModel(
+                        id: id,
+                        owner: prReference.repository.owner.login,
+                        repo: prReference.repository.name,
+                        number: prReference.number,
+                        pullRequest: false,
+                        state: prReference.merged ? .merged : prReference.closed ? .closed : .open,
+                        date: date,
+                        title: prReference.title
+                    )
+                    results.append(model)
+                }
             } else if let referenced = node.asReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
@@ -277,7 +307,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueRequestModel(
                     id: reviewRequested.fragments.nodeFields.id,
                     actor: reviewRequested.actor?.login ?? Constants.Strings.unknown,
-                    user: reviewRequested.subject.login,
+                    user: reviewRequested.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequested,
                     width: width
@@ -288,7 +318,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let model = IssueRequestModel(
                     id: reviewRequestRemoved.fragments.nodeFields.id,
                     actor: reviewRequestRemoved.actor?.login ?? Constants.Strings.unknown,
-                    user: reviewRequestRemoved.subject.login,
+                    user: reviewRequestRemoved.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequestRemoved,
                     width: width
@@ -301,7 +331,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     actor: milestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
-                    type: .milestoned
+                    type: .milestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let demilestone = node.asDemilestonedEvent,
@@ -311,7 +342,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     actor: demilestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
-                    type: .demilestoned
+                    type: .demilestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let commit = node.asCommit,

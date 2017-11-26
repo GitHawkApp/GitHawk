@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTextCell: UICollectionViewCell, ListBindable, CollapsibleCell {
+final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleCell {
 
     static let inset = Styles.Sizes.textCellInset
 
@@ -18,6 +18,7 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
 
         backgroundColor = .white
         contentView.clipsToBounds = true
@@ -34,6 +35,15 @@ final class IssueCommentTextCell: UICollectionViewCell, ListBindable, Collapsibl
         layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
         textView.reposition(width: contentView.bounds.width)
+    }
+
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
     }
 
     // MARK: ListBindable

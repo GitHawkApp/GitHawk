@@ -77,6 +77,13 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         super.init()
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(NSAttributedStringSizing.onMemoryWarning),
+            name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+            object: nil
+        )
+
         computeSize(containerWidth)
     }
 
@@ -123,9 +130,10 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private var _contents = [CGFloat: CGImage]()
+    private var _contents = [String: CGImage]()
     func contents(_ width: CGFloat) -> CGImage? {
-        if let contents = _contents[width] {
+        let key = "\(width)"
+        if let contents = _contents[key] {
             return contents
         }
 
@@ -141,7 +149,9 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
 
-        _contents[width] = contents
+        // keep only one bitmap at a time
+        _contents.removeAll()
+        _contents[key] = contents
 
         return contents
     }
@@ -170,6 +180,10 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         _textSize[width] = size
 
         return size
+    }
+
+    @objc func onMemoryWarning() {
+        _contents.removeAll()
     }
 
     // MARK: ListDiffable

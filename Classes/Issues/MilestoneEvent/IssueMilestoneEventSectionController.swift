@@ -9,11 +9,16 @@
 import Foundation
 import IGListKit
 
-final class IssueMilestoneEventSectionController: ListGenericSectionController<IssueMilestoneEventModel>, IssueMilestoneEventCellDelegate {
+final class IssueMilestoneEventSectionController: ListGenericSectionController<IssueMilestoneEventModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        guard let width = collectionContext?.containerSize.width,
+            let object = self.object
+            else { fatalError("Collection context must be set") }
+        return CGSize(
+            width: width,
+            height: object.attributedText.textViewSize(width).height
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -21,15 +26,8 @@ final class IssueMilestoneEventSectionController: ListGenericSectionController<I
         let object = self.object
             else { fatalError("Missing context, object, or wrong cell type") }
         cell.configure(object)
-        cell.delegate = self
+        cell.delegate = viewController
         return cell
-    }
-
-    // MARK: IssueMilestoneEventCellDelegate
-
-    func didTapActor(cell: IssueMilestoneEventCell) {
-        guard let actor = object?.actor else { return }
-        viewController?.presentProfile(login: actor)
     }
 
 }

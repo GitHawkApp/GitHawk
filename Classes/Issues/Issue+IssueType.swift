@@ -149,6 +149,36 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     pullRequest: false
                 )
                 results.append(model)
+            } else if let referenced = node.asCrossReferencedEvent,
+                let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
+                let id = referenced.fragments.nodeFields.id
+                if let issueReference = referenced.source.asIssue,
+                    // do not ref the current issue
+                    issueReference.number != number {
+                    let model = IssueReferencedModel(
+                        id: id,
+                        owner: issueReference.repository.owner.login,
+                        repo: issueReference.repository.name,
+                        number: issueReference.number,
+                        pullRequest: false,
+                        state: issueReference.closed ? .closed : .open,
+                        date: date,
+                        title: issueReference.title
+                    )
+                    results.append(model)
+                } else if let prReference = referenced.source.asPullRequest {
+                    let model = IssueReferencedModel(
+                        id: id,
+                        owner: prReference.repository.owner.login,
+                        repo: prReference.repository.name,
+                        number: prReference.number,
+                        pullRequest: false,
+                        state: prReference.merged ? .merged : prReference.closed ? .closed : .open,
+                        date: date,
+                        title: prReference.title
+                    )
+                    results.append(model)
+                }
             } else if let referenced = node.asReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
@@ -160,7 +190,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         repo: repo.name,
                         hash: commitRef.oid,
                         actor: referenced.actor?.login ?? Constants.Strings.unknown,
-                        date: date
+                        date: date,
+                        width: width
                     )
                     results.append(model)
                 } else if let issueReference = referenced.subject.asIssue,
@@ -233,7 +264,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: milestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: milestone.milestoneTitle,
                     date: date,
-                    type: .milestoned
+                    type: .milestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let demilestone = node.asDemilestonedEvent,
@@ -243,7 +275,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     actor: demilestone.actor?.login ?? Constants.Strings.unknown,
                     milestone: demilestone.milestoneTitle,
                     date: date,
-                    type: .demilestoned
+                    type: .demilestoned,
+                    width: width
                 )
                 results.append(model)
             } else if let commit = node.asCommit,

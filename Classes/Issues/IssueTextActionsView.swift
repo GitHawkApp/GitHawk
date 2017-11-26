@@ -44,6 +44,18 @@ final class IssueTextActionsCell: SelectableCell {
         imageView.frame = contentView.bounds
     }
 
+    func configure(operation: IssueTextActionOperation) {
+        imageView.image = operation.icon
+        imageView.accessibilityLabel = operation.name
+    }
+
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
+
 }
 
 protocol IssueTextActionsViewDelegate: class {
@@ -61,6 +73,7 @@ struct IssueTextActionOperation {
 
     let icon: UIImage?
     let operation: Operation
+    let name: String
 
 }
 
@@ -113,7 +126,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueTextActionsCell
             else { fatalError("Wrong cell type") }
-        cell.imageView.image = operations[indexPath.item].icon
+        cell.configure(operation: operations[indexPath.item])
         return cell
     }
 

@@ -11,8 +11,7 @@ import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
     ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate,
-LabelsViewControllerDelegate {
+ListBindingSectionControllerSelectionDelegate {
 
     private var expanded = false
     private let issueModel: IssueDetailsModel
@@ -46,9 +45,6 @@ LabelsViewControllerDelegate {
         if expanded {
             viewModels += labels as [ListDiffable]
         }
-        if self.object?.viewerCanUpdate == true {
-            viewModels.append("edit" as ListDiffable)
-        }
 
         return viewModels
     }
@@ -74,8 +70,7 @@ LabelsViewControllerDelegate {
         let cellClass: AnyClass
         switch viewModel {
         case is IssueLabelSummaryModel: cellClass = IssueLabelSummaryCell.self
-        case is RepositoryLabel: cellClass = IssueLabelCell.self
-        default: cellClass = IssueLabelEditCell.self
+        default: cellClass = IssueLabelCell.self
         }
 
         guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
@@ -91,48 +86,8 @@ LabelsViewControllerDelegate {
         viewModel: Any
         ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
-
-        if let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? IssueLabelEditCell {
-            guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
-                else { fatalError("Missing labels view controller") }
-            controller.configure(
-                selected: labelsOverride ?? self.object?.labels ?? [],
-                client: client,
-                owner: issueModel.owner,
-                repo: issueModel.repo,
-                delegate: self
-            )
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .popover
-            nav.popoverPresentationController?.sourceView = cell.label
-            nav.popoverPresentationController?.sourceRect = cell.label.frame
-            viewController?.present(nav, animated: true)
-        } else {
-            expanded = !expanded
-            update(animated: true)
-        }
-    }
-
-    // MARK: LabelsViewControllerDelegate
-
-    func didDismiss(controller: LabelsViewController, selectedLabels: [RepositoryLabel]) {
-        labelsOverride = selectedLabels
+        expanded = !expanded
         update(animated: true)
-
-        let request = GithubClient.Request(
-            path: "repos/\(issueModel.owner)/\(issueModel.repo)/issues/\(issueModel.number)",
-            method: .patch,
-            parameters: ["labels": selectedLabels.map { $0.name }]
-        ) { [weak self] (response, _) in
-            if let statusCode = response.response?.statusCode, statusCode != 200 {
-                self?.labelsOverride = nil
-                self?.update(animated: true)
-                if statusCode == 403 {
-                    ToastManager.showPermissionsError()
-                }
-            }
-        }
-        client.request(request)
     }
 
 }

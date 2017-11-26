@@ -27,10 +27,14 @@ FlatCacheListener {
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
-    private var hasScrolledToBottom = false
     private let viewFilesModel = "view_files" as ListDiffable
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var needsScrollToBottom = false
+
+    // must fetch collaborator info from API before showing editing controls
+    private var viewerIsCollaborator = false
+    private let collaboratorKey = "collaborator" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -77,8 +81,6 @@ FlatCacheListener {
         return rightItem
     }
 
-    private var sentComments = [ListDiffable]()
-
     init(
         client: GithubClient,
         model: IssueDetailsModel,
@@ -87,9 +89,7 @@ FlatCacheListener {
         self.client = client
         self.model = model
         self.addCommentClient = AddCommentClient(client: client)
-
-        // trick into thinking already scrolled to bottom after load
-        self.hasScrolledToBottom = !scrollToBottom
+        self.needsScrollToBottom = scrollToBottom
 
         // force unwrap, this absolutely must work
         super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
@@ -323,6 +323,22 @@ FlatCacheListener {
     }
 
     func fetch(previous: Bool) {
+        if !previous {
+            client.fetchViewerCollaborator(
+                owner: model.owner,
+                repo: model.repo
+            ) { [weak self] (result) in
+                switch result {
+                case .success(let permission):
+                    self?.viewerIsCollaborator = permission.canManage
+                    // avoid finishLoading() so empty view doesn't appear
+                    self?.feed.adapter.performUpdates(animated: true)
+                case .error:
+                    ToastManager.showGenericError()
+                }
+            }
+        }
+
         client.fetch(
             owner: model.owner,
             repo: model.repo,
@@ -336,12 +352,6 @@ FlatCacheListener {
 
             switch resultType {
             case .success(let result, let mentionableUsers):
-                // clear pending comments since they should now be part of the payload
-                // only clear when doing a refresh load
-                if !previous {
-                    strongSelf.sentComments.removeAll()
-                }
-
                 strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
@@ -350,12 +360,16 @@ FlatCacheListener {
 
             // subsequent updates are handled by the FlatCacheListener
             if isFirstUpdate {
-                strongSelf.feed.finishLoading(dismissRefresh: true) {
-                    if strongSelf.hasScrolledToBottom != true {
-                        strongSelf.hasScrolledToBottom = true
-                        strongSelf.feed.collectionView.slk_scrollToBottom(animated: true)
-                    }
-                }
+                strongSelf.updateAndScrollIfNeeded()
+            }
+        }
+    }
+
+    func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
+        feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
+            if self?.needsScrollToBottom == true {
+                self?.needsScrollToBottom = false
+                self?.feed.collectionView.slk_scrollToBottom(animated: true)
             }
         }
     }
@@ -397,11 +411,14 @@ FlatCacheListener {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.result else { return [] }
 
-        var objects: [ListDiffable] = [
-            current.status,
-            current.title,
-            current.labels
-        ]
+        var objects: [ListDiffable] = [current.status]
+
+        if viewerIsCollaborator {
+            objects.append(collaboratorKey)
+        }
+
+        objects.append(current.title)
+        objects.append(current.labels)
 
         if let milestone = current.milestone {
             objects.append(milestone)
@@ -417,23 +434,26 @@ FlatCacheListener {
             objects.append(viewFilesModel)
         }
 
-        if current.hasPreviousPage {
-            objects.append(IssueNeckLoadModel())
-        }
-
         if let rootComment = current.rootComment {
             objects.append(rootComment)
         }
 
+        if current.hasPreviousPage {
+            objects.append(IssueNeckLoadModel())
+        }
+
         objects += current.timelineViewModels
-        objects += sentComments
 
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? ListDiffable, object === viewFilesModel {
+        guard let object = object as? ListDiffable else { fatalError("Must be diffable") }
+
+        if object === viewFilesModel {
             return IssueViewFilesSectionController(issueModel: model, client: client)
+        } else if object === collaboratorKey, let id = resultID {
+            return IssueManagingSectionController(id: id, model: model, client: client)
         }
 
         switch object {
@@ -453,7 +473,7 @@ FlatCacheListener {
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
-        case is IssueMilestoneModel: return IssueMilestoneSectionController(issueModel: model)
+        case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -489,7 +509,8 @@ FlatCacheListener {
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool
         ) {
-        guard let comment = createCommentModel(
+        guard let previous = result,
+            let comment = createCommentModel(
             id: id,
             commentFields: commentFields,
             reactionFields: reactionFields,
@@ -502,12 +523,13 @@ FlatCacheListener {
             isRoot: false
             )
             else { return }
-        sentComments.append(comment)
 
-        let collectionView = feed.collectionView
-        feed.adapter.performUpdates(animated: false, completion: { _ in
-            collectionView.slk_scrollToBottom(animated: true)
-        })
+        needsScrollToBottom = true
+
+        let newResult = previous.updated(
+            timelinePages: previous.timelinePages(appending: [comment])
+        )
+        self.client.cache.set(value: newResult)
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
@@ -543,7 +565,7 @@ FlatCacheListener {
         switch update {
         case .item(let item):
             guard item is IssueResult else { break }
-            feed.finishLoading(dismissRefresh: true)
+            updateAndScrollIfNeeded()
         case .list: break
         }
     }

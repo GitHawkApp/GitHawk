@@ -8,11 +8,12 @@
 
 import UIKit
 
-@objc protocol AttributedStringViewDelegate: class {
-    @objc optional func didTapURL(view: AttributedStringView, url: URL)
-    @objc optional func didTapUsername(view: AttributedStringView, username: String)
-    @objc optional func didTapEmail(view: AttributedStringView, email: String)
-    @objc optional func didTapLabel(view: AttributedStringView, label: String)
+protocol AttributedStringViewDelegate: class {
+    func didTapURL(view: AttributedStringView, url: URL)
+    func didTapUsername(view: AttributedStringView, username: String)
+    func didTapEmail(view: AttributedStringView, email: String)
+    func didTapCommit(view: AttributedStringView, commit: CommitDetails)
+    func didTapLabel(view: AttributedStringView, label: String)
 }
 
 protocol AttributedStringViewIssueDelegate: class {
@@ -51,6 +52,15 @@ final class AttributedStringView: UIView {
         return true
     }
 
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return text?.attributedText.string
+        }
+        set { }
+    }
+
     // MARK: Public API
 
     func reposition(width: CGFloat) {
@@ -80,6 +90,8 @@ final class AttributedStringView: UIView {
             issueDelegate?.didTapIssue(view: self, issue: issue)
         } else if let label = attributes[MarkdownAttribute.label] as? String {
             delegate?.didTapLabel?(view: self, label: label)
+        } else if let commit = attributes[MarkdownAttribute.commit] as? CommitDetails {
+            delegate?.didTapCommit(view: self, commit: commit)
         }
     }
 

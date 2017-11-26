@@ -21,8 +21,8 @@ extension GithubClient {
         ) {
         let parameters = [
             "code": code,
-            "client_id": GithubAPI.clientID,
-            "client_secret": GithubAPI.clientSecret
+            "client_id": Secrets.GitHub.clientId,
+            "client_secret": Secrets.GitHub.clientSecret
         ]
         let headers = [
             "Accept": "application/json"

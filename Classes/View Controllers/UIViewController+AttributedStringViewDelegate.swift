@@ -23,4 +23,8 @@ extension UIViewController: AttributedStringViewDelegate {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
+    func didTapCommit(view: AttributedStringView, commit: CommitDetails) {
+        presentCommit(owner: commit.owner, repo: commit.repo, hash: commit.hash)
+    }
+
 }
