@@ -57,9 +57,7 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
-            else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(width: util_context.containerSize.width, height: Styles.Sizes.labelEventHeight)
     }
 
     func sectionController(
@@ -67,17 +65,11 @@ ListBindingSectionControllerSelectionDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell & ListBindable {
-        guard let context = collectionContext
-            else { fatalError("Collection context must be set") }
-        let cellClass: AnyClass
         switch viewModel {
-        case is IssueAssigneeSummaryModel: cellClass = IssueAssigneeSummaryCell.self
-        case is IssueAssigneeViewModel: cellClass = IssueAssigneeUserCell.self
+        case is IssueAssigneeSummaryModel: return util_dequeueCell(index: index) as IssueAssigneeSummaryCell
+        case is IssueAssigneeViewModel: return util_dequeueCell(index: index) as IssueAssigneeUserCell
         default: fatalError("Unsupported model \(viewModel)")
         }
-        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
-            else { fatalError("Cell not bindable") }
-        return cell
     }
 
     // MARK: ListBindingSectionControllerSelectionDelegate
