@@ -22,6 +22,10 @@ extension UIViewController: AttributedStringViewDelegate {
         guard let url = URL(string: "mailTo:\(email)") else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
+    
+    func didTapLabel(view: AttributedStringView, label: LabelDetails) {
+        presentLabels(owner: label.owner, repo: label.repo, label: label.label)
+    }
 
     func didTapCommit(view: AttributedStringView, commit: CommitDetails) {
         presentCommit(owner: commit.owner, repo: commit.repo, hash: commit.hash)

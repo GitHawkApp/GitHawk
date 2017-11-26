@@ -97,7 +97,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
                     date: date,
-                    type: .removed
+                    type: .removed,
+                    repoOwner: owner,
+                    repoName: repo
                 )
                 results.append(model)
             } else if let labeled = node.asLabeledEvent,
@@ -108,7 +110,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     title: labeled.label.name,
                     color: labeled.label.color,
                     date: date,
-                    type: .added
+                    type: .added,
+                    repoOwner: owner,
+                    repoName: repo
                 )
                 results.append(model)
             } else if let closed = node.asClosedEvent,

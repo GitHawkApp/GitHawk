@@ -13,6 +13,7 @@ protocol AttributedStringViewDelegate: class {
     func didTapUsername(view: AttributedStringView, username: String)
     func didTapEmail(view: AttributedStringView, email: String)
     func didTapCommit(view: AttributedStringView, commit: CommitDetails)
+    func didTapLabel(view: AttributedStringView, label: LabelDetails)
 }
 
 protocol AttributedStringViewIssueDelegate: class {
@@ -87,6 +88,8 @@ final class AttributedStringView: UIView {
             delegate?.didTapEmail(view: self, email: emailString)
         } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
             issueDelegate?.didTapIssue(view: self, issue: issue)
+        } else if let label = attributes[MarkdownAttribute.label] as? LabelDetails {
+            delegate?.didTapLabel(view: self, label: label)
         } else if let commit = attributes[MarkdownAttribute.commit] as? CommitDetails {
             delegate?.didTapCommit(view: self, commit: commit)
         }

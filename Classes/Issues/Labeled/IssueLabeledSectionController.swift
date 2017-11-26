@@ -9,10 +9,10 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, IssueLabeledCellDelegate {
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
 
     private let issueModel: IssueDetailsModel
-
+    
     init(issueModel: IssueDetailsModel) {
         self.issueModel = issueModel
         super.init()
@@ -20,7 +20,8 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        let insets = IssueLabeledCell.insets
+        return CGSize(width: width, height: insets.top + insets.bottom + (object?.attributedString.textViewSize(width).height ?? 0))
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -28,20 +29,8 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
             let object = self.object
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(object)
-        cell.delegate = self
+        cell.delegate = viewController
         return cell
-    }
-
-    // MARK: IssueLabeledCellDelegate
-
-    func didTapActor(cell: IssueLabeledCell) {
-        guard let actor = object?.actor else { return }
-        viewController?.presentProfile(login: actor)
-    }
-
-    func didTapLabel(cell: IssueLabeledCell) {
-        guard let label = object?.title else { return }
-        viewController?.presentLabels(owner: issueModel.owner, repo: issueModel.repo, label: label)
     }
 
 }
