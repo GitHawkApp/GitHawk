@@ -350,7 +350,8 @@ extension GithubClient {
                     date: Date(),
                     type: .added,
                     repoOwner: owner,
-                    repoName: repo
+                    repoName: repo,
+                    width: 0
                 ))
             }
         }
@@ -364,7 +365,8 @@ extension GithubClient {
                     date: Date(),
                     type: .removed,
                     repoOwner: owner,
-                    repoName: repo
+                    repoName: repo,
+                    width: 0
                 ))
             }
         }

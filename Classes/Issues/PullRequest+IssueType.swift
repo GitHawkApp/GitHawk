@@ -99,7 +99,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     date: date,
                     type: .removed,
                     repoOwner: owner,
-                    repoName: repo
+                    repoName: repo,
+                    width: width
                 )
                 results.append(model)
             } else if let labeled = node.asLabeledEvent,
@@ -112,7 +113,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     date: date,
                     type: .added,
                     repoOwner: owner,
-                    repoName: repo
+                    repoName: repo,
+                    width: width
                 )
                 results.append(model)
             } else if let closed = node.asClosedEvent,
