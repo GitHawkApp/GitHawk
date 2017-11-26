@@ -32,7 +32,8 @@ final class IssueLabeledModel: ListDiffable {
         date: Date,
         type: EventType,
         repoOwner: String,
-        repoName: String
+        repoName: String,
+        width: CGFloat
         ) {
         self.id = id
         self.actor = actor
@@ -94,7 +95,7 @@ final class IssueLabeledModel: ListDiffable {
         // Set
         
         self.attributedString = NSAttributedStringSizing(
-            containerWidth: 0,
+            containerWidth: width,
             attributedText: attributedString,
             inset: IssueLabeledCell.insets,
             backgroundColor: Styles.Colors.Gray.lighter.color

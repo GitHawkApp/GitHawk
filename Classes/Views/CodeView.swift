@@ -50,7 +50,7 @@ final class CodeView: UIScrollView {
     func set(attributedCode: NSAttributedString) {
         textView.attributedText = attributedCode
         let max = CGFloat.greatestFiniteMagnitude
-        let size = textVi ew.sizeThatFits(CGSize(width: max, height: max))
+        let size = textView.sizeThatFits(CGSize(width: max, height: max))
         textView.frame = CGRect(origin: .zero, size: size)
         contentSize = size
     }
