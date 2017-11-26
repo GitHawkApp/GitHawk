@@ -34,10 +34,7 @@ final class IssueViewFilesSectionController: ListSectionController {
     override func didSelectItem(at index: Int) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
-        guard let controller = UIStoryboard(name: "Files", bundle: Bundle.main)
-            .instantiateInitialViewController() as? IssueFilesViewController
-            else { return }
-        controller.configure(model: issueModel, client: client)
+        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: 0)
         viewController?.show(controller, sender: nil)
     }
 
