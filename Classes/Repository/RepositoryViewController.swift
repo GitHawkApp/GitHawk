@@ -46,7 +46,7 @@ NewIssueTableViewControllerDelegate {
         }
         controllers += [
             RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
-            RepositoryCodeDirectoryViewController(client: client, repo: repo, branch: repo.defaultBranch, path: "", isRoot: true)
+            RepositoryCodeDirectoryViewController.createRoot(client: client, repo: repo, branch: repo.defaultBranch)
         ]
         self.controllers = controllers
 

@@ -7,29 +7,56 @@
 //
 
 import UIKit
+import IGListKit
 
-final class RepositoryCodeDirectoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
+BaseListViewControllerDataSource,
+ListSingleSectionControllerDelegate {
 
-    private let tableView = UITableView(frame: .zero, style: .plain)
     private let client: GithubClient
     private let branch: String
+    private let file: String
     private let path: String
     private let repo: RepositoryDetails
-    private let cellIdentifier = "cell"
-    private let feedRefresh = FeedRefresh()
     private var files = [RepositoryFile]()
     private let isRoot: Bool
 
-    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String, isRoot: Bool) {
+    init(
+        client: GithubClient,
+        repo: RepositoryDetails,
+        branch: String,
+        path: String,
+        file: String,
+        isRoot: Bool
+        ) {
         self.client = client
         self.repo = repo
         self.branch = branch
-        self.path = path
         self.isRoot = isRoot
-        super.init(nibName: nil, bundle: nil)
-        self.title = isRoot
-        ? NSLocalizedString("Code", comment: "")
-        : path
+        self.file = file
+        self.path = path
+
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: ""),
+            dataSource: self
+        )
+
+        // set on init in case used by Tabman
+        self.title = NSLocalizedString("Code", comment: "")
+    }
+
+    static func createRoot(
+        client: GithubClient,
+        repo: RepositoryDetails,
+        branch: String
+        ) -> RepositoryCodeDirectoryViewController {
+        return RepositoryCodeDirectoryViewController(
+            client: client,
+            repo: repo,
+            branch: branch,
+            path: "",
+            file: "", 
+            isRoot: true)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -38,95 +65,82 @@ final class RepositoryCodeDirectoryViewController: UIViewController, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.dataSource = self
-        tableView.delegate = self
-        view.addSubview(tableView)
-
-        // set the frame in -viewDidLoad is required when working with TabMan
-        tableView.frame = view.bounds
-        if isRoot, #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        }
-
-        makeBackBarItemEmpty()
-
-        feedRefresh.refreshControl.addTarget(
-            self,
-            action: #selector(RepositoryCodeDirectoryViewController.onRefresh),
-            for: .valueChanged
-        )
-        tableView.refreshControl = feedRefresh.refreshControl
-        tableView.register(StyledTableCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 0.1))
-
-        feedRefresh.beginRefreshing()
-        fetch()
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        tableView.frame = view.bounds
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(tableView: tableView)
+        self.navigationItem.configure(title: file, subtitle: path)
     }
 
     // MARK: Private API
 
-    func fetch() {
-        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
+    var fullPath: String {
+        return path.isEmpty ? file : "\(path)/\(file)"
+    }
+
+    // MARK: Overrides
+
+    override func fetch(page: NSNumber?) {
+        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: fullPath) { [weak self] (result) in
             switch result {
             case .error:
-                ToastManager.showGenericError()
+                self?.error(animated: true)
             case .success(let files):
                 self?.files = files
-                self?.tableView.reloadData()
-                self?.feedRefresh.endRefreshing()
+                self?.update(animated: true)
             }
         }
     }
 
-    @objc func onRefresh() {
-        fetch()
+    // MARK: BaseListViewControllerDataSource
+
+    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
     }
 
-    // MARK: UITableViewDataSource
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return files.count
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        return files
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? StyledTableCell else {
-            fatalError("Could not dequeueCell with identifier: \(cellIdentifier)")
-        }
-
-        let file = files[indexPath.row]
-        cell.setup(with: file)
-
-        return cell
+    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        let controller = ListSingleSectionController(cellClass: RepositoryFileCell.self, configureBlock: { (file, cell: UICollectionViewCell) in
+            guard let cell = cell as? RepositoryFileCell, let file = file as? RepositoryFile else { return }
+            cell.configure(path: file.name, isDirectory: file.isDirectory)
+        }, sizeBlock: { (_, context: ListCollectionContext?) -> CGSize in
+            guard let width = context?.containerSize.width else { return .zero }
+            return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        })
+        controller.selectionDelegate = self
+        return controller
     }
 
-    // MARK: UITableViewDelegate
+    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+        return ListSingleSectionController(cellClass: LabelCell.self, configureBlock: { (_, cell: UICollectionViewCell) in
+            guard let cell = cell as? LabelCell else { return }
+            cell.label.text = NSLocalizedString("No files found.", comment: "")
+        }, sizeBlock: { [weak self] (_, context: ListCollectionContext?) -> CGSize in
+            guard let context = context,
+                let strongSelf = self
+                else { return .zero }
+            return CGSize(
+                width: context.containerSize.width,
+                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+            )
+        })
+    }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let file = files[indexPath.row]
-        let newPath = path.isEmpty ? file.name : "\(path)/\(file.name)"
+    // MARK: ListSingleSectionControllerDelegate
 
+    func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
+        guard let file = object as? RepositoryFile else { return }
         let controller: UIViewController
         if file.isDirectory {
             controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
                 branch: branch,
-                path: newPath,
+                path: fullPath,
+                file: file.name,
                 isRoot: false
             )
         } else {
-            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: newPath)
+            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: fullPath)
         }
         navigationController?.pushViewController(controller, animated: true)
     }

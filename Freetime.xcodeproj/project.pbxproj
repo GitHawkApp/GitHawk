@@ -269,6 +269,7 @@
 		29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */; };
 		29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */; };
 		29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E661FCB2D4600715D7E /* CodeView.swift */; };
+		29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */; };
 		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C167671ECA005500439D62 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Constants.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
@@ -394,7 +395,6 @@
 		DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */; };
 		DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */; };
 		DCD421C91FAFC049008CC2EC /* BookmarkHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */; };
-		E1DE7A3A1FA6A28300CA3845 /* RepositoryCodeDirectoryCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE7A391FA6A28300CA3845 /* RepositoryCodeDirectoryCellExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -674,6 +674,7 @@
 		29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFile.swift; sourceTree = "<group>"; };
 		29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeBlobViewController.swift; sourceTree = "<group>"; };
 		29B94E661FCB2D4600715D7E /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFileCell.swift; sourceTree = "<group>"; };
 		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -806,7 +807,6 @@
 		DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionController.swift; sourceTree = "<group>"; };
 		DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkHeaderSectionController.swift; sourceTree = "<group>"; };
-		E1DE7A391FA6A28300CA3845 /* RepositoryCodeDirectoryCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeDirectoryCellExtension.swift; sourceTree = "<group>"; };
 		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1666,6 +1666,7 @@
 				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
 				295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */,
 				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
+				29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */,
 				292ACE171F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift */,
 				29A5AF401F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift */,
 				986B87331F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift */,
@@ -1676,7 +1677,6 @@
 				986B87371F2CB29700AAB55C /* RepositorySummaryCell.swift */,
 				986B87351F2CB28C00AAB55C /* RepositorySummarySectionController.swift */,
 				2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */,
-				E1DE7A391FA6A28300CA3845 /* RepositoryCodeDirectoryCellExtension.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -2302,7 +2302,6 @@
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
-				E1DE7A3A1FA6A28300CA3845 /* RepositoryCodeDirectoryCellExtension.swift in Sources */,
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */,
@@ -2462,6 +2461,7 @@
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
+				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
 				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
