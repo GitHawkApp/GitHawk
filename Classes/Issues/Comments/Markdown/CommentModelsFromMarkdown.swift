@@ -59,12 +59,15 @@ func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
 func CreateCommentModels(
     markdown: String,
     width: CGFloat,
-    options: GitHubMarkdownOptions
+    options: GitHubMarkdownOptions,
+    viewerCanUpdate: Bool = false
     ) -> [ListDiffable] {
+
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
+    let replaceCheckmarks = annotateCheckmarks(markdown: replaceHTMLentities)
 
-    guard let document = createCommentAST(markdown: replaceHTMLentities)
+    guard let document = createCommentAST(markdown: replaceCheckmarks)
         else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
@@ -92,12 +95,18 @@ func CreateCommentModels(
             listLevel: 0,
             quoteLevel: 0,
             options: options,
-            results: &results
+            results: &results,
+            viewerCanUpdate: viewerCanUpdate
         )
     }
 
     // add any remaining text
-    if let text = createTextModel(attributedString: seedString, width: width, options: options) {
+    if let text = createTextModel(
+        attributedString: seedString,
+        width: width,
+        options: options,
+        viewerCanUpdate: viewerCanUpdate
+        ) {
         results.append(text)
     }
 
@@ -107,7 +116,8 @@ func CreateCommentModels(
 func createTextModel(
     attributedString: NSAttributedString,
     width: CGFloat,
-    options: GitHubMarkdownOptions
+    options: GitHubMarkdownOptions,
+    viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing? {
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
@@ -117,7 +127,8 @@ func createTextModel(
         attributedString: trimmedString,
         width: width,
         inset: IssueCommentTextCell.inset,
-        options: options
+        options: options,
+        viewerCanUpdate: viewerCanUpdate
     )
 }
 
@@ -125,7 +136,8 @@ func createQuoteModel(
     level: Int,
     attributedString: NSAttributedString,
     width: CGFloat,
-    options: GitHubMarkdownOptions
+    options: GitHubMarkdownOptions,
+    viewerCanUpdate: Bool
     ) -> IssueCommentQuoteModel {
     // remove head/tail whitespace and newline from text blocks
     let trimmedString = attributedString
@@ -134,7 +146,8 @@ func createQuoteModel(
         attributedString: trimmedString,
         width: width,
         inset: IssueCommentQuoteCell.inset(quoteLevel: level),
-        options: options
+        options: options,
+        viewerCanUpdate: viewerCanUpdate
     )
     return IssueCommentQuoteModel(level: level, quote: text)
 }
@@ -204,7 +217,8 @@ func travelAST(
     listLevel: Int,
     quoteLevel: Int,
     options: GitHubMarkdownOptions,
-    results: inout [ListDiffable]
+    results: inout [ListDiffable],
+    viewerCanUpdate: Bool
     ) {
     let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
 
@@ -229,9 +243,15 @@ func travelAST(
                 level: quoteLevel,
                 attributedString: attributedString,
                 width: width,
-                options: options
+                options: options,
+                viewerCanUpdate: viewerCanUpdate
             ))
-        } else if let text = createTextModel(attributedString: attributedString, width: width, options: options) {
+        } else if let text = createTextModel(
+            attributedString: attributedString,
+            width: width,
+            options: options,
+            viewerCanUpdate: viewerCanUpdate
+            ) {
             results.append(text)
         }
         attributedString.removeAll()
@@ -263,7 +283,12 @@ func travelAST(
 
     // if a model exists, push a new model with the current text stack _before_ the model. remember to drain the text
     if let model = model {
-        if let text = createTextModel(attributedString: attributedString, width: width, options: options) {
+        if let text = createTextModel(
+            attributedString: attributedString,
+            width: width,
+            options: options,
+            viewerCanUpdate: viewerCanUpdate
+            ) {
             results.append(text)
         }
         results.append(model)
@@ -279,7 +304,8 @@ func travelAST(
                 listLevel: nextListLevel,
                 quoteLevel: nextQuoteLevel,
                 options: options,
-                results: &results
+                results: &results,
+                viewerCanUpdate: viewerCanUpdate
             )
         }
     }
@@ -290,7 +316,8 @@ func travelAST(
             level: nextQuoteLevel,
             attributedString: attributedString,
             width: width,
-            options: options
+            options: options,
+            viewerCanUpdate: viewerCanUpdate
         ))
         attributedString.removeAll()
     }
@@ -404,20 +431,56 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
     return mutableAttributedString
 }
 
+private let checkedIdentifier = ">/CHECKED>/"
+private let uncheckedIdentifier = ">/UNCHECKED>/"
+private let checkmarkRegex = try! NSRegularExpression(pattern: "^- (\\[([ |x])\\])", options: [.anchorsMatchLines])
+private func annotateCheckmarks(markdown: String) -> String {
+    let matches = checkmarkRegex.matches(in: markdown, options: [], range: markdown.nsrange)
+    let result = NSMutableString(string: markdown)
+    for match in matches.reversed() {
+        let checked = markdown.substring(with: match.range(at: 2)) == "x"
+        result.replaceCharacters(in: match.range(at: 1), with: checked ? checkedIdentifier : uncheckedIdentifier)
+    }
+    return result as String
+}
+
+private let checkmarkIdentifierRegex = try! NSRegularExpression(pattern: "(\(checkedIdentifier)|\(uncheckedIdentifier))", options: [])
+func addCheckmarkAttachments(
+    attributedString: NSAttributedString,
+    viewerCanUpdate: Bool
+    ) -> NSAttributedString {
+    let string = attributedString.string
+    let matches = checkmarkIdentifierRegex.matches(in: string, options: [], range: string.nsrange)
+    let result = NSMutableAttributedString(attributedString: attributedString)
+    for match in matches.reversed() {
+        let checked = string.substring(with: match.range) == checkedIdentifier
+        let attachment = NSTextAttachment()
+        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
+        guard let image = UIImage(named: (checked ? "checked" : "unchecked") + appendDisabled) else { continue }
+        attachment.image = image
+        // nudge bounds to align better with baseline text
+        attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
+        result.replaceCharacters(in: match.range, with: NSAttributedString(attachment: attachment))
+    }
+    return result
+}
+
 func createTextModelUpdatingGitHubFeatures(
     attributedString: NSAttributedString,
     width: CGFloat,
     inset: UIEdgeInsets,
-    options: GitHubMarkdownOptions
+    options: GitHubMarkdownOptions,
+    viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing {
 
     let usernames = updateUsernames(attributedString: attributedString, options: options)
     let issues = updateIssueShorthand(attributedString: usernames, options: options)
     let shorten = shortenGitHubLinks(attributedString: issues, options: options)
+    let checkmarked = addCheckmarkAttachments(attributedString: shorten, viewerCanUpdate: viewerCanUpdate)
 
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: shorten,
+        attributedText: checkmarked,
         inset: inset
     )
 }

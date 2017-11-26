@@ -174,4 +174,18 @@ class IssueTests: XCTestCase {
         XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "line three")
     }
 
+    func test_whenCheckmarks() {
+        let body = [
+            "- [ ] foo",
+            "- [x] bar",
+        ].joined(separator: "\r\n")
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
+        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        XCTAssertEqual(models.count, 1)
+
+        let attrText = (models[0] as! NSAttributedStringSizing).attributedText
+        XCTAssertNotNil(attrText.attributes(at: 2, effectiveRange: nil)[.attachment])
+        XCTAssertNotNil(attrText.attributes(at: 10, effectiveRange: nil)[.attachment])
+    }
+
 }

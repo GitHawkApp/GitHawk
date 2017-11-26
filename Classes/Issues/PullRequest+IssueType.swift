@@ -196,7 +196,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let bodies = CreateCommentModels(
                     markdown: review.fragments.commentFields.body,
                     width: width,
-                    options: options
+                    options: options,
+                    viewerCanUpdate: viewerCanUpdate
                 )
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,
