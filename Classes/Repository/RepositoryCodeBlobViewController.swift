@@ -14,8 +14,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     private let branch: String
     private let path: String
     private let repo: RepositoryDetails
-    private let scrollView = UIScrollView()
-    private let textView = UITextView()
+    private let codeView = CodeView()
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
@@ -50,24 +49,10 @@ final class RepositoryCodeBlobViewController: UIViewController {
         emptyView.isHidden = true
         view.addSubview(emptyView)
 
-        scrollView.backgroundColor = .clear
-        scrollView.isDirectionalLockEnabled = true
-        view.addSubview(scrollView)
+        view.addSubview(codeView)
 
-        scrollView.refreshControl = feedRefresh.refreshControl
+        codeView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(RepositoryCodeBlobViewController.onRefresh), for: .valueChanged)
-
-        textView.font = Styles.Fonts.code
-        textView.isScrollEnabled = false
-        textView.isEditable = false
-        textView.contentInset = .zero
-        textView.textContainerInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing,
-            left: Styles.Sizes.columnSpacing,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.columnSpacing
-        )
-        scrollView.addSubview(textView)
 
         navigationItem.rightBarButtonItem = sharingButton
 
@@ -79,7 +64,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         super.viewWillLayoutSubviews()
         let bounds = view.bounds
         emptyView.frame = bounds
-        scrollView.frame = bounds
+        codeView.frame = bounds
     }
 
     // MARK: Private API
@@ -126,12 +111,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-
-        textView.text = text
-        let max = CGFloat.greatestFiniteMagnitude
-        let size = textView.sizeThatFits(CGSize(width: max, height: max))
-        textView.frame = CGRect(origin: .zero, size: size)
-        scrollView.contentSize = size
+        codeView.set(code: text)
     }
 
 }
