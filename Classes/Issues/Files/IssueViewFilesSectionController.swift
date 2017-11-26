@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueViewFilesSectionController: ListSectionController {
+final class IssueViewFilesSectionController: ListGenericSectionController<IssueFileChangesModel> {
 
     private let issueModel: IssueDetailsModel
     private let client: GithubClient
@@ -32,9 +32,11 @@ final class IssueViewFilesSectionController: ListSectionController {
     }
 
     override func didSelectItem(at index: Int) {
+        guard let object = self.object else { return }
+
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
-        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: 0)
+        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes)
         viewController?.show(controller, sender: nil)
     }
 

@@ -55,6 +55,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
+    var changedFileCount: Int {
+        return changedFiles
+    }
+
     // FIXME: Super high cyclo complexity
     // swiftlint:disable cyclomatic_complexity
     func timelineViewModels(

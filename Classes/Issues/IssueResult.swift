@@ -28,6 +28,7 @@ struct IssueResult: Cachable {
     let hasIssuesEnabled: Bool
     let viewerCanAdminister: Bool
     let defaultBranch: String
+    let changedFiles: Int
 
     var timelineViewModels: [ListDiffable] {
         return timelinePages.reduce([], { $0 + $1.viewModels })
@@ -74,7 +75,8 @@ struct IssueResult: Cachable {
         viewerCanUpdate: Bool? = nil,
         hasIssuesEnabled: Bool? = nil,
         viewerCanAdminister: Bool? = nil,
-        defaultBranch: String? = nil
+        defaultBranch: String? = nil,
+        changedFiles: Int? = nil
         ) -> IssueResult {
         return IssueResult(
             id: id ?? self.id,
@@ -90,7 +92,8 @@ struct IssueResult: Cachable {
             viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
             hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
             viewerCanAdminister: viewerCanAdminister ?? self.viewerCanAdminister,
-            defaultBranch: defaultBranch ?? self.defaultBranch
+            defaultBranch: defaultBranch ?? self.defaultBranch,
+            changedFiles: changedFiles ?? self.changedFiles
         )
     }
 
@@ -112,7 +115,8 @@ struct IssueResult: Cachable {
             viewerCanUpdate: self.viewerCanUpdate,
             hasIssuesEnabled: self.hasIssuesEnabled,
             viewerCanAdminister: self.viewerCanAdminister,
-            defaultBranch: self.defaultBranch
+            defaultBranch: self.defaultBranch,
+            changedFiles: self.changedFiles
         )
     }
 

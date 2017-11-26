@@ -27,7 +27,6 @@ FlatCacheListener {
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
-    private let viewFilesModel = "view_files" as ListDiffable
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var needsScrollToBottom = false
@@ -431,7 +430,7 @@ FlatCacheListener {
         }
 
         if current.pullRequest {
-            objects.append(viewFilesModel)
+            objects.append(IssueFileChangesModel(changes: current.changedFiles))
         }
 
         if let rootComment = current.rootComment {
@@ -450,9 +449,7 @@ FlatCacheListener {
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         guard let object = object as? ListDiffable else { fatalError("Must be diffable") }
 
-        if object === viewFilesModel {
-            return IssueViewFilesSectionController(issueModel: model, client: client)
-        } else if object === collaboratorKey, let id = resultID {
+        if object === collaboratorKey, let id = resultID {
             return IssueManagingSectionController(id: id, model: model, client: client)
         }
 
@@ -474,6 +471,7 @@ FlatCacheListener {
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
+        case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
         default: fatalError("Unhandled object: \(object)")
         }
     }

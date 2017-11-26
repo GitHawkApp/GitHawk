@@ -268,7 +268,7 @@
 		29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */; };
 		29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E661FCB2D4600715D7E /* CodeView.swift */; };
 		29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E681FCB36A000715D7E /* File+ListDiffable.swift */; };
-		29B94E6B1FCB374700715D7E /* IssueFilePatchSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E6A1FCB374700715D7E /* IssueFilePatchSectionController.swift */; };
+		29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */; };
 		29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0E7061ECBC6C50051D756 /* GithubClient.swift */; };
 		29C167671ECA005500439D62 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167661ECA005500439D62 /* Constants.swift */; };
 		29C167691ECA016500439D62 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C167681ECA016500439D62 /* EmptyView.swift */; };
@@ -673,7 +673,7 @@
 		29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeBlobViewController.swift; sourceTree = "<group>"; };
 		29B94E661FCB2D4600715D7E /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		29B94E681FCB36A000715D7E /* File+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+ListDiffable.swift"; sourceTree = "<group>"; };
-		29B94E6A1FCB374700715D7E /* IssueFilePatchSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilePatchSectionController.swift; sourceTree = "<group>"; };
+		29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFileChangesModel.swift; sourceTree = "<group>"; };
 		29C0E7061ECBC6C50051D756 /* GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubClient.swift; sourceTree = "<group>"; };
 		29C167661ECA005500439D62 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		29C167681ECA016500439D62 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -849,8 +849,8 @@
 				29B94E681FCB36A000715D7E /* File+ListDiffable.swift */,
 				2919294C1F3F746B0012067B /* GithubClient+PullRequestFiles.swift */,
 				291929521F3F9E490012067B /* IssueFileCell.swift */,
+				29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */,
 				291929501F3F76B10012067B /* IssueFilesViewController.swift */,
-				29B94E6A1FCB374700715D7E /* IssueFilePatchSectionController.swift */,
 				2919295E1F3FD1F40012067B /* IssuePatchContentViewController.swift */,
 				2919294A1F3EAD890012067B /* IssueViewFilesCell.swift */,
 				291929481F3EAD2E0012067B /* IssueViewFilesSectionController.swift */,
@@ -2200,6 +2200,7 @@
 				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,
 				29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */,
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
+				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
 				98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */,
 				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
@@ -2218,7 +2219,6 @@
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
 				299A04AA1FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
-				29B94E6B1FCB374700715D7E /* IssueFilePatchSectionController.swift in Sources */,
 				297403D91F18545A00ABA95A /* IssueAssigneesSectionController.swift in Sources */,
 				49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */,
 				297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */,

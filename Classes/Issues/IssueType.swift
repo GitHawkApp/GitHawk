@@ -26,6 +26,7 @@ protocol IssueType {
     var locked: Bool { get }
     var headPaging: HeadPaging { get }
     var viewerCanUpdate: Bool { get }
+    var changedFileCount: Int { get }
 
     var reviewRequestModel: IssueAssigneesModel? { get }
 
