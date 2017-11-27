@@ -24,8 +24,6 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        accessibilityTraits |= UIAccessibilityTraitButton
-        isAccessibilityElement = true
         
         backgroundColor = .white
 
@@ -100,13 +98,5 @@ final class BookmarkCell: SwipeSelectableCell {
             detailLabel.text = ""
         }
         detailLabel.sizeToFit()
-    }
-
-    // MARK: Accessibility
-    override var accessibilityLabel: String? {
-        get {
-            return AccessibilityHelper.generatedLabel(forCell: self)
-        }
-        set { }
     }
 }
