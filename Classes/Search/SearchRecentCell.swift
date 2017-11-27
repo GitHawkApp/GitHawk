@@ -16,7 +16,9 @@ final class SearchRecentCell: SwipeSelectableCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
+        
         backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
@@ -57,4 +59,11 @@ final class SearchRecentCell: SwipeSelectableCell {
         label.attributedText = viewModel.displayText
     }
 
+    // MARK: Accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
 }
