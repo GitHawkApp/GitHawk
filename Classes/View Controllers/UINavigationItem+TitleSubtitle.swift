@@ -11,6 +11,11 @@ import UIKit
 extension UINavigationItem {
 
     func configure(title: String, subtitle: String) {
+        guard !subtitle.isEmpty else {
+            self.title = title
+            return
+        }
+
         let titleAttributes: [NSAttributedStringKey: Any] = [
             .font: Styles.Fonts.bodyBold,
             .foregroundColor: Styles.Colors.Gray.dark.color
@@ -29,6 +34,7 @@ extension UINavigationItem {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.attributedText = title
+        label.lineBreakMode = .byTruncatingHead
         label.sizeToFit()
 
         titleView = label
