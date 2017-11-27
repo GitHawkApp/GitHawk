@@ -14,11 +14,16 @@ extension GithubClient {
         owner: String,
         repo: String,
         number: Int,
-        completion: @escaping (Result<[File]>) -> Void
+        page: Int,
+        completion: @escaping (Result<([File], Int?)>) -> Void
         ) {
         request(Request(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/files",
-            completion: { (response, _) in
+            parameters: [
+                "per_page": 50,
+                "page": page
+            ],
+            completion: { (response, nextPage) in
                 if let arr = response.value as? [ [String: Any] ] {
                     var files = [File]()
                     for json in arr {
@@ -26,7 +31,7 @@ extension GithubClient {
                             files.append(file)
                         }
                     }
-                    completion(.success(files))
+                    completion(.success((files, nextPage?.next)))
                 } else {
                     completion(.error(nil))
                 }

@@ -7,105 +7,117 @@
 //
 
 import UIKit
+import IGListKit
 
-final class IssueFilesViewController: UITableViewController {
+final class IssueFilesViewController: BaseListViewController<NSNumber>,
+BaseListViewControllerDataSource,
+ListSingleSectionControllerDelegate {
 
-    private var model: IssueDetailsModel!
-    private var client: GithubClient!
-    private var result: Result<[File]>?
+    private let model: IssueDetailsModel
+    private let client: GithubClient
+    private var files = [File]()
     private let feedRefresh = FeedRefresh()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        makeBackBarItemEmpty()
-
-        feedRefresh.refreshControl.addTarget(self, action: #selector(IssueFilesViewController.onRefresh), for: .valueChanged)
-        tableView.refreshControl = feedRefresh.refreshControl
-
-        feedRefresh.beginRefreshing()
-        fetch()
-    }
-
-    // MARK: Public API
-
-    func configure(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, fileCount: Int) {
         self.model = model
         self.client = client
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load changes.", comment: ""),
+            dataSource: self
+        )
+        let titleFormat = NSLocalizedString("Files (%zi)", comment: "")
+        title = String.localizedStringWithFormat(titleFormat, fileCount)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Overrides
+
+    override func fetch(page: NSNumber?) {
+        client.fetchFiles(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            page: page?.intValue ?? 1
+        ) { [weak self] (result) in
+                self?.handle(result: result, append: page != nil)
+        }
     }
 
     // MARK: Private API
 
-    @objc func onRefresh() {
-        fetch()
-    }
-
-    func fetch() {
-        client.fetchFiles(
-        owner: model.owner,
-        repo: model.repo,
-        number: model.number) { [weak self] (result) in
-            self?.handle(result: result)
-        }
-    }
-
-    func handle(result: Result<[File]>) {
-        self.result = result
-        tableView.reloadData()
-        feedRefresh.endRefreshing()
-
+    func handle(result: Result<([File], Int?)>, append: Bool) {
         switch result {
-        case .success(let files):
-            let titleFormat = NSLocalizedString("Files (%zi)", comment: "")
-            title = String.localizedStringWithFormat(titleFormat, files.count)
-        default: break
-        }
-    }
-
-    // MARK: UITableViewDataSource
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let result = self.result else { return 0 }
-        switch result {
-        case .success(let files): return files.count
-        case .error: return 1
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let result = self.result else { fatalError("No cells when no data") }
-
-        let identifier: String
-        var file: File? = nil
-        switch result {
-        case .success(let files):
-            identifier = "file"
-            file = files[indexPath.row]
+        case .success(let files, let next):
+            if append {
+                self.files += files
+            } else {
+                self.files = files
+            }
+            update(page: next as NSNumber?, animated: true)
         case .error:
-            identifier = "error"
+            error(animated: true)
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+    }
 
-        if let cell = cell as? IssueFilesTableCell, let file = file {
+    // MARK: BaseListViewControllerDataSource
+
+    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
+    }
+
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        return files
+    }
+
+    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        let configure: (Any, UICollectionViewCell) -> Void = { (file, cell) in
+            guard let file = file as? File, let cell = cell as? IssueFileCell else { return }
             cell.configure(path: file.filename, additions: file.additions.intValue, deletions: file.deletions.intValue)
         }
-
-        return cell
+        let size: (Any, ListCollectionContext?) -> CGSize = { (file, context) in
+            guard let width = context?.containerSize.width else { fatalError("Missing context") }
+            return CGSize(width: width, height: Styles.Sizes.tableCellHeightLarge)
+        }
+        let controller = ListSingleSectionController(
+            cellClass: IssueFileCell.self,
+            configureBlock: configure,
+            sizeBlock: size
+        )
+        controller.selectionDelegate = self
+        return controller
     }
 
-    // MARK: UITableViewDelegate
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        guard let result = result else { return }
-
-        switch result {
-        case .success(let files):
-            let controller = IssuePatchContentViewController(file: files[indexPath.row], client: client)
-            show(controller, sender: nil)
-        default: break
+    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+        let configure: (Any, UICollectionViewCell) -> Void = { (_, cell) in
+            guard let cell = cell as? LabelCell else { return }
+            cell.label.text = NSLocalizedString("No changes found.", comment: "")
         }
+        let size: (Any, ListCollectionContext?) -> CGSize = { [weak self] (file, context) in
+            guard let context = context,
+                let strongSelf = self
+                else { return .zero }
+            return CGSize(
+                width: context.containerSize.width,
+                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+            )
+        }
+        let controller = ListSingleSectionController(
+            cellClass: LabelCell.self,
+            configureBlock: configure,
+            sizeBlock: size
+        )
+        return controller
+    }
+
+    // MARK: ListSingleSectionControllerDelegate
+
+    func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
+        guard let object = object as? File else { return }
+        let controller = IssuePatchContentViewController(file: object, client: client)
+        show(controller, sender: nil)
     }
 
 }

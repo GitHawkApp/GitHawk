@@ -9692,6 +9692,22 @@
               "deprecationReason": null
             },
             {
+              "name": "changedFiles",
+              "description": "The number of changed files in this pull request.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "closed",
               "description": "`true` if the pull request is closed",
               "args": [],
@@ -11611,6 +11627,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "reactable",
+              "description": "The reactable piece of content",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INTERFACE",
+                  "name": "Reactable",
                   "ofType": null
                 }
               },

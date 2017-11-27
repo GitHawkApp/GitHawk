@@ -24,7 +24,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         backgroundColor = .white
 
         contentView.clipsToBounds = true
@@ -99,5 +99,4 @@ final class BookmarkCell: SwipeSelectableCell {
         }
         detailLabel.sizeToFit()
     }
-
 }

@@ -387,6 +387,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         number
         title
         merged
+        changedFiles
       }
     }
   }
