@@ -84,6 +84,16 @@ class SelectableCell: UICollectionViewCell {
 
 class SwipeSelectableCell: SwipeCollectionViewCell {
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+         super.init(coder: aDecoder)
+    }
+
     private lazy var overlay: UIView = {
         return self.contentView.addOverlay()
     }()
@@ -111,4 +121,11 @@ class SwipeSelectableCell: SwipeCollectionViewCell {
         }
     }
 
+    // MARK: Accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
 }
