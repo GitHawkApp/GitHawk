@@ -108,6 +108,7 @@ IssueReviewViewCommentsCellDelegate {
             imageDelegate: photoHandler,
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
+            htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
             issueAttributedDelegate: self,
             imageHeightDelegate: imageCache
