@@ -8,81 +8,6 @@
 
 import UIKit
 
-public protocol PageboyViewControllerDataSource: class {
-    
-    /// The number of view controllers to display.
-    ///
-    /// - Parameter pageboyViewController: The Page view controller.
-    /// - Returns: The total number of view controllers to display.
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int
-    
-    /// The view controller to display at a page index.
-    ///
-    /// - Parameters:
-    ///   - pageboyViewController: The Page view controller.
-    ///   - index: The page index.
-    /// - Returns: The view controller to display
-    func viewController(for pageboyViewController: PageboyViewController,
-                        at index: PageboyViewController.PageIndex) -> UIViewController?
-    
-    /// The default page index to display in the Pageboy view controller.
-    ///
-    /// - Parameter pageboyViewController: The Pageboy view controller
-    /// - Returns: Default page
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page?
-}
-
-
-public protocol PageboyViewControllerDelegate: class {
- 
-    /// The page view controller will begin scrolling to a new page.
-    ///
-    /// - Parameters:
-    ///   - pageboyViewController: The Page view controller.
-    ///   - index: The new page index.
-    ///   - direction: The direction of the scroll.
-    ///   - animation: Whether the scroll will be animated.
-    func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                               willScrollToPageAt index: PageboyViewController.PageIndex,
-                               direction: PageboyViewController.NavigationDirection,
-                               animated: Bool)
-    
-    /// The page view controller did scroll to an offset between pages.
-    ///
-    /// - Parameters:
-    ///   - pageboyViewController: The Page view controller.
-    ///   - position: The current relative page position.
-    ///   - direction: The direction of the scroll.
-    ///   - animated: Whether the scroll is being animated.
-    func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                               didScrollTo position: CGPoint,
-                               direction: PageboyViewController.NavigationDirection,
-                               animated: Bool)
-    
-    /// The page view controller did complete scroll to a new page.
-    ///
-    /// - Parameters:
-    ///   - pageboyViewController: The Page view controller.
-    ///   - index: The new page index.
-    ///   - direction: The direction of the scroll.
-    ///   - animation: Whether the scroll was animated.
-    func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                               didScrollToPageAt index: PageboyViewController.PageIndex,
-                               direction: PageboyViewController.NavigationDirection,
-                               animated: Bool)
-    
-    /// The page view controller did reload.
-    ///
-    /// - Parameters:
-    ///   - pageboyViewController: The Pageboy view controller.
-    ///   - currentViewController: The current view controller.
-    ///   - currentPageIndex: The current page index.
-    func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                               didReloadWith currentViewController: UIViewController,
-                               currentPageIndex: PageboyViewController.PageIndex)
-}
-
-
 /// A simple, highly informative page view controller.
 open class PageboyViewController: UIViewController {
     
@@ -118,7 +43,6 @@ open class PageboyViewController: UIViewController {
         case last
         case at(index: PageIndex)
     }
-    
     
     // MARK: Properties
     
@@ -158,7 +82,6 @@ open class PageboyViewController: UIViewController {
     
     #endif
     
-    
     /// The object that is the data source for the page view controller. (Defaults to self)
     public weak var dataSource: PageboyViewControllerDataSource? {
         didSet {
@@ -177,7 +100,13 @@ open class PageboyViewController: UIViewController {
     }
     /// default YES. if YES, bounces past edge of content and back again.
     public var bounces: Bool = true
-    
+    // Whether client content appears on both sides of each page. If 'NO', content on page front will partially show through back.
+    // If 'UIPageViewControllerSpineLocationMid' is set, 'doubleSided' is set to 'YES'. Setting 'NO' when spine location is mid results in an exception.
+    public var isDoubleSided: Bool = false {
+        didSet {
+            self.pageViewController?.isDoubleSided = isDoubleSided
+        }
+    }
     
     /// Whether the page view controller is currently being touched.
     public var isTracking: Bool {
@@ -222,7 +151,6 @@ open class PageboyViewController: UIViewController {
         }
     }
     
-    
     /// The transition to use when animating scrolls between pages.
     public var transition = Transition.defaultTransition
     /// The display link for transitioning.
@@ -230,22 +158,22 @@ open class PageboyViewController: UIViewController {
     /// The active transition operation.
     internal var activeTransition: TransitionOperation?
     
-    
     /// The number of view controllers in the page view controller.
     internal var viewControllerCount: Int?
     /// A map of view controllers and related page indexes.
     internal var viewControllerMap = IndexedMap<WeakWrapper<UIViewController>>()
-    
     
     /// The number of pages in the page view controller.
     public var pageCount: Int? {
         return viewControllerCount
     }
     
-    
+    /// The page index that is currently the target of a transition. This will align with currentIndex if no transition is active.
+    internal var targetIndex: PageIndex?
     /// The page index that the page view controller is currently at.
     public internal(set) var currentIndex: PageIndex? {
         didSet {
+            self.targetIndex = currentIndex
             guard let currentIndex = self.currentIndex else { return }
 
             #if os(iOS)
@@ -287,6 +215,8 @@ open class PageboyViewController: UIViewController {
     /// Auto Scroller for automatic time-based page transitions.
     public let autoScroller = PageboyAutoScroller()
     
+    /// Whether to show the built-in UIPageViewController page control.
+    public var showsPageControl: Bool = false
     
     // MARK: Lifecycle
 
@@ -307,7 +237,6 @@ open class PageboyViewController: UIViewController {
             self.pageViewController?.scrollView?.delegate = self
         }
     }
-    
     
     // MARK: Updating
     
@@ -409,6 +338,7 @@ open class PageboyViewController: UIViewController {
             return
         }
         
+        targetIndex = toIndex
         isUpdatingViewControllers = true
         performTransition(from: fromIndex,
                           to: toIndex,
