@@ -41,7 +41,7 @@ PODS:
   - SnapKit (4.0.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.1.0):
+  - Tabman (1.1.1):
     - Pageboy (~> 2.0)
     - PureLayout (~> 3.0)
   - TUSafariActivity (1.0.4)
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 1f8ef92a7e249d06cdb03e6ce3ee54da4780ee6b
+  Tabman: 929a09683a5b2f5abb9933abc83e000578356396
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
 PODFILE CHECKSUM: 567ac3e96c557f2edf4b665e5f12c0023c7b2b93
