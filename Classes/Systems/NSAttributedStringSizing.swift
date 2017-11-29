@@ -211,36 +211,9 @@ final class LabelLayoutManager: NSLayoutManager {
             super.fillBackgroundRectArray(rectArray, count: rectCount, forCharacterRange: charRange, color: color)
             return
         }
-        
-        // Define label rectangle and rounded path
-        let cornerRadius: CGFloat = 2
-        let rect = rectArray[0].insetBy(dx: -2, dy: 1)
-        let path = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
-        
-        // Define the CoreGraphics context
-        let context = UIGraphicsGetCurrentContext()
-        context?.setAllowsAntialiasing(true)
-        context?.setShouldAntialias(true)
-        context?.setLineWidth(cornerRadius * 2)
-        context?.setLineJoin(.round)
-        
-        // Draw the label background
-        context?.addPath(path.cgPath)
-        context?.drawPath(using: .fillStroke)
-        
-        // Add a small border around the label
-        let borderWidth = 1 / UIScreen.main.scale
-        let strokeRect = rect.insetBy(dx: -2, dy: -borderWidth)
-        let strokePath = UIBezierPath(roundedRect: strokeRect, cornerRadius: cornerRadius)
-        
-        Styles.Colors.Gray.border.color.set()
-        context?.setLineWidth(borderWidth)
-        context?.addPath(strokePath.cgPath)
-        context?.drawPath(using: .stroke)
-        
-        // Reset color as per Apple docs
-        color.set()
-        
+
+        let rect = rectArray[0].insetBy(dx: -2, dy: 0)
+        UIBezierPath(roundedRect: rect, cornerRadius: Styles.Sizes.avatarCornerRadius).fill()
     }
     
 }

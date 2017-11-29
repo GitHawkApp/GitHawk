@@ -20,8 +20,7 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
-        let insets = IssueLabeledCell.insets
-        return CGSize(width: width, height: insets.top + insets.bottom + (object?.attributedString.textViewSize(width).height ?? 0))
+        return CGSize(width: width, height: object?.attributedString.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

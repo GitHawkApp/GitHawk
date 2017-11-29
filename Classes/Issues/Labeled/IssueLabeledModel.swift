@@ -42,58 +42,49 @@ final class IssueLabeledModel: ListDiffable {
         self.date = date
         self.type = type
         
-        // Actor
-        
-        let actorAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
-            MarkdownAttribute.username: actor
-        ]
-        
-        let attributedString = NSMutableAttributedString(string: actor, attributes: actorAttributes)
-        
-        // Action
-        
-        let actionAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondary
-        ]
-        
+        let attributedString = NSMutableAttributedString(
+            string: actor,
+            attributes: [
+                .foregroundColor: Styles.Colors.Gray.dark.color,
+                .font: Styles.Fonts.secondaryBold,
+                MarkdownAttribute.username: actor
+            ]
+        )
+
         let actionString: String
-        
         switch type {
         case .added: actionString = NSLocalizedString(" added  ", comment: "")
         case .removed: actionString = NSLocalizedString(" removed  ", comment: "")
         }
-        
-        attributedString.append(NSAttributedString(string: actionString, attributes: actionAttributes))
-        
-        // Label
-        
+        attributedString.append(NSAttributedString(
+            string: actionString,
+            attributes: [
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                .font: Styles.Fonts.secondary
+            ]
+        ))
+
         let labelColor = color.color
-        let labelDetails = LabelDetails(owner: repoOwner, repo: repoName, label: title)
-        
-        let labelAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
-            NSAttributedStringKey.backgroundColor: labelColor,
-            NSAttributedStringKey.foregroundColor: labelColor.textOverlayColor ?? .black,
-            MarkdownAttribute.label: labelDetails
-        ]
-        
-        attributedString.append(NSAttributedString(string: title, attributes: labelAttributes))
-        
-        // Date
-        
-        let dateAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: Styles.Fonts.secondary,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
-            MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
-        ]
-        
-        attributedString.append(NSAttributedString(string: "  \(date.agoString)", attributes: dateAttributes))
-        
-        // Set
-        
+        attributedString.append(NSAttributedString(
+            string: title,
+            attributes: [
+                .font: Styles.Fonts.secondaryBold,
+                .backgroundColor: labelColor,
+                .foregroundColor: labelColor.textOverlayColor ?? .black,
+                .baselineOffset: 1, // offset for better rounded background colors
+                MarkdownAttribute.label: LabelDetails(owner: repoOwner, repo: repoName, label: title)
+            ]
+        ))
+
+        attributedString.append(NSAttributedString(
+            string: "  \(date.agoString)",
+            attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
+            ]
+        ))
+
         self.attributedString = NSAttributedStringSizing(
             containerWidth: width,
             attributedText: attributedString,
