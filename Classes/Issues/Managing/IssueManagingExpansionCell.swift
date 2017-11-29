@@ -17,7 +17,9 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
+        
         let tint = Styles.Colors.Blue.medium.color
 
         chevron.tintColor = tint
@@ -91,4 +93,11 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         rotateChevron(expanded: viewModel.expanded)
     }
 
+    // MARK: Accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
 }
