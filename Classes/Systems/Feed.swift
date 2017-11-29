@@ -73,9 +73,13 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
     func viewDidAppear(_ animated: Bool) {
-        if status == .loading {
-            feedRefresh.beginRefreshing()
-        }
+        // put in a small delay to let container finish laying out
+        // prevents a bug from double-insetting the refresh control
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if self.status == .loading {
+                self.feedRefresh.beginRefreshing()
+            }
+        })
     }
 
     func viewWillLayoutSubviews(view: UIView) {
