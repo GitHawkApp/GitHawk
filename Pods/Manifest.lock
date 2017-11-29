@@ -31,7 +31,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.0.0)
+  - Pageboy (2.1.0)
   - PureLayout (3.0.2)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
@@ -41,9 +41,9 @@ PODS:
   - SnapKit (4.0.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.0.1):
-    - Pageboy (~> 2.0.0)
-    - PureLayout (~> 3.0.0)
+  - Tabman (1.1.1):
+    - Pageboy (~> 2.0)
+    - PureLayout (~> 3.0)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
@@ -65,7 +65,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
-  - Tabman (~> 1.0)
+  - Tabman (~> 1.1)
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
@@ -101,16 +101,16 @@ SPEC CHECKSUMS:
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
+  Pageboy: f137e98cdb92c1913401d9d3c8888951ff81a630
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 627b2bddc6c054bcd86c60919000c30c4adf2ec4
+  Tabman: 929a09683a5b2f5abb9933abc83e000578356396
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: a7111b843263b810841c8bc0d74821b355cf5e63
+PODFILE CHECKSUM: 567ac3e96c557f2edf4b665e5f12c0023c7b2b93
 
 COCOAPODS: 1.4.0.beta.1

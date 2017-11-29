@@ -16,7 +16,7 @@ pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'Tabman', '~> 1.0'
+pod 'Tabman', '~> 1.1'
 pod 'Highlightr', '~> 1.1'
 
 # prerelease pods

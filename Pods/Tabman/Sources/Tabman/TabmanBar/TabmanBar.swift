@@ -10,25 +10,20 @@ import UIKit
 import PureLayout
 import Pageboy
 
+public protocol TabmanBarDelegate: class {
+    
+    /// Whether a bar should select an item at an index.
+    ///
+    /// - Parameters:
+    ///   - index: The proposed selection index.
+    /// - Returns: Whether the index should be selected.
+    func bar(shouldSelectItemAt index: Int) -> Bool
+}
+
 /// A bar that displays the current page status of a TabmanViewController.
 open class TabmanBar: UIView, TabmanBarLifecycle {
     
     // MARK: Types
-    
-    /// The style of the bar.
-    ///
-    /// - bar: A simple horizontal bar only.
-    /// - buttonBar: A horizontal bar with evenly distributed buttons for each page index.
-    /// - scrollingButtonBar: A scrolling horizontal bar with buttons for each page index.
-    /// - blockTabBar: A tab bar with sliding block style indicator behind tabs.
-    /// - custom: A custom defined TabmanBar type.
-    public enum Style {
-        case bar
-        case buttonBar
-        case scrollingButtonBar
-        case blockTabBar
-        case custom(type: TabmanBar.Type)
-    }
     
     /// The height for the bar.
     ///
@@ -48,11 +43,10 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         }
     }
     
-    /// The current position of the bar.
     internal private(set) var currentPosition: CGFloat = 0.0
-    /// Store of available transitions for bar item/indicator transitions.
     internal weak var transitionStore: TabmanBarTransitionStore?
-    
+    internal lazy var behaviorEngine = BarBehaviorEngine(for: self)
+
     /// The object that acts as a responder to the bar.
     internal weak var responder: TabmanBarResponder?
     /// The object that acts as a data source to the bar.
@@ -101,7 +95,8 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     /// The content view for the bar.
     public private(set) var contentView = UIView(forAutoLayout: ())
     /// The bottom separator view for the bar.
-    internal private(set) var bottomSeparator = Separator()
+    internal private(set) var bottomSeparator = SeparatorView()
+    
     /// Indicator for the bar.
     public internal(set) var indicator: TabmanIndicator? {
         didSet {
@@ -115,13 +110,13 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         maskView.backgroundColor = .black
         return maskView
     }()
-    
     internal var indicatorLeftMargin: NSLayoutConstraint?
     internal var indicatorWidth: NSLayoutConstraint?
-    
     internal var indicatorIsProgressive: Bool = TabmanBar.Appearance.defaultAppearance.indicator.isProgressive ?? false {
         didSet {
-            guard indicatorIsProgressive != oldValue else { return }
+            guard indicatorIsProgressive != oldValue else {
+                return
+            }
             
             UIView.animate(withDuration: 0.3, animations: {
                 self.updateForCurrentPosition()
@@ -130,7 +125,6 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     }
     internal var indicatorBounces: Bool = TabmanBar.Appearance.defaultAppearance.indicator.bounces ?? false
     internal var indicatorCompresses: Bool = TabmanBar.Appearance.defaultAppearance.indicator.compresses ?? false
-    
     /// Preferred style for the indicator. 
     /// Bar conforms at own discretion via usePreferredIndicatorStyle()
     public var preferredIndicatorStyle: TabmanIndicator.Style? {
@@ -141,9 +135,7 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     
     /// The limit that the bar has for the number of items it can display.
     public var itemCountLimit: Int? {
-        get {
-            return nil
-        }
+        return nil
     }
     
     // MARK: Init
@@ -162,8 +154,7 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         self.addSubview(backgroundView)
         backgroundView.autoPinEdgesToSuperviewEdges()
         
-        self.addSubview(bottomSeparator)
-        bottomSeparator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        bottomSeparator.addAsSubview(to: self)
         
         self.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
@@ -224,7 +215,9 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     internal func updatePosition(_ position: CGFloat,
                                  direction: PageboyViewController.NavigationDirection,
                                  bounds: CGRect? = nil) {
-        guard let items = self.items else { return }
+        guard let items = self.items else {
+            return
+        }
         let bounds = bounds ?? self.bounds
         
         self.layoutIfNeeded()
@@ -256,7 +249,9 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
                      direction: PageboyViewController.NavigationDirection,
                      indexRange: Range<Int>,
                      bounds: CGRect) {
-        guard self.indicator != nil else { return }
+        guard self.indicator != nil else {
+            return
+        }
         
         let indicatorTransition = self.transitionStore?.indicatorTransition(forBar: self)
         indicatorTransition?.transition(withPosition: position,
@@ -282,7 +277,7 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         let backgroundStyle = appearance.style.background ?? defaultAppearance.style.background!
         self.backgroundView.style = backgroundStyle
         
-        let height : Height
+        let height: Height
         let hideWhenSingleItem = appearance.state.shouldHideWhenSingleItem ?? defaultAppearance.state.shouldHideWhenSingleItem!
         if hideWhenSingleItem && items?.count ?? 0 <= 1 {
             height = .explicit(value: 0)
@@ -293,6 +288,8 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         
         let bottomSeparatorColor = appearance.style.bottomSeparatorColor ?? defaultAppearance.style.bottomSeparatorColor!
         self.bottomSeparator.color = bottomSeparatorColor
+        let bottomSeparatorEdgeInsets = appearance.layout.bottomSeparatorEdgeInsets ?? defaultAppearance.layout.bottomSeparatorEdgeInsets!
+        self.bottomSeparator.edgeInsets = bottomSeparatorEdgeInsets
         
         self.update(forAppearance: appearance,
                     defaultAppearance: defaultAppearance)
