@@ -17,6 +17,10 @@ protocol IssueCommentHtmlCellNavigationDelegate: class {
     func webViewWantsNavigate(cell: IssueCommentHtmlCell, url: URL)
 }
 
+protocol IssueCommentHtmlCellImageDelegate: class {
+    func webViewDidTapImage(cell: IssueCommentHtmlCell, url: URL)
+}
+
 private final class IssueCommentHtmlCellWebView: UIWebView {
 
     override var safeAreaInsets: UIEdgeInsets {
@@ -29,6 +33,7 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
 
     private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
 
+    private static let ImgScheme = "freetime-img"
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
     body{
@@ -67,6 +72,13 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     <script>
         document.documentElement.style.webkitUserSelect='none';
         document.documentElement.style.webkitTouchCallout='none';
+        var tapAction = function(e) {
+            document.location = "\(ImgScheme)://" + encodeURIComponent(e.target.src);
+        };
+        var imgs = document.getElementsByTagName('img')
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].addEventListener('click', tapAction);
+        }
     </script>
     </body>
     </html>
@@ -74,6 +86,7 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
 
     weak var delegate: IssueCommentHtmlCellDelegate?
     weak var navigationDelegate: IssueCommentHtmlCellNavigationDelegate?
+    weak var imageDelegate: IssueCommentHtmlCellImageDelegate?
 
     @objc private let webView = IssueCommentHtmlCellWebView()
     private var body = ""
@@ -131,6 +144,13 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         guard let url = request.url else { return true }
+
+        if url.scheme == IssueCommentHtmlCell.ImgScheme,
+            let host = url.host,
+            let imageURL = URL(string: host) {
+            imageDelegate?.webViewDidTapImage(cell: self, url: imageURL)
+            return false
+        }
 
         if let baseURL = webViewBaseURL, url == baseURL {
             return true
