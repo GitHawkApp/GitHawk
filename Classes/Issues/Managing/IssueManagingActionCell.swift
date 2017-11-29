@@ -17,6 +17,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        accessibilityTraits |= UIAccessibilityTraitButton
+        isAccessibilityElement = true
 
         let tint = Styles.Colors.Blue.medium.color
 
@@ -70,4 +72,11 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
     }
 
+    // MARK: Accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
 }
