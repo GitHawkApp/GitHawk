@@ -162,6 +162,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
             } else if let referenced = node.asCrossReferencedEvent,
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let id = referenced.fragments.nodeFields.id
+                let actor = referenced.actor?.login ?? Constants.Strings.unknown
                 if let issueReference = referenced.source.asIssue,
                     // do not ref the current issue
                     issueReference.number != number {
@@ -173,7 +174,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         pullRequest: false,
                         state: issueReference.closed ? .closed : .open,
                         date: date,
-                        title: issueReference.title
+                        title: issueReference.title,
+                        actor: actor,
+                        width: width
                     )
                     results.append(model)
                 } else if let prReference = referenced.source.asPullRequest {
@@ -185,7 +188,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         pullRequest: false,
                         state: prReference.merged ? .merged : prReference.closed ? .closed : .open,
                         date: date,
-                        title: prReference.title
+                        title: prReference.title,
+                        actor: actor,
+                        width: width
                     )
                     results.append(model)
                 }
@@ -193,6 +198,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 let date = GithubAPIDateFormatter().date(from: referenced.createdAt) {
                 let repo = referenced.commitRepository.fragments.referencedRepositoryFields
                 let id = referenced.fragments.nodeFields.id
+                let actor = referenced.actor?.login ?? Constants.Strings.unknown
                 if let commitRef = referenced.refCommit {
                     let model = IssueReferencedCommitModel(
                         id: id,
@@ -215,7 +221,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         pullRequest: false,
                         state: issueReference.closed ? .closed : .open,
                         date: date,
-                        title: issueReference.title
+                        title: issueReference.title,
+                        actor: actor,
+                        width: width
                     )
                     results.append(model)
                 } else if let prReference = referenced.subject.asPullRequest {
@@ -227,7 +235,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         pullRequest: false,
                         state: prReference.merged ? .merged : prReference.closed ? .closed : .open,
                         date: date,
-                        title: prReference.title
+                        title: prReference.title,
+                        actor: actor,
+                        width: width
                     )
                     results.append(model)
                 }
