@@ -157,6 +157,7 @@ final class RepositoryClient {
         completion: @escaping (Result<String>) -> Void
         ) {
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "repos/\(owner)/\(name)/readme",
             completion: { (response, _) in
                 if let json = response.value as? [String: Any],

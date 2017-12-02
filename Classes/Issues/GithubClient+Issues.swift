@@ -209,6 +209,7 @@ extension GithubClient {
 
         // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
             parameters: [ "state": stateString ],
@@ -222,7 +223,7 @@ extension GithubClient {
     }
 
     func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> Void) {
-        request(Request(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
+        request(Request(client: userSession?.client, path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
             // As per documentation this endpoint returns no content, so all we can validate is that
             // the status code is "204 No Content".
             if response.response?.statusCode == 204 {
@@ -265,6 +266,7 @@ extension GithubClient {
         cache.set(value: optimisticResult)
 
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
             method: locked ? .put : .delete,
             completion: { (response, _) in
@@ -312,6 +314,7 @@ extension GithubClient {
 
         // https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/collaborators/\(viewer)/permission",
             headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
             completion: { (response, _) in
@@ -381,6 +384,7 @@ extension GithubClient {
         cache.set(value: optimistic)
 
         request(GithubClient.Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
             parameters: ["labels": labels.map { $0.name }]
@@ -459,6 +463,7 @@ extension GithubClient {
         // https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
         if added.count > 0 {
             request(GithubClient.Request(
+                client: userSession?.client,
                 path: path,
                 method: .post,
                 parameters: ["assignees": added]
@@ -470,6 +475,7 @@ extension GithubClient {
         // https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
         if removed.count > 0 {
             request(GithubClient.Request(
+                client: userSession?.client,
                 path: path,
                 method: .delete,
                 parameters: ["assignees": removed]

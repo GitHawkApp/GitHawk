@@ -17,6 +17,7 @@ extension GithubClient {
         ) {
         // https://developer.github.com/v3/issues/assignees/#list-assignees
         request(GithubClient.Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/assignees"
         ) { (response, _) in
             if let jsonArr = response.value as? [[String: Any]] {

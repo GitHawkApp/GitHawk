@@ -79,8 +79,19 @@ extension Client {
         // https://status.github.com/api
         case .github: return "https://status.\(baseUrl)/api/status.json"
         
-        // Enterprise doesn't support this
+        // TODO: Remove "API Status" as an option in Settings
+        // Unsupported
         case .githubEnterprise: return nil
+        }
+    }
+    
+    func apiUrl(path: String) -> String {
+        switch type {
+        // https://developer.github.com/v3/#root-endpoint
+        case .github: return "https://api.\(baseUrl)/\(path)"
+        
+        // https://developer.github.com/v3/enterprise/#endpoint-urls
+        case .githubEnterprise: return "https://\(baseUrl)/api/v3/\(path)"
         }
     }
     

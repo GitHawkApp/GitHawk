@@ -56,6 +56,7 @@ final class NotificationClient {
         let cache = githubClient.cache
 
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "notifications",
             method: .get,
             parameters: parameters,
@@ -74,6 +75,7 @@ final class NotificationClient {
     typealias MarkAllCompletion = (Bool) -> Void
     func markAllNotifications(completion: MarkAllCompletion? = nil) {
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "notifications",
             method: .put) { (response, _) in
                 guard let completion = completion else { return }
@@ -110,6 +112,7 @@ final class NotificationClient {
         }
 
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "notifications/threads/\(id)",
             method: .patch) { [weak self] (response, _) in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read

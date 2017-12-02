@@ -27,7 +27,8 @@ extension GithubClient {
             completion(model)
         }
 
-        request(Request(path: "repos/\(owner)/\(repo)/issues",
+        request(Request(client: userSession?.client,
+                        path: "repos/\(owner)/\(repo)/issues",
                         method: .post,
                         parameters: params,
                         headers: nil,

@@ -29,6 +29,7 @@ struct GithubClient {
         let completion: (DataResponse<Any>, Page?) -> Void
 
         init(
+            client: Client?,
             path: String,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
@@ -36,9 +37,13 @@ struct GithubClient {
             logoutOnAuthFailure: Bool = true,
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) {
-            // TODO: REVISE
+            
+            guard let url = client?.apiUrl(path: path) else {
+                fatalError("Attempted to make request without a client!")
+            }
+            
             self.init(
-                url: "https://api.github.com/" + path,
+                url: url,
                 method: method,
                 parameters: parameters,
                 headers: headers,

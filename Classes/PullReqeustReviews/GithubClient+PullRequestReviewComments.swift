@@ -28,6 +28,7 @@ extension GithubClient {
         ) {
         let viewerUsername = userSession?.username
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
             completion: { (response, nextPage) in
 
