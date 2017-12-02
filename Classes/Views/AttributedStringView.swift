@@ -26,6 +26,8 @@ final class AttributedStringView: UIView {
     weak var issueDelegate: AttributedStringViewIssueDelegate?
 
     private var text: NSAttributedStringSizing?
+    private var tapGesture: UITapGestureRecognizer?
+    private var longPressGesture: UILongPressGestureRecognizer?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,12 +38,13 @@ final class AttributedStringView: UIView {
 
         layer.contentsGravity = kCAGravityTopLeft
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(AttributedStringView.onTap(recognizer:)))
-        tap.cancelsTouchesInView = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(onTap(recognizer:)))
         addGestureRecognizer(tap)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(AttributedStringView.onLong(recognizer:)))
-        long.cancelsTouchesInView = false
+        self.tapGesture = tap
+
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(onLong(recognizer:)))
         addGestureRecognizer(long)
+        self.longPressGesture = long
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,6 +53,21 @@ final class AttributedStringView: UIView {
 
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+
+    // MARK: UIGestureRecognizerDelegate
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard (gestureRecognizer === tapGesture || gestureRecognizer === longPressGesture),
+            let attributes = text?.attributes(point: gestureRecognizer.location(in: self)) else {
+                return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+        for attribute in attributes {
+            if MarkdownAttribute.all.contains(attribute.key) {
+                return true
+            }
+        }
+        return false
     }
 
     // MARK: Accessibility
