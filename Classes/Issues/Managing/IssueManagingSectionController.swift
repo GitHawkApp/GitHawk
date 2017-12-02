@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueManagingSectionController: ListBindingSectionController<NSString>,
+final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate,
 LabelsViewControllerDelegate,
@@ -29,16 +29,18 @@ PeopleViewControllerDelegate {
             label: NSLocalizedString("Assignees", comment: ""),
             imageName: "person"
         )
+        static let reviewers = IssueManagingActionModel(
+            label: NSLocalizedString("Reviewers", comment: ""),
+            imageName: "reviewer"
+        )
     }
 
-    private let id: String
     private let model: IssueDetailsModel
     private let client: GithubClient
     private var expanded = false
     private var updating = false
 
-    init(id: String, model: IssueDetailsModel, client: GithubClient) {
-        self.id = id
+    init(model: IssueDetailsModel, client: GithubClient) {
         self.model = model
         self.client = client
         super.init()
@@ -50,6 +52,7 @@ PeopleViewControllerDelegate {
     // MARK: Private API
 
     var issueResult: IssueResult? {
+        guard let id = object?.objectId else { return nil }
         return client.cache.get(id: id)
     }
 
@@ -107,12 +110,22 @@ PeopleViewControllerDelegate {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
         ) -> [ListDiffable] {
-        return [IssueManagingModel(expanded: expanded)]
-            + (expanded ? [
-                    Action.labels,
-                    Action.milestone,
-                    Action.assignees,
-                    ] : [])
+        guard let object = object as? IssueManagingModel else {
+            fatalError("Object not correct type")
+        }
+
+        var models: [ListDiffable] = [IssueManagingExpansionModel(expanded: expanded)]
+        if expanded {
+            models += [
+                Action.labels,
+                Action.milestone,
+                Action.assignees,
+            ]
+            if object.pullRequest {
+                models.append(Action.reviewers)
+            }
+        }
+        return models
     }
 
     func sectionController(
@@ -123,7 +136,7 @@ PeopleViewControllerDelegate {
         guard let containerWidth = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
         switch viewModel {
-        case is IssueManagingModel:
+        case is IssueManagingExpansionModel:
             let width = floor(containerWidth / 2)
             return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
         default:
@@ -141,7 +154,7 @@ PeopleViewControllerDelegate {
         ) -> UICollectionViewCell & ListBindable {
         let cellClass: AnyClass
         switch viewModel {
-        case is IssueManagingModel: cellClass = IssueManagingExpansionCell.self
+        case is IssueManagingExpansionModel: cellClass = IssueManagingExpansionCell.self
         default: cellClass = IssueManagingActionCell.self
         }
         guard let cell = collectionContext?.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
