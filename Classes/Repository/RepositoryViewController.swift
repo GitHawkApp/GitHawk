@@ -81,6 +81,7 @@ NewIssueTableViewControllerDelegate {
     // MARK: Private API
 
     var repoUrl: URL {
+        // TODO: REVISE
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
     }
 

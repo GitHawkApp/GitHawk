@@ -11,7 +11,7 @@ import Foundation
 enum Constants {
 
     enum URLs {
-        static let repository = "https://github.com/rnystrom/GitHawk/"
+        static let repository = "https://github.com/rnystrom/GitHawk/" // TODO: REVISE
         static let website = "http://www.githawk.com/"
         static let blog = "http://blog.githawk.com/"
     }

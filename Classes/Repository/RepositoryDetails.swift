@@ -15,6 +15,7 @@ struct RepositoryDetails: Codable {
     let hasIssuesEnabled: Bool
 
     var ownerURL: URL {
+        // TODO: REVISE
         return URL(string: "https://github.com/\(owner)")!
     }
 

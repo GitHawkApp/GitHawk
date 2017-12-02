@@ -234,6 +234,7 @@ FlatCacheListener {
     // MARK: Private API
 
     var externalURL: URL {
+        // TODO: REVISE
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
 

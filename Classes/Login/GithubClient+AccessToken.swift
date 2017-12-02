@@ -27,6 +27,7 @@ extension GithubClient {
         let headers = [
             "Accept": "application/json"
         ]
+        // TODO: REVISE
         request(Request(
             url: "https://github.com/login/oauth/access_token",
             method: .post,
@@ -58,6 +59,7 @@ extension GithubClient {
             "Accept": "application/json",
             "Authorization": "token \(token)"
         ]
+        // TODO: REVISE
         request(Request(
             url: "https://api.github.com/user",
             method: .get,

@@ -189,6 +189,7 @@ func createModel(
 
         let baseURL: URL?
         if options.flavors.contains(.baseURL) {
+            // TODO: REVISE
             baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/master/")
         } else {
             baseURL = nil
@@ -384,6 +385,7 @@ func updateIssueShorthand(
     return mutableAttributedString
 }
 
+// TODO: REVISE
 private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 func shortenGitHubLinks(attributedString: NSAttributedString,
                         options: GitHubMarkdownOptions) -> NSAttributedString {

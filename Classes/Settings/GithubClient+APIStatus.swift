@@ -15,6 +15,7 @@ extension GithubClient {
     }
 
     func fetchAPIStatus(completion: @escaping (Result<APIStatus>) -> Void) {
+        // TODO: REVISE
         request(Request(
             url: "https://status.github.com/api/status.json",
             method: .get,

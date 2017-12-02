@@ -10,6 +10,7 @@ import UIKit
 import SafariServices
 
 func CreateProfileViewController(login: String) -> UIViewController {
+    // TODO: REVISE (Also shouldn't assume URL, https://github.com/rnystrom/GitHawk/issues/159)
     let url = URL(string: "https://github.com/\(login)")!
 	return try! SFSafariViewController.configured(with: url)
 }

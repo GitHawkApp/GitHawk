@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 
+// TODO: REVISE
 private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
 private let callbackURLScheme = "freetime://"
 
