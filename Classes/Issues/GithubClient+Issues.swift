@@ -415,20 +415,22 @@ extension GithubClient {
         let param: String
         let addedType: IssueRequestModel.Event
         let removedType: IssueRequestModel.Event
+        let oldAssigness: Set<String>
         switch type {
         case .assignee:
             path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
             param = "assignees"
             addedType = .assigned
             removedType = .unassigned
+            oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
         case .reviewer:
             path = "repos/\(owner)/\(repo)/pulls/\(number)/requested_reviewers"
             param = "reviewers"
             addedType = .reviewRequested
             removedType = .reviewRequestRemoved
+            oldAssigness = Set<String>(previous.reviewers?.users.map { $0.login } ?? [])
         }
 
-        let oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
         let newAssignees = Set<String>(people.map { $0.login })
 
         var newEvents = [IssueRequestModel]()

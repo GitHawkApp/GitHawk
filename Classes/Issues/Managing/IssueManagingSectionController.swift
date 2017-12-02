@@ -82,12 +82,19 @@ PeopleViewControllerDelegate {
         return controller
     }
 
-    func newAssigneesController() -> UIViewController {
+    func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
         guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateInitialViewController() as? PeopleViewController
             else { fatalError("Missing people view controller") }
+
+        let selections: [String]
+        switch type {
+        case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
+        case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
+        }
+
         controller.configure(
-            selections: issueResult?.assignee.users.map { $0.login } ?? [],
-            type: .assignee,
+            selections: selections,
+            type: type,
             client: client,
             delegate: self,
             owner: model.owner,
@@ -191,7 +198,10 @@ PeopleViewControllerDelegate {
             let controller = newMilestonesController()
             present(controller: controller, from: cell)
         } else if viewModel === Action.assignees {
-            let controller = newAssigneesController()
+            let controller = newPeopleController(type: .assignee)
+            present(controller: controller, from: cell)
+        } else if viewModel === Action.reviewers {
+            let controller = newPeopleController(type: .reviewer)
             present(controller: controller, from: cell)
         }
     }
