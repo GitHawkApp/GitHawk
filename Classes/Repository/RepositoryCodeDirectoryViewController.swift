@@ -65,7 +65,8 @@ ListSingleSectionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.configure(title: file, subtitle: path)
+        navigationItem.configure(title: file, subtitle: path)
+        makeBackBarItemEmpty()
     }
 
     // MARK: Private API

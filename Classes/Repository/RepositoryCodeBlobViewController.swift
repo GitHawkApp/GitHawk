@@ -44,11 +44,12 @@ final class RepositoryCodeBlobViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        makeBackBarItemEmpty()
+
         view.backgroundColor = .white
 
         emptyView.isHidden = true
         view.addSubview(emptyView)
-
         view.addSubview(codeView)
 
         codeView.refreshControl = feedRefresh.refreshControl
