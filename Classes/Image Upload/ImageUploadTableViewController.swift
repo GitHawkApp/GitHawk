@@ -141,7 +141,7 @@ class ImageUploadTableViewController: UITableViewController {
             }
         ])
 
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 
     @IBAction func didPressUpload() {
@@ -189,14 +189,12 @@ class ImageUploadTableViewController: UITableViewController {
 
                 switch result {
                 case .error:
-                    print("error")
                     ToastManager.showGenericError()
                     self?.setRightBarItemIdle()
 
                 case .success(let link):
-                    print("success")
                     self?.delegate?.imageUploaded(link: link, altText: name)
-                    self?.dismiss(animated: true, completion: nil)
+                    self?.dismiss(animated: true)
                 }
 
             }
@@ -205,7 +203,7 @@ class ImageUploadTableViewController: UITableViewController {
     
     @IBAction func didPressPreviewImage() {
         let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
-        present(previewViewController, animated: true, completion: nil)
+        present(previewViewController, animated: true)
     }
 }
 
