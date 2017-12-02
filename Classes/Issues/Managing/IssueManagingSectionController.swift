@@ -224,19 +224,31 @@ PeopleViewControllerDelegate {
 
     // MARK: PeopleViewControllerDelegate
 
-    func didDismiss(controller: PeopleViewController, selections: [User]) {
+    func didDismiss(
+        controller: PeopleViewController,
+        type: PeopleViewController.PeopleType,
+        selections: [User]
+        ) {
         guard let previous = issueResult else { return }
         var assignees = [IssueAssigneeViewModel]()
         for user in selections {
             guard let url = URL(string: user.avatar_url) else { continue }
             assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: url))
         }
-        client.addAssignees(
+
+        let mutationType: GithubClient.AddPeopleType
+        switch type {
+        case .assignee: mutationType = .assignee
+        case .reviewer: mutationType = .reviewer
+        }
+
+        client.addPeople(
+            type: mutationType,
             previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            assignees: assignees
+            people: assignees
         )
     }
 

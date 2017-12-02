@@ -396,17 +396,40 @@ extension GithubClient {
         })
     }
 
-    func addAssignees(
+    enum AddPeopleType {
+        case assignee
+        case reviewer
+    }
+
+    func addPeople(
+        type: AddPeopleType,
         previous: IssueResult,
         owner: String,
         repo: String,
         number: Int,
-        assignees: [IssueAssigneeViewModel]
+        people: [IssueAssigneeViewModel]
         ) {
         guard let actor = userSession?.username else { return }
 
+        let path: String
+        let param: String
+        let addedType: IssueRequestModel.Event
+        let removedType: IssueRequestModel.Event
+        switch type {
+        case .assignee:
+            path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
+            param = "assignees"
+            addedType = .assigned
+            removedType = .unassigned
+        case .reviewer:
+            path = "repos/\(owner)/\(repo)/pulls/\(number)/requested_reviewers"
+            param = "reviewers"
+            addedType = .reviewRequested
+            removedType = .reviewRequestRemoved
+        }
+
         let oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
-        let newAssignees = Set<String>(assignees.map { $0.login })
+        let newAssignees = Set<String>(people.map { $0.login })
 
         var newEvents = [IssueRequestModel]()
         var added = [String]()
@@ -420,9 +443,9 @@ extension GithubClient {
                     actor: actor,
                     user: old,
                     date: Date(),
-                    event: .unassigned,
+                    event: removedType,
                     width: 0 // will be inflated when asked
-                    ))
+                ))
             }
         }
         for new in newAssignees {
@@ -433,21 +456,29 @@ extension GithubClient {
                     actor: actor,
                     user: new,
                     date: Date(),
-                    event: .assigned,
+                    event: addedType,
                     width: 0 // will be inflated when asked
                 ))
             }
         }
 
-        let optimistic = previous.updated(
-            assignee: IssueAssigneesModel(users: assignees, type: .assigned),
-            timelinePages: previous.timelinePages(appending: newEvents)
-        )
+        let timelinePages = previous.timelinePages(appending: newEvents)
+        let optimistic: IssueResult
+        switch type {
+        case .assignee:
+            optimistic = previous.updated(
+                assignee: IssueAssigneesModel(users: people, type: .assigned),
+                timelinePages: timelinePages
+            )
+        case .reviewer:
+            optimistic = previous.withReviewers(
+                IssueAssigneesModel(users: people, type: .reviewRequested),
+                timelinePages: timelinePages
+            )
+        }
 
         let cache = self.cache
         cache.set(value: optimistic)
-
-        let path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
 
         let handler: (Int, Int?) -> Void = { (expect, status) in
             if status != expect {
@@ -457,22 +488,24 @@ extension GithubClient {
         }
 
         // https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+        // https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
         if added.count > 0 {
             request(GithubClient.Request(
                 path: path,
                 method: .post,
-                parameters: ["assignees": added]
+                parameters: [param: added]
             ) { (response, _) in
                 handler(201, response.response?.statusCode)
             })
         }
 
         // https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+        // https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
         if removed.count > 0 {
             request(GithubClient.Request(
                 path: path,
                 method: .delete,
-                parameters: ["assignees": removed]
+                parameters: [param: removed]
             ) { (response, _) in
                 handler(200, response.response?.statusCode)
             })
