@@ -19,7 +19,8 @@ func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizin
     return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: attributedString,
-        inset: IssueTitleCell.inset
+        inset: IssueTitleCell.inset,
+        backgroundColor: Styles.Colors.background
     )
 }
 
