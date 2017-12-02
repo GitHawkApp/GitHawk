@@ -89,7 +89,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueManagingModel else { return }
+        guard let viewModel = viewModel as? IssueManagingExpansionModel else { return }
         rotateChevron(expanded: viewModel.expanded)
     }
 

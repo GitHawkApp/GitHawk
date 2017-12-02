@@ -2,7 +2,7 @@
 //  IssueManagingModel.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 11/13/17.
+//  Created by Ryan Nystrom on 12/2/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
@@ -11,22 +11,26 @@ import IGListKit
 
 final class IssueManagingModel: ListDiffable {
 
-    let expanded: Bool
+    let objectId: String
+    let pullRequest: Bool
 
-    init(expanded: Bool) {
-        self.expanded = expanded
+    init(objectId: String, pullRequest: Bool) {
+        self.objectId = objectId
+        self.pullRequest = pullRequest
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return "managing-model" as NSObjectProtocol
+        // should only ever be one
+        return "managing_model" as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueManagingModel else { return false }
-        return expanded == object.expanded
+        return pullRequest == object.pullRequest
+        && objectId == object.objectId
     }
 
 }

@@ -33,7 +33,6 @@ FlatCacheListener {
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
-    private let collaboratorKey = "collaborator" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -413,7 +412,7 @@ FlatCacheListener {
         var objects: [ListDiffable] = [current.status]
 
         if viewerIsCollaborator {
-            objects.append(collaboratorKey)
+            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
         }
 
         objects.append(current.title)
@@ -447,12 +446,6 @@ FlatCacheListener {
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        guard let object = object as? ListDiffable else { fatalError("Must be diffable") }
-
-        if object === collaboratorKey, let id = resultID {
-            return IssueManagingSectionController(id: id, model: model, client: client)
-        }
-
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
@@ -472,6 +465,7 @@ FlatCacheListener {
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
+        case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
         default: fatalError("Unhandled object: \(object)")
         }
     }

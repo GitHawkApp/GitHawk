@@ -120,6 +120,29 @@ struct IssueResult: Cachable {
         )
     }
 
+    func withReviewers(
+        _ reviewers: IssueAssigneesModel?,
+        timelinePages: [IssueTimelinePage]? = nil
+        ) -> IssueResult {
+        return IssueResult(
+            id: self.id,
+            pullRequest: self.pullRequest,
+            status: self.status,
+            title: self.title,
+            labels: self.labels,
+            assignee: self.assignee,
+            rootComment: self.rootComment,
+            reviewers: reviewers,
+            milestone: self.milestone,
+            timelinePages: timelinePages ?? self.timelinePages,
+            viewerCanUpdate: self.viewerCanUpdate,
+            hasIssuesEnabled: self.hasIssuesEnabled,
+            viewerCanAdminister: self.viewerCanAdminister,
+            defaultBranch: self.defaultBranch,
+            changedFiles: self.changedFiles
+        )
+    }
+
 }
 
 struct IssueTimelinePage {

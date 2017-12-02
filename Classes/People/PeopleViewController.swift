@@ -9,7 +9,11 @@
 import UIKit
 
 protocol PeopleViewControllerDelegate: class {
-    func didDismiss(controller: PeopleViewController, selections: [User])
+    func didDismiss(
+        controller: PeopleViewController,
+        type: PeopleViewController.PeopleType,
+        selections: [User]
+    )
 }
 
 final class PeopleViewController: UITableViewController {
@@ -33,7 +37,7 @@ final class PeopleViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         feedRefresh.beginRefreshing()
         fetch()
@@ -71,7 +75,7 @@ final class PeopleViewController: UITableViewController {
 
     @IBAction func onDone(_ sender: Any) {
         let selections = users.filter { self.selections.contains($0.login) }
-        delegate?.didDismiss(controller: self, selections: selections)
+        delegate?.didDismiss(controller: self, type: type, selections: selections)
         dismiss(animated: true)
     }
 
