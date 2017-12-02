@@ -1904,8 +1904,9 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
             cachedAttributedText = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
         }
     }
-    
-    if (self.textView.attributedText.length == 0 || cachedAttributedText.length > 0) {
+
+    // only update the text if it is empty on the first load
+    if (self.textView.attributedText.length == 0 && cachedAttributedText.length > 0) {
         self.textView.attributedText = cachedAttributedText;
     }
 }

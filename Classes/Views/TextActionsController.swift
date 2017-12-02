@@ -74,7 +74,7 @@ final class TextActionsController: NSObject,
     // MARK: ImageUploadDelegate
 
     func imageUploaded(link: String, altText: String) {
-        textView?.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: true)
+        textView?.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: false)
     }
 
 }
