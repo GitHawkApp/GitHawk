@@ -84,7 +84,7 @@ SearchBarSectionControllerDelegate {
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        filter(query: query.trimmingCharacters(in: .whitespacesAndNewlines), animated: true)
+        filter(query: query, animated: true)
     }
 
     // MARK: BaseListViewControllerDataSource
