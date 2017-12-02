@@ -8,52 +8,6 @@
 
 import Foundation
 
-final class Client: NSObject, NSCoding {
-    
-    enum Keys {
-        static let type = "type"
-        static let baseUrl = "baseUrl"
-    }
-    
-    enum ClientType: String {
-        case github
-        case githubEnterprise
-    }
-    
-    let type: ClientType
-    let baseUrl: String
-    
-    override init() {
-        self.type = .github
-        self.baseUrl = "https://github.com/"
-        super.init()
-    }
-    
-    init(type: ClientType = .githubEnterprise, baseUrl: String) {
-        self.type = type
-        self.baseUrl = baseUrl
-    }
-    
-    // MARK: NSCoding
-    
-    convenience init?(coder aDecoder: NSCoder) {
-        let storedType = aDecoder.decodeObject(forKey: Keys.type) as? String
-        
-        let type = storedType.flatMap(ClientType.init) ?? .github
-        guard let baseUrl = aDecoder.decodeObject(forKey: Keys.baseUrl) as? String else {
-            return nil
-        }
-        
-        self.init(type: type, baseUrl: baseUrl)
-    }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(type.rawValue, forKey: Keys.type)
-        aCoder.encode(baseUrl, forKey: Keys.baseUrl)
-    }
-    
-}
-
 final class GithubUserSession: NSObject, NSCoding {
     
     enum Keys {
