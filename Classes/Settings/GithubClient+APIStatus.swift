@@ -15,9 +15,13 @@ extension GithubClient {
     }
 
     func fetchAPIStatus(completion: @escaping (Result<APIStatus>) -> Void) {
-        // TODO: REVISE
+        
+        guard let url = userSession?.client.statusAPIUrl else {
+            return
+        }
+        
         request(Request(
-            url: "https://status.github.com/api/status.json",
+            url: url,
             method: .get,
             completion: { (response, _) in
                 if let json = response.value as? [String: Any],

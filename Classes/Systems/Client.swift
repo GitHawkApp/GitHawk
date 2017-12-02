@@ -85,6 +85,16 @@ extension Client {
         }
     }
     
+    var statusUrl: String? {
+        switch type {
+        // https://status.github.com/messages
+        case .github: return "https://status.\(baseUrl)/messages"
+            
+        // Unsupported
+        case .githubEnterprise: return nil
+        }
+    }
+    
     func apiUrl(path: String) -> String {
         switch type {
         // https://developer.github.com/v3/#root-endpoint
@@ -93,6 +103,15 @@ extension Client {
         // https://developer.github.com/v3/enterprise/#endpoint-urls
         case .githubEnterprise: return "https://\(baseUrl)/api/v3/\(path)"
         }
+    }
+    
+    var loginOauthUrl: String {
+        // https://developer.github.com/v3/oauth_authorizations/
+        return "\(fullUrl)/login/oauth/access_token"
+    }
+    
+    var loginAuthoriseUrl: String {
+        return "\(fullUrl)/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications"
     }
     
 }
