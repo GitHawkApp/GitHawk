@@ -21,7 +21,7 @@ final class IssueTitleSectionController: ListGenericSectionController<NSAttribut
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: IssueTitleCell.self, for: self, at: index) as? IssueTitleCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
-        cell.label.attributedText = object.attributedText
+        cell.set(attributedText: object)
         return cell
     }
 
