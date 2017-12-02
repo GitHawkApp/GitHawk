@@ -117,7 +117,7 @@ DoubleTappableCellDelegate {
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
             nav.modalPresentationStyle = .formSheet
-            self?.viewController?.present(nav, animated: true, completion: nil)
+            self?.viewController?.present(nav, animated: true)
         })
     }
 
@@ -169,14 +169,14 @@ DoubleTappableCellDelegate {
 
         // Optimistically delete the comment
         hasBeenDeleted = true
-        update(animated: true, completion: nil)
+        update(animated: true)
 
         // Actually delete the comment now
         client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
             switch result {
             case .error:
                 self?.hasBeenDeleted = false
-                self?.update(animated: true, completion: nil)
+                self?.update(animated: true)
 
                 ToastManager.showGenericError()
             case .success: break // Don't need to handle success since updated optimistically

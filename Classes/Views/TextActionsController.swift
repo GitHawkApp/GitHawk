@@ -53,7 +53,7 @@ final class TextActionsController: NSObject,
         imagePicker.popoverPresentationController?.sourceRect = sourceRect
         imagePicker.popoverPresentationController?.permittedArrowDirections = .up
 
-        viewController?.present(imagePicker, animated: true, completion: nil)
+        viewController?.present(imagePicker, animated: true)
     }
 
     // MARK: UIImagePickerControllerDelegate
@@ -68,7 +68,7 @@ final class TextActionsController: NSObject,
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
     }
 
     // MARK: ImageUploadDelegate

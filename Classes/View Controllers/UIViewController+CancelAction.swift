@@ -31,7 +31,7 @@ extension UIViewController {
                     dismissBlock()
                 }
                 ])
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         }
     }
 

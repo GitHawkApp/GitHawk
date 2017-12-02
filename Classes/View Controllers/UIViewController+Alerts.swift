@@ -14,7 +14,7 @@ extension UIViewController {
 		let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: Constants.Strings.ok, style: .default, handler: nil)
         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
     }
 
 }

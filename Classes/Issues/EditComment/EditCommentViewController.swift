@@ -139,7 +139,7 @@ class EditCommentViewController: UIViewController, UITextViewDelegate {
                     dismissBlock()
                 }
                 ])
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         }
     }
 
