@@ -13,7 +13,7 @@ final class IssueStatusSectionController: ListGenericSectionController<IssueStat
 
     override init() {
         super.init()
-        inset = Styles.Sizes.listInsetTight
+        inset = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {

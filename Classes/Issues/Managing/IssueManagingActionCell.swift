@@ -28,7 +28,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonIcon)
             make.centerX.equalTo(contentView)
-            make.centerY.equalTo(contentView).offset(-7)
+            make.centerY.equalTo(contentView).offset(-10)
         }
 
         label.textColor = tint
