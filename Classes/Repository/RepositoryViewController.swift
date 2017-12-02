@@ -51,8 +51,6 @@ NewIssueTableViewControllerDelegate {
         self.controllers = controllers
 
         super.init(nibName: nil, bundle: nil)
-
-        self.title = "\(repo.owner)/\(repo.name)"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -77,6 +75,7 @@ NewIssueTableViewControllerDelegate {
 
         configureNavigationItems()
         navigationItem.configure(title: repo.name, subtitle: repo.owner)
+        navigationItem.titleView?.accessibilityLabel = .localizedStringWithFormat("Repository, %@", "\(repo.owner)/\(repo.name)")
     }
 
     // MARK: Private API
@@ -112,7 +111,8 @@ NewIssueTableViewControllerDelegate {
     }
 
     @objc func onMore(sender: UIButton) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        let alertTitle = "\(repo.owner)/\(repo.name)"
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
