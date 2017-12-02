@@ -98,5 +98,7 @@ final class BookmarkCell: SwipeSelectableCell {
             detailLabel.text = ""
         }
         detailLabel.sizeToFit()
+
+        setNeedsLayout()
     }
 }
