@@ -10,7 +10,6 @@ import Foundation
 
 private let dateFormatter = ISO8601DateFormatter()
 func GithubAPIDateFormatter() -> ISO8601DateFormatter {
-    // TODO: REVISE (Should be static)
     // https://developer.github.com/v3/#schema
     return dateFormatter
 }
