@@ -56,8 +56,7 @@ final class IssueReferencedModel: ListDiffable {
             attributes: [
                 .font: Styles.Fonts.secondaryBold,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
-                // TODO: enable once #1125 is fixed
-//                MarkdownAttribute.username: actor
+                MarkdownAttribute.username: actor
             ]
         ))
         attributedText.append(NSAttributedString(
