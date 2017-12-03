@@ -81,8 +81,7 @@ NewIssueTableViewControllerDelegate {
     // MARK: Private API
 
     var repoUrl: URL {
-        // TODO: REVISE
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+        return URL(string: client.userSession!.client.repoUrl(owner: repo.owner, name: repo.name))!
     }
 
     func configureNavigationItems() {

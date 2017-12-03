@@ -114,4 +114,8 @@ extension Client {
         return "\(fullUrl)/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications"
     }
     
+    var reviewAccessUrl: String {
+        return "\(fullUrl)/settings/connections/applications/\(Secrets.GitHub.clientId)"
+    }
+    
 }
