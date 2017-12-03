@@ -13,6 +13,7 @@ final class ScrollViewKeyboardAdjuster {
     private let scrollView: UIScrollView
     private var originalContentInset: UIEdgeInsets = .zero
     private weak var viewController: UIViewController?
+    private var keyboardIsShowing = false
 
     init(scrollView: UIScrollView, viewController: UIViewController) {
         self.scrollView = scrollView
@@ -36,10 +37,13 @@ final class ScrollViewKeyboardAdjuster {
     // MARK: Notifications
 
     @objc func onKeyboardWillShow(notification: NSNotification) {
-        guard let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
+        guard !keyboardIsShowing,
+            let frame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
             let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
             let viewController = self.viewController
             else { return }
+
+        keyboardIsShowing = true
 
         var inset = scrollView.contentInset
         originalContentInset = inset
@@ -57,8 +61,12 @@ final class ScrollViewKeyboardAdjuster {
     }
 
     @objc func onKeyboardWillHide(notification: NSNotification) {
-        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
+        guard keyboardIsShowing,
+            let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
+
+        keyboardIsShowing = false
+
         UIView.animate(withDuration: duration, delay: 0, options: [.beginFromCurrentState], animations: {
             self.scrollView.contentInset = self.originalContentInset
             self.scrollView.scrollIndicatorInsets = self.originalContentInset
