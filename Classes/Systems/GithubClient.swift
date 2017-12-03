@@ -128,7 +128,7 @@ struct GithubClient {
         resultHandler: OperationResultHandler<Query>? = nil
         ) -> Cancellable {
         NetworkActivityIndicatorManager.shared.incrementActivityCount()
-        return apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
+        return apollo.fetch(query: query, cachePolicy: .returnCacheDataAndFetch, resultHandler: { (result, error) in
             NetworkActivityIndicatorManager.shared.decrementActivityCount()
             resultHandler?(result, error)
         })
