@@ -125,7 +125,9 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+
+        let language = filename.components(separatedBy: ".").last
+        codeView.set(code: text, language: language)
     }
 
 }

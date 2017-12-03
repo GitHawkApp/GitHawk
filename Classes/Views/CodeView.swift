@@ -47,6 +47,15 @@ final class CodeView: UIScrollView {
             ]))
     }
 
+    func set(code: String, language: String?) {
+        if let language = language,
+            let highlighted = GithubHighlighting.highlight(code, as: language) {
+            set(attributedCode: highlighted)
+        } else {
+            set(code: code)
+        }
+    }
+
     func set(attributedCode: NSAttributedString) {
         textView.attributedText = attributedCode
         let max = CGFloat.greatestFiniteMagnitude
