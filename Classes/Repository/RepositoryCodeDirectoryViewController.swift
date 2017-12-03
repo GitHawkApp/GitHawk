@@ -140,7 +140,13 @@ ListSingleSectionControllerDelegate {
                 isRoot: false
             )
         } else {
-            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: fullPath)
+            controller = RepositoryCodeBlobViewController(
+                client: client,
+                repo: repo,
+                branch: branch,
+                path: fullPath,
+                filename: file.name
+            )
         }
         navigationController?.pushViewController(controller, animated: true)
     }
