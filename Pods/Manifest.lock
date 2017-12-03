@@ -55,7 +55,7 @@ DEPENDENCIES:
   - FBSnapshotTestCase
   - FlatCache (from `Local Pods/FlatCache`)
   - FLEX (~> 2.0)
-  - Highlightr (~> 1.1)
+  - Highlightr (from `Local Pods/Highlightr`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - MMMarkdown (from `Local Pods/MMMarkdown`)
@@ -71,6 +71,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   FlatCache:
     :path: Local Pods/FlatCache
+  Highlightr:
+    :path: Local Pods/Highlightr
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
@@ -96,7 +98,7 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  Highlightr: 519911a0a9a040d76e591f6fe58bb5177c8bdaa3
+  Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
@@ -111,6 +113,6 @@ SPEC CHECKSUMS:
   Tabman: 929a09683a5b2f5abb9933abc83e000578356396
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 567ac3e96c557f2edf4b665e5f12c0023c7b2b93
+PODFILE CHECKSUM: 6e89c3920cf1f384a8d97d057ba1844bb3ff2bd9
 
 COCOAPODS: 1.4.0.beta.1
