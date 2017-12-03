@@ -61,7 +61,7 @@ FlatCacheListener {
             } else {
                 hidden = true
             }
-            self.setTextInputbarHidden(hidden, animated: true)
+            self.setTextInputbarHidden(hidden, animated: trueUnlessReduceMotionEnabled)
 
             // hack required to get textInputBar.contentView + textView laid out correctly
             self.textInputbar.layoutIfNeeded()
@@ -317,7 +317,7 @@ FlatCacheListener {
         ])
         alert.popoverPresentationController?.setSourceView(sender)
         
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch(previous: Bool) {
@@ -330,7 +330,7 @@ FlatCacheListener {
                 case .success(let permission):
                     self?.viewerIsCollaborator = permission.canManage
                     // avoid finishLoading() so empty view doesn't appear
-                    self?.feed.adapter.performUpdates(animated: true)
+                    self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:
                     ToastManager.showGenericError()
                 }
@@ -367,7 +367,7 @@ FlatCacheListener {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
             if self?.needsScrollToBottom == true {
                 self?.needsScrollToBottom = false
-                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                self?.feed.collectionView.slk_scrollToBottom(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }

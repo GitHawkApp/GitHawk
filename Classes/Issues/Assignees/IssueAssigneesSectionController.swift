@@ -89,7 +89,7 @@ ListBindingSectionControllerSelectionDelegate {
         ) {
         if viewModel is IssueAssigneeSummaryModel {
             expanded = !expanded
-            update(animated: true)
+            update(animated: trueUnlessReduceMotionEnabled)
         } else if let viewModel = viewModel as? IssueAssigneeViewModel {
             viewController?.presentProfile(login: viewModel.login)
         }

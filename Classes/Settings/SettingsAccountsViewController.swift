@@ -48,7 +48,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
             })
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
@@ -65,7 +65,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
             preferredStyle: .alert
         )
         alert.addAction(AlertAction.ok())
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
@@ -98,7 +98,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
 
         let selectedSession = userSessions[indexPath.row]
         guard selectedSession != sessionManager.focusedUserSession else { return }

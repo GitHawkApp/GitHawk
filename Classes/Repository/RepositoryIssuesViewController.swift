@@ -64,14 +64,14 @@ SearchBarSectionControllerDelegate {
         let block = { [weak self] (result: Result<RepositoryClient.RepositoryPayload>) in
             switch result {
             case .error:
-                self?.error(animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let payload):
                 if page != nil {
                     self?.models += payload.models as [ListDiffable]
                 } else {
                     self?.models = payload.models
                 }
-                self?.update(page: payload.nextPage as NSString?, animated: true)
+                self?.update(page: payload.nextPage as NSString?, animated: trueUnlessReduceMotionEnabled)
             }
         }
 
@@ -84,7 +84,7 @@ SearchBarSectionControllerDelegate {
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        filter(query: query, animated: true)
+        filter(query: query, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: BaseListViewControllerDataSource

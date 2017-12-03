@@ -47,7 +47,7 @@ final class BookmarkSectionController: ListGenericSectionController<BookmarkView
     }
 
     override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
 
         guard let object = object else { return }
         delegate?.didSelect(bookmarkSectionController: self, viewModel: object)

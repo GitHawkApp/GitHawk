@@ -85,9 +85,9 @@ ListBindingSectionControllerSelectionDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
         expanded = !expanded
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
 }

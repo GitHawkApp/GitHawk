@@ -115,7 +115,7 @@ UICollectionViewDelegateFlowLayout {
         let menu = UIMenuController.shared
         menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
         menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
-        menu.setMenuVisible(true, animated: true)
+        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {

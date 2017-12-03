@@ -133,7 +133,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         delegate?.didSelect(actionsView: self, operation: operations[indexPath.item])
     }
 

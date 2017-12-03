@@ -32,7 +32,7 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
     }
 
     override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
         guard let number = object?.number else { return }
         viewController?.presentMilestone(owner: issueModel.owner, repo: issueModel.repo, milestone: number)
     }

@@ -94,7 +94,7 @@ DoubleTappableCellDelegate {
                 }
             ])
 
-            self?.viewController?.present(alert, animated: true)
+            self?.viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -117,7 +117,7 @@ DoubleTappableCellDelegate {
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
             nav.modalPresentationStyle = .formSheet
-            self?.viewController?.present(nav, animated: true)
+            self?.viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
         })
     }
 
@@ -135,7 +135,7 @@ DoubleTappableCellDelegate {
         guard collapsed else { return false }
         collapsed = false
         clearCollapseCells()
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
         return true
     }
 
@@ -153,12 +153,12 @@ DoubleTappableCellDelegate {
 
         cell?.perform(operation: result.operation, content: content)
 
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
         generator.impactOccurred()
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
             if result == nil {
                 self?.reactionMutation = previousReaction
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -169,14 +169,14 @@ DoubleTappableCellDelegate {
 
         // Optimistically delete the comment
         hasBeenDeleted = true
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
 
         // Actually delete the comment now
         client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
             switch result {
             case .error:
                 self?.hasBeenDeleted = false
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
 
                 ToastManager.showGenericError()
             case .success: break // Don't need to handle success since updated optimistically
@@ -354,7 +354,7 @@ DoubleTappableCellDelegate {
             deleteAction(),
             AlertAction.cancel()
         ])
-        viewController?.present(alert, animated: true)
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
@@ -396,7 +396,7 @@ DoubleTappableCellDelegate {
     // MARK: EditCommentViewControllerDelegate
 
     func didEditComment(viewController: EditCommentViewController, markdown: String) {
-        viewController.dismiss(animated: true)
+        viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
 
         guard let width = collectionContext?.containerSize.width else { return }
         let options = commentModelOptions(owner: model.owner, repo: model.repo)
@@ -404,11 +404,11 @@ DoubleTappableCellDelegate {
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
     func didCancel(viewController: EditCommentViewController) {
-        viewController.dismiss(animated: true)
+        viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
 }

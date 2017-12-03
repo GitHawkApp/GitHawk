@@ -81,10 +81,10 @@ ListSingleSectionControllerDelegate {
         client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: fullPath) { [weak self] (result) in
             switch result {
             case .error:
-                self?.error(animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let files):
                 self?.files = files
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -149,7 +149,7 @@ ListSingleSectionControllerDelegate {
                 filename: file.name
             )
         }
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

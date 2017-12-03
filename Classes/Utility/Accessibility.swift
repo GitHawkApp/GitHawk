@@ -33,3 +33,9 @@ private extension AccessibilityHelper {
             .reduce("") { "\($0).\n\($1)" }
     }
 }
+
+// MARK: Reduce motion
+
+var trueUnlessReduceMotionEnabled: Bool {
+    return !UIAccessibilityIsReduceMotionEnabled()
+}

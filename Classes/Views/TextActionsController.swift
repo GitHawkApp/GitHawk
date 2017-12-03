@@ -53,7 +53,7 @@ final class TextActionsController: NSObject,
         imagePicker.popoverPresentationController?.sourceRect = sourceRect
         imagePicker.popoverPresentationController?.permittedArrowDirections = .up
 
-        viewController?.present(imagePicker, animated: true)
+        viewController?.present(imagePicker, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: UIImagePickerControllerDelegate
@@ -64,11 +64,11 @@ final class TextActionsController: NSObject,
         let username = client?.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
         guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
 
-        picker.pushViewController(uploadController, animated: true)
+        picker.pushViewController(uploadController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
+        picker.dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ImageUploadDelegate

@@ -43,7 +43,7 @@ BaseListViewControllerDataSource {
             case .error: ToastManager.showGenericError()
             case .success(let models, let page):
                 self?.models = models
-                self?.update(page: page as NSNumber?, animated: true)
+                self?.update(page: page as NSNumber?, animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
