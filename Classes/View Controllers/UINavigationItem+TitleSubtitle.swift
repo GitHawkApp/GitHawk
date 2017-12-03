@@ -10,8 +10,14 @@ import UIKit
 
 extension UINavigationItem {
 
-    func configure(title: String, subtitle: String) {
-        guard !subtitle.isEmpty else {
+    func configure(filePath: FilePath) {
+        configure(title: filePath.current, subtitle: filePath.basePath)
+    }
+
+    func configure(title: String?, subtitle: String?) {
+        guard let title = title else { return }
+
+        guard let subtitle = subtitle, !subtitle.isEmpty else {
             self.title = title
             return
         }
@@ -25,15 +31,15 @@ extension UINavigationItem {
             .foregroundColor: Styles.Colors.Gray.light.color
         ]
 
-        let title = NSMutableAttributedString(string: title, attributes: titleAttributes)
-        title.append(NSAttributedString(string: "\n"))
-        title.append(NSAttributedString(string: subtitle, attributes: subtitleAttributes))
+        let attributedTitle = NSMutableAttributedString(string: title, attributes: titleAttributes)
+        attributedTitle.append(NSAttributedString(string: "\n"))
+        attributedTitle.append(NSAttributedString(string: subtitle, attributes: subtitleAttributes))
 
         let label = UILabel()
         label.backgroundColor = .clear
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.attributedText = title
+        label.attributedText = attributedTitle
         label.lineBreakMode = .byTruncatingHead
         label.sizeToFit()
 

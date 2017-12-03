@@ -12,8 +12,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     private let client: GithubClient
     private let branch: String
-    private let path: String
-    private let filename: String
+    private let path: FilePath
     private let repo: RepositoryDetails
     private let codeView = CodeView()
     private let feedRefresh = FeedRefresh()
@@ -33,14 +32,12 @@ final class RepositoryCodeBlobViewController: UIViewController {
         client: GithubClient,
         repo: RepositoryDetails,
         branch: String,
-        path: String,
-        filename: String
+        path: FilePath
         ) {
         self.client = client
         self.repo = repo
         self.branch = branch
         self.path = path
-        self.filename = filename
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,7 +49,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
-        navigationItem.configure(title: filename, subtitle: path)
+        navigationItem.configure(filePath: path)
 
         view.backgroundColor = .white
 
@@ -100,7 +97,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         owner: repo.owner,
         repo: repo.name,
         branch: branch,
-        path: "\(path)/\(filename)"
+        path: path.path
         ) { [weak self] (result) in
             self?.feedRefresh.endRefreshing()
             switch result {
@@ -125,9 +122,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-
-        let language = filename.components(separatedBy: ".").last
-        codeView.set(code: text, language: language)
+        codeView.set(code: text, language: path.fileExtension)
     }
 
 }
