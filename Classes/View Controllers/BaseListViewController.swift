@@ -166,7 +166,10 @@ LoadMoreSectionControllerDelegate {
 
     final func emptyView(for listAdapter: ListAdapter) -> UIView? {
         assert(Thread.isMainThread)
-        return nil
+        guard hasError else { return nil }
+        let empty = EmptyView()
+        empty.label.text = emptyErrorMessage
+        return empty
     }
 
     // MARK: FeedDelegate
