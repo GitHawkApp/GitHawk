@@ -111,7 +111,7 @@ open class Highlightr
         }
         
         let res = jsContext.evaluateScript(command)
-        guard var string = res!.toString() else
+        guard var string = res!.toString(), string != "undefined" else
         {
             return nil
         }
