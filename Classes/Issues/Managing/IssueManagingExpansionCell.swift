@@ -43,6 +43,11 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     override var isSelected: Bool {
         didSet {
             highlight(isSelected)
