@@ -41,6 +41,7 @@ extension UINavigationItem {
         label.textAlignment = .center
         label.attributedText = attributedTitle
         label.lineBreakMode = .byTruncatingHead
+        label.adjustsFontSizeToFitWidth = true
         label.sizeToFit()
 
         titleView = label
