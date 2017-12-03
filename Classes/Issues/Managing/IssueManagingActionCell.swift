@@ -20,6 +20,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
+        contentView.backgroundColor = .white
+
         let tint = Styles.Colors.Blue.medium.color
 
         imageView.tintColor = tint
@@ -38,6 +40,9 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
             make.centerX.equalTo(imageView)
             make.top.equalTo(imageView.snp.bottom)
         }
+
+        addBorder(.top)
+        addBorder(.bottom)
     }
 
     required init?(coder aDecoder: NSCoder) {
