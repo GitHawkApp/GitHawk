@@ -13,6 +13,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     private let client: GithubClient
     private let branch: String
     private let path: String
+    private let filename: String
     private let repo: RepositoryDetails
     private let codeView = CodeView()
     private let feedRefresh = FeedRefresh()
@@ -28,13 +29,19 @@ final class RepositoryCodeBlobViewController: UIViewController {
         return barButtonItem
     }()
 
-    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String) {
+    init(
+        client: GithubClient,
+        repo: RepositoryDetails,
+        branch: String,
+        path: String,
+        filename: String
+        ) {
         self.client = client
         self.repo = repo
         self.branch = branch
         self.path = path
+        self.filename = filename
         super.init(nibName: nil, bundle: nil)
-        self.title = path
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +52,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
+        navigationItem.configure(title: filename, subtitle: path)
 
         view.backgroundColor = .white
 
@@ -53,7 +61,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         view.addSubview(codeView)
 
         codeView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(RepositoryCodeBlobViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         navigationItem.rightBarButtonItem = sharingButton
 
@@ -88,7 +96,12 @@ final class RepositoryCodeBlobViewController: UIViewController {
     }
 
     func fetch() {
-        client.fetchFile(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
+        client.fetchFile(
+        owner: repo.owner,
+        repo: repo.name,
+        branch: branch,
+        path: "\(path)/\(filename)"
+        ) { [weak self] (result) in
             self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):
@@ -112,7 +125,9 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+
+        let language = filename.components(separatedBy: ".").last
+        codeView.set(code: text, language: language)
     }
 
 }

@@ -40,7 +40,6 @@ class DotListView: UIView, UICollectionViewDataSource {
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
-        collectionView.reloadData()
     }
 
     // MARK: UICollectionViewDataSource
