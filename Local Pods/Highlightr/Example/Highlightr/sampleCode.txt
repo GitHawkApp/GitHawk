@@ -1,0 +1,127 @@
+//
+//  SampleCode.swift
+//  Highlightr
+//
+//  Created by Illanes, J.P. on 5/5/16.
+//
+
+import UIKit
+import Highlightr
+import ActionSheetPicker_3_0
+
+enum pickerSource : Int {
+    case theme = 0
+    case language
+}
+
+class SampleCode: UIViewController
+{
+    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var viewPlaceholder: UIView!
+    var textView : UITextView!
+    
+    @IBOutlet weak var languageName: UILabel!
+    @IBOutlet weak var themeName: UILabel!
+    
+    var highlightr : Highlightr!
+    let textStorage = CodeAttributedString()
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        languageName.text = "Swift"
+        themeName.text = "Pojoaque"
+        
+        textStorage.language = languageName.text?.lowercaseString
+        let layoutManager = NSLayoutManager()
+        textStorage.addLayoutManager(layoutManager)
+        
+        let textContainer = NSTextContainer(size: view.bounds.size)
+        layoutManager.addTextContainer(textContainer)
+        
+        textView = UITextView(frame: viewPlaceholder.bounds, textContainer: textContainer)
+        textView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        textView.autocorrectionType = UITextAutocorrectionType.No
+        textView.autocapitalizationType = UITextAutocapitalizationType.None
+        textView.textColor = UIColor(white: 0.8, alpha: 1.0)
+        viewPlaceholder.addSubview(textView)
+        
+        let code = try! String.init(contentsOfFile: NSBundle.mainBundle().pathForResource("sampleCode", ofType: "txt")!)
+        textView.text = code
+        
+        highlightr = textStorage.highlightr
+        
+        updateColors()
+    }
+
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func pickLanguage(sender: AnyObject)
+    {
+        let languages = highlightr.supportedLanguages()
+        let indexOrNil = languages.indexOf(languageName.text!.lowercaseString)
+        let index = (indexOrNil == nil) ? 0 : indexOrNil!
+        
+        ActionSheetStringPicker.showPickerWithTitle("Pick a Language",
+                                                    rows: languages,
+                                                    initialSelection: index,
+                                                    doneBlock:
+            { picker, index, value in
+                let language = value! as! String
+                self.textStorage.language = language
+                self.languageName.text = language.capitalizedString
+            },
+                                                    cancelBlock: nil,
+                                                    origin: toolBar)
+
+    }
+
+    @IBAction func performanceTest(sender: AnyObject)
+    {
+    }
+    
+    @IBAction func pickTheme(sender: AnyObject)
+    {
+        let themes = highlightr.availableThemes()
+        let indexOrNil = themes.indexOf(themeName.text!.lowercaseString)
+        let index = (indexOrNil == nil) ? 0 : indexOrNil!
+        
+        ActionSheetStringPicker.showPickerWithTitle("Pick a Language",
+                                                    rows: themes,
+                                                    initialSelection: index,
+                                                    doneBlock:
+            { picker, index, value in
+                let theme = value! as! String
+                self.textStorage.theme = theme
+                self.themeName.text = theme.capitalizedString
+                self.updateColors()
+            },
+                                                    cancelBlock: nil,
+                                                    origin: toolBar)
+        
+    }
+    
+    func updateColors()
+    {
+        textView.backgroundColor = highlightr.theme.themeBackgroundColor
+        navBar.barTintColor = highlightr.theme.themeBackgroundColor
+        navBar.tintColor = invertColor(navBar.barTintColor!)
+        languageName.textColor = navBar.tintColor
+        themeName.textColor = navBar.tintColor.colorWithAlphaComponent(0.5)
+        toolBar.barTintColor = navBar.barTintColor
+        toolBar.tintColor = navBar.tintColor
+    }
+    
+    func invertColor(color: UIColor) -> UIColor
+    {
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0
+        color.getRed(&r, green: &g, blue: &b, alpha: nil)
+        return UIColor(red:1.0-r, green: 1.0-g, blue: 1.0-b, alpha: 1)
+    }
+}

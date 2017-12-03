@@ -17,7 +17,6 @@ pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Tabman', '~> 1.1'
-pod 'Highlightr', '~> 1.1'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
@@ -30,6 +29,7 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
+pod 'Highlightr', :path => 'Local Pods/Highlightr'
 
 target 'Freetime' do
 
@@ -41,14 +41,4 @@ end
 
 post_install do |installer|
   system("sh tools/generateAcknowledgements.sh")
-
-  # convert incompatible pods back to Swift 3.2
-  myTargets = ['Highlightr']  
-  installer.pods_project.targets.each do |target|
-    if myTargets.include? target.name
-      target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '3.2'
-      end
-    end
-  end
 end

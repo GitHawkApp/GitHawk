@@ -42,7 +42,8 @@ final class CodeView: UIScrollView {
         set(attributedCode: NSAttributedString(
             string: code,
             attributes: [
-                .font: Styles.Fonts.code,
+                // match Highlightr size
+                .font: UIFont(name: "Courier", size: 14)!,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
             ]))
     }
