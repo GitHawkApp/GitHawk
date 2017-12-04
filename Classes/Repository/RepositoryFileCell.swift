@@ -75,7 +75,7 @@ final class RepositoryFileCell: SelectableCell {
         let imageName = isDirectory ? "file-directory" : "file"
         imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
 
-        disclosure.isHighlighted = !isDirectory
+        disclosure.isHidden = !isDirectory
     }
 
 }
