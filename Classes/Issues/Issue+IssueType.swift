@@ -51,8 +51,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return milestone?.fragments.milestoneFields
     }
 
-    var changedFileCount: Int {
-        return 0
+    var fileChanges: FileChanges? {
+        return nil
     }
 
     func timelineViewModels(

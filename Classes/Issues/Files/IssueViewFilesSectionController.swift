@@ -36,7 +36,7 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
 
         collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
 
-        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes)
+        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
         viewController?.show(controller, sender: nil)
     }
 

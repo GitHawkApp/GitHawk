@@ -131,7 +131,7 @@ extension GithubClient {
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository?.defaultBranchRef?.name ?? "master",
-                        changedFiles: issueType.changedFileCount
+                        fileChanges: issueType.fileChanges
                     )
 
                     DispatchQueue.main.async {
