@@ -85,7 +85,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   IGListKit:
-    :commit: 0f04a073194033fbfc6f1d916fad83838042a7c0
+    :commit: 296baf5f854f57150ed12ca5bd8d3903db492734
     :git: https://github.com/Instagram/IGListKit.git
 
 SPEC CHECKSUMS:
