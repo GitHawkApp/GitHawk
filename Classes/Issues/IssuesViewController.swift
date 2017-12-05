@@ -428,8 +428,8 @@ FlatCacheListener {
             objects.append(reviewers)
         }
 
-        if current.pullRequest {
-            objects.append(IssueFileChangesModel(changes: current.changedFiles))
+        if let changes = current.fileChanges {
+            objects.append(IssueFileChangesModel(changes: changes))
         }
 
         if let rootComment = current.rootComment {

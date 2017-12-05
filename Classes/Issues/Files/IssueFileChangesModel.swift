@@ -11,9 +11,9 @@ import IGListKit
 
 final class IssueFileChangesModel: ListDiffable {
 
-    let changes: Int
+    let changes: FileChanges
 
-    init(changes: Int) {
+    init(changes: FileChanges) {
         self.changes = changes
     }
 

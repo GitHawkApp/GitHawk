@@ -388,6 +388,8 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         title
         merged
         changedFiles
+        additions
+        deletions
       }
     }
   }
