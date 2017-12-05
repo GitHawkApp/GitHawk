@@ -108,7 +108,9 @@ extension GithubClient {
                         milestoneModel = Milestone(
                             number: milestone.number,
                             title: milestone.title,
-                            dueOn: dueOn
+                            dueOn: dueOn,
+                            openIssueCount: milestone.openCount.totalCount,
+                            totalIssueCount: milestone.totalCount.totalCount
                         )
                     } else {
                         milestoneModel = nil

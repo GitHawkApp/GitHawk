@@ -5400,6 +5400,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("url", type: .nonNull(.scalar(String.self))),
               GraphQLField("dueOn", type: .scalar(String.self)),
+              GraphQLField("issues", alias: "openCount", arguments: ["states": ["OPEN"]], type: .nonNull(.object(OpenCount.selections))),
+              GraphQLField("issues", alias: "totalCount", type: .nonNull(.object(TotalCount.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -5408,8 +5410,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(number: Int, title: String, url: String, dueOn: String? = nil) {
-              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
+            public init(number: Int, title: String, url: String, dueOn: String? = nil, openCount: OpenCount, totalCount: TotalCount) {
+              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn, "openCount": openCount.snapshot, "totalCount": totalCount.snapshot])
             }
 
             public var __typename: String {
@@ -5461,6 +5463,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
             }
 
+            /// A list of issues associated with the milestone.
+            public var openCount: OpenCount {
+              get {
+                return OpenCount(snapshot: snapshot["openCount"]! as! Snapshot)
+              }
+              set {
+                snapshot.updateValue(newValue.snapshot, forKey: "openCount")
+              }
+            }
+
+            /// A list of issues associated with the milestone.
+            public var totalCount: TotalCount {
+              get {
+                return TotalCount(snapshot: snapshot["totalCount"]! as! Snapshot)
+              }
+              set {
+                snapshot.updateValue(newValue.snapshot, forKey: "totalCount")
+              }
+            }
+
             public var fragments: Fragments {
               get {
                 return Fragments(snapshot: snapshot)
@@ -5479,6 +5501,82 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
                 set {
                   snapshot += newValue.snapshot
+                }
+              }
+            }
+
+            public struct OpenCount: GraphQLSelectionSet {
+              public static let possibleTypes = ["IssueConnection"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(totalCount: Int) {
+                self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the total count of items in the connection.
+              public var totalCount: Int {
+                get {
+                  return snapshot["totalCount"]! as! Int
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "totalCount")
+                }
+              }
+            }
+
+            public struct TotalCount: GraphQLSelectionSet {
+              public static let possibleTypes = ["IssueConnection"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(totalCount: Int) {
+                self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the total count of items in the connection.
+              public var totalCount: Int {
+                get {
+                  return snapshot["totalCount"]! as! Int
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "totalCount")
                 }
               }
             }
@@ -11766,6 +11864,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("url", type: .nonNull(.scalar(String.self))),
               GraphQLField("dueOn", type: .scalar(String.self)),
+              GraphQLField("issues", alias: "openCount", arguments: ["states": ["OPEN"]], type: .nonNull(.object(OpenCount.selections))),
+              GraphQLField("issues", alias: "totalCount", type: .nonNull(.object(TotalCount.selections))),
             ]
 
             public var snapshot: Snapshot
@@ -11774,8 +11874,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(number: Int, title: String, url: String, dueOn: String? = nil) {
-              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
+            public init(number: Int, title: String, url: String, dueOn: String? = nil, openCount: OpenCount, totalCount: TotalCount) {
+              self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn, "openCount": openCount.snapshot, "totalCount": totalCount.snapshot])
             }
 
             public var __typename: String {
@@ -11827,6 +11927,26 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
             }
 
+            /// A list of issues associated with the milestone.
+            public var openCount: OpenCount {
+              get {
+                return OpenCount(snapshot: snapshot["openCount"]! as! Snapshot)
+              }
+              set {
+                snapshot.updateValue(newValue.snapshot, forKey: "openCount")
+              }
+            }
+
+            /// A list of issues associated with the milestone.
+            public var totalCount: TotalCount {
+              get {
+                return TotalCount(snapshot: snapshot["totalCount"]! as! Snapshot)
+              }
+              set {
+                snapshot.updateValue(newValue.snapshot, forKey: "totalCount")
+              }
+            }
+
             public var fragments: Fragments {
               get {
                 return Fragments(snapshot: snapshot)
@@ -11845,6 +11965,82 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
                 set {
                   snapshot += newValue.snapshot
+                }
+              }
+            }
+
+            public struct OpenCount: GraphQLSelectionSet {
+              public static let possibleTypes = ["IssueConnection"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(totalCount: Int) {
+                self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the total count of items in the connection.
+              public var totalCount: Int {
+                get {
+                  return snapshot["totalCount"]! as! Int
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "totalCount")
+                }
+              }
+            }
+
+            public struct TotalCount: GraphQLSelectionSet {
+              public static let possibleTypes = ["IssueConnection"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(totalCount: Int) {
+                self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// Identifies the total count of items in the connection.
+              public var totalCount: Int {
+                get {
+                  return snapshot["totalCount"]! as! Int
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "totalCount")
                 }
               }
             }
@@ -16028,7 +16224,7 @@ public struct HeadPaging: GraphQLFragment {
 
 public struct MilestoneFields: GraphQLFragment {
   public static let fragmentString =
-    "fragment milestoneFields on Milestone {\n  __typename\n  number\n  title\n  url\n  dueOn\n}"
+    "fragment milestoneFields on Milestone {\n  __typename\n  number\n  title\n  url\n  dueOn\n  openCount: issues(states: [OPEN]) {\n    __typename\n    totalCount\n  }\n  totalCount: issues {\n    __typename\n    totalCount\n  }\n}"
 
   public static let possibleTypes = ["Milestone"]
 
@@ -16038,6 +16234,8 @@ public struct MilestoneFields: GraphQLFragment {
     GraphQLField("title", type: .nonNull(.scalar(String.self))),
     GraphQLField("url", type: .nonNull(.scalar(String.self))),
     GraphQLField("dueOn", type: .scalar(String.self)),
+    GraphQLField("issues", alias: "openCount", arguments: ["states": ["OPEN"]], type: .nonNull(.object(OpenCount.selections))),
+    GraphQLField("issues", alias: "totalCount", type: .nonNull(.object(TotalCount.selections))),
   ]
 
   public var snapshot: Snapshot
@@ -16046,8 +16244,8 @@ public struct MilestoneFields: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public init(number: Int, title: String, url: String, dueOn: String? = nil) {
-    self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn])
+  public init(number: Int, title: String, url: String, dueOn: String? = nil, openCount: OpenCount, totalCount: TotalCount) {
+    self.init(snapshot: ["__typename": "Milestone", "number": number, "title": title, "url": url, "dueOn": dueOn, "openCount": openCount.snapshot, "totalCount": totalCount.snapshot])
   }
 
   public var __typename: String {
@@ -16096,6 +16294,102 @@ public struct MilestoneFields: GraphQLFragment {
     }
     set {
       snapshot.updateValue(newValue, forKey: "dueOn")
+    }
+  }
+
+  /// A list of issues associated with the milestone.
+  public var openCount: OpenCount {
+    get {
+      return OpenCount(snapshot: snapshot["openCount"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "openCount")
+    }
+  }
+
+  /// A list of issues associated with the milestone.
+  public var totalCount: TotalCount {
+    get {
+      return TotalCount(snapshot: snapshot["totalCount"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "totalCount")
+    }
+  }
+
+  public struct OpenCount: GraphQLSelectionSet {
+    public static let possibleTypes = ["IssueConnection"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(totalCount: Int) {
+      self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// Identifies the total count of items in the connection.
+    public var totalCount: Int {
+      get {
+        return snapshot["totalCount"]! as! Int
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "totalCount")
+      }
+    }
+  }
+
+  public struct TotalCount: GraphQLSelectionSet {
+    public static let possibleTypes = ["IssueConnection"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(totalCount: Int) {
+      self.init(snapshot: ["__typename": "IssueConnection", "totalCount": totalCount])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// Identifies the total count of items in the connection.
+    public var totalCount: Int {
+      get {
+        return snapshot["totalCount"]! as! Int
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "totalCount")
+      }
     }
   }
 }
