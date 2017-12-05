@@ -30,10 +30,10 @@ final class IssueMilestoneCell: SelectableCell {
         progress.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.height.equalTo(6)
-            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
             // fit to gutter on all iphones, cap in landscape or ipad
-            make.width.equalTo(300)
-            make.right.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.gutter)
+            make.width.lessThanOrEqualTo(300).priority(.required)
+            make.right.equalTo(-Styles.Sizes.gutter)
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
         }
     }
 
