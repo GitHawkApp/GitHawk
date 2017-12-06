@@ -9,6 +9,7 @@
 import Foundation
 import StoreKit
 import IGListKit
+import Crashlytics
 
 final class RatingToken: NSObject, ListDiffable {
 
@@ -57,10 +58,17 @@ final class RatingController {
     class func prompt(_ type: Prompt) {
         guard canPrompt(.system) else { return }
 
+        let typeString: String
         switch type {
-        case .system: requestSystem()
-        case .inFeed: openAppStore()
+        case .system:
+            typeString = "system"
+            requestSystem()
+        case .inFeed:
+            typeString = "in-feed"
+            openAppStore()
         }
+
+        Answers.logCustomEvent(withName: "rating-prompt", customAttributes: ["type": typeString])
     }
 
     // MARK: Private API
