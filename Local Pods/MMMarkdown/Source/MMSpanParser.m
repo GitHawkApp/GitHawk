@@ -80,8 +80,8 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     
     for (NSNumber *alignment in columns)
     {
-        [scanner skipWhitespace];
-        
+//        [scanner skipWhitespace];
+
         NSUInteger startLocation = scanner.location;
         NSArray *spans = scanner.nextCharacter == '|' ? @[] : [self _parseWithScanner:scanner untilTestPasses:^ BOOL {
             [scanner skipWhitespace];
