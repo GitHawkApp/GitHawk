@@ -12,12 +12,11 @@ import IGListKit
 extension File: ListDiffable {
 
     func diffIdentifier() -> NSObjectProtocol {
-        return sha as NSObjectProtocol
+        return (filename + sha) as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? File else { return false }
         // assume that if the sha is the same, its the same patch
         return true
     }
