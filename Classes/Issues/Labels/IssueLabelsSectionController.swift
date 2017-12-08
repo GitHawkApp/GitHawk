@@ -18,6 +18,7 @@ final class IssueLabelsSectionController: ListBindingSectionController<IssueLabe
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
+        inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
         dataSource = self
     }
 
