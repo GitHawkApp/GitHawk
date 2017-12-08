@@ -10,10 +10,8 @@ import UIKit
 import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
-    ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate {
+    ListBindingSectionControllerDataSource {
 
-    private var expanded = false
     private let issueModel: IssueDetailsModel
     private let client: GithubClient
     private var labelsOverride: [RepositoryLabel]?
@@ -22,7 +20,6 @@ ListBindingSectionControllerSelectionDelegate {
         self.issueModel = issueModel
         self.client = client
         super.init()
-        selectionDelegate = self
         dataSource = self
     }
 
@@ -36,16 +33,12 @@ ListBindingSectionControllerSelectionDelegate {
 
         // use override labels when available
         let labels = (labelsOverride ?? self.object?.labels ?? [])
-        let colors = labels.map { UIColor.fromHex($0.color) }
 
         // avoid an empty summary cell
         if labels.count > 0 {
-            viewModels.append(IssueLabelSummaryModel(colors: colors))
+            viewModels.append(IssueLabelSummaryModel(labels: labels))
         }
-        if expanded {
-            viewModels += labels as [ListDiffable]
-        }
-
+        
         return viewModels
     }
 
@@ -56,7 +49,26 @@ ListBindingSectionControllerSelectionDelegate {
         ) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        
+        let labels = (labelsOverride ?? self.object?.labels ?? [])
+        
+        var labelTextTotalWidth = CGFloat()
+        for label in labels {
+            let fontAttributes = [NSAttributedStringKey.font: Styles.Fonts.smallTitle]
+            let labelStringWidth = (label.name as NSString).size(withAttributes: fontAttributes).width
+            let labelHorizontalPadding: CGFloat = Styles.Sizes.labelTextPadding * 2
+            labelTextTotalWidth += (labelStringWidth + labelHorizontalPadding)
+        }
+        let labelInteritemSpacing = labels.count > 1 ? CGFloat(labels.count - 1) * Styles.Sizes.labelSpacing : 0.0
+        labelTextTotalWidth += labelInteritemSpacing
+        
+        let labelListViewWidth = width - (2 * Styles.Sizes.gutter)
+        let labelRows = ceil(labelTextTotalWidth / labelListViewWidth)
+        let rowSpacing = labelRows > 1 ? (labelRows - 1) * Styles.Sizes.labelSpacing : 0.0
+        let labelListViewVerticalPadding: CGFloat = Styles.Sizes.labelSpacing * 2
+        let totalLabelsCellheight = (Styles.Sizes.labelRowHeight * labelRows) + rowSpacing + labelListViewVerticalPadding
+        
+        return CGSize(width: width, height: totalLabelsCellheight)
     }
 
     func sectionController(
@@ -66,28 +78,8 @@ ListBindingSectionControllerSelectionDelegate {
         ) -> UICollectionViewCell & ListBindable {
         guard let context = self.collectionContext
             else { fatalError("Collection context must be set") }
-
-        let cellClass: AnyClass
-        switch viewModel {
-        case is IssueLabelSummaryModel: cellClass = IssueLabelSummaryCell.self
-        default: cellClass = IssueLabelCell.self
-        }
-
-        guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+        guard let cell = context.dequeueReusableCell(of: IssueLabelSummaryCell.self, for: self, at: index) as? IssueLabelSummaryCell
             else { fatalError("Cell not bindable") }
         return cell
     }
-
-    // MARK: ListBindingSectionControllerSelectionDelegate
-
-    func sectionController(
-        _ sectionController: ListBindingSectionController<ListDiffable>,
-        didSelectItemAt index: Int,
-        viewModel: Any
-        ) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
-        expanded = !expanded
-        update(animated: true)
-    }
-
 }

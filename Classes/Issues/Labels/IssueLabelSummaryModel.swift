@@ -11,12 +11,18 @@ import IGListKit
 
 final class IssueLabelSummaryModel: ListDiffable {
 
-    let title = NSLocalizedString("Labels:", comment: "")
-    let colors: [UIColor]
+    let labels: [RepositoryLabel]
     let _diffIdentifier: String
+    
+    
+    // quicker comparison for diffing rather than scanning the labels array
+    private let labelSummary: String
 
-    init(colors: [UIColor]) {
-        self.colors = colors
+    init(labels: [RepositoryLabel]) {
+        self.labels = labels
+        labelSummary = labels.reduce("", { $0 + $1.name })
+        
+        let colors = labels.map { UIColor.fromHex($0.color) }
         _diffIdentifier = colors.reduce("") { $0 + $1.description }
     }
 
@@ -29,7 +35,7 @@ final class IssueLabelSummaryModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueLabelSummaryModel else { return false }
-        return title == object.title
+        return labelSummary == object.labelSummary
     }
 
 }
