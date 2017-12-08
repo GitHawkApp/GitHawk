@@ -14,27 +14,19 @@ final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
 
     static let reuse = "cell"
 
-    private let label = UILabel()
-    private let labelDotView = DotListView(dotSize: CGSize(width: 15, height: 15))
-    private var colors = [UIColor]()
+    private let labelListView = LabelListView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-
-        label.font = Styles.Fonts.secondary
-        label.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
-        }
-
-        contentView.addSubview(labelDotView)
-        labelDotView.snp.makeConstraints { make in
-            make.left.equalTo(label.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.top.bottom.right.equalTo(contentView)
+        
+        contentView.addSubview(labelListView)
+        labelListView.snp.makeConstraints { make in
+            make.left.equalTo(contentView).offset(Styles.Sizes.gutter)
+            make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
+            make.top.equalTo(contentView).offset(Styles.Sizes.labelSpacing)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.labelSpacing)
         }
     }
 
@@ -51,8 +43,7 @@ final class IssueLabelSummaryCell: UICollectionViewCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueLabelSummaryModel else { return }
-        label.text = viewModel.title
-        labelDotView.configure(colors: viewModel.colors)
+        labelListView.configure(labels: viewModel.labels)
     }
 
     // MARK: Accessibility

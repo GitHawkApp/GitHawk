@@ -43,7 +43,10 @@ enum Styles {
             right: Styles.Sizes.gutter
         )
         static let labelEventHeight: CGFloat = 30
-
+        static let labelRowHeight: CGFloat = 18
+        static let labelSpacing: CGFloat = 4
+        static let labelTextPadding: CGFloat = 4
+        
         enum Text {
             static let body: CGFloat = 16
             static let secondary: CGFloat = 13
