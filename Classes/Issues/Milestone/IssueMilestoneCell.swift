@@ -12,6 +12,7 @@ import SnapKit
 final class IssueMilestoneCell: SelectableCell {
 
     private let titleLabel = UILabel()
+    private let progress = UIProgressView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,18 @@ final class IssueMilestoneCell: SelectableCell {
             make.centerY.equalTo(contentView)
             make.left.equalTo(Styles.Sizes.gutter)
         }
+
+        progress.progressTintColor = Styles.Colors.Green.medium.color
+        progress.trackTintColor = Styles.Colors.Gray.border.color
+        contentView.addSubview(progress)
+        progress.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.height.equalTo(6)
+            // fit to gutter on all iphones, cap in landscape or ipad
+            make.width.lessThanOrEqualTo(300).priority(.required)
+            make.right.equalTo(-Styles.Sizes.gutter)
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +43,7 @@ final class IssueMilestoneCell: SelectableCell {
 
     // MARK: Public API
 
-    func configure(title: String) {
+    func configure(milestone: Milestone) {
         let milestoneAttributes = [
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color,
             NSAttributedStringKey.font: Styles.Fonts.secondary
@@ -43,8 +56,10 @@ final class IssueMilestoneCell: SelectableCell {
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
             NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
-        titleText.append(NSAttributedString(string: title, attributes: titleAttributes))
+        titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
+
+        progress.progress = Float(milestone.openIssueCount) / Float(milestone.totalIssueCount)
     }
 
 }

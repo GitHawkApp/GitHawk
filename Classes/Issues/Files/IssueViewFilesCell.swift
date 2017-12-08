@@ -11,14 +11,11 @@ import SnapKit
 
 final class IssueViewFilesCell: SelectableCell {
 
-    let label = UILabel()
+    private let label = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.text = NSLocalizedString("View Files", comment: "")
-        label.font = Styles.Fonts.secondary
-        label.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
@@ -28,6 +25,40 @@ final class IssueViewFilesCell: SelectableCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public API
+
+    func configure(changes: FileChanges) {
+        let attributedText = NSMutableAttributedString()
+
+        let actionFormat = NSLocalizedString("View Files (%zi) ", comment: "")
+        attributedText.append(NSAttributedString(
+            string: .localizedStringWithFormat(actionFormat, changes.changedFiles),
+            attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Blue.medium.color
+            ]
+        ))
+        if changes.additions > 0 {
+            attributedText.append(NSAttributedString(
+                string: "+\(changes.additions) ", // note trailing space
+                attributes: [
+                    .font: Styles.Fonts.secondaryBold,
+                    .foregroundColor: Styles.Colors.Green.medium.color
+                ]
+            ))
+        }
+        if changes.deletions > 0 {
+            attributedText.append(NSAttributedString(
+                string: "-\(changes.deletions)",
+                attributes: [
+                    .font: Styles.Fonts.secondaryBold,
+                    .foregroundColor: Styles.Colors.Red.medium.color
+                ]
+            ))
+        }
+        label.attributedText = attributedText
     }
 
 }
