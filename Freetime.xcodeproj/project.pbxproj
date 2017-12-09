@@ -190,6 +190,7 @@
 		2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069C1F0EDEAD003A6BFB /* IssueCommentTableCell.swift */; };
 		2974069F1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */; };
 		297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297406A01F0EE51E003A6BFB /* MMElement+Table.swift */; };
+		29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29764C131FDC4DB60095FF95 /* SettingsLabel.swift */; };
 		297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372B1F1700BC0081C04E /* IssueRequestModel.swift */; };
 		297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372D1F17018F0081C04E /* IssueRequestCell.swift */; };
 		297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */; };
@@ -590,6 +591,7 @@
 		2974069C1F0EDEAD003A6BFB /* IssueCommentTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentTableCell.swift; sourceTree = "<group>"; };
 		2974069E1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentTableCollectionCell.swift; sourceTree = "<group>"; };
 		297406A01F0EE51E003A6BFB /* MMElement+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MMElement+Table.swift"; sourceTree = "<group>"; };
+		29764C131FDC4DB60095FF95 /* SettingsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabel.swift; sourceTree = "<group>"; };
 		297A372B1F1700BC0081C04E /* IssueRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestModel.swift; sourceTree = "<group>"; };
 		297A372D1F17018F0081C04E /* IssueRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestCell.swift; sourceTree = "<group>"; };
 		297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestSectionController.swift; sourceTree = "<group>"; };
@@ -1537,6 +1539,7 @@
 				29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */,
 				292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */,
 				297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */,
+				29764C131FDC4DB60095FF95 /* SettingsLabel.swift */,
 				292FF8AD1F2FD4A8009E63F7 /* SettingsViewController.swift */,
 			);
 			path = Settings;
@@ -2262,6 +2265,7 @@
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
 				292FA33F1FBCE4D000BBB0BB /* GithubClient+Milestones.swift in Sources */,
 				2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */,
+				29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */,
 				2974069F1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift in Sources */,
 				2974069B1F0EDC7C003A6BFB /* IssueCommentTableModel.swift in Sources */,
 				292FCB0A1EDFCC510026635E /* IssueCommentTextCell.swift in Sources */,
