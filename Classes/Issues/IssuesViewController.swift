@@ -449,7 +449,7 @@ FlatCacheListener {
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
-        case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
+        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
