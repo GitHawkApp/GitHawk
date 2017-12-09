@@ -60,9 +60,10 @@ NewIssueTableViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+
         makeBackBarItemEmpty()
 
-//        automaticallyAdjustsChildScrollViewInsets = false
         dataSource = self
         delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
