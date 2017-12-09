@@ -87,6 +87,7 @@ enum Styles {
             static var h4: CGFloat { return size(18) }
             static var h5: CGFloat { return size(16) }
             static var h6: CGFloat { return size(16) }
+            static var code: CGFloat { return size(14) }
 
         }
 

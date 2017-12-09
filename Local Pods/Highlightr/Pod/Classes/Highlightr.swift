@@ -55,7 +55,7 @@ open class Highlightr
             return nil
         }
         
-        guard setTheme(to: "pojoaque") else
+        guard setTheme(to: "pojoaque", fontSize: 14) else
         {
             return nil
         }
@@ -70,16 +70,15 @@ open class Highlightr
      - returns: true if it was possible to set the given theme, false otherwise
      */
     @discardableResult
-    open func setTheme(to name: String) -> Bool
+    open func setTheme(to name: String, fontSize: CGFloat) -> Bool
     {
         guard let defTheme = bundle.path(forResource: name+".min", ofType: "css") else
         {
             return false
         }
         let themeString = try! String.init(contentsOfFile: defTheme)
-        theme =  Theme(themeString: themeString)
+        theme =  Theme(themeString: themeString, fontSize: fontSize)
 
-        
         return true
     }
     
