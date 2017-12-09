@@ -10,11 +10,14 @@ import UIKit
 import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
-ListBindingSectionControllerDataSource {
+ListBindingSectionControllerDataSource,
+ListBindingSectionControllerSelectionDelegate {
 
+    private let issue: IssueDetailsModel
     private var sizeCache = [String: CGSize]()
 
-    override init() {
+    init(issue: IssueDetailsModel) {
+        self.issue = issue
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
@@ -59,5 +62,13 @@ ListBindingSectionControllerDataSource {
             else { fatalError("Missing context or wrong cell") }
         return cell
     }
+
+    // MARK: ListBindingSectionControllerSelectionDelegate
+
+    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
+        guard let viewModel = viewModel as? RepositoryLabel else { return }
+        viewController?.presentLabels(owner: issue.owner, repo: issue.repo, label: viewModel.name)
+    }
+
 }
 

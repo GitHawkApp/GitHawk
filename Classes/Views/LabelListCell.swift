@@ -29,8 +29,11 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
         
-        layer.cornerRadius = 3.0
+        layer.cornerRadius = Styles.Sizes.avatarCornerRadius
         
         nameLabel.font = LabelListCell.font
         contentView.addSubview(nameLabel)
@@ -63,4 +66,14 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         nameLabel.text = label.name
         nameLabel.textColor = color.textOverlayColor
     }
+
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
+    }
+    
 }
