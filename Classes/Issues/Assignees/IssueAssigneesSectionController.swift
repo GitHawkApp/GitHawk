@@ -59,7 +59,11 @@ ListBindingSectionControllerSelectionDelegate {
         ) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
+            height: max(Styles.Sizes.icon.height, Styles.Sizes.Text.secondary)
+        )
     }
 
     func sectionController(
