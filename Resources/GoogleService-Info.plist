@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>604974211073-rc9av7h3ckf512uf0avfm0nkraf8drri.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.604974211073-rc9av7h3ckf512uf0avfm0nkraf8drri</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB88ccfv2ymVFOu05aaNg6Ll_G50asRaIE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>604974211073</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.whoisryannystrom.freetime</string>
+	<key>PROJECT_ID</key>
+	<string>githawk-4c33b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>githawk-4c33b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:604974211073:ios:82c9bd1b84fa9460</string>
+	<key>DATABASE_URL</key>
+	<string>https://githawk-4c33b.firebaseio.com</string>
+</dict>
+</plist>

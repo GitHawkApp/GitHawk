@@ -18,9 +18,9 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         return (string as NSString).size(withAttributes: [
             .font: font
             ]).resized(inset: UIEdgeInsets(
-                top: 0,
+                top: 1,
                 left: Styles.Sizes.labelTextPadding,
-                bottom: 0,
+                bottom: 1,
                 right: Styles.Sizes.labelTextPadding)
         )
     }
@@ -33,14 +33,12 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
         
-        layer.cornerRadius = Styles.Sizes.avatarCornerRadius
+        contentView.layer.cornerRadius = Styles.Sizes.labelCornerRadius
         
         nameLabel.font = LabelListCell.font
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(contentView).offset(Styles.Sizes.labelTextPadding)
-            make.right.equalTo(contentView).offset(-Styles.Sizes.labelTextPadding)
-            make.centerY.equalTo(contentView)
+            make.center.equalTo(contentView)
         }
     }
     
@@ -53,7 +51,7 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? RepositoryLabel else { return }
         let color = UIColor.fromHex(viewModel.color)
-        backgroundColor = color
+        contentView.backgroundColor = color
         nameLabel.text = viewModel.name
         nameLabel.textColor = color.textOverlayColor
     }

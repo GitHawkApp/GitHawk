@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueViewFilesCell: SelectableCell {
+final class IssueViewFilesCell: UICollectionViewCell {
 
     private let label = UILabel()
 

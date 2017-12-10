@@ -19,6 +19,7 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
+        minimumLineSpacing = Styles.Sizes.rowSpacing/2
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -59,7 +60,11 @@ ListBindingSectionControllerSelectionDelegate {
         ) -> CGSize {
         guard let width = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
+            height: max(Styles.Sizes.icon.height, Styles.Fonts.secondary.lineHeight)
+        )
     }
 
     func sectionController(

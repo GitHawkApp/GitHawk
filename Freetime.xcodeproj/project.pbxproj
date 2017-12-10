@@ -128,6 +128,7 @@
 		293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */; };
 		293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */; };
 		293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */; };
+		294002411FDD9E8400950167 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 294002401FDD9E8400950167 /* GoogleService-Info.plist */; };
 		29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29416BF81F1138B700D03E1A /* OauthLogin.storyboard */; };
 		29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */; };
 		29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */; };
@@ -296,6 +297,7 @@
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
 		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
+		29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */; };
 		29D548CB1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */; };
 		29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8DF021FBBD72A00C486C2 /* IssueManagingActionModel.swift */; };
 		29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */; };
@@ -527,6 +529,7 @@
 		293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitSectionController.swift; sourceTree = "<group>"; };
 		293B58521EF808DA001D067D /* IssueCommentUnsupportedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentUnsupportedModel.swift; sourceTree = "<group>"; };
 		293B58541EF80908001D067D /* IssueCommentUnsupportedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentUnsupportedCell.swift; sourceTree = "<group>"; };
+		294002401FDD9E8400950167 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29416BF81F1138B700D03E1A /* OauthLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OauthLogin.storyboard; sourceTree = "<group>"; };
 		29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSplashViewController.swift; sourceTree = "<group>"; };
 		29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+QueryItemValue.swift"; sourceTree = "<group>"; };
@@ -706,6 +709,7 @@
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
 		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
+		29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEmptyMessageClient.swift; sourceTree = "<group>"; };
 		29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+TitleSubtitle.swift"; sourceTree = "<group>"; };
 		29D8DF021FBBD72A00C486C2 /* IssueManagingActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingActionModel.swift; sourceTree = "<group>"; };
 		29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLoadingView.swift; sourceTree = "<group>"; };
@@ -1474,6 +1478,7 @@
 				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
 				98F0A0421F27BC4B0062A2CA /* emoji.json */,
 				29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */,
+				294002401FDD9E8400950167 /* GoogleService-Info.plist */,
 				297AE8731EC0D5C200B44A1F /* Info.plist */,
 				297AE86F1EC0D5C200B44A1F /* LaunchScreen.storyboard */,
 				29A195061EC7601000C3E289 /* Localizable.stringsdict */,
@@ -1573,6 +1578,7 @@
 				290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */,
 				29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */,
 				297DD5E21F06922A006E7E63 /* NotificationClient.swift */,
+				29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */,
 				295C31C61F09E62600521CED /* NotificationNextPageCell.swift */,
 				295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */,
 				29A195101EC7AC9500C3E289 /* NotificationRepoCell.swift */,
@@ -1915,6 +1921,7 @@
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 				98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */,
 				292FA3371FBCDA8800BBB0BB /* Milestones.storyboard in Resources */,
+				294002411FDD9E8400950167 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1971,6 +1978,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
@@ -1984,6 +1992,8 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1993,6 +2003,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
@@ -2006,6 +2017,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2072,6 +2085,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
@@ -2085,6 +2099,8 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2095,6 +2111,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
@@ -2108,6 +2125,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2468,6 +2487,7 @@
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
+				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,

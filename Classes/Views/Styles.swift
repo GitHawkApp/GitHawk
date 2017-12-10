@@ -16,8 +16,10 @@ enum Styles {
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
+        static let buttonTopPadding: CGFloat = 2
         static let barButton = CGRect(x: 0, y: 0, width: 30, height: 44)
         static let avatarCornerRadius: CGFloat = 3
+        static let labelCornerRadius: CGFloat = 2
         static let columnSpacing: CGFloat = 8
         static let rowSpacing: CGFloat = 8
         static let cellSpacing: CGFloat = 15
