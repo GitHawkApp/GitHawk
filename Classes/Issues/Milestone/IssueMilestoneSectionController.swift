@@ -22,7 +22,7 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
         return CGSize(
             width: width,
-            height: Styles.Sizes.Text.secondary
+            height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 
@@ -35,7 +35,6 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
     }
 
     override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
         guard let number = object?.number else { return }
         viewController?.presentMilestone(owner: issueModel.owner, repo: issueModel.repo, milestone: number)
     }

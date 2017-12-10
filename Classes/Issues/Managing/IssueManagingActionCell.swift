@@ -23,12 +23,12 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         let tint = Styles.Colors.Blue.medium.color
 
         imageView.tintColor = tint
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .center
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonIcon)
             make.centerX.equalTo(contentView)
-            make.centerY.equalTo(contentView).offset(-10)
+            make.top.equalTo(contentView)
         }
 
         label.textColor = tint

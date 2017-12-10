@@ -22,7 +22,10 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

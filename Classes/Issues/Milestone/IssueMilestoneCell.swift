@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueMilestoneCell: SelectableCell {
+final class IssueMilestoneCell: UICollectionViewCell {
 
     private let titleLabel = UILabel()
     private let progress = UIProgressView()
