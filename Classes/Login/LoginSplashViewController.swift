@@ -78,7 +78,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         } else {
             guard let safariController = try? SFSafariViewController.configured(with: loginURL) else { return }
             self.safariController = safariController
-            present(safariController, animated: true)
+            present(safariController, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -107,7 +107,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
             })
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
@@ -126,7 +126,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
             preferredStyle: .alert
         )
         alert.addAction(AlertAction.ok())
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
@@ -139,7 +139,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     // MARK: GithubSessionListener
 
     func didReceiveRedirect(manager: GithubSessionManager, code: String) {
-        safariController?.dismiss(animated: true)
+        safariController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         state = .fetchingToken
 
         client.requestAccessToken(code: code) { result in

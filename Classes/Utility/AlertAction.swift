@@ -41,7 +41,7 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
             buildActivityBlock?(activityController)
-            self.rootViewController?.present(activityController, animated: true)
+            self.rootViewController?.present(activityController, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -62,7 +62,7 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
-            self.rootViewController?.present(nav, animated: true)
+            self.rootViewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
         }
     }
 

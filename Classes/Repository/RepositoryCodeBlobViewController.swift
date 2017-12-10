@@ -89,7 +89,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
         activityController.popoverPresentationController?.barButtonItem = sender
 
-        present(activityController, animated: true)
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch() {

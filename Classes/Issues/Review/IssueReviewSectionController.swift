@@ -139,7 +139,7 @@ IssueReviewViewCommentsCellDelegate {
 
     func didTapViewComments(cell: IssueReviewViewCommentsCell) {
         let controller = PullRequestReviewCommentsViewController(model: model, client: client)
-        viewController?.navigationController?.pushViewController(controller, animated: true)
+        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

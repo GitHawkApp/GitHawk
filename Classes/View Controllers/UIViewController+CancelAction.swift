@@ -16,7 +16,7 @@ extension UIViewController {
         message: String
         ) {
         let dismissBlock = {
-            self.dismiss(animated: true)
+            self.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
         // dismiss if all text entries are empty
@@ -31,7 +31,7 @@ extension UIViewController {
                     dismissBlock()
                 }
                 ])
-            present(alert, animated: true)
+            present(alert, animated: trueUnlessReduceMotionEnabled)
         }
     }
 

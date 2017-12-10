@@ -56,9 +56,9 @@ ListSingleSectionControllerDelegate {
             } else {
                 self.files = files
             }
-            update(page: next as NSNumber?, animated: true)
+            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
         case .error:
-            error(animated: true)
+            error(animated: trueUnlessReduceMotionEnabled)
         }
     }
 

@@ -108,7 +108,7 @@ PeopleViewControllerDelegate {
         nav.modalPresentationStyle = .popover
         nav.popoverPresentationController?.sourceView = cell
         nav.popoverPresentationController?.sourceRect = cell.bounds
-        viewController?.present(nav, animated: true)
+        viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -179,7 +179,7 @@ PeopleViewControllerDelegate {
         didSelectItemAt index: Int,
         viewModel: Any
         ) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
         
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
@@ -191,7 +191,7 @@ PeopleViewControllerDelegate {
             cell.animate(expanded: expanded)
 
             updating = true
-            update(animated: true, completion: { [weak self] _ in
+            update(animated: trueUnlessReduceMotionEnabled, completion: { [weak self] _ in
                 self?.updating = false
             })
         } else if viewModel === Action.labels {

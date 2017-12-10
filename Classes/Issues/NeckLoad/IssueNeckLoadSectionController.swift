@@ -36,7 +36,7 @@ final class IssueNeckLoadSectionController: ListSectionController {
 
     override func didSelectItem(at index: Int) {
         delegate?.didSelect(sectionController: self)
-        collectionContext?.performBatch(animated: true, updates: { context in
+        collectionContext?.performBatch(animated: trueUnlessReduceMotionEnabled, updates: { context in
             self.loadingOverride = true
             context.reload(self)
         })

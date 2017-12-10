@@ -39,7 +39,7 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
 
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
 
         let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
         viewController?.show(controller, sender: nil)

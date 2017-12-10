@@ -45,7 +45,7 @@ final class ShowMoreDetailsLabel: UILabel {
             UIMenuItem(title: detailText, action: #selector(ShowMoreDetailsLabel.empty))
         ]
         menu.setTargetRect(bounds, in: self)
-        menu.setMenuVisible(true, animated: true)
+        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func empty() {}

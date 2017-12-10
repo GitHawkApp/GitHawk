@@ -65,7 +65,7 @@ FlatCacheListener {
     @objc func onViewAll() {
         let controller = NotificationsViewController(client: client, showRead: true)
         controller.title = NSLocalizedString("Archives", comment: "")
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func resetLeftBarItem() {
@@ -124,7 +124,7 @@ FlatCacheListener {
             AlertAction.cancel()
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
@@ -137,7 +137,7 @@ FlatCacheListener {
             }
             rebuildAndUpdate(ids: ids, append: append, page: next as NSNumber?, animated: animated)
         case .error:
-            error(animated: true)
+            error(animated: trueUnlessReduceMotionEnabled)
             ToastManager.showNetworkError()
         }
 
@@ -170,7 +170,7 @@ FlatCacheListener {
         } else {
             let first = 1
             client.requestNotifications(all: showRead, page: first, width: width) { [weak self] result in
-                self?.handle(result: result, append: false, animated: true, page: first)
+                self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
             }
         }
     }
@@ -225,13 +225,13 @@ FlatCacheListener {
 
     func ratingNeedsDismiss(sectionController: RatingSectionController) {
         ratingToken = nil
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: TabNavRootViewControllerType
 
     func didSingleTapTab() {
-        feed.collectionView.scrollToTop(animated: true)
+        feed.collectionView.scrollToTop(animated: trueUnlessReduceMotionEnabled)
     }
 
     func didDoubleTapTab() {}
@@ -240,7 +240,7 @@ FlatCacheListener {
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
         switch update {
-        case .item: self.update(animated: true)
+        case .item: self.update(animated: trueUnlessReduceMotionEnabled)
         case .list: break
         }
     }

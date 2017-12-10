@@ -127,7 +127,7 @@ NewIssueTableViewControllerDelegate {
         ])
         alert.popoverPresentationController?.setSourceView(sender)
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: PageboyViewControllerDataSource

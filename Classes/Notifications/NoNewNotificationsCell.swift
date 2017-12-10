@@ -22,7 +22,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         emojiLabel.text = "🎉"
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
-        emojiLabel.font = UIFont.systemFont(ofSize: 60)
+        emojiLabel.font = .systemFont(ofSize: 60)
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerX.equalTo(contentView)
@@ -99,12 +99,13 @@ final class NoNewNotificationsCell: UICollectionViewCell {
     // MARK: Private API
 
     @objc private func resetAnimations() {
+        guard trueUnlessReduceMotionEnabled else { return }
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         let duration: TimeInterval = 1
 
         let emojiBounce = CABasicAnimation(keyPath: "transform.translation.y")
         emojiBounce.toValue = -10
-        emojiBounce.repeatCount = Float.greatestFiniteMagnitude
+        emojiBounce.repeatCount = .greatestFiniteMagnitude
         emojiBounce.autoreverses = true
         emojiBounce.duration = duration
         emojiBounce.timingFunction = timingFunction
@@ -113,7 +114,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         let shadowScale = CABasicAnimation(keyPath: "transform.scale")
         shadowScale.toValue = 0.9
-        shadowScale.repeatCount = Float.greatestFiniteMagnitude
+        shadowScale.repeatCount = .greatestFiniteMagnitude
         shadowScale.autoreverses = true
         shadowScale.duration = duration
         shadowScale.timingFunction = timingFunction

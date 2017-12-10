@@ -73,10 +73,10 @@ ListSingleSectionControllerDelegate {
         ) { [weak self] (result) in
             switch result {
             case .error:
-                self?.error(animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let files):
                 self?.files = files
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -139,7 +139,7 @@ ListSingleSectionControllerDelegate {
                 path: next
             )
         }
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

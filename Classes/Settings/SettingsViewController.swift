@@ -64,7 +64,7 @@ NewIssueTableViewControllerDelegate {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        func deselectRow() { tableView.deselectRow(at: indexPath, animated: true) }
+        func deselectRow() { tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled) }
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
@@ -128,7 +128,7 @@ NewIssueTableViewControllerDelegate {
         viewController.delegate = self
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .formSheet
-        present(navController, animated: true)
+        present(navController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func onViewSource() {
@@ -151,7 +151,7 @@ NewIssueTableViewControllerDelegate {
             }
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func signout() {
