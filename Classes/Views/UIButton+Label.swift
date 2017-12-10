@@ -22,7 +22,7 @@ extension UIButton {
         accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
         titleLabel?.font = Styles.Fonts.smallTitle
-        layer.cornerRadius = Styles.Sizes.avatarCornerRadius
+        layer.cornerRadius = Styles.Sizes.labelCornerRadius
         clipsToBounds = true
 
         let magnitude: CGFloat = 2

@@ -68,7 +68,7 @@ final class IssueLabeledModel: ListDiffable {
         attributedString.append(NSAttributedString(
             string: title,
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Fonts.smallTitle,
                 .backgroundColor: labelColor,
                 .foregroundColor: labelColor.textOverlayColor ?? .black,
                 .baselineOffset: 1, // offset for better rounded background colors
