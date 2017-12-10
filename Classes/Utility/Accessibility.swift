@@ -28,8 +28,11 @@ enum AccessibilityHelper {
 
 private extension AccessibilityHelper {
     static func generatedLabel(forContentViewContainer cell: ContentViewContaining) -> String {
-        return cell.contentView.subviews
-            .flatMap { $0.accessibilityLabel }
-            .reduce("") { "\($0).\n\($1)" }
+        let labels = cell.contentView.subviews.flatMap { $0.accessibilityLabel }
+        if labels.count == 1, let label = labels.first {
+            return label
+        } else {
+            return labels.reduce("") { "\($0).\n\($1)" }
+        }
     }
 }
