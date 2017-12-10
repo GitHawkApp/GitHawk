@@ -46,7 +46,7 @@ FlatCacheListener {
             let hidden: Bool
             if let id = resultID,
                 let result = self.client.cache.get(id: id) as IssueResult? {
-                hidden = result.status.locked && !result.viewerCanUpdate
+                hidden = result.status.locked && !viewerIsCollaborator
 
                 let bookmark = Bookmark(
                     type: result.pullRequest ? .pullRequest : .issue,
@@ -257,7 +257,7 @@ FlatCacheListener {
     }
 
     func closeAction() -> UIAlertAction? {
-        guard result?.viewerCanUpdate == true,
+        guard viewerIsCollaborator,
             let status = result?.status.status,
             status != .merged
             else { return nil }
@@ -269,7 +269,7 @@ FlatCacheListener {
     }
 
     func lockAction() -> UIAlertAction? {
-        guard result?.viewerCanUpdate == true, let locked = result?.status.locked else {
+        guard viewerIsCollaborator, let locked = result?.status.locked else {
             return nil
         }
 
