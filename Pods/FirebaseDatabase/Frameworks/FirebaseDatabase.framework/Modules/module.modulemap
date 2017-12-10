@@ -1,0 +1,10 @@
+framework module FirebaseDatabase {
+  umbrella header "FirebaseDatabase.h"
+  export *
+  module * { export *}
+  link "c++"
+  link "icucore"
+  link "z"
+  link framework "CFNetwork"
+  link framework "Security"
+  link framework "SystemConfiguration"}
