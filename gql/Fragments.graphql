@@ -81,6 +81,8 @@ fragment milestoneFields on Milestone {
   title
   url
   dueOn
+  openCount: issues(states:[OPEN]) {totalCount}
+  totalCount: issues {totalCount}
 }
 
 fragment repoEventFields on Comment {

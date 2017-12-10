@@ -15,25 +15,19 @@ ListSingleSectionControllerDelegate {
 
     private let client: GithubClient
     private let branch: String
-    private let file: String
-    private let path: String
+    private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
-    private let isRoot: Bool
 
     init(
         client: GithubClient,
         repo: RepositoryDetails,
         branch: String,
-        path: String,
-        file: String,
-        isRoot: Bool
+        path: FilePath
         ) {
         self.client = client
         self.repo = repo
         self.branch = branch
-        self.isRoot = isRoot
-        self.file = file
         self.path = path
 
         super.init(
@@ -54,9 +48,8 @@ ListSingleSectionControllerDelegate {
             client: client,
             repo: repo,
             branch: branch,
-            path: "",
-            file: "", 
-            isRoot: true)
+            path: FilePath(components: [])
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -65,20 +58,19 @@ ListSingleSectionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.configure(title: file, subtitle: path)
+        navigationItem.configure(filePath: path)
         makeBackBarItemEmpty()
-    }
-
-    // MARK: Private API
-
-    var fullPath: String {
-        return path.isEmpty ? file : "\(path)/\(file)"
     }
 
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
-        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: fullPath) { [weak self] (result) in
+        client.fetchFiles(
+        owner: repo.owner,
+        repo: repo.name,
+        branch: branch,
+        path: path.path
+        ) { [weak self] (result) in
             switch result {
             case .error:
                 self?.error(animated: trueUnlessReduceMotionEnabled)
@@ -130,23 +122,21 @@ ListSingleSectionControllerDelegate {
 
     func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
         guard let file = object as? RepositoryFile else { return }
+        let next = path.appending(file.name)
         let controller: UIViewController
         if file.isDirectory {
             controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
                 branch: branch,
-                path: fullPath,
-                file: file.name,
-                isRoot: false
+                path: next
             )
         } else {
             controller = RepositoryCodeBlobViewController(
                 client: client,
                 repo: repo,
                 branch: branch,
-                path: fullPath,
-                filename: file.name
+                path: next
             )
         }
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)

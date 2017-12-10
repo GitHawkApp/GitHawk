@@ -26,8 +26,10 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueViewFilesCell.self, for: self, at: index)
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueViewFilesCell.self, for: self, at: index) as? IssueViewFilesCell,
+            let object = self.object
             else { fatalError("Missing collection context") }
+        cell.configure(changes: object.changes)
         return cell
     }
 
@@ -36,7 +38,7 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
 
         collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
 
-        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes)
+        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
         viewController?.show(controller, sender: nil)
     }
 

@@ -39,7 +39,10 @@ class DotListView: UIView, UICollectionViewDataSource {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = bounds
+        if collectionView.frame != bounds {
+            collectionView.frame = bounds
+            collectionView.reloadData()
+        }
     }
 
     // MARK: UICollectionViewDataSource
@@ -51,7 +54,7 @@ class DotListView: UIView, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelSummaryCell.reuse, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelDotCell.reuse, for: indexPath)
         cell.backgroundColor = colors[indexPath.item]
         return cell
     }

@@ -27,7 +27,7 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
         guard let cell = collectionContext?.dequeueReusableCell(of: IssueMilestoneCell.self, for: self, at: index) as? IssueMilestoneCell,
         let object = self.object
             else { fatalError("Missing context, cell wrong type, or missing object") }
-        cell.configure(title: object.title)
+        cell.configure(milestone: object)
         return cell
     }
 

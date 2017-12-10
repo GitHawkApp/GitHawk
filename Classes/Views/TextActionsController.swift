@@ -40,18 +40,9 @@ final class TextActionsController: NSObject,
     // MARK: Image Upload
 
     func displayUploadImage() {
-        guard let superview = textView?.superview else { return }
-
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .popover
-        imagePicker.popoverPresentationController?.canOverlapSourceViewRect = true
-
-        let sourceFrame = superview.frame
-        let sourceRect = CGRect(origin: CGPoint(x: sourceFrame.midX, y: sourceFrame.minY), size: CGSize(width: 1, height: 1))
-        imagePicker.popoverPresentationController?.sourceView = superview
-        imagePicker.popoverPresentationController?.sourceRect = sourceRect
-        imagePicker.popoverPresentationController?.permittedArrowDirections = .up
+        imagePicker.modalPresentationStyle = .formSheet
 
         viewController?.present(imagePicker, animated: trueUnlessReduceMotionEnabled)
     }

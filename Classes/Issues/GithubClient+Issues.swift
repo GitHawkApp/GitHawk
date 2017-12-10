@@ -108,7 +108,9 @@ extension GithubClient {
                         milestoneModel = Milestone(
                             number: milestone.number,
                             title: milestone.title,
-                            dueOn: dueOn
+                            dueOn: dueOn,
+                            openIssueCount: milestone.openCount.totalCount,
+                            totalIssueCount: milestone.totalCount.totalCount
                         )
                     } else {
                         milestoneModel = nil
@@ -131,7 +133,7 @@ extension GithubClient {
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository?.defaultBranchRef?.name ?? "master",
-                        changedFiles: issueType.changedFileCount
+                        fileChanges: issueType.fileChanges
                     )
 
                     DispatchQueue.main.async {

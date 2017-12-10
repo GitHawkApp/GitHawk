@@ -212,7 +212,7 @@ final class LabelLayoutManager: NSLayoutManager {
             return
         }
 
-        let rect = rectArray[0].insetBy(dx: -2, dy: 0)
+        let rect = rectArray[0].integral.insetBy(dx: -2, dy: 0)
         UIBezierPath(roundedRect: rect, cornerRadius: Styles.Sizes.avatarCornerRadius).fill()
     }
     

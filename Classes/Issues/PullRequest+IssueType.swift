@@ -55,8 +55,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return timeline.pageInfo.fragments.headPaging
     }
 
-    var changedFileCount: Int {
-        return changedFiles
+    var fileChanges: FileChanges? {
+        return FileChanges(additions: additions, deletions: deletions, changedFiles: changedFiles)
     }
 
     // FIXME: Super high cyclo complexity
