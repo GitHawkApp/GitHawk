@@ -17,6 +17,8 @@ pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Tabman', '~> 1.1'
+pod 'Firebase/Core'
+pod 'Firebase/Database' 
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'

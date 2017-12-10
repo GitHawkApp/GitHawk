@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireNetworkActivityIndicator
 import Fabric
 import Crashlytics
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // initialize a webview at the start so webview startup later on isn't so slow
         _ = UIWebView()
+        FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
         RatingController.applicationDidLaunch()
         flexController.configureWindow(window)
