@@ -294,6 +294,7 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
+		29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
 		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
@@ -706,6 +707,7 @@
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GithubDate.swift"; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
 		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
@@ -963,6 +965,7 @@
 				293189291F5397D400EF0911 /* Milestone */,
 				292EB08B1F1FF57B0046865D /* MilestoneEvent */,
 				29F7F05D1F2A833E00F6075D /* NeckLoad */,
+				29CCB28C1FDDFFDE00E23FA0 /* Parsing */,
 				292FF8B31F303BC8009E63F7 /* Preview */,
 				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
 				29C53FBD1F12EF4000A59ED5 /* Referenced */,
@@ -1392,6 +1395,7 @@
 				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
+				29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -1594,6 +1598,13 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		29CCB28C1FDDFFDE00E23FA0 /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
 		29DA1E7C1F5DF2960050C64B /* LoadMore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1700,21 +1711,21 @@
 		98835BCC1F1965C5005BA24F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				98F9F4021F9CD006005A0266 /* Image+Base64.swift */,
+				5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */,
 				75A0ACF41F79A82D0062D99A /* AlertAction.swift */,
 				75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */,
 				98835BD31F1A17EE005BA24F /* Bundle+Version.swift */,
+				DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */,
 				29A5AF421F926C600065D529 /* Filterable.swift */,
+				49FFF4331F9FC83200335568 /* HapticFeedback.swift */,
+				98F9F4021F9CD006005A0266 /* Image+Base64.swift */,
+				DC60C6DB1F99414E00241271 /* IsCancellationError.swift */,
+				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
 				7B7BBA3D1F8B752A00D6AEDA /* SearchQueryTokenizer.swift */,
+				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
-				DC60C6DB1F99414E00241271 /* IsCancellationError.swift */,
-				49FFF4331F9FC83200335568 /* HapticFeedback.swift */,
-				DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */,
-				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
-				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
-				5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2488,6 +2499,7 @@
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
+				29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
