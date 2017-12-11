@@ -965,7 +965,6 @@
 				293189291F5397D400EF0911 /* Milestone */,
 				292EB08B1F1FF57B0046865D /* MilestoneEvent */,
 				29F7F05D1F2A833E00F6075D /* NeckLoad */,
-				29CCB28C1FDDFFDE00E23FA0 /* Parsing */,
 				292FF8B31F303BC8009E63F7 /* Preview */,
 				294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */,
 				29C53FBD1F12EF4000A59ED5 /* Referenced */,
@@ -1596,13 +1595,6 @@
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
 			);
 			path = Notifications;
-			sourceTree = "<group>";
-		};
-		29CCB28C1FDDFFDE00E23FA0 /* Parsing */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Parsing;
 			sourceTree = "<group>";
 		};
 		29DA1E7C1F5DF2960050C64B /* LoadMore */ = {
