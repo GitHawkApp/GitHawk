@@ -71,10 +71,10 @@ FlatCacheListener {
     func resetLeftBarItem() {
         if !showRead {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Mark All", comment: ""),
+                image: UIImage(named: "check"),
                 style: .plain,
                 target: self,
-                action: #selector(NotificationsViewController.onMarkAll(sender:))
+                action: #selector(onMarkAll(sender:))
             )
         }
         updateUnreadState(count: notificationIDs.count)
