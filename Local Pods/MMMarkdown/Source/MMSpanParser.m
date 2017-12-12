@@ -373,7 +373,11 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
             // Can't end on a '.'
             [scanner beginTransaction];
             [scanner advance];
-            if ([boringChars characterIsMember:scanner.nextCharacter])
+
+            // search for ellipsis, used for github comparison urls
+            // http://peter.coffee/github-comparison-between-tags
+            unichar next = scanner.nextCharacter;
+            if (next == '.' || [boringChars characterIsMember:next])
             {
                 [scanner commitTransaction:YES];
             }
