@@ -66,7 +66,7 @@ final class IssueMilestoneEventModel: ListDiffable {
             ]
         ))
         attributedText.append(NSAttributedString(
-            string: "  \(date.agoString)",
+            string: " \(date.agoString)",
             attributes: [
                 .font: Styles.Fonts.secondary,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
