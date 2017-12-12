@@ -19,7 +19,6 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         super.init(frame: frame)
 
         emojiLabel.isAccessibilityElement = false
-        emojiLabel.text = "🎉"
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
         emojiLabel.font = .systemFont(ofSize: 60)
@@ -33,7 +32,6 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         contentView.layer.addSublayer(shadow)
 
         messageLabel.isAccessibilityElement = false
-        messageLabel.text = NSLocalizedString("Inbox zero!", comment: "")
         messageLabel.textAlignment = .center
         messageLabel.backgroundColor = .clear
         messageLabel.font = Styles.Fonts.body

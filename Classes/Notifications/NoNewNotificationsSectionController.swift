@@ -16,7 +16,13 @@ final class NoNewNotificationSectionController: ListSectionController {
     private let topLayoutGuide: UILayoutSupport
     private let bottomLayoutGuide: UILayoutSupport
     private let client = NotificationEmptyMessageClient()
-    private var message: NotificationEmptyMessageClient.Message?
+
+    enum State {
+        case loading
+        case success(NotificationEmptyMessageClient.Message)
+        case error
+    }
+    private var state: State = .loading
 
     init(topInset: CGFloat, topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
         self.topInset = topInset
@@ -24,13 +30,7 @@ final class NoNewNotificationSectionController: ListSectionController {
         self.bottomLayoutGuide = bottomLayoutGuide
         super.init()
         client.fetch { [weak self] (result) in
-            switch result {
-            case .success(let message):
-                self?.handle(message)
-            case .error(let error):
-                let msg = error?.localizedDescription ?? ""
-                Answers.logCustomEvent(withName: "fb-fetch-error", customAttributes: ["error": msg])
-            }
+            self?.handleFinished(result)
         }
     }
 
@@ -43,18 +43,33 @@ final class NoNewNotificationSectionController: ListSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: NoNewNotificationsCell.self, for: self, at: index) as? NoNewNotificationsCell
             else { fatalError("Missing context or cell is wrong type") }
-        if let message = self.message {
-            cell.configure(emoji: message.emoji, message: message.text)
-        }
+        configure(cell)
         return cell
     }
 
     // MARK: Private API
 
-    private func handle(_ message: NotificationEmptyMessageClient.Message) {
-        self.message = message
-        let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? NoNewNotificationsCell
-        cell?.configure(emoji: message.emoji, message: message.text)
+    private func configure(_ cell: NoNewNotificationsCell) {
+        switch state {
+        case .loading: break
+        case .success(let message): cell.configure(emoji: message.emoji, message: message.text)
+        case .error: cell.configure(emoji: "🎉", message: NSLocalizedString("Inbox zero!", comment: ""))
+        }
+    }
+
+    private func handleFinished(_ result: Result<NotificationEmptyMessageClient.Message>) {
+        switch result {
+        case .success(let message):
+            state = .success(message)
+        case .error(let error):
+            state = .error
+            let msg = error?.localizedDescription ?? ""
+            Answers.logCustomEvent(withName: "fb-fetch-error", customAttributes: ["error": msg])
+        }
+
+        guard let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? NoNewNotificationsCell
+            else { return }
+        configure(cell)
     }
 
 }
