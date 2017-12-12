@@ -33,6 +33,10 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
         
+        layer.borderColor = Styles.Colors.Gray.border.color.cgColor
+        layer.borderWidth = 1 / UIScreen.main.scale
+        
+        layer.cornerRadius = Styles.Sizes.labelCornerRadius
         contentView.layer.cornerRadius = Styles.Sizes.labelCornerRadius
         
         nameLabel.font = LabelListCell.font
