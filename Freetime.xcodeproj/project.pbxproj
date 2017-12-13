@@ -294,7 +294,6 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
-		29CCB2931FDE251B00E23FA0 /* StyledText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CCB2921FDE251B00E23FA0 /* StyledText.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
 		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
@@ -707,7 +706,6 @@
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		29CCB2921FDE251B00E23FA0 /* StyledText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledText.swift; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
 		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
@@ -1362,7 +1360,6 @@
 		297AE8651EC0D5C100B44A1F /* Systems */ = {
 			isa = PBXGroup;
 			children = (
-				29CCB2911FDE251100E23FA0 /* Strings */,
 				29316DC41ECC9841007CAE3F /* Alamofire+GithubAPI.swift */,
 				297AE8671EC0D5C200B44A1F /* AppDelegate.swift */,
 				290744B01F250A1D00FD9E48 /* Autocomplete */,
@@ -1595,14 +1592,6 @@
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
 			);
 			path = Notifications;
-			sourceTree = "<group>";
-		};
-		29CCB2911FDE251100E23FA0 /* Strings */ = {
-			isa = PBXGroup;
-			children = (
-				29CCB2921FDE251B00E23FA0 /* StyledText.swift */,
-			);
-			path = Strings;
 			sourceTree = "<group>";
 		};
 		29DA1E7C1F5DF2960050C64B /* LoadMore */ = {
@@ -2000,6 +1989,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SlackTextViewController/SlackTextViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/StyledText/StyledText.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
@@ -2025,6 +2015,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlackTextViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledText.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
@@ -2107,6 +2098,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SlackTextViewController/SlackTextViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/StyledText/StyledText.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
@@ -2133,6 +2125,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlackTextViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledText.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
@@ -2498,7 +2491,6 @@
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
-				29CCB2931FDE251B00E23FA0 /* StyledText.swift in Sources */,
 				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
 				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,

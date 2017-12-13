@@ -32,6 +32,7 @@ pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
 pod 'Highlightr', :path => 'Local Pods/Highlightr'
+pod 'StyledText', :path => 'Local Pods/StyledText'
 
 target 'Freetime' do
 

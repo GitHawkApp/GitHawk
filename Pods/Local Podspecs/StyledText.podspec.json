@@ -1,0 +1,23 @@
+{
+  "name": "StyledText",
+  "version": "0.1.0",
+  "license": {
+    "type": "MIT"
+  },
+  "homepage": "https://github.com/rnystrom/GitHawk",
+  "authors": {
+    "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
+  },
+  "summary": "NSAttributedString building..",
+  "source": {
+    "git": "https://github.com/rnystrom/GitHawk.git",
+    "tag": "#{s.version}"
+  },
+  "source_files": "StyledText/*.swift",
+  "platforms": {
+    "osx": null,
+    "ios": null,
+    "tvos": null,
+    "watchos": null
+  }
+}

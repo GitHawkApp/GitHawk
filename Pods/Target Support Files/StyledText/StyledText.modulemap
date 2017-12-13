@@ -1,0 +1,6 @@
+framework module StyledText {
+  umbrella header "StyledText-umbrella.h"
+
+  export *
+  module * { export * }
+}
