@@ -59,7 +59,7 @@ final class IssueMilestoneCell: UICollectionViewCell {
         titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
 
-        progress.progress = Float(milestone.openIssueCount) / Float(milestone.totalIssueCount)
+        progress.progress = Float(milestone.totalIssueCount - milestone.openIssueCount) / Float(milestone.totalIssueCount)
     }
 
 }
