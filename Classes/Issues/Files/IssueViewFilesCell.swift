@@ -15,6 +15,8 @@ final class IssueViewFilesCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
@@ -59,6 +61,14 @@ final class IssueViewFilesCell: UICollectionViewCell {
             ))
         }
         label.attributedText = attributedText
+        
+        accessibilityLabel = NSLocalizedString(
+            "View Files",
+            comment: "The accessibility label for the View Files button in a pull request.")
+        let hintFormat = NSLocalizedString(
+            "View %zi files with %zi additions and %zi deletions.",
+            comment: "The accessibility hint with details of the View Files button.")
+        accessibilityHint = .localizedStringWithFormat(hintFormat, changes.changedFiles, changes.additions, changes.deletions)
     }
 
 }
