@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public struct TextStyle: Hashable, Equatable {
 
@@ -38,6 +38,12 @@ public struct TextStyle: Hashable, Equatable {
             .combineHash(with: traits.rawValue)
             .combineHash(with: minSize)
             .combineHash(with: maxSize)
+    }
+
+    public func font(contentSizeCategory: UIContentSizeCategory) -> UIFont {
+        let preferredSize = contentSizeCategory.preferredContentSize(size)
+        let font = UIFont(name: name, size: preferredSize) ?? UIFont.systemFont(ofSize: preferredSize)
+        return font.addingTraits(traits: traits)
     }
 
     internal let _hashValue: Int

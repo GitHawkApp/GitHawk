@@ -21,14 +21,9 @@ public struct StyledText {
         self.style = style
     }
 
-    internal func font(size: CGFloat) -> UIFont {
-        let font = UIFont(name: style.name, size: size) ?? UIFont.systemFont(ofSize: size)
-        return font.addingTraits(traits: style.traits)
-    }
-
     internal func render(contentSizeCategory: UIContentSizeCategory) -> NSAttributedString {
         var attributes = style.attributes
-        attributes[.font] = font(size: contentSizeCategory.preferredContentSize(style.size))
+        attributes[.font] = style.font(contentSizeCategory: contentSizeCategory)
         return NSAttributedString(string: text, attributes: attributes)
     }
 
