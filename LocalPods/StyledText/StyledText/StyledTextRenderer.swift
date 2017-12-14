@@ -11,11 +11,12 @@ import Foundation
 final class StyledTextRenderer {
 
     private let builder: StyledTextBuilder
-    private let inset: UIEdgeInsets
     private let backgroundColor: UIColor?
     private let layoutManager: NSLayoutManager
     private let textContainer: NSTextContainer
-    private let scale: CGFloat
+    
+    let scale: CGFloat
+    let inset: UIEdgeInsets
 
     private var map = [UIContentSizeCategory: NSTextStorage]()
     private var lock = os_unfair_lock_s()
@@ -93,25 +94,41 @@ final class StyledTextRenderer {
     public func render(
         contentSizeCategory: UIContentSizeCategory = .large,
         width: CGFloat
-        ) -> CGImage? {
+        ) -> (image: CGImage?, size: CGSize) {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
 
         let attributedText = storage(contentSizeCategory: contentSizeCategory)
         let key = StyledTextRenderCacheKey(width: width, attributedText: attributedText)
+        let size = _size(key)
         let cache = StyledTextRenderer.globalBitmapCache
         if let cached = cache[key] {
-            return cached
+            return (cached, size)
         }
 
         let contents = layoutManager.render(
-            size: _size(key),
+            size: size,
             textContainer: textContainer,
             scale: scale,
             backgroundColor: backgroundColor
         )
         cache[key] = contents
-        return contents
+        return (contents, size)
+    }
+
+    public func attributes(at point: CGPoint) -> [NSAttributedStringKey: Any]? {
+        os_unfair_lock_lock(&lock)
+        defer { os_unfair_lock_unlock(&lock) }
+        var fractionDistance: CGFloat = 1.0
+        let index = layoutManager.characterIndex(
+            for: point,
+            in: textContainer,
+            fractionOfDistanceBetweenInsertionPoints: &fractionDistance
+        )
+        if index != NSNotFound, fractionDistance < 1.0 {
+            return layoutManager.textStorage?.attributes(at: index, effectiveRange: nil)
+        }
+        return nil
     }
 
 }

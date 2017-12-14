@@ -30,6 +30,7 @@
 		29822E4B1FE2CC8E008532D2 /* CGSize+LRUCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */; };
 		29822E4D1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */; };
 		29822E4F1FE338A2008532D2 /* UIScreen+Static.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */; };
+		29822E511FE33FB7008532D2 /* StyledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E501FE33FB7008532D2 /* StyledTextView.swift */; };
 		575FB4D16572209E15EE3840 /* Pods_StyledTextTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64B6FF70E8175B869FF2D395 /* Pods_StyledTextTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+LRUCachable.swift"; sourceTree = "<group>"; };
 		29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextRendererSnapshotTests.swift; sourceTree = "<group>"; };
 		29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Static.swift"; sourceTree = "<group>"; };
+		29822E501FE33FB7008532D2 /* StyledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextView.swift; sourceTree = "<group>"; };
 		64B6FF70E8175B869FF2D395 /* Pods_StyledTextTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StyledTextTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68752FBF073DD3E1FC5028A0 /* Pods-StyledTextTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StyledTextTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StyledTextTests/Pods-StyledTextTests.release.xcconfig"; sourceTree = "<group>"; };
 		AA0611F2D52563D9D227F037 /* Pods-StyledTextTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StyledTextTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StyledTextTests/Pods-StyledTextTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,16 +134,17 @@
 				29822E2E1FE0528F008532D2 /* Hashable+Combined.swift */,
 				29822E121FE05247008532D2 /* Info.plist */,
 				29822E421FE21884008532D2 /* LRUCache.swift */,
-				29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */,
 				29822E3E1FE21528008532D2 /* NSLayoutManager+Render.swift */,
 				29822E111FE05247008532D2 /* StyledText.h */,
 				29822E2A1FE05282008532D2 /* StyledText.swift */,
 				29822E281FE0527D008532D2 /* StyledTextBuilder.swift */,
 				29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */,
 				29822E401FE217D5008532D2 /* StyledTextRenderer.swift */,
+				29822E501FE33FB7008532D2 /* StyledTextView.swift */,
 				29822E2C1FE05289008532D2 /* TextStyle.swift */,
 				29822E321FE052A7008532D2 /* UIContentSizeCategory+Scaling.swift */,
 				29822E301FE05299008532D2 /* UIFont+UnionTraits.swift */,
+				29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */,
 			);
 			path = StyledText;
 			sourceTree = "<group>";
@@ -152,11 +155,11 @@
 				29822E211FE0525F008532D2 /* Info.plist */,
 				29822E441FE2271D008532D2 /* LRUCacheTests.swift */,
 				29822E3A1FE0534A008532D2 /* StyledTextBuilderTests.swift */,
+				29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */,
 				29822E1F1FE0525F008532D2 /* StyledTextTests.swift */,
 				29822E361FE0532C008532D2 /* TextStyleTests.swift */,
 				29822E381FE05341008532D2 /* UIContentSizeCategoryScalingTests.swift */,
 				29822E341FE05319008532D2 /* UIFontUnionTraitsTests.swift */,
-				29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */,
 			);
 			path = StyledTextTests;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				29822E471FE2BBC4008532D2 /* CGImage+LRUCachable.swift in Sources */,
 				29822E311FE05299008532D2 /* UIFont+UnionTraits.swift in Sources */,
 				29822E431FE21884008532D2 /* LRUCache.swift in Sources */,
+				29822E511FE33FB7008532D2 /* StyledTextView.swift in Sources */,
 				29822E491FE2BD07008532D2 /* StyledTextRenderCacheKey.swift in Sources */,
 				29822E2F1FE0528F008532D2 /* Hashable+Combined.swift in Sources */,
 				29822E411FE217D5008532D2 /* StyledTextRenderer.swift in Sources */,

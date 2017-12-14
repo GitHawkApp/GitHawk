@@ -16,15 +16,6 @@ internal extension NSLayoutManager {
         return bounds.size.snapped(scale: scale)
     }
 
-    func attributes(textContainer: NSTextContainer, attributedText: NSAttributedString, point: CGPoint) -> [NSAttributedStringKey: Any]? {
-        var fractionDistance: CGFloat = 1.0
-        let index = characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: &fractionDistance)
-        if index != NSNotFound, fractionDistance < 1.0 {
-            return attributedText.attributes(at: index, effectiveRange: nil)
-        }
-        return nil
-    }
-
     func render(
         size: CGSize,
         textContainer: NSTextContainer,
