@@ -111,5 +111,36 @@ class LRUCacheTests: XCTestCase {
         XCTAssertEqual(cache.head?.value.value, "bug")
         XCTAssertEqual(cache.head?.key, "bang")
     }
+
+    func test_whenOverwritingExistingKey_thatSizeUpdates() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10)
+
+        cache.set("foo", value: TestValue(size: 1, value: "cat"))
+        XCTAssertEqual(cache.map.count, 1)
+        XCTAssertEqual(cache.size, 1)
+        XCTAssertEqual(cache.get("foo")?.value, "cat")
+
+        cache.set("foo", value: TestValue(size: 3, value: "dog"))
+        XCTAssertEqual(cache.map.count, 1)
+        XCTAssertEqual(cache.size, 3)
+        XCTAssertEqual(cache.get("foo")?.value, "dog")
+    }
+
+    func test_whenClearingCache_thatValuesReset() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10)
+
+        cache.set("foo", value: TestValue(size: 4, value: "cat"))
+        cache.set("bar", value: TestValue(size: 3, value: "dog"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
+
+        XCTAssertEqual(cache.map.count, 3)
+        XCTAssertEqual(cache.size, 10)
+
+        cache.clear()
+
+        XCTAssertEqual(cache.map.count, 0)
+        XCTAssertEqual(cache.size, 0)
+        XCTAssertNil(cache.head)
+    }
     
 }

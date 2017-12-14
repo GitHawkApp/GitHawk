@@ -16,22 +16,33 @@ import UIKit
 //
 //}
 
-protocol LRUCachable {
+public protocol LRUCachable {
     var cachedSize: Int { get }
 }
 
-final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
+public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     internal class Node {
 
+        // for reverse lookup in map
         let key: Key
+        // mutable b/c you can change the value for an existing key
         var value: Value
-        var head: Node? = nil
-        var tail: Node? = nil
+        // 2-way linked list
+        var previous: Node? = nil
+        var next: Node? = nil
 
         init(key: Key, value: Value) {
             self.key = key
             self.value = value
+        }
+
+        var tail: Node? {
+            var t: Node? = self
+            while let next = t?.next {
+                t = next
+            }
+            return t
         }
     }
 
@@ -40,8 +51,10 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         case percent(Double)
     }
 
+    // thread safety
     private var lock = os_unfair_lock_s()
-    
+
+    // mutable collection state
     internal var map = [Key: Node]()
     internal var size: Int = 0
     internal var head: Node?
@@ -63,7 +76,7 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         }
     }
 
-    func get(_ key: Key) -> Value? {
+    public func get(_ key: Key) -> Value? {
         os_unfair_lock_lock(&lock)
 
         let node = map[key]
@@ -74,7 +87,9 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         return node?.value
     }
 
-    func set(_ key: Key, value: Value) {
+    public func set(_ key: Key, value: Value?) {
+        guard let value = value else { return }
+
         os_unfair_lock_lock(&lock)
 
         let node: Node
@@ -94,12 +109,29 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         os_unfair_lock_unlock(&lock)
     }
 
+    public subscript(key: Key) -> Value? {
+        get {
+            return get(key)
+        }
+        set(newValue) {
+            set(key, value: newValue)
+        }
+    }
+
+    public func clear() {
+        os_unfair_lock_lock(&lock)
+        head = nil
+        map.removeAll()
+        size = 0
+        os_unfair_lock_unlock(&lock)
+    }
+
     // unsafe to call w/out nested in lock
     private func newHead(node: Node?) {
-        head?.head = node
+        head?.previous = node
 
-        node?.tail = head
-        node?.head = nil
+        node?.next = head
+        node?.previous = nil
 
         head = node
     }
@@ -108,10 +140,7 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
     private func purge() {
         guard size > maxSize else { return }
 
-        var tail: Node? = head
-        while let next = tail?.tail {
-            tail = next
-        }
+        var tail = head?.tail
 
         let purgeSize: Int
         switch compaction {
@@ -122,7 +151,7 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         while size > purgeSize, let next = tail {
             size -= next.value.cachedSize
             map.removeValue(forKey: next.key)
-            tail = next.head
+            tail = next.previous
         }
     }
 
