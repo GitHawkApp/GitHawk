@@ -26,13 +26,13 @@ pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch =
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
-# local pods w/ custom changes
-pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
-pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
-pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
-pod 'FlatCache', :path => 'Local Pods/FlatCache'
-pod 'Highlightr', :path => 'Local Pods/Highlightr'
-pod 'StyledText', :path => 'Local Pods/StyledText'
+# LocalPods w/ custom changes
+pod 'MMMarkdown', :path => 'LocalPods/MMMarkdown'
+pod 'SlackTextViewController', :path => 'LocalPods/SlackTextViewController'
+pod 'SwipeCellKit', :path => 'LocalPods/SwipeCellKit'
+pod 'FlatCache', :path => 'LocalPods/FlatCache'
+pod 'Highlightr', :path => 'LocalPods/Highlightr'
+pod 'StyledText', :path => 'LocalPods/StyledText'
 
 target 'Freetime' do
 
