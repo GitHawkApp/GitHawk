@@ -40,10 +40,11 @@ class LRUCacheTests: XCTestCase {
 
         cache.set("foo", value: TestValue(size: 1, value: "cat"))
         cache.set("bar", value: TestValue(size: 1, value: "dog"))
-        cache.set("baz", value: TestValue(size: 1, value: "rat"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
         cache.set("bang", value: TestValue(size: 1, value: "bug"))
 
         XCTAssertEqual(cache.map.count, 4)
+        XCTAssertEqual(cache.size, 6)
         XCTAssertEqual(cache.head?.value.value, "bug")
         XCTAssertEqual(cache.head?.key, "bang")
 
@@ -52,6 +53,63 @@ class LRUCacheTests: XCTestCase {
         XCTAssertEqual(cache.map.count, 4)
         XCTAssertEqual(cache.head?.value.value, "cat")
         XCTAssertEqual(cache.head?.key, "foo")
+    }
+
+    func test_whenExceedingMaxSize_withDefaultCompaction_thatCachePurged() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10)
+
+        cache.set("foo", value: TestValue(size: 1, value: "cat"))
+        cache.set("bar", value: TestValue(size: 2, value: "dog"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
+        cache.set("bang", value: TestValue(size: 4, value: "bug"))
+
+        XCTAssertEqual(cache.map.count, 4)
+        XCTAssertEqual(cache.size, 10)
+
+        cache.set("bop", value: TestValue(size: 3, value: "pig"))
+
+        XCTAssertEqual(cache.map.count, 3)
+        XCTAssertEqual(cache.size, 10)
+        XCTAssertEqual(cache.head?.value.value, "pig")
+        XCTAssertEqual(cache.head?.key, "bop")
+    }
+
+    func test_whenPercentCompactionOOB_thatInitWithDefault() {
+        let zeroCompact = LRUCache<String, TestValue>(maxSize: 10, compaction: .percent(0)).compaction
+        switch zeroCompact {
+        case .percent:
+            XCTFail()
+        default: break
+        }
+
+        let negativeCompact = LRUCache<String, TestValue>(maxSize: 10, compaction: .percent(-1)).compaction
+        switch negativeCompact {
+        case .percent:
+            XCTFail()
+        default: break
+        }
+
+        let tooBigCompact = LRUCache<String, TestValue>(maxSize: 10, compaction: .percent(1.1)).compaction
+        switch tooBigCompact {
+        case .percent:
+            XCTFail()
+        default: break
+        }
+    }
+
+    func test_whenExceedingMaxSize_with50PercentCompaction_thatCachePurged() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10, compaction: .percent(0.5))
+
+        cache.set("foo", value: TestValue(size: 4, value: "cat"))
+        cache.set("bar", value: TestValue(size: 3, value: "dog"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
+
+        cache.set("bang", value: TestValue(size: 3, value: "bug"))
+
+        XCTAssertEqual(cache.map.count, 1)
+        XCTAssertEqual(cache.size, 3)
+        XCTAssertEqual(cache.head?.value.value, "bug")
+        XCTAssertEqual(cache.head?.key, "bang")
     }
     
 }

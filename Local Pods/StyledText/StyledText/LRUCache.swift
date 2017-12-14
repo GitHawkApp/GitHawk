@@ -51,7 +51,16 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     init(maxSize: Int, compaction: Compaction = .default) {
         self.maxSize = maxSize
-        self.compaction = compaction
+
+        switch compaction {
+        case .default: self.compaction = compaction
+        case .percent(let percent):
+            if percent <= 0 || percent > 1 {
+                self.compaction = .default
+            } else {
+                self.compaction = compaction
+            }
+        }
     }
 
     func get(_ key: Key) -> Value? {
@@ -85,18 +94,23 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         os_unfair_lock_unlock(&lock)
     }
 
+    // unsafe to call w/out nested in lock
     private func newHead(node: Node?) {
+        head?.head = node
+
         node?.tail = head
         node?.head = nil
+
         head = node
     }
 
+    // unsafe to call w/out nested in lock
     private func purge() {
         guard size > maxSize else { return }
 
         var tail: Node? = head
-        while let current = tail {
-            tail = current.tail
+        while let next = tail?.tail {
+            tail = next
         }
 
         let purgeSize: Int
@@ -108,7 +122,7 @@ final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         while size > purgeSize, let next = tail {
             size -= next.value.cachedSize
             map.removeValue(forKey: next.key)
-            tail = next.tail
+            tail = next.head
         }
     }
 
