@@ -26,6 +26,7 @@
 		29822E431FE21884008532D2 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E421FE21884008532D2 /* LRUCache.swift */; };
 		29822E451FE2271D008532D2 /* LRUCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E441FE2271D008532D2 /* LRUCacheTests.swift */; };
 		29822E471FE2BBC4008532D2 /* CGImage+LRUCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E461FE2BBC4008532D2 /* CGImage+LRUCachable.swift */; };
+		29822E491FE2BD07008532D2 /* StyledTextRenderCacheKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		29822E421FE21884008532D2 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		29822E441FE2271D008532D2 /* LRUCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCacheTests.swift; sourceTree = "<group>"; };
 		29822E461FE2BBC4008532D2 /* CGImage+LRUCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+LRUCachable.swift"; sourceTree = "<group>"; };
+		29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextRenderCacheKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				29822E2E1FE0528F008532D2 /* Hashable+Combined.swift */,
 				29822E121FE05247008532D2 /* Info.plist */,
 				29822E421FE21884008532D2 /* LRUCache.swift */,
+				29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */,
 				29822E3E1FE21528008532D2 /* NSLayoutManager+Render.swift */,
 				29822E111FE05247008532D2 /* StyledText.h */,
 				29822E2A1FE05282008532D2 /* StyledText.swift */,
@@ -253,6 +256,7 @@
 				29822E471FE2BBC4008532D2 /* CGImage+LRUCachable.swift in Sources */,
 				29822E311FE05299008532D2 /* UIFont+UnionTraits.swift in Sources */,
 				29822E431FE21884008532D2 /* LRUCache.swift in Sources */,
+				29822E491FE2BD07008532D2 /* StyledTextRenderCacheKey.swift in Sources */,
 				29822E2F1FE0528F008532D2 /* Hashable+Combined.swift in Sources */,
 				29822E411FE217D5008532D2 /* StyledTextRenderer.swift in Sources */,
 				29822E2B1FE05282008532D2 /* StyledText.swift in Sources */,
