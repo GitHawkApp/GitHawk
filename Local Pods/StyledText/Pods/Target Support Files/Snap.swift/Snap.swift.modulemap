@@ -1,0 +1,6 @@
+framework module Snap_swift {
+  umbrella header "Snap.swift-umbrella.h"
+
+  export *
+  module * { export * }
+}

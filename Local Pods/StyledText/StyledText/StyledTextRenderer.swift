@@ -72,7 +72,7 @@ final class StyledTextRenderer {
     }
 
     public func size(
-        contentSizeCategory: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory,
+        contentSizeCategory: UIContentSizeCategory = .large,
         width: CGFloat
         ) -> CGSize {
         os_unfair_lock_lock(&lock)
@@ -88,7 +88,7 @@ final class StyledTextRenderer {
     )
 
     public func render(
-        contentSizeCategory: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory,
+        contentSizeCategory: UIContentSizeCategory = .large,
         width: CGFloat
         ) -> CGImage? {
         os_unfair_lock_lock(&lock)
