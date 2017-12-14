@@ -6,15 +6,7 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import UIKit
-
-//extension CGImage {
-//
-//    var bytesLength: Int {
-//        return height * bytesPerRow
-//    }
-//
-//}
+import Foundation
 
 public protocol LRUCachable {
     var cachedSize: Int { get }
@@ -62,7 +54,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
     let maxSize: Int
     let compaction: Compaction
 
-    init(maxSize: Int, compaction: Compaction = .default) {
+    init(maxSize: Int, compaction: Compaction = .default, clearOnWarning: Bool = false) {
         self.maxSize = maxSize
 
         switch compaction {
@@ -73,6 +65,15 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
             } else {
                 self.compaction = compaction
             }
+        }
+
+        if clearOnWarning {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(LRUCache.clear),
+                name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+                object: nil
+            )
         }
     }
 
@@ -104,7 +105,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
         size += value.cachedSize
         newHead(node: node)
-        purge()
+        compact()
 
         os_unfair_lock_unlock(&lock)
     }
@@ -118,7 +119,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         }
     }
 
-    public func clear() {
+    @objc public func clear() {
         os_unfair_lock_lock(&lock)
         head = nil
         map.removeAll()
@@ -137,18 +138,18 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
     }
 
     // unsafe to call w/out nested in lock
-    private func purge() {
+    private func compact() {
         guard size > maxSize else { return }
 
         var tail = head?.tail
 
-        let purgeSize: Int
+        let compactSize: Int
         switch compaction {
-        case .default: purgeSize = maxSize
-        case .percent(let percent): purgeSize = Int(Double(maxSize) * percent)
+        case .default: compactSize = maxSize
+        case .percent(let percent): compactSize = Int(Double(maxSize) * percent)
         }
 
-        while size > purgeSize, let next = tail {
+        while size > compactSize, let next = tail {
             size -= next.value.cachedSize
             map.removeValue(forKey: next.key)
             tail = next.previous

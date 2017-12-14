@@ -142,5 +142,38 @@ class LRUCacheTests: XCTestCase {
         XCTAssertEqual(cache.size, 0)
         XCTAssertNil(cache.head)
     }
+
+    func test_whenConfiguredForMemoryWarning_thatCacheClears() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10, clearOnWarning: true)
+
+        cache.set("foo", value: TestValue(size: 4, value: "cat"))
+        cache.set("bar", value: TestValue(size: 3, value: "dog"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
+
+        XCTAssertEqual(cache.map.count, 3)
+        XCTAssertEqual(cache.size, 10)
+
+        NotificationCenter.default.post(Notification(name: Notification.Name.UIApplicationDidReceiveMemoryWarning))
+
+        XCTAssertEqual(cache.map.count, 0)
+        XCTAssertEqual(cache.size, 0)
+        XCTAssertNil(cache.head)
+    }
+
+    func test_whenNotForMemoryWarning_thatCacheUnchanged() {
+        let cache = LRUCache<String, TestValue>(maxSize: 10, clearOnWarning: false)
+
+        cache.set("foo", value: TestValue(size: 4, value: "cat"))
+        cache.set("bar", value: TestValue(size: 3, value: "dog"))
+        cache.set("baz", value: TestValue(size: 3, value: "rat"))
+
+        XCTAssertEqual(cache.map.count, 3)
+        XCTAssertEqual(cache.size, 10)
+
+        NotificationCenter.default.post(Notification(name: Notification.Name.UIApplicationDidReceiveMemoryWarning))
+
+        XCTAssertEqual(cache.map.count, 3)
+        XCTAssertEqual(cache.size, 10)
+    }
     
 }
