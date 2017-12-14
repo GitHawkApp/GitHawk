@@ -99,16 +99,10 @@ extension GithubClient {
 
                     let milestoneModel: Milestone?
                     if let milestone = issueType.milestoneFields {
-                        let dueOn: Date?
-                        if let date = milestone.dueOn {
-                            dueOn = GithubAPIDateFormatter().date(from: date)
-                        } else {
-                            dueOn = nil
-                        }
                         milestoneModel = Milestone(
                             number: milestone.number,
                             title: milestone.title,
-                            dueOn: dueOn,
+                            dueOn: milestone.dueOn?.githubDate,
                             openIssueCount: milestone.openCount.totalCount,
                             totalIssueCount: milestone.totalCount.totalCount
                         )
