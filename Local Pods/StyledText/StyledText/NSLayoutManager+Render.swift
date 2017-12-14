@@ -10,16 +10,11 @@ import UIKit
 
 private let screenScale = UIScreen.main.scale
 
-extension NSLayoutManager {
+internal extension NSLayoutManager {
 
-    func size(textContainer: NSTextContainer, width: CGFloat, inset: UIEdgeInsets) -> CGSize {
-        let insetWidth = max(width - inset.left - inset.right, 0)
-        textContainer.size = CGSize(width: insetWidth, height: 0)
-
-        // find the size of the text now that everything is configured
+    func size(textContainer: NSTextContainer, width: CGFloat) -> CGSize {
+        textContainer.size = CGSize(width: width, height: 0)
         let bounds = usedRect(for: textContainer)
-
-        // snap to pixel
         return bounds.size.snapped(scale: screenScale)
     }
 
@@ -32,10 +27,12 @@ extension NSLayoutManager {
         return nil
     }
 
-    func render(textContainer: NSTextContainer, backgroundColor: UIColor? = nil) -> CGImage? {
-        UIGraphicsBeginImageContextWithOptions(textContainer.size, backgroundColor != nil, screenScale)
+    func render(size: CGSize, textContainer: NSTextContainer, backgroundColor: UIColor? = nil) -> CGImage? {
+        textContainer.size = size
+
+        UIGraphicsBeginImageContextWithOptions(size, backgroundColor != nil, screenScale)
         backgroundColor?.setFill()
-        UIBezierPath(rect: CGRect(origin: .zero, size: textContainer.size)).fill()
+        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let range = glyphRange(for: textContainer)
         drawBackground(forGlyphRange: range, at: .zero)
         drawGlyphs(forGlyphRange: range, at: .zero)

@@ -38,7 +38,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         }
     }
 
-    enum Compaction {
+    public enum Compaction {
         case `default`
         case percent(Double)
     }
@@ -51,8 +51,8 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
     internal var size: Int = 0
     internal var head: Node?
 
-    let maxSize: Int
-    let compaction: Compaction
+    public let maxSize: Int
+    public let compaction: Compaction
 
     init(maxSize: Int, compaction: Compaction = .default, clearOnWarning: Bool = false) {
         self.maxSize = maxSize
@@ -79,12 +79,10 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     public func get(_ key: Key) -> Value? {
         os_unfair_lock_lock(&lock)
+        defer { os_unfair_lock_unlock(&lock) }
 
         let node = map[key]
         newHead(node: node)
-
-        os_unfair_lock_unlock(&lock)
-
         return node?.value
     }
 
@@ -92,6 +90,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         guard let value = value else { return }
 
         os_unfair_lock_lock(&lock)
+        defer { os_unfair_lock_unlock(&lock) }
 
         let node: Node
         if let existingNode = map[key] {
@@ -106,8 +105,6 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         size += value.cachedSize
         newHead(node: node)
         compact()
-
-        os_unfair_lock_unlock(&lock)
     }
 
     public subscript(key: Key) -> Value? {
@@ -121,10 +118,11 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     @objc public func clear() {
         os_unfair_lock_lock(&lock)
+        defer { os_unfair_lock_unlock(&lock) }
+
         head = nil
         map.removeAll()
         size = 0
-        os_unfair_lock_unlock(&lock)
     }
 
     // unsafe to call w/out nested in lock

@@ -27,6 +27,7 @@
 		29822E451FE2271D008532D2 /* LRUCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E441FE2271D008532D2 /* LRUCacheTests.swift */; };
 		29822E471FE2BBC4008532D2 /* CGImage+LRUCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E461FE2BBC4008532D2 /* CGImage+LRUCachable.swift */; };
 		29822E491FE2BD07008532D2 /* StyledTextRenderCacheKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */; };
+		29822E4B1FE2CC8E008532D2 /* CGSize+LRUCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		29822E441FE2271D008532D2 /* LRUCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCacheTests.swift; sourceTree = "<group>"; };
 		29822E461FE2BBC4008532D2 /* CGImage+LRUCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+LRUCachable.swift"; sourceTree = "<group>"; };
 		29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextRenderCacheKey.swift; sourceTree = "<group>"; };
+		29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+LRUCachable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,15 +108,16 @@
 			isa = PBXGroup;
 			children = (
 				29822E461FE2BBC4008532D2 /* CGImage+LRUCachable.swift */,
+				29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */,
 				29822E3C1FE211C8008532D2 /* CGSize+Utility.swift */,
 				29822E2E1FE0528F008532D2 /* Hashable+Combined.swift */,
 				29822E121FE05247008532D2 /* Info.plist */,
 				29822E421FE21884008532D2 /* LRUCache.swift */,
-				29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */,
 				29822E3E1FE21528008532D2 /* NSLayoutManager+Render.swift */,
 				29822E111FE05247008532D2 /* StyledText.h */,
 				29822E2A1FE05282008532D2 /* StyledText.swift */,
 				29822E281FE0527D008532D2 /* StyledTextBuilder.swift */,
+				29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */,
 				29822E401FE217D5008532D2 /* StyledTextRenderer.swift */,
 				29822E2C1FE05289008532D2 /* TextStyle.swift */,
 				29822E321FE052A7008532D2 /* UIContentSizeCategory+Scaling.swift */,
@@ -127,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				29822E211FE0525F008532D2 /* Info.plist */,
-				29822E3A1FE0534A008532D2 /* StyledTextBuilderTests.swift */,
 				29822E441FE2271D008532D2 /* LRUCacheTests.swift */,
+				29822E3A1FE0534A008532D2 /* StyledTextBuilderTests.swift */,
 				29822E1F1FE0525F008532D2 /* StyledTextTests.swift */,
 				29822E361FE0532C008532D2 /* TextStyleTests.swift */,
 				29822E381FE05341008532D2 /* UIContentSizeCategoryScalingTests.swift */,
@@ -251,6 +254,7 @@
 				29822E2D1FE05289008532D2 /* TextStyle.swift in Sources */,
 				29822E291FE0527D008532D2 /* StyledTextBuilder.swift in Sources */,
 				29822E3D1FE211C8008532D2 /* CGSize+Utility.swift in Sources */,
+				29822E4B1FE2CC8E008532D2 /* CGSize+LRUCachable.swift in Sources */,
 				29822E331FE052A7008532D2 /* UIContentSizeCategory+Scaling.swift in Sources */,
 				29822E3F1FE21528008532D2 /* NSLayoutManager+Render.swift in Sources */,
 				29822E471FE2BBC4008532D2 /* CGImage+LRUCachable.swift in Sources */,
