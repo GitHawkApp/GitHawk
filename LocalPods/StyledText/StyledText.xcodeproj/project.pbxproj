@@ -29,6 +29,7 @@
 		29822E491FE2BD07008532D2 /* StyledTextRenderCacheKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */; };
 		29822E4B1FE2CC8E008532D2 /* CGSize+LRUCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */; };
 		29822E4D1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */; };
+		29822E4F1FE338A2008532D2 /* UIScreen+Static.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */; };
 		575FB4D16572209E15EE3840 /* Pods_StyledTextTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64B6FF70E8175B869FF2D395 /* Pods_StyledTextTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		29822E481FE2BD07008532D2 /* StyledTextRenderCacheKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextRenderCacheKey.swift; sourceTree = "<group>"; };
 		29822E4A1FE2CC8E008532D2 /* CGSize+LRUCachable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+LRUCachable.swift"; sourceTree = "<group>"; };
 		29822E4C1FE32ACA008532D2 /* StyledTextRendererSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextRendererSnapshotTests.swift; sourceTree = "<group>"; };
+		29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Static.swift"; sourceTree = "<group>"; };
 		64B6FF70E8175B869FF2D395 /* Pods_StyledTextTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StyledTextTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68752FBF073DD3E1FC5028A0 /* Pods-StyledTextTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StyledTextTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StyledTextTests/Pods-StyledTextTests.release.xcconfig"; sourceTree = "<group>"; };
 		AA0611F2D52563D9D227F037 /* Pods-StyledTextTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StyledTextTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StyledTextTests/Pods-StyledTextTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				29822E2E1FE0528F008532D2 /* Hashable+Combined.swift */,
 				29822E121FE05247008532D2 /* Info.plist */,
 				29822E421FE21884008532D2 /* LRUCache.swift */,
+				29822E4E1FE338A2008532D2 /* UIScreen+Static.swift */,
 				29822E3E1FE21528008532D2 /* NSLayoutManager+Render.swift */,
 				29822E111FE05247008532D2 /* StyledText.h */,
 				29822E2A1FE05282008532D2 /* StyledText.swift */,
@@ -336,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29822E2D1FE05289008532D2 /* TextStyle.swift in Sources */,
+				29822E4F1FE338A2008532D2 /* UIScreen+Static.swift in Sources */,
 				29822E291FE0527D008532D2 /* StyledTextBuilder.swift in Sources */,
 				29822E3D1FE211C8008532D2 /* CGSize+Utility.swift in Sources */,
 				29822E4B1FE2CC8E008532D2 /* CGSize+LRUCachable.swift in Sources */,
@@ -502,6 +506,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = StyledText/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.StyledText;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -525,6 +530,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = StyledText/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.StyledText;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

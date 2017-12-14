@@ -15,6 +15,7 @@ final class StyledTextRenderer {
     private let backgroundColor: UIColor?
     private let layoutManager: NSLayoutManager
     private let textContainer: NSTextContainer
+    private let scale: CGFloat
 
     private var map = [UIContentSizeCategory: NSTextStorage]()
     private var lock = os_unfair_lock_s()
@@ -23,11 +24,13 @@ final class StyledTextRenderer {
         builder: StyledTextBuilder,
         inset: UIEdgeInsets = .zero,
         backgroundColor: UIColor? = nil,
-        layoutManager: NSLayoutManager = NSLayoutManager()
+        layoutManager: NSLayoutManager = NSLayoutManager(),
+        scale: CGFloat = ScreenScale
         ) {
         self.builder = builder
         self.inset = inset
         self.backgroundColor = backgroundColor
+        self.scale = scale
 
         textContainer = NSTextContainer()
         textContainer.exclusionPaths = []
@@ -66,7 +69,7 @@ final class StyledTextRenderer {
             return cached
         }
         let insetWidth = max(key.width - inset.left - inset.right, 0)
-        let size = layoutManager.size(textContainer: textContainer, width: insetWidth)
+        let size = layoutManager.size(textContainer: textContainer, width: insetWidth, scale: scale)
         cache[key] = size
         return size
     }
@@ -104,6 +107,7 @@ final class StyledTextRenderer {
         let contents = layoutManager.render(
             size: _size(key),
             textContainer: textContainer,
+            scale: scale,
             backgroundColor: backgroundColor
         )
         cache[key] = contents

@@ -8,14 +8,12 @@
 
 import UIKit
 
-private let screenScale = UIScreen.main.scale
-
 internal extension NSLayoutManager {
 
-    func size(textContainer: NSTextContainer, width: CGFloat) -> CGSize {
+    func size(textContainer: NSTextContainer, width: CGFloat, scale: CGFloat) -> CGSize {
         textContainer.size = CGSize(width: width, height: 0)
         let bounds = usedRect(for: textContainer)
-        return bounds.size.snapped(scale: screenScale)
+        return bounds.size.snapped(scale: scale)
     }
 
     func attributes(textContainer: NSTextContainer, attributedText: NSAttributedString, point: CGPoint) -> [NSAttributedStringKey: Any]? {
@@ -27,10 +25,15 @@ internal extension NSLayoutManager {
         return nil
     }
 
-    func render(size: CGSize, textContainer: NSTextContainer, backgroundColor: UIColor? = nil) -> CGImage? {
+    func render(
+        size: CGSize,
+        textContainer: NSTextContainer,
+        scale: CGFloat,
+        backgroundColor: UIColor? = nil
+        ) -> CGImage? {
         textContainer.size = size
 
-        UIGraphicsBeginImageContextWithOptions(size, backgroundColor != nil, screenScale)
+        UIGraphicsBeginImageContextWithOptions(size, backgroundColor != nil, scale)
         backgroundColor?.setFill()
         UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let range = glyphRange(for: textContainer)

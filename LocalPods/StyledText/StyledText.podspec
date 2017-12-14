@@ -7,4 +7,5 @@ Pod::Spec.new do |spec|
   spec.summary      = 'NSAttributedString building..'
   spec.source       = { :git => 'https://github.com/rnystrom/GitHawk.git', :tag => '#{s.version}' }
   spec.source_files = 'StyledText/*.swift'
+  spec.platform     = :ios, '10.0'
 end
