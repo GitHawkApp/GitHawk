@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct StyledTextBuilder {
+public struct StyledTextBuilder: Hashable, Equatable {
 
     internal let styledTexts: [StyledText]
     internal var savedStyle: TextStyle? = nil
@@ -85,6 +85,20 @@ public struct StyledTextBuilder {
         let result = NSMutableAttributedString()
         styledTexts.forEach { result.append($0.render(contentSizeCategory: contentSizeCategory)) }
         return result
+    }
+
+    public var hashValue: Int {
+        guard let seed: Int = styledTexts.first?.hashValue else { return 0 }
+        let count = styledTexts.count
+        if count > 1 {
+            return styledTexts[1...count].reduce(seed, { $0.combineHash(with: $1) })
+        } else {
+            return seed
+        }
+    }
+
+    public static func == (lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
+        return lhs.styledTexts == rhs.styledTexts
     }
 
 }
