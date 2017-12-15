@@ -27,7 +27,7 @@ extension CGSize {
 
 }
 
-final class NSAttributedStringSizing: NSObject, ListDiffable {
+final class NSAttributedStringSizing_DEPRECATED: NSObject, ListDiffable {
 
     private let textContainer: NSTextContainer
     private let textStorage: NSTextStorage
@@ -79,7 +79,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(NSAttributedStringSizing.onMemoryWarning),
+            selector: #selector(NSAttributedStringSizing_DEPRECATED.onMemoryWarning),
             name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
             object: nil
         )
@@ -109,25 +109,6 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
             width: size.width - inset.left - inset.right,
             height: size.height - inset.top - inset.bottom
         )
-    }
-
-    func configure(textView: UITextView) {
-        textView.attributedText = attributedText
-        textView.contentInset = .zero
-        textView.textContainerInset = inset
-
-        let textContainer = textView.textContainer
-        textContainer.exclusionPaths = self.textContainer.exclusionPaths
-        textContainer.maximumNumberOfLines = self.textContainer.maximumNumberOfLines
-        textContainer.lineFragmentPadding = self.textContainer.lineFragmentPadding
-
-        let layoutManager = textView.layoutManager
-        layoutManager.allowsNonContiguousLayout = self.layoutManager.allowsNonContiguousLayout
-        layoutManager.hyphenationFactor = self.layoutManager.hyphenationFactor
-        layoutManager.showsInvisibleCharacters = self.layoutManager.showsInvisibleCharacters
-        layoutManager.showsControlCharacters = self.layoutManager.showsControlCharacters
-        layoutManager.usesFontLeading = self.layoutManager.usesFontLeading
-        layoutManager.addTextContainer(textContainer)
     }
 
     private var _contents = [String: CGImage]()

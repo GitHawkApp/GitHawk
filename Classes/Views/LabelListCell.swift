@@ -12,7 +12,7 @@ import IGListKit
 final class LabelListCell: UICollectionViewCell, ListBindable {
     
     static let reuse = "cell"
-    static let font = Styles.Fonts.smallTitle
+    static let font = Styles.Text.smallTitle.preferredFont
 
     static func size(_ string: String) -> CGSize {
         return (string as NSString).size(withAttributes: [

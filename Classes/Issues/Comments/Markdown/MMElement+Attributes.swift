@@ -14,7 +14,7 @@ func PushAttributes(
     current: [NSAttributedStringKey: Any],
     listLevel: Int
     ) -> [NSAttributedStringKey: Any] {
-    let currentFont: UIFont = current[.font] as? UIFont ?? Styles.Fonts.body
+    let currentFont: UIFont = current[.font] as? UIFont ?? Styles.Text.body.preferredFont
 
     // TODO: cleanup
     let paragraphStyleCopy: NSMutableParagraphStyle
@@ -38,7 +38,7 @@ func PushAttributes(
         .font: currentFont.addingTraits(traits: .traitItalic)
         ]
     case .codeSpan: newAttributes = [
-        .font: Styles.Fonts.code,
+        .font: Styles.Text.code.preferredFont,
         NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         MarkdownAttribute.usernameDisabled: true,

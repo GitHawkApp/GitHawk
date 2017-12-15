@@ -27,7 +27,7 @@ final class IssueLabelCell: UICollectionViewCell, ListBindable {
             make.bottom.equalTo(-Styles.Sizes.rowSpacing)
         }
 
-        label.font = Styles.Fonts.smallTitle
+        label.font = Styles.Text.smallTitle.preferredFont
         background.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(background)

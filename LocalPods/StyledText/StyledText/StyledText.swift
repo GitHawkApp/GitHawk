@@ -13,7 +13,7 @@ public struct StyledText: Hashable, Equatable {
     let text: String
     let style: TextStyle
 
-    init(
+    public init(
         text: String = "",
         style: TextStyle = TextStyle()
         ) {

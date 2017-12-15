@@ -46,7 +46,7 @@ final class IssueMilestoneCell: UICollectionViewCell {
     func configure(milestone: Milestone) {
         let milestoneAttributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.light.color,
-            .font: Styles.Fonts.secondary
+            .font: Styles.Text.secondary.preferredFont
         ]
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
@@ -54,7 +54,7 @@ final class IssueMilestoneCell: UICollectionViewCell {
         )
         let titleAttributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.dark.color,
-            .font: Styles.Fonts.secondaryBold
+            .font: Styles.Text.secondaryBold.preferredFont
         ]
         titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText

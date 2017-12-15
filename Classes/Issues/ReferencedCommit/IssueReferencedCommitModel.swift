@@ -39,7 +39,7 @@ final class IssueReferencedCommitModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: actor,
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
                 MarkdownAttribute.username: actor
             ]
@@ -47,14 +47,14 @@ final class IssueReferencedCommitModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: NSLocalizedString("referenced ", comment: ""),
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
             ]
         ))
         attributedText.append(NSAttributedString(
             string: hash.hashDisplay,
             attributes: [
-                .font: Styles.Fonts.code.addingTraits(traits: .traitBold),
+                .font: Styles.Text.code.preferredFont.addingTraits(traits: .traitBold),
                 .foregroundColor: Styles.Colors.Gray.dark.color,
                 MarkdownAttribute.commit: CommitDetails(owner: owner, repo: repo, hash: hash)
             ]
@@ -62,7 +62,7 @@ final class IssueReferencedCommitModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: " \(date.agoString)",
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
             ]

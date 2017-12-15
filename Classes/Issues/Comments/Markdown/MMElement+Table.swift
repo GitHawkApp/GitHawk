@@ -94,10 +94,10 @@ func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel
     for row in element.children {
         switch row.type {
         case .tableHeader:
-            baseAttributes[NSAttributedStringKey.font] = Styles.Fonts.bodyBold
+            baseAttributes[NSAttributedStringKey.font] = Styles.Text.bodyBold.preferredFont
         case .tableRow:
             rowCount += 1
-            baseAttributes[NSAttributedStringKey.font] = Styles.Fonts.body
+            baseAttributes[NSAttributedStringKey.font] = Styles.Text.body.preferredFont
         default: continue
         }
 

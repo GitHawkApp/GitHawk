@@ -9,4 +9,4 @@
 import UIKit
 
 // grab this once and avoid touching this on the main thread
-internal let ScreenScale = UIScreen.main.scale
+public let StyledTextScreenScale = UIScreen.main.scale

@@ -12,7 +12,7 @@ public protocol StyledTextViewDelegate: class {
     func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any])
 }
 
-public final class StyledTextView: UIView {
+public class StyledTextView: UIView {
 
     weak var delegate: StyledTextViewDelegate?
 

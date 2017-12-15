@@ -38,12 +38,14 @@ class StyledTextBuilderTests: XCTestCase {
     }
 
     func test_whenAddingAttributes_withSavingState_thenRestoring() {
-        let render = StyledTextBuilder(styledText: StyledText(text: "foo", style: TextStyle(traits: .traitBold)))
+        let builder = StyledTextBuilder(styledText: StyledText(text: "foo", style: TextStyle(traits: .traitBold)))
             .save()
             .add(styledText: StyledText(text: " bar", style: TextStyle(traits: .traitItalic)))
             .restore()
             .add(text: " baz")
-            .render(contentSizeCategory: .large)
+        XCTAssertEqual(builder.allText, "foo bar baz")
+
+        let render = builder.render(contentSizeCategory: .large)
         XCTAssertEqual(render.string, "foo bar baz")
 
         let font1 = render.attributes(at: 1, effectiveRange: nil)[.font] as! UIFont

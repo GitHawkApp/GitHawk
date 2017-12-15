@@ -34,7 +34,7 @@ final class IssueReactionCell: UICollectionViewCell {
 
         countLabel.textAlignment = .center
         countLabel.backgroundColor = .clear
-        countLabel.font = Styles.Fonts.body
+        countLabel.font = Styles.Text.body.preferredFont
         countLabel.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in

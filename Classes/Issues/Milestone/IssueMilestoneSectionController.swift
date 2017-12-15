@@ -22,7 +22,7 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
         return CGSize(
             width: width,
-            height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing
+            height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 

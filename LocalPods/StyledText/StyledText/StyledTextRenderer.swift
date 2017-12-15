@@ -8,25 +8,25 @@
 
 import Foundation
 
-final class StyledTextRenderer {
+public final class StyledTextRenderer {
 
-    private let builder: StyledTextBuilder
-    private let backgroundColor: UIColor?
     private let layoutManager: NSLayoutManager
     private let textContainer: NSTextContainer
     
-    let scale: CGFloat
-    let inset: UIEdgeInsets
+    public let scale: CGFloat
+    public let inset: UIEdgeInsets
+    public let builder: StyledTextBuilder
+    public let backgroundColor: UIColor?
 
     private var map = [UIContentSizeCategory: NSTextStorage]()
     private var lock = os_unfair_lock_s()
 
-    init(
+    public init(
         builder: StyledTextBuilder,
         inset: UIEdgeInsets = .zero,
         backgroundColor: UIColor? = nil,
         layoutManager: NSLayoutManager = NSLayoutManager(),
-        scale: CGFloat = ScreenScale
+        scale: CGFloat = StyledTextScreenScale
         ) {
         self.builder = builder
         self.inset = inset

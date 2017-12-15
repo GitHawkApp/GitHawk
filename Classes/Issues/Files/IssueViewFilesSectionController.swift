@@ -24,7 +24,7 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,
-            height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing
+            height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 

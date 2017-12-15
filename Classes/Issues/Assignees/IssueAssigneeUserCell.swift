@@ -34,7 +34,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
             make.size.equalTo(Styles.Sizes.icon)
         }
 
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         label.textColor = Styles.Colors.Gray.dark.color
         label.backgroundColor = .clear
         contentView.addSubview(label)

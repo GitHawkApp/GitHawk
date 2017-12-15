@@ -36,7 +36,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         messageLabel.text = NSLocalizedString("Inbox zero!", comment: "")
         messageLabel.textAlignment = .center
         messageLabel.backgroundColor = .clear
-        messageLabel.font = Styles.Fonts.body
+        messageLabel.font = Styles.Text.body.preferredFont
         messageLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make in

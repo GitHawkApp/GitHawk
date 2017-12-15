@@ -19,7 +19,7 @@ final class NotificationRepoCell: UICollectionViewCell, ListBindable {
 
         contentView.backgroundColor = Styles.Colors.Gray.lighter.color
 
-        label.font = Styles.Fonts.title
+        label.font = Styles.Text.title.preferredFont
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

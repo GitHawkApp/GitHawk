@@ -25,7 +25,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
                 fatalError("Missing context or object")
         }
         let height = object.title.textViewSize(width).height
-            + Styles.Fonts.secondary.lineHeight
+            + Styles.Text.secondary.preferredFont.lineHeight
             + Styles.Sizes.rowSpacing
             + (object.labels.count > 0 ? RepositorySummaryCell.labelDotSize.height + Styles.Sizes.rowSpacing : 0)
         return CGSize(width: width, height: ceil(height))

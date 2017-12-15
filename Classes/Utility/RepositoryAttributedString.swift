@@ -10,12 +10,12 @@ import Foundation
 
 func RepositoryAttributedString(owner: String, name: String) -> NSAttributedString {
     let ownerAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Fonts.body,
+        .font: Styles.Text.body.preferredFont,
         .foregroundColor: Styles.Colors.Gray.dark.color
     ]
 
     let nameAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Fonts.bodyBold,
+        .font: Styles.Text.bodyBold.preferredFont,
         .foregroundColor: Styles.Colors.Gray.dark.color
     ]
 

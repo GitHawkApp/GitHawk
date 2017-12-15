@@ -50,7 +50,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
-        loginLabel.font = Styles.Fonts.title
+        loginLabel.font = Styles.Text.title.preferredFont
         loginLabel.textColor = Styles.Colors.Gray.dark.color
         loginLabel.isUserInteractionEnabled = true
         loginLabel.addGestureRecognizer(UITapGestureRecognizer(
@@ -63,7 +63,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
         }
 
-        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -93,7 +93,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
 
-        editedLabel.font = Styles.Fonts.secondary
+        editedLabel.font = Styles.Text.secondary.preferredFont
         editedLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(editedLabel)
         editedLabel.snp.makeConstraints { make in

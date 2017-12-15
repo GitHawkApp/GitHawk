@@ -13,13 +13,17 @@ public struct StyledTextBuilder: Hashable, Equatable {
     internal let styledTexts: [StyledText]
     internal var savedStyle: TextStyle? = nil
 
-    init(styledText: StyledText) {
+    public init(styledText: StyledText) {
         self.init(styledTexts: [styledText])
     }
 
-    init(styledTexts: [StyledText]) {
+    public init(styledTexts: [StyledText]) {
         self.styledTexts = styledTexts
         self.savedStyle = nil
+    }
+
+    public var allText: String {
+        return styledTexts.reduce("", { $0 + $1.text })
     }
 
     public func add(styledTexts: [StyledText]) -> StyledTextBuilder {

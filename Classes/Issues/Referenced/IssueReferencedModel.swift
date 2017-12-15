@@ -54,7 +54,7 @@ final class IssueReferencedModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: actor,
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 MarkdownAttribute.username: actor
             ]
@@ -62,14 +62,14 @@ final class IssueReferencedModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: NSLocalizedString(" referenced ", comment: ""),
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 ]
         ))
         attributedText.append(NSAttributedString(
             string: date.agoString,
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
             ]
@@ -78,14 +78,14 @@ final class IssueReferencedModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: title,
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
             ]
         ))
         attributedText.append(NSAttributedString(
             string: " #\(number)",
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
             ]
         ))

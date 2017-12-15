@@ -96,7 +96,7 @@ SwipeCollectionViewCellDelegate {
         action.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
         action.textColor = .white
         action.tintColor = .white
-        action.font = Styles.Fonts.button
+        action.font = Styles.Text.button.preferredFont
         action.transitionDelegate = ScaleTransition.default
         return [action]
     }

@@ -17,7 +17,7 @@ public struct TextStyle: Hashable, Equatable {
     public let minSize: CGFloat
     public let maxSize: CGFloat
 
-    init(
+    public init(
         name: String = UIFont.systemFont(ofSize: 1).fontName,
         size: CGFloat = UIFont.systemFontSize,
         attributes: [NSAttributedStringKey: AnyObject] = [:],
