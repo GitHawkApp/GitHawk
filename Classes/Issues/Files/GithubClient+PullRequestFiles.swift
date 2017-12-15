@@ -56,7 +56,7 @@ extension GithubClient {
                         let sizing = NSAttributedStringSizing(
                             containerWidth: 0,
                             attributedText: attributedText,
-                            inset: Styles.Sizes.textViewInset
+                            inset: Styles.TextViewInset
                         )
                         DispatchQueue.main.async {
                             completion(.success((sizing, content)))

@@ -51,23 +51,23 @@ func PushAttributes(
     case .header:
         switch element.level {
         case 1: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h1)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h1)
             ]
         case 2: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h2)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h2)
             ]
         case 3: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h3)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h3)
             ]
         case 4: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h4)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h4)
             ]
         case 5: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h5)
             ]
         default: newAttributes = [
             .foregroundColor: Styles.Colors.Gray.medium.color,
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h6)
             ]
         }
     case .bulletedList, .numberedList:

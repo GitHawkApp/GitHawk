@@ -70,6 +70,13 @@ enum Styles {
         static let code = TextStyle(name: "Courier", size: 16)
         static let secondaryCode = TextStyle(name: "Courier", size: 13)
 
+        static let h1 = TextStyle(size: 24, traits: .traitBold)
+        static let h2 = TextStyle(size: 20, traits: .traitBold)
+        static let h3 = TextStyle(size: 20, traits: .traitBold)
+        static let h4 = TextStyle(size: 18, traits: .traitBold)
+        static let h5 = TextStyle(size: 16, traits: .traitBold)
+        static let h6 = TextStyle(size: 16, traits: .traitBold)
+
     }
 
     enum Colors {
