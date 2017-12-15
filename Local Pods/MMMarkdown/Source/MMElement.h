@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, MMElementType)
     MMElementTypeTableHeaderCell,
     MMElementTypeTableRow,
     MMElementTypeTableRowCell,
+    MMElementTypeUsername,
 };
 
 typedef NS_ENUM(NSInteger, MMTableCellAlignment)
@@ -77,6 +78,7 @@ typedef NS_ENUM(NSInteger, MMTableCellAlignment)
 @property (copy,   nonatomic, nullable) NSString      *identifier;
 @property (copy,   nonatomic, nullable) NSString      *stringValue;
 @property (assign, nonatomic) NSUInteger numberedListPosition;
+@property (copy, nonatomic, nullable) NSString *username;
 
 @property (weak, nonatomic, nullable) MMElement *parent;
 @property (copy,   nonatomic, nonnull) NSArray<MMElement *>   *children;
