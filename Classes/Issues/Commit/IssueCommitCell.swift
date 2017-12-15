@@ -87,7 +87,7 @@ final class IssueCommitCell: UICollectionViewCell {
         avatarImageView.sd_setImage(with: model.avatarURL)
         messageLabel.text = model.message
 
-        let labelFormat = NSLocalizedString("%@ committed %@", comment: "")
+        let labelFormat = NSLocalizedString("%@ committed \"%@\"", comment: "")
         accessibilityLabel = String(format: labelFormat, arguments: [model.login, model.message])
     }
 
