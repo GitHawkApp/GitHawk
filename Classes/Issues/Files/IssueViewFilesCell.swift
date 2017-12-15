@@ -68,7 +68,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
         let hintFormat = NSLocalizedString(
             "View %zi files with %zi additions and %zi deletions.",
             comment: "The accessibility hint with details of the View Files button.")
-        accessibilityHint = .localizedStringWithFormat(hintFormat, changes.changedFiles, changes.additions, changes.deletions)
+        accessibilityHint = String(format: hintFormat, arguments: [changes.changedFiles, changes.additions, changes.deletions])
     }
 
 }
