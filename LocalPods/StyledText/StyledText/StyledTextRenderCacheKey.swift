@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct StyledTextRenderCacheKey: Hashable, Equatable {
+internal struct StyledTextRenderCacheKey: Hashable, Equatable {
 
     let width: CGFloat
     let attributedText: NSAttributedString

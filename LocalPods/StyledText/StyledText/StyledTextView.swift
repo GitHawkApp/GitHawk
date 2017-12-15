@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol StyledTextViewDelegate: class {
+public protocol StyledTextViewDelegate: class {
     func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any])
 }
 
-final class StyledTextView: UIView {
+public final class StyledTextView: UIView {
 
     weak var delegate: StyledTextViewDelegate?
 
@@ -26,7 +26,7 @@ final class StyledTextView: UIView {
         commonInit()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -50,7 +50,7 @@ final class StyledTextView: UIView {
 
     // MARK: UIGestureRecognizerDelegate
 
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard (gestureRecognizer === tapGesture || gestureRecognizer === longPressGesture),
             let attributes = renderer?.attributes(at: gestureRecognizer.location(in: self)) else {
                 return super.gestureRecognizerShouldBegin(gestureRecognizer)

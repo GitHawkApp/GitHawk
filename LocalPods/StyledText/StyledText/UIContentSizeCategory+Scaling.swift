@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension UIContentSizeCategory {
+internal extension UIContentSizeCategory {
 
-    internal var multiplier: CGFloat {
+    var multiplier: CGFloat {
         switch self {
         case .accessibilityExtraExtraExtraLarge: return 23 / 16
         case .accessibilityExtraExtraLarge: return 22 / 16
@@ -28,7 +28,7 @@ extension UIContentSizeCategory {
         }
     }
 
-    internal func preferredContentSize(
+    func preferredContentSize(
         _ base: CGFloat,
         minSize: CGFloat = 0,
         maxSize: CGFloat = CGFloat.greatestFiniteMagnitude

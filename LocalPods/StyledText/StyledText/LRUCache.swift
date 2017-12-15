@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol LRUCachable {
+internal protocol LRUCachable {
     var cachedSize: Int { get }
 }
 
-public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
+internal final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     internal class Node {
 

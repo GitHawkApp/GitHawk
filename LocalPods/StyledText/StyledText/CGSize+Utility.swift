@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension CGSize {
+internal extension CGSize {
 
     func snapped(scale: CGFloat) -> CGSize {
         var size = self

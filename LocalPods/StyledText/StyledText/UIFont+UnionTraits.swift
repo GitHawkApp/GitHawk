@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension UIFont {
+internal extension UIFont {
 
-    internal func addingTraits(traits: UIFontDescriptorSymbolicTraits) -> UIFont {
+    func addingTraits(traits: UIFontDescriptorSymbolicTraits) -> UIFont {
         let newTraits = fontDescriptor.symbolicTraits.union(traits)
         guard let descriptor = fontDescriptor.withSymbolicTraits(newTraits)
             else { return self }
