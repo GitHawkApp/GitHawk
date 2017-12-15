@@ -56,7 +56,7 @@ final class IssueCommitCell: UICollectionViewCell {
         }
 
         messageLabel.backgroundColor = .clear
-        messageLabel.font = Styles.Text.secondaryCode.preferredFont
+        messageLabel.font = Styles.Fonts.secondaryCode
         messageLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make in

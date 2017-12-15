@@ -22,13 +22,13 @@ struct CompareImages {
     }
     
     let reference = testTarget.reference(for: .reference).path
-    guard fileManager.fileExists(atPath: reference.absoluteString) else {
-      XCTFail("🚫 Reference image not found [`\(reference)`]")
+    guard fileManager.fileExists(atPath: reference.path) else {
+      XCTFail("🚫 Reference image not found [`\(reference.path)`]")
       return
     }
     
-    guard let referenceImage = UIImage(contentsOfFile: reference.standardizedFileURL.absoluteString) else {
-      XCTFail("🚫 Error loading reference image [`\(reference)`]")
+    guard let referenceImage = UIImage(contentsOfFile: reference.path) else {
+      XCTFail("🚫 Error loading reference image [`\(reference.path)`]")
       return
     }
     
@@ -43,13 +43,13 @@ struct CompareImages {
       try referenceImage.compare(with: processedImage)
     } catch CompareError.notEqualSize(let referenceSize, let comparedSize) {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-       XCTFail("📏 Image sizes should be equals, reference image size: \(referenceSize), compared image size: \(comparedSize)")
+      XCTFail("📏 Image sizes should be equals, reference image size: \(referenceSize), compared image size: \(comparedSize)")
     } catch CompareError.invalidImageSize {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-       XCTFail("📏 One of the images has 0 size")
+      XCTFail("📏 One of the images has 0 size")
     } catch CompareError.notEquals {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-       XCTFail("≠ Images are not equal")
+      XCTFail("≠ Images are not equal")
     } catch CompareError.notEqualMetadata {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
       XCTFail("👾 Images have different metadata information")

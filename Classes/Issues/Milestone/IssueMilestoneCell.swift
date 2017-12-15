@@ -46,7 +46,7 @@ final class IssueMilestoneCell: UICollectionViewCell {
     func configure(milestone: Milestone) {
         let milestoneAttributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.light.color,
-            .font: Styles.Text.secondary.preferredFont
+            .font: Styles.Fonts.secondary
         ]
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
@@ -54,12 +54,12 @@ final class IssueMilestoneCell: UICollectionViewCell {
         )
         let titleAttributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.dark.color,
-            .font: Styles.Text.secondaryBold.preferredFont
+            .font: Styles.Fonts.secondaryBold
         ]
         titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
 
-        progress.progress = Float(milestone.openIssueCount) / Float(milestone.totalIssueCount)
+        progress.progress = Float(milestone.totalIssueCount - milestone.openIssueCount) / Float(milestone.totalIssueCount)
     }
 
 }

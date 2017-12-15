@@ -28,7 +28,7 @@ public final class StyledTextRenderer {
         layoutManager: NSLayoutManager = NSLayoutManager(),
         scale: CGFloat = StyledTextScreenScale
         ) {
-        self.builder = builder
+        self.builder = builder.copy
         self.inset = inset
         self.backgroundColor = backgroundColor
         self.scale = scale
@@ -129,6 +129,23 @@ public final class StyledTextRenderer {
             return layoutManager.textStorage?.attributes(at: index, effectiveRange: nil)
         }
         return nil
+    }
+
+    public enum WarmOption {
+        case size
+        case bitmap
+    }
+
+    public func warm(
+        _ option: WarmOption = .size,
+        contentSizeCategory: UIContentSizeCategory,
+        width: CGFloat
+        ) -> StyledTextRenderer {
+        switch option {
+        case .size: let _ = size(contentSizeCategory: contentSizeCategory, width: width)
+        case .bitmap: let _ = render(contentSizeCategory: contentSizeCategory, width: width)
+        }
+        return self
     }
 
 }

@@ -23,7 +23,7 @@ final class ClearAllHeaderCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = Styles.Text.secondary.preferredFont
+        label.font = Styles.Fonts.secondary
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
@@ -33,7 +33,7 @@ final class ClearAllHeaderCell: UICollectionViewCell {
 
         button.setTitle(Constants.Strings.clearAll, for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
-        button.titleLabel?.font = Styles.Text.button.preferredFont
+        button.titleLabel?.font = Styles.Fonts.button
         button.addTarget(self, action: #selector(ClearAllHeaderCell.onClear), for: .touchUpInside)
         contentView.addSubview(button)
         button.snp.makeConstraints { make in

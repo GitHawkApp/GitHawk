@@ -2,7 +2,7 @@ import UIKit
 import XCTest
 
 struct ExtractViewImage {
-
+  
   private let saveImageToDisk: SaveImageToDisk
   private let addAttachment: AddAttachment
   
@@ -20,6 +20,6 @@ struct ExtractViewImage {
     saveImageToDisk.execute(with: image, with: testTarget.reference(for: .reference))
     addAttachment.execute(with: image, type: .reference)
     
-    XCTFail("⚠️ Test ran in record mode, reference image has been saved to \(testTarget.reference(for: .reference).path), now remove `isRecording` in order to perform the snapshot comparsion.")
+    XCTFail("⚠️ Test ran in record mode, reference image has been saved to \(testTarget.reference(for: .reference).path.path), now remove `isRecording` in order to perform the snapshot comparsion.")
   }
 }

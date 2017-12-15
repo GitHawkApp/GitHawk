@@ -32,7 +32,7 @@ final class SearchRecentCell: SwipeSelectableCell {
         }
 
         label.textColor = Styles.Colors.Gray.dark.color
-        label.font = Styles.Text.body.preferredFont
+        label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

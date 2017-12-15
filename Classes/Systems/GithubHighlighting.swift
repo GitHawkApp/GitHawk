@@ -13,7 +13,7 @@ enum GithubHighlighting {
 
     private static var shared: Highlightr? = {
         let h = Highlightr()
-        h?.setTheme(to: "github", fontSize: Styles.Text.code)
+        h?.setTheme(to: "github", fontSize: Styles.Sizes.Text.code)
         return h
     }()
 

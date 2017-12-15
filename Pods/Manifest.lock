@@ -83,38 +83,38 @@ DEPENDENCIES:
   - FBSnapshotTestCase
   - Firebase/Core
   - Firebase/Database
-  - FlatCache (from `LocalPods/FlatCache`)
+  - FlatCache (from `Local Pods/FlatCache`)
   - FLEX (~> 2.0)
-  - Highlightr (from `LocalPods/Highlightr`)
+  - Highlightr (from `Local Pods/Highlightr`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
-  - MMMarkdown (from `LocalPods/MMMarkdown`)
+  - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
-  - SlackTextViewController (from `LocalPods/SlackTextViewController`)
+  - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
-  - StyledText (from `LocalPods/StyledText`)
+  - StyledText (from `Local Pods/StyledText`)
   - SwiftLint
-  - SwipeCellKit (from `LocalPods/SwipeCellKit`)
+  - SwipeCellKit (from `Local Pods/SwipeCellKit`)
   - Tabman (~> 1.1)
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
   FlatCache:
-    :path: LocalPods/FlatCache
+    :path: Local Pods/FlatCache
   Highlightr:
-    :path: LocalPods/Highlightr
+    :path: Local Pods/Highlightr
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
   MMMarkdown:
-    :path: LocalPods/MMMarkdown
+    :path: Local Pods/MMMarkdown
   SlackTextViewController:
-    :path: LocalPods/SlackTextViewController
+    :path: Local Pods/SlackTextViewController
   StyledText:
-    :path: LocalPods/StyledText
+    :path: Local Pods/StyledText
   SwipeCellKit:
-    :path: LocalPods/SwipeCellKit
+    :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
   IGListKit:
@@ -155,6 +155,6 @@ SPEC CHECKSUMS:
   Tabman: 94692b62fc58ed4945220be2f3f0ad7406aa3699
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: f61b6521d93d11964c83952fd4c8ae5f517b2fbd
+PODFILE CHECKSUM: 53b8192c56f79fe8781d63f3ebaad65fdaabd4f6
 
 COCOAPODS: 1.4.0.beta.1

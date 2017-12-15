@@ -37,7 +37,7 @@ final class SearchNoResultsCell: UICollectionViewCell {
         label.text = NSLocalizedString("No Results Found", comment: "")
         label.textAlignment = .center
         label.backgroundColor = .clear
-        label.font = Styles.Text.body.preferredFont
+        label.font = Styles.Fonts.body
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

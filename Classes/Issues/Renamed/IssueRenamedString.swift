@@ -11,11 +11,11 @@ import UIKit
 func IssueRenamedString(previous: String, current: String, width: CGFloat) -> NSAttributedStringSizing {
     let titleAttributes = [
         NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-        NSAttributedStringKey.font: Styles.Text.secondaryBold.preferredFont
+        NSAttributedStringKey.font: Styles.Fonts.secondaryBold
     ]
     let dividerAttributes = [
         NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
-        NSAttributedStringKey.font: Styles.Text.secondary.preferredFont
+        NSAttributedStringKey.font: Styles.Fonts.secondary
     ]
     let text = NSMutableAttributedString(string: previous, attributes: titleAttributes)
     text.append(NSAttributedString(string: NSLocalizedString(" to ", comment: ""), attributes: dividerAttributes))

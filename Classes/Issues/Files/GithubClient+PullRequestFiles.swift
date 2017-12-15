@@ -49,14 +49,14 @@ extension GithubClient {
                         let data = Data(base64Encoded: content.content, options: [.ignoreUnknownCharacters]),
                         let text = String(data: data, encoding: .utf8) {
                         let attributes = [
-                            NSAttributedStringKey.font: Styles.Text.code.preferredFont,
+                            NSAttributedStringKey.font: Styles.Fonts.code,
                             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
                         ]
                         let attributedText = NSAttributedString(string: text, attributes: attributes)
                         let sizing = NSAttributedStringSizing(
                             containerWidth: 0,
                             attributedText: attributedText,
-                            inset: Styles.TextViewInset
+                            inset: Styles.Sizes.textViewInset
                         )
                         DispatchQueue.main.async {
                             completion(.success((sizing, content)))

@@ -60,14 +60,15 @@ NewIssueTableViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+
         makeBackBarItemEmpty()
 
-//        automaticallyAdjustsChildScrollViewInsets = false
         dataSource = self
         delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
         bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Text.button.preferredFont
+            appearance.text.font = Styles.Fonts.button
             appearance.state.color = Styles.Colors.Gray.light.color
             appearance.state.selectedColor = Styles.Colors.Blue.medium.color
             appearance.indicator.color = Styles.Colors.Blue.medium.color

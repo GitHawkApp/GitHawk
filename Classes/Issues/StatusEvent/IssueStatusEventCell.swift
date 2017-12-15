@@ -43,7 +43,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         }
 
         // courier has a little bit of a different kerning, manually adjust
-        hashButton.titleLabel?.font = Styles.Text.secondaryCode.preferredFont
+        hashButton.titleLabel?.font = Styles.Fonts.secondaryCode
         hashButton.setTitleColor(Styles.Colors.Gray.dark.color, for: .normal)
         hashButton.addTarget(self, action: #selector(IssueStatusEventCell.onHash), for: .touchUpInside)
         contentView.addSubview(hashButton)
@@ -52,7 +52,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
             make.centerY.equalTo(contentView).offset(1)
         }
 
-        dateLabel.font = Styles.Text.secondary.preferredFont
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.backgroundColor = .clear
         contentView.addSubview(dateLabel)
@@ -86,7 +86,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
     func configure(_ model: IssueStatusEventModel) {
         let actorAttributes = [
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-            NSAttributedStringKey.font: Styles.Text.secondaryBold.preferredFont
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
         ]
         actorButton.setAttributedTitle(NSAttributedString(string: model.actor, attributes: actorAttributes), for: .normal)
 

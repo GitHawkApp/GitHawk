@@ -12,7 +12,7 @@ import SnapKit
 final class NotificationCell: SwipeSelectableCell {
 
     static let labelInset = UIEdgeInsets(
-        top: Styles.Text.title.preferredFont.lineHeight + 2*Styles.Sizes.rowSpacing,
+        top: Styles.Fonts.title.lineHeight + 2*Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
@@ -31,7 +31,7 @@ final class NotificationCell: SwipeSelectableCell {
         backgroundColor = .white
 
         titleLabel.numberOfLines = 1
-        titleLabel.font = Styles.Text.title.preferredFont
+        titleLabel.font = Styles.Fonts.title
         titleLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -41,7 +41,7 @@ final class NotificationCell: SwipeSelectableCell {
 
         dateLabel.backgroundColor = .clear
         dateLabel.numberOfLines = 1
-        dateLabel.font = Styles.Text.secondary.preferredFont
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.light.color
         dateLabel.textAlignment = .right
         contentView.addSubview(dateLabel)
@@ -91,12 +91,12 @@ final class NotificationCell: SwipeSelectableCell {
 
     func configure(_ viewModel: NotificationViewModel) {
         var titleAttributes = [
-            NSAttributedStringKey.font: Styles.Text.title.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.title,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
         let title = NSMutableAttributedString(string: "\(viewModel.owner)/\(viewModel.repo) ", attributes: titleAttributes)
 
-        titleAttributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
+        titleAttributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
         switch viewModel.identifier {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break

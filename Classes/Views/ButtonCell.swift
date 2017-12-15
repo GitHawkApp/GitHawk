@@ -27,7 +27,7 @@ final class ButtonCell: SelectableCell {
 
         label.backgroundColor = .clear
         label.textAlignment = .center
-        label.font = Styles.Text.button.preferredFont
+        label.font = Styles.Fonts.button
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

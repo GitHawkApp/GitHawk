@@ -63,7 +63,7 @@ ListBindingSectionControllerSelectionDelegate {
         return CGSize(
             width: width,
             // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
-            height: max(Styles.Sizes.icon.height, Styles.Text.secondary.preferredFont.lineHeight)
+            height: max(Styles.Sizes.icon.height, Styles.Fonts.secondary.lineHeight)
         )
     }
 

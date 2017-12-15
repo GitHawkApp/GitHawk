@@ -9,19 +9,20 @@
 import UIKit
 
 public protocol StyledTextViewDelegate: class {
-    func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any])
+    func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint)
+    func didLongPress(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint)
 }
 
-public class StyledTextView: UIView {
+open class StyledTextView: UIView {
 
-    weak var delegate: StyledTextViewDelegate?
+    open weak var delegate: StyledTextViewDelegate?
+    open var gesturableAttributes = Set<NSAttributedStringKey>()
 
     private var renderer: StyledTextRenderer?
     private var tapGesture: UITapGestureRecognizer?
     private var longPressGesture: UILongPressGestureRecognizer?
-    private var gesturableAttributes = Set<NSAttributedStringKey>()
 
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -50,7 +51,7 @@ public class StyledTextView: UIView {
 
     // MARK: UIGestureRecognizerDelegate
 
-    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard (gestureRecognizer === tapGesture || gestureRecognizer === longPressGesture),
             let attributes = renderer?.attributes(at: gestureRecognizer.location(in: self)) else {
                 return super.gestureRecognizerShouldBegin(gestureRecognizer)
@@ -66,23 +67,29 @@ public class StyledTextView: UIView {
     // MARK: Private API
 
     @objc func onTap(recognizer: UITapGestureRecognizer) {
-        guard let attributes = renderer?.attributes(at: recognizer.location(in: self)) else { return }
-        delegate?.didTap(view: self, attributes: attributes)
+        let point = recognizer.location(in: self)
+        guard let attributes = renderer?.attributes(at: point) else { return }
+        delegate?.didTap(view: self, attributes: attributes, point: point)
     }
 
     @objc func onLong(recognizer: UILongPressGestureRecognizer) {
-        guard recognizer.state == .began else { return }
+        let point = recognizer.location(in: self)
+        guard recognizer.state == .began,
+            let attributes = renderer?.attributes(at: point)
+            else { return }
+        delegate?.didLongPress(view: self, attributes: attributes, point: point)
     }
 
     // MARK: Public API
 
-    func configure(renderer: StyledTextRenderer, width: CGFloat) {
+    open func configure(renderer: StyledTextRenderer, width: CGFloat) {
         self.renderer = renderer
         layer.contentsScale = renderer.scale
         reposition(width: width)
+        accessibilityLabel = renderer.builder.allText
     }
 
-    func reposition(width: CGFloat) {
+    open func reposition(width: CGFloat) {
         guard let renderer = self.renderer else { return }
         let result = renderer.render(
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,

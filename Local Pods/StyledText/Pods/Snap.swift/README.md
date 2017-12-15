@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Snap.swift - Snapshot testing in a snap 🎨</h1>
 <p align="center">
-    <img src="https://travis-ci.org/skyweb07/Snap.swift.svg?branch=feature%2Fintegrate-tracis-ci"/>
+    <img src="https://travis-ci.org/skyweb07/Snap.swift.svg?branch=develop"/>
     <img src="https://img.shields.io/badge/Swift-4.0-orange.svg" />
     <a href="https://twitter.com/skyweb07">
         <img src="https://img.shields.io/badge/contact-@skyweb07-blue.svg?style=flat" alt="Twitter: @skyweb07" />
@@ -18,11 +18,12 @@
 ### 🤖 Requirements
 
 * iOS 9.0+
+* tvOS 10.0+
 * Xcode 9.0+
 * Swift / Objective-C
 
 
-### 🚀 Getting started 
+### 🚀 Getting started
 
 ### 🎨 Why test the UI?
 You want to make sure that every time you touch any of your UI elements everything stays as they way they were meant to be, also this kind of integration test help you achieve the pixel perfect views and make your designers happy by having design reference images that they can see even in your pull requests.
@@ -31,7 +32,7 @@ You want to make sure that every time you touch any of your UI elements everythi
 Works by generating a reference image that gets stored in your repository and then comparing each new test case with the `reference image` to check if there are any differences. If test found any differences it will add an attachment into your test case and you'll be able to check what changed
 
 ![Project attachment](.art/xcode_attachment.png)
- 
+
 ### 🛠 Configuration
 
 In order to configure the snapshot test folder, we need to add a new environment variable to the project with name `SNAP_REFERENCE_IMAGE_PATH` and value `$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/` so `Snap.swift` can find the folder to store the reference images. If the configuration was correctly set the project should look like this:
@@ -49,7 +50,7 @@ it, simply add the following line to your Podfile:
 pod 'Snap.swift'
 ```
 
-### ✅ Creating our first test 
+### ✅ Creating our first test
 
 1) We first need to record our reference images, in order to do so we have to first go into our test class and set the `isRecording` variable to be `true` so the library knows that we are in record mode and can extract the `reference images`
 
@@ -60,7 +61,7 @@ import XCTest
 import Snap_swift
 
 class SnapTests: XCTestCase {
-  
+
   override func setUp() {
     super.setUp()
     isRecording = true
@@ -68,7 +69,7 @@ class SnapTests: XCTestCase {
 
   func test_box_with_text_aligned_to_center() {
     let view = BoxWithTextAlignedToCenterView()
-    
+
     expect(view).toMatchSnapshot()
   }
 }
@@ -93,7 +94,7 @@ class SnapTests: XCTestCase {
 - (void)test_box_with_text_aligned_to_center {
 
   UIView *view = [BoxWithTextAlignedToCenterView new];
-  
+
   verifyView(view);
 }
 
@@ -122,9 +123,9 @@ This is ok, it just means that our reference images were saved, we can inspect t
 
 > As today, you can make assertions on `UIView` and `CALayer` classes.
 
-This project is highly inspired on `Facebook` [FBSnapshotTestCase](https://github.com/facebookarchive/ios-snapshot-test-case/) library, it seems that they had archived the library so I started this one to continue envolving the project and continue with mobile `snapshot-testing` 
+This project is highly inspired on `Facebook` [FBSnapshotTestCase](https://github.com/facebookarchive/ios-snapshot-test-case/) library, it seems that they had archived the library so I started this one to continue envolving the project and continue with mobile `snapshot-testing`
 
-### 😬 Contributions 
+### 😬 Contributions
 - Open an [issue](https://github.com/skyweb07/Snap.swift/issues/new)
 - Add suggestions or fix [issues](https://github.com/skyweb07/Snap.swift/issues) by opening PR's
 - Send me a message via [Twitter](https://twitter.com/skyweb07)

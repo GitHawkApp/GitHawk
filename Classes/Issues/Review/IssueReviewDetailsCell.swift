@@ -46,7 +46,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         }
 
         contentView.addSubview(dateLabel)
-        dateLabel.font = Styles.Text.secondary.preferredFont
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(actorButton)
@@ -115,12 +115,12 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         icon.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
 
         var attributes = [
-            NSAttributedStringKey.font: Styles.Text.title.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.title,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         let mActorString = NSMutableAttributedString(string: viewModel.actor, attributes: attributes)
 
-        attributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
+        attributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
         mActorString.append(NSAttributedString(string: " \(action)", attributes: attributes))
         actorButton.setAttributedTitle(mActorString, for: .normal)
     }

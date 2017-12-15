@@ -34,7 +34,7 @@ final class RepositoryEmptyResultsCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.backgroundColor = .clear
-        label.font = Styles.Text.body.preferredFont
+        label.font = Styles.Fonts.body
         label.textColor = tint
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

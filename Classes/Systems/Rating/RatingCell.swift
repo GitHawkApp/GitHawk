@@ -29,7 +29,7 @@ final class RatingCell: UICollectionViewCell {
         let tint = UIColor.white
 
         titleLabel.textAlignment = .center
-        titleLabel.font = Styles.Text.bodyBold.preferredFont
+        titleLabel.font = Styles.Fonts.bodyBold
         titleLabel.textColor = tint
         titleLabel.text = NSLocalizedString("Enjoying GitHawk? 😍", comment: "")
         contentView.addSubview(titleLabel)
@@ -39,7 +39,7 @@ final class RatingCell: UICollectionViewCell {
         }
 
         detailLabel.textAlignment = .center
-        detailLabel.font = Styles.Text.body.preferredFont
+        detailLabel.font = Styles.Fonts.body
         detailLabel.textColor = tint
         detailLabel.numberOfLines = 0
         detailLabel.text = NSLocalizedString("Help spread the word by leaving\na quick rating & review!", comment: "")

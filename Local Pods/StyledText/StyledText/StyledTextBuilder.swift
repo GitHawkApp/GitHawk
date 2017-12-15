@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct StyledTextBuilder: Hashable, Equatable {
+public final class StyledTextBuilder: Hashable, Equatable {
 
-    internal let styledTexts: [StyledText]
+    internal var styledTexts: [StyledText]
     internal var savedStyle: TextStyle? = nil
 
-    public init(styledText: StyledText) {
+    public convenience init(styledText: StyledText) {
         self.init(styledTexts: [styledText])
     }
 
@@ -26,33 +26,44 @@ public struct StyledTextBuilder: Hashable, Equatable {
         return styledTexts.reduce("", { $0 + $1.text })
     }
 
-    public func add(styledTexts: [StyledText]) -> StyledTextBuilder {
-        var builder = StyledTextBuilder(styledTexts: self.styledTexts + styledTexts)
-        builder.savedStyle = savedStyle
-        return builder
+    public var tipAttributes: [NSAttributedStringKey: Any]? {
+        return styledTexts.last?.style.attributes
     }
 
+    @discardableResult
+    public func add(styledTexts: [StyledText]) -> StyledTextBuilder {
+        self.styledTexts += styledTexts
+        return self
+    }
+
+    @discardableResult
     public func add(styledText: StyledText) -> StyledTextBuilder {
         return add(styledTexts: [styledText])
     }
 
+    @discardableResult
     public func save() -> StyledTextBuilder {
-        var builder = self
-        builder.savedStyle = styledTexts.last?.style
-        return builder
+        savedStyle = styledTexts.last?.style
+        return self
     }
 
+    @discardableResult
     public func restore() -> StyledTextBuilder {
         guard let savedStyle = self.savedStyle else { return self }
-        var builder = add(styledText: StyledText(style: savedStyle))
-        builder.savedStyle = nil
-        return builder
+        self.savedStyle = nil
+        return add(styledText: StyledText(style: savedStyle))
     }
 
+    @discardableResult
+    public func add(style: TextStyle) -> StyledTextBuilder {
+        return add(styledText: StyledText(text: "", style: style))
+    }
+
+    @discardableResult
     public func add(
-        text: String,
+        text: String = "",
         traits: UIFontDescriptorSymbolicTraits? = nil,
-        attributes: [NSAttributedStringKey: AnyObject]? = nil
+        attributes: [NSAttributedStringKey: Any]? = nil
         ) -> StyledTextBuilder {
         guard let tip = styledTexts.last else { return self }
 
@@ -103,6 +114,19 @@ public struct StyledTextBuilder: Hashable, Equatable {
 
     public static func == (lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
         return lhs.styledTexts == rhs.styledTexts
+    }
+
+    public var copy: StyledTextBuilder {
+        let copy = StyledTextBuilder(styledTexts: styledTexts)
+        copy.savedStyle = savedStyle
+        return copy
+    }
+
+    @discardableResult
+    public func clearText() -> StyledTextBuilder {
+        guard let tipStyle = styledTexts.last?.style else { return self }
+        styledTexts.removeAll()
+        return add(styledText: StyledText(text: "", style: tipStyle))
     }
 
 }

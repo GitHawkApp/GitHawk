@@ -21,7 +21,7 @@ extension UIButton {
     func setupAsLabel(icon: Bool = true) {
         accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
-        titleLabel?.font = Styles.Text.smallTitle.preferredFont
+        titleLabel?.font = Styles.Fonts.smallTitle
         layer.cornerRadius = Styles.Sizes.labelCornerRadius
         clipsToBounds = true
 

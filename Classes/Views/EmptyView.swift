@@ -18,7 +18,7 @@ final class EmptyView: UIView {
 
         label.backgroundColor = .clear
         label.textAlignment = .center
-        label.font = Styles.Text.body.preferredFont
+        label.font = Styles.Fonts.body
         label.textColor = Styles.Colors.Gray.medium.color
         label.numberOfLines = 0
         addSubview(label)

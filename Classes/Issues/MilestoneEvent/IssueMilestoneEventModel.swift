@@ -41,7 +41,7 @@ final class IssueMilestoneEventModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: actor,
             attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
+                .font: Styles.Fonts.secondaryBold,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
                 MarkdownAttribute.username: actor
             ]
@@ -55,14 +55,22 @@ final class IssueMilestoneEventModel: ListDiffable {
             string: action,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.medium.color,
-                .font: Styles.Text.secondary.preferredFont
+                .font: Styles.Fonts.secondary
             ]
         ))
         attributedText.append(NSAttributedString(
             string: milestone,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Text.secondaryBold.preferredFont
+                .font: Styles.Fonts.secondaryBold
+            ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: " \(date.agoString)",
+            attributes: [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
             ]
         ))
         self.attributedText = NSAttributedStringSizing(

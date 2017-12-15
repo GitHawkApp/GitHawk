@@ -152,7 +152,7 @@ PeopleViewControllerDelegate {
             let width = floor(containerWidth / itemsPerRow)
             return CGSize(
                 width: width,
-                height: Styles.Sizes.buttonIcon.height + Styles.Text.secondary.preferredFont.lineHeight
+                height: Styles.Sizes.buttonIcon.height + Styles.Fonts.secondary.lineHeight
             )
         }
     }

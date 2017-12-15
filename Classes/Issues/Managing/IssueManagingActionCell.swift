@@ -32,7 +32,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         }
 
         label.textColor = tint
-        label.font = Styles.Text.secondary.preferredFont
+        label.font = Styles.Fonts.secondary
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)

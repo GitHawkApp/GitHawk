@@ -30,7 +30,7 @@ func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBl
             string: text,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Text.code.preferredFont
+                .font: Styles.Fonts.code
             ]
         )
     }

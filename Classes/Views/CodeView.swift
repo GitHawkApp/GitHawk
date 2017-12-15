@@ -12,7 +12,7 @@ final class CodeView: UIScrollView {
 
     private lazy var textView: UITextView = {
         let view = UITextView()
-        view.font = Styles.Text.code.preferredFont
+        view.font = Styles.Fonts.code
         view.isScrollEnabled = false
         view.isEditable = false
         view.contentInset = .zero

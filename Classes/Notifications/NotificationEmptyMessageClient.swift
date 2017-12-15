@@ -17,9 +17,7 @@ final class NotificationEmptyMessageClient {
     }
 
     private lazy var reference: DatabaseReference = {
-        let d = Database.database()
-        d.isPersistenceEnabled = true
-        let r = d.reference()
+        let r = Database.database().reference()
         r.keepSynced(true)
         return r
     }()

@@ -5,7 +5,7 @@ protocol SnapshotViewMatcherProvider {
 }
 
 struct SnapshotViewMatcher: Matcher {
-  
+
   private let view: UIView
   private let isRecording: Bool
   private let testTarget: TestTarget
@@ -26,10 +26,14 @@ struct SnapshotViewMatcher: Matcher {
   }
   
   func toMatchSnapshot() {
+    toMatchSnapshot(named: nil)
+  }
+  
+  func toMatchSnapshot(named: String?) {
     guard isRecording else {
-      compareImages.compare(with: view, testTarget: testTarget)
+      compareImages.compare(with: view, testTarget: testTarget.named(named))
       return
     }
-    extractViewImage.execute(with: view, testTarget: testTarget)
+    extractViewImage.execute(with: view, testTarget: testTarget.named(named))
   }
 }

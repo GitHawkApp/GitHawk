@@ -21,7 +21,7 @@ final class SettingsLabel: UILabel {
     }
 
     func configure() {
-        font = Styles.Text.body.preferredFont
+        font = Styles.Fonts.body
     }
 
 }

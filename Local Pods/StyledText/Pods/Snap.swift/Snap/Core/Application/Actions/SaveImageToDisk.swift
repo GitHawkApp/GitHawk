@@ -4,7 +4,7 @@ struct SaveImageToDisk {
   
   private let environment: Environment
   private let fileManager: FileManager
-
+  
   init(environment: Environment,
        fileManager: FileManager)
   {
@@ -16,11 +16,11 @@ struct SaveImageToDisk {
     let referenceImage = UIImagePNGRepresentation(image)
     
     do {
-      try fileManager.createDirectory(atPath: reference.directory.absoluteString, withIntermediateDirectories: true)
+      try fileManager.createDirectory(atPath: reference.directory.path, withIntermediateDirectories: true)
     } catch {
       fatalError("🚨 Error creating reference image directory ['\(reference.directory)']")
     }
-    guard fileManager.createFile(atPath: reference.path.absoluteString, contents: referenceImage) else {
+    guard fileManager.createFile(atPath: reference.path.path, contents: referenceImage) else {
       fatalError("🚨 Error saving reference image into ['\(reference.path)']")
     }
   }

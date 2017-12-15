@@ -6,13 +6,6 @@ enum Type: String {
   case diff
 }
 
-struct TestTarget {
-  let function: String
-  let file: String
-  let fileManager: FileManager = resolver.fileManager
-  let environment: Environment = resolver.environment
-}
-
 extension TestTarget {
   func reference(for type: Type) -> Reference {
     // There should be a better way to handle with this ⚠️
@@ -20,7 +13,8 @@ extension TestTarget {
     let functionName = function.replacingOccurrences(of: "()", with: "").lowercased()
     let path = "\(self.path(for: type))\(classFile)/"
     let directory = url.appendingPathComponent(path)
-    let pathUrl = directory.appendingPathComponent("\(type.rawValue)_\(functionName)\(scale).png")
+    let name = (named ?? functionName).replacingOccurrences(of: " ", with: "_")
+    let pathUrl = directory.appendingPathComponent("\(type.rawValue)_\(name)\(scale).png")
     
     return Reference(
       directory: directory,
@@ -38,14 +32,14 @@ extension TestTarget {
     guard let referenceImagePath = environment.get(Path.referenceImage) else {
       fatalError("🚧 You need to configure the reference image path environment variable `\(Path.referenceImage)`")
     }
-    
+    let fileURL = URL(fileURLWithPath: referenceImagePath)
     var isDir: ObjCBool = true
-    let referenceImagePathExists = fileManager.fileExists(atPath: referenceImagePath, isDirectory: &isDir)
+    let referenceImagePathExists = fileManager.fileExists(atPath: fileURL.path, isDirectory: &isDir)
     
-    guard referenceImagePathExists, let url = URL(string: referenceImagePath) else {
+    guard referenceImagePathExists else {
       fatalError("🚫 Provided path ['\(referenceImagePath)'] for `\(Path.referenceImage)` is invalid")
     }
-    return url
+    return fileURL
   }
   
   private func path(for type: Type) -> String {

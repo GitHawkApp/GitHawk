@@ -30,7 +30,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         }
 
         label.text = NSLocalizedString("Manage", comment: "")
-        label.font = Styles.Text.secondaryBold.preferredFont
+        label.font = Styles.Fonts.secondaryBold
         label.textColor = tint
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

@@ -21,7 +21,7 @@ extension UITextView {
                 )
             : .zero
         textContainer.lineFragmentPadding = 0
-        font = Styles.Text.body.preferredFont
+        font = Styles.Fonts.body
     }
 
 }

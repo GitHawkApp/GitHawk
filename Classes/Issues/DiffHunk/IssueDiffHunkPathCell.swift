@@ -20,7 +20,7 @@ final class IssueDiffHunkPathCell: UICollectionViewCell, ListBindable {
 
         label.adjustsFontSizeToFitWidth = true
         label.textColor = Styles.Colors.Gray.dark.color
-        label.font = Styles.Text.code.preferredFont
+        label.font = Styles.Fonts.code
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)

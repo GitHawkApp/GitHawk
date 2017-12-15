@@ -18,7 +18,7 @@ final class IssueLabelEditCell: SelectableCell, ListBindable {
         super.init(frame: frame)
 
         label.text = NSLocalizedString("Edit Labels", comment: "")
-        label.font = Styles.Text.secondary.preferredFont
+        label.font = Styles.Fonts.secondary
         label.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

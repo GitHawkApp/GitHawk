@@ -24,7 +24,7 @@ func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
 
     for line in lines {
         var attributes = [
-            NSAttributedStringKey.font: Styles.Text.code.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.code,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         if line.hasPrefix("+") {

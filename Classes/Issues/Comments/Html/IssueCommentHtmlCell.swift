@@ -39,28 +39,28 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     body{
     // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
     // lint compiled style with http://csslint.net/
-    font-family: -apple-system; font-size: \(Styles.Text.body.size)px;
+    font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;
     color: #\(Styles.Colors.Gray.dark);
     padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;
     margin: 0;
     }
-    * { font-family: -apple-system; font-size: \(Styles.Text.body.size)px; }
+    * { font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px; }
     b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
     i, em{font-style: italic;}
     a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}
-    h1{font-size: \(Styles.Text.h1.size)px;}
-    h2{font-size: \(Styles.Text.h2.size)px;}
-    h3{font-size: \(Styles.Text.h3.size)px;}
-    h4{font-size: \(Styles.Text.h4.size)px;}
-    h5{font-size: \(Styles.Text.h5.size)px;}
-    h6, h7, h8{font-size: \(Styles.Text.h6.size)px; color: #\(Styles.Colors.Gray.medium);}
+    h1{font-size: \(Styles.Sizes.Text.h1);}
+    h2{font-size: \(Styles.Sizes.Text.h2);}
+    h3{font-size: \(Styles.Sizes.Text.h3);}
+    h4{font-size: \(Styles.Sizes.Text.h4);}
+    h5{font-size: \(Styles.Sizes.Text.h5);}
+    h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}
     dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}
     dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
     pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}
-    sub{font-size: \(Styles.Text.secondary.size)px;}
-    sub a{font-size: \(Styles.Text.secondary.size)px;}
+    sub{font-size: \(Styles.Sizes.Text.secondary)px;}
+    sub a{font-size: \(Styles.Sizes.Text.secondary)px;}
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}

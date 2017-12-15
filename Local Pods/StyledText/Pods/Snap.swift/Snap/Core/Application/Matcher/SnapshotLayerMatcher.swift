@@ -23,6 +23,10 @@ struct SnapshotLayerMatcher: Matcher {
   }
   
   func toMatchSnapshot() {
+    toMatchSnapshot(named: nil)
+  }
+  
+  func toMatchSnapshot(named: String?) {
     let view = UIView(frame: layer.frame)
     view.layer.insertSublayer(layer, at: 0)
     
@@ -30,6 +34,6 @@ struct SnapshotLayerMatcher: Matcher {
       with: view,
       isRecording: isRecording,
       tesTarget: testTarget
-    ).toMatchSnapshot()
+    ).toMatchSnapshot(named: named)
   }
 }

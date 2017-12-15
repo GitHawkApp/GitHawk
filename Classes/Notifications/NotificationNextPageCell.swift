@@ -18,7 +18,7 @@ final class NotificationNextPageCell: UICollectionViewCell {
 
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
-        label.font = Styles.Text.button.preferredFont
+        label.font = Styles.Fonts.button
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

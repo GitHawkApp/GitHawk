@@ -30,7 +30,7 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        label.font = Styles.Text.secondary.preferredFont
+        label.font = Styles.Fonts.secondary
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in

@@ -39,7 +39,7 @@ final class IssueRenamedCell: UICollectionViewCell {
             make.top.equalTo(0)
         }
 
-        dateLabel.font = Styles.Text.secondary.preferredFont
+        dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -70,12 +70,12 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     func configure(_ model: IssueRenamedModel) {
         let actorAttributes = [
-            NSAttributedStringKey.font: Styles.Text.secondaryBold.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let actor = NSMutableAttributedString(string: model.actor, attributes: actorAttributes)
         let referencedAttributes = [
-            NSAttributedStringKey.font: Styles.Text.secondary.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.secondary,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         actor.append(NSAttributedString(

@@ -12,7 +12,7 @@ public struct TextStyle: Hashable, Equatable {
 
     public let name: String
     public let size: CGFloat
-    public let attributes: [NSAttributedStringKey: AnyObject]
+    public let attributes: [NSAttributedStringKey: Any]
     public let traits: UIFontDescriptorSymbolicTraits
     public let minSize: CGFloat
     public let maxSize: CGFloat
@@ -20,7 +20,7 @@ public struct TextStyle: Hashable, Equatable {
     public init(
         name: String = UIFont.systemFont(ofSize: 1).fontName,
         size: CGFloat = UIFont.systemFontSize,
-        attributes: [NSAttributedStringKey: AnyObject] = [:],
+        attributes: [NSAttributedStringKey: Any] = [:],
         traits: UIFontDescriptorSymbolicTraits = [],
         minSize: CGFloat = 0,
         maxSize: CGFloat = .greatestFiniteMagnitude

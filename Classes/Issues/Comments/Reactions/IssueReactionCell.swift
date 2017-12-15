@@ -25,7 +25,7 @@ final class IssueReactionCell: UICollectionViewCell {
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
         // hint bigger emoji than labels
-        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Text.body + 2)
+        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2)
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -34,7 +34,7 @@ final class IssueReactionCell: UICollectionViewCell {
 
         countLabel.textAlignment = .center
         countLabel.backgroundColor = .clear
-        countLabel.font = Styles.Text.body.preferredFont
+        countLabel.font = Styles.Fonts.body
         countLabel.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in

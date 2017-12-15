@@ -10,7 +10,6 @@ import UIKit
 import IGListKit
 import MMMarkdown
 import HTMLString
-import StyledText
 
 private let newlineString = "\n"
 
@@ -42,7 +41,7 @@ func createCommentAST(markdown: String) -> MMDocument? {
 
 func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
     let attributes = [
-        .font: Styles.Text.body.preferredFont.addingTraits(traits: .traitItalic),
+        .font: Styles.Fonts.body.addingTraits(traits: .traitItalic),
         .foregroundColor: Styles.Colors.Gray.medium.color,
         NSAttributedStringKey.backgroundColor: UIColor.white
     ]
@@ -74,7 +73,7 @@ func CreateCommentModels(
     var results = [ListDiffable]()
 
     let baseAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Text.body.preferredFont,
+        .font: Styles.Fonts.body,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         .paragraphStyle: {
             let para = NSMutableParagraphStyle()
@@ -344,7 +343,7 @@ func updateUsernames(
         // manually disable username highlighting for some text (namely code)
         guard attributes[MarkdownAttribute.usernameDisabled] == nil else { continue }
 
-        let font = attributes[.font] as? UIFont ?? Styles.Text.body.preferredFont
+        let font = attributes[.font] as? UIFont ?? Styles.Fonts.body
         attributes[.font] = font.addingTraits(traits: .traitBold)
         attributes[MarkdownAttribute.username] = substring.replacingOccurrences(of: "@", with: "")
 

@@ -46,7 +46,7 @@ final class AutocompleteCell: StyledTableCell {
             make.centerY.equalTo(contentView)
         }
 
-        titleLabel.font = Styles.Text.body.preferredFont
+        titleLabel.font = Styles.Fonts.body
         titleLabel.textColor = Styles.Colors.Gray.dark.color
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in

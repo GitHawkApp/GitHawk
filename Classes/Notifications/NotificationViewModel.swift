@@ -58,7 +58,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         containerWidth: CGFloat
         ) {
         let attributes = [
-            NSAttributedStringKey.font: Styles.Text.body.preferredFont,
+            NSAttributedStringKey.font: Styles.Fonts.body,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let title = NSAttributedStringSizing(

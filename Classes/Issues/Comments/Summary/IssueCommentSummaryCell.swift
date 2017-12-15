@@ -21,7 +21,7 @@ final class IssueCommentSummaryCell: DoubleTappableCell, ListBindable, Collapsib
         backgroundColor = .white
 
         label.textColor = Styles.Colors.Gray.dark.color
-        label.font = Styles.Text.body.preferredFont
+        label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
