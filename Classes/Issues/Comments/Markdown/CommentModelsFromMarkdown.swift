@@ -65,9 +65,8 @@ func CreateCommentModels(
 
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
-    let replaceCheckmarks = annotateCheckmarks(markdown: replaceHTMLentities)
 
-    guard let document = createCommentAST(markdown: replaceCheckmarks)
+    guard let document = createCommentAST(markdown: replaceHTMLentities)
         else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
@@ -267,6 +266,16 @@ func travelAST(
         if substring != newlineString || listLevel == 0 {
             attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
         }
+    } else if element.type == .checkbox {
+        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
+        if let image = UIImage(named: (element.checked ? "checked" : "unchecked") + appendDisabled) {
+            let attachment = NSTextAttachment()
+            attachment.image = image
+            // nudge bounds to align better with baseline text
+            attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
+            attributedString.append(NSAttributedString(attachment: attachment))
+            attributedString.append(NSAttributedString(string: " ", attributes: pushedAttributes))
+        }
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
         let isInsideBulletedList = element.parent?.type == .bulletedList
@@ -404,40 +413,6 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
     return mutableAttributedString
 }
 
-private let checkedIdentifier = ">/CHECKED>/"
-private let uncheckedIdentifier = ">/UNCHECKED>/"
-private let checkmarkRegex = try! NSRegularExpression(pattern: "^- (\\[([ |x])\\])", options: [.anchorsMatchLines])
-private func annotateCheckmarks(markdown: String) -> String {
-    let matches = checkmarkRegex.matches(in: markdown, options: [], range: markdown.nsrange)
-    let result = NSMutableString(string: markdown)
-    for match in matches.reversed() {
-        let checked = markdown.substring(with: match.range(at: 2)) == "x"
-        result.replaceCharacters(in: match.range(at: 1), with: checked ? checkedIdentifier : uncheckedIdentifier)
-    }
-    return result as String
-}
-
-private let checkmarkIdentifierRegex = try! NSRegularExpression(pattern: "(\(checkedIdentifier)|\(uncheckedIdentifier))", options: [])
-func addCheckmarkAttachments(
-    attributedString: NSAttributedString,
-    viewerCanUpdate: Bool
-    ) -> NSAttributedString {
-    let string = attributedString.string
-    let matches = checkmarkIdentifierRegex.matches(in: string, options: [], range: string.nsrange)
-    let result = NSMutableAttributedString(attributedString: attributedString)
-    for match in matches.reversed() {
-        let checked = string.substring(with: match.range) == checkedIdentifier
-        let attachment = NSTextAttachment()
-        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
-        guard let image = UIImage(named: (checked ? "checked" : "unchecked") + appendDisabled) else { continue }
-        attachment.image = image
-        // nudge bounds to align better with baseline text
-        attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
-        result.replaceCharacters(in: match.range, with: NSAttributedString(attachment: attachment))
-    }
-    return result
-}
-
 func createTextModelUpdatingGitHubFeatures(
     attributedString: NSAttributedString,
     width: CGFloat,
@@ -448,11 +423,10 @@ func createTextModelUpdatingGitHubFeatures(
 
     let issues = updateIssueShorthand(attributedString: attributedString, options: options)
     let shorten = shortenGitHubLinks(attributedString: issues, options: options)
-    let checkmarked = addCheckmarkAttachments(attributedString: shorten, viewerCanUpdate: viewerCanUpdate)
 
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: checkmarked,
+        attributedText: shorten,
         inset: inset
     )
 }

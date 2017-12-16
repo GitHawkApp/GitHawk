@@ -910,7 +910,13 @@ static NSString * __HTMLEntityForCharacter(unichar character)
             }
             else
             {
-                element.children = [self.spanParser parseSpansInBlockElement:element withScanner:preListScanner];
+                NSMutableArray *children = [NSMutableArray new];
+                MMElement *checkbox = [self _parseListCheckboxWithScanner:preListScanner];
+                if (checkbox) {
+                    [children addObject:checkbox];
+                }
+                [children addObjectsFromArray:[self.spanParser parseSpansInBlockElement:element withScanner:preListScanner]];
+                element.children = children;
             }
             
             element.children = [element.children arrayByAddingObjectsFromArray:[self _parseElementsWithScanner:postListScanner]];
@@ -924,12 +930,78 @@ static NSString * __HTMLEntityForCharacter(unichar character)
             }
             else
             {
-                element.children = [self.spanParser parseSpansInBlockElement:element withScanner:innerScanner];
+                NSMutableArray *children = [NSMutableArray new];
+                MMElement *checkbox = [self _parseListCheckboxWithScanner:innerScanner];
+                if (checkbox) {
+                    [children addObject:checkbox];
+                }
+                [children addObjectsFromArray:[self.spanParser parseSpansInBlockElement:element withScanner:innerScanner]];
+                element.children = children;
             }
         }
     }
     
     return element;
+}
+
+- (MMElement *)_parseListCheckboxWithScanner:(MMScanner *)scanner
+{
+    [scanner skipWhitespace];
+    
+    const NSRange range = NSMakeRange(scanner.location, 3);
+    NSString *string = scanner.string;
+
+    if (string.length - range.location < range.length) {
+        return nil;
+    }
+
+    NSString *substring = [string substringWithRange:range];
+    BOOL checked = NO;
+
+    if ([substring isEqualToString:@"[x]"] || [substring isEqualToString:@"[X]"]) {
+        checked = YES;
+    } else if (![substring isEqualToString:@"[ ]"]) {
+        return nil;
+    }
+
+    scanner.location += range.length;
+
+    MMElement *element = [MMElement new];
+    element.type = MMElementTypeCheckbox;
+    element.range = range;
+    element.checked = checked;
+
+    return element;
+
+//    const NSInteger start = scanner.startLocation;
+//
+//    if (scanner.nextCharacter != '[') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    BOOL checked = NO;
+//    if (scanner.nextCharacter == 'x') {
+//        checked = YES;
+//    } else if (scanner.nextCharacter != ' ') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    if (scanner.nextCharacter != ']') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    MMElement *element = [MMElement new];
+//    element.type = MMElementTypeCheckboxes;
+//    element.range = NSMakeRange(start, 3);
+//    element.checked = checked;
+//
+//    return element;
 }
 
 - (MMElement *)_parseListWithScanner:(MMScanner *)scanner
