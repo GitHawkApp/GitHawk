@@ -44,19 +44,24 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
 @property (assign, nonatomic) BOOL parseImages;
 @property (assign, nonatomic) BOOL parseLinks;
 @property (assign, nonatomic) BOOL parseStrong;
+
+@property (strong, nonatomic, readonly) NSString *owner;
+@property (strong, nonatomic, readonly) NSString *repository;
 @end
 
 @implementation MMSpanParser
 
 #pragma mark - Public Methods
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository
 {
     self = [super init];
     
     if (self)
     {
         _extensions = extensions;
+        _owner = [owner copy];
+        _repository = [repository copy];
         _htmlParser = [MMHTMLParser new];
         self.parseEm     = YES;
         self.parseImages = YES;
@@ -242,6 +247,13 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
         if (element) {
             return element;
         }
+    }
+
+    [scanner beginTransaction];
+    element = [self _parseAutomaticIssueShorthandLinkWithScanner:scanner];
+    [scanner commitTransaction:element != nil];
+    if (element) {
+        return element;
     }
     
     [scanner beginTransaction];
@@ -811,6 +823,45 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     element.type  = MMElementTypeLineBreak;
     element.range = NSMakeRange(startLocation, scanner.location-startLocation);
     
+    return element;
+}
+
+- (MMElement *)_parseAutomaticIssueShorthandLinkWithScanner:(MMScanner *)scanner
+{
+    [scanner skipWhitespaceAndNewlines];
+
+    NSString *repositoryLower = [self.repository lowercaseString];
+    NSString *ownerLower = [self.owner lowercaseString];
+    if ([repositoryLower length] == 0 || [ownerLower length] == 0) {
+        return nil;
+    }
+
+    const NSInteger start = scanner.location;
+
+    NSMutableCharacterSet *characters = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+    [characters addCharactersInString:repositoryLower];
+    [characters addCharactersInString:ownerLower];
+    [characters addCharactersInString:@"\/#"];
+
+    [scanner skipCharactersFromSet:characters];
+
+    const NSRange range = NSMakeRange(start, scanner.location - start);
+    NSString *substring = [[scanner.string substringWithRange:range] lowercaseString];
+    NSString *remainder = [substring stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/%@#", ownerLower, repositoryLower]
+                                                               withString:@""];
+    const NSInteger number = [remainder integerValue];
+
+    if (number <= 0) {
+        return nil;
+    }
+
+    MMElement *element = [MMElement new];
+    element.type = MMElementTypeShorthandIssues;
+    element.repository = self.repository;
+    element.owner = self.owner;
+    element.number = number;
+    element.range = range;
+
     return element;
 }
 

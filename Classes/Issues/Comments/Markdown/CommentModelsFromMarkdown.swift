@@ -28,9 +28,9 @@ struct GitHubMarkdownOptions {
     let flavors: [GitHubFlavors]
 }
 
-func createCommentAST(markdown: String) -> MMDocument? {
+func createCommentAST(markdown: String, owner: String, repository: String) -> MMDocument? {
     guard !markdown.isEmpty else { return nil }
-    let parser = MMParser(extensions: .gitHubFlavored)
+    let parser = MMParser(extensions: .gitHubFlavored, owner: owner, repository: repository)
     var error: NSError? = nil
     let document = parser.parseMarkdown(markdown, error: &error)
     if let error = error {
@@ -66,8 +66,11 @@ func CreateCommentModels(
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
-    guard let document = createCommentAST(markdown: replaceHTMLentities)
-        else { return [emptyDescriptionModel(width: width)] }
+    guard let document = createCommentAST(
+        markdown: replaceHTMLentities,
+        owner: options.owner,
+        repository: options.repo
+        ) else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
 
@@ -259,7 +262,8 @@ func travelAST(
     if element.type == .none
         || element.type == .entity
         || element.type == .mailTo
-        || element.type == .username {
+        || element.type == .username
+        || element.type == .shorthandIssues {
         let substring = substringOrNewline(text: markdown, range: element.range)
 
         // hack: dont allow newlines within lists
@@ -335,37 +339,6 @@ func travelAST(
     }
 }
 
-private let issueShorthandRegex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
-func updateIssueShorthand(
-    attributedString: NSAttributedString,
-    options: GitHubMarkdownOptions
-    ) -> NSAttributedString {
-    guard options.flavors.contains(.issueShorthand) else { return attributedString }
-
-    let string = attributedString.string
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = issueShorthandRegex.matches(in: string, options: [], range: string.nsrange)
-
-    for match in matches {
-        let ownerRange = match.range(at: 3)
-        let repoRange = match.range(at: 4)
-        let numberRange = match.range(at: 5)
-        guard let numberSubstring = string.substring(with: numberRange) else { continue }
-
-        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
-        attributes[.foregroundColor] = Styles.Colors.Blue.medium.color
-
-        attributes[MarkdownAttribute.issue] = IssueDetailsModel(
-            owner: string.substring(with: ownerRange) ?? options.owner,
-            repo: string.substring(with: repoRange) ?? options.repo,
-            number: (numberSubstring as NSString).integerValue
-        )
-
-        mutableAttributedString.setAttributes(attributes, range: match.range)
-    }
-    return mutableAttributedString
-}
-
 private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 func shortenGitHubLinks(attributedString: NSAttributedString,
                         options: GitHubMarkdownOptions) -> NSAttributedString {
@@ -421,8 +394,7 @@ func createTextModelUpdatingGitHubFeatures(
     viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing {
 
-    let issues = updateIssueShorthand(attributedString: attributedString, options: options)
-    let shorten = shortenGitHubLinks(attributedString: issues, options: options)
+    let shorten = shortenGitHubLinks(attributedString: attributedString, options: options)
 
     return NSAttributedStringSizing(
         containerWidth: width,

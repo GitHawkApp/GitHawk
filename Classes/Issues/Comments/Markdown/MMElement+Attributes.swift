@@ -97,6 +97,19 @@ func PushAttributes(
         } else {
             newAttributes = [:]
         }
+    case .shorthandIssues:
+        if let repo = element.repository, let owner = element.owner {
+            newAttributes = [
+                .foregroundColor: Styles.Colors.Blue.medium.color,
+                MarkdownAttribute.issue: IssueDetailsModel(
+                    owner: owner,
+                    repo: repo,
+                    number: element.number
+                )
+            ]
+        } else {
+            newAttributes = [:]
+        }
     default: newAttributes = [:]
     }
     var attributes = current

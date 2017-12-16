@@ -84,6 +84,8 @@ static NSString * __MMStringFromElementType(MMElementType type)
             return @"username";
         case MMElementTypeCheckbox:
             return @"checkbox";
+        case MMElementTypeShorthandIssues:
+            return @"shorthand";
     }
 }
 
