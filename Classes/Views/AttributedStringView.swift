@@ -16,14 +16,15 @@ protocol AttributedStringViewDelegate: class {
     func didTapLabel(view: AttributedStringView, label: LabelDetails)
 }
 
-protocol AttributedStringViewIssueDelegate: class {
+protocol AttributedStringViewExtrasDelegate: class {
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel)
+    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel)
 }
 
 final class AttributedStringView: UIView {
 
     weak var delegate: AttributedStringViewDelegate?
-    weak var issueDelegate: AttributedStringViewIssueDelegate?
+    weak var extrasDelegate: AttributedStringViewExtrasDelegate?
 
     private var text: NSAttributedStringSizing?
     private var tapGesture: UITapGestureRecognizer?
@@ -106,11 +107,13 @@ final class AttributedStringView: UIView {
         } else if let emailString = attributes[MarkdownAttribute.email] as? String {
             delegate?.didTapEmail(view: self, email: emailString)
         } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
-            issueDelegate?.didTapIssue(view: self, issue: issue)
+            extrasDelegate?.didTapIssue(view: self, issue: issue)
         } else if let label = attributes[MarkdownAttribute.label] as? LabelDetails {
             delegate?.didTapLabel(view: self, label: label)
         } else if let commit = attributes[MarkdownAttribute.commit] as? CommitDetails {
             delegate?.didTapCommit(view: self, commit: commit)
+        } else if let checkbox = attributes[MarkdownAttribute.checkbox] as? MarkdownCheckboxModel {
+            extrasDelegate?.didTapCheckbox(view: self, checkbox: checkbox)
         }
     }
 

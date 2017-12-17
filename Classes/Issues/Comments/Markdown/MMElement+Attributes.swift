@@ -88,6 +88,28 @@ func PushAttributes(
         .foregroundColor: Styles.Colors.Blue.medium.color,
         MarkdownAttribute.email: element.href ?? ""
         ]
+    case .username:
+        if let username = element.username {
+            newAttributes = [
+                .font: currentFont.addingTraits(traits: .traitBold),
+                MarkdownAttribute.username: username
+            ]
+        } else {
+            newAttributes = [:]
+        }
+    case .shorthandIssues:
+        if let repo = element.repository, let owner = element.owner {
+            newAttributes = [
+                .foregroundColor: Styles.Colors.Blue.medium.color,
+                MarkdownAttribute.issue: IssueDetailsModel(
+                    owner: owner,
+                    repo: repo,
+                    number: element.number
+                )
+            ]
+        } else {
+            newAttributes = [:]
+        }
     default: newAttributes = [:]
     }
     var attributes = current

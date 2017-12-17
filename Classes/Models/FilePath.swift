@@ -29,7 +29,12 @@ struct FilePath {
     }
 
     var fileExtension: String? {
-        return current?.components(separatedBy: ".").last
+        let components = current?.components(separatedBy: ".") ?? []
+        if components.count > 1 {
+            return components.last
+        } else {
+            return nil
+        }
     }
 
     func appending(_ component: String) -> FilePath {

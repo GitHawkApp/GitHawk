@@ -45,8 +45,7 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 }
 
 func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFloat) -> RepositoryIssueSummaryModel? {
-    guard let date = GithubAPIDateFormatter().date(from: node.repoEventFields.createdAt)
-        else { return nil }
+    guard let date = node.repoEventFields.createdAt.githubDate else { return nil }
 
     let attributes = [
         NSAttributedStringKey.font: Styles.Fonts.body,

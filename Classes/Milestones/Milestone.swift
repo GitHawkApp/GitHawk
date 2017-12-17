@@ -35,7 +35,7 @@ final class Milestone: Equatable, ListDiffable {
 
         let dueOn: Date?
         if let dueString = json["due_on"] as? String {
-            dueOn = GithubAPIDateFormatter().date(from: dueString)
+            dueOn = dueString.githubDate
         } else {
             dueOn = nil
         }

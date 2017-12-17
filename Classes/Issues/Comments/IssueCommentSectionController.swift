@@ -15,7 +15,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
-AttributedStringViewIssueDelegate,
+AttributedStringViewExtrasDelegate,
 EditCommentViewControllerDelegate,
 DoubleTappableCellDelegate {
 
@@ -40,6 +40,10 @@ DoubleTappableCellDelegate {
 
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
+
+    private var currentMarkdown: String? {
+        return bodyEdits?.markdown ?? object?.rawMarkdown
+    }
 
     private let tailModel = "tailModel" as ListDiffable
 
@@ -101,7 +105,7 @@ DoubleTappableCellDelegate {
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
+            guard let markdown = self?.currentMarkdown,
                 let issueModel = self?.model,
                 let client = self?.client,
                 let commentID = self?.object?.number,
@@ -161,6 +165,16 @@ DoubleTappableCellDelegate {
                 self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
+    }
+
+    func edit(markdown: String) {
+        guard let width = collectionContext?.containerSize.width else { return }
+        let options = commentModelOptions(owner: model.owner, repo: model.repo)
+        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
+        bodyEdits = (markdown, bodyModels)
+        collapsed = false
+        clearCollapseCells()
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
     /// Deletes the comment and optimistically removes it from the feed
@@ -296,7 +310,7 @@ DoubleTappableCellDelegate {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self,
+            extrasAttributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -393,18 +407,39 @@ DoubleTappableCellDelegate {
         viewController?.show(controller, sender: nil)
     }
 
+    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
+        guard object?.viewerCanUpdate == true,
+            let commentID = object?.number,
+            let isRoot = object?.isRoot,
+            let originalMarkdown = currentMarkdown
+            else { return }
+
+        let invertedToken = checkbox.checked ? "[ ]" : "[x]"
+        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        edit(markdown: edited)
+
+        client.editComment(
+            owner: model.owner,
+            repo: model.repo,
+            issueNumber: model.number,
+            commentID: commentID,
+            body: edited,
+            isRoot: isRoot
+        ) { [weak self] (result) in
+            switch result {
+            case .success: break;
+            case .error:
+                self?.edit(markdown: originalMarkdown)
+                ToastManager.showGenericError()
+            }
+        }
+    }
+
     // MARK: EditCommentViewControllerDelegate
 
     func didEditComment(viewController: EditCommentViewController, markdown: String) {
         viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
-
-        guard let width = collectionContext?.containerSize.width else { return }
-        let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
-        bodyEdits = (markdown, bodyModels)
-        collapsed = false
-        clearCollapseCells()
-        update(animated: trueUnlessReduceMotionEnabled)
+        edit(markdown: markdown)
     }
 
     func didCancel(viewController: EditCommentViewController) {
