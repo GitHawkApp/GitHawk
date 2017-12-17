@@ -15,7 +15,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
-AttributedStringViewIssueDelegate,
+AttributedStringViewExtrasDelegate,
 EditCommentViewControllerDelegate,
 DoubleTappableCellDelegate {
 
@@ -163,6 +163,16 @@ DoubleTappableCellDelegate {
         }
     }
 
+    func edit(markdown: String) {
+        guard let width = collectionContext?.containerSize.width else { return }
+        let options = commentModelOptions(owner: model.owner, repo: model.repo)
+        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
+        bodyEdits = (markdown, bodyModels)
+        collapsed = false
+        clearCollapseCells()
+        update(animated: trueUnlessReduceMotionEnabled)
+    }
+
     /// Deletes the comment and optimistically removes it from the feed
     private func deleteComment() {
         guard let number = object?.number else { return }
@@ -296,7 +306,7 @@ DoubleTappableCellDelegate {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self,
+            extrasAttributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -393,18 +403,18 @@ DoubleTappableCellDelegate {
         viewController?.show(controller, sender: nil)
     }
 
+    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
+        guard let originalMarkdown = bodyEdits?.markdown ?? object?.rawMarkdown else { return }
+        let invertedToken = checkbox.checked ? "[ ]" : "[x]"
+        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        edit(markdown: edited)
+    }
+
     // MARK: EditCommentViewControllerDelegate
 
     func didEditComment(viewController: EditCommentViewController, markdown: String) {
         viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
-
-        guard let width = collectionContext?.containerSize.width else { return }
-        let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
-        bodyEdits = (markdown, bodyModels)
-        collapsed = false
-        clearCollapseCells()
-        update(animated: trueUnlessReduceMotionEnabled)
+        edit(markdown: markdown)
     }
 
     func didCancel(viewController: EditCommentViewController) {
