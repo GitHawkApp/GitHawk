@@ -41,6 +41,10 @@ DoubleTappableCellDelegate {
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
+    private var currentMarkdown: String? {
+        return bodyEdits?.markdown ?? object?.rawMarkdown
+    }
+
     private let tailModel = "tailModel" as ListDiffable
 
     init(model: IssueDetailsModel, client: GithubClient) {
@@ -101,7 +105,7 @@ DoubleTappableCellDelegate {
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
+            guard let markdown = self?.currentMarkdown,
                 let issueModel = self?.model,
                 let client = self?.client,
                 let commentID = self?.object?.number,
@@ -404,10 +408,31 @@ DoubleTappableCellDelegate {
     }
 
     func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
-        guard let originalMarkdown = bodyEdits?.markdown ?? object?.rawMarkdown else { return }
+        guard object?.viewerCanUpdate == true,
+            let commentID = object?.number,
+            let isRoot = object?.isRoot,
+            let originalMarkdown = currentMarkdown
+            else { return }
+
         let invertedToken = checkbox.checked ? "[ ]" : "[x]"
         let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
         edit(markdown: edited)
+
+        client.editComment(
+            owner: model.owner,
+            repo: model.repo,
+            issueNumber: model.number,
+            commentID: commentID,
+            body: edited,
+            isRoot: isRoot
+        ) { [weak self] (result) in
+            switch result {
+            case .success: break;
+            case .error:
+                self?.edit(markdown: originalMarkdown)
+                ToastManager.showGenericError()
+            }
+        }
     }
 
     // MARK: EditCommentViewControllerDelegate
