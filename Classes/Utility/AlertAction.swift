@@ -96,22 +96,6 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
     }
 
-    static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = status == .open
-            ? NSLocalizedString("Close", comment: "")
-            : NSLocalizedString("Reopen", comment: "")
-        
-        return UIAlertAction(title: title, style: .destructive, handler: handler)
-    }
-    
-    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = locked
-            ? NSLocalizedString("Unlock", comment: "")
-            : NSLocalizedString("Lock", comment: "")
-
-        return UIAlertAction(title: title, style: .destructive, handler: handler)
-    }
-
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
     }
