@@ -19,19 +19,43 @@ PeopleViewControllerDelegate {
     private enum Action {
         static let labels = IssueManagingActionModel(
             label: NSLocalizedString("Labels", comment: ""),
-            imageName: "tag"
+            imageName: "tag",
+            color: "3f88f7".color
         )
         static let milestone = IssueManagingActionModel(
             label: NSLocalizedString("Milestone", comment: ""),
-            imageName: "milestone"
+            imageName: "milestone",
+            color: "6847ba".color
         )
         static let assignees = IssueManagingActionModel(
             label: NSLocalizedString("Assignees", comment: ""),
-            imageName: "person"
+            imageName: "person",
+            color: "e77230".color
         )
         static let reviewers = IssueManagingActionModel(
             label: NSLocalizedString("Reviewers", comment: ""),
-            imageName: "reviewer"
+            imageName: "reviewer",
+            color: "50a451".color
+        )
+        static let lock = IssueManagingActionModel(
+            label: NSLocalizedString("Lock", comment: ""),
+            imageName: "lock",
+            color: Styles.Colors.Gray.dark.color
+        )
+        static let unlock = IssueManagingActionModel(
+            label: NSLocalizedString("Unlock", comment: ""),
+            imageName: "key",
+            color: Styles.Colors.Gray.dark.color
+        )
+        static let reopen = IssueManagingActionModel(
+            label: Constants.Strings.reopen,
+            imageName: "sync",
+            color: Styles.Colors.Green.medium.color
+        )
+        static let close = IssueManagingActionModel(
+            label: Constants.Strings.close,
+            imageName: "x",
+            color: Styles.Colors.Red.medium.color
         )
     }
 
@@ -44,7 +68,6 @@ PeopleViewControllerDelegate {
         self.model = model
         self.client = client
         super.init()
-//        inset = Styles.Sizes.listInsetTight
         selectionDelegate = self
         dataSource = self
     }
@@ -111,15 +134,43 @@ PeopleViewControllerDelegate {
         viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
     }
 
+    func close(_ doClose: Bool) {
+        guard let previous = issueResult else { return }
+
+        client.setStatus(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            close: doClose
+        )
+
+        Haptic.triggerNotification(.success)
+    }
+
+    func lock(_ doLock: Bool) {
+        guard let previous = issueResult else { return }
+
+        client.setLocked(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            locked: doLock
+        )
+
+        Haptic.triggerNotification(.success)
+    }
+
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
         _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
         ) -> [ListDiffable] {
-        guard let object = object as? IssueManagingModel else {
-            fatalError("Object not correct type")
-        }
+        guard let object = object as? IssueManagingModel,
+            let result = issueResult
+            else { fatalError("Object not correct type") }
 
         var models: [ListDiffable] = [IssueManagingExpansionModel(expanded: expanded)]
         if expanded {
@@ -130,6 +181,16 @@ PeopleViewControllerDelegate {
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
+            }
+            switch result.status.status {
+            case .closed: models.append(Action.reopen)
+            case .open: models.append(Action.close)
+            case .merged: break // can't do anything
+            }
+            if result.status.locked {
+                models.append(Action.unlock)
+            } else {
+                models.append(Action.lock)
             }
         }
         return models
@@ -152,7 +213,7 @@ PeopleViewControllerDelegate {
             let width = floor(containerWidth / itemsPerRow)
             return CGSize(
                 width: width,
-                height: Styles.Sizes.buttonIcon.height + Styles.Fonts.secondary.lineHeight
+                height: IssueManagingActionCell.height
             )
         }
     }
@@ -206,6 +267,14 @@ PeopleViewControllerDelegate {
         } else if viewModel === Action.reviewers {
             let controller = newPeopleController(type: .reviewer)
             present(controller: controller, from: cell)
+        } else if viewModel === Action.close {
+            close(true)
+        } else if viewModel === Action.reopen {
+            close(false)
+        } else if viewModel === Action.lock {
+            lock(true)
+        } else if viewModel === Action.unlock {
+            lock(false)
         }
     }
 

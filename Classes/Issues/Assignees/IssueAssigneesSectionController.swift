@@ -20,6 +20,7 @@ ListBindingSectionControllerSelectionDelegate {
         dataSource = self
         selectionDelegate = self
         minimumLineSpacing = Styles.Sizes.rowSpacing/2
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing, right: 0)
     }
 
     // MARK: ListBindingSectionControllerDataSource

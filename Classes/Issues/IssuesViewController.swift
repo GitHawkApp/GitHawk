@@ -258,29 +258,6 @@ FlatCacheListener {
         navigationItem.rightBarButtonItems = items
     }
 
-    func closeAction() -> UIAlertAction? {
-        guard viewerIsCollaborator,
-            let status = result?.status.status,
-            status != .merged
-            else { return nil }
-
-        return AlertAction.toggleIssue(status) { [weak self] _ in
-            self?.setStatus(close: status == .open)
-            Haptic.triggerNotification(.success)
-        }
-    }
-
-    func lockAction() -> UIAlertAction? {
-        guard viewerIsCollaborator, let locked = result?.status.locked else {
-            return nil
-        }
-
-        return AlertAction.toggleLocked(locked) { [weak self] _ in
-            self?.setLocked(!locked)
-            Haptic.triggerNotification(.success)
-        }
-    }
-
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
         
@@ -309,8 +286,6 @@ FlatCacheListener {
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
 
         alert.addActions([
-            closeAction(),
-            lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
@@ -381,29 +356,6 @@ FlatCacheListener {
             repo: model.repo
         )
         showDetailViewController(controller, sender: nil)
-    }
-
-    func setStatus(close: Bool) {
-        guard let previous = result else { return }
-
-        client.setStatus(
-            previous: previous,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            close: close
-        )
-    }
-
-    func setLocked(_ locked: Bool) {
-        guard let previous = result else { return }
-        client.setLocked(
-            previous: previous,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            locked: locked
-        )
     }
 
     // MARK: ListAdapterDataSource

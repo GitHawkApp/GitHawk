@@ -15,6 +15,9 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
     private let label = UILabel()
     private let imageView = UIImageView()
 
+    static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 3
+    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Sizes.Text.secondary)
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
@@ -22,21 +25,25 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
 
         let tint = Styles.Colors.Blue.medium.color
 
-        imageView.tintColor = tint
+        let iconSize = IssueManagingActionCell.iconHeight
+        imageView.tintColor = .white
         imageView.contentMode = .center
+        imageView.layer.cornerRadius = iconSize/2
+        imageView.backgroundColor = tint
+        imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.size.equalTo(Styles.Sizes.buttonIcon)
+            make.size.equalTo(CGSize(width: iconSize, height: iconSize))
             make.centerX.equalTo(contentView)
-            make.top.equalTo(contentView)
+            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
         }
 
         label.textColor = tint
-        label.font = Styles.Fonts.secondary
+        label.font = Styles.Fonts.secondaryBold
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)
-            make.top.equalTo(imageView.snp.bottom)
+            make.top.equalTo(imageView.snp.bottom).offset(ceil(Styles.Sizes.rowSpacing / 2))
         }
     }
 
@@ -70,6 +77,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         guard let viewModel = viewModel as? IssueManagingActionModel else { return }
         label.text = viewModel.label
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
+        imageView.backgroundColor = viewModel.color
+        label.textColor = viewModel.color
     }
 
     // MARK: Accessibility
