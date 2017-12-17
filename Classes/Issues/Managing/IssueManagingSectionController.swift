@@ -148,6 +148,20 @@ PeopleViewControllerDelegate {
         Haptic.triggerNotification(.success)
     }
 
+    func lock(_ doLock: Bool) {
+        guard let previous = issueResult else { return }
+
+        client.setLocked(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            locked: doLock
+        )
+
+        Haptic.triggerNotification(.success)
+    }
+
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
@@ -257,6 +271,10 @@ PeopleViewControllerDelegate {
             close(true)
         } else if viewModel === Action.reopen {
             close(false)
+        } else if viewModel === Action.lock {
+            lock(true)
+        } else if viewModel === Action.unlock {
+            lock(false)
         }
     }
 
