@@ -141,6 +141,7 @@
 		294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */; };
 		294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EF1EE5036A00DBCD35 /* IssueType.swift */; };
 		29459A6F1FE61E0500034A04 /* MarkdownCheckboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29459A6E1FE61E0500034A04 /* MarkdownCheckboxModel.swift */; };
+		29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */; };
 		2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674B1EF9716400B1CF1A /* IssueCommentHrModel.swift */; };
 		2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */; };
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
@@ -544,6 +545,7 @@
 		294563ED1EE5012900DBCD35 /* PullRequest+IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PullRequest+IssueType.swift"; sourceTree = "<group>"; };
 		294563EF1EE5036A00DBCD35 /* IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueType.swift; sourceTree = "<group>"; };
 		29459A6E1FE61E0500034A04 /* MarkdownCheckboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownCheckboxModel.swift; sourceTree = "<group>"; };
+		29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEnvironmentInformation.swift; sourceTree = "<group>"; };
 		2949674B1EF9716400B1CF1A /* IssueCommentHrModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrModel.swift; sourceTree = "<group>"; };
 		2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrCell.swift; sourceTree = "<group>"; };
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
@@ -1715,6 +1717,7 @@
 				49FFF4331F9FC83200335568 /* HapticFeedback.swift */,
 				98F9F4021F9CD006005A0266 /* Image+Base64.swift */,
 				DC60C6DB1F99414E00241271 /* IsCancellationError.swift */,
+				29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */,
 				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
 				7B7BBA3D1F8B752A00D6AEDA /* SearchQueryTokenizer.swift */,
 				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
@@ -2506,6 +2509,7 @@
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
+				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
