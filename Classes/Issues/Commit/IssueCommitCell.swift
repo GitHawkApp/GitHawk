@@ -24,6 +24,8 @@ final class IssueCommitCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits = UIAccessibilityTraitButton
 
         commitImageView.contentMode = .scaleAspectFit
         commitImageView.tintColor = Styles.Colors.Gray.light.color
@@ -84,6 +86,9 @@ final class IssueCommitCell: UICollectionViewCell {
     func configure(_ model: IssueCommitModel) {
         avatarImageView.sd_setImage(with: model.avatarURL)
         messageLabel.text = model.message
+
+        let labelFormat = NSLocalizedString("%@ committed \"%@\"", comment: "")
+        accessibilityLabel = String(format: labelFormat, arguments: [model.login, model.message])
     }
 
     // MARK: Private API
