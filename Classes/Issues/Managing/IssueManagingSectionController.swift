@@ -134,6 +134,20 @@ PeopleViewControllerDelegate {
         viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
     }
 
+    func close(_ doClose: Bool) {
+        guard let previous = issueResult else { return }
+
+        client.setStatus(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            close: doClose
+        )
+
+        Haptic.triggerNotification(.success)
+    }
+
     // MARK: ListBindingSectionControllerDataSource
 
     func sectionController(
@@ -239,6 +253,10 @@ PeopleViewControllerDelegate {
         } else if viewModel === Action.reviewers {
             let controller = newPeopleController(type: .reviewer)
             present(controller: controller, from: cell)
+        } else if viewModel === Action.close {
+            close(true)
+        } else if viewModel === Action.reopen {
+            close(false)
         }
     }
 
