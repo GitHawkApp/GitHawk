@@ -75,8 +75,9 @@ NewIssueTableViewControllerDelegate {
         })
 
         configureNavigationItems()
-        navigationItem.configure(title: repo.name, subtitle: repo.owner)
-        navigationItem.titleView?.accessibilityLabel = .localizedStringWithFormat("Repository, %@", "\(repo.owner)/\(repo.name)")
+        let labelFormat = NSLocalizedString("Repository %@ by %@", comment: "Accessibility label for a repository navigation item")
+        let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
+        navigationItem.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
     }
 
     // MARK: Private API

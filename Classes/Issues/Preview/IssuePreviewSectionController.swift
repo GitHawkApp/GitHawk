@@ -66,7 +66,7 @@ ListBindingSectionControllerDataSource {
             htmlNavigationDelegate: nil,
             htmlImageDelegate: nil,
             attributedDelegate: nil,
-            issueAttributedDelegate: nil,
+            extrasAttributedDelegate: nil,
             imageHeightDelegate: imageCache
         )
 

@@ -109,7 +109,9 @@ FlatCacheListener {
 
         makeBackBarItemEmpty()
 
-        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)")
+        let labelFormat = NSLocalizedString("#%zi in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
+        let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
+        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)", accessibilityLabel: labelString)
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self

@@ -61,7 +61,7 @@
     if (string.length == 0)
         return @"";
     
-    MMParser    *parser    = [[MMParser alloc] initWithExtensions:extensions];
+    MMParser    *parser    = [[MMParser alloc] initWithExtensions:extensions owner:nil repository:nil];
     MMGenerator *generator = [MMGenerator new];
     
     MMDocument *document = [parser parseMarkdown:string error:error];
