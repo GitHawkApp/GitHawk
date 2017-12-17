@@ -277,8 +277,16 @@ func travelAST(
             attachment.image = image
             // nudge bounds to align better with baseline text
             attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
-            attributedString.append(NSAttributedString(attachment: attachment))
-            attributedString.append(NSAttributedString(string: " ", attributes: pushedAttributes))
+
+            if let attachmentString = NSAttributedString(attachment: attachment).mutableCopy() as? NSMutableAttributedString {
+                attachmentString.addAttribute(
+                    MarkdownAttribute.checkbox,
+                    value: MarkdownCheckboxModel(checked: element.checked, originalMarkdownRange: element.range),
+                    range: attachmentString.string.nsrange
+                )
+                attributedString.append(attachmentString)
+                attributedString.append(NSAttributedString(string: " ", attributes: pushedAttributes))
+            }
         }
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
