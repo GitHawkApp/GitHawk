@@ -86,7 +86,7 @@ public final class StyledTextRenderer {
     }
 
     static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
-        maxSize: 1024 * 1024 * 1024 * 20, // 20mb
+        maxSize: 1024 * 1024 * 20, // 20mb
         compaction: .default,
         clearOnWarning: true
     )
