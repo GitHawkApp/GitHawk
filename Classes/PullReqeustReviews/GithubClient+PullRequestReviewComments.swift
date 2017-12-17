@@ -111,7 +111,7 @@ private func createReviewCommentModel(id: Int, json: [String: Any]) -> GithubCli
         let userAvatar = userJSON["avatar_url"] as? String,
         let userAvatarURL = URL(string: userAvatar),
         let createdString = json["created_at"] as? String,
-        let created = GithubAPIDateFormatter().date(from: createdString),
+        let created = createdString.githubDate,
         let login = userJSON["login"] as? String
         else { return nil }
     return GithubClient.ReviewComment(

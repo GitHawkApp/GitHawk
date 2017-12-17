@@ -29,10 +29,9 @@ func CreateViewModels(
     notifications: [NotificationResponse]) -> [NotificationViewModel] {
     var viewModels = [NotificationViewModel]()
 
-    let df = GithubAPIDateFormatter()
     for notification in notifications {
         guard let type = NotificationType(rawValue: notification.subject.type),
-            let date = df.date(from: notification.updated_at),
+            let date = notification.updated_at.githubDate,
             let identifier = notification.subject.url.notificationIdentifier
             else { continue }
 
@@ -61,10 +60,9 @@ func CreateNotificationViewModels(
     DispatchQueue.global().async {
         var viewModels = [NotificationViewModel]()
 
-        let df = GithubAPIDateFormatter()
         for notification in notifications {
             guard let type = NotificationType(rawValue: notification.subject.type),
-                let date = df.date(from: notification.updated_at),
+                let date = notification.updated_at.githubDate,
                 let identifier = notification.subject.url.notificationIdentifier
                 else { continue }
 
