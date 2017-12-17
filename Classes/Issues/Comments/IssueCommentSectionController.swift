@@ -166,7 +166,7 @@ DoubleTappableCellDelegate {
     func edit(markdown: String) {
         guard let width = collectionContext?.containerSize.width else { return }
         let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
+        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()
