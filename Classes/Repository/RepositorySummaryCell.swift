@@ -84,7 +84,7 @@ final class RepositorySummaryCell: SelectableCell {
         titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
-        secondaryLabel.text = String.localizedStringWithFormat(format, model.number, model.created.agoString, model.author)
+        secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString, model.author])
 
         let imageName: String
         let tint: UIColor

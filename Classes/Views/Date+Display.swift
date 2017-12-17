@@ -55,19 +55,19 @@ extension Date {
         case .seconds: return NSLocalizedString("just now", comment: "")
         case .minutes(let t):
             let format = NSLocalizedString("%d minute(s) ago", comment: "")
-            return String.localizedStringWithFormat(format, t)
+            return String(format: format, t)
         case .hours(let t):
             let format = NSLocalizedString("%d hour(s) ago", comment: "")
-            return String.localizedStringWithFormat(format, t)
+            return String(format: format, t)
         case .days(let t):
             let format = NSLocalizedString("%d day(s) ago", comment: "")
-            return String.localizedStringWithFormat(format, t)
+            return String(format: format, t)
         case .months(let t):
             let format = NSLocalizedString("%d month(s) ago", comment: "")
-            return String.localizedStringWithFormat(format, t)
+            return String(format: format, t)
         case .years(let t):
             let format = NSLocalizedString("%d year(s) ago", comment: "")
-            return String.localizedStringWithFormat(format, t)
+            return String(format: format, t)
         }
     }
 

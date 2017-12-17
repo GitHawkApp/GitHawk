@@ -46,14 +46,14 @@ struct AlertAction {
     }
 
     func view(client: GithubClient, repo: RepositoryDetails) -> UIAlertAction {
-        return UIAlertAction(title: String.localizedStringWithFormat("View %@", repo.name), style: .default) { _ in
+        return UIAlertAction(title: .localizedStringWithFormat("View %@", repo.name), style: .default) { _ in
             let repoViewController = RepositoryViewController(client: client, repo: repo)
             self.rootViewController?.show(repoViewController, sender: nil)
         }
     }
 
     func view(owner: String, url: URL) -> UIAlertAction {
-        return UIAlertAction(title: String.localizedStringWithFormat("View @%@", owner), style: .default) { _ in
+        return UIAlertAction(title: .localizedStringWithFormat("View @%@", owner), style: .default) { _ in
             self.rootViewController?.presentSafari(url: url)
         }
     }

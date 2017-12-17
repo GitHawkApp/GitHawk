@@ -34,9 +34,9 @@ final class IssueViewFilesCell: UICollectionViewCell {
     func configure(changes: FileChanges) {
         let attributedText = NSMutableAttributedString()
 
-        let actionFormat = NSLocalizedString("View Files (%zi) ", comment: "")
+        let actionFormat = NSLocalizedString("View Files (%d) ", comment: "")
         attributedText.append(NSAttributedString(
-            string: .localizedStringWithFormat(actionFormat, changes.changedFiles),
+            string: String(format: actionFormat, changes.changedFiles),
             attributes: [
                 .font: Styles.Fonts.secondary,
                 .foregroundColor: Styles.Colors.Blue.medium.color
