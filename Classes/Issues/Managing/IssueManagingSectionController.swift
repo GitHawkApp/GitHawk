@@ -37,6 +37,26 @@ PeopleViewControllerDelegate {
             imageName: "reviewer",
             color: "50a451".color
         )
+        static let lock = IssueManagingActionModel(
+            label: NSLocalizedString("Lock", comment: ""),
+            imageName: "lock",
+            color: Styles.Colors.Gray.dark.color
+        )
+        static let unlock = IssueManagingActionModel(
+            label: NSLocalizedString("Unlock", comment: ""),
+            imageName: "key",
+            color: Styles.Colors.Gray.dark.color
+        )
+        static let reopen = IssueManagingActionModel(
+            label: Constants.Strings.reopen,
+            imageName: "sync",
+            color: Styles.Colors.Green.medium.color
+        )
+        static let close = IssueManagingActionModel(
+            label: Constants.Strings.close,
+            imageName: "x",
+            color: Styles.Colors.Red.medium.color
+        )
     }
 
     private let model: IssueDetailsModel
@@ -120,9 +140,9 @@ PeopleViewControllerDelegate {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
         ) -> [ListDiffable] {
-        guard let object = object as? IssueManagingModel else {
-            fatalError("Object not correct type")
-        }
+        guard let object = object as? IssueManagingModel,
+            let result = issueResult
+            else { fatalError("Object not correct type") }
 
         var models: [ListDiffable] = [IssueManagingExpansionModel(expanded: expanded)]
         if expanded {
@@ -133,6 +153,16 @@ PeopleViewControllerDelegate {
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
+            }
+            switch result.status.status {
+            case .closed: models.append(Action.reopen)
+            case .open: models.append(Action.close)
+            case .merged: break // can't do anything
+            }
+            if result.status.locked {
+                models.append(Action.unlock)
+            } else {
+                models.append(Action.lock)
             }
         }
         return models
