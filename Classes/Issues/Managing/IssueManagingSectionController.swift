@@ -19,19 +19,23 @@ PeopleViewControllerDelegate {
     private enum Action {
         static let labels = IssueManagingActionModel(
             label: NSLocalizedString("Labels", comment: ""),
-            imageName: "tag"
+            imageName: "tag",
+            color: "3f88f7".color
         )
         static let milestone = IssueManagingActionModel(
             label: NSLocalizedString("Milestone", comment: ""),
-            imageName: "milestone"
+            imageName: "milestone",
+            color: "6847ba".color
         )
         static let assignees = IssueManagingActionModel(
             label: NSLocalizedString("Assignees", comment: ""),
-            imageName: "person"
+            imageName: "person",
+            color: "e77230".color
         )
         static let reviewers = IssueManagingActionModel(
             label: NSLocalizedString("Reviewers", comment: ""),
-            imageName: "reviewer"
+            imageName: "reviewer",
+            color: "50a451".color
         )
     }
 

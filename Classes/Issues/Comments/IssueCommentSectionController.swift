@@ -62,7 +62,12 @@ DoubleTappableCellDelegate {
         guard let object = self.object else { return }
         switch object.threadState {
         case .single:
-            inset = Styles.Sizes.listInsetLarge
+            var inset = Styles.Sizes.listInsetLarge
+            // title and other header objects will have bottom insetting
+            if object.isRoot {
+                inset.top = 0
+            }
+            self.inset = inset
         case .neck:
             inset = .zero
         case .tail:

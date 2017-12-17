@@ -13,10 +13,12 @@ final class IssueManagingActionModel: ListDiffable {
 
     let label: String
     let imageName: String
+    let color: UIColor
 
-    init(label: String, imageName: String) {
+    init(label: String, imageName: String, color: UIColor) {
         self.label = label
         self.imageName = imageName
+        self.color = color
     }
 
     // MARK: ListDiffable
@@ -26,9 +28,8 @@ final class IssueManagingActionModel: ListDiffable {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? IssueManagingActionModel else { return false }
-        return imageName == object.imageName
+        // keep it simple
+        return true
     }
 
 }

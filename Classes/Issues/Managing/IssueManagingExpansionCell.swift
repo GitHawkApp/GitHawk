@@ -10,15 +10,27 @@ import UIKit
 import IGListKit
 import SnapKit
 
+final class IssueManagingRoundedBackgroundView: UIView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
+    }
+}
+
 final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     private let label = UILabel()
     private let chevron = UIImageView(image: UIImage(named: "chevron-down-small")?.withRenderingMode(.alwaysTemplate))
+    private let backgroundHighlightView = IssueManagingRoundedBackgroundView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
+
+        backgroundHighlightView.backgroundColor = UIColor(white: 0, alpha: 0.07)
+        backgroundHighlightView.alpha = 0
+        contentView.addSubview(backgroundHighlightView)
         
         let tint = Styles.Colors.Blue.medium.color
 
@@ -36,6 +48,13 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.right.equalTo(chevron.snp.left).offset(-Styles.Sizes.rowSpacing+3)
+        }
+
+        backgroundHighlightView.snp.makeConstraints { make in
+            make.left.equalTo(label).offset(-Styles.Sizes.rowSpacing)
+            make.right.equalTo(chevron).offset(Styles.Sizes.rowSpacing)
+            make.height.equalTo(label).offset(4)
+            make.centerY.equalTo(contentView)
         }
     }
 
@@ -78,13 +97,14 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
             initialSpringVelocity: 0,
             options: [],
             animations: {
-                self.rotateChevron(expanded: expanded)
+                self.expand(expanded: expanded)
         })
     }
 
     // MARK: Private API
 
-    private func rotateChevron(expanded: Bool) {
+    private func expand(expanded: Bool) {
+        backgroundHighlightView.alpha = expanded ? 1 : 0
         // nudging the angles let's us control the animation direction
         chevron.transform = expanded
             ? CGAffineTransform(rotationAngle: CGFloat.pi + 0.00001)
@@ -95,7 +115,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueManagingExpansionModel else { return }
-        rotateChevron(expanded: viewModel.expanded)
+        expand(expanded: viewModel.expanded)
     }
 
     // MARK: Accessibility

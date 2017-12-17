@@ -19,7 +19,8 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-//        minimumLineSpacing = Styles.Sizes.rowSpacing/2
+        minimumLineSpacing = Styles.Sizes.rowSpacing/2
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing, right: 0)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -63,7 +64,7 @@ ListBindingSectionControllerSelectionDelegate {
         return CGSize(
             width: width,
             // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
-            height: max(Styles.Sizes.icon.height, Styles.Fonts.secondary.lineHeight) + Styles.Sizes.rowSpacing
+            height: max(Styles.Sizes.icon.height, Styles.Fonts.secondary.lineHeight)
         )
     }
 

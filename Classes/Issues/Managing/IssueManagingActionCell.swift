@@ -77,6 +77,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         guard let viewModel = viewModel as? IssueManagingActionModel else { return }
         label.text = viewModel.label
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
+        imageView.backgroundColor = viewModel.color
+        label.textColor = viewModel.color
     }
 
     // MARK: Accessibility
