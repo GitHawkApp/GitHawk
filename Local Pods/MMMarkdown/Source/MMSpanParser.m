@@ -1322,8 +1322,8 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     [scanner beginTransaction];
 
     NSCharacterSet *whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet;
-    if (scanner.atBeginningOfLine
-        || ![whitespace characterIsMember:prevChar]) {
+    if (prevChar != NULL
+        && ![whitespace characterIsMember:prevChar]) {
         return nil;
     }
 
