@@ -80,6 +80,8 @@ static NSString * __MMStringFromElementType(MMElementType type)
             return @"table-row-cell";
         case MMElementTypeTableHeaderCell:
             return @"table-header-cell";
+        case MMElementTypeUsername:
+            return @"username";
     }
 }
 

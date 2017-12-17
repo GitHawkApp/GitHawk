@@ -40,6 +40,8 @@ typedef NS_OPTIONS(NSUInteger, MMMarkdownExtensions)
     MMMarkdownExtensionsTables              = 1 << 8,
     MMMarkdownExtensionsUnderscoresInWords  = 1 << 9,
 
-    MMMarkdownExtensionsGitHubFlavored = MMMarkdownExtensionsAutolinkedURLs|MMMarkdownExtensionsFencedCodeBlocks|MMMarkdownExtensionsHardNewlines|MMMarkdownExtensionsStrikethroughs|MMMarkdownExtensionsTables|MMMarkdownExtensionsUnderscoresInWords,
+    MMMarkdownExtensionsUsernames            = 1 << 10,
+
+    MMMarkdownExtensionsGitHubFlavored = MMMarkdownExtensionsAutolinkedURLs|MMMarkdownExtensionsFencedCodeBlocks|MMMarkdownExtensionsHardNewlines|MMMarkdownExtensionsStrikethroughs|MMMarkdownExtensionsTables|MMMarkdownExtensionsUnderscoresInWords|MMMarkdownExtensionsUsernames,
 };
 

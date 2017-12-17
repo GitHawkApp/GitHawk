@@ -234,6 +234,15 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
         if (element)
             return element;
     }
+
+    if (self.extensions & MMMarkdownExtensionsUsernames) {
+        [scanner beginTransaction];
+        element = [self _parseUsernameWithScanner:scanner];
+        [scanner commitTransaction:element != nil];
+        if (element) {
+            return element;
+        }
+    }
     
     [scanner beginTransaction];
     element = [self _parseBackslashWithScanner:scanner];
@@ -1302,5 +1311,47 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     return result;
 }
 
+- (MMElement *)_parseUsernameWithScanner:(MMScanner *)scanner {
+    if (scanner.nextCharacter != '@') {
+        return nil;
+    }
+
+    [scanner commitTransaction:NO];
+    // Look for the previous char outside of the current transaction
+    unichar prevChar = scanner.previousCharacter;
+    [scanner beginTransaction];
+
+    NSCharacterSet *whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet;
+    if (prevChar != NULL
+        && ![whitespace characterIsMember:prevChar]) {
+        return nil;
+    }
+
+    [scanner advance];
+
+    NSMutableCharacterSet *validUsernameCharacters = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+    [validUsernameCharacters addCharactersInString:@"@-"];
+
+    [scanner skipCharactersFromSet:validUsernameCharacters];
+
+    NSMutableCharacterSet *stopCharacters = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
+    [stopCharacters formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+
+    if (![stopCharacters characterIsMember:scanner.nextCharacter]) {
+        return nil;
+    }
+
+    const NSRange range = NSMakeRange(scanner.startLocation, scanner.location - scanner.startLocation);
+    if (range.length < 2) {
+        return nil;
+    }
+
+    MMElement *element = [MMElement new];
+    element.type = MMElementTypeUsername;
+    element.range = range;
+    element.username = [scanner.string substringWithRange:NSMakeRange(range.location + 1, range.length - 1)];
+
+    return element;
+}
 
 @end

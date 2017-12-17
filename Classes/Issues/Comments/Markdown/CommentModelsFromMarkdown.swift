@@ -257,7 +257,10 @@ func travelAST(
         attributedString.removeAll()
     }
 
-    if element.type == .none || element.type == .entity || element.type == .mailTo {
+    if element.type == .none
+        || element.type == .entity
+        || element.type == .mailTo
+        || element.type == .username {
         let substring = substringOrNewline(text: markdown, range: element.range)
 
         // hack: dont allow newlines within lists
@@ -321,36 +324,6 @@ func travelAST(
         ))
         attributedString.removeAll()
     }
-}
-
-private let usernameRegex = try! NSRegularExpression(pattern: "\\B@([a-zA-Z0-9_-]+)", options: [])
-func updateUsernames(
-    attributedString: NSAttributedString,
-    options: GitHubMarkdownOptions
-    ) -> NSAttributedString {
-    guard options.flavors.contains(.usernames) else { return attributedString }
-
-    let string = attributedString.string
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = usernameRegex.matches(in: string, options: [], range: string.nsrange)
-
-    for match in matches {
-        let range = match.range(at: 0)
-        guard let substring = string.substring(with: range) else { continue }
-
-        var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
-
-        // manually disable username highlighting for some text (namely code)
-        guard attributes[MarkdownAttribute.usernameDisabled] == nil else { continue }
-
-        let font = attributes[.font] as? UIFont ?? Styles.Fonts.body
-        attributes[.font] = font.addingTraits(traits: .traitBold)
-        attributes[MarkdownAttribute.username] = substring.replacingOccurrences(of: "@", with: "")
-
-        let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
-        mutableAttributedString.replaceCharacters(in: range, with: usernameAttributedString)
-    }
-    return mutableAttributedString
 }
 
 private let issueShorthandRegex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
@@ -473,8 +446,7 @@ func createTextModelUpdatingGitHubFeatures(
     viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing {
 
-    let usernames = updateUsernames(attributedString: attributedString, options: options)
-    let issues = updateIssueShorthand(attributedString: usernames, options: options)
+    let issues = updateIssueShorthand(attributedString: attributedString, options: options)
     let shorten = shortenGitHubLinks(attributedString: issues, options: options)
     let checkmarked = addCheckmarkAttachments(attributedString: shorten, viewerCanUpdate: viewerCanUpdate)
 
