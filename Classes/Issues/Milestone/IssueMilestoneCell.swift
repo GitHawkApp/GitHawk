@@ -16,6 +16,8 @@ final class IssueMilestoneCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         titleLabel.backgroundColor = .clear
         contentView.addSubview(titleLabel)
@@ -60,6 +62,10 @@ final class IssueMilestoneCell: UICollectionViewCell {
         titleLabel.attributedText = titleText
 
         progress.progress = Float(milestone.totalIssueCount - milestone.openIssueCount) / Float(milestone.totalIssueCount)
+
+        let milestoneFormat = NSLocalizedString("Milestone: %@, %.0f percent completed.", comment: "The accessibility label for a repositories' milestone")
+        let percentProgress = progress.progress * 100
+        accessibilityLabel = String(format: milestoneFormat, arguments: [milestone.title, percentProgress])
     }
 
 }
