@@ -836,33 +836,95 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
         return nil;
     }
 
-    const NSInteger start = scanner.location;
-
-    NSMutableCharacterSet *characters = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
-    [characters addCharactersInString:repositoryLower];
-    [characters addCharactersInString:ownerLower];
-    [characters addCharactersInString:@"\/#"];
-
-    [scanner skipCharactersFromSet:characters];
-
-    const NSRange range = NSMakeRange(start, scanner.location - start);
-    NSString *substring = [[scanner.string substringWithRange:range] lowercaseString];
-    NSString *remainder = [substring stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/%@#", ownerLower, repositoryLower]
-                                                               withString:@""];
-    const NSInteger number = [remainder integerValue];
-
-    if (number <= 0) {
-        return nil;
+    unichar nextCharacter = scanner.nextCharacter;
+    if (nextCharacter == '[' || nextCharacter == '(') {
+        [scanner advance];
     }
+
+    const NSInteger start = scanner.location;
 
     MMElement *element = [MMElement new];
     element.type = MMElementTypeShorthandIssues;
-    element.repository = self.repository;
-    element.owner = self.owner;
-    element.number = number;
-    element.range = range;
 
-    return element;
+    // detect single #123 shorthand
+    if (scanner.nextCharacter == '#') {
+        [scanner advance];
+
+        NSString *word = [scanner nextWord];
+        NSInteger number = [word integerValue];
+
+        if (number <= 0) {
+            return nil;
+        }
+
+        const NSInteger length = [word length];
+
+        scanner.location += length;
+
+        // add 1 for advancing '#'
+        element.range = NSMakeRange(start, length + 1);
+        element.number = number;
+        element.repository = self.repository;
+        element.owner = self.owner;
+        return element;
+    } else {
+        // same as allowed characters in username
+        NSMutableCharacterSet *characters = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+        [characters addCharactersInString:@"-/"];
+
+        const NSInteger skipLength = [scanner skipCharactersFromSet:characters];
+
+        // either "GH-" or "a/a" is min 3 characters
+        if (skipLength <= 3) {
+            return nil;
+        }
+
+        NSString *substring = [scanner.string substringWithRange:NSMakeRange(start, skipLength)];
+
+        if (scanner.nextCharacter == '#') {
+            // move past the '#'
+            [scanner advance];
+
+            // try to find the issue number
+            NSString *numberWord = [scanner nextWord];
+            const NSInteger number = [numberWord integerValue];
+            if (number <= 0) {
+                return nil;
+            }
+
+            // handle "owner/repository" shorthand
+            NSArray *components = [substring componentsSeparatedByString:@"/"];
+            if (components.count != 2) {
+                return nil;
+            }
+
+            scanner.location += [numberWord length];
+
+            element.number = number;
+            element.range = NSMakeRange(start, scanner.location - start);
+            element.owner = components.firstObject;
+            element.repository = components.lastObject;
+        } else if ([[substring lowercaseString] hasPrefix:@"gh-"]) {
+            NSArray *components = [substring componentsSeparatedByString:@"-"];
+            if (components.count != 2) {
+                return nil;
+            }
+
+            const NSInteger number = [[components lastObject] integerValue];
+            if (number <= 0) {
+                return nil;
+            }
+
+            element.repository = self.repository;
+            element.owner = self.owner;
+            element.number = number;
+            element.range = NSMakeRange(start, scanner.location - start);
+        } else {
+            return nil;
+        }
+
+        return element;
+    }
 }
 
 - (MMElement *)_parseAutomaticLinkWithScanner:(MMScanner *)scanner
