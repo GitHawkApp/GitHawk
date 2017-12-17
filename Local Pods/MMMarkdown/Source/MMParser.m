@@ -63,7 +63,7 @@ static NSString * __HTMLEntityForCharacter(unichar character)
 
 #pragma mark - Public Methods
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository
 {
     self = [super init];
     
@@ -71,7 +71,7 @@ static NSString * __HTMLEntityForCharacter(unichar character)
     {
         _extensions = extensions;
         _htmlParser = [MMHTMLParser new];
-        _spanParser = [[MMSpanParser alloc] initWithExtensions:extensions];
+        _spanParser = [[MMSpanParser alloc] initWithExtensions:extensions owner:owner repository:repository];
     }
     
     return self;
@@ -81,13 +81,14 @@ static NSString * __HTMLEntityForCharacter(unichar character)
 {
     // It would be better to not replace all the tabs with spaces. But this will do for now.
     markdown = [self _removeTabsFromString:markdown];
-    
+
     MMScanner  *scanner  = [MMScanner scannerWithString:markdown];
+
     MMDocument *document = [MMDocument documentWithMarkdown:markdown];
-    
+
     document.elements = [self _parseElementsWithScanner:scanner];
     [self _updateLinksFromDefinitionsInDocument:document];
-    
+
     return document;
 }
 

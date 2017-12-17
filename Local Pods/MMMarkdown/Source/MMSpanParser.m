@@ -44,19 +44,24 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
 @property (assign, nonatomic) BOOL parseImages;
 @property (assign, nonatomic) BOOL parseLinks;
 @property (assign, nonatomic) BOOL parseStrong;
+
+@property (strong, nonatomic, readonly) NSString *owner;
+@property (strong, nonatomic, readonly) NSString *repository;
 @end
 
 @implementation MMSpanParser
 
 #pragma mark - Public Methods
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository
 {
     self = [super init];
     
     if (self)
     {
         _extensions = extensions;
+        _owner = [owner copy];
+        _repository = [repository copy];
         _htmlParser = [MMHTMLParser new];
         self.parseEm     = YES;
         self.parseImages = YES;
@@ -242,6 +247,13 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
         if (element) {
             return element;
         }
+    }
+
+    [scanner beginTransaction];
+    element = [self _parseAutomaticIssueShorthandLinkWithScanner:scanner];
+    [scanner commitTransaction:element != nil];
+    if (element) {
+        return element;
     }
     
     [scanner beginTransaction];
@@ -812,6 +824,107 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     element.range = NSMakeRange(startLocation, scanner.location-startLocation);
     
     return element;
+}
+
+- (MMElement *)_parseAutomaticIssueShorthandLinkWithScanner:(MMScanner *)scanner
+{
+    [scanner skipWhitespaceAndNewlines];
+
+    NSString *repositoryLower = [self.repository lowercaseString];
+    NSString *ownerLower = [self.owner lowercaseString];
+    if ([repositoryLower length] == 0 || [ownerLower length] == 0) {
+        return nil;
+    }
+
+    unichar nextCharacter = scanner.nextCharacter;
+    if (nextCharacter == '[' || nextCharacter == '(') {
+        [scanner advance];
+    }
+
+    const NSInteger start = scanner.location;
+
+    MMElement *element = [MMElement new];
+    element.type = MMElementTypeShorthandIssues;
+
+    // detect single #123 shorthand
+    if (scanner.nextCharacter == '#') {
+        [scanner advance];
+
+        NSString *word = [scanner nextWord];
+        NSInteger number = [word integerValue];
+
+        if (number <= 0) {
+            return nil;
+        }
+
+        const NSInteger length = [word length];
+
+        scanner.location += length;
+
+        // add 1 for advancing '#'
+        element.range = NSMakeRange(start, length + 1);
+        element.number = number;
+        element.repository = self.repository;
+        element.owner = self.owner;
+        return element;
+    } else {
+        // same as allowed characters in username
+        NSMutableCharacterSet *characters = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+        [characters addCharactersInString:@"-/"];
+
+        const NSInteger skipLength = [scanner skipCharactersFromSet:characters];
+
+        // either "GH-" or "a/a" is min 3 characters
+        if (skipLength <= 3) {
+            return nil;
+        }
+
+        NSString *substring = [scanner.string substringWithRange:NSMakeRange(start, skipLength)];
+
+        if (scanner.nextCharacter == '#') {
+            // move past the '#'
+            [scanner advance];
+
+            // try to find the issue number
+            NSString *numberWord = [scanner nextWord];
+            const NSInteger number = [numberWord integerValue];
+            if (number <= 0) {
+                return nil;
+            }
+
+            // handle "owner/repository" shorthand
+            NSArray *components = [substring componentsSeparatedByString:@"/"];
+            if (components.count != 2) {
+                return nil;
+            }
+
+            scanner.location += [numberWord length];
+
+            element.number = number;
+            element.range = NSMakeRange(start, scanner.location - start);
+            element.owner = components.firstObject;
+            element.repository = components.lastObject;
+        } else if ([[substring lowercaseString] hasPrefix:@"gh-"]) {
+            NSArray *components = [substring componentsSeparatedByString:@"-"];
+            if (components.count != 2) {
+                return nil;
+            }
+
+            const NSInteger number = [[components lastObject] integerValue];
+            if (number <= 0) {
+                return nil;
+            }
+
+            element.repository = self.repository;
+            element.owner = self.owner;
+            element.number = number;
+            element.range = NSMakeRange(start, scanner.location - start);
+        } else {
+            return nil;
+        }
+
+        return element;
+    }
 }
 
 - (MMElement *)_parseAutomaticLinkWithScanner:(MMScanner *)scanner
