@@ -123,4 +123,28 @@ final class NotificationClient {
         })
     }
 
+    func fetchWatchedRepositories(completion: @escaping (Result<[Repository]>) -> Void) {
+        guard let viewer = githubClient.userSession?.username else {
+            completion(.error(nil))
+            return
+        }
+
+        githubClient.request(GithubClient.Request(
+            path: "users/\(viewer)/subscriptions"
+        ) { (response, _) in
+            // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
+            if let jsonArr = response.value as? [ [String: Any] ] {
+                var repos = [Repository]()
+                for json in jsonArr {
+                    if let repo = Repository(json: json) {
+                        repos.append(repo)
+                    }
+                }
+                completion(.success(repos))
+            } else {
+                completion(.error(response.error))
+            }
+        })
+    }
+
 }
