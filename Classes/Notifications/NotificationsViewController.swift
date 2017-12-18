@@ -132,7 +132,8 @@ FlatCacheListener {
 
     private func markAllRead() {
         self.setRightBarItemSpinning()
-        self.client.markAllNotifications { success in
+
+        let block: (Bool) -> Void = { success in
             let generator = UINotificationFeedbackGenerator()
             if success {
                 generator.notificationOccurred(.success)
@@ -146,6 +147,11 @@ FlatCacheListener {
 
             // "mark all" is an engaging action, system prompt on it
             RatingController.prompt(.system)
+        }
+
+        switch inboxType {
+        case .all, .unread: client.markAllNotifications(completion: block)
+        case .repo(let owner, let name): client.markRepoNotifications(owner: owner, repo: name, completion: block)
         }
     }
 
