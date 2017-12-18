@@ -64,7 +64,7 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        resetLeftBarItem()
+        resetRightBarItem()
 
         switch inboxType {
         case .unread:
@@ -104,7 +104,7 @@ FlatCacheListener {
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
-    func resetLeftBarItem() {
+    func resetRightBarItem() {
         let item = UIBarButtonItem(
             image: UIImage(named: "check"),
             style: .plain,
@@ -131,7 +131,7 @@ FlatCacheListener {
     }
 
     private func markAllRead() {
-        self.setLeftBarItemSpinning()
+        self.setRightBarItemSpinning()
         self.client.markAllNotifications { success in
             let generator = UINotificationFeedbackGenerator()
             if success {
@@ -181,7 +181,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetLeftBarItem()
+        self.resetRightBarItem()
     }
 
     private func rebuildAndUpdate(
