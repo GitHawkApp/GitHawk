@@ -201,6 +201,8 @@ FlatCacheListener {
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
+        subscriptionController?.fetchSubscriptions()
+
         let width = view.bounds.width
 
         let repo: (String, String)?
@@ -208,7 +210,7 @@ FlatCacheListener {
         switch inboxType {
         case .repo(let owner, let name):
             repo = (owner, name)
-            fetchAll = false
+            fetchAll = true
         case .all:
             repo = nil
             fetchAll = true

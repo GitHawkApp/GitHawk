@@ -23,7 +23,6 @@ final class NotificationSubscriptionsController {
     init(viewController: UIViewController, client: NotificationClient) {
         self.viewController = viewController
         self.client = client
-        self.refreshSubscriptions()
     }
 
     // MARK: Public API
@@ -36,31 +35,7 @@ final class NotificationSubscriptionsController {
         }
     }
 
-    // MARK: Private API
-
-    var refreshAction: UIAlertAction {
-        return UIAlertAction(
-            title: NSLocalizedString("Refresh", comment: ""),
-            style: .default,
-            handler: { [weak self] _ in
-                self?.refreshSubscriptions()
-        })
-    }
-
-    func repoActions(repos: [Repository]) -> [UIAlertAction] {
-        return repos.map {
-            let name = $0.name
-            return UIAlertAction(title: name, style: .default, handler: { [weak self] _ in
-                self?.pushRepoNotifications(name: name)
-            })
-        }
-    }
-
-    func pushRepoNotifications(name: String) {
-        // TODO
-    }
-
-    func refreshSubscriptions() {
+    public func fetchSubscriptions() {
         client.fetchWatchedRepositories { [weak self] result in
             switch result {
             case .success(let repos): self?.state = .results(repos)
@@ -69,6 +44,31 @@ final class NotificationSubscriptionsController {
                 ToastManager.showGenericError()
             }
         }
+    }
+
+    // MARK: Private API
+
+    var refreshAction: UIAlertAction {
+        return UIAlertAction(
+            title: NSLocalizedString("Refresh", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.fetchSubscriptions()
+        })
+    }
+
+    func repoActions(repos: [Repository]) -> [UIAlertAction] {
+        return repos.map {
+            let repo = $0
+            return UIAlertAction(title: repo.name, style: .default, handler: { [weak self] _ in
+                self?.pushRepoNotifications(owner: repo.owner.login, name: repo.name)
+            })
+        }
+    }
+
+    func pushRepoNotifications(owner: String, name: String) {
+        let controller = NotificationsViewController(client: client, inboxType: .repo(owner: owner, name: name))
+        viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 
 }
