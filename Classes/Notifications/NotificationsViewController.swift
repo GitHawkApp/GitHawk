@@ -22,7 +22,7 @@ FlatCacheListener {
 
     enum InboxType {
         case unread
-        case repo(String)
+        case repo(owner: String, name: String)
         case all
     }
 
@@ -30,6 +30,7 @@ FlatCacheListener {
     private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
+    private var subscriptionController: NotificationSubscriptionsController?
 
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
@@ -44,6 +45,16 @@ FlatCacheListener {
         )
 
         self.foreground.delegate = self
+
+        switch inboxType {
+        case .all:
+            title = NSLocalizedString("Archives", comment: "")
+        case .unread:
+            title = NSLocalizedString("Inbox", comment: "")
+            self.subscriptionController = NotificationSubscriptionsController(viewController: self, client: client)
+        case .repo(_, let name):
+            title = name
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,7 +72,7 @@ FlatCacheListener {
                 image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
-                action: #selector(onViewAll)
+                action: #selector(NotificationsViewController.onMore)
             )
             item.accessibilityLabel = NSLocalizedString("More options", comment: "")
             navigationItem.leftBarButtonItem = item
@@ -73,9 +84,23 @@ FlatCacheListener {
 
     // MARK: Private API
 
-    @objc func onViewAll() {
+    @objc func onMore() {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+
+        alert.add(action: UIAlertAction(
+            title: NSLocalizedString("View Read", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                self?.onViewAll()
+        }))
+        subscriptionController?.actions.forEach({ alert.add(action: $0) })
+        alert.add(action: AlertAction.cancel())
+
+        present(alert, animated: true)
+    }
+
+    func onViewAll() {
         let controller = NotificationsViewController(client: client, inboxType: .all)
-        controller.title = NSLocalizedString("Archives", comment: "")
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
@@ -177,13 +202,28 @@ FlatCacheListener {
 
     override func fetch(page: NSNumber?) {
         let width = view.bounds.width
+
+        let repo: (String, String)?
+        let fetchAll: Bool
+        switch inboxType {
+        case .repo(let owner, let name):
+            repo = (owner, name)
+            fetchAll = false
+        case .all:
+            repo = nil
+            fetchAll = true
+        case .unread:
+            repo = nil
+            fetchAll = false
+        }
+
         if let page = page?.intValue {
-            client.requestNotifications(all: showRead, page: page, width: width) { [weak self] result in
+            client.fetchNotifications(repo: repo, all: fetchAll, page: page, width: width) { [weak self] result in
                 self?.handle(result: result, append: true, animated: false, page: page)
             }
         } else {
             let first = 1
-            client.requestNotifications(all: showRead, page: first, width: width) { [weak self] result in
+            client.fetchNotifications(repo: repo, all: fetchAll, page: first, width: width) { [weak self] result in
                 self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
             }
         }
@@ -198,9 +238,15 @@ FlatCacheListener {
     func models(listAdapter: ListAdapter) -> [ListDiffable] {
         var models = [NotificationViewModel]()
 
+        let showAll: Bool
+        switch inboxType {
+        case .all: showAll = true
+        case .unread, .repo: showAll = false
+        }
+
         for id in notificationIDs {
             if let model = client.githubClient.cache.get(id: id) as NotificationViewModel?,
-                (showRead || !model.read) {
+                (showAll || !model.read) {
                 // swap the model if not read, otherwise exclude it
                 // this powers the "swipe to archive" feature deleting the cell
                 models.append(model)

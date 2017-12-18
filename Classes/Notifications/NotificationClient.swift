@@ -31,7 +31,8 @@ final class NotificationClient {
     }
 
     // https://developer.github.com/v3/activity/notifications/#list-your-notifications
-    func requestNotifications(
+    func fetchNotifications(
+        repo: (owner: String, name: String)? = nil,
         all: Bool = false,
         participating: Bool = false,
         since: Date? = nil,
@@ -53,10 +54,17 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
+        let path: String
+        if let repo = repo {
+            path = "/repos/\(repo.owner)/\(repo.name)/notifications"
+        } else {
+            path = "notifications"
+        }
+
         let cache = githubClient.cache
 
         githubClient.request(GithubClient.Request(
-            path: "notifications",
+            path: path,
             method: .get,
             parameters: parameters,
             headers: nil
@@ -71,16 +79,12 @@ final class NotificationClient {
         })
     }
 
-    typealias MarkAllCompletion = (Bool) -> Void
-    func markAllNotifications(completion: MarkAllCompletion? = nil) {
-        githubClient.request(GithubClient.Request(
-            path: "notifications",
-            method: .put) { (response, _) in
-                guard let completion = completion else { return }
-                // https://developer.github.com/v3/activity/notifications/#mark-as-read
-                let success = response.response?.statusCode == 205
-                completion(success)
-        })
+    func markAllNotifications(completion: @escaping (Bool) -> Void) {
+        markNotifications(repo: nil, completion: completion)
+    }
+
+    func markRepoNotifications(owner: String, repo: String, completion: @escaping (Bool) -> Void) {
+        markNotifications(repo: (owner, repo), completion: completion)
     }
 
     func notificationOpened(id: String) -> Bool {
@@ -144,6 +148,27 @@ final class NotificationClient {
             } else {
                 completion(.error(response.error))
             }
+        })
+    }
+
+    // MARK: Private API
+
+    func markNotifications(repo: (owner: String, name: String)?, completion: @escaping (Bool) -> Void) {
+        let path: String
+        if let repo = repo {
+            // https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
+            path = "/repos/\(repo.owner)/\(repo.name)/notifications"
+        } else {
+            // https://developer.github.com/v3/activity/notifications/#mark-as-read
+            path = "notifications"
+        }
+
+        githubClient.request(GithubClient.Request(
+            path: path,
+            method: .put
+        ) { (response, _) in
+            let success = response.response?.statusCode == 205
+            completion(success)
         })
     }
 
