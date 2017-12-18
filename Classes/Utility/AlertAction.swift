@@ -100,10 +100,6 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
     }
 
-    static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Mark all Read", comment: ""), style: .destructive, handler: handler)
-    }
-
     static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.clearAll, style: .destructive, handler: handler)
     }

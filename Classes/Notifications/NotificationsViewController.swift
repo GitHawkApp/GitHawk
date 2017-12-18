@@ -130,7 +130,7 @@ FlatCacheListener {
         BadgeNotifications.update(count: count)
     }
 
-    private func markAllRead() {
+    private func markRead() {
         self.setRightBarItemSpinning()
 
         let block: (Bool) -> Void = { success in
@@ -156,15 +156,27 @@ FlatCacheListener {
     }
 
     @objc private func onMarkAll() {
+        let message: String
+        switch inboxType {
+        case .all, .unread:
+            message = NSLocalizedString("Mark all notifications as read?", comment: "")
+        case .repo(_, let name):
+            let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
+            message = String(format: messageFormat, name)
+        }
+
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Notifications", comment: ""),
-            message: NSLocalizedString("Mark all notifications as read?", comment: ""),
+            message: message,
             preferredStyle: .alert
         )
 
         alert.addActions([
-            AlertAction.markAll({ [weak self] _ in
-                self?.markAllRead()
+            UIAlertAction(
+                title: NSLocalizedString("Mark Read", comment: ""),
+                style: .destructive,
+                handler: { [weak self] _ in
+                    self?.markRead()
             }),
             AlertAction.cancel()
         ])
