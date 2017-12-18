@@ -144,7 +144,7 @@ final class NotificationClient {
                         repos.append(repo)
                     }
                 }
-                completion(.success(repos))
+                completion(.success(repos.sorted { $0.name < $1.name }))
             } else {
                 completion(.error(response.error))
             }
