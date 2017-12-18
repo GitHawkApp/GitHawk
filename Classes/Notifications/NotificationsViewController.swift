@@ -20,17 +20,23 @@ TabNavRootViewControllerType,
 BaseListViewControllerDataSource,
 FlatCacheListener {
 
+    enum InboxType {
+        case unread
+        case repo(String)
+        case all
+    }
+
     private let client: NotificationClient
     private let foreground = ForegroundHandler(threshold: 5 * 60)
-    private let showRead: Bool
+    private let inboxType: InboxType
     private var notificationIDs = [String]()
 
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
 
-    init(client: NotificationClient, showRead: Bool) {
+    init(client: NotificationClient, inboxType: InboxType) {
         self.client = client
-        self.showRead = showRead
+        self.inboxType = inboxType
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
@@ -48,13 +54,18 @@ FlatCacheListener {
         super.viewDidLoad()
 
         resetLeftBarItem()
-        if !showRead {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Archives", comment: ""),
+
+        switch inboxType {
+        case .unread:
+            let item = UIBarButtonItem(
+                image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
-                action: #selector(NotificationsViewController.onViewAll)
+                action: #selector(onViewAll)
             )
+            item.accessibilityLabel = NSLocalizedString("More options", comment: "")
+            navigationItem.leftBarButtonItem = item
+        case .repo, .all: break
         }
 
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
@@ -63,27 +74,30 @@ FlatCacheListener {
     // MARK: Private API
 
     @objc func onViewAll() {
-        let controller = NotificationsViewController(client: client, showRead: true)
+        let controller = NotificationsViewController(client: client, inboxType: .all)
         controller.title = NSLocalizedString("Archives", comment: "")
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func resetLeftBarItem() {
-        if !showRead {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Mark All", comment: ""),
-                style: .plain,
-                target: self,
-                action: #selector(NotificationsViewController.onMarkAll(sender:))
-            )
-        }
+        let item = UIBarButtonItem(
+            image: UIImage(named: "check"),
+            style: .plain,
+            target: self,
+            action: #selector(NotificationsViewController.onMarkAll)
+        )
+        item.accessibilityLabel = NSLocalizedString("", comment: "")
+        navigationItem.rightBarButtonItem = item
         updateUnreadState(count: notificationIDs.count)
     }
 
     private func updateUnreadState(count: Int) {
         // don't update tab bar and badges when not showing only new notifications
         // prevents archives updating badge and tab #s
-        guard !showRead else { return }
+        switch inboxType {
+            case .all, .repo: return
+            case .unread: break
+        }
 
         let hasUnread = count > 0
         navigationItem.leftBarButtonItem?.isEnabled = hasUnread
@@ -110,7 +124,7 @@ FlatCacheListener {
         }
     }
 
-    @objc private func onMarkAll(sender: UIBarButtonItem) {
+    @objc private func onMarkAll() {
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Notifications", comment: ""),
             message: NSLocalizedString("Mark all notifications as read?", comment: ""),
