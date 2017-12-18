@@ -216,6 +216,13 @@ FlatCacheListener {
         update(page: page, animated: animated)
     }
 
+    private var showAll: Bool {
+        switch inboxType {
+        case .all, .repo: return true
+        case .unread: return false
+        }
+    }
+
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
@@ -224,26 +231,22 @@ FlatCacheListener {
         let width = view.bounds.width
 
         let repo: (String, String)?
-        let fetchAll: Bool
         switch inboxType {
         case .repo(let owner, let name):
             repo = (owner, name)
-            fetchAll = true
         case .all:
             repo = nil
-            fetchAll = true
         case .unread:
             repo = nil
-            fetchAll = false
         }
 
         if let page = page?.intValue {
-            client.fetchNotifications(repo: repo, all: fetchAll, page: page, width: width) { [weak self] result in
+            client.fetchNotifications(repo: repo, all: showAll, page: page, width: width) { [weak self] result in
                 self?.handle(result: result, append: true, animated: false, page: page)
             }
         } else {
             let first = 1
-            client.fetchNotifications(repo: repo, all: fetchAll, page: first, width: width) { [weak self] result in
+            client.fetchNotifications(repo: repo, all: showAll, page: first, width: width) { [weak self] result in
                 self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
             }
         }
@@ -258,12 +261,7 @@ FlatCacheListener {
     func models(listAdapter: ListAdapter) -> [ListDiffable] {
         var models = [NotificationViewModel]()
 
-        let showAll: Bool
-        switch inboxType {
-        case .all: showAll = true
-        case .unread, .repo: showAll = false
-        }
-
+        let showAll = self.showAll
         for id in notificationIDs {
             if let model = client.githubClient.cache.get(id: id) as NotificationViewModel?,
                 (showAll || !model.read) {
