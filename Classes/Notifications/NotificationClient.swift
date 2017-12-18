@@ -56,7 +56,7 @@ final class NotificationClient {
 
         let path: String
         if let repo = repo {
-            path = "/repos/\(repo.owner)/\(repo.name)/notifications"
+            path = "repos/\(repo.owner)/\(repo.name)/notifications"
         } else {
             path = "notifications"
         }
@@ -157,7 +157,7 @@ final class NotificationClient {
         let path: String
         if let repo = repo {
             // https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
-            path = "/repos/\(repo.owner)/\(repo.name)/notifications"
+            path = "repos/\(repo.owner)/\(repo.name)/notifications"
         } else {
             // https://developer.github.com/v3/activity/notifications/#mark-as-read
             path = "notifications"
