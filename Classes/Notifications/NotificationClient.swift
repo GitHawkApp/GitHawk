@@ -10,6 +10,11 @@ import Foundation
 
 final class NotificationClient {
 
+    struct NotificationRepository {
+        let owner: String
+        let name: String
+    }
+
     private var openedNotificationIDs = Set<String>()
 
     let githubClient: GithubClient
@@ -32,7 +37,7 @@ final class NotificationClient {
 
     // https://developer.github.com/v3/activity/notifications/#list-your-notifications
     func fetchNotifications(
-        repo: (owner: String, name: String)? = nil,
+        repo: NotificationRepository? = nil,
         all: Bool = false,
         participating: Bool = false,
         since: Date? = nil,
@@ -54,21 +59,14 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
-        let path: String
-        if let repo = repo {
-            path = "repos/\(repo.owner)/\(repo.name)/notifications"
-        } else {
-            path = "notifications"
-        }
-
         let cache = githubClient.cache
 
         githubClient.request(GithubClient.Request(
-            path: path,
+            path: path(repo: repo),
             method: .get,
             parameters: parameters,
             headers: nil
-        ) { (response, nextPage) in
+        ) { response, nextPage in
             if let notifications = (response.value as? [[String:Any]])?.flatMap({ NotificationResponse(json: $0) }) {
                 let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
                 cache.set(values: viewModels)
@@ -83,8 +81,8 @@ final class NotificationClient {
         markNotifications(repo: nil, completion: completion)
     }
 
-    func markRepoNotifications(owner: String, repo: String, completion: @escaping (Bool) -> Void) {
-        markNotifications(repo: (owner, repo), completion: completion)
+    func markRepoNotifications(repo: NotificationRepository, completion: @escaping (Bool) -> Void) {
+        markNotifications(repo: repo, completion: completion)
     }
 
     func notificationOpened(id: String) -> Bool {
@@ -115,7 +113,7 @@ final class NotificationClient {
 
         githubClient.request(GithubClient.Request(
             path: "notifications/threads/\(id)",
-            method: .patch) { [weak self] (response, _) in
+            method: .patch) { [weak self] response, _ in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
                 if response.response?.statusCode != 205 {
                     if isOpen {
@@ -135,7 +133,7 @@ final class NotificationClient {
 
         githubClient.request(GithubClient.Request(
             path: "users/\(viewer)/subscriptions"
-        ) { (response, _) in
+        ) { response, _ in
             // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
             if let jsonArr = response.value as? [ [String: Any] ] {
                 var repos = [Repository]()
@@ -153,20 +151,19 @@ final class NotificationClient {
 
     // MARK: Private API
 
-    func markNotifications(repo: (owner: String, name: String)?, completion: @escaping (Bool) -> Void) {
-        let path: String
+    func path(repo: NotificationRepository?) -> String {
         if let repo = repo {
-            // https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
-            path = "repos/\(repo.owner)/\(repo.name)/notifications"
+            return "repos/\(repo.owner)/\(repo.name)/notifications"
         } else {
-            // https://developer.github.com/v3/activity/notifications/#mark-as-read
-            path = "notifications"
+            return "notifications"
         }
+    }
 
+    func markNotifications(repo: NotificationRepository? = nil, completion: @escaping (Bool) -> Void) {
         githubClient.request(GithubClient.Request(
-            path: path,
+            path: path(repo: repo),
             method: .put
-        ) { (response, _) in
+        ) { response, _ in
             let success = response.response?.statusCode == 205
             completion(success)
         })

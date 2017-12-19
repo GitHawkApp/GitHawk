@@ -22,7 +22,7 @@ FlatCacheListener {
 
     enum InboxType {
         case unread
-        case repo(owner: String, name: String)
+        case repo(NotificationClient.NotificationRepository)
         case all
     }
 
@@ -52,8 +52,8 @@ FlatCacheListener {
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
             self.subscriptionController = NotificationSubscriptionsController(viewController: self, client: client)
-        case .repo(_, let name):
-            title = name
+        case .repo(let repo):
+            title = repo.name
         }
     }
 
@@ -88,12 +88,12 @@ FlatCacheListener {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         alert.add(action: UIAlertAction(
-            title: NSLocalizedString("View Read", comment: ""),
+            title: NSLocalizedString("View Archived", comment: ""),
             style: .default,
             handler: { [weak self] _ in
                 self?.onViewAll()
         }))
-        subscriptionController?.actions.forEach({ alert.add(action: $0) })
+        subscriptionController?.actions.forEach { alert.add(action: $0) }
         alert.add(action: AlertAction.cancel())
 
         present(alert, animated: true)
@@ -111,7 +111,7 @@ FlatCacheListener {
             target: self,
             action: #selector(NotificationsViewController.onMarkAll)
         )
-        item.accessibilityLabel = NSLocalizedString("", comment: "")
+        item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
         navigationItem.rightBarButtonItem = item
         updateUnreadState(count: notificationIDs.count)
     }
@@ -151,7 +151,7 @@ FlatCacheListener {
 
         switch inboxType {
         case .all, .unread: client.markAllNotifications(completion: block)
-        case .repo(let owner, let name): client.markRepoNotifications(owner: owner, repo: name, completion: block)
+        case .repo(let repo): client.markRepoNotifications(repo: repo, completion: block)
         }
     }
 
@@ -160,9 +160,9 @@ FlatCacheListener {
         switch inboxType {
         case .all, .unread:
             message = NSLocalizedString("Mark all notifications as read?", comment: "")
-        case .repo(_, let name):
+        case .repo(let repo):
             let messageFormat = NSLocalizedString("Mark %@ notifications as read?", comment: "")
-            message = String(format: messageFormat, name)
+            message = String(format: messageFormat, repo.name)
         }
 
         let alert = UIAlertController.configured(
@@ -230,14 +230,10 @@ FlatCacheListener {
 
         let width = view.bounds.width
 
-        let repo: (String, String)?
+        let repo: NotificationClient.NotificationRepository?
         switch inboxType {
-        case .repo(let owner, let name):
-            repo = (owner, name)
-        case .all:
-            repo = nil
-        case .unread:
-            repo = nil
+        case .repo(let r): repo = r
+        case .all, .unread: repo = nil
         }
 
         if let page = page?.intValue {

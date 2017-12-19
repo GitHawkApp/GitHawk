@@ -36,12 +36,18 @@ final class NotificationSubscriptionsController {
     }
 
     public func fetchSubscriptions() {
+        let previousState = state
+
         client.fetchWatchedRepositories { [weak self] result in
             switch result {
             case .success(let repos): self?.state = .results(repos)
             case .error:
-                self?.state = .error
-                ToastManager.showGenericError()
+                // don't overwrite previously successful fetch
+                switch previousState {
+                case .error, .loading: self?.state = .error
+                case .results: break
+                }
+                ToastManager.showError(message: NSLocalizedString("Error loading subscriptions.", comment: ""))
             }
         }
     }
@@ -50,7 +56,7 @@ final class NotificationSubscriptionsController {
 
     var refreshAction: UIAlertAction {
         return UIAlertAction(
-            title: NSLocalizedString("Refresh", comment: ""),
+            title: NSLocalizedString("Refresh Subscriptions", comment: ""),
             style: .default,
             handler: { [weak self] _ in
                 self?.fetchSubscriptions()
@@ -61,13 +67,14 @@ final class NotificationSubscriptionsController {
         return repos.map {
             let repo = $0
             return UIAlertAction(title: repo.name, style: .default, handler: { [weak self] _ in
-                self?.pushRepoNotifications(owner: repo.owner.login, name: repo.name)
+                self?.pushRepoNotifications(repo: repo)
             })
         }
     }
 
-    func pushRepoNotifications(owner: String, name: String) {
-        let controller = NotificationsViewController(client: client, inboxType: .repo(owner: owner, name: name))
+    func pushRepoNotifications(repo: Repository) {
+        let model = NotificationClient.NotificationRepository(owner: repo.owner.login, name: repo.name)
+        let controller = NotificationsViewController(client: client, inboxType: .repo(model))
         viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 
