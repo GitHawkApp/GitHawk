@@ -16,12 +16,8 @@ final class LabelListView: UIView, UICollectionViewDataSource, UICollectionViewD
         }
         
         let rowHeight = LabelListCell.size(labels.first?.name ?? "").height
-        var labelTextTotalWidth = CGFloat()
-        for label in labels {
-            labelTextTotalWidth += LabelListCell.size(label.name).width
-        }
         let interitemSpacing = labels.count > 1 ? CGFloat(labels.count - 1) * Styles.Sizes.labelSpacing : 0.0
-        labelTextTotalWidth += interitemSpacing
+        let labelTextTotalWidth = labels.reduce(0, { $0 + LabelListCell.size($1.name).width }) + interitemSpacing
         let labelRows = ceil(labelTextTotalWidth / width)
         let rowSpacing = labelRows > 1 ? (labelRows - 1) * Styles.Sizes.labelSpacing : 0.0
         
