@@ -61,6 +61,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setup 3d touch shortcut handling
         ShortcutHandler.configure(application: application, sessionManager: sessionManager)
 
+        // log device environment information
+        LogEnvironmentInformation(application: application)
+
         return true
     }
 
