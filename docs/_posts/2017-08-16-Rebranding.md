@@ -50,8 +50,8 @@ I came up with a few leads that I liked:
 I also started circling the concept of "chirp" (derived from "notify"). That lead me to birds. What about "Git"+bird-something? I explored this a little and landed on this trifecta:
 
 - There are **0 results** when searching "githawk" on the App Store. ✔️ uniqueness 
-- The Twitter handle [@githawk](twitter.com/githawk) is available. Nabbed.
-- The fucking domain [githawk.com](githawk.com) is available for only $10/y!! 😱
+- The Twitter handle [@githawk](https://twitter.com/githawk) is available. Nabbed.
+- The fucking domain [githawk.com](http://githawk.com) is available for only $10/y!! 😱
 
 So without further adieu, Freetime will now be called **GitHawk**! 🎉 
 
