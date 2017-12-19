@@ -382,7 +382,6 @@
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
-		D8BAD0681FDF3FC300C41071 /* LabelListViewHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0671FDF3FC300C41071 /* LabelListViewHeightCache.swift */; };
 		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
 		D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */; };
 		D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */; };
@@ -806,7 +805,6 @@
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
 		D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrappingStaticSpacingFlowLayout.swift; sourceTree = "<group>"; };
-		D8BAD0671FDF3FC300C41071 /* LabelListViewHeightCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListViewHeightCache.swift; sourceTree = "<group>"; };
 		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
 		D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+SourceView.swift"; sourceTree = "<group>"; };
 		D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+TightSpacing.swift"; sourceTree = "<group>"; };
@@ -1409,7 +1407,6 @@
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */,
 				D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */,
-				D8BAD0671FDF3FC300C41071 /* LabelListViewHeightCache.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -2386,7 +2383,6 @@
 				3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */,
 				29A5AF411F92677D0065D529 /* RepositoryIssueSummaryModel+Filterable.swift in Sources */,
 				295C31D11F0AA72000521CED /* IssueStatusEvent+ButtonState.swift in Sources */,
-				D8BAD0681FDF3FC300C41071 /* LabelListViewHeightCache.swift in Sources */,
 				DCA5ED101FAEDF290072F074 /* BookmarkStore.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,

@@ -10,8 +10,11 @@ import Foundation
 
 final class LabelListView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    private static var cache = [String: CGFloat]()
+    
     static func height(width: CGFloat, labels: [RepositoryLabel], cacheKey: String) -> CGFloat {
-        if let cachedHeight = LabelListViewHeightCache.shared.height(forKey: cacheKey) {
+        let key = "\(cacheKey)\(width)"
+        if let cachedHeight = LabelListView.cache[key] {
             return cachedHeight
         }
         
@@ -22,7 +25,7 @@ final class LabelListView: UIView, UICollectionViewDataSource, UICollectionViewD
         let rowSpacing = labelRows > 1 ? (labelRows - 1) * Styles.Sizes.labelSpacing : 0.0
         
         let height = ceil((rowHeight * labelRows) + rowSpacing)
-        LabelListViewHeightCache.shared.store(height: height, forKey: cacheKey)
+        LabelListView.cache[key] = height
         
         return height
     }

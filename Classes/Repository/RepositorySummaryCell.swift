@@ -80,7 +80,7 @@ final class RepositorySummaryCell: SelectableCell {
     
     private func resizeLabelListView(labels: [RepositoryLabel], cacheKey: String) {
         let width = contentView.frame.width - (Styles.Sizes.columnSpacing * 2)
-        let height = LabelListView.height(width: width, labels: labels, cacheKey: cacheKey + "\(width)")
+        let height = LabelListView.height(width: width, labels: labels, cacheKey: cacheKey)
         //check if height has changed before updating
         if height != labelListView.frame.height {
             labelListView.snp.updateConstraints { make in
