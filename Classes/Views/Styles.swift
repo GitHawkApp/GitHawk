@@ -166,3 +166,90 @@ extension String {
     }
 
 }
+
+// MARK: Attributes
+
+extension Styles {
+
+    enum Attributes {
+
+        static func body(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.body,
+                .foregroundColor: color
+            ]
+        }
+
+        static func bodyBold(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.bodyBold,
+                .foregroundColor: color
+            ]
+        }
+
+        static func bodyItalic(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.bodyItalic,
+                .foregroundColor: color
+            ]
+        }
+
+        static func secondary(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.secondary,
+                .foregroundColor: color
+            ]
+        }
+
+        static func secondaryBold(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.secondaryBold,
+                .foregroundColor: color
+            ]
+        }
+
+        static func title(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.title,
+                .foregroundColor: color
+            ]
+        }
+
+        static func button(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.button,
+                .foregroundColor: color
+            ]
+        }
+
+        static func headline(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.headline,
+                .foregroundColor: color
+            ]
+        }
+
+        static func smallTitle(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.smallTitle,
+                .foregroundColor: color
+            ]
+        }
+
+        static func code(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.code,
+                .foregroundColor: color
+            ]
+        }
+
+        static func secondaryCode(color: UIColor) -> [NSAttributedStringKey: Any] {
+            return [
+                .font: Styles.Fonts.secondaryCode,
+                .foregroundColor: color
+            ]
+        }
+
+    }
+
+}
