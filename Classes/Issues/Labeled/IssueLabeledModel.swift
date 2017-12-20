@@ -58,10 +58,7 @@ final class IssueLabeledModel: ListDiffable {
         }
         attributedString.append(NSAttributedString(
             string: actionString,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                .font: Styles.Fonts.secondary
-            ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.medium.color)
         ))
 
         let labelColor = color.color

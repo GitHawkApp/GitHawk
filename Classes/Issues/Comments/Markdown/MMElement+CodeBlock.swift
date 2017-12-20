@@ -28,10 +28,7 @@ func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBl
     } else {
         attributedString = NSAttributedString(
             string: text,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Fonts.code
-            ]
+            attributes: Styles.Attributes.code(color: Styles.Colors.Gray.dark.color)
         )
     }
 

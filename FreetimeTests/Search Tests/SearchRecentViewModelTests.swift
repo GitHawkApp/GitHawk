@@ -36,7 +36,7 @@ class SearchRecentViewModelTests: XCTestCase {
     }
 
     func test_displayText_searchQuery_styling() {
-        let expected = NSAttributedString(string: "Pythonic", attributes: standardAttributes)
+        let expected = NSAttributedString(string: "Pythonic", attributes: Styles.Attributes.body(color: Styles.Colors.Gray.dark.color))
         let actual = searchViewModel.displayText
         XCTAssertEqual(expected, actual)
     }
@@ -49,8 +49,8 @@ class SearchRecentViewModelTests: XCTestCase {
     }
 
     func test_displayText_recentlyViewed_styling() {
-        let expected = NSMutableAttributedString(string: "Kickstarter/", attributes: standardAttributes)
-        expected.append(NSAttributedString(string: "ios-oss", attributes: boldAttributes))
+        let expected = NSMutableAttributedString(string: "Kickstarter/", attributes: Styles.Attributes.body(color: Styles.Colors.Gray.dark.color))
+        expected.append(NSAttributedString(string: "ios-oss", attributes: Styles.Attributes.bodyBold(color: Styles.Colors.Gray.dark.color)))
         let actual = recentViewModel.displayText
 
         XCTAssertEqual(expected, actual)
@@ -70,17 +70,4 @@ class SearchRecentViewModelTests: XCTestCase {
         XCTAssertEqual(expected, actual)
     }
 
-    private var standardAttributes: [NSAttributedStringKey: Any] {
-        return [
-            .font: Styles.Fonts.body,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-    }
-
-    private var boldAttributes: [NSAttributedStringKey: Any] {
-        return [
-            .font: Styles.Fonts.bodyBold,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-    }
 }

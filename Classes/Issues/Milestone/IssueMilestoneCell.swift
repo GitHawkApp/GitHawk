@@ -46,18 +46,12 @@ final class IssueMilestoneCell: UICollectionViewCell {
     // MARK: Public API
 
     func configure(milestone: Milestone) {
-        let milestoneAttributes: [NSAttributedStringKey: Any] = [
-            .foregroundColor: Styles.Colors.Gray.light.color,
-            .font: Styles.Fonts.secondary
-        ]
+        let milestoneAttributes = Styles.Attributes.secondary(color: Styles.Colors.Gray.light.color)
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
             attributes: milestoneAttributes
         )
-        let titleAttributes: [NSAttributedStringKey: Any] = [
-            .foregroundColor: Styles.Colors.Gray.dark.color,
-            .font: Styles.Fonts.secondaryBold
-        ]
+        let titleAttributes = Styles.Attributes.secondaryBold(color: Styles.Colors.Gray.dark.color)
         titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
 

@@ -53,17 +53,11 @@ final class IssueMilestoneEventModel: ListDiffable {
         }
         attributedText.append(NSAttributedString(
             string: action,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                .font: Styles.Fonts.secondary
-            ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.medium.color)
         ))
         attributedText.append(NSAttributedString(
             string: milestone,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Fonts.secondaryBold
-            ]
+            attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Gray.dark.color)
         ))
         attributedText.append(NSAttributedString(
             string: " \(date.agoString)",

@@ -19,22 +19,15 @@ final class BookmarkViewModel: ListDiffable {
     init(bookmark: Bookmark, width: CGFloat) {
         self.bookmark = bookmark
 
-        let attributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.body,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-
+        let attributes = Styles.Attributes.body(color: Styles.Colors.Gray.dark.color)
         let attributedText: NSAttributedString
+
         switch bookmark.type {
         case .issue, .pullRequest:
             attributedText = NSAttributedString(string: bookmark.title, attributes: attributes)
         case .commit, .repo:
             let mAttributedText = NSMutableAttributedString(string: "\(bookmark.owner)/", attributes: attributes)
-            mAttributedText.append(NSAttributedString(string: bookmark.name, attributes: [
-                .font: Styles.Fonts.bodyBold,
-                .foregroundColor: Styles.Colors.Gray.dark.color
-                ]
-            ))
+            mAttributedText.append(NSAttributedString(string: bookmark.name, attributes: Styles.Attributes.bodyBold(color: Styles.Colors.Gray.dark.color)))
             attributedText = mAttributedText
         }
 
