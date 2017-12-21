@@ -86,7 +86,7 @@ func CreateCommentModels(
     ]
 
     let seedString = NSMutableAttributedString()
-
+    
     for element in document.elements {
         travelAST(
             markdown: document.markdown,
