@@ -125,7 +125,7 @@ FlatCacheListener {
         }
 
         let hasUnread = count > 0
-        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        navigationItem.leftBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
         BadgeNotifications.update(count: count)
     }
