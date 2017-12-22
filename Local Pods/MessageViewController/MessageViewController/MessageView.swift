@@ -258,4 +258,9 @@ public final class MessageView: UIView {
         setNeedsLayout()
     }
 
+    internal func textViewContentSizeDidChange() {
+        delegate?.sizeDidChange(messageView: self)
+        textView.alwaysBounceVertical = textView.contentSize.height > maxHeight
+    }
+
 }

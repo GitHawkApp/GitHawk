@@ -9,5 +9,5 @@
 import UIKit
 
 public protocol MessageViewControllerAutocompleteDelegate: class {
-    func didFindPrefix(prefix: String, word: String)
+    func shouldHandleFindPrefix(prefix: String, word: String) -> Bool
 }

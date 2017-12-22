@@ -10,13 +10,12 @@ import UIKit
 
 extension MessageView: UITextViewDelegate {
 
-    public func textViewContentSizeDidChange() {
-        delegate?.sizeDidChange(messageView: self)
-        textView.alwaysBounceVertical = textView.contentSize.height > maxHeight
-    }
-
     public func textViewDidChange(_ textView: UITextView) {
         updateEmptyTextStates()
+    }
+
+    public func textViewDidChangeSelection(_ textView: UITextView) {
+        delegate?.selectionDidChange(messageView: self)
     }
 
 }

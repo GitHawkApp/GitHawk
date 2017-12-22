@@ -11,4 +11,5 @@ import UIKit
 internal protocol MessageViewDelegate: class {
     func sizeDidChange(messageView: MessageView)
     func wantsLayout(messageView: MessageView)
+    func selectionDidChange(messageView: MessageView)
 }

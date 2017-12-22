@@ -11,7 +11,6 @@ import UIKit
 open class MessageViewController: UIViewController {
 
     public let messageView = MessageView()
-
     public let autocompleteTableView = UITableView()
     public weak var autocompleteDelegate: MessageViewControllerAutocompleteDelegate?
 
@@ -40,10 +39,11 @@ open class MessageViewController: UIViewController {
         }
         scrollView.panGestureRecognizer.addTarget(self, action: #selector(onPan(gesture:)))
 
+        view.addSubview(autocompleteTableView)
         view.addSubview(messageView)
     }
 
-    func register(prefix: String) {
+    public func register(prefix: String) {
         registeredPrefixes.insert(prefix)
     }
 
@@ -110,6 +110,15 @@ open class MessageViewController: UIViewController {
 
         // required for the nested UITextView to layout its internals correctly
         messageView.layoutIfNeeded()
+    }
+
+    internal func checkForAutocomplete() {
+        guard let result = messageView.textView.find(prefixes: registeredPrefixes) else { return }
+        if autocompleteDelegate?.shouldHandleFindPrefix(prefix: result.prefix, word: result.word) == true {
+            currentAutocomplete = CurrentAutocomplete(prefix: result.prefix, word: result.word, range: result.range)
+        } else {
+            currentAutocomplete = nil
+        }
     }
 
     // MARK: Keyboard notifications
