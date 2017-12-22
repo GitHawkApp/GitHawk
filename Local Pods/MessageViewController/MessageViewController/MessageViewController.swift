@@ -13,6 +13,7 @@ open class MessageViewController: UIViewController {
     public let messageView = MessageView()
     public let autocompleteTableView = UITableView()
     public weak var autocompleteDelegate: MessageViewControllerAutocompleteDelegate?
+    public var cacheKey: String?
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -27,6 +28,16 @@ open class MessageViewController: UIViewController {
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layout()
+    }
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        messageView.text = cachedText ?? ""
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cache()
     }
 
     // MARK: Public API
@@ -78,9 +89,7 @@ open class MessageViewController: UIViewController {
     }
 
     public final var autocompleteMaxVisibleHeight: CGFloat = 200 {
-        didSet {
-            view.setNeedsLayout()
-        }
+        didSet { view.setNeedsLayout() }
     }
 
     // MARK: Private API
@@ -115,6 +124,7 @@ open class MessageViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardDidChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appWillResignActive(notification:)), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
     internal var safeAreaAdditionalHeight: CGFloat {
@@ -171,6 +181,21 @@ open class MessageViewController: UIViewController {
         showAutocomplete(false)
     }
 
+    internal var fullCacheKey: String? {
+        guard let key = cacheKey else { return nil }
+        return "com.freetime.MessageViewController.\(key)"
+    }
+
+    internal func cache() {
+        guard let key = fullCacheKey else { return }
+        UserDefaults.standard.set(messageView.text, forKey: key)
+    }
+
+    var cachedText: String? {
+        guard let key = fullCacheKey else { return nil }
+        return UserDefaults.standard.string(forKey: key)
+    }
+
     // MARK: Keyboard notifications
 
     @objc internal func keyboardWillShow(notification: Notification) {
@@ -201,7 +226,7 @@ open class MessageViewController: UIViewController {
         }
     }
 
-    // MARK: Keyboard Notifications
+    // MARK: Notifications
 
     @objc internal func keyboardDidShow(notification: Notification) {
         keyboardState = .visible
@@ -229,6 +254,10 @@ open class MessageViewController: UIViewController {
 
     @objc internal func keyboardDidChangeFrame(notification: Notification) {
 
+    }
+
+    @objc internal func appWillResignActive(notification: Notification) {
+        cache()
     }
 
     // MARK: Gestures
