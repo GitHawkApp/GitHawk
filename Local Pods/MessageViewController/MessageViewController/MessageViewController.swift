@@ -43,8 +43,44 @@ open class MessageViewController: UIViewController {
         view.addSubview(messageView)
     }
 
-    public func register(prefix: String) {
+    public final func register(prefix: String) {
         registeredPrefixes.insert(prefix)
+    }
+
+    public final func showAutocomplete(_ doShow: Bool) {
+        if doShow {
+            autocompleteTableView.reloadData()
+            autocompleteTableView.layoutIfNeeded()
+        }
+        autocompleteTableView.isHidden = !doShow
+        view.setNeedsLayout()
+    }
+
+    public final func accept(autocomplete: String, keepPrefix: Bool = true) {
+        defer { cancelAutocomplete() }
+
+        guard let current = currentAutocomplete else { return }
+
+        let prefixLength = current.prefix.utf16.count
+        let insertionRange = NSRange(
+            location: current.range.location + (keepPrefix ? prefixLength : 0),
+            length: current.word.utf16.count + (!keepPrefix ? prefixLength : 0)
+        )
+
+        let text = messageView.text
+        guard let range = Range(insertionRange, in: text) else { return }
+
+        messageView.textView.text = text.replacingCharacters(in: range, with: autocomplete)
+        messageView.textView.selectedRange = NSRange(
+            location: insertionRange.location + autocomplete.utf16.count,
+            length: 0
+        )
+    }
+
+    public final var autocompleteMaxVisibleHeight: CGFloat = 200 {
+        didSet {
+            view.setNeedsLayout()
+        }
     }
 
     // MARK: Private API
@@ -101,6 +137,9 @@ open class MessageViewController: UIViewController {
         )
         messageView.frame = messageViewFrame
 
+        // required for the nested UITextView to layout its internals correctly
+        messageView.layoutIfNeeded()
+
         scrollView.frame = CGRect(
             x: bounds.minX,
             y: bounds.minY,
@@ -108,17 +147,28 @@ open class MessageViewController: UIViewController {
             height: messageViewFrame.minY
         )
 
-        // required for the nested UITextView to layout its internals correctly
-        messageView.layoutIfNeeded()
+        let autocompleteHeight = min(autocompleteMaxVisibleHeight, autocompleteTableView.contentSize.height)
+        autocompleteTableView.frame = CGRect(
+            x: bounds.minX,
+            y: messageViewFrame.minY - autocompleteHeight,
+            width: bounds.width,
+            height: autocompleteHeight
+        )
     }
 
     internal func checkForAutocomplete() {
-        guard let result = messageView.textView.find(prefixes: registeredPrefixes) else { return }
-        if autocompleteDelegate?.shouldHandleFindPrefix(prefix: result.prefix, word: result.word) == true {
-            currentAutocomplete = CurrentAutocomplete(prefix: result.prefix, word: result.word, range: result.range)
-        } else {
-            currentAutocomplete = nil
+        guard let result = messageView.textView.find(prefixes: registeredPrefixes) else {
+            cancelAutocomplete()
+            return
         }
+        let wordWithoutPrefix = (result.word as NSString).substring(from: result.prefix.utf16.count)
+        currentAutocomplete = CurrentAutocomplete(prefix: result.prefix, word: wordWithoutPrefix, range: result.range)
+        autocompleteDelegate?.didFind(prefix: result.prefix, word: wordWithoutPrefix)
+    }
+
+    internal func cancelAutocomplete() {
+        currentAutocomplete = nil
+        showAutocomplete(false)
     }
 
     // MARK: Keyboard notifications

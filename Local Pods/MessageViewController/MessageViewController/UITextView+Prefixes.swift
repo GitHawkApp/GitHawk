@@ -47,7 +47,7 @@ internal extension UITextView {
             }
         }
 
-        let joinedWord = (leftWordPart as String) + (rightWordPart as String)hi
+        let joinedWord = (leftWordPart as String) + (rightWordPart as String)
         let newline = "\n"
         if joinedWord.contains(newline) {
             guard let word = joinedWord.components(separatedBy: newline).last
