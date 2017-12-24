@@ -1,0 +1,20 @@
+{
+  "name": "MessageViewController",
+  "version": "0.1.0",
+  "license": {
+    "type": "MIT"
+  },
+  "homepage": "https://github.com/rnystrom/GitHawk",
+  "authors": {
+    "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
+  },
+  "summary": "Replacement for SlackTextViewController.",
+  "source": {
+    "git": "https://github.com/rnystrom/GitHawk.git",
+    "tag": "#{s.version}"
+  },
+  "source_files": "MessageViewController/*.swift",
+  "platforms": {
+    "ios": "10.0"
+  }
+}

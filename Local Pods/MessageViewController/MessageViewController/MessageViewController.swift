@@ -49,9 +49,14 @@ open class MessageViewController: UIViewController {
             view.addSubview(scrollView)
         }
         scrollView.panGestureRecognizer.addTarget(self, action: #selector(onPan(gesture:)))
+        scrollView.keyboardDismissMode = .none
 
         view.addSubview(autocompleteTableView)
+        view.layer.addSublayer(autocompleteBorder)
         view.addSubview(messageView)
+
+        autocompleteTableView.isHidden = true
+        autocompleteBorder.isHidden = true
     }
 
     public final func register(prefix: String) {
@@ -64,6 +69,7 @@ open class MessageViewController: UIViewController {
             autocompleteTableView.layoutIfNeeded()
         }
         autocompleteTableView.isHidden = !doShow
+        autocompleteBorder.isHidden = !doShow
         view.setNeedsLayout()
     }
 
@@ -92,6 +98,24 @@ open class MessageViewController: UIViewController {
         didSet { view.setNeedsLayout() }
     }
 
+    public var borderColor: UIColor? {
+        get {
+            guard let color = autocompleteBorder.backgroundColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set {
+            autocompleteBorder.backgroundColor = newValue?.cgColor
+            messageView.topBorderLayer.backgroundColor = newValue?.cgColor
+        }
+    }
+
+    public func setMessageView(hidden: Bool, animated: Bool) {
+        isMessageViewHidden = hidden
+        UIView.animate(withDuration: animated ? 0.25 : 0) {
+            self.layout()
+        }
+    }
+
     // MARK: Private API
 
     // keyboard management
@@ -104,15 +128,17 @@ open class MessageViewController: UIViewController {
     internal var keyboardState: KeyboardState = .resigned
     internal var scrollView: UIScrollView!
     internal var keyboardHeight: CGFloat = 0
+    internal var isMessageViewHidden = false
 
     // autocomplete
-    struct CurrentAutocomplete {
-        let prefix: String
-        let word: String
-        let range: NSRange
+    public struct CurrentAutocomplete {
+        public let prefix: String
+        public let word: String
+        public let range: NSRange
     }
     internal var registeredPrefixes = Set<String>()
-    internal var currentAutocomplete: CurrentAutocomplete?
+    public private(set) var currentAutocomplete: CurrentAutocomplete?
+    private let autocompleteBorder = CALayer()
 
     internal func commonInit() {
         messageView.delegate = self
@@ -137,13 +163,15 @@ open class MessageViewController: UIViewController {
     internal func layout() {
         let bounds = view.bounds
 
-        let messageViewHeight = messageView.height
         let safeAreaAdditionalHeight = self.safeAreaAdditionalHeight
+        let messageViewHeight = messageView.height + safeAreaAdditionalHeight
+        let hiddenHeight = isMessageViewHidden ? messageViewHeight : 0
+
         let messageViewFrame = CGRect(
             x: bounds.minX,
-            y: bounds.minY + bounds.height - messageViewHeight - keyboardHeight - safeAreaAdditionalHeight,
+            y: bounds.minY + bounds.height - messageViewHeight - keyboardHeight + hiddenHeight,
             width: bounds.width,
-            height: messageViewHeight + safeAreaAdditionalHeight
+            height: messageViewHeight
         )
         messageView.frame = messageViewFrame
 
@@ -158,12 +186,23 @@ open class MessageViewController: UIViewController {
         )
 
         let autocompleteHeight = min(autocompleteMaxVisibleHeight, autocompleteTableView.contentSize.height)
-        autocompleteTableView.frame = CGRect(
+        let autocompleteFrame = CGRect(
             x: bounds.minX,
             y: messageViewFrame.minY - autocompleteHeight,
             width: bounds.width,
             height: autocompleteHeight
         )
+        autocompleteTableView.frame = autocompleteFrame
+
+        let borderHeight = 1 / UIScreen.main.scale
+        UIView.performWithoutAnimation {
+            autocompleteBorder.frame = CGRect(
+                x: bounds.minX,
+                y: autocompleteFrame.minY - borderHeight,
+                width: bounds.width,
+                height: borderHeight
+            )
+        }
     }
 
     internal func checkForAutocomplete() {
@@ -205,20 +244,25 @@ open class MessageViewController: UIViewController {
 
         scrollView.stopScrolling()
         keyboardState = .showing
+
+        let previousKeyboardHeight = keyboardHeight
         keyboardHeight = keyboardFrame.height
 
         UIView.animate(withDuration: animationDuration) {
+            // capture before changing the frame which might have weird side effects
+            let contentOffset = self.scrollView.contentOffset.y
+
             self.layout()
 
             let scrollViewHeight = self.scrollView.bounds.height
             let contentHeight = self.scrollView.contentSize.height
-            let contentOffset = self.scrollView.contentOffset.y
             let topInset = self.scrollView.util_adjustedContentInset.top
+            let bottomSafeInset = self.view.util_safeAreaInsets.bottom
 
             let newOffset = max(
                 min(
                     contentHeight - scrollViewHeight,
-                    contentOffset + self.keyboardHeight - self.view.util_safeAreaInsets.bottom
+                    contentOffset + self.keyboardHeight - previousKeyboardHeight - bottomSafeInset
                 ),
                 -topInset
             )

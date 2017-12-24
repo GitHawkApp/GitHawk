@@ -10,9 +10,9 @@ import UIKit
 
 public final class MessageView: UIView {
 
-    internal weak var delegate: MessageViewDelegate?
+    public let textView = UITextView()
 
-    internal let textView = UITextView()
+    internal weak var delegate: MessageViewDelegate?
     internal let placeholderLabel = UILabel()
     internal let button = UIButton()
     internal let UITextViewContentSizeKeyPath = #keyPath(UITextView.contentSize)
@@ -55,6 +55,10 @@ public final class MessageView: UIView {
         button.imageEdgeInsets = .zero
 
         updateEmptyTextStates()
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(becomeFirstResponder))
+        tap.cancelsTouchesInView = false
+        addGestureRecognizer(tap)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -83,7 +87,7 @@ public final class MessageView: UIView {
     public var font: UIFont? {
         get { return textView.font }
         set {
-            placeholderLabel.font = font
+            placeholderLabel.font = newValue
             textView.font = newValue
             placeholderLayoutDidChange()
             delegate?.wantsLayout(messageView: self)
@@ -95,6 +99,7 @@ public final class MessageView: UIView {
         set {
             textView.text = newValue
             delegate?.wantsLayout(messageView: self)
+            updateEmptyTextStates()
         }
     }
 
@@ -134,16 +139,6 @@ public final class MessageView: UIView {
         }
     }
 
-    public var borderColor: UIColor? {
-        get {
-            guard let color = topBorderLayer.backgroundColor else { return nil }
-            return UIColor(cgColor: color)
-        }
-        set {
-            topBorderLayer.backgroundColor = newValue?.cgColor
-        }
-    }
-
     public var maxLineCount: Int = 4 {
         didSet {
             delegate?.wantsLayout(messageView: self)
@@ -157,6 +152,15 @@ public final class MessageView: UIView {
         addSubview(contentView)
         setNeedsLayout()
         delegate?.wantsLayout(messageView: self)
+    }
+
+    public var keyboardType: UIKeyboardType {
+        get { return textView.keyboardType }
+        set { textView.keyboardType = newValue }
+    }
+
+    func addButton(target: Any, selector: Selector) {
+        button.addTarget(target, action: selector, for: .touchUpInside)
     }
 
     // MARK: Overrides
@@ -222,6 +226,10 @@ public final class MessageView: UIView {
 
     public override func resignFirstResponder() -> Bool {
         return textView.resignFirstResponder()
+    }
+
+    public override func becomeFirstResponder() -> Bool {
+        return textView.becomeFirstResponder()
     }
 
     // MARK: Private API

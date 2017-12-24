@@ -45,6 +45,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
   - leveldb-library (1.20)
+  - MessageViewController (0.1.0)
   - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - Highlightr (from `Local Pods/Highlightr`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
+  - MessageViewController (from `Local Pods/MessageViewController`)
   - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
@@ -107,6 +109,8 @@ EXTERNAL SOURCES:
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
+  MessageViewController:
+    :path: Local Pods/MessageViewController
   MMMarkdown:
     :path: Local Pods/MMMarkdown
   SlackTextViewController:
@@ -141,6 +145,7 @@ SPEC CHECKSUMS:
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  MessageViewController: 0c6fb72f0e70a6229458bb19fe69adadb747793f
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
@@ -155,6 +160,6 @@ SPEC CHECKSUMS:
   Tabman: 94692b62fc58ed4945220be2f3f0ad7406aa3699
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 53b8192c56f79fe8781d63f3ebaad65fdaabd4f6
+PODFILE CHECKSUM: 5a070bcf9f5c5b3be9879b87c3ff4c18924cd6ad
 
 COCOAPODS: 1.4.0.beta.1

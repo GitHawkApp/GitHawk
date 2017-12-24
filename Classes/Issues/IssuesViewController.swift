@@ -10,18 +10,21 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import SafariServices
-import SlackTextViewController
 import SnapKit
 import FlatCache
+import MessageViewController
 
-final class IssuesViewController: SLKTextViewController,
+final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
     IssueCommentAutocompleteDelegate,
-FeedSelectionProviding,
-IssueNeckLoadSectionControllerDelegate,
-FlatCacheListener {
+    FeedSelectionProviding,
+    IssueNeckLoadSectionControllerDelegate,
+    FlatCacheListener,
+    MessageViewControllerAutocompleteDelegate,
+    UITableViewDelegate,
+UITableViewDataSource {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -30,6 +33,7 @@ FlatCacheListener {
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var needsScrollToBottom = false
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -61,10 +65,7 @@ FlatCacheListener {
             } else {
                 hidden = true
             }
-            self.setTextInputbarHidden(hidden, animated: trueUnlessReduceMotionEnabled)
-
-            // hack required to get textInputBar.contentView + textView laid out correctly
-            self.textInputbar.layoutIfNeeded()
+            self.setMessageView(hidden: hidden, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -89,15 +90,19 @@ FlatCacheListener {
         self.addCommentClient = AddCommentClient(client: client)
         self.needsScrollToBottom = scrollToBottom
 
-        // force unwrap, this absolutely must work
-        super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
+        super.init(nibName: nil, bundle: nil)
 
         self.hidesBottomBarWhenPushed = true
         self.addCommentClient.addListener(listener: self)
 
         // not registered until request is finished and self.registerPrefixes(...) is called
         // must have user autocompletes
-        autocomplete.configure(tableView: autoCompletionView, delegate: self)
+        autocomplete.configure(tableView: autocompleteTableView, delegate: self)
+
+        cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
+        autocompleteDelegate = self
+        autocompleteTableView.dataSource = self
+        autocompleteTableView.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,6 +111,9 @@ FlatCacheListener {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setup(scrollView: collectionView)
+        setMessageView(hidden: true, animated: false)
 
         makeBackBarItemEmpty()
 
@@ -119,23 +127,18 @@ FlatCacheListener {
         // override Feed bg color setting
         view.backgroundColor = Styles.Colors.background
 
-        // override default SLKTextViewController values
-        isInverted = false
-        textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
-        textView.placeholderColor = Styles.Colors.Gray.light.color
-        textView.keyboardType = .twitter
-        textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
-        rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
-        rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
-
-        collectionView?.keyboardDismissMode = .interactive
-
-        // displayed once an add comment client is created (requires a gql subject id)
-        setTextInputbarHidden(true, animated: false)
+        // setup message view properties
+        borderColor = Styles.Colors.Gray.border.color
+        messageView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
+        messageView.placeholderTextColor = Styles.Colors.Gray.light.color
+        messageView.keyboardType = .twitter
+        messageView.buttonTitle = NSLocalizedString("Send", comment: "")
+        messageView.buttonTint = Styles.Colors.Blue.medium.color
+        messageView.font = Styles.Fonts.body
+        messageView.inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: Styles.Sizes.gutter, bottom: 4, right: Styles.Sizes.gutter)
 
         let getMarkdownBlock = { [weak self] () -> (String) in
-            return self?.textView.text ?? ""
+            return self?.messageView.text ?? ""
         }
         let actions = IssueTextActionsView.forMarkdown(
             viewController: self,
@@ -147,19 +150,12 @@ FlatCacheListener {
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
-        
-        textActionsController.configure(client: client, textView: textView, actions: actions)
+
+        textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
-        
-        let contentView = textInputbar.contentView
-        contentView.addSubview(actions)
-        actions.snp.makeConstraints { (make) in
-            make.height.equalTo(30)
-            make.top.equalTo(contentView)
-            make.bottom.equalTo(contentView).offset(-4).priority(999)
-            make.left.right.equalTo(contentView)
-        }
-        self.textInputbar.layoutIfNeeded()
+
+        actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
+        messageView.add(contentView: actions)
 
         navigationItem.rightBarButtonItem = moreOptionsItem
     }
@@ -185,54 +181,19 @@ FlatCacheListener {
         feed.viewWillLayoutSubviews(view: view)
     }
 
-    // MARK: SLKTextViewController overrides
+    // MARK: Private API
 
-    override func keyForTextCaching() -> String? {
-        return "issue.\(model.owner).\(model.repo).\(model.number)"
-    }
-
-    override func didPressRightButton(_ sender: Any?) {
+    @objc func didPressButton(_ sender: Any?) {
         // get text before calling super b/c it will clear it
-        let text = textView.text
+        let text = messageView.text
 
-        super.didPressRightButton(sender)
-
-        if let id = resultID,
-            let text = text {
+        if let id = resultID {
             addCommentClient.addComment(
                 subjectId: id,
                 body: text
             )
         }
     }
-
-    override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
-        autocomplete.didChange(tableView: autoCompletionView, prefix: prefix, word: word)
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: foundPrefix)
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return autocomplete.cell(tableView: tableView, prefix: foundPrefix, indexPath: indexPath)
-    }
-
-    override func heightForAutoCompletionView() -> CGFloat {
-        return autocomplete.resultHeight(prefix: foundPrefix)
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
-            acceptAutoCompletion(with: accept + " ", keepPrefix: false)
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return autocomplete.cellHeight
-    }
-
-    // MARK: Private API
 
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
@@ -260,7 +221,7 @@ FlatCacheListener {
 
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
-        
+
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
@@ -277,9 +238,9 @@ FlatCacheListener {
         let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
-        
+
         let alertTitle = "\(issueType) #\(model.number)"
-        
+
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
@@ -291,9 +252,9 @@ FlatCacheListener {
             },
             viewRepoAction(),
             AlertAction.cancel()
-        ])
+            ])
         alert.popoverPresentationController?.setSourceView(sender)
-        
+
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
@@ -351,7 +312,7 @@ FlatCacheListener {
 
     func onPreview() {
         let controller = IssuePreviewViewController(
-            markdown: textView.text,
+            markdown: messageView.text,
             owner: model.owner,
             repo: model.repo
         )
@@ -457,16 +418,16 @@ FlatCacheListener {
         ) {
         guard let previous = result,
             let comment = createCommentModel(
-            id: id,
-            commentFields: commentFields,
-            reactionFields: reactionFields,
-            width: view.bounds.width,
-            owner: model.owner,
-            repo: model.repo,
-            threadState: .single,
-            viewerCanUpdate: viewerCanUpdate,
-            viewerCanDelete: viewerCanDelete,
-            isRoot: false
+                id: id,
+                commentFields: commentFields,
+                reactionFields: reactionFields,
+                width: view.bounds.width,
+                owner: model.owner,
+                repo: model.repo,
+                threadState: .single,
+                viewerCanUpdate: viewerCanUpdate,
+                viewerCanDelete: viewerCanDelete,
+                isRoot: false
             )
             else { return }
 
@@ -479,18 +440,20 @@ FlatCacheListener {
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
-        textView.text = body
+        messageView.text = body
     }
 
     // MARK: IssueCommentAutocompleteDelegate
 
     func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        showAutoCompletionView(hasResults)
+        showAutocomplete(hasResults)
     }
 
     func didChangeStore(autocomplete: IssueCommentAutocomplete) {
-        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
-        autoCompletionView.reloadData()
+        for prefix in autocomplete.prefixes {
+            register(prefix: prefix)
+        }
+        autocompleteTableView.reloadData()
     }
 
     // MARK: FeedSelectionProviding
@@ -514,6 +477,34 @@ FlatCacheListener {
             updateAndScrollIfNeeded()
         case .list: break
         }
+    }
+
+    // MARK: MessageViewControllerAutocompleteDelegate
+
+    func didFind(prefix: String, word: String) {
+        autocomplete.didChange(tableView: autocompleteTableView, prefix: prefix, word: word)
+    }
+
+    // MARK: UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocomplete.resultCount(prefix: currentAutocomplete?.prefix)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return autocomplete.cell(tableView: tableView, prefix: currentAutocomplete?.prefix, indexPath: indexPath)
+    }
+
+    // MARK: UITableViewDataSource
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let accepted = autocomplete.accept(prefix: currentAutocomplete?.prefix, indexPath: indexPath) {
+            accept(autocomplete: accepted + " ", keepPrefix: false)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return autocomplete.cellHeight
     }
 
 }
