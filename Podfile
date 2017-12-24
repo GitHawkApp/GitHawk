@@ -33,6 +33,7 @@ pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
 pod 'Highlightr', :path => 'Local Pods/Highlightr'
 pod 'StyledText', :path => 'Local Pods/StyledText'
+pod 'MessageViewController', :path => 'Local Pods/MessageViewController'
 
 target 'Freetime' do
 
