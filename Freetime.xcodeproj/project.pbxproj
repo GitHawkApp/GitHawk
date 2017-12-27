@@ -239,8 +239,6 @@
 		29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */; };
 		299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */; };
 		299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */; };
-		299A04A91FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */; };
-		299A04AA1FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
 		299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */; };
 		299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
@@ -297,6 +295,8 @@
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
+		29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC292E1FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift */; };
+		29CC29311FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC292F1FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift */; };
 		29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */; };
 		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
@@ -654,8 +654,6 @@
 		29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+APIStatus.swift"; sourceTree = "<group>"; };
 		299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialEmptyView.swift; sourceTree = "<group>"; };
 		299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewViewCommentsCell.swift; sourceTree = "<group>"; };
-		299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+PullRequestReviewComments.swift"; sourceTree = "<group>"; };
-		299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestReviewCommentsViewController.swift; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
 		299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Paging.swift"; sourceTree = "<group>"; };
 		299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
@@ -715,6 +713,8 @@
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		29CC292E1FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+PullRequestReviewComments.swift"; sourceTree = "<group>"; };
+		29CC292F1FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestReviewCommentsViewController.swift; sourceTree = "<group>"; };
 		29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GithubDate.swift"; sourceTree = "<group>"; };
 		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
@@ -1313,7 +1313,7 @@
 				98B5A07E1F6C73A2000617D6 /* New Issue */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				295B513E1FC26AB200C3993B /* People */,
-				299A04A61FAE94B4003C2450 /* PullReqeustReviews */,
+				29CC292D1FF421DC006B6DE7 /* PullRequestReviews */,
 				986B872E1F2CA8E800AAB55C /* Repository */,
 				986B87171F2B873200AAB55C /* Search */,
 				297AE8641EC0D5C100B44A1F /* Section Controllers */,
@@ -1536,15 +1536,6 @@
 			path = Managing;
 			sourceTree = "<group>";
 		};
-		299A04A61FAE94B4003C2450 /* PullReqeustReviews */ = {
-			isa = PBXGroup;
-			children = (
-				299A04A71FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift */,
-				299A04A81FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift */,
-			);
-			path = PullReqeustReviews;
-			sourceTree = "<group>";
-		};
 		29AF1E801F8AAB1D0008A0EF /* EditComment */ = {
 			isa = PBXGroup;
 			children = (
@@ -1609,6 +1600,15 @@
 				297406971F0ED1E9003A6BFB /* SegmentedControlModel+Notifications.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		29CC292D1FF421DC006B6DE7 /* PullRequestReviews */ = {
+			isa = PBXGroup;
+			children = (
+				29CC292E1FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift */,
+				29CC292F1FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift */,
+			);
+			path = PullRequestReviews;
 			sourceTree = "<group>";
 		};
 		29DA1E7C1F5DF2960050C64B /* LoadMore */ = {
@@ -1884,7 +1884,7 @@
 				TargetAttributes = {
 					297AE8331EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-                        DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = 523C4DWBTH;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2275,7 +2275,6 @@
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
-				299A04AA1FAE94D0003C2450 /* PullRequestReviewCommentsViewController.swift in Sources */,
 				297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */,
 				297403D91F18545A00ABA95A /* IssueAssigneesSectionController.swift in Sources */,
 				49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */,
@@ -2483,8 +2482,8 @@
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
-				299A04A91FAE94D0003C2450 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */,
+				29CC29311FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift in Sources */,
 				986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */,
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
 				DC7857101F97F546009BADDA /* Debouncer.swift in Sources */,
@@ -2515,6 +2514,7 @@
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29459A731FE853C600034A04 /* NotificationSubscriptionsController.swift in Sources */,
+				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
@@ -2750,7 +2750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2775,7 +2775,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2882,7 +2882,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 523C4DWBTH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
