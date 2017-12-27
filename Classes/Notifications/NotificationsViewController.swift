@@ -109,7 +109,7 @@ FlatCacheListener {
             image: UIImage(named: "check"),
             style: .plain,
             target: self,
-            action: #selector(NotificationsViewController.onMarkAll)
+            action: #selector(onMarkAll)
         )
         item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
         navigationItem.rightBarButtonItem = item
@@ -125,7 +125,11 @@ FlatCacheListener {
         }
 
         let hasUnread = count > 0
-        navigationItem.leftBarButtonItem?.isEnabled = hasUnread
+        let markAllItem = navigationItem.rightBarButtonItem
+        if let markAllItem = markAllItem {
+            assert(markAllItem.action == #selector(onMarkAll)) // https://github.com/rnystrom/GitHawk/issues/1293
+        }
+        markAllItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
         BadgeNotifications.update(count: count)
     }
