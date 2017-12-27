@@ -112,9 +112,6 @@ UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setup(scrollView: collectionView)
-        setMessageView(hidden: true, animated: false)
-
         makeBackBarItemEmpty()
 
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
@@ -123,6 +120,10 @@ UITableViewDataSource {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+
+        // setup after feed is lazy loaded
+        setup(scrollView: collectionView)
+        setMessageView(hidden: true, animated: false)
 
         // override Feed bg color setting
         view.backgroundColor = Styles.Colors.background
