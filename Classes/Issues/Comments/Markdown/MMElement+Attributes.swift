@@ -17,12 +17,7 @@ func PushAttributes(
     let currentFont: UIFont = current[.font] as? UIFont ?? Styles.Fonts.body
 
     // TODO: cleanup
-    let paragraphStyleCopy: NSMutableParagraphStyle
-    if let para = (current[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle {
-        paragraphStyleCopy = para
-    } else {
-        paragraphStyleCopy = NSMutableParagraphStyle()
-    }
+    let paragraphStyleCopy: NSMutableParagraphStyle = paragraphStyle(for: current)
 
     var newAttributes: [NSAttributedStringKey: Any]
     switch element.type {
@@ -38,13 +33,17 @@ func PushAttributes(
         .font: currentFont.addingTraits(traits: .traitItalic)
         ]
     case .codeSpan: newAttributes = [
-        .font: Styles.Fonts.code,
-        NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
-        .foregroundColor: Styles.Colors.Gray.dark.color,
-        MarkdownAttribute.usernameDisabled: true,
-        MarkdownAttribute.linkShorteningDisabled: true
+            .font: Styles.Fonts.code,
+            NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
+            MarkdownAttribute.usernameDisabled: true,
+            MarkdownAttribute.linkShorteningDisabled: true
         ]
-    case .link: newAttributes = [
+        // Apply color Grey only if the link style was not applied on this element.
+        if current[MarkdownAttribute.url] == nil {
+            newAttributes[.foregroundColor] = Styles.Colors.Gray.dark.color
+        }
+    case .link:
+        newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,
         MarkdownAttribute.url: element.href ?? ""
         ]
@@ -117,4 +116,11 @@ func PushAttributes(
         attributes[k] = v
     }
     return attributes
+}
+
+fileprivate func paragraphStyle(for current:  [NSAttributedStringKey: Any]) -> NSMutableParagraphStyle {
+    guard let para = (current[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle  else {
+        return NSMutableParagraphStyle()
+    }
+    return para
 }
