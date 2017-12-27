@@ -114,20 +114,14 @@ public final class MessageView: UIView {
         didSet { setNeedsLayout() }
     }
 
-    public var buttonIcon: UIImage? {
-        get { return button.imageView?.image }
-        set {
-            button.setImage(newValue, for: .normal)
-            buttonLayoutDidChange()
-        }
+    public func set(buttonIcon: UIImage?, for state: UIControlState) {
+        button.setImage(buttonIcon, for: state)
+        buttonLayoutDidChange()
     }
 
-    public var buttonTitle: String? {
-        get { return button.title(for: .normal) }
-        set {
-            button.setTitle(newValue, for: .normal)
-            buttonLayoutDidChange()
-        }
+    public func set(buttonTitle: String, for state: UIControlState) {
+        button.setTitle(buttonTitle, for: state)
+        buttonLayoutDidChange()
     }
 
     public var buttonTint: UIColor {
@@ -159,8 +153,8 @@ public final class MessageView: UIView {
         set { textView.keyboardType = newValue }
     }
 
-    func addButton(target: Any, selector: Selector) {
-        button.addTarget(target, action: selector, for: .touchUpInside)
+    public func addButton(target: Any, action: Selector) {
+        button.addTarget(target, action: action, for: .touchUpInside)
     }
 
     // MARK: Overrides

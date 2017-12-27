@@ -132,10 +132,11 @@ UITableViewDataSource {
         messageView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
         messageView.placeholderTextColor = Styles.Colors.Gray.light.color
         messageView.keyboardType = .twitter
-        messageView.buttonTitle = NSLocalizedString("Send", comment: "")
+        messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
         messageView.buttonTint = Styles.Colors.Blue.medium.color
         messageView.font = Styles.Fonts.body
         messageView.inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: Styles.Sizes.gutter, bottom: 4, right: Styles.Sizes.gutter)
+        messageView.addButton(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -186,6 +187,7 @@ UITableViewDataSource {
     @objc func didPressButton(_ sender: Any?) {
         // get text before calling super b/c it will clear it
         let text = messageView.text
+        messageView.text = ""
 
         if let id = resultID {
             addCommentClient.addComment(
