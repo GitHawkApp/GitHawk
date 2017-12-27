@@ -41,18 +41,15 @@ extension UINavigationItem {
             return
         }
 
-        let titleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.bodyBold,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-        let subtitleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.secondaryBold,
-            .foregroundColor: Styles.Colors.Gray.light.color
-        ]
-
-        let attributedTitle = NSMutableAttributedString(string: title, attributes: titleAttributes)
+        let attributedTitle = NSMutableAttributedString(
+            string: title,
+            attributes: Styles.Attributes.bodyBold(color: Styles.Colors.Gray.dark.color)
+        )
         attributedTitle.append(NSAttributedString(string: "\n"))
-        attributedTitle.append(NSAttributedString(string: subtitle, attributes: subtitleAttributes))
+        attributedTitle.append(NSAttributedString(
+            string: subtitle,
+            attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Gray.light.color)
+        ))
 
         let label = UILabel()
         label.backgroundColor = .clear

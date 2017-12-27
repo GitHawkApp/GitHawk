@@ -61,10 +61,7 @@ final class IssueReferencedModel: ListDiffable {
         ))
         attributedText.append(NSAttributedString(
             string: NSLocalizedString(" referenced ", comment: ""),
-            attributes: [
-                .font: Styles.Fonts.secondary,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.medium.color)
         ))
         attributedText.append(NSAttributedString(
             string: date.agoString,
@@ -77,17 +74,11 @@ final class IssueReferencedModel: ListDiffable {
         attributedText.append(NSAttributedString(string: "\n"))
         attributedText.append(NSAttributedString(
             string: title,
-            attributes: [
-                .font: Styles.Fonts.secondaryBold,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-            ]
+            attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Gray.dark.color)
         ))
         attributedText.append(NSAttributedString(
             string: " #\(number)",
-            attributes: [
-                .font: Styles.Fonts.secondary,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-            ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.medium.color)
         ))
         self.attributedText = NSAttributedStringSizing(
             containerWidth: width,

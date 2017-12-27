@@ -51,10 +51,7 @@ final class IssueRequestModel: ListDiffable {
         }
         attributedText.append(NSAttributedString(
             string: phrase,
-            attributes: [
-                .font: Styles.Fonts.secondary,
-                .foregroundColor: Styles.Colors.Gray.medium.color
-            ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.medium.color)
         ))
         attributedText.append(NSAttributedString(
             string: " \(user)",

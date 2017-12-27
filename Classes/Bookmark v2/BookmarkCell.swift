@@ -81,17 +81,12 @@ final class BookmarkCell: SwipeSelectableCell {
         case .issue, .pullRequest:
             let detailString = NSMutableAttributedString(
                 string: "\(viewModel.bookmark.owner)/\(viewModel.bookmark.name)",
-                attributes: [
-                    .font: Styles.Fonts.secondaryBold,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
-                    ]
+                attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Gray.light.color)
             )
+
             detailString.append(NSAttributedString(
                 string: " #\(viewModel.bookmark.number)",
-                attributes: [
-                    .font: Styles.Fonts.secondary,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
-                ]
+                attributes: Styles.Attributes.secondary(color: Styles.Colors.Gray.light.color)
             ))
             detailLabel.attributedText = detailString
         default:

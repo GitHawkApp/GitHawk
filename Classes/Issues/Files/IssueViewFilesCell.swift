@@ -37,27 +37,18 @@ final class IssueViewFilesCell: UICollectionViewCell {
         let actionFormat = NSLocalizedString("View Files (%d) ", comment: "")
         attributedText.append(NSAttributedString(
             string: String(format: actionFormat, changes.changedFiles),
-            attributes: [
-                .font: Styles.Fonts.secondary,
-                .foregroundColor: Styles.Colors.Blue.medium.color
-            ]
+            attributes: Styles.Attributes.secondary(color: Styles.Colors.Blue.medium.color)
         ))
         if changes.additions > 0 {
             attributedText.append(NSAttributedString(
                 string: "+\(changes.additions) ", // note trailing space
-                attributes: [
-                    .font: Styles.Fonts.secondaryBold,
-                    .foregroundColor: Styles.Colors.Green.medium.color
-                ]
+                attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Green.medium.color)
             ))
         }
         if changes.deletions > 0 {
             attributedText.append(NSAttributedString(
                 string: "-\(changes.deletions)",
-                attributes: [
-                    .font: Styles.Fonts.secondaryBold,
-                    .foregroundColor: Styles.Colors.Red.medium.color
-                ]
+                attributes: Styles.Attributes.secondaryBold(color: Styles.Colors.Red.medium.color)
             ))
         }
         label.attributedText = attributedText

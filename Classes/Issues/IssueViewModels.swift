@@ -12,10 +12,8 @@ import IGListKit
 func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
     let attributedString = NSAttributedString(
         string: title,
-        attributes: [
-            NSAttributedStringKey.font: Styles.Fonts.headline,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-        ])
+        attributes: Styles.Attributes.headline(color: Styles.Colors.Gray.dark.color)
+    )
     return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: attributedString,
