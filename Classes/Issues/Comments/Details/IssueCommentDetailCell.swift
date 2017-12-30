@@ -69,8 +69,9 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         }
 
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: Styles.Sizes.commentGutter)
-        moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        moreButton.contentVerticalAlignment = .center
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.imageView?.contentMode = .center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
         moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
@@ -78,7 +79,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonMin)
             make.centerY.equalTo(imageView)
-            make.right.equalTo(contentView)
+            make.right.equalTo(-Styles.Sizes.commentGutter)
         }
 
         authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color

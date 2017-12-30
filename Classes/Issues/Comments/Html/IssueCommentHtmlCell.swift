@@ -95,7 +95,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        webView.backgroundColor = .white
+        webView.backgroundColor = .clear
         webView.delegate = self
         webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
 

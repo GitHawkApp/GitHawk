@@ -39,12 +39,14 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         doubleTapGesture.delegate = self
         addGestureRecognizer(doubleTapGesture)
 
+        // insert above contentView layer
         borderLayer.strokeColor = UIColor.red.cgColor
         borderLayer.strokeColor = Styles.Colors.Gray.border.color.cgColor
         borderLayer.lineWidth = 1 / UIScreen.main.scale
         borderLayer.fillColor = nil
-        layer.insertSublayer(borderLayer, at: 0)
+        layer.addSublayer(borderLayer)
 
+        // insert as base layer
         backgroundLayer.strokeColor = nil
         backgroundLayer.fillColor = UIColor.white.cgColor
         layer.insertSublayer(backgroundLayer, at: 0)
@@ -56,6 +58,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
 
         let bounds = self.bounds
         let inset = borderLayer.lineWidth / 2
@@ -111,9 +114,6 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
         borderLayer.frame = bounds
         backgroundLayer.frame = bounds
-
-        let borderInsetBounds = bounds.insetBy(dx: borderLayer.lineWidth, dy: borderLayer.lineWidth)
-        layoutContentViewForSafeAreaInsets(bounds: borderInsetBounds)
     }
 
     // MARK: Private API
