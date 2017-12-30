@@ -48,7 +48,7 @@ FlatCacheListener {
 
         switch inboxType {
         case .all:
-            title = NSLocalizedString("Archives", comment: "")
+            title = NSLocalizedString("Archived", comment: "")
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
             self.subscriptionController = NotificationSubscriptionsController(viewController: self, client: client)
