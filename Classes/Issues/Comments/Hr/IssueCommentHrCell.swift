@@ -14,17 +14,15 @@ final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
 
     static let inset = UIEdgeInsets(
         top: 0,
-        left: Styles.Sizes.gutter,
+        left: Styles.Sizes.commentGutter,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
+        right: Styles.Sizes.commentGutter
     )
 
     let hr = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
 
         hr.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(hr)
@@ -35,11 +33,6 @@ final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: ListBindable

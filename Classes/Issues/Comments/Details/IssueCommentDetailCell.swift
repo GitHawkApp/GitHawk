@@ -16,7 +16,7 @@ protocol IssueCommentDetailCellDelegate: class {
     func didTapProfile(cell: IssueCommentDetailCell)
 }
 
-final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
+final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueCommentDetailCellDelegate?
 
@@ -27,12 +27,9 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     private let editedLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
     private var login = ""
-    private var border: UIView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
@@ -46,7 +43,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
             make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
@@ -72,7 +69,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
 
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: Styles.Sizes.gutter)
+        moreButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: Styles.Sizes.commentGutter)
         moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
@@ -83,8 +80,6 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             make.centerY.equalTo(imageView)
             make.right.equalTo(contentView)
         }
-
-        border = addBorder(.top, useSafeMargins: false)
 
         authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
         contentView.insertSubview(authorBackgroundView, at: 0)
@@ -102,11 +97,6 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -114,7 +104,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     // MARK: Public API
 
     func setBorderVisible(_ visible: Bool) {
-        border?.isHidden = !visible
+        border = visible ? .head : .neck
     }
 
     // MARK: Private API

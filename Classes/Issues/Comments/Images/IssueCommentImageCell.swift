@@ -19,7 +19,7 @@ protocol IssueCommentImageHeightCellDelegate: class {
     func imageDidFinishLoad(cell: IssueCommentImageCell, url: URL, size: CGSize)
 }
 
-final class IssueCommentImageCell: DoubleTappableCell,
+final class IssueCommentImageCell: IssueCommentBaseCell,
 ListBindable,
 CollapsibleCell {
 
@@ -34,9 +34,6 @@ CollapsibleCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        contentView.clipsToBounds = true
-        backgroundColor = .white
 
         imageView.contentMode = .scaleAspectFit
         if #available(iOS 11, *) {
@@ -62,7 +59,6 @@ CollapsibleCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
 
         var frame = bounds

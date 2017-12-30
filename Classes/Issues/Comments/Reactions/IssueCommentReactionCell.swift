@@ -15,7 +15,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
 
-final class IssueCommentReactionCell: DoubleTappableCell,
+final class IssueCommentReactionCell: IssueCommentBaseCell,
 ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
@@ -34,13 +34,10 @@ UICollectionViewDelegateFlowLayout {
         return view
     }()
     private var reactions = [ReactionViewModel]()
-    private var border: UIView?
     private var queuedOperation: (content: ReactionContent, operation: IssueReactionOperation)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
@@ -52,7 +49,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
             make.centerY.equalTo(contentView)
         }
 
@@ -64,17 +61,10 @@ UICollectionViewDelegateFlowLayout {
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
             make.top.bottom.right.equalTo(contentView)
         }
-
-        border = addBorder(.bottom, useSafeMargins: false)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API
@@ -87,7 +77,7 @@ UICollectionViewDelegateFlowLayout {
     }
 
     func configure(borderVisible: Bool) {
-        self.border?.isHidden = !borderVisible
+        border = borderVisible ? .tail : .neck
     }
 
     // MARK: Private API

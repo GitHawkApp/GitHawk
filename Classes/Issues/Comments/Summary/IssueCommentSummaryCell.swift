@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentSummaryCell: DoubleTappableCell, ListBindable, CollapsibleCell {
+final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable, CollapsibleCell {
 
     let label = UILabel()
     let overlay = CreateCollapsibleOverlay()
@@ -18,13 +18,11 @@ final class IssueCommentSummaryCell: DoubleTappableCell, ListBindable, Collapsib
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
-
         label.textColor = Styles.Colors.Gray.dark.color
         label.font = Styles.Fonts.body
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
             make.centerY.equalTo(contentView)
         }
     }
@@ -35,7 +33,6 @@ final class IssueCommentSummaryCell: DoubleTappableCell, ListBindable, Collapsib
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
     }
 

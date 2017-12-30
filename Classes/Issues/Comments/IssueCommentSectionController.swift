@@ -17,7 +17,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
 IssueCommentReactionCellDelegate,
 AttributedStringViewExtrasDelegate,
 EditCommentViewControllerDelegate,
-DoubleTappableCellDelegate {
+IssueCommentDoubleTapDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -57,22 +57,7 @@ DoubleTappableCellDelegate {
 
     override func didUpdate(to object: Any) {
         super.didUpdate(to: object)
-
-        // set the inset based on whether or not this is part of a comment thread
-        guard let object = self.object else { return }
-        switch object.threadState {
-        case .single:
-            var inset = Styles.Sizes.listInsetLarge
-            // title and other header objects will have bottom insetting
-            if object.isRoot {
-                inset.top = 0
-            }
-            self.inset = inset
-        case .neck:
-            inset = .zero
-        case .tail:
-            inset = Styles.Sizes.listInsetLargeTail
-        }
+        inset = self.object?.commentSectionControllerInset ?? .zero
     }
 
     // MARK: Private API
@@ -237,9 +222,10 @@ DoubleTappableCellDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let viewModel = viewModel as? ListDiffable
+        guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
+
+        let width = (collectionContext?.containerSize.width ?? 0) - inset.left - inset.right
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
@@ -304,7 +290,7 @@ DoubleTappableCellDelegate {
         
         if let object = self.object,
             !object.asReviewComment,
-            let cell = cell as? DoubleTappableCell {
+            let cell = cell as? IssueCommentBaseCell {
             cell.doubleTapDelegate = self
         }
 
@@ -337,9 +323,9 @@ DoubleTappableCellDelegate {
         uncollapse()
     }
     
-    // MARK: DoubleTappableCellDelegate
+    // MARK: IssueCommentDoubleTapDelegate
     
-    func didDoubleTap(cell: DoubleTappableCell) {
+    func didDoubleTap(cell: IssueCommentBaseCell) {
         let reaction = ReactionContent.thumbsUp
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)

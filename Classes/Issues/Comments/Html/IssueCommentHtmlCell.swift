@@ -29,7 +29,7 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 
 }
 
-final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDelegate {
+final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewDelegate {
 
     private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
 
@@ -41,7 +41,7 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     // lint compiled style with http://csslint.net/
     font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;
     color: #\(Styles.Colors.Gray.dark);
-    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;
+    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px 0;
     margin: 0;
     }
     * { font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px; }
@@ -58,7 +58,7 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
-    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}
+    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px;}
     sub{font-size: \(Styles.Sizes.Text.secondary)px;}
     sub a{font-size: \(Styles.Sizes.Text.secondary)px;}
     table{border-spacing: 0; border-collapse: collapse;}
@@ -95,8 +95,6 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
-
         webView.backgroundColor = .white
         webView.delegate = self
         webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
@@ -123,7 +121,6 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         if webView.frame != contentView.bounds {
             webView.frame = contentView.bounds
         }
