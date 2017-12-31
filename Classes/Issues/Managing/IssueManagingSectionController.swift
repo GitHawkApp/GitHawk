@@ -9,11 +9,15 @@
 import Foundation
 import IGListKit
 
+protocol IssueManagingSectionControllerDelegate: class {
+    func needsScrollToBottom(sectionController: IssueManagingSectionController)
+}
+
 final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
-ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate,
-LabelsViewControllerDelegate,
-MilestonesViewControllerDelegate,
+    ListBindingSectionControllerDataSource,
+    ListBindingSectionControllerSelectionDelegate,
+    LabelsViewControllerDelegate,
+    MilestonesViewControllerDelegate,
 PeopleViewControllerDelegate {
 
     private enum Action {
@@ -63,10 +67,16 @@ PeopleViewControllerDelegate {
     private let client: GithubClient
     private var expanded = false
     private var updating = false
+    private weak var delegate: IssueManagingSectionControllerDelegate?
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(
+        model: IssueDetailsModel,
+        client: GithubClient,
+        delegate: IssueManagingSectionControllerDelegate
+        ) {
         self.model = model
         self.client = client
+        self.delegate = delegate
         super.init()
         selectionDelegate = self
         dataSource = self
@@ -201,11 +211,17 @@ PeopleViewControllerDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.containerSize.width
+        guard let containerWidth = collectionContext?.containerSize.width,
+            let object = self.object
             else { fatalError("Collection context must be set") }
         switch viewModel {
         case is IssueManagingExpansionModel:
-            let width = floor(containerWidth / 2)
+            let divide: CGFloat
+            switch object.position {
+            case .top: divide = 2
+            case .bottom: divide = 1
+            }
+            let width = floor(containerWidth / divide)
             return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
         default:
             // justify-align cells to a max of 4-per-row
@@ -241,9 +257,10 @@ PeopleViewControllerDelegate {
         viewModel: Any
         ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
-        
+
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
+            let object = self.object,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)
             else { return }
 
@@ -251,9 +268,19 @@ PeopleViewControllerDelegate {
             expanded = !expanded
             cell.animate(expanded: expanded)
 
+            let needsScroll: Bool
+            switch object.position {
+            case .top: needsScroll = false
+            case .bottom: needsScroll = expanded
+            }
+
             updating = true
-            update(animated: trueUnlessReduceMotionEnabled, completion: { [weak self] _ in
-                self?.updating = false
+            update(animated: !needsScroll && trueUnlessReduceMotionEnabled, completion: { [weak self] _ in
+                guard let stronSelf = self else { return }
+                stronSelf.updating = false
+                if needsScroll {
+                    stronSelf.delegate?.needsScrollToBottom(sectionController: stronSelf)
+                }
             })
         } else if viewModel === Action.labels {
             let controller = newLabelsController()

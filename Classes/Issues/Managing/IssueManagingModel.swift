@@ -11,19 +11,26 @@ import IGListKit
 
 final class IssueManagingModel: ListDiffable {
 
+    enum ManagingPosition: Int {
+        case top
+        case bottom
+    }
+
     let objectId: String
     let pullRequest: Bool
+    let position: ManagingPosition
 
-    init(objectId: String, pullRequest: Bool) {
+    init(objectId: String, pullRequest: Bool, position: ManagingPosition) {
         self.objectId = objectId
         self.pullRequest = pullRequest
+        self.position = position
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
         // should only ever be one
-        return "managing_model" as NSObjectProtocol
+        return "managing_model\(position)" as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {

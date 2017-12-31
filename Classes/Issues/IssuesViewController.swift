@@ -24,7 +24,8 @@ final class IssuesViewController: MessageViewController,
     FlatCacheListener,
     MessageViewControllerAutocompleteDelegate,
     UITableViewDelegate,
-UITableViewDataSource {
+UITableViewDataSource,
+IssueManagingSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -330,7 +331,11 @@ UITableViewDataSource {
         var objects: [ListDiffable] = [current.status]
 
         if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+            objects.append(IssueManagingModel(
+                objectId: current.id,
+                pullRequest: current.pullRequest,
+                position: .top
+            ))
         }
 
         objects.append(current.title)
@@ -360,6 +365,14 @@ UITableViewDataSource {
 
         objects += current.timelineViewModels
 
+        if viewerIsCollaborator {
+            objects.append(IssueManagingModel(
+                objectId: current.id,
+                pullRequest: current.pullRequest,
+                position: .bottom
+            ))
+        }
+
         return objects
     }
 
@@ -383,7 +396,7 @@ UITableViewDataSource {
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
-        case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
+        case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client, delegate: self)
         default: fatalError("Unhandled object: \(object)")
         }
     }
@@ -508,6 +521,12 @@ UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return autocomplete.cellHeight
+    }
+
+    // MARK: IssueManagingSectionControllerDelegate
+
+    func needsScrollToBottom(sectionController: IssueManagingSectionController) {
+        collectionView.scrollToBottom(animated: true)
     }
 
 }
