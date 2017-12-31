@@ -12,7 +12,8 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 8
+        static let eventGutter: CGFloat = 16 // comment gutter 2x
+        static let commentGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
@@ -32,12 +33,6 @@ enum Styles {
         static let listInsetLargeHead = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-        static let textCellInset = UIEdgeInsets(
-            top: 0,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
-        )
         static let textViewInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing,
             left: Styles.Sizes.gutter,

@@ -9,15 +9,15 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentQuoteCell: DoubleTappableCell, ListBindable, CollapsibleCell {
+final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable, CollapsibleCell {
 
     static let borderWidth: CGFloat = 2
     static func inset(quoteLevel: Int) -> UIEdgeInsets {
         return UIEdgeInsets(
             top: 0,
-            left: Styles.Sizes.gutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(quoteLevel),
+            left: Styles.Sizes.commentGutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(quoteLevel),
             bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
+            right: Styles.Sizes.commentGutter
         )
     }
 
@@ -28,9 +28,6 @@ final class IssueCommentQuoteCell: DoubleTappableCell, ListBindable, Collapsible
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
-        contentView.clipsToBounds = true
-
         contentView.addSubview(textView)
     }
 
@@ -40,12 +37,11 @@ final class IssueCommentQuoteCell: DoubleTappableCell, ListBindable, Collapsible
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         LayoutCollapsible(layer: overlay, view: contentView)
         textView.reposition(width: contentView.bounds.width)
         for (i, border) in borders.enumerated() {
             border.frame = CGRect(
-                x: Styles.Sizes.gutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
+                x: Styles.Sizes.commentGutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
                 y: 0,
                 width: IssueCommentQuoteCell.borderWidth,
                 height: contentView.bounds.height - Styles.Sizes.rowSpacing

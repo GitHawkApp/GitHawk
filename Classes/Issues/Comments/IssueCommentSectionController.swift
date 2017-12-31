@@ -17,7 +17,7 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
 IssueCommentReactionCellDelegate,
 AttributedStringViewExtrasDelegate,
 EditCommentViewControllerDelegate,
-DoubleTappableCellDelegate {
+IssueCommentDoubleTapDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -45,6 +45,8 @@ DoubleTappableCellDelegate {
         return bodyEdits?.markdown ?? object?.rawMarkdown
     }
 
+    // empty space cell placeholders
+    private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
     init(model: IssueDetailsModel, client: GithubClient) {
@@ -57,22 +59,7 @@ DoubleTappableCellDelegate {
 
     override func didUpdate(to object: Any) {
         super.didUpdate(to: object)
-
-        // set the inset based on whether or not this is part of a comment thread
-        guard let object = self.object else { return }
-        switch object.threadState {
-        case .single:
-            var inset = Styles.Sizes.listInsetLarge
-            // title and other header objects will have bottom insetting
-            if object.isRoot {
-                inset.top = 0
-            }
-            self.inset = inset
-        case .neck:
-            inset = .zero
-        case .tail:
-            inset = Styles.Sizes.listInsetLargeTail
-        }
+        inset = self.object?.commentSectionControllerInset ?? .zero
     }
 
     // MARK: Private API
@@ -227,7 +214,7 @@ DoubleTappableCellDelegate {
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details ]
+        return [ object.details, headModel ]
             + bodies
             + tail
     }
@@ -237,18 +224,19 @@ DoubleTappableCellDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let viewModel = viewModel as? ListDiffable
+        guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
+
+        let width = (collectionContext?.containerSize.width ?? 0) - inset.left - inset.right
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
         } else if viewModel is IssueCommentReactionViewModel {
-            height = 40.0
+            height = 38.0
         } else if viewModel is IssueCommentDetailsViewModel {
-            height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
-        } else if viewModel === tailModel {
+            height = Styles.Sizes.rowSpacing * 2 + Styles.Sizes.avatar.height
+        } else if viewModel === tailModel || viewModel === headModel {
             height = Styles.Sizes.rowSpacing
         } else {
             height = BodyHeightForComment(
@@ -271,9 +259,14 @@ DoubleTappableCellDelegate {
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
+        // TODO need to update PR tail model?
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
+            return cell
+        } else if viewModel === headModel {
+            guard let cell = context.dequeueReusableCell(of: IssueCommentEmptyCell.self, for: self, at: index) as? IssueCommentEmptyCell
+                else { fatalError("Wrong cell type") }
             return cell
         }
 
@@ -304,7 +297,7 @@ DoubleTappableCellDelegate {
         
         if let object = self.object,
             !object.asReviewComment,
-            let cell = cell as? DoubleTappableCell {
+            let cell = cell as? IssueCommentBaseCell {
             cell.doubleTapDelegate = self
         }
 
@@ -337,9 +330,9 @@ DoubleTappableCellDelegate {
         uncollapse()
     }
     
-    // MARK: DoubleTappableCellDelegate
+    // MARK: IssueCommentDoubleTapDelegate
     
-    func didDoubleTap(cell: DoubleTappableCell) {
+    func didDoubleTap(cell: IssueCommentBaseCell) {
         let reaction = ReactionContent.thumbsUp
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
