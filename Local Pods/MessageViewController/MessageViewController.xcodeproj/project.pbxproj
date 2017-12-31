@@ -17,12 +17,16 @@
 		290482251FED90340053978C /* MessageViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821C1FED90340053978C /* MessageViewDelegate.swift */; };
 		290482261FED90340053978C /* UIButton+BottomHeightOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */; };
 		290482271FED90340053978C /* UITextView+Prefixes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821E1FED90340053978C /* UITextView+Prefixes.swift */; };
-		2904822F1FED90430053978C /* MessageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904822E1FED90430053978C /* MessageViewControllerTests.swift */; };
-		290482311FED90430053978C /* MessageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2904820B1FED90070053978C /* MessageViewController.framework */; };
+		29CC293B1FF4266D006B6DE7 /* MessageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC293A1FF4266D006B6DE7 /* MessageViewControllerTests.swift */; };
+		29CC293D1FF4266D006B6DE7 /* MessageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2904820B1FED90070053978C /* MessageViewController.framework */; };
+		29CC29441FF4267F006B6DE7 /* String+WordAtRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC29431FF4267F006B6DE7 /* String+WordAtRangeTests.swift */; };
+		29CC29471FF42687006B6DE7 /* String+WordAtRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC29451FF42687006B6DE7 /* String+WordAtRange.swift */; };
+		29CC29481FF42687006B6DE7 /* UIView+iOS11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC29461FF42687006B6DE7 /* UIView+iOS11.swift */; };
+		29CC29491FF81F1F006B6DE7 /* String+WordAtRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC29451FF42687006B6DE7 /* String+WordAtRange.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		290482321FED90430053978C /* PBXContainerItemProxy */ = {
+		29CC293E1FF4266D006B6DE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 290482021FED90070053978C /* Project object */;
 			proxyType = 1;
@@ -44,9 +48,12 @@
 		2904821C1FED90340053978C /* MessageViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewDelegate.swift; sourceTree = "<group>"; };
 		2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+BottomHeightOffset.swift"; sourceTree = "<group>"; };
 		2904821E1FED90340053978C /* UITextView+Prefixes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Prefixes.swift"; sourceTree = "<group>"; };
-		2904822C1FED90430053978C /* MessageViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2904822E1FED90430053978C /* MessageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewControllerTests.swift; sourceTree = "<group>"; };
-		290482301FED90430053978C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29CC29381FF4266D006B6DE7 /* MessageViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29CC293A1FF4266D006B6DE7 /* MessageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewControllerTests.swift; sourceTree = "<group>"; };
+		29CC293C1FF4266D006B6DE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29CC29431FF4267F006B6DE7 /* String+WordAtRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+WordAtRangeTests.swift"; sourceTree = "<group>"; };
+		29CC29451FF42687006B6DE7 /* String+WordAtRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WordAtRange.swift"; sourceTree = "<group>"; };
+		29CC29461FF42687006B6DE7 /* UIView+iOS11.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+iOS11.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +64,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		290482291FED90430053978C /* Frameworks */ = {
+		29CC29351FF4266D006B6DE7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				290482311FED90430053978C /* MessageViewController.framework in Frameworks */,
+				29CC293D1FF4266D006B6DE7 /* MessageViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				2904820D1FED90070053978C /* MessageViewController */,
-				2904822D1FED90430053978C /* MessageViewControllerTests */,
+				29CC29391FF4266D006B6DE7 /* MessageViewControllerTests */,
 				2904820C1FED90070053978C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				2904820B1FED90070053978C /* MessageViewController.framework */,
-				2904822C1FED90430053978C /* MessageViewControllerTests.xctest */,
+				29CC29381FF4266D006B6DE7 /* MessageViewControllerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,18 +104,21 @@
 				290482191FED90340053978C /* MessageViewController+MessageViewDelegate.swift */,
 				2904821B1FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift */,
 				2904821C1FED90340053978C /* MessageViewDelegate.swift */,
+				29CC29451FF42687006B6DE7 /* String+WordAtRange.swift */,
 				2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */,
 				290482161FED90340053978C /* UIScrollView+StopScrolling.swift */,
 				2904821E1FED90340053978C /* UITextView+Prefixes.swift */,
+				29CC29461FF42687006B6DE7 /* UIView+iOS11.swift */,
 			);
 			path = MessageViewController;
 			sourceTree = "<group>";
 		};
-		2904822D1FED90430053978C /* MessageViewControllerTests */ = {
+		29CC29391FF4266D006B6DE7 /* MessageViewControllerTests */ = {
 			isa = PBXGroup;
 			children = (
-				2904822E1FED90430053978C /* MessageViewControllerTests.swift */,
-				290482301FED90430053978C /* Info.plist */,
+				29CC293C1FF4266D006B6DE7 /* Info.plist */,
+				29CC293A1FF4266D006B6DE7 /* MessageViewControllerTests.swift */,
+				29CC29431FF4267F006B6DE7 /* String+WordAtRangeTests.swift */,
 			);
 			path = MessageViewControllerTests;
 			sourceTree = "<group>";
@@ -145,22 +155,22 @@
 			productReference = 2904820B1FED90070053978C /* MessageViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		2904822B1FED90430053978C /* MessageViewControllerTests */ = {
+		29CC29371FF4266D006B6DE7 /* MessageViewControllerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 290482341FED90430053978C /* Build configuration list for PBXNativeTarget "MessageViewControllerTests" */;
+			buildConfigurationList = 29CC29401FF4266D006B6DE7 /* Build configuration list for PBXNativeTarget "MessageViewControllerTests" */;
 			buildPhases = (
-				290482281FED90430053978C /* Sources */,
-				290482291FED90430053978C /* Frameworks */,
-				2904822A1FED90430053978C /* Resources */,
+				29CC29341FF4266D006B6DE7 /* Sources */,
+				29CC29351FF4266D006B6DE7 /* Frameworks */,
+				29CC29361FF4266D006B6DE7 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				290482331FED90430053978C /* PBXTargetDependency */,
+				29CC293F1FF4266D006B6DE7 /* PBXTargetDependency */,
 			);
 			name = MessageViewControllerTests;
 			productName = MessageViewControllerTests;
-			productReference = 2904822C1FED90430053978C /* MessageViewControllerTests.xctest */;
+			productReference = 29CC29381FF4266D006B6DE7 /* MessageViewControllerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -178,7 +188,7 @@
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
-					2904822B1FED90430053978C = {
+					29CC29371FF4266D006B6DE7 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
@@ -197,7 +207,7 @@
 			projectRoot = "";
 			targets = (
 				2904820A1FED90070053978C /* MessageViewController */,
-				2904822B1FED90430053978C /* MessageViewControllerTests */,
+				29CC29371FF4266D006B6DE7 /* MessageViewControllerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -210,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2904822A1FED90430053978C /* Resources */ = {
+		29CC29361FF4266D006B6DE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,28 +239,32 @@
 				290482261FED90340053978C /* UIButton+BottomHeightOffset.swift in Sources */,
 				290482251FED90340053978C /* MessageViewDelegate.swift in Sources */,
 				290482201FED90340053978C /* MessageViewController.swift in Sources */,
+				29CC29481FF42687006B6DE7 /* UIView+iOS11.swift in Sources */,
 				290482231FED90340053978C /* MessageView+UITextViewDelegate.swift in Sources */,
 				2904821F1FED90340053978C /* UIScrollView+StopScrolling.swift in Sources */,
+				29CC29471FF42687006B6DE7 /* String+WordAtRange.swift in Sources */,
 				290482241FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift in Sources */,
 				290482271FED90340053978C /* UITextView+Prefixes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		290482281FED90430053978C /* Sources */ = {
+		29CC29341FF4266D006B6DE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2904822F1FED90430053978C /* MessageViewControllerTests.swift in Sources */,
+				29CC293B1FF4266D006B6DE7 /* MessageViewControllerTests.swift in Sources */,
+				29CC29441FF4267F006B6DE7 /* String+WordAtRangeTests.swift in Sources */,
+				29CC29491FF81F1F006B6DE7 /* String+WordAtRange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		290482331FED90430053978C /* PBXTargetDependency */ = {
+		29CC293F1FF4266D006B6DE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2904820A1FED90070053978C /* MessageViewController */;
-			targetProxy = 290482321FED90430053978C /* PBXContainerItemProxy */;
+			targetProxy = 29CC293E1FF4266D006B6DE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -413,7 +427,7 @@
 			};
 			name = Release;
 		};
-		290482351FED90430053978C /* Debug */ = {
+		29CC29411FF4266D006B6DE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -427,7 +441,7 @@
 			};
 			name = Debug;
 		};
-		290482361FED90430053978C /* Release */ = {
+		29CC29421FF4266D006B6DE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -462,11 +476,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		290482341FED90430053978C /* Build configuration list for PBXNativeTarget "MessageViewControllerTests" */ = {
+		29CC29401FF4266D006B6DE7 /* Build configuration list for PBXNativeTarget "MessageViewControllerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				290482351FED90430053978C /* Debug */,
-				290482361FED90430053978C /* Release */,
+				29CC29411FF4266D006B6DE7 /* Debug */,
+				29CC29421FF4266D006B6DE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
