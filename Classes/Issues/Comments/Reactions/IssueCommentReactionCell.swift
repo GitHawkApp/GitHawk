@@ -50,7 +50,7 @@ UICollectionViewDelegateFlowLayout {
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.commentGutter)
-            make.centerY.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
         }
 
         collectionView.backgroundColor = .clear

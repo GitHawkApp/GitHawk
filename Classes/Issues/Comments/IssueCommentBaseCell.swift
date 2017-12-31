@@ -116,6 +116,14 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         backgroundLayer.frame = bounds
     }
 
+    override var backgroundColor: UIColor? {
+        get {
+            guard let color = backgroundLayer.fillColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set { backgroundLayer.fillColor = newValue?.cgColor}
+    }
+
     // MARK: Private API
 
     @objc private func onDoubleTap() {

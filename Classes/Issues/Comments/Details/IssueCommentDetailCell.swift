@@ -20,7 +20,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueCommentDetailCellDelegate?
 
-    private let authorBackgroundView = UIView()
     private let imageView = UIImageView()
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
@@ -82,13 +81,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             make.right.equalTo(-Styles.Sizes.commentGutter)
         }
 
-        authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
-        contentView.insertSubview(authorBackgroundView, at: 0)
-        authorBackgroundView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(contentView)
-            make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
-        }
-
         editedLabel.font = Styles.Fonts.secondary
         editedLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(editedLabel)
@@ -126,7 +118,11 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
-        authorBackgroundView.isHidden = !viewModel.didAuthor
+
+        backgroundColor = viewModel.didAuthor
+            ? Styles.Colors.Blue.light.color
+            : .white
+
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login

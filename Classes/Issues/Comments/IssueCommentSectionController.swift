@@ -45,6 +45,8 @@ IssueCommentDoubleTapDelegate {
         return bodyEdits?.markdown ?? object?.rawMarkdown
     }
 
+    // empty space cell placeholders
+    private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
     init(model: IssueDetailsModel, client: GithubClient) {
@@ -212,7 +214,7 @@ IssueCommentDoubleTapDelegate {
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details ]
+        return [ object.details, headModel ]
             + bodies
             + tail
     }
@@ -231,10 +233,10 @@ IssueCommentDoubleTapDelegate {
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
         } else if viewModel is IssueCommentReactionViewModel {
-            height = 40.0
+            height = 38.0
         } else if viewModel is IssueCommentDetailsViewModel {
-            height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
-        } else if viewModel === tailModel {
+            height = Styles.Sizes.rowSpacing * 2 + Styles.Sizes.avatar.height
+        } else if viewModel === tailModel || viewModel === headModel {
             height = Styles.Sizes.rowSpacing
         } else {
             height = BodyHeightForComment(
@@ -257,9 +259,14 @@ IssueCommentDoubleTapDelegate {
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
+        // TODO need to update PR tail model?
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
+            return cell
+        } else if viewModel === headModel {
+            guard let cell = context.dequeueReusableCell(of: IssueCommentEmptyCell.self, for: self, at: index) as? IssueCommentEmptyCell
+                else { fatalError("Wrong cell type") }
             return cell
         }
 
