@@ -18,28 +18,28 @@ public protocol MessageAutocompleteControllerLayoutDelegate: class {
 public final class MessageAutocompleteController: MessageTextViewListener {
 
     public let textView: MessageTextView
-    public let autocompleteTableView = UITableView()
+    public let tableView = UITableView()
 
     public weak var delegate: MessageAutocompleteControllerDelegate?
     public weak var layoutDelegate: MessageAutocompleteControllerLayoutDelegate?
 
-    public struct CurrentAutocomplete {
+    public struct Selection {
         public let prefix: String
         public let word: String
         public let range: NSRange
     }
-    public private(set) var currentAutocomplete: CurrentAutocomplete?
+    public private(set) var selection: Selection?
 
     internal var registeredPrefixes = Set<String>()
-    internal let autocompleteBorder = CALayer()
+    internal let border = CALayer()
     internal var keyboardHeight: CGFloat = 0
 
     init(textView: MessageTextView) {
         self.textView = textView
         textView.add(listener: self)
 
-        autocompleteTableView.isHidden = true
-        autocompleteBorder.isHidden = true
+        tableView.isHidden = true
+        border.isHidden = true
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(
@@ -56,27 +56,27 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         registeredPrefixes.insert(prefix)
     }
 
-    public final func showAutocomplete(_ doShow: Bool) {
+    public final func show(_ doShow: Bool) {
         if doShow {
-            autocompleteTableView.reloadData()
-            autocompleteTableView.layoutIfNeeded()
+            tableView.reloadData()
+            tableView.layoutIfNeeded()
         }
-        autocompleteTableView.isHidden = !doShow
-        autocompleteBorder.isHidden = !doShow
+        tableView.isHidden = !doShow
+        border.isHidden = !doShow
         layoutDelegate?.needsLayout(controller: self)
     }
 
     public final func accept(autocomplete: String, keepPrefix: Bool = true) {
-        defer { cancelAutocomplete() }
+        defer { cancel() }
 
-        guard let current = currentAutocomplete,
+        guard let selection = self.selection,
             let text = textView.text
             else { return }
 
-        let prefixLength = current.prefix.utf16.count
+        let prefixLength = selection.prefix.utf16.count
         let insertionRange = NSRange(
-            location: current.range.location + (keepPrefix ? prefixLength : 0),
-            length: current.word.utf16.count + (!keepPrefix ? prefixLength : 0)
+            location: selection.range.location + (keepPrefix ? prefixLength : 0),
+            length: selection.word.utf16.count + (!keepPrefix ? prefixLength : 0)
         )
 
         guard let range = Range(insertionRange, in: text) else { return }
@@ -88,40 +88,40 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         )
     }
 
-    internal func cancelAutocomplete() {
-        currentAutocomplete = nil
-        showAutocomplete(false)
+    internal func cancel() {
+        selection = nil
+        show(false)
     }
 
-    public final var autocompleteMaxVisibleHeight: CGFloat = 200 {
+    public final var maxHeight: CGFloat = 200 {
         didSet { layoutDelegate?.needsLayout(controller: self) }
     }
 
     public func layout(in view: UIView, bottomY: CGFloat? = nil) {
-        if autocompleteTableView.superview != view {
-            view.addSubview(autocompleteTableView)
-            view.layer.addSublayer(autocompleteBorder)
+        if tableView.superview != view {
+            view.addSubview(tableView)
+            view.layer.addSublayer(border)
         }
 
         let bounds = view.bounds
         let pinY = bottomY ?? (bounds.height - keyboardHeight)
 
-        let autocompleteHeight = min(autocompleteMaxVisibleHeight, autocompleteTableView.contentSize.height)
-        let autocompleteFrame = CGRect(
+        let height = min(maxHeight, tableView.contentSize.height)
+        let frame = CGRect(
             x: bounds.minX,
-            y: pinY - autocompleteHeight,
+            y: pinY - height,
             width: bounds.width,
-            height: autocompleteHeight
+            height: height
         )
-        autocompleteTableView.frame = autocompleteFrame
+        tableView.frame = frame
 
         let borderHeight = 1 / UIScreen.main.scale
 
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        autocompleteBorder.frame = CGRect(
+        border.frame = CGRect(
             x: bounds.minX,
-            y: autocompleteFrame.minY - borderHeight,
+            y: frame.minY - borderHeight,
             width: bounds.width,
             height: borderHeight
         )
@@ -130,23 +130,23 @@ public final class MessageAutocompleteController: MessageTextViewListener {
 
     public var borderColor: UIColor? {
         get {
-            guard let color = autocompleteBorder.backgroundColor else { return nil }
+            guard let color = border.backgroundColor else { return nil }
             return UIColor(cgColor: color)
         }
         set {
-            autocompleteBorder.backgroundColor = newValue?.cgColor
+            border.backgroundColor = newValue?.cgColor
         }
     }
 
     // MARK: Private API
 
-    internal func checkForAutocomplete() {
+    internal func check() {
         guard let result = textView.find(prefixes: registeredPrefixes) else {
-            cancelAutocomplete()
+            cancel()
             return
         }
         let wordWithoutPrefix = (result.word as NSString).substring(from: result.prefix.utf16.count)
-        currentAutocomplete = CurrentAutocomplete(prefix: result.prefix, word: wordWithoutPrefix, range: result.range)
+        selection = Selection(prefix: result.prefix, word: wordWithoutPrefix, range: result.range)
 
         delegate?.didFind(controller: self, prefix: result.prefix, word: wordWithoutPrefix)
     }
@@ -160,7 +160,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     // MARK: MessageTextViewListener
 
     public func didChangeSelection(textView: MessageTextView) {
-        checkForAutocomplete()
+        check()
     }
 
     public func didChange(textView: MessageTextView) {}

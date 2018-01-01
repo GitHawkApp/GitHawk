@@ -97,12 +97,12 @@ UITableViewDataSource {
 
         // not registered until request is finished and self.registerPrefixes(...) is called
         // must have user autocompletes
-        autocomplete.configure(tableView: autocompleteController.autocompleteTableView, delegate: self)
+        autocomplete.configure(tableView: autocompleteController.tableView, delegate: self)
 
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
         autocompleteController.delegate = self
-        autocompleteController.autocompleteTableView.dataSource = self
-        autocompleteController.autocompleteTableView.delegate = self
+        autocompleteController.tableView.dataSource = self
+        autocompleteController.tableView.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -449,14 +449,14 @@ UITableViewDataSource {
     // MARK: IssueCommentAutocompleteDelegate
 
     func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        autocompleteController.showAutocomplete(hasResults)
+        autocompleteController.show(hasResults)
     }
 
     func didChangeStore(autocomplete: IssueCommentAutocomplete) {
         for prefix in autocomplete.prefixes {
             autocompleteController.register(prefix: prefix)
         }
-        autocompleteController.autocompleteTableView.reloadData()
+        autocompleteController.tableView.reloadData()
     }
 
     // MARK: FeedSelectionProviding
@@ -485,19 +485,19 @@ UITableViewDataSource {
     // MARK: MessageAutocompleteControllerDelegate
 
     func didFind(controller: MessageAutocompleteController, prefix: String, word: String) {
-        autocomplete.didChange(tableView: controller.autocompleteTableView, prefix: prefix, word: word)
+        autocomplete.didChange(tableView: controller.tableView, prefix: prefix, word: word)
     }
 
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: autocompleteController.currentAutocomplete?.prefix)
+        return autocomplete.resultCount(prefix: autocompleteController.selection?.prefix)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return autocomplete.cell(
             tableView: tableView,
-            prefix: autocompleteController.currentAutocomplete?.prefix,
+            prefix: autocompleteController.selection?.prefix,
             indexPath: indexPath
         )
     }
@@ -505,7 +505,7 @@ UITableViewDataSource {
     // MARK: UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accepted = autocomplete.accept(prefix: autocompleteController.currentAutocomplete?.prefix, indexPath: indexPath) {
+        if let accepted = autocomplete.accept(prefix: autocompleteController.selection?.prefix, indexPath: indexPath) {
             autocompleteController.accept(autocomplete: accepted + " ", keepPrefix: false)
         }
     }
