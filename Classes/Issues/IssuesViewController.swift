@@ -22,7 +22,7 @@ final class IssuesViewController: MessageViewController,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    MessageViewControllerAutocompleteDelegate,
+    MessageAutocompleteControllerDelegate,
     UITableViewDelegate,
 UITableViewDataSource {
 
@@ -97,12 +97,12 @@ UITableViewDataSource {
 
         // not registered until request is finished and self.registerPrefixes(...) is called
         // must have user autocompletes
-        autocomplete.configure(tableView: autocompleteTableView, delegate: self)
+        autocomplete.configure(tableView: autocompleteController.autocompleteTableView, delegate: self)
 
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
-        autocompleteDelegate = self
-        autocompleteTableView.dataSource = self
-        autocompleteTableView.delegate = self
+        autocompleteController.delegate = self
+        autocompleteController.autocompleteTableView.dataSource = self
+        autocompleteController.autocompleteTableView.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -449,14 +449,14 @@ UITableViewDataSource {
     // MARK: IssueCommentAutocompleteDelegate
 
     func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        showAutocomplete(hasResults)
+        autocompleteController.showAutocomplete(hasResults)
     }
 
     func didChangeStore(autocomplete: IssueCommentAutocomplete) {
         for prefix in autocomplete.prefixes {
-            register(prefix: prefix)
+            autocompleteController.register(prefix: prefix)
         }
-        autocompleteTableView.reloadData()
+        autocompleteController.autocompleteTableView.reloadData()
     }
 
     // MARK: FeedSelectionProviding
@@ -482,27 +482,31 @@ UITableViewDataSource {
         }
     }
 
-    // MARK: MessageViewControllerAutocompleteDelegate
+    // MARK: MessageAutocompleteControllerDelegate
 
-    func didFind(prefix: String, word: String) {
-        autocomplete.didChange(tableView: autocompleteTableView, prefix: prefix, word: word)
+    func didFind(controller: MessageAutocompleteController, prefix: String, word: String) {
+        autocomplete.didChange(tableView: controller.autocompleteTableView, prefix: prefix, word: word)
     }
 
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: currentAutocomplete?.prefix)
+        return autocomplete.resultCount(prefix: autocompleteController.currentAutocomplete?.prefix)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return autocomplete.cell(tableView: tableView, prefix: currentAutocomplete?.prefix, indexPath: indexPath)
+        return autocomplete.cell(
+            tableView: tableView,
+            prefix: autocompleteController.currentAutocomplete?.prefix,
+            indexPath: indexPath
+        )
     }
 
     // MARK: UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accepted = autocomplete.accept(prefix: currentAutocomplete?.prefix, indexPath: indexPath) {
-            accept(autocomplete: accepted + " ", keepPrefix: false)
+        if let accepted = autocomplete.accept(prefix: autocompleteController.currentAutocomplete?.prefix, indexPath: indexPath) {
+            autocompleteController.accept(autocomplete: accepted + " ", keepPrefix: false)
         }
     }
 
