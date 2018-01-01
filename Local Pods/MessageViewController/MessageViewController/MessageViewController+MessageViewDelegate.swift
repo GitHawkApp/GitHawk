@@ -20,8 +20,6 @@ extension MessageViewController: MessageViewDelegate {
         view.setNeedsLayout()
     }
 
-    internal func selectionDidChange(messageView: MessageView) {
-        checkForAutocomplete()
-    }
+    internal func selectionDidChange(messageView: MessageView) {}
 
 }

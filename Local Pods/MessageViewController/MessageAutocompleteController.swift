@@ -34,13 +34,12 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     internal let autocompleteBorder = CALayer()
     internal var keyboardHeight: CGFloat = 0
 
-    init(textView: MessageTextView, layoutDelegate: MessageAutocompleteControllerLayoutDelegate) {
+    init(textView: MessageTextView) {
         self.textView = textView
         textView.add(listener: self)
 
-        self.layoutDelegate = layoutDelegate
-
         autocompleteTableView.isHidden = true
+        autocompleteBorder.isHidden = true
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(
@@ -64,6 +63,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         }
         autocompleteTableView.isHidden = !doShow
         autocompleteBorder.isHidden = !doShow
+        layoutDelegate?.needsLayout(controller: self)
     }
 
     public final func accept(autocomplete: String, keepPrefix: Bool = true) {
@@ -116,13 +116,25 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         autocompleteTableView.frame = autocompleteFrame
 
         let borderHeight = 1 / UIScreen.main.scale
-        UIView.performWithoutAnimation {
-            autocompleteBorder.frame = CGRect(
-                x: bounds.minX,
-                y: autocompleteFrame.minY - borderHeight,
-                width: bounds.width,
-                height: borderHeight
-            )
+
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        autocompleteBorder.frame = CGRect(
+            x: bounds.minX,
+            y: autocompleteFrame.minY - borderHeight,
+            width: bounds.width,
+            height: borderHeight
+        )
+        CATransaction.commit()
+    }
+
+    public var borderColor: UIColor? {
+        get {
+            guard let color = autocompleteBorder.backgroundColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set {
+            autocompleteBorder.backgroundColor = newValue?.cgColor
         }
     }
 
@@ -147,7 +159,10 @@ public final class MessageAutocompleteController: MessageTextViewListener {
 
     // MARK: MessageTextViewListener
 
+    public func didChangeSelection(textView: MessageTextView) {
+        checkForAutocomplete()
+    }
+
     public func didChange(textView: MessageTextView) {}
-    public func didChangeSelection(textView: MessageTextView) {}
 
 }
