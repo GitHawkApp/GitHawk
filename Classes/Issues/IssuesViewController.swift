@@ -369,7 +369,7 @@ UITableViewDataSource {
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,
-            autocomplete: autocomplete
+            autocomplete: autocomplete.copy
             )
         case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
@@ -379,7 +379,7 @@ UITableViewDataSource {
         case is IssueReviewModel: return IssueReviewSectionController(
             model: model,
             client: client,
-            autocomplete: autocomplete
+            autocomplete: autocomplete.copy
             )
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()

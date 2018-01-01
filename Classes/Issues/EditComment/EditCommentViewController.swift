@@ -8,40 +8,61 @@
 
 import UIKit
 import SnapKit
+import MessageViewController
 
 protocol EditCommentViewControllerDelegate: class {
     func didEditComment(viewController: EditCommentViewController, markdown: String)
     func didCancel(viewController: EditCommentViewController)
 }
 
-class EditCommentViewController: UIViewController, UITextViewDelegate {
+final class EditCommentViewController: UIViewController,
+    MessageTextViewListener,
+    MessageAutocompleteControllerDelegate,
+    MessageAutocompleteControllerLayoutDelegate,
+    IssueCommentAutocompleteDelegate,
+    UITableViewDataSource,
+UITableViewDelegate {
 
     weak var delegate: EditCommentViewControllerDelegate?
 
     private let commentID: Int
     private let client: GithubClient
-    private let textView = UITextView()
+    private let textView = MessageTextView()
     private let textActionsController = TextActionsController()
     private let issueModel: IssueDetailsModel
     private let isRoot: Bool
     private let originalMarkdown: String
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
+    private let autocomplete: IssueCommentAutocomplete
+    private let autocompleteController: MessageAutocompleteController
 
     init(
         client: GithubClient,
         markdown: String,
         issueModel: IssueDetailsModel,
         commentID: Int,
-        isRoot: Bool
+        isRoot: Bool,
+        autocomplete: IssueCommentAutocomplete
         ) {
         self.client = client
         self.issueModel = issueModel
         self.commentID = commentID
         self.isRoot = isRoot
         self.originalMarkdown = markdown
+        self.autocomplete = autocomplete
+        self.autocompleteController = MessageAutocompleteController(textView: textView)
         super.init(nibName: nil, bundle: nil)
         textView.text = markdown
-        textView.delegate = self
+        textView.add(listener: self)
+
+        autocomplete.configure(tableView: autocompleteController.tableView, delegate: self)
+        autocompleteController.layoutDelegate = self
+        autocompleteController.delegate = self
+        autocompleteController.tableView.dataSource = self
+        autocompleteController.tableView.delegate = self
+        for prefix in autocomplete.prefixes {
+            autocompleteController.register(prefix: prefix)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -173,8 +194,60 @@ class EditCommentViewController: UIViewController, UITextViewDelegate {
         ToastManager.showGenericError()
     }
 
-    func textViewDidChange(_ textView: UITextView) {
+    // MARK: MessageTextViewListener
+
+    func didChange(textView: MessageTextView) {
         navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
+    }
+
+    func didChangeSelection(textView: MessageTextView) {}
+
+    // MARK: MessageAutocompleteControllerDelegate
+
+    func didFind(controller: MessageAutocompleteController, prefix: String, word: String) {
+        autocomplete.didChange(tableView: controller.tableView, prefix: prefix, word: word)
+    }
+
+    // MARK: MessageAutocompleteControllerLayoutDelegate
+
+    func needsLayout(controller: MessageAutocompleteController) {
+        controller.layout(in: view)
+    }
+
+    // MARK: UITableViewDataSource
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return autocomplete.resultCount(prefix: autocompleteController.selection?.prefix)
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return autocomplete.cell(
+            tableView: tableView,
+            prefix: autocompleteController.selection?.prefix,
+            indexPath: indexPath
+        )
+    }
+
+    // MARK: UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let accepted = autocomplete.accept(prefix: autocompleteController.selection?.prefix, indexPath: indexPath) {
+            autocompleteController.accept(autocomplete: accepted + " ", keepPrefix: false)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return autocomplete.cellHeight
+    }
+
+    // MARK: IssueCommentAutocompleteDelegate
+
+    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
+        // edit doesn't add any stores
+    }
+
+    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
+        autocompleteController.show(hasResults)
     }
 
 }

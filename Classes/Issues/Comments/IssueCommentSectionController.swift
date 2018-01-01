@@ -99,18 +99,19 @@ IssueCommentDoubleTapDelegate {
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.currentMarkdown,
-                let issueModel = self?.model,
-                let client = self?.client,
-                let commentID = self?.object?.number,
-                let isRoot = self?.object?.isRoot
+            guard let strongSelf = self,
+                let object = strongSelf.object,
+                let number = object.number,
+                let markdown = strongSelf.currentMarkdown
                 else { return }
+
             let edit = EditCommentViewController(
-                client: client,
+                client: strongSelf.client,
                 markdown: markdown,
-                issueModel: issueModel,
-                commentID: commentID,
-                isRoot: isRoot
+                issueModel: strongSelf.model,
+                commentID: number,
+                isRoot: object.isRoot,
+                autocomplete: strongSelf.autocomplete
             )
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)

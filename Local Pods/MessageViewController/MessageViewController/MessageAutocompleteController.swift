@@ -34,7 +34,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     internal let border = CALayer()
     internal var keyboardHeight: CGFloat = 0
 
-    init(textView: MessageTextView) {
+    public init(textView: MessageTextView) {
         self.textView = textView
         textView.add(listener: self)
 
