@@ -24,6 +24,7 @@ IssueCommentDoubleTapDelegate {
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
+    private let autocomplete: IssueCommentAutocomplete
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -49,9 +50,10 @@ IssueCommentDoubleTapDelegate {
     private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init()
         self.dataSource = self
         self.selectionDelegate = self

@@ -366,13 +366,21 @@ UITableViewDataSource {
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
+        case is IssueCommentModel: return IssueCommentSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocomplete
+            )
         case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController(model: model, client: client)
+        case is IssueReviewModel: return IssueReviewSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocomplete
+            )
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()

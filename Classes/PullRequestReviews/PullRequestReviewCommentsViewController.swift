@@ -14,11 +14,13 @@ BaseListViewControllerDataSource {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
+    private let autocomplete: IssueCommentAutocomplete
     private var models = [ListDiffable]()
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init(
             emptyErrorMessage: NSLocalizedString("Error loading review comments.", comment: ""),
             dataSource: self
@@ -61,7 +63,11 @@ BaseListViewControllerDataSource {
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
         switch model {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: self.model, client: client)
+        case is IssueCommentModel: return IssueCommentSectionController(
+            model: self.model,
+            client: client,
+            autocomplete: autocomplete
+            )
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         default: fatalError("Unhandled object: \(model)")
         }

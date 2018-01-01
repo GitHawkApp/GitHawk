@@ -29,10 +29,12 @@ IssueReviewViewCommentsCellDelegate {
     private let viewCommentsModel = "viewComments" as ListDiffable
     private let tailModel = "tail" as ListDiffable
     private let client: GithubClient
+    private let autocomplete: IssueCommentAutocomplete
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init()
         self.inset = Styles.Sizes.listInsetLarge
         self.dataSource = self
@@ -142,7 +144,11 @@ IssueReviewViewCommentsCellDelegate {
     // MARK: IssueReviewViewCommentsCellDelegate
 
     func didTapViewComments(cell: IssueReviewViewCommentsCell) {
-        let controller = PullRequestReviewCommentsViewController(model: model, client: client)
+        let controller = PullRequestReviewCommentsViewController(
+            model: model,
+            client: client,
+            autocomplete: autocomplete
+        )
         viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
