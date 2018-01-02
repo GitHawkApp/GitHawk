@@ -11,17 +11,17 @@ import UIKit
 open class MessageViewController: UIViewController, MessageAutocompleteControllerLayoutDelegate {
 
     public let messageView = MessageView()
-    public let autocompleteController: MessageAutocompleteController
+    public private(set) lazy var messageAutocompleteController: MessageAutocompleteController = {
+        return MessageAutocompleteController(textView: self.messageView.textView)
+    }()
     public var cacheKey: String?
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        autocompleteController = MessageAutocompleteController(textView: messageView.textView)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        autocompleteController = MessageAutocompleteController(textView: messageView.textView)
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -56,9 +56,9 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
     }
 
     public var borderColor: UIColor? {
-        get { return autocompleteController.borderColor }
+        get { return messageAutocompleteController.borderColor }
         set {
-            autocompleteController.borderColor = newValue
+            messageAutocompleteController.borderColor = newValue
             messageView.topBorderLayer.backgroundColor = newValue?.cgColor
         }
     }
@@ -86,7 +86,7 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
 
     internal func commonInit() {
         messageView.delegate = self
-        autocompleteController.layoutDelegate = self
+        messageAutocompleteController.layoutDelegate = self
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -128,7 +128,7 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
             height: messageViewFrame.minY
         )
 
-        autocompleteController.layout(in: view, bottomY: messageViewFrame.minY)
+        messageAutocompleteController.layout(in: view, bottomY: messageViewFrame.minY)
     }
 
     internal var fullCacheKey: String? {

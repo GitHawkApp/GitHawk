@@ -16,12 +16,7 @@ protocol EditCommentViewControllerDelegate: class {
 }
 
 final class EditCommentViewController: UIViewController,
-    MessageTextViewListener,
-    MessageAutocompleteControllerDelegate,
-    MessageAutocompleteControllerLayoutDelegate,
-    IssueCommentAutocompleteDelegate,
-    UITableViewDataSource,
-UITableViewDelegate {
+MessageTextViewListener {
 
     weak var delegate: EditCommentViewControllerDelegate?
 
@@ -33,8 +28,7 @@ UITableViewDelegate {
     private let isRoot: Bool
     private let originalMarkdown: String
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
-    private let autocomplete: IssueCommentAutocomplete
-    private let autocompleteController: MessageAutocompleteController
+    private let autocompleteController: AutocompleteController
 
     init(
         client: GithubClient,
@@ -49,20 +43,16 @@ UITableViewDelegate {
         self.commentID = commentID
         self.isRoot = isRoot
         self.originalMarkdown = markdown
-        self.autocomplete = autocomplete
-        self.autocompleteController = MessageAutocompleteController(textView: textView)
+        self.autocompleteController = AutocompleteController(
+            messageAutocompleteController: MessageAutocompleteController(textView: textView),
+            autocomplete: autocomplete
+        )
+
         super.init(nibName: nil, bundle: nil)
+
         textView.text = markdown
         textView.add(listener: self)
-
-        autocomplete.configure(tableView: autocompleteController.tableView, delegate: self)
-        autocompleteController.layoutDelegate = self
-        autocompleteController.delegate = self
-        autocompleteController.tableView.dataSource = self
-        autocompleteController.tableView.delegate = self
-        for prefix in autocomplete.prefixes {
-            autocompleteController.register(prefix: prefix)
-        }
+        autocompleteController.messageAutocompleteController.layoutDelegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -201,53 +191,5 @@ UITableViewDelegate {
     }
 
     func didChangeSelection(textView: MessageTextView) {}
-
-    // MARK: MessageAutocompleteControllerDelegate
-
-    func didFind(controller: MessageAutocompleteController, prefix: String, word: String) {
-        autocomplete.didChange(tableView: controller.tableView, prefix: prefix, word: word)
-    }
-
-    // MARK: MessageAutocompleteControllerLayoutDelegate
-
-    func needsLayout(controller: MessageAutocompleteController) {
-        controller.layout(in: view)
-    }
-
-    // MARK: UITableViewDataSource
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: autocompleteController.selection?.prefix)
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return autocomplete.cell(
-            tableView: tableView,
-            prefix: autocompleteController.selection?.prefix,
-            indexPath: indexPath
-        )
-    }
-
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accepted = autocomplete.accept(prefix: autocompleteController.selection?.prefix, indexPath: indexPath) {
-            autocompleteController.accept(autocomplete: accepted + " ", keepPrefix: false)
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return autocomplete.cellHeight
-    }
-
-    // MARK: IssueCommentAutocompleteDelegate
-
-    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
-        // edit doesn't add any stores
-    }
-
-    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        autocompleteController.show(hasResults)
-    }
 
 }
