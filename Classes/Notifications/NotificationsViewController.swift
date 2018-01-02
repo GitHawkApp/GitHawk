@@ -125,11 +125,7 @@ FlatCacheListener {
         }
 
         let hasUnread = count > 0
-        let markAllItem = navigationItem.rightBarButtonItem
-        if let markAllItem = markAllItem {
-            assert(markAllItem.action == #selector(onMarkAll)) // https://github.com/rnystrom/GitHawk/issues/1293
-        }
-        markAllItem?.isEnabled = hasUnread
+        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
         BadgeNotifications.update(count: count)
     }
