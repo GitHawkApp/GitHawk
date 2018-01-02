@@ -199,12 +199,17 @@ PeopleViewControllerDelegate {
         ) -> CGSize {
         guard let containerWidth = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        // justify-align cells to a max of 4-per-row
-        let itemsPerRow = CGFloat(min(self.viewModels.count - 1, 4))
-        let width = floor(containerWidth / itemsPerRow)
+
+        let height = IssueManagingActionCell.height
+        let width = HangingChadItemWidth(
+            index: index,
+            count: viewModels.count,
+            containerWidth: containerWidth,
+            desiredItemWidth: height
+        )
         return CGSize(
             width: width,
-            height: IssueManagingActionCell.height
+            height: height
         )
     }
 

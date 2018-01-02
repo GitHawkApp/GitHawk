@@ -196,6 +196,9 @@
 		297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297406A01F0EE51E003A6BFB /* MMElement+Table.swift */; };
 		29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29764C131FDC4DB60095FF95 /* SettingsLabel.swift */; };
 		29792B1D1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1C1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift */; };
+		29792B1F1FFB3E3A007A0C57 /* HangingChadItemWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1E1FFB3E3A007A0C57 /* HangingChadItemWidth.swift */; };
+		29792B221FFB3EE8007A0C57 /* HangingChadItemWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1E1FFB3E3A007A0C57 /* HangingChadItemWidth.swift */; };
+		29792B241FFB3EF6007A0C57 /* HangingChadItemWidthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B231FFB3EF6007A0C57 /* HangingChadItemWidthTests.swift */; };
 		297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372B1F1700BC0081C04E /* IssueRequestModel.swift */; };
 		297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372D1F17018F0081C04E /* IssueRequestCell.swift */; };
 		297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */; };
@@ -608,6 +611,8 @@
 		297406A01F0EE51E003A6BFB /* MMElement+Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MMElement+Table.swift"; sourceTree = "<group>"; };
 		29764C131FDC4DB60095FF95 /* SettingsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabel.swift; sourceTree = "<group>"; };
 		29792B1C1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingNavSectionController.swift; sourceTree = "<group>"; };
+		29792B1E1FFB3E3A007A0C57 /* HangingChadItemWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangingChadItemWidth.swift; sourceTree = "<group>"; };
+		29792B231FFB3EF6007A0C57 /* HangingChadItemWidthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangingChadItemWidthTests.swift; sourceTree = "<group>"; };
 		297A372B1F1700BC0081C04E /* IssueRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestModel.swift; sourceTree = "<group>"; };
 		297A372D1F17018F0081C04E /* IssueRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestCell.swift; sourceTree = "<group>"; };
 		297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestSectionController.swift; sourceTree = "<group>"; };
@@ -1291,6 +1296,7 @@
 				2981A8A61EFEBEF900E25EF1 /* EmojiTests.swift */,
 				2986B35D1FD462AA00E3CFC6 /* FilePathTests.swift */,
 				296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */,
+				29792B231FFB3EF6007A0C57 /* HangingChadItemWidthTests.swift */,
 				297AE84E1EC0D58A00B44A1F /* Info.plist */,
 				DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */,
 				29A476B11ED24D99005D0953 /* IssueTests.swift */,
@@ -1463,11 +1469,13 @@
 				291929541F3FAADF0012067B /* FeedRefresh.swift */,
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
+				29792B1E1FFB3E3A007A0C57 /* HangingChadItemWidth.swift */,
 				297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */,
 				299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */,
 				29AF1E871F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift */,
 				98835BD11F1A158D005BA24F /* LabelCell.swift */,
 				D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */,
+				D8BAD0631FDF221900C41071 /* LabelListView.swift */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
 				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
 				29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */,
@@ -1491,7 +1499,6 @@
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				D8BAD0631FDF221900C41071 /* LabelListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2276,6 +2283,7 @@
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
+				29792B1F1FFB3E3A007A0C57 /* HangingChadItemWidth.swift in Sources */,
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,
@@ -2593,6 +2601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29792B241FFB3EF6007A0C57 /* HangingChadItemWidthTests.swift in Sources */,
 				293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */,
 				293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */,
 				49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */,
@@ -2601,6 +2610,7 @@
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
+				29792B221FFB3EE8007A0C57 /* HangingChadItemWidth.swift in Sources */,
 				2986B35F1FD462B300E3CFC6 /* FilePath.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
