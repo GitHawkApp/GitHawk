@@ -21,7 +21,7 @@ final class IssuesViewController: MessageViewController,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-IssueManagingSectionControllerDelegate {
+IssueManagingNavSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -34,6 +34,7 @@ IssueManagingSectionControllerDelegate {
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
+    private let manageKey = "manageKey" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -327,7 +328,7 @@ IssueManagingSectionControllerDelegate {
         var objects: [ListDiffable] = [current.status]
 
         if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+            objects.append(manageKey)
         }
 
         objects.append(current.title)
@@ -357,10 +358,18 @@ IssueManagingSectionControllerDelegate {
 
         objects += current.timelineViewModels
 
+        if viewerIsCollaborator {
+            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+        }
+
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? ListDiffable, object === manageKey {
+            return IssueManagingNavSectionController(delegate: self)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
@@ -472,6 +481,12 @@ IssueManagingSectionControllerDelegate {
             updateAndScrollIfNeeded()
         case .list: break
         }
+    }
+
+    // MARK: IssueManagingNavSectionControllerDelegate
+
+    func didSelect(managingNavController: IssueManagingNavSectionController) {
+        collectionView.scrollToBottom(animated: true)
     }
 
 }
