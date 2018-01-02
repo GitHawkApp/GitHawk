@@ -61,7 +61,6 @@ PeopleViewControllerDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
-    private var expanded = false
     private var updating = false
 
     init(model: IssueDetailsModel, client: GithubClient) {
@@ -172,26 +171,23 @@ PeopleViewControllerDelegate {
             let result = issueResult
             else { fatalError("Object not correct type") }
 
-        var models: [ListDiffable] = [IssueManagingExpansionModel(expanded: expanded)]
-        if expanded {
-            models += [
-                Action.labels,
-                Action.milestone,
-                Action.assignees,
+        var models: [ListDiffable] = [
+            Action.labels,
+            Action.milestone,
+            Action.assignees,
             ]
-            if object.pullRequest {
-                models.append(Action.reviewers)
-            }
-            switch result.status.status {
-            case .closed: models.append(Action.reopen)
-            case .open: models.append(Action.close)
-            case .merged: break // can't do anything
-            }
-            if result.status.locked {
-                models.append(Action.unlock)
-            } else {
-                models.append(Action.lock)
-            }
+        if object.pullRequest {
+            models.append(Action.reviewers)
+        }
+        switch result.status.status {
+        case .closed: models.append(Action.reopen)
+        case .open: models.append(Action.close)
+        case .merged: break // can't do anything
+        }
+        if result.status.locked {
+            models.append(Action.unlock)
+        } else {
+            models.append(Action.lock)
         }
         return models
     }
@@ -203,19 +199,13 @@ PeopleViewControllerDelegate {
         ) -> CGSize {
         guard let containerWidth = collectionContext?.containerSize.width
             else { fatalError("Collection context must be set") }
-        switch viewModel {
-        case is IssueManagingExpansionModel:
-            let width = floor(containerWidth / 2)
-            return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
-        default:
-            // justify-align cells to a max of 4-per-row
-            let itemsPerRow = CGFloat(min(self.viewModels.count - 1, 4))
-            let width = floor(containerWidth / itemsPerRow)
-            return CGSize(
-                width: width,
-                height: IssueManagingActionCell.height
-            )
-        }
+        // justify-align cells to a max of 4-per-row
+        let itemsPerRow = CGFloat(min(self.viewModels.count - 1, 4))
+        let width = floor(containerWidth / itemsPerRow)
+        return CGSize(
+            width: width,
+            height: IssueManagingActionCell.height
+        )
     }
 
     func sectionController(
@@ -223,12 +213,7 @@ PeopleViewControllerDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell & ListBindable {
-        let cellClass: AnyClass
-        switch viewModel {
-        case is IssueManagingExpansionModel: cellClass = IssueManagingExpansionCell.self
-        default: cellClass = IssueManagingActionCell.self
-        }
-        guard let cell = collectionContext?.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueManagingActionCell.self, for: self, at: index) as? IssueManagingActionCell
             else { fatalError("Cell not bindable") }
         return cell
     }
@@ -247,15 +232,7 @@ PeopleViewControllerDelegate {
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)
             else { return }
 
-        if let cell = cell as? IssueManagingExpansionCell {
-            expanded = !expanded
-            cell.animate(expanded: expanded)
-
-            updating = true
-            update(animated: trueUnlessReduceMotionEnabled, completion: { [weak self] _ in
-                self?.updating = false
-            })
-        } else if viewModel === Action.labels {
+        if viewModel === Action.labels {
             let controller = newLabelsController()
             present(controller: controller, from: cell)
         } else if viewModel === Action.milestone {
