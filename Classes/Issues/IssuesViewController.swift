@@ -24,7 +24,8 @@ final class IssuesViewController: MessageViewController,
     FlatCacheListener,
     MessageViewControllerAutocompleteDelegate,
     UITableViewDelegate,
-UITableViewDataSource {
+    UITableViewDataSource,
+IssueManagingNavSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -37,6 +38,7 @@ UITableViewDataSource {
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
+    private let manageKey = "manageKey" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -330,7 +332,7 @@ UITableViewDataSource {
         var objects: [ListDiffable] = [current.status]
 
         if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+            objects.append(manageKey)
         }
 
         objects.append(current.title)
@@ -360,10 +362,18 @@ UITableViewDataSource {
 
         objects += current.timelineViewModels
 
+        if viewerIsCollaborator {
+            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+        }
+
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? ListDiffable, object === manageKey {
+            return IssueManagingNavSectionController(delegate: self)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
@@ -508,6 +518,12 @@ UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return autocomplete.cellHeight
+    }
+
+    // MARK: IssueManagingNavSectionControllerDelegate
+
+    func didSelect(managingNavController: IssueManagingNavSectionController) {
+        collectionView.scrollToBottom(animated: true)
     }
 
 }
