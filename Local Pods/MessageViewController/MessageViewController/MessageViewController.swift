@@ -8,11 +8,12 @@
 
 import UIKit
 
-open class MessageViewController: UIViewController {
+open class MessageViewController: UIViewController, MessageAutocompleteControllerLayoutDelegate {
 
     public let messageView = MessageView()
-    public let autocompleteTableView = UITableView()
-    public weak var autocompleteDelegate: MessageViewControllerAutocompleteDelegate?
+    public private(set) lazy var messageAutocompleteController: MessageAutocompleteController = {
+        return MessageAutocompleteController(textView: self.messageView.textView)
+    }()
     public var cacheKey: String?
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -51,60 +52,13 @@ open class MessageViewController: UIViewController {
         scrollView.panGestureRecognizer.addTarget(self, action: #selector(onPan(gesture:)))
         scrollView.keyboardDismissMode = .none
 
-        view.addSubview(autocompleteTableView)
-        view.layer.addSublayer(autocompleteBorder)
         view.addSubview(messageView)
-
-        autocompleteTableView.isHidden = true
-        autocompleteBorder.isHidden = true
-    }
-
-    public final func register(prefix: String) {
-        registeredPrefixes.insert(prefix)
-    }
-
-    public final func showAutocomplete(_ doShow: Bool) {
-        if doShow {
-            autocompleteTableView.reloadData()
-            autocompleteTableView.layoutIfNeeded()
-        }
-        autocompleteTableView.isHidden = !doShow
-        autocompleteBorder.isHidden = !doShow
-        view.setNeedsLayout()
-    }
-
-    public final func accept(autocomplete: String, keepPrefix: Bool = true) {
-        defer { cancelAutocomplete() }
-
-        guard let current = currentAutocomplete else { return }
-
-        let prefixLength = current.prefix.utf16.count
-        let insertionRange = NSRange(
-            location: current.range.location + (keepPrefix ? prefixLength : 0),
-            length: current.word.utf16.count + (!keepPrefix ? prefixLength : 0)
-        )
-
-        let text = messageView.text
-        guard let range = Range(insertionRange, in: text) else { return }
-
-        messageView.textView.text = text.replacingCharacters(in: range, with: autocomplete)
-        messageView.textView.selectedRange = NSRange(
-            location: insertionRange.location + autocomplete.utf16.count,
-            length: 0
-        )
-    }
-
-    public final var autocompleteMaxVisibleHeight: CGFloat = 200 {
-        didSet { view.setNeedsLayout() }
     }
 
     public var borderColor: UIColor? {
-        get {
-            guard let color = autocompleteBorder.backgroundColor else { return nil }
-            return UIColor(cgColor: color)
-        }
+        get { return messageAutocompleteController.borderColor }
         set {
-            autocompleteBorder.backgroundColor = newValue?.cgColor
+            messageAutocompleteController.borderColor = newValue
             messageView.topBorderLayer.backgroundColor = newValue?.cgColor
         }
     }
@@ -130,26 +84,15 @@ open class MessageViewController: UIViewController {
     internal var keyboardHeight: CGFloat = 0
     internal var isMessageViewHidden = false
 
-    // autocomplete
-    public struct CurrentAutocomplete {
-        public let prefix: String
-        public let word: String
-        public let range: NSRange
-    }
-    internal var registeredPrefixes = Set<String>()
-    public private(set) var currentAutocomplete: CurrentAutocomplete?
-    private let autocompleteBorder = CALayer()
-
     internal func commonInit() {
         messageView.delegate = self
+        messageAutocompleteController.layoutDelegate = self
 
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardDidChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillChangeFrame(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appWillResignActive(notification:)), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
@@ -185,39 +128,7 @@ open class MessageViewController: UIViewController {
             height: messageViewFrame.minY
         )
 
-        let autocompleteHeight = min(autocompleteMaxVisibleHeight, autocompleteTableView.contentSize.height)
-        let autocompleteFrame = CGRect(
-            x: bounds.minX,
-            y: messageViewFrame.minY - autocompleteHeight,
-            width: bounds.width,
-            height: autocompleteHeight
-        )
-        autocompleteTableView.frame = autocompleteFrame
-
-        let borderHeight = 1 / UIScreen.main.scale
-        UIView.performWithoutAnimation {
-            autocompleteBorder.frame = CGRect(
-                x: bounds.minX,
-                y: autocompleteFrame.minY - borderHeight,
-                width: bounds.width,
-                height: borderHeight
-            )
-        }
-    }
-
-    internal func checkForAutocomplete() {
-        guard let result = messageView.textView.find(prefixes: registeredPrefixes) else {
-            cancelAutocomplete()
-            return
-        }
-        let wordWithoutPrefix = (result.word as NSString).substring(from: result.prefix.utf16.count)
-        currentAutocomplete = CurrentAutocomplete(prefix: result.prefix, word: wordWithoutPrefix, range: result.range)
-        autocompleteDelegate?.didFind(prefix: result.prefix, word: wordWithoutPrefix)
-    }
-
-    internal func cancelAutocomplete() {
-        currentAutocomplete = nil
-        showAutocomplete(false)
+        messageAutocompleteController.layout(in: view, bottomY: messageViewFrame.minY)
     }
 
     internal var fullCacheKey: String? {
@@ -235,7 +146,7 @@ open class MessageViewController: UIViewController {
         return UserDefaults.standard.string(forKey: key)
     }
 
-    // MARK: Keyboard notifications
+    // MARK: Notifications
 
     @objc internal func keyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect,
@@ -270,8 +181,6 @@ open class MessageViewController: UIViewController {
         }
     }
 
-    // MARK: Notifications
-
     @objc internal func keyboardDidShow(notification: Notification) {
         keyboardState = .visible
     }
@@ -292,14 +201,6 @@ open class MessageViewController: UIViewController {
         keyboardState = .resigned
     }
 
-    @objc internal func keyboardWillChangeFrame(notification: Notification) {
-
-    }
-
-    @objc internal func keyboardDidChangeFrame(notification: Notification) {
-
-    }
-
     @objc internal func appWillResignActive(notification: Notification) {
         cache()
     }
@@ -312,6 +213,12 @@ open class MessageViewController: UIViewController {
         if messageView.frame.contains(location) {
             let _ = messageView.resignFirstResponder()
         }
+    }
+
+    // MARK: MessageAutocompleteControllerLayoutDelegate
+
+    public func needsLayout(controller: MessageAutocompleteController) {
+        view.setNeedsLayout()
     }
 
 }

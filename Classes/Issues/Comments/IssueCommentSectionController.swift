@@ -24,6 +24,7 @@ IssueCommentDoubleTapDelegate {
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
+    private let autocomplete: IssueCommentAutocomplete
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -49,9 +50,10 @@ IssueCommentDoubleTapDelegate {
     private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
@@ -97,18 +99,19 @@ IssueCommentDoubleTapDelegate {
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.currentMarkdown,
-                let issueModel = self?.model,
-                let client = self?.client,
-                let commentID = self?.object?.number,
-                let isRoot = self?.object?.isRoot
+            guard let strongSelf = self,
+                let object = strongSelf.object,
+                let number = object.number,
+                let markdown = strongSelf.currentMarkdown
                 else { return }
+
             let edit = EditCommentViewController(
-                client: client,
+                client: strongSelf.client,
                 markdown: markdown,
-                issueModel: issueModel,
-                commentID: commentID,
-                isRoot: isRoot
+                issueModel: strongSelf.model,
+                commentID: number,
+                isRoot: object.isRoot,
+                autocomplete: strongSelf.autocomplete
             )
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)

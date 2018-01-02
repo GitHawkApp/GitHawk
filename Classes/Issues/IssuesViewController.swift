@@ -18,23 +18,19 @@ final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
-    IssueCommentAutocompleteDelegate,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    MessageViewControllerAutocompleteDelegate,
-    UITableViewDelegate,
-    UITableViewDataSource,
 IssueManagingNavSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
-    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var needsScrollToBottom = false
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
+    private var autocompleteController: AutocompleteController!
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -94,17 +90,15 @@ IssueManagingNavSectionControllerDelegate {
 
         super.init(nibName: nil, bundle: nil)
 
+        self.autocompleteController = AutocompleteController(
+            messageAutocompleteController: messageAutocompleteController,
+            autocomplete: IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
+        )
+
         self.hidesBottomBarWhenPushed = true
         self.addCommentClient.addListener(listener: self)
 
-        // not registered until request is finished and self.registerPrefixes(...) is called
-        // must have user autocompletes
-        autocomplete.configure(tableView: autocompleteTableView, delegate: self)
-
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
-        autocompleteDelegate = self
-        autocompleteTableView.dataSource = self
-        autocompleteTableView.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -293,7 +287,9 @@ IssueManagingNavSectionControllerDelegate {
 
             switch resultType {
             case .success(let result, let mentionableUsers):
-                strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                strongSelf.autocompleteController.autocomplete.add(
+                    UserAutocomplete(mentionableUsers: mentionableUsers)
+                )
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
             default: break
@@ -376,13 +372,21 @@ IssueManagingNavSectionControllerDelegate {
 
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
+        case is IssueCommentModel: return IssueCommentSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocompleteController.autocomplete.copy
+            )
         case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController(model: model, client: client)
+        case is IssueReviewModel: return IssueReviewSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocompleteController.autocomplete.copy
+            )
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
@@ -456,19 +460,6 @@ IssueManagingNavSectionControllerDelegate {
         messageView.text = body
     }
 
-    // MARK: IssueCommentAutocompleteDelegate
-
-    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        showAutocomplete(hasResults)
-    }
-
-    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
-        for prefix in autocomplete.prefixes {
-            register(prefix: prefix)
-        }
-        autocompleteTableView.reloadData()
-    }
-
     // MARK: FeedSelectionProviding
 
     var feedContainsSelection: Bool {
@@ -490,34 +481,6 @@ IssueManagingNavSectionControllerDelegate {
             updateAndScrollIfNeeded()
         case .list: break
         }
-    }
-
-    // MARK: MessageViewControllerAutocompleteDelegate
-
-    func didFind(prefix: String, word: String) {
-        autocomplete.didChange(tableView: autocompleteTableView, prefix: prefix, word: word)
-    }
-
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: currentAutocomplete?.prefix)
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return autocomplete.cell(tableView: tableView, prefix: currentAutocomplete?.prefix, indexPath: indexPath)
-    }
-
-    // MARK: UITableViewDataSource
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accepted = autocomplete.accept(prefix: currentAutocomplete?.prefix, indexPath: indexPath) {
-            accept(autocomplete: accepted + " ", keepPrefix: false)
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return autocomplete.cellHeight
     }
 
     // MARK: IssueManagingNavSectionControllerDelegate

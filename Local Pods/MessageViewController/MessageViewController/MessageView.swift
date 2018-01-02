@@ -8,9 +8,9 @@
 
 import UIKit
 
-public final class MessageView: UIView {
+public final class MessageView: UIView, MessageTextViewListener {
 
-    public let textView = UITextView()
+    public let textView = MessageTextView()
 
     internal weak var delegate: MessageViewDelegate?
     internal let placeholderLabel = UILabel()
@@ -37,7 +37,7 @@ public final class MessageView: UIView {
         textView.textContainerInset = .zero
         textView.backgroundColor = .clear
         textView.addObserver(self, forKeyPath: UITextViewContentSizeKeyPath, options: [.new], context: nil)
-        textView.delegate = self
+        textView.add(listener: self)
 
         // setup TextKit props to defaults
         textView.textContainer.exclusionPaths = []
@@ -263,6 +263,16 @@ public final class MessageView: UIView {
     internal func textViewContentSizeDidChange() {
         delegate?.sizeDidChange(messageView: self)
         textView.alwaysBounceVertical = textView.contentSize.height > maxHeight
+    }
+
+    // MARK: MessageTextViewListener
+
+    public func didChange(textView: MessageTextView) {
+        updateEmptyTextStates()
+    }
+
+    public func didChangeSelection(textView: MessageTextView) {
+        delegate?.selectionDidChange(messageView: self)
     }
 
 }

@@ -12,11 +12,11 @@
 		290482201FED90340053978C /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290482171FED90340053978C /* MessageViewController.swift */; };
 		290482211FED90340053978C /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290482181FED90340053978C /* MessageView.swift */; };
 		290482221FED90340053978C /* MessageViewController+MessageViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290482191FED90340053978C /* MessageViewController+MessageViewDelegate.swift */; };
-		290482231FED90340053978C /* MessageView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821A1FED90340053978C /* MessageView+UITextViewDelegate.swift */; };
-		290482241FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821B1FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift */; };
 		290482251FED90340053978C /* MessageViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821C1FED90340053978C /* MessageViewDelegate.swift */; };
 		290482261FED90340053978C /* UIButton+BottomHeightOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */; };
 		290482271FED90340053978C /* UITextView+Prefixes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904821E1FED90340053978C /* UITextView+Prefixes.swift */; };
+		29792B141FFAE7FC007A0C57 /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B121FFAE7FC007A0C57 /* MessageTextView.swift */; };
+		29792B151FFAE7FC007A0C57 /* MessageAutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B131FFAE7FC007A0C57 /* MessageAutocompleteController.swift */; };
 		29CC293B1FF4266D006B6DE7 /* MessageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC293A1FF4266D006B6DE7 /* MessageViewControllerTests.swift */; };
 		29CC293D1FF4266D006B6DE7 /* MessageViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2904820B1FED90070053978C /* MessageViewController.framework */; };
 		29CC29441FF4267F006B6DE7 /* String+WordAtRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC29431FF4267F006B6DE7 /* String+WordAtRangeTests.swift */; };
@@ -43,11 +43,11 @@
 		290482171FED90340053978C /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		290482181FED90340053978C /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		290482191FED90340053978C /* MessageViewController+MessageViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageViewController+MessageViewDelegate.swift"; sourceTree = "<group>"; };
-		2904821A1FED90340053978C /* MessageView+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
-		2904821B1FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewControllerAutocompleteDelegate.swift; sourceTree = "<group>"; };
 		2904821C1FED90340053978C /* MessageViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewDelegate.swift; sourceTree = "<group>"; };
 		2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+BottomHeightOffset.swift"; sourceTree = "<group>"; };
 		2904821E1FED90340053978C /* UITextView+Prefixes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Prefixes.swift"; sourceTree = "<group>"; };
+		29792B121FFAE7FC007A0C57 /* MessageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		29792B131FFAE7FC007A0C57 /* MessageAutocompleteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageAutocompleteController.swift; sourceTree = "<group>"; };
 		29CC29381FF4266D006B6DE7 /* MessageViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29CC293A1FF4266D006B6DE7 /* MessageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewControllerTests.swift; sourceTree = "<group>"; };
 		29CC293C1FF4266D006B6DE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,12 +97,12 @@
 			isa = PBXGroup;
 			children = (
 				2904820F1FED90070053978C /* Info.plist */,
+				29792B131FFAE7FC007A0C57 /* MessageAutocompleteController.swift */,
+				29792B121FFAE7FC007A0C57 /* MessageTextView.swift */,
 				290482181FED90340053978C /* MessageView.swift */,
-				2904821A1FED90340053978C /* MessageView+UITextViewDelegate.swift */,
 				2904820E1FED90070053978C /* MessageViewController.h */,
 				290482171FED90340053978C /* MessageViewController.swift */,
 				290482191FED90340053978C /* MessageViewController+MessageViewDelegate.swift */,
-				2904821B1FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift */,
 				2904821C1FED90340053978C /* MessageViewDelegate.swift */,
 				29CC29451FF42687006B6DE7 /* String+WordAtRange.swift */,
 				2904821D1FED90340053978C /* UIButton+BottomHeightOffset.swift */,
@@ -235,15 +235,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				290482221FED90340053978C /* MessageViewController+MessageViewDelegate.swift in Sources */,
+				29792B141FFAE7FC007A0C57 /* MessageTextView.swift in Sources */,
 				290482211FED90340053978C /* MessageView.swift in Sources */,
 				290482261FED90340053978C /* UIButton+BottomHeightOffset.swift in Sources */,
 				290482251FED90340053978C /* MessageViewDelegate.swift in Sources */,
 				290482201FED90340053978C /* MessageViewController.swift in Sources */,
 				29CC29481FF42687006B6DE7 /* UIView+iOS11.swift in Sources */,
-				290482231FED90340053978C /* MessageView+UITextViewDelegate.swift in Sources */,
+				29792B151FFAE7FC007A0C57 /* MessageAutocompleteController.swift in Sources */,
 				2904821F1FED90340053978C /* UIScrollView+StopScrolling.swift in Sources */,
 				29CC29471FF42687006B6DE7 /* String+WordAtRange.swift in Sources */,
-				290482241FED90340053978C /* MessageViewControllerAutocompleteDelegate.swift in Sources */,
 				290482271FED90340053978C /* UITextView+Prefixes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
