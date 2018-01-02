@@ -24,8 +24,19 @@ func HangingChadItemWidth(
     let remainder = count - fullRowsCount
 
     let itemsInThisRow: Int
-    if remainder == 1 && count > 2 && itemsPerRow > 1 && index > count - 3 {
-        itemsInThisRow = 2
+    if remainder == 1 && count > 2 && itemsPerRow > 1 {
+        let row = index / itemsPerRow
+        if row == fullRows {
+            itemsInThisRow = 2
+        } else if row == fullRows - 1 {
+            if index == count - 2 {
+                itemsInThisRow = 2
+            } else {
+                itemsInThisRow = itemsPerRow - 1
+            }
+        } else {
+            itemsInThisRow = itemsPerRow
+        }
     } else if index > fullRowsCount - 1 {
         itemsInThisRow = remainder
     } else {

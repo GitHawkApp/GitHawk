@@ -58,6 +58,14 @@ class HangingChadItemWidthTests: XCTestCase {
         XCTAssertEqual(HangingChadItemWidth(index: 0, count: 21, containerWidth: 300, desiredItemWidth: 30), 30)
     }
 
+    func test_whenTwoRows_withHangingChad_withIndexOnFirstRow() {
+        XCTAssertEqual(HangingChadItemWidth(index: 5, count: 21, containerWidth: 300, desiredItemWidth: 30), 30)
+    }
+
+    func test_whenTwoRows_withHangingChad_withIndexOnAdjustedSecondRow() {
+        XCTAssertEqual(HangingChadItemWidth(index: 15, count: 21, containerWidth: 300, desiredItemWidth: 30), 33)
+    }
+
     func test_whenTwoRows_withHangingChad_withSecondLastIndex() {
         XCTAssertEqual(HangingChadItemWidth(index: 19, count: 21, containerWidth: 300, desiredItemWidth: 30), 150)
     }
