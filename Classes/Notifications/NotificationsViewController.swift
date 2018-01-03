@@ -93,10 +93,28 @@ FlatCacheListener {
             handler: { [weak self] _ in
                 self?.onViewAll()
         }))
-        subscriptionController?.actions.forEach { alert.add(action: $0) }
+
+        let cache = client.githubClient.cache
+        var repoNames = Set<String>()
+        for id in notificationIDs {
+            guard let notification = cache.get(id: id) as NotificationViewModel?,
+                !repoNames.contains(notification.repo)
+                else { continue }
+            repoNames.insert(notification.repo)
+            alert.add(action: UIAlertAction(title: notification.repo, style: .default, handler: { [weak self] _ in
+                self?.pushRepoNotifications(owner: notification.owner, repo: notification.repo)
+            }))
+        }
+
         alert.add(action: AlertAction.cancel())
 
         present(alert, animated: true)
+    }
+
+    func pushRepoNotifications(owner: String, repo: String) {
+        let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
+        let controller = NotificationsViewController(client: client, inboxType: .repo(model))
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     func onViewAll() {
