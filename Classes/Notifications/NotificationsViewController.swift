@@ -30,7 +30,6 @@ FlatCacheListener {
     private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
-    private var subscriptionController: NotificationSubscriptionsController?
 
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
@@ -51,7 +50,6 @@ FlatCacheListener {
             title = NSLocalizedString("Archived", comment: "")
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
-            self.subscriptionController = NotificationSubscriptionsController(viewController: self, client: client)
         case .repo(let repo):
             title = repo.name
         }
@@ -244,8 +242,6 @@ FlatCacheListener {
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
-        subscriptionController?.fetchSubscriptions()
-
         let width = view.bounds.width
 
         let repo: NotificationClient.NotificationRepository?
