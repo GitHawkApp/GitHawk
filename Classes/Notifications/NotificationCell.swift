@@ -53,7 +53,6 @@ final class NotificationCell: SwipeSelectableCell {
 
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
@@ -109,6 +108,15 @@ final class NotificationCell: SwipeSelectableCell {
         accessibilityLabel = AccessibilityHelper
             .generatedLabel(forCell: self)
             .appending(".\n\(viewModel.type.localizedString)")
+
+        let tintColor: UIColor
+        switch viewModel.state {
+        case .closed: tintColor = Styles.Colors.Red.medium.color
+        case .merged: tintColor = Styles.Colors.purple.color
+        case .open: tintColor = Styles.Colors.Green.medium.color
+        case .pending: tintColor = Styles.Colors.Blue.medium.color
+        }
+        reasonImageView.tintColor = tintColor
     }
 
 }

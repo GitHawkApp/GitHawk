@@ -91,6 +91,32 @@ final class NotificationViewModel: ListDiffable, Cachable {
         )
     }
 
+    // MARK: Public API
+
+    func updated(
+        id: String? = nil,
+        title: NSAttributedStringSizing? = nil,
+        type: NotificationType? = nil,
+        date: Date? = nil,
+        read: Bool? = nil,
+        owner: String? = nil,
+        repo: String? = nil,
+        identifier: Identifier? = nil,
+        state: State? = nil
+        ) -> NotificationViewModel {
+        return NotificationViewModel(
+            id: id ?? self.id,
+            title: title ?? self.title,
+            type: type ?? self.type,
+            date: date ?? self.date,
+            read: read ?? self.read,
+            owner: owner ?? self.owner,
+            repo: repo ?? self.repo,
+            identifier: identifier ?? self.identifier,
+            state: state ?? self.state
+        )
+    }
+
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
