@@ -17,6 +17,16 @@ final class NotificationViewModel: ListDiffable, Cachable {
         case hash(String)
     }
 
+    // combining possible issue and PR states
+    // https://developer.github.com/v4/enum/issuestate/
+    // https://developer.github.com/v4/enum/pullrequeststate/
+    enum State: String {
+        case pending
+        case closed = "CLOSED"
+        case merged = "MERGED"
+        case open = "OPEN"
+    }
+
     let id: String
     let title: NSAttributedStringSizing
     let type: NotificationType
@@ -25,6 +35,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     let owner: String
     let repo: String
     let identifier: Identifier
+    let state: State
 
     init(
     id: String,
@@ -34,7 +45,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
     read: Bool,
     owner: String,
     repo: String,
-    identifier: Identifier
+    identifier: Identifier,
+    state: State = .pending
         ) {
         self.id = id
         self.title = title
@@ -44,6 +56,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         self.owner = owner
         self.repo = repo
         self.identifier = identifier
+        self.state = state
     }
 
     convenience init(
@@ -92,6 +105,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
             && date == object.date
             && repo == object.repo
             && owner == object.owner
+            && state == object.state
             && title.attributedText.string == object.title.attributedText.string
     }
 
