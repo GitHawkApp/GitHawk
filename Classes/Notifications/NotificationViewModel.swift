@@ -36,6 +36,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     let repo: String
     let identifier: Identifier
     let state: State
+    let commentCount: Int
 
     init(
     id: String,
@@ -46,7 +47,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
     owner: String,
     repo: String,
     identifier: Identifier,
-    state: State = .pending
+    state: State,
+    commentCount: Int
         ) {
         self.id = id
         self.title = title
@@ -57,6 +59,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         self.repo = repo
         self.identifier = identifier
         self.state = state
+        self.commentCount = commentCount
     }
 
     convenience init(
@@ -87,7 +90,9 @@ final class NotificationViewModel: ListDiffable, Cachable {
             read: read,
             owner: owner,
             repo: repo,
-            identifier: identifier
+            identifier: identifier,
+            state: .pending,
+            commentCount: 0
         )
     }
 
@@ -102,7 +107,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
         owner: String? = nil,
         repo: String? = nil,
         identifier: Identifier? = nil,
-        state: State? = nil
+        state: State? = nil,
+        commentCount: Int? = nil
         ) -> NotificationViewModel {
         return NotificationViewModel(
             id: id ?? self.id,
@@ -113,7 +119,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
             owner: owner ?? self.owner,
             repo: repo ?? self.repo,
             identifier: identifier ?? self.identifier,
-            state: state ?? self.state
+            state: state ?? self.state,
+            commentCount: commentCount ?? self.commentCount
         )
     }
 

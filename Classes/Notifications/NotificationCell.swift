@@ -22,6 +22,8 @@ final class NotificationCell: SwipeSelectableCell {
     private let dateLabel = ShowMoreDetailsLabel()
     private let titleLabel = UILabel()
     private let textLabel = UILabel()
+    private let commentLabel = UILabel()
+    private let commentImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,6 +66,23 @@ final class NotificationCell: SwipeSelectableCell {
         contentView.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
+        }
+
+        commentLabel.font = Styles.Fonts.secondary
+        commentLabel.textColor = Styles.Colors.Gray.light.color
+        contentView.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints { make in
+            make.right.equalTo(dateLabel)
+            make.bottom.equalTo(-Styles.Sizes.rowSpacing)
+        }
+
+        commentImageView.tintColor = commentLabel.textColor
+        commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
+        commentImageView.backgroundColor = .clear
+        contentView.addSubview(commentImageView)
+        commentImageView.snp.makeConstraints { make in
+            make.right.equalTo(commentLabel.snp.left).offset(-Styles.Sizes.rowSpacing/2)
+            make.centerY.equalTo(commentLabel).offset(2)
         }
 
         contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
@@ -117,6 +136,11 @@ final class NotificationCell: SwipeSelectableCell {
         case .pending: tintColor = Styles.Colors.Blue.medium.color
         }
         reasonImageView.tintColor = tintColor
+
+        let commentHidden = viewModel.commentCount == 0
+        commentLabel.isHidden = commentHidden
+        commentImageView.isHidden = commentHidden
+        commentLabel.text = "\(viewModel.commentCount)"
     }
 
 }

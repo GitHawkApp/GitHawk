@@ -117,8 +117,10 @@ final class NotificationClient {
                         let result = data[alias.key] as? [String: Any],
                         let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
                         let stateString = issueOrPullRequest["state"] as? String,
-                        let state = NotificationViewModel.State(rawValue: stateString) {
-                        updatedNotifications.append(notification.updated(state: state))
+                        let state = NotificationViewModel.State(rawValue: stateString),
+                    let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
+                    let commentCount = commentsJSON["totalCount"] as? Int {
+                        updatedNotifications.append(notification.updated(state: state, commentCount: commentCount))
                     } else {
                         updatedNotifications.append(notification)
                     }
@@ -155,16 +157,7 @@ final class NotificationClient {
             // optimistically set the model to read
             // if the request fails, replace this model w/ the old one.
             if let old = oldModel {
-                githubClient.cache.set(value: NotificationViewModel(
-                    id: old.id,
-                    title: old.title,
-                    type: old.type,
-                    date: old.date,
-                    read: true,
-                    owner: old.owner,
-                    repo: old.repo,
-                    identifier: old.identifier
-                ))
+                githubClient.cache.set(value: old.updated(read: true))
             }
         }
 
