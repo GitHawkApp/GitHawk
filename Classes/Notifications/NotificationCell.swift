@@ -50,7 +50,6 @@ final class NotificationCell: SwipeSelectableCell {
         dateLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
-            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
 
         reasonImageView.backgroundColor = .clear
@@ -68,21 +67,21 @@ final class NotificationCell: SwipeSelectableCell {
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
         }
 
-        commentLabel.font = Styles.Fonts.secondary
-        commentLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(commentLabel)
-        commentLabel.snp.makeConstraints { make in
-            make.right.equalTo(dateLabel)
-            make.bottom.equalTo(-Styles.Sizes.rowSpacing)
-        }
-
-        commentImageView.tintColor = commentLabel.textColor
+        commentImageView.tintColor = dateLabel.textColor
         commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
         commentImageView.backgroundColor = .clear
         contentView.addSubview(commentImageView)
         commentImageView.snp.makeConstraints { make in
-            make.right.equalTo(commentLabel.snp.left).offset(-Styles.Sizes.rowSpacing/2)
-            make.centerY.equalTo(commentLabel).offset(2)
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.columnSpacing + 2)
+            make.centerY.equalTo(titleLabel).offset(2)
+        }
+
+        commentLabel.font = dateLabel.font
+        commentLabel.textColor = dateLabel.textColor
+        contentView.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints { make in
+            make.left.equalTo(commentImageView.snp.right).offset(Styles.Sizes.columnSpacing/2)
+            make.centerY.equalTo(titleLabel)
         }
 
         contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
