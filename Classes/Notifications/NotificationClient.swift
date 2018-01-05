@@ -8,6 +8,20 @@
 
 import Foundation
 
+// used to request states via graphQL
+extension NotificationViewModel {
+    var stateAlias: (number: Int, key: String)? {
+        switch identifier {
+        case .hash:
+            // commits don't have states, always merged
+            return nil
+        case .number(let number):
+            // graphQL alias must be an alpha-numeric string and start w/ alpha
+            return (number, "k\(id)")
+        }
+    }
+}
+
 final class NotificationClient {
 
     struct NotificationRepository {
@@ -59,8 +73,6 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
-        let cache = githubClient.cache
-
         githubClient.request(GithubClient.Request(
             path: path(repo: repo),
             method: .get,
@@ -69,12 +81,59 @@ final class NotificationClient {
         ) { response, nextPage in
             if let notifications = (response.value as? [[String:Any]])?.flatMap({ NotificationResponse(json: $0) }) {
                 let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
-                cache.set(values: viewModels)
-                completion(.success((viewModels, nextPage?.next)))
+                self.fetchStates(for: viewModels, page: nextPage?.next, completion: completion)
             } else {
                 completion(.error(response.error))
             }
         })
+    }
+
+    private func fetchStates(
+        for notifications: [NotificationViewModel],
+        page: Int?,
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
+        ) {
+
+        let content = "state comments{totalCount}"
+        let notificationQueries: String = notifications.flatMap {
+            guard let alias = $0.stateAlias else { return nil }
+            return """
+            \(alias.key): repository(owner: "\($0.owner)", name: "\($0.repo)") { issueOrPullRequest(number: \(alias.number)) { ...on Issue {\(content)} ...on PullRequest {\(content)} } }
+            """
+            }.joined(separator: " ")
+        let query = "query{\(notificationQueries)}"
+
+        let cache = githubClient.cache
+
+        githubClient.graphQL(
+        parameters: ["query": query]) { response in
+            let processedNotifications: [NotificationViewModel]
+            if let json = response.value as? [String: Any],
+                let data = json["data"] as? [String: Any] {
+
+                var updatedNotifications = [NotificationViewModel]()
+                for notification in notifications {
+                    if let alias = notification.stateAlias,
+                        let result = data[alias.key] as? [String: Any],
+                        let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
+                        let stateString = issueOrPullRequest["state"] as? String,
+                        let state = NotificationViewModel.State(rawValue: stateString),
+                    let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
+                    let commentCount = commentsJSON["totalCount"] as? Int {
+                        updatedNotifications.append(notification.updated(state: state, commentCount: commentCount))
+                    } else {
+                        updatedNotifications.append(notification)
+                    }
+                }
+
+                processedNotifications = updatedNotifications
+            } else {
+                processedNotifications = notifications
+            }
+            cache.set(values: processedNotifications)
+            completion(.success((processedNotifications, page)))
+        }
+
     }
 
     func markAllNotifications(completion: @escaping (Bool) -> Void) {
@@ -98,16 +157,7 @@ final class NotificationClient {
             // optimistically set the model to read
             // if the request fails, replace this model w/ the old one.
             if let old = oldModel {
-                githubClient.cache.set(value: NotificationViewModel(
-                    id: old.id,
-                    title: old.title,
-                    type: old.type,
-                    date: old.date,
-                    read: true,
-                    owner: old.owner,
-                    repo: old.repo,
-                    identifier: old.identifier
-                ))
+                githubClient.cache.set(value: old.updated(read: true))
             }
         }
 
