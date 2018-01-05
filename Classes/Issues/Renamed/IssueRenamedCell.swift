@@ -35,7 +35,7 @@ final class IssueRenamedCell: UICollectionViewCell {
         actorLabel.addTarget(self, action: #selector(IssueRenamedCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.columnSpacing)
+            make.left.equalTo(IssueRenamedCell.titleInset.left)
             make.top.equalTo(0)
         }
 
