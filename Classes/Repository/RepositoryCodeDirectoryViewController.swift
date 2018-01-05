@@ -31,7 +31,7 @@ ListSingleSectionControllerDelegate {
         self.path = path
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: ""),
+            emptyErrorMessage: NSLocalizedString("Cannot load directory.", comment: ""),
             dataSource: self
         )
 
