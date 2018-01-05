@@ -70,7 +70,7 @@ FlatCacheListener {
                 image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
-                action: #selector(NotificationsViewController.onMore)
+                action: #selector(NotificationsViewController.onMore(sender:))
             )
             item.accessibilityLabel = NSLocalizedString("More options", comment: "")
             navigationItem.leftBarButtonItem = item
@@ -82,7 +82,7 @@ FlatCacheListener {
 
     // MARK: Private API
 
-    @objc func onMore() {
+    @objc func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         alert.add(action: UIAlertAction(
@@ -105,6 +105,8 @@ FlatCacheListener {
         }
 
         alert.add(action: AlertAction.cancel())
+
+        alert.popoverPresentationController?.barButtonItem = sender
 
         present(alert, animated: true)
     }
