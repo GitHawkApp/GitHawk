@@ -59,7 +59,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.1.0)
+  - Pageboy (2.2.0)
   - PureLayout (3.0.2)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
@@ -70,8 +70,8 @@ PODS:
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.1.2):
-    - Pageboy (~> 2.0)
+  - Tabman (1.2.0):
+    - Pageboy (~> 2.2.0)
     - PureLayout (~> 3.0)
   - TUSafariActivity (1.0.4)
 
@@ -149,7 +149,7 @@ SPEC CHECKSUMS:
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: f137e98cdb92c1913401d9d3c8888951ff81a630
+  Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   StyledText: 0da66d27eaab0269b1d43e2fd73f75984a88184d
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 94692b62fc58ed4945220be2f3f0ad7406aa3699
+  Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
 PODFILE CHECKSUM: 5a070bcf9f5c5b3be9879b87c3ff4c18924cd6ad
