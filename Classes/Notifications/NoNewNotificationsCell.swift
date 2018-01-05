@@ -11,20 +11,19 @@ import SnapKit
 
 final class NoNewNotificationsCell: UICollectionViewCell {
 
-    let emoji = UILabel()
-    let label = UILabel()
+    let emojiLabel = UILabel()
+    let messageLabel = UILabel()
     let shadow = CAShapeLayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        emoji.isAccessibilityElement = false
-        emoji.text = "🎉"
-        emoji.textAlignment = .center
-        emoji.backgroundColor = .clear
-        emoji.font = UIFont.systemFont(ofSize: 60)
-        contentView.addSubview(emoji)
-        emoji.snp.makeConstraints { make in
+        emojiLabel.isAccessibilityElement = false
+        emojiLabel.textAlignment = .center
+        emojiLabel.backgroundColor = .clear
+        emojiLabel.font = .systemFont(ofSize: 60)
+        contentView.addSubview(emojiLabel)
+        emojiLabel.snp.makeConstraints { make in
             make.centerX.equalTo(contentView)
             make.centerY.equalTo(contentView).offset(-Styles.Sizes.tableSectionSpacing)
         }
@@ -32,16 +31,15 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         shadow.fillColor = UIColor(white: 0, alpha: 0.05).cgColor
         contentView.layer.addSublayer(shadow)
 
-        label.isAccessibilityElement = false
-        label.text = NSLocalizedString("Inbox zero!", comment: "")
-        label.textAlignment = .center
-        label.backgroundColor = .clear
-        label.font = Styles.Fonts.body
-        label.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.centerX.equalTo(emoji)
-            make.top.equalTo(emoji.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
+        messageLabel.isAccessibilityElement = false
+        messageLabel.textAlignment = .center
+        messageLabel.backgroundColor = .clear
+        messageLabel.font = Styles.Fonts.body
+        messageLabel.textColor = Styles.Colors.Gray.light.color
+        contentView.addSubview(messageLabel)
+        messageLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(emojiLabel)
+            make.top.equalTo(emojiLabel.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
         }
 
         resetAnimations()
@@ -68,8 +66,15 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         let width: CGFloat = 30
         let height: CGFloat = 12
-        shadow.path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: CGSize(width: width, height: height))).cgPath
-        shadow.position = CGPoint(x: contentView.bounds.width/2 - 20, y: contentView.bounds.height/2 + 5)
+        let rect = CGRect(origin: .zero, size: CGSize(width: width, height: height))
+        shadow.path = UIBezierPath(ovalIn: rect).cgPath
+
+        let bounds = contentView.bounds
+        shadow.bounds = rect
+        shadow.position = CGPoint(
+            x: bounds.width/2,
+            y: bounds.height/2 + 15
+        )
     }
 
     override func prepareForReuse() {
@@ -82,24 +87,32 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         resetAnimations()
     }
 
+    // MARK: Public API
+
+    func configure(emoji: String, message: String) {
+        emojiLabel.text = emoji
+        messageLabel.text = message
+    }
+
     // MARK: Private API
 
     @objc private func resetAnimations() {
+        guard trueUnlessReduceMotionEnabled else { return }
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         let duration: TimeInterval = 1
 
         let emojiBounce = CABasicAnimation(keyPath: "transform.translation.y")
         emojiBounce.toValue = -10
-        emojiBounce.repeatCount = Float.greatestFiniteMagnitude
+        emojiBounce.repeatCount = .greatestFiniteMagnitude
         emojiBounce.autoreverses = true
         emojiBounce.duration = duration
         emojiBounce.timingFunction = timingFunction
 
-        emoji.layer.add(emojiBounce, forKey: "nonewnotificationscell.emoji")
+        emojiLabel.layer.add(emojiBounce, forKey: "nonewnotificationscell.emoji")
 
         let shadowScale = CABasicAnimation(keyPath: "transform.scale")
         shadowScale.toValue = 0.9
-        shadowScale.repeatCount = Float.greatestFiniteMagnitude
+        shadowScale.repeatCount = .greatestFiniteMagnitude
         shadowScale.autoreverses = true
         shadowScale.duration = duration
         shadowScale.timingFunction = timingFunction

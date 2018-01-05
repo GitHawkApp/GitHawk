@@ -23,7 +23,7 @@ extension IssueTextActionsView {
                 icon: UIImage(named: "bar-eye"),
                 operation: .execute({ [weak viewController] in
                 let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
-                viewController?.navigationController?.pushViewController(controller, animated: true)
+                viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
             }),
                 name: NSLocalizedString("Message Preview", comment: "The name of the action for previewing a message from the markdown actions bar")),
             IssueTextActionOperation(

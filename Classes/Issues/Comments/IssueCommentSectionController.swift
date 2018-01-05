@@ -15,15 +15,16 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
-AttributedStringViewIssueDelegate,
+AttributedStringViewExtrasDelegate,
 EditCommentViewControllerDelegate,
-DoubleTappableCellDelegate {
+IssueCommentDoubleTapDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
     private let client: GithubClient
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
+    private let autocomplete: IssueCommentAutocomplete
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -41,11 +42,18 @@ DoubleTappableCellDelegate {
     // set after succesfully editing the body
     private var bodyEdits: (markdown: String, models: [ListDiffable])?
 
+    private var currentMarkdown: String? {
+        return bodyEdits?.markdown ?? object?.rawMarkdown
+    }
+
+    // empty space cell placeholders
+    private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
@@ -53,17 +61,7 @@ DoubleTappableCellDelegate {
 
     override func didUpdate(to object: Any) {
         super.didUpdate(to: object)
-
-        // set the inset based on whether or not this is part of a comment thread
-        guard let object = self.object else { return }
-        switch object.threadState {
-        case .single:
-            inset = Styles.Sizes.listInsetLarge
-        case .neck:
-            inset = .zero
-        case .tail:
-            inset = Styles.Sizes.listInsetLargeTail
-        }
+        inset = self.object?.commentSectionControllerInset ?? .zero
     }
 
     // MARK: Private API
@@ -94,30 +92,31 @@ DoubleTappableCellDelegate {
                 }
             ])
 
-            self?.viewController?.present(alert, animated: true)
+            self?.viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
     func editAction() -> UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
-            guard let markdown = self?.bodyEdits?.markdown ?? self?.object?.rawMarkdown,
-                let issueModel = self?.model,
-                let client = self?.client,
-                let commentID = self?.object?.number,
-                let isRoot = self?.object?.isRoot
+            guard let strongSelf = self,
+                let object = strongSelf.object,
+                let number = object.number,
+                let markdown = strongSelf.currentMarkdown
                 else { return }
+
             let edit = EditCommentViewController(
-                client: client,
+                client: strongSelf.client,
                 markdown: markdown,
-                issueModel: issueModel,
-                commentID: commentID,
-                isRoot: isRoot
+                issueModel: strongSelf.model,
+                commentID: number,
+                isRoot: object.isRoot,
+                autocomplete: strongSelf.autocomplete
             )
             edit.delegate = self
             let nav = UINavigationController(rootViewController: edit)
             nav.modalPresentationStyle = .formSheet
-            self?.viewController?.present(nav, animated: true)
+            self?.viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
         })
     }
 
@@ -135,7 +134,7 @@ DoubleTappableCellDelegate {
         guard collapsed else { return false }
         collapsed = false
         clearCollapseCells()
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
         return true
     }
 
@@ -153,14 +152,24 @@ DoubleTappableCellDelegate {
 
         cell?.perform(operation: result.operation, content: content)
 
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
         generator.impactOccurred()
         client.react(subjectID: object.id, content: content, isAdd: isAdd) { [weak self] result in
             if result == nil {
                 self?.reactionMutation = previousReaction
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
+    }
+
+    func edit(markdown: String) {
+        guard let width = collectionContext?.containerSize.width else { return }
+        let options = commentModelOptions(owner: model.owner, repo: model.repo)
+        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
+        bodyEdits = (markdown, bodyModels)
+        collapsed = false
+        clearCollapseCells()
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
     /// Deletes the comment and optimistically removes it from the feed
@@ -169,14 +178,14 @@ DoubleTappableCellDelegate {
 
         // Optimistically delete the comment
         hasBeenDeleted = true
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
 
         // Actually delete the comment now
         client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
             switch result {
             case .error:
                 self?.hasBeenDeleted = false
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
 
                 ToastManager.showGenericError()
             case .success: break // Don't need to handle success since updated optimistically
@@ -208,7 +217,7 @@ DoubleTappableCellDelegate {
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details ]
+        return [ object.details, headModel ]
             + bodies
             + tail
     }
@@ -218,18 +227,19 @@ DoubleTappableCellDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let viewModel = viewModel as? ListDiffable
+        guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
+
+        let width = (collectionContext?.containerSize.width ?? 0) - inset.left - inset.right
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {
             height = object?.collapse?.height ?? 0
         } else if viewModel is IssueCommentReactionViewModel {
-            height = 40.0
+            height = 38.0
         } else if viewModel is IssueCommentDetailsViewModel {
-            height = Styles.Sizes.rowSpacing * 3 + Styles.Sizes.avatar.height
-        } else if viewModel === tailModel {
+            height = Styles.Sizes.rowSpacing * 2 + Styles.Sizes.avatar.height
+        } else if viewModel === tailModel || viewModel === headModel {
             height = Styles.Sizes.rowSpacing
         } else {
             height = BodyHeightForComment(
@@ -252,9 +262,14 @@ DoubleTappableCellDelegate {
             let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
+        // TODO need to update PR tail model?
         if viewModel === tailModel {
             guard let cell = context.dequeueReusableCell(of: IssueReviewEmptyTailCell.self, for: self, at: index) as? UICollectionViewCell & ListBindable
                 else { fatalError("Cell not bindable") }
+            return cell
+        } else if viewModel === headModel {
+            guard let cell = context.dequeueReusableCell(of: IssueCommentEmptyCell.self, for: self, at: index) as? IssueCommentEmptyCell
+                else { fatalError("Wrong cell type") }
             return cell
         }
 
@@ -285,7 +300,7 @@ DoubleTappableCellDelegate {
         
         if let object = self.object,
             !object.asReviewComment,
-            let cell = cell as? DoubleTappableCell {
+            let cell = cell as? IssueCommentBaseCell {
             cell.doubleTapDelegate = self
         }
 
@@ -296,7 +311,7 @@ DoubleTappableCellDelegate {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self,
+            extrasAttributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -318,9 +333,9 @@ DoubleTappableCellDelegate {
         uncollapse()
     }
     
-    // MARK: DoubleTappableCellDelegate
+    // MARK: IssueCommentDoubleTapDelegate
     
-    func didDoubleTap(cell: DoubleTappableCell) {
+    func didDoubleTap(cell: IssueCommentBaseCell) {
         let reaction = ReactionContent.thumbsUp
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
@@ -344,7 +359,7 @@ DoubleTappableCellDelegate {
         let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
 
         let alert = UIAlertController.configured(
-            title: .localizedStringWithFormat(alertTitle, login),
+            title: String(format: alertTitle, login),
             preferredStyle: .actionSheet
         )
         alert.popoverPresentationController?.sourceView = sender
@@ -354,7 +369,7 @@ DoubleTappableCellDelegate {
             deleteAction(),
             AlertAction.cancel()
         ])
-        viewController?.present(alert, animated: true)
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func didTapProfile(cell: IssueCommentDetailCell) {
@@ -393,22 +408,43 @@ DoubleTappableCellDelegate {
         viewController?.show(controller, sender: nil)
     }
 
+    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
+        guard object?.viewerCanUpdate == true,
+            let commentID = object?.number,
+            let isRoot = object?.isRoot,
+            let originalMarkdown = currentMarkdown
+            else { return }
+
+        let invertedToken = checkbox.checked ? "[ ]" : "[x]"
+        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        edit(markdown: edited)
+
+        client.editComment(
+            owner: model.owner,
+            repo: model.repo,
+            issueNumber: model.number,
+            commentID: commentID,
+            body: edited,
+            isRoot: isRoot
+        ) { [weak self] (result) in
+            switch result {
+            case .success: break;
+            case .error:
+                self?.edit(markdown: originalMarkdown)
+                ToastManager.showGenericError()
+            }
+        }
+    }
+
     // MARK: EditCommentViewControllerDelegate
 
     func didEditComment(viewController: EditCommentViewController, markdown: String) {
-        viewController.dismiss(animated: true)
-
-        guard let width = collectionContext?.containerSize.width else { return }
-        let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options)
-        bodyEdits = (markdown, bodyModels)
-        collapsed = false
-        clearCollapseCells()
-        update(animated: true)
+        viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
+        edit(markdown: markdown)
     }
 
     func didCancel(viewController: EditCommentViewController) {
-        viewController.dismiss(animated: true)
+        viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
 }

@@ -54,7 +54,7 @@ class DotListView: UIView, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelSummaryCell.reuse, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IssueLabelDotCell.reuse, for: indexPath)
         cell.backgroundColor = colors[indexPath.item]
         return cell
     }

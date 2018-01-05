@@ -18,11 +18,15 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
         self.issueModel = issueModel
         self.client = client
         super.init()
+        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            height: Styles.Fonts.secondary.lineHeight
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -36,7 +40,7 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
 
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
 
         let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
         viewController?.show(controller, sender: nil)

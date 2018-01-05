@@ -40,7 +40,7 @@ final class SearchRecentSectionController: ListGenericSectionController<SearchRe
     }
 
     override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
         delegate?.didSelect(recentSectionController: self, viewModel: searchViewModel)
     }
 

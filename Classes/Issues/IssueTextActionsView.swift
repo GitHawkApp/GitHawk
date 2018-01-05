@@ -10,20 +10,12 @@ import UIKit
 
 final class IssueTextActionsCell: SelectableCell {
 
-    let label = UILabel()
     let imageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let color = Styles.Colors.Gray.dark.color
-
-        label.textAlignment = .center
-        label.textColor = color
-        label.backgroundColor = .clear
-        contentView.addSubview(label)
-
-        imageView.tintColor = color
+        imageView.tintColor = Styles.Colors.Gray.dark.color
         imageView.contentMode = .center
         contentView.addSubview(imageView)
     }
@@ -34,13 +26,11 @@ final class IssueTextActionsCell: SelectableCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        label.text = ""
         imageView.image = nil
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = contentView.bounds
         imageView.frame = contentView.bounds
     }
 
@@ -133,7 +123,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         delegate?.didSelect(actionsView: self, operation: operations[indexPath.item])
     }
 

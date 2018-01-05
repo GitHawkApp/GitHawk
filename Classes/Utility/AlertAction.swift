@@ -41,19 +41,19 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
             buildActivityBlock?(activityController)
-            self.rootViewController?.present(activityController, animated: true)
+            self.rootViewController?.present(activityController, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
     func view(client: GithubClient, repo: RepositoryDetails) -> UIAlertAction {
-        return UIAlertAction(title: String.localizedStringWithFormat("View %@", repo.name), style: .default) { _ in
+        return UIAlertAction(title: .localizedStringWithFormat("View %@", repo.name), style: .default) { _ in
             let repoViewController = RepositoryViewController(client: client, repo: repo)
             self.rootViewController?.show(repoViewController, sender: nil)
         }
     }
 
     func view(owner: String, url: URL) -> UIAlertAction {
-        return UIAlertAction(title: String.localizedStringWithFormat("View @%@", owner), style: .default) { _ in
+        return UIAlertAction(title: .localizedStringWithFormat("View @%@", owner), style: .default) { _ in
             self.rootViewController?.presentSafari(url: url)
         }
     }
@@ -62,7 +62,7 @@ struct AlertAction {
         return UIAlertAction(title: Constants.Strings.newIssue, style: .default) { _ in
             let nav = UINavigationController(rootViewController: issueController)
             nav.modalPresentationStyle = .formSheet
-            self.rootViewController?.present(nav, animated: true)
+            self.rootViewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -96,28 +96,8 @@ struct AlertAction {
         return UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: handler)
     }
 
-    static func toggleIssue(_ status: IssueStatus, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = status == .open
-            ? NSLocalizedString("Close", comment: "")
-            : NSLocalizedString("Reopen", comment: "")
-        
-        return UIAlertAction(title: title, style: .destructive, handler: handler)
-    }
-    
-    static func toggleLocked(_ locked: Bool, handler: AlertActionBlock? = nil) -> UIAlertAction {
-        let title = locked
-            ? NSLocalizedString("Unlock", comment: "")
-            : NSLocalizedString("Lock", comment: "")
-
-        return UIAlertAction(title: title, style: .destructive, handler: handler)
-    }
-
     static func login(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
         return UIAlertAction(title: Constants.Strings.signin, style: .default, handler: handler)
-    }
-
-    static func markAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Mark all Read", comment: ""), style: .destructive, handler: handler)
     }
 
     static func clearAll(_ handler: AlertActionBlock? = nil) -> UIAlertAction {

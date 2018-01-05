@@ -11,10 +11,29 @@ import UIKit
 extension UINavigationItem {
 
     func configure(filePath: FilePath) {
-        configure(title: filePath.current, subtitle: filePath.basePath)
+        let accessibilityLabel: String?
+        switch (filePath.current, filePath.basePath) {
+        case (.some(let current), .some(let basePath)):
+            let isCurrentAFile = filePath.fileExtension != nil
+            let currentType = isCurrentAFile ? "File" : "Folder"
+            accessibilityLabel = .localizedStringWithFormat("%@: %@, file path: %@", currentType, current, basePath)
+        case (.some(let current), .none):
+            // NOTE: This is currently unused, as we early-exit
+            // and set the navigationItem's title, but not it's titleView -
+            // and thus we can't set an accessibility label.
+            let isFile = filePath.fileExtension != nil
+            let type = isFile ? "File" : "File path"
+            accessibilityLabel = .localizedStringWithFormat("%@: %@", type, current)
+        case (.none, .some(let basePath)):
+            assert(false, "We should never have just a base path; this should always be accompanied by a current path!")
+            accessibilityLabel = .localizedStringWithFormat("File path: %@", basePath)
+        case (.none, .none):
+            accessibilityLabel = nil
+        }
+        configure(title: filePath.current, subtitle: filePath.basePath, accessibilityLabel: accessibilityLabel)
     }
 
-    func configure(title: String?, subtitle: String?) {
+    func configure(title: String?, subtitle: String?, accessibilityLabel: String? = nil) {
         guard let title = title else { return }
 
         guard let subtitle = subtitle, !subtitle.isEmpty else {
@@ -45,6 +64,9 @@ extension UINavigationItem {
         label.sizeToFit()
 
         titleView = label
+        if let accessibilityLabel = accessibilityLabel { // prevent from setting to nil if we don't provide anything, use default instead
+            titleView?.accessibilityLabel = accessibilityLabel
+        }
     }
 
 }

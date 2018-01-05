@@ -9,12 +9,14 @@
 import UIKit
 import SnapKit
 
-final class IssueViewFilesCell: SelectableCell {
+final class IssueViewFilesCell: UICollectionViewCell {
 
     private let label = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
@@ -32,9 +34,9 @@ final class IssueViewFilesCell: SelectableCell {
     func configure(changes: FileChanges) {
         let attributedText = NSMutableAttributedString()
 
-        let actionFormat = NSLocalizedString("View Files (%zi) ", comment: "")
+        let actionFormat = NSLocalizedString("View Files (%d) ", comment: "")
         attributedText.append(NSAttributedString(
-            string: .localizedStringWithFormat(actionFormat, changes.changedFiles),
+            string: String(format: actionFormat, changes.changedFiles),
             attributes: [
                 .font: Styles.Fonts.secondary,
                 .foregroundColor: Styles.Colors.Blue.medium.color
@@ -59,6 +61,14 @@ final class IssueViewFilesCell: SelectableCell {
             ))
         }
         label.attributedText = attributedText
+        
+        accessibilityLabel = NSLocalizedString(
+            "View Files",
+            comment: "The accessibility label for the View Files button in a pull request.")
+        let hintFormat = NSLocalizedString(
+            "View %zi files with %zi additions and %zi deletions.",
+            comment: "The accessibility hint with details of the View Files button.")
+        accessibilityHint = String(format: hintFormat, arguments: [changes.changedFiles, changes.additions, changes.deletions])
     }
 
 }

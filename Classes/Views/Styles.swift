@@ -12,12 +12,15 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 8
+        static let eventGutter: CGFloat = 16 // comment gutter 2x
+        static let commentGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
+        static let buttonTopPadding: CGFloat = 2
         static let barButton = CGRect(x: 0, y: 0, width: 30, height: 44)
         static let avatarCornerRadius: CGFloat = 3
+        static let labelCornerRadius: CGFloat = 3
         static let columnSpacing: CGFloat = 8
         static let rowSpacing: CGFloat = 8
         static let cellSpacing: CGFloat = 15
@@ -30,12 +33,6 @@ enum Styles {
         static let listInsetLargeHead = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-        static let textCellInset = UIEdgeInsets(
-            top: 0,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
-        )
         static let textViewInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing,
             left: Styles.Sizes.gutter,
@@ -43,20 +40,52 @@ enum Styles {
             right: Styles.Sizes.gutter
         )
         static let labelEventHeight: CGFloat = 30
-
+        static let labelRowHeight: CGFloat = 18
+        static let labelSpacing: CGFloat = 4
+        static let labelTextPadding: CGFloat = 4
+        
         enum Text {
-            static let body: CGFloat = 16
-            static let secondary: CGFloat = 13
-            static let title: CGFloat = 14
-            static let button: CGFloat = 16
-            static let headline: CGFloat = 18
-            static let smallTitle: CGFloat = 12
-            static let h1: CGFloat = 24
-            static let h2: CGFloat = 22
-            static let h3: CGFloat = 20
-            static let h4: CGFloat = 18
-            static let h5: CGFloat = 16
-            static let h6: CGFloat = 16
+
+            private static func size(
+                _ base: CGFloat,
+                minSize: CGFloat = 0,
+                maxSize: CGFloat = CGFloat.greatestFiniteMagnitude
+                ) -> CGFloat {
+                let multiplier: CGFloat
+                // https://github.com/mapbox/mapbox-navigation-ios/blob/master/MapboxNavigation/UIFont.swift#L8-L19
+                switch UIApplication.shared.preferredContentSizeCategory {
+                case .accessibilityExtraExtraExtraLarge: multiplier = 23 / 16
+                case .accessibilityExtraExtraLarge: multiplier = 22 / 16
+                case .accessibilityExtraLarge: multiplier = 21 / 16
+                case .accessibilityLarge: multiplier = 20 / 16
+                case .accessibilityMedium: multiplier = 19 / 16
+                case .extraExtraExtraLarge: multiplier = 19 / 16
+                case .extraExtraLarge: multiplier = 18 / 16
+                case .extraLarge: multiplier = 17 / 16
+                case .large: multiplier = 1
+                case .medium: multiplier = 15 / 16
+                case .small: multiplier = 14 / 16
+                case .extraSmall: multiplier = 13 / 16
+                default: multiplier = 1
+                }
+                let result = base * multiplier
+                return min(max(result, minSize), maxSize)
+            }
+
+            static var body: CGFloat { return size(16) }
+            static var secondary: CGFloat { return size(13) }
+            static var title: CGFloat { return size(14) }
+            static var button: CGFloat { return size(16) }
+            static var headline: CGFloat { return size(18) }
+            static var smallTitle: CGFloat { return size(12) }
+            static var h1: CGFloat { return size(24) }
+            static var h2: CGFloat { return size(22) }
+            static var h3: CGFloat { return size(20) }
+            static var h4: CGFloat { return size(18) }
+            static var h5: CGFloat { return size(16) }
+            static var h6: CGFloat { return size(16) }
+            static var code: CGFloat { return size(14) }
+
         }
 
         enum HTML {

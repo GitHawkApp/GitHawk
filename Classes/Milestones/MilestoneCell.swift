@@ -26,7 +26,7 @@ final class MilestoneCell: UITableViewCell {
         self.titleLabel.text = title
         if let date = date {
             let format = NSLocalizedString("Due by %@", comment: "")
-            dueDateLabel.text = .localizedStringWithFormat(format, MilestoneCell.dateFormatter.string(from: date))
+            dueDateLabel.text = String(format: format, MilestoneCell.dateFormatter.string(from: date))
         } else {
             dueDateLabel.text = NSLocalizedString("No due date", comment: "")
         }

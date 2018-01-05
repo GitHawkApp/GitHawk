@@ -125,7 +125,7 @@ final class IssueReactionCell: UICollectionViewCell {
             UIMenuItem(title: detailText, action: #selector(IssueReactionCell.empty))
         ]
         menu.setTargetRect(contentView.bounds, in: self)
-        menu.setMenuVisible(true, animated: true)
+        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func empty() {}

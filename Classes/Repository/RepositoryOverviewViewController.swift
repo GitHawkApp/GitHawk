@@ -43,7 +43,7 @@ BaseListViewControllerDataSource {
         client.fetchReadme { [weak self] result in
             switch result {
             case .error:
-                self?.error(animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let readme):
                 DispatchQueue.global().async {
                     let options = GitHubMarkdownOptions(owner: repo.owner, repo: repo.name, flavors: [.baseURL])
@@ -51,7 +51,7 @@ BaseListViewControllerDataSource {
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model
-                        self?.update(animated: true)
+                        self?.update(animated: trueUnlessReduceMotionEnabled)
                     }
                 }
             }

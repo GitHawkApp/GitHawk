@@ -1480,8 +1480,16 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
                                                       CGSize contentSize = scrollView.contentSize;
                                                       CGPoint contentOffset = scrollView.contentOffset;
 
-                                                      CGFloat newOffset = MIN(contentSize.height - scrollViewHeight,
-                                                                              contentOffset.y + keyboardHeight - previousKeyboardHeight);
+                                                      CGFloat topInset = 0;
+                                                      if (@available(iOS 11.0, *)) {
+                                                          topInset = scrollView.adjustedContentInset.top;
+                                                      } else {
+                                                          topInset = scrollView.contentInset.top;
+                                                      }
+
+                                                      CGFloat newOffset = MAX(MIN(contentSize.height - scrollViewHeight,
+                                                                              contentOffset.y + keyboardHeight - previousKeyboardHeight),
+                                                                              -topInset);
 
                                                       scrollView.contentOffset = CGPointMake(contentOffset.x, newOffset);
                                                   }

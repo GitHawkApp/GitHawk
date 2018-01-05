@@ -52,7 +52,7 @@ final class MilestonesViewController: UITableViewController {
 
     @IBAction func onDone(_ sender: Any) {
         delegate?.didDismiss(controller: self, selected: selected)
-        dismiss(animated: true)
+        dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func onRefresh() {
@@ -94,7 +94,7 @@ final class MilestonesViewController: UITableViewController {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         let milestone = milestones[indexPath.row]
         if milestone == selected {
             selected = nil

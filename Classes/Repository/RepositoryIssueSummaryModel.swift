@@ -21,7 +21,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
     let labels: [RepositoryLabel]
 
     // quicker comparison for diffing rather than scanning the labels array
-    private let labelSummary: String
+    let labelSummary: String
 
     init(
         id: String,

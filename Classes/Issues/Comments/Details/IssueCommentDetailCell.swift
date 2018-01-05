@@ -16,23 +16,19 @@ protocol IssueCommentDetailCellDelegate: class {
     func didTapProfile(cell: IssueCommentDetailCell)
 }
 
-final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
+final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueCommentDetailCellDelegate?
 
-    private let authorBackgroundView = UIView()
     private let imageView = UIImageView()
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let editedLabel = ShowMoreDetailsLabel()
     private let moreButton = UIButton()
     private var login = ""
-    private var border: UIView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
@@ -46,7 +42,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
             make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
@@ -72,8 +68,9 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
 
         moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 9, bottom: 12, right: Styles.Sizes.gutter)
-        moreButton.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        moreButton.contentVerticalAlignment = .center
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.imageView?.contentMode = .center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
         moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
@@ -81,16 +78,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonMin)
             make.centerY.equalTo(imageView)
-            make.right.equalTo(contentView)
-        }
-
-        border = addBorder(.top, useSafeMargins: false)
-
-        authorBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
-        contentView.insertSubview(authorBackgroundView, at: 0)
-        authorBackgroundView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(contentView)
-            make.bottom.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing)
+            make.right.equalTo(-Styles.Sizes.commentGutter)
         }
 
         editedLabel.font = Styles.Fonts.secondary
@@ -102,11 +90,6 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
         }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -114,7 +97,7 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
     // MARK: Public API
 
     func setBorderVisible(_ visible: Bool) {
-        border?.isHidden = !visible
+        border = visible ? .head : .neck
     }
 
     // MARK: Private API
@@ -135,7 +118,11 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
-        authorBackgroundView.isHidden = !viewModel.didAuthor
+
+        backgroundColor = viewModel.didAuthor
+            ? Styles.Colors.Blue.light.color
+            : .white
+
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
@@ -146,10 +133,10 @@ final class IssueCommentDetailCell: UICollectionViewCell, ListBindable {
             let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
             let editedByOwner = NSLocalizedString("Edited", comment: "")
             let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
-            editedLabel.text = "\(Constants.Strings.bullet) " + String.localizedStringWithFormat(format, editedLogin)
+            editedLabel.text = "\(Constants.Strings.bullet) \(String(format: format, editedLogin))"
 
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
-            editedLabel.detailText = String.localizedStringWithFormat(detailFormat, editedLogin, editedDate.agoString)
+            editedLabel.detailText = String(format: detailFormat, arguments: [editedLogin, editedDate.agoString])
         } else {
             editedLabel.isHidden = true
         }

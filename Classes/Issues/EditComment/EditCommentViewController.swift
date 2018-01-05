@@ -8,40 +8,51 @@
 
 import UIKit
 import SnapKit
+import MessageViewController
 
 protocol EditCommentViewControllerDelegate: class {
     func didEditComment(viewController: EditCommentViewController, markdown: String)
     func didCancel(viewController: EditCommentViewController)
 }
 
-class EditCommentViewController: UIViewController, UITextViewDelegate {
+final class EditCommentViewController: UIViewController,
+MessageTextViewListener {
 
     weak var delegate: EditCommentViewControllerDelegate?
 
     private let commentID: Int
     private let client: GithubClient
-    private let textView = UITextView()
+    private let textView = MessageTextView()
     private let textActionsController = TextActionsController()
     private let issueModel: IssueDetailsModel
     private let isRoot: Bool
     private let originalMarkdown: String
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
+    private let autocompleteController: AutocompleteController
 
     init(
         client: GithubClient,
         markdown: String,
         issueModel: IssueDetailsModel,
         commentID: Int,
-        isRoot: Bool
+        isRoot: Bool,
+        autocomplete: IssueCommentAutocomplete
         ) {
         self.client = client
         self.issueModel = issueModel
         self.commentID = commentID
         self.isRoot = isRoot
         self.originalMarkdown = markdown
+        self.autocompleteController = AutocompleteController(
+            messageAutocompleteController: MessageAutocompleteController(textView: textView),
+            autocomplete: autocomplete
+        )
+
         super.init(nibName: nil, bundle: nil)
+
         textView.text = markdown
-        textView.delegate = self
+        textView.add(listener: self)
+        autocompleteController.messageAutocompleteController.layoutDelegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -139,7 +150,7 @@ class EditCommentViewController: UIViewController, UITextViewDelegate {
                     dismissBlock()
                 }
                 ])
-            present(alert, animated: true)
+            present(alert, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -173,8 +184,12 @@ class EditCommentViewController: UIViewController, UITextViewDelegate {
         ToastManager.showGenericError()
     }
 
-    func textViewDidChange(_ textView: UITextView) {
+    // MARK: MessageTextViewListener
+
+    func didChange(textView: MessageTextView) {
         navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
     }
+
+    func didChangeSelection(textView: MessageTextView) {}
 
 }

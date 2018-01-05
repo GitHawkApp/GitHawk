@@ -12,7 +12,7 @@ import IGListKit
 final class IssueReviewSectionController: ListBindingSectionController<IssueReviewModel>,
     ListBindingSectionControllerDataSource,
 IssueReviewDetailsCellDelegate,
-AttributedStringViewIssueDelegate,
+AttributedStringViewExtrasDelegate,
 IssueReviewViewCommentsCellDelegate {
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -29,10 +29,12 @@ IssueReviewViewCommentsCellDelegate {
     private let viewCommentsModel = "viewComments" as ListDiffable
     private let tailModel = "tail" as ListDiffable
     private let client: GithubClient
+    private let autocomplete: IssueCommentAutocomplete
 
-    init(model: IssueDetailsModel, client: GithubClient) {
+    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
         self.model = model
         self.client = client
+        self.autocomplete = autocomplete
         super.init()
         self.inset = Styles.Sizes.listInsetLarge
         self.dataSource = self
@@ -110,7 +112,7 @@ IssueReviewViewCommentsCellDelegate {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
-            issueAttributedDelegate: self,
+            extrasAttributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -135,11 +137,19 @@ IssueReviewViewCommentsCellDelegate {
         viewController?.show(controller, sender: nil)
     }
 
+    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
+        
+    }
+
     // MARK: IssueReviewViewCommentsCellDelegate
 
     func didTapViewComments(cell: IssueReviewViewCommentsCell) {
-        let controller = PullRequestReviewCommentsViewController(model: model, client: client)
-        viewController?.navigationController?.pushViewController(controller, animated: true)
+        let controller = PullRequestReviewCommentsViewController(
+            model: model,
+            client: client,
+            autocomplete: autocomplete
+        )
+        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

@@ -10,29 +10,31 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import SafariServices
-import SlackTextViewController
 import SnapKit
 import FlatCache
+import MessageViewController
 
-final class IssuesViewController: SLKTextViewController,
+final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
-    IssueCommentAutocompleteDelegate,
-FeedSelectionProviding,
-IssueNeckLoadSectionControllerDelegate,
-FlatCacheListener {
+    FeedSelectionProviding,
+    IssueNeckLoadSectionControllerDelegate,
+    FlatCacheListener,
+IssueManagingNavSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
-    private let autocomplete = IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var needsScrollToBottom = false
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
+    private var autocompleteController: AutocompleteController!
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
+    private let manageKey = "manageKey" as ListDiffable
 
     lazy private var feed: Feed = { Feed(
         viewController: self,
@@ -46,7 +48,7 @@ FlatCacheListener {
             let hidden: Bool
             if let id = resultID,
                 let result = self.client.cache.get(id: id) as IssueResult? {
-                hidden = result.status.locked && !result.viewerCanUpdate
+                hidden = result.status.locked && !viewerIsCollaborator
 
                 let bookmark = Bookmark(
                     type: result.pullRequest ? .pullRequest : .issue,
@@ -61,10 +63,7 @@ FlatCacheListener {
             } else {
                 hidden = true
             }
-            self.setTextInputbarHidden(hidden, animated: true)
-
-            // hack required to get textInputBar.contentView + textView laid out correctly
-            self.textInputbar.layoutIfNeeded()
+            self.setMessageView(hidden: hidden, animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -89,15 +88,17 @@ FlatCacheListener {
         self.addCommentClient = AddCommentClient(client: client)
         self.needsScrollToBottom = scrollToBottom
 
-        // force unwrap, this absolutely must work
-        super.init(collectionViewLayout: ListCollectionViewLayout.basic())!
+        super.init(nibName: nil, bundle: nil)
+
+        self.autocompleteController = AutocompleteController(
+            messageAutocompleteController: messageAutocompleteController,
+            autocomplete: IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
+        )
 
         self.hidesBottomBarWhenPushed = true
         self.addCommentClient.addListener(listener: self)
 
-        // not registered until request is finished and self.registerPrefixes(...) is called
-        // must have user autocompletes
-        autocomplete.configure(tableView: autoCompletionView, delegate: self)
+        cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -109,31 +110,33 @@ FlatCacheListener {
 
         makeBackBarItemEmpty()
 
-        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)")
+        let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
+        let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
+        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)", accessibilityLabel: labelString)
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
+        // setup after feed is lazy loaded
+        setup(scrollView: collectionView)
+        setMessageView(hidden: true, animated: false)
+
         // override Feed bg color setting
         view.backgroundColor = Styles.Colors.background
 
-        // override default SLKTextViewController values
-        isInverted = false
-        textView.placeholder = NSLocalizedString("Leave a comment", comment: "")
-        textView.placeholderColor = Styles.Colors.Gray.light.color
-        textView.keyboardType = .twitter
-        textView.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        textInputbar.backgroundColor = Styles.Colors.Gray.lighter.color
-        rightButton.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
-        rightButton.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
-
-        collectionView?.keyboardDismissMode = .interactive
-
-        // displayed once an add comment client is created (requires a gql subject id)
-        setTextInputbarHidden(true, animated: false)
+        // setup message view properties
+        borderColor = Styles.Colors.Gray.border.color
+        messageView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
+        messageView.placeholderTextColor = Styles.Colors.Gray.light.color
+        messageView.keyboardType = .twitter
+        messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        messageView.buttonTint = Styles.Colors.Blue.medium.color
+        messageView.font = Styles.Fonts.body
+        messageView.inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: Styles.Sizes.gutter, bottom: 4, right: Styles.Sizes.gutter)
+        messageView.addButton(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
-            return self?.textView.text ?? ""
+            return self?.messageView.text ?? ""
         }
         let actions = IssueTextActionsView.forMarkdown(
             viewController: self,
@@ -145,19 +148,12 @@ FlatCacheListener {
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
-        
-        textActionsController.configure(client: client, textView: textView, actions: actions)
+
+        textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
-        
-        let contentView = textInputbar.contentView
-        contentView.addSubview(actions)
-        actions.snp.makeConstraints { (make) in
-            make.height.equalTo(30)
-            make.top.equalTo(contentView)
-            make.bottom.equalTo(contentView).offset(-4).priority(999)
-            make.left.right.equalTo(contentView)
-        }
-        self.textInputbar.layoutIfNeeded()
+
+        actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
+        messageView.add(contentView: actions)
 
         navigationItem.rightBarButtonItem = moreOptionsItem
     }
@@ -183,54 +179,20 @@ FlatCacheListener {
         feed.viewWillLayoutSubviews(view: view)
     }
 
-    // MARK: SLKTextViewController overrides
+    // MARK: Private API
 
-    override func keyForTextCaching() -> String? {
-        return "issue.\(model.owner).\(model.repo).\(model.number)"
-    }
-
-    override func didPressRightButton(_ sender: Any?) {
+    @objc func didPressButton(_ sender: Any?) {
         // get text before calling super b/c it will clear it
-        let text = textView.text
+        let text = messageView.text
+        messageView.text = ""
 
-        super.didPressRightButton(sender)
-
-        if let id = resultID,
-            let text = text {
+        if let id = resultID {
             addCommentClient.addComment(
                 subjectId: id,
                 body: text
             )
         }
     }
-
-    override func didChangeAutoCompletionPrefix(_ prefix: String, andWord word: String) {
-        autocomplete.didChange(tableView: autoCompletionView, prefix: prefix, word: word)
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return autocomplete.resultCount(prefix: foundPrefix)
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return autocomplete.cell(tableView: tableView, prefix: foundPrefix, indexPath: indexPath)
-    }
-
-    override func heightForAutoCompletionView() -> CGFloat {
-        return autocomplete.resultHeight(prefix: foundPrefix)
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let accept = autocomplete.accept(prefix: foundPrefix, indexPath: indexPath) {
-            acceptAutoCompletion(with: accept + " ", keepPrefix: false)
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return autocomplete.cellHeight
-    }
-
-    // MARK: Private API
 
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
@@ -256,32 +218,9 @@ FlatCacheListener {
         navigationItem.rightBarButtonItems = items
     }
 
-    func closeAction() -> UIAlertAction? {
-        guard result?.viewerCanUpdate == true,
-            let status = result?.status.status,
-            status != .merged
-            else { return nil }
-
-        return AlertAction.toggleIssue(status) { [weak self] _ in
-            self?.setStatus(close: status == .open)
-            Haptic.triggerNotification(.success)
-        }
-    }
-
-    func lockAction() -> UIAlertAction? {
-        guard result?.viewerCanUpdate == true, let locked = result?.status.locked else {
-            return nil
-        }
-
-        return AlertAction.toggleLocked(locked) { [weak self] _ in
-            self?.setLocked(!locked)
-            Haptic.triggerNotification(.success)
-        }
-    }
-
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
-        
+
         let repo = RepositoryDetails(
             owner: model.owner,
             name: model.repo,
@@ -298,26 +237,24 @@ FlatCacheListener {
         let issueType = result?.pullRequest == true
             ? Constants.Strings.pullRequest
             : Constants.Strings.issue
-        
+
         let alertTitle = "\(issueType) #\(model.number)"
-        
+
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
 
         alert.addActions([
-            closeAction(),
-            lockAction(),
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
             viewRepoAction(),
             AlertAction.cancel()
-        ])
+            ])
         alert.popoverPresentationController?.setSourceView(sender)
-        
-        present(alert, animated: true)
+
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch(previous: Bool) {
@@ -330,7 +267,7 @@ FlatCacheListener {
                 case .success(let permission):
                     self?.viewerIsCollaborator = permission.canManage
                     // avoid finishLoading() so empty view doesn't appear
-                    self?.feed.adapter.performUpdates(animated: true)
+                    self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:
                     ToastManager.showGenericError()
                 }
@@ -350,7 +287,9 @@ FlatCacheListener {
 
             switch resultType {
             case .success(let result, let mentionableUsers):
-                strongSelf.autocomplete.add(UserAutocomplete(mentionableUsers: mentionableUsers))
+                strongSelf.autocompleteController.autocomplete.add(
+                    UserAutocomplete(mentionableUsers: mentionableUsers)
+                )
                 strongSelf.client.cache.add(listener: strongSelf, value: result)
                 strongSelf.resultID = result.id
             default: break
@@ -367,41 +306,18 @@ FlatCacheListener {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
             if self?.needsScrollToBottom == true {
                 self?.needsScrollToBottom = false
-                self?.feed.collectionView.slk_scrollToBottom(animated: true)
+                self?.feed.collectionView.slk_scrollToBottom(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
 
     func onPreview() {
         let controller = IssuePreviewViewController(
-            markdown: textView.text,
+            markdown: messageView.text,
             owner: model.owner,
             repo: model.repo
         )
         showDetailViewController(controller, sender: nil)
-    }
-
-    func setStatus(close: Bool) {
-        guard let previous = result else { return }
-
-        client.setStatus(
-            previous: previous,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            close: close
-        )
-    }
-
-    func setLocked(_ locked: Bool) {
-        guard let previous = result else { return }
-        client.setLocked(
-            previous: previous,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            locked: locked
-        )
     }
 
     // MARK: ListAdapterDataSource
@@ -412,7 +328,7 @@ FlatCacheListener {
         var objects: [ListDiffable] = [current.status]
 
         if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+            objects.append(manageKey)
         }
 
         objects.append(current.title)
@@ -442,19 +358,35 @@ FlatCacheListener {
 
         objects += current.timelineViewModels
 
+        if viewerIsCollaborator {
+            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+        }
+
         return objects
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let object = object as? ListDiffable, object === manageKey {
+            return IssueManagingNavSectionController(delegate: self)
+        }
+
         switch object {
         case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(model: model, client: client)
-        case is IssueLabelsModel: return IssueLabelsSectionController(issueModel: model, client: client)
+        case is IssueCommentModel: return IssueCommentSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocompleteController.autocomplete.copy
+            )
+        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is IssueReviewModel: return IssueReviewSectionController(model: model, client: client)
+        case is IssueReviewModel: return IssueReviewSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocompleteController.autocomplete.copy
+            )
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
         case is IssueRenamedModel: return IssueRenamedSectionController()
@@ -503,16 +435,16 @@ FlatCacheListener {
         ) {
         guard let previous = result,
             let comment = createCommentModel(
-            id: id,
-            commentFields: commentFields,
-            reactionFields: reactionFields,
-            width: view.bounds.width,
-            owner: model.owner,
-            repo: model.repo,
-            threadState: .single,
-            viewerCanUpdate: viewerCanUpdate,
-            viewerCanDelete: viewerCanDelete,
-            isRoot: false
+                id: id,
+                commentFields: commentFields,
+                reactionFields: reactionFields,
+                width: view.bounds.width,
+                owner: model.owner,
+                repo: model.repo,
+                threadState: .single,
+                viewerCanUpdate: viewerCanUpdate,
+                viewerCanDelete: viewerCanDelete,
+                isRoot: false
             )
             else { return }
 
@@ -525,18 +457,7 @@ FlatCacheListener {
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
-        textView.text = body
-    }
-
-    // MARK: IssueCommentAutocompleteDelegate
-
-    func didFinish(autocomplete: IssueCommentAutocomplete, hasResults: Bool) {
-        showAutoCompletionView(hasResults)
-    }
-
-    func didChangeStore(autocomplete: IssueCommentAutocomplete) {
-        registerPrefixes(forAutoCompletion: autocomplete.prefixes)
-        autoCompletionView.reloadData()
+        messageView.text = body
     }
 
     // MARK: FeedSelectionProviding
@@ -560,6 +481,12 @@ FlatCacheListener {
             updateAndScrollIfNeeded()
         case .list: break
         }
+    }
+
+    // MARK: IssueManagingNavSectionControllerDelegate
+
+    func didSelect(managingNavController: IssueManagingNavSectionController) {
+        collectionView.scrollToBottom(animated: true)
     }
 
 }

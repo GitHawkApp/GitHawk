@@ -69,7 +69,7 @@ ListBindingSectionControllerDataSource {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: viewController,
-            issueAttributedDelegate: nil,
+            extrasAttributedDelegate: nil,
             imageHeightDelegate: imageCache
         )
 

@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "apollo-codegen": "^0.17.0-alpha.13"
+    "apollo-codegen": "0.17.0-alpha.13"
   }
 }

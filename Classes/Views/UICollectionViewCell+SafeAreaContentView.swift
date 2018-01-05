@@ -11,6 +11,10 @@ import UIKit
 extension UICollectionViewCell {
 
     func layoutContentViewForSafeAreaInsets() {
+        layoutContentViewForSafeAreaInsets(bounds: self.bounds)
+    }
+
+    func layoutContentViewForSafeAreaInsets(bounds: CGRect) {
         let insets: UIEdgeInsets
         if #available(iOS 11.0, *) {
             insets = safeAreaInsets

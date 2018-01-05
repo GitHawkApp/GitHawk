@@ -25,7 +25,7 @@ extension UIMenuController {
             UIMenuItem(title: $0.rawValue, action: #selector(UIMenuController._empty))
         }
         setTargetRect(fromView.bounds, in: fromView)
-        setMenuVisible(true, animated: true)
+        setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func _empty() {}

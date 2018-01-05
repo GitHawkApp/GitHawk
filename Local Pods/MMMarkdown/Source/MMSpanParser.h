@@ -35,7 +35,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface MMSpanParser : NSObject
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions;
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository;
 
 - (nullable NSArray *)parseSpansInBlockElement:(MMElement *)block withScanner:(MMScanner *)scanner;
 

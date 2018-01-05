@@ -9,13 +9,15 @@
 import UIKit
 import SnapKit
 
-final class IssueMilestoneCell: SelectableCell {
+final class IssueMilestoneCell: UICollectionViewCell {
 
     private let titleLabel = UILabel()
     private let progress = UIProgressView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         titleLabel.backgroundColor = .clear
         contentView.addSubview(titleLabel)
@@ -44,22 +46,26 @@ final class IssueMilestoneCell: SelectableCell {
     // MARK: Public API
 
     func configure(milestone: Milestone) {
-        let milestoneAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondary
+        let milestoneAttributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: Styles.Colors.Gray.light.color,
+            .font: Styles.Fonts.secondary
         ]
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
             attributes: milestoneAttributes
         )
-        let titleAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
+        let titleAttributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: Styles.Colors.Gray.dark.color,
+            .font: Styles.Fonts.secondaryBold
         ]
         titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
 
-        progress.progress = Float(milestone.openIssueCount) / Float(milestone.totalIssueCount)
+        progress.progress = Float(milestone.totalIssueCount - milestone.openIssueCount) / Float(milestone.totalIssueCount)
+
+        let milestoneFormat = NSLocalizedString("Milestone: %@, %.0f percent completed.", comment: "The accessibility label for a repositories' milestone")
+        let percentProgress = progress.progress * 100
+        accessibilityLabel = String(format: milestoneFormat, arguments: [milestone.title, percentProgress])
     }
 
 }

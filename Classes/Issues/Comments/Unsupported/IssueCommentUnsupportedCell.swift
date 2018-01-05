@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentUnsupportedCell: DoubleTappableCell, ListBindable {
+final class IssueCommentUnsupportedCell: IssueCommentBaseCell, ListBindable {
 
     let label = UILabel()
 
@@ -31,11 +31,6 @@ final class IssueCommentUnsupportedCell: DoubleTappableCell, ListBindable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: ListBindable

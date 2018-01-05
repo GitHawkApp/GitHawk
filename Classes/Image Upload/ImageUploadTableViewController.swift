@@ -122,7 +122,7 @@ class ImageUploadTableViewController: UITableViewController {
 
     @IBAction func didPressCancel() {
         let dismissBlock = {
-            self.dismiss(animated: true)
+            self.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
         if titleText == nil && descriptionText == nil {
@@ -141,7 +141,7 @@ class ImageUploadTableViewController: UITableViewController {
             }
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     @IBAction func didPressUpload() {
@@ -194,7 +194,7 @@ class ImageUploadTableViewController: UITableViewController {
 
                 case .success(let link):
                     self?.delegate?.imageUploaded(link: link, altText: name)
-                    self?.dismiss(animated: true)
+                    self?.dismiss(animated: trueUnlessReduceMotionEnabled)
                 }
 
             }
@@ -203,7 +203,7 @@ class ImageUploadTableViewController: UITableViewController {
     
     @IBAction func didPressPreviewImage() {
         let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
-        present(previewViewController, animated: true)
+        present(previewViewController, animated: trueUnlessReduceMotionEnabled)
     }
 }
 

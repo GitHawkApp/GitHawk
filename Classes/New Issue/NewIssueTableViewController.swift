@@ -159,7 +159,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             }
 
             let delegate = strongSelf.delegate
-            strongSelf.dismiss(animated: true, completion: {
+            strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
                 delegate?.didDismissAfterCreatingIssue(model: model)
             })
         }

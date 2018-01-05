@@ -20,21 +20,24 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: IssueMilestoneCell.self, for: self, at: index) as? IssueMilestoneCell,
-        let object = self.object
+            let object = self.object
             else { fatalError("Missing context, cell wrong type, or missing object") }
         cell.configure(milestone: object)
         return cell
     }
 
     override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
         guard let number = object?.number else { return }
         viewController?.presentMilestone(owner: issueModel.owner, repo: issueModel.repo, milestone: number)
     }
 
 }
+

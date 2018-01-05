@@ -85,4 +85,8 @@ final class IssueCommentAutocomplete {
         return autocomplete.accept(index: indexPath.item)
     }
 
+    var copy: IssueCommentAutocomplete {
+        return IssueCommentAutocomplete(autocompletes: Array(map.values))
+    }
+
 }

@@ -63,7 +63,7 @@ static NSString * __HTMLEntityForCharacter(unichar character)
 
 #pragma mark - Public Methods
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository
 {
     self = [super init];
     
@@ -71,7 +71,7 @@ static NSString * __HTMLEntityForCharacter(unichar character)
     {
         _extensions = extensions;
         _htmlParser = [MMHTMLParser new];
-        _spanParser = [[MMSpanParser alloc] initWithExtensions:extensions];
+        _spanParser = [[MMSpanParser alloc] initWithExtensions:extensions owner:owner repository:repository];
     }
     
     return self;
@@ -81,13 +81,14 @@ static NSString * __HTMLEntityForCharacter(unichar character)
 {
     // It would be better to not replace all the tabs with spaces. But this will do for now.
     markdown = [self _removeTabsFromString:markdown];
-    
+
     MMScanner  *scanner  = [MMScanner scannerWithString:markdown];
+
     MMDocument *document = [MMDocument documentWithMarkdown:markdown];
-    
+
     document.elements = [self _parseElementsWithScanner:scanner];
     [self _updateLinksFromDefinitionsInDocument:document];
-    
+
     return document;
 }
 
@@ -910,7 +911,13 @@ static NSString * __HTMLEntityForCharacter(unichar character)
             }
             else
             {
-                element.children = [self.spanParser parseSpansInBlockElement:element withScanner:preListScanner];
+                NSMutableArray *children = [NSMutableArray new];
+                MMElement *checkbox = [self _parseListCheckboxWithScanner:preListScanner];
+                if (checkbox) {
+                    [children addObject:checkbox];
+                }
+                [children addObjectsFromArray:[self.spanParser parseSpansInBlockElement:element withScanner:preListScanner]];
+                element.children = children;
             }
             
             element.children = [element.children arrayByAddingObjectsFromArray:[self _parseElementsWithScanner:postListScanner]];
@@ -924,12 +931,78 @@ static NSString * __HTMLEntityForCharacter(unichar character)
             }
             else
             {
-                element.children = [self.spanParser parseSpansInBlockElement:element withScanner:innerScanner];
+                NSMutableArray *children = [NSMutableArray new];
+                MMElement *checkbox = [self _parseListCheckboxWithScanner:innerScanner];
+                if (checkbox) {
+                    [children addObject:checkbox];
+                }
+                [children addObjectsFromArray:[self.spanParser parseSpansInBlockElement:element withScanner:innerScanner]];
+                element.children = children;
             }
         }
     }
     
     return element;
+}
+
+- (MMElement *)_parseListCheckboxWithScanner:(MMScanner *)scanner
+{
+    [scanner skipWhitespace];
+    
+    const NSRange range = NSMakeRange(scanner.location, 3);
+    NSString *string = scanner.string;
+
+    if (string.length - range.location < range.length) {
+        return nil;
+    }
+
+    NSString *substring = [string substringWithRange:range];
+    BOOL checked = NO;
+
+    if ([substring isEqualToString:@"[x]"] || [substring isEqualToString:@"[X]"]) {
+        checked = YES;
+    } else if (![substring isEqualToString:@"[ ]"]) {
+        return nil;
+    }
+
+    scanner.location += range.length;
+
+    MMElement *element = [MMElement new];
+    element.type = MMElementTypeCheckbox;
+    element.range = range;
+    element.checked = checked;
+
+    return element;
+
+//    const NSInteger start = scanner.startLocation;
+//
+//    if (scanner.nextCharacter != '[') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    BOOL checked = NO;
+//    if (scanner.nextCharacter == 'x') {
+//        checked = YES;
+//    } else if (scanner.nextCharacter != ' ') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    if (scanner.nextCharacter != ']') {
+//        return nil;
+//    }
+//
+//    [scanner advance];
+//
+//    MMElement *element = [MMElement new];
+//    element.type = MMElementTypeCheckboxes;
+//    element.range = NSMakeRange(start, 3);
+//    element.checked = checked;
+//
+//    return element;
 }
 
 - (MMElement *)_parseListWithScanner:(MMScanner *)scanner

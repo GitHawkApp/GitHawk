@@ -25,8 +25,8 @@ ListSingleSectionControllerDelegate {
             emptyErrorMessage: NSLocalizedString("Cannot load changes.", comment: ""),
             dataSource: self
         )
-        let titleFormat = NSLocalizedString("Files (%zi)", comment: "")
-        title = String.localizedStringWithFormat(titleFormat, fileCount)
+        let titleFormat = NSLocalizedString("Files (%d)", comment: "")
+        title = String(format: titleFormat, fileCount)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,9 +56,9 @@ ListSingleSectionControllerDelegate {
             } else {
                 self.files = files
             }
-            update(page: next as NSNumber?, animated: true)
+            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
         case .error:
-            error(animated: true)
+            error(animated: trueUnlessReduceMotionEnabled)
         }
     }
 
