@@ -216,6 +216,7 @@ open class PageboyViewController: UIViewController {
     public let autoScroller = PageboyAutoScroller()
     
     /// Whether to show the built-in UIPageViewController page control.
+    @available(*, deprecated: 1.2.0, message: "Temporarily unavailable due to iOS 11.2 UIPageViewController issue. See here: https://github.com/uias/Pageboy/issues/128")
     public var showsPageControl: Bool = false
     
     // MARK: Lifecycle
