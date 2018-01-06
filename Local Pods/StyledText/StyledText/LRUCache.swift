@@ -8,11 +8,11 @@
 
 import Foundation
 
-internal protocol LRUCachable {
+public protocol LRUCachable {
     var cachedSize: Int { get }
 }
 
-internal final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
+public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     internal class Node {
 
@@ -54,7 +54,7 @@ internal final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
     public let maxSize: Int
     public let compaction: Compaction
 
-    init(maxSize: Int, compaction: Compaction = .default, clearOnWarning: Bool = false) {
+    public init(maxSize: Int, compaction: Compaction = .default, clearOnWarning: Bool = false) {
         self.maxSize = maxSize
 
         switch compaction {

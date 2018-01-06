@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import StyledText
 
 extension CGSize {
 
@@ -77,24 +78,38 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         super.init()
 
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(NSAttributedStringSizing.onMemoryWarning),
-            name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
-            object: nil
-        )
-
-        computeSize(containerWidth)
+        computeSize(CacheKey(attributedText: attributedText, width: containerWidth))
     }
 
     // MARK: Public API
 
-    private var _textSize = [CGFloat: CGSize]()
+    private struct CacheKey: Hashable, Equatable {
+        let attributedText: NSAttributedString
+        let width: CGFloat
+
+        var hashValue: Int {
+            return attributedText.combineHash(with: width)
+        }
+
+        public static func == (lhs: CacheKey, rhs: CacheKey) -> Bool {
+            return lhs.width == rhs.width
+            && lhs.attributedText == rhs.attributedText
+        }
+
+    }
+
+    private static let globalSizeCache = LRUCache<CacheKey, CGSize>(
+        maxSize: 1000,
+        compaction: LRUCache.Compaction.default,
+        clearOnWarning: true
+    )
+
     func textSize(_ width: CGFloat) -> CGSize {
-        if let cache = _textSize[width] {
+        let key = CacheKey(attributedText: attributedText, width: width)
+        if let cache = NSAttributedStringSizing.globalSizeCache[key] {
             return cache
         }
-        return computeSize(width)
+        return computeSize(key)
     }
 
     func textViewSize(_ width: CGFloat) -> CGSize {
@@ -130,10 +145,16 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private var _contents = [String: CGImage]()
+    private static let globalBitmapCache = LRUCache<CacheKey, CGImage>(
+        maxSize: 1024 * 1024 * 20, // 20mb
+        compaction: LRUCache.Compaction.default,
+        clearOnWarning: true
+    )
+
     func contents(_ width: CGFloat) -> CGImage? {
-        let key = "\(width)"
-        if let contents = _contents[key] {
+        let key = CacheKey(attributedText: attributedText, width: width)
+
+        if let contents = NSAttributedStringSizing.globalBitmapCache[key] {
             return contents
         }
 
@@ -149,9 +170,7 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
         let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
         UIGraphicsEndImageContext()
 
-        // keep only one bitmap at a time
-        _contents.removeAll()
-        _contents[key] = contents
+        NSAttributedStringSizing.globalBitmapCache[key] = contents
 
         return contents
     }
@@ -168,8 +187,8 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
     // MARK: Private API
 
     @discardableResult
-    func computeSize(_ width: CGFloat) -> CGSize {
-        let insetWidth = max(width - inset.left - inset.right, 0)
+    private func computeSize(_ key: CacheKey) -> CGSize {
+        let insetWidth = max(key.width - inset.left - inset.right, 0)
         textContainer.size = CGSize(width: insetWidth, height: 0)
 
         // find the size of the text now that everything is configured
@@ -177,13 +196,9 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
 
         // snap to pixel
         let size = bounds.size.snapped(scale: screenScale)
-        _textSize[width] = size
+        NSAttributedStringSizing.globalSizeCache[key] = size
 
         return size
-    }
-
-    @objc func onMemoryWarning() {
-        _contents.removeAll()
     }
 
     // MARK: ListDiffable

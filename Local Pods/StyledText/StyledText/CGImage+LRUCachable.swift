@@ -10,7 +10,7 @@ import UIKit
 
 extension CGImage: LRUCachable {
 
-    var cachedSize: Int {
+    public var cachedSize: Int {
         return height * bytesPerRow
     }
 
