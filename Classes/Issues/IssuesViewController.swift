@@ -328,10 +328,8 @@ IssueManagingNavSectionControllerDelegate {
 
         guard let attributes = feed.collectionView.layoutAttributesForItem(at: path) else { return }
 
-        let paddedMaxY = attributes.frame.maxY + Styles.Sizes.rowSpacing
-
-        let inset = collectionView.contentInset
-        let viewportHeight = collectionView.bounds.height - inset.bottom + inset.top
+        let paddedMaxY = min(attributes.frame.maxY + Styles.Sizes.rowSpacing, collectionView.contentSize.height)
+        let viewportHeight = collectionView.bounds.height
 
         // make sure not already at the top
         guard paddedMaxY > viewportHeight else { return }
