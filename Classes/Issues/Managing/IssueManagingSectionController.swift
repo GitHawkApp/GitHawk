@@ -67,6 +67,7 @@ PeopleViewControllerDelegate {
         self.model = model
         self.client = client
         super.init()
+        inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: 0, bottom: Styles.Sizes.gutter, right: 0)
         selectionDelegate = self
         dataSource = self
     }

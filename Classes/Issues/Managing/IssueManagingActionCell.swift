@@ -26,7 +26,6 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         let tint = Styles.Colors.Blue.medium.color
 
         let iconSize = IssueManagingActionCell.iconHeight
-        imageView.tintColor = .white
         imageView.contentMode = .center
         imageView.layer.cornerRadius = iconSize/2
         imageView.backgroundColor = tint
@@ -77,7 +76,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         guard let viewModel = viewModel as? IssueManagingActionModel else { return }
         label.text = viewModel.label
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
-        imageView.backgroundColor = viewModel.color
+        imageView.tintColor = viewModel.color
+        imageView.backgroundColor = viewModel.color.withAlphaComponent(0.2)
         label.textColor = viewModel.color
     }
 
