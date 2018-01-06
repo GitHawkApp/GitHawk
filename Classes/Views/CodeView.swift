@@ -8,28 +8,22 @@
 
 import UIKit
 
-final class CodeView: UIScrollView {
+final class CodeView: UITextView {
 
-    private lazy var textView: UITextView = {
-        let view = UITextView()
-        view.font = Styles.Fonts.code
-        view.isScrollEnabled = false
-        view.isEditable = false
-        view.contentInset = .zero
-        view.textContainerInset = UIEdgeInsets(
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+
+        backgroundColor = .clear
+
+        font = Styles.Fonts.code
+        isEditable = false
+        contentInset = .zero
+        textContainerInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing,
             left: Styles.Sizes.columnSpacing,
             bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.columnSpacing
         )
-        self.addSubview(view)
-        return view
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .clear
-        isDirectionalLockEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,11 +52,7 @@ final class CodeView: UIScrollView {
     }
 
     func set(attributedCode: NSAttributedString) {
-        textView.attributedText = attributedCode
-        let max = CGFloat.greatestFiniteMagnitude
-        let size = textView.sizeThatFits(CGSize(width: max, height: max))
-        textView.frame = CGRect(origin: .zero, size: size)
-        contentSize = size
+        attributedText = attributedCode
     }
 
 }
