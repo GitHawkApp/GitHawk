@@ -12,8 +12,7 @@ import SnapKit
 final class IssueReactionCell: UICollectionViewCell {
 
     private static var cache = [String: CGFloat]()
-    private static let padding: CGFloat = 3
-    private static let spacing: CGFloat = 6
+    private static let spacing: CGFloat = 4
     private static var emojiFont: UIFont { return UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2) }
     private static var countFont: UIFont { return Styles.Fonts.body }
 
@@ -25,7 +24,7 @@ final class IssueReactionCell: UICollectionViewCell {
 
         let emojiWidth = (emoji as NSString).size(withAttributes: [.font: emojiFont]).width
         let countWidth = ("\(count)" as NSString).size(withAttributes: [.font: countFont]).width
-        let width = emojiWidth + countWidth + 2*padding + spacing
+        let width = emojiWidth + countWidth + 3 * spacing
         cache[key] = width
         return width
     }
@@ -46,7 +45,7 @@ final class IssueReactionCell: UICollectionViewCell {
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView).offset(IssueReactionCell.padding)
+            make.left.equalTo(contentView).offset(IssueReactionCell.spacing)
         }
 
         countLabel.textAlignment = .center
