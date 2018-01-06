@@ -10,7 +10,7 @@ import Foundation
 
 extension Hashable {
 
-    internal func combineHash<T: Hashable>(with hashableOther: T) -> Int {
+    public func combineHash<T: Hashable>(with hashableOther: T) -> Int {
         let ownHash = self.hashValue
         let otherHash = hashableOther.hashValue
         return (ownHash << 5) &+ ownHash &+ otherHash
