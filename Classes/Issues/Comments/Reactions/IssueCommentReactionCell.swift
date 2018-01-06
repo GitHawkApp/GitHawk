@@ -29,6 +29,7 @@ UICollectionViewDelegateFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
