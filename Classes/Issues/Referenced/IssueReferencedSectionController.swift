@@ -44,7 +44,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
             client: client,
             model: model
         )
-        viewController?.showDetailViewController(controller, sender: nil)
+        viewController?.show(controller, sender: nil)
     }
 
 }

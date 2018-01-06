@@ -401,7 +401,7 @@ IssueCommentDoubleTapDelegate {
         react(cell: cell, content: reaction, isAdd: false)
     }
 
-    // MARK: AttributedStringViewIssueDelegate
+    // MARK: AttributedStringViewExtrasDelegate
 
     func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
         let controller = IssuesViewController(client: client, model: issue)
