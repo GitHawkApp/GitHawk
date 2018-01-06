@@ -11,6 +11,25 @@ import SnapKit
 
 final class IssueReactionCell: UICollectionViewCell {
 
+    private static var cache = [String: CGFloat]()
+    private static let padding: CGFloat = 3
+    private static let spacing: CGFloat = 6
+    private static var emojiFont: UIFont { return UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2) }
+    private static var countFont: UIFont { return Styles.Fonts.body }
+
+    static func width(emoji: String, count: Int) -> CGFloat {
+        let key = "\(emoji)\(count)"
+        if let cached = cache[key] {
+            return cached
+        }
+
+        let emojiWidth = (emoji as NSString).size(withAttributes: [.font: emojiFont]).width
+        let countWidth = ("\(count)" as NSString).size(withAttributes: [.font: countFont]).width
+        let width = emojiWidth + countWidth + 2*padding + spacing
+        cache[key] = width
+        return width
+    }
+
     private let emojiLabel = UILabel()
     private let countLabel = ShowMoreDetailsLabel()
     private var detailText = ""
@@ -20,8 +39,6 @@ final class IssueReactionCell: UICollectionViewCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        let offset: CGFloat = 6
-
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
         // hint bigger emoji than labels
@@ -29,7 +46,7 @@ final class IssueReactionCell: UICollectionViewCell {
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.centerX.equalTo(contentView).offset(-offset)
+            make.left.equalTo(contentView).offset(IssueReactionCell.padding)
         }
 
         countLabel.textAlignment = .center
@@ -39,7 +56,7 @@ final class IssueReactionCell: UICollectionViewCell {
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in
             make.centerY.equalTo(emojiLabel)
-            make.left.equalTo(emojiLabel.snp.right).offset(offset)
+            make.left.equalTo(emojiLabel.snp.right).offset(IssueReactionCell.spacing)
         }
 
         let longPress = UILongPressGestureRecognizer(
