@@ -363,6 +363,12 @@ IssueCommentDoubleTapDelegate {
             preferredStyle: .actionSheet
         )
         alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = CGRect(
+            x: sender.bounds.midX,
+            y: sender.bounds.midY,
+            width: sender.bounds.width,
+            height: sender.bounds.height
+        )
         alert.addActions([
             shareAction(sender: sender),
             editAction(),
