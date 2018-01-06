@@ -15,8 +15,17 @@ final class NotificationCell: SwipeSelectableCell {
         top: Styles.Fonts.title.lineHeight + 2*Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
+        right: Styles.Sizes.gutter + Styles.Sizes.icon.width + Styles.Sizes.columnSpacing
     )
+
+    static var minHeight: CGFloat {
+        // comment icon
+        return Styles.Sizes.icon.height
+            // date, comment count labels
+            + 2 * Styles.Fonts.secondary.lineHeight
+            // padding
+            + 3 * Styles.Sizes.rowSpacing
+    }
 
     private let reasonImageView = UIImageView()
     private let dateLabel = ShowMoreDetailsLabel()
@@ -32,13 +41,22 @@ final class NotificationCell: SwipeSelectableCell {
 
         backgroundColor = .white
 
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(reasonImageView)
+        contentView.addSubview(textLabel)
+        contentView.addSubview(commentImageView)
+        contentView.addSubview(commentLabel)
+
         titleLabel.numberOfLines = 1
         titleLabel.font = Styles.Fonts.title
         titleLabel.textColor = Styles.Colors.Gray.light.color
-        contentView.addSubview(titleLabel)
+        titleLabel.lineBreakMode = .byTruncatingMiddle
+        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(NotificationCell.labelInset.left)
+            make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
 
         dateLabel.backgroundColor = .clear
@@ -46,7 +64,7 @@ final class NotificationCell: SwipeSelectableCell {
         dateLabel.font = Styles.Fonts.secondary
         dateLabel.textColor = Styles.Colors.Gray.light.color
         dateLabel.textAlignment = .right
-        contentView.addSubview(dateLabel)
+        dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         dateLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
@@ -54,7 +72,6 @@ final class NotificationCell: SwipeSelectableCell {
 
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
-        contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.top.equalTo(NotificationCell.labelInset.top)
@@ -62,26 +79,23 @@ final class NotificationCell: SwipeSelectableCell {
         }
 
         textLabel.numberOfLines = 0
-        contentView.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
+            make.top.left.right.equalTo(contentView).inset(NotificationCell.labelInset)
         }
 
         commentImageView.tintColor = dateLabel.textColor
         commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
         commentImageView.backgroundColor = .clear
-        contentView.addSubview(commentImageView)
         commentImageView.snp.makeConstraints { make in
-            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.columnSpacing + 2)
-            make.centerY.equalTo(titleLabel).offset(2)
+            make.right.equalTo(dateLabel)
+            make.top.equalTo(dateLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
         }
 
         commentLabel.font = dateLabel.font
         commentLabel.textColor = dateLabel.textColor
-        contentView.addSubview(commentLabel)
         commentLabel.snp.makeConstraints { make in
-            make.left.equalTo(commentImageView.snp.right).offset(Styles.Sizes.columnSpacing/2)
-            make.centerY.equalTo(titleLabel)
+            make.top.equalTo(commentImageView.snp.bottom)
+            make.centerX.equalTo(commentImageView)
         }
 
         contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
@@ -139,7 +153,7 @@ final class NotificationCell: SwipeSelectableCell {
         let commentHidden = viewModel.commentCount == 0
         commentLabel.isHidden = commentHidden
         commentImageView.isHidden = commentHidden
-        commentLabel.text = "\(viewModel.commentCount)"
+        commentLabel.text = viewModel.commentCount.abbreviated
     }
 
 }
