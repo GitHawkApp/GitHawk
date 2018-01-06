@@ -28,9 +28,10 @@ IssueManagingNavSectionControllerDelegate {
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
-    private var needsScrollToBottom = false
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
     private var autocompleteController: AutocompleteController!
+
+    private var needsScrollToBottom = false
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -306,9 +307,37 @@ IssueManagingNavSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
             if self?.needsScrollToBottom == true {
                 self?.needsScrollToBottom = false
-                self?.feed.collectionView.slk_scrollToBottom(animated: trueUnlessReduceMotionEnabled)
+                self?.scrollToLastContentElement()
             }
         }
+    }
+
+    func scrollToLastContentElement() {
+        let adapter = feed.adapter
+        let collectionView = feed.collectionView
+        let objects = adapter.objects()
+        guard objects.count > 1 else { return }
+
+        // assuming the last element is the "actions" when collaborator
+        let lastContent = objects[objects.count - (viewerIsCollaborator ? 2 : 1)]
+
+        guard let sectionController = adapter.sectionController(for: lastContent) else { return }
+
+        let lastItemIndex = sectionController.numberOfItems() - 1
+        let path = IndexPath(item: lastItemIndex, section: sectionController.section)
+
+        guard let attributes = feed.collectionView.layoutAttributesForItem(at: path) else { return }
+
+        let paddedMaxY = attributes.frame.maxY + Styles.Sizes.rowSpacing
+
+        let inset = collectionView.contentInset
+        let viewportHeight = collectionView.bounds.height - inset.bottom + inset.top
+
+        // make sure not already at the top
+        guard paddedMaxY > viewportHeight else { return }
+
+        let offset = paddedMaxY - viewportHeight
+        collectionView.setContentOffset(CGPoint(x: 0, y: offset), animated: trueUnlessReduceMotionEnabled)
     }
 
     func onPreview() {

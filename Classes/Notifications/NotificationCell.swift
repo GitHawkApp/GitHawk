@@ -22,6 +22,8 @@ final class NotificationCell: SwipeSelectableCell {
     private let dateLabel = ShowMoreDetailsLabel()
     private let titleLabel = UILabel()
     private let textLabel = UILabel()
+    private let commentLabel = UILabel()
+    private let commentImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,12 +50,10 @@ final class NotificationCell: SwipeSelectableCell {
         dateLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(titleLabel)
-            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.gutter)
         }
 
         reasonImageView.backgroundColor = .clear
         reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.tintColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(reasonImageView)
         reasonImageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
@@ -65,6 +65,23 @@ final class NotificationCell: SwipeSelectableCell {
         contentView.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(NotificationCell.labelInset)
+        }
+
+        commentImageView.tintColor = dateLabel.textColor
+        commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
+        commentImageView.backgroundColor = .clear
+        contentView.addSubview(commentImageView)
+        commentImageView.snp.makeConstraints { make in
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.columnSpacing + 2)
+            make.centerY.equalTo(titleLabel).offset(2)
+        }
+
+        commentLabel.font = dateLabel.font
+        commentLabel.textColor = dateLabel.textColor
+        contentView.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints { make in
+            make.left.equalTo(commentImageView.snp.right).offset(Styles.Sizes.columnSpacing/2)
+            make.centerY.equalTo(titleLabel)
         }
 
         contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
@@ -109,6 +126,20 @@ final class NotificationCell: SwipeSelectableCell {
         accessibilityLabel = AccessibilityHelper
             .generatedLabel(forCell: self)
             .appending(".\n\(viewModel.type.localizedString)")
+
+        let tintColor: UIColor
+        switch viewModel.state {
+        case .closed: tintColor = Styles.Colors.Red.medium.color
+        case .merged: tintColor = Styles.Colors.purple.color
+        case .open: tintColor = Styles.Colors.Green.medium.color
+        case .pending: tintColor = Styles.Colors.Blue.medium.color
+        }
+        reasonImageView.tintColor = tintColor
+
+        let commentHidden = viewModel.commentCount == 0
+        commentLabel.isHidden = commentHidden
+        commentImageView.isHidden = commentHidden
+        commentLabel.text = "\(viewModel.commentCount)"
     }
 
 }

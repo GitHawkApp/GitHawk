@@ -41,6 +41,9 @@ IssueCommentHtmlCellImageDelegate {
     // MARK: IssueCommentHtmlCellImageDelegate
 
     func webViewDidTapImage(cell: IssueCommentHtmlCell, url: URL) {
+        // cannot download svgs yet
+        guard url.pathExtension != "svg" else { return }
+
         SDWebImageDownloader.shared().downloadImage(
             with: url,
             options: [.highPriority],
