@@ -43,6 +43,7 @@ enum Styles {
         static let labelRowHeight: CGFloat = 18
         static let labelSpacing: CGFloat = 4
         static let labelTextPadding: CGFloat = 4
+        static let cardCornerRadius: CGFloat = 6
         
         enum Text {
 
