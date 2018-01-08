@@ -385,8 +385,12 @@ IssueManagingNavSectionControllerDelegate {
 
         objects += current.timelineViewModels
 
-        if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+        if viewerIsCollaborator || current.viewerCanUpdate {
+            objects.append(IssueManagingModel(
+                objectId: current.id,
+                pullRequest: current.pullRequest,
+                role: viewerIsCollaborator ? .collaborator : .author
+            ))
         }
 
         return objects
