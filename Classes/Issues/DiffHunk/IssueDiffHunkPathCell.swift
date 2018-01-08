@@ -24,11 +24,9 @@ final class IssueDiffHunkPathCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.width.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.gutter * 2)
+            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.width.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.commentGutter * 2)
         }
-
-        contentView.addBorder(.bottom)
     }
 
     required init?(coder aDecoder: NSCoder) {
