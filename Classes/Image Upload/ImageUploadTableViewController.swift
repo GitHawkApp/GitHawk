@@ -81,8 +81,12 @@ class ImageUploadTableViewController: UITableViewController {
         bodyTextField.placeholder = placeholderText
         bodyTextField.placeholderFont = Styles.Fonts.body
         bodyTextField.placeholderColor = Styles.Colors.Gray.light.color
+        bodyTextField.font = Styles.Fonts.body
+        bodyTextField.textColor = Styles.Colors.Gray.dark.color
         bodyTextField.textContainerInset = .zero
         bodyTextField.textContainer.lineFragmentPadding = 0
+        titleTextField.textColor = Styles.Colors.Gray.dark.color
+        titleTextField.font = Styles.Fonts.body
         titleTextField.attributedPlaceholder = NSAttributedString(
             string: placeholderText,
             attributes: [

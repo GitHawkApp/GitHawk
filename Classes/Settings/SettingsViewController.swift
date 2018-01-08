@@ -118,12 +118,14 @@ NewIssueTableViewControllerDelegate {
 
     func onReportBug() {
         guard let client = client,
-              let viewController = NewIssueTableViewController.create(client: client,
-                                                                      owner: "rnystrom",
-                                                                      repo: "GitHawk",
-                                                                      signature: .bugReport) else {
-            ToastManager.showGenericError()
-            return
+            let viewController = NewIssueTableViewController.create(
+                client: client,
+                owner: "rnystrom",
+                repo: "GitHawk",
+                signature: .bugReport
+            ) else {
+                ToastManager.showGenericError()
+                return
         }
         viewController.delegate = self
         let navController = UINavigationController(rootViewController: viewController)
