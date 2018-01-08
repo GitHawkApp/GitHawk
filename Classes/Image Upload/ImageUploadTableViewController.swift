@@ -75,6 +75,21 @@ class ImageUploadTableViewController: UITableViewController {
 
         // Set the left button item to cancel
         setLeftBarItem()
+
+        // Setup view colors and styles
+        let placeholderText = NSLocalizedString("Optional", comment: "")
+        bodyTextField.placeholder = placeholderText
+        bodyTextField.placeholderFont = Styles.Fonts.body
+        bodyTextField.placeholderColor = Styles.Colors.Gray.light.color
+        bodyTextField.textContainerInset = .zero
+        bodyTextField.textContainer.lineFragmentPadding = 0
+        titleTextField.attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: [
+                .foregroundColor: Styles.Colors.Gray.light.color,
+                .font: Styles.Fonts.body
+            ]
+        )
         
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
