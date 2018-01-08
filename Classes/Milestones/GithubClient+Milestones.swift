@@ -25,7 +25,17 @@ extension GithubClient {
                         milestones.append(milestone)
                     }
                 }
-                milestones.sort { $0.number < $1.number }
+                milestones.sort { lhs, rhs in
+                    if let lhsDue = lhs.dueOn, let rhsDue = rhs.dueOn {
+                        return lhsDue.compare(rhsDue) == .orderedAscending
+                    } else if lhs.dueOn != nil && rhs.dueOn == nil {
+                        return true
+                    } else if lhs.dueOn == nil && rhs.dueOn != nil {
+                        return false
+                    }
+                    
+                    return lhs.title < rhs.title
+                }
                 completion(.success(milestones))
             } else {
                 completion(.error(response.error))
