@@ -26,15 +26,16 @@ extension GithubClient {
                     }
                 }
                 milestones.sort { lhs, rhs in
-                    if let lhsDue = lhs.dueOn, let rhsDue = rhs.dueOn {
+                    switch (lhs.dueOn, rhs.dueOn) {
+                    case (let lhsDue?, let rhsDue?):
                         return lhsDue.compare(rhsDue) == .orderedAscending
-                    } else if lhs.dueOn != nil && rhs.dueOn == nil {
+                    case (_?, nil):
                         return true
-                    } else if lhs.dueOn == nil && rhs.dueOn != nil {
+                    case (nil, _?):
                         return false
+                    default:
+                        return lhs.title < rhs.title
                     }
-                    
-                    return lhs.title < rhs.title
                 }
                 completion(.success(milestones))
             } else {
