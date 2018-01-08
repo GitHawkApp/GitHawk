@@ -60,9 +60,9 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
 
-        let bounds = self.bounds
+        let bounds = contentView.frame
         let inset = borderLayer.lineWidth / 2
-        let pixelSnapBounds = self.bounds.insetBy(dx: inset, dy: inset)
+        let pixelSnapBounds = bounds.insetBy(dx: inset, dy: inset)
         let cornerRadius: CGFloat = 6
 
         let borderPath = UIBezierPath()
@@ -112,8 +112,8 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         borderLayer.path = borderPath.cgPath
         backgroundLayer.path = fillPath.cgPath
 
-        borderLayer.frame = bounds
-        backgroundLayer.frame = bounds
+        borderLayer.frame = self.bounds
+        backgroundLayer.frame = self.bounds
     }
 
     override var backgroundColor: UIColor? {
