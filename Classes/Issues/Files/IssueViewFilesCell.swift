@@ -29,6 +29,11 @@ final class IssueViewFilesCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     // MARK: Public API
 
     func configure(changes: FileChanges) {
