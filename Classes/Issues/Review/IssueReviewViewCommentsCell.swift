@@ -14,7 +14,7 @@ protocol IssueReviewViewCommentsCellDelegate: class {
     func didTapViewComments(cell: IssueReviewViewCommentsCell)
 }
 
-final class IssueReviewViewCommentsCell: UICollectionViewCell, ListBindable {
+final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueReviewViewCommentsCellDelegate? = nil
 
@@ -22,7 +22,6 @@ final class IssueReviewViewCommentsCell: UICollectionViewCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
 
         button.setTitle(NSLocalizedString("View Comments", comment: ""), for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
@@ -34,7 +33,7 @@ final class IssueReviewViewCommentsCell: UICollectionViewCell, ListBindable {
             make.centerY.equalTo(contentView)
         }
 
-        addBorder(.bottom)
+        border = .tail
     }
 
     required init?(coder aDecoder: NSCoder) {
