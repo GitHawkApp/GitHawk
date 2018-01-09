@@ -99,6 +99,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
         // Make the return button move on to description field
         titleField.delegate = self
+        titleField.font = Styles.Fonts.body
 
         // Setup markdown input view
         bodyField.githawkConfigure(inset: false)
