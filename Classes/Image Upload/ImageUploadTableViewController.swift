@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SlackTextViewController
 import NYTPhotoViewer
 
 protocol ImageUploadDelegate: class {
@@ -23,7 +22,7 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextField: SLKTextView!
+    @IBOutlet private var bodyTextField: UITextView!
     
     private var bodyPlaceholder: String?
     private var bodyTextColor: UIColor?
@@ -60,7 +59,7 @@ class ImageUploadTableViewController: UITableViewController {
 
         return viewController
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,18 +76,16 @@ class ImageUploadTableViewController: UITableViewController {
         setLeftBarItem()
 
         // Setup view colors and styles
-        let placeholderText = NSLocalizedString("Optional", comment: "")
-        bodyTextField.placeholder = placeholderText
-        bodyTextField.placeholderFont = Styles.Fonts.body
-        bodyTextField.placeholderColor = Styles.Colors.Gray.light.color
+        bodyTextField.delegate = self
         bodyTextField.font = Styles.Fonts.body
-        bodyTextField.textColor = Styles.Colors.Gray.dark.color
         bodyTextField.textContainerInset = .zero
         bodyTextField.textContainer.lineFragmentPadding = 0
+        setBodyPlaceholderVisible(true)
+        
         titleTextField.textColor = Styles.Colors.Gray.dark.color
         titleTextField.font = Styles.Fonts.body
         titleTextField.attributedPlaceholder = NSAttributedString(
-            string: placeholderText,
+            string: ImageUploadTableViewController.placeholderText,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.light.color,
                 .font: Styles.Fonts.body
@@ -233,5 +230,55 @@ extension ImageUploadTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         bodyTextField.becomeFirstResponder()
         return false
+    }
+}
+
+// MARK: UITextViewDelegate (Placeholder)
+
+extension ImageUploadTableViewController: UITextViewDelegate {
+    
+    private static let placeholderText = NSLocalizedString("Optional", comment: "")
+    
+    private func setBodyPlaceholderVisible(_ visible: Bool) {
+        if visible {
+            bodyTextField.text = ImageUploadTableViewController.placeholderText
+            bodyTextField.textColor = Styles.Colors.Gray.light.color
+            
+            setCursorToStart(textView: bodyTextField)
+        } else {
+            bodyTextField.text = nil
+            bodyTextField.textColor = Styles.Colors.Gray.dark.color
+        }
+    }
+    
+    private func setCursorToStart(textView: UITextView) {
+        textView.selectedTextRange = textView.textRange(
+            from: textView.beginningOfDocument,
+            to: textView.beginningOfDocument
+        )
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text as NSString
+        let updatedText = currentText.replacingCharacters(in: range, with: text)
+        
+        // If updated text view will be empty, add the placeholder and set
+        // the cursor to the beginning of the text view.
+        // Otherwise prepare for the user's entry.
+        if updatedText.isEmpty {
+            setBodyPlaceholderVisible(true)
+            
+            return false
+        } else if textView.textColor == Styles.Colors.Gray.light.color && !text.isEmpty {
+            setBodyPlaceholderVisible(false)
+        }
+        
+        return true
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil && textView.textColor == Styles.Colors.Gray.light.color {
+            setCursorToStart(textView: textView)
+        }
     }
 }
