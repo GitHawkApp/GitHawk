@@ -65,7 +65,6 @@ PODS:
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - SlackTextViewController (1.9.5)
   - SnapKit (4.0.0)
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
@@ -93,7 +92,6 @@ DEPENDENCIES:
   - MMMarkdown (from `Local Pods/MMMarkdown`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
-  - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
   - StyledText (from `Local Pods/StyledText`)
   - SwiftLint
@@ -113,8 +111,6 @@ EXTERNAL SOURCES:
     :path: Local Pods/MessageViewController
   MMMarkdown:
     :path: Local Pods/MMMarkdown
-  SlackTextViewController:
-    :path: Local Pods/SlackTextViewController
   StyledText:
     :path: Local Pods/StyledText
   SwipeCellKit:
@@ -152,7 +148,6 @@ SPEC CHECKSUMS:
   Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StyledText: 0da66d27eaab0269b1d43e2fd73f75984a88184d
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
@@ -160,6 +155,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 5a070bcf9f5c5b3be9879b87c3ff4c18924cd6ad
+PODFILE CHECKSUM: c639f72d32f181c5681b99fa40dcecbcddb1041e
 
 COCOAPODS: 1.3.1
