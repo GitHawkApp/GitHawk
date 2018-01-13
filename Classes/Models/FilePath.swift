@@ -14,14 +14,18 @@ struct FilePath {
 
     let components: [String]
 
+    var baseComponents: [String]? {
+        let count = components.count
+        guard count > 1 else { return nil }
+        return Array(components[0..<count-1])
+    }
+
     var path: String {
         return components.joined(separator: FilePath.joiner)
     }
 
     var basePath: String? {
-        let count = components.count
-        guard count > 1 else { return nil }
-        return components[0..<count-1].joined(separator: FilePath.joiner)
+        return baseComponents?.joined(separator: FilePath.joiner)
     }
 
     var current: String? {

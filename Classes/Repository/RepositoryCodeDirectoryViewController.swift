@@ -39,6 +39,18 @@ ListSingleSectionControllerDelegate {
         self.title = NSLocalizedString("Code", comment: "")
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureTitle(filePath: path, target: self, action: #selector(onFileNavigationTitle(sender:)))
+        makeBackBarItemEmpty()
+    }
+
+    // MARK: Public API
+
     static func createRoot(
         client: GithubClient,
         repo: RepositoryDetails,
@@ -52,14 +64,10 @@ ListSingleSectionControllerDelegate {
         )
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: Private API
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.configure(filePath: path)
-        makeBackBarItemEmpty()
+    @objc func onFileNavigationTitle(sender: UIView) {
+        showAlert(filePath: path, sender: sender)
     }
 
     // MARK: Overrides
