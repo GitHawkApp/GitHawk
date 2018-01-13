@@ -262,12 +262,12 @@ IssueManagingNavSectionControllerDelegate {
             .view(client: client, repo: repo)
     }
 
-    @objc func onMore(sender: UIButton) {
+    @objc func onMore(sender: UIBarButtonItem) {
         let activityController = UIActivityViewController(
             activityItems: [externalURL],
             applicationActivities: [TUSafariActivity()]
         )
-        activityController.popoverPresentationController?.setSourceView(sender)
+        activityController.popoverPresentationController?.barButtonItem = sender
         present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
