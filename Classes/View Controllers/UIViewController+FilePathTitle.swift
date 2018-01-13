@@ -45,7 +45,8 @@ extension UIViewController {
     }
 
     func showAlert(filePath: FilePath, sender: UIView) {
-        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        let alertTitle = NSLocalizedString("Jump to...", comment: "Alert sheet title to jump to a filepath")
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
         weak var weakSelf = self
 
         if let components = filePath.baseComponents {
