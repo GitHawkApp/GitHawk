@@ -73,8 +73,12 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(IssuesViewController.onMore(sender:)))
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        let rightItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("Share", comment: "")
         return rightItem
     }
 
@@ -259,26 +263,12 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     @objc func onMore(sender: UIButton) {
-        let issueType = result?.pullRequest == true
-            ? Constants.Strings.pullRequest
-            : Constants.Strings.issue
-
-        let alertTitle = "\(issueType) #\(model.number)"
-
-        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
-
-        weak var weakSelf = self
-        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-
-        alert.addActions([
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            AlertAction.cancel()
-            ])
-        alert.popoverPresentationController?.setSourceView(sender)
-
-        present(alert, animated: trueUnlessReduceMotionEnabled)
+        let activityController = UIActivityViewController(
+            activityItems: [externalURL],
+            applicationActivities: [TUSafariActivity()]
+        )
+        activityController.popoverPresentationController?.setSourceView(sender)
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch(previous: Bool) {
