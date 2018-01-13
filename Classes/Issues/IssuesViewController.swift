@@ -29,6 +29,7 @@ IssueManagingNavSectionControllerDelegate {
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
+    private let navigationTitle = NavigationTitleDropdownView()
 
     private var needsScrollToBottom = false
 
@@ -111,7 +112,14 @@ IssueManagingNavSectionControllerDelegate {
 
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
-        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)", accessibilityLabel: labelString)
+
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
+        navigationTitle.configure(
+            title: "#\(model.number)",
+            subtitle: "\(model.owner)/\(model.repo)",
+            accessibilityLabel: labelString
+        )
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -229,6 +237,12 @@ IssueManagingNavSectionControllerDelegate {
         navigationItem.rightBarButtonItems = items
     }
 
+    func viewOwnerAction() -> UIAlertAction? {
+        weak var weakSelf = self
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+            .view(owner: model.owner)
+    }
+
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
 
@@ -260,7 +274,6 @@ IssueManagingNavSectionControllerDelegate {
             AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
-            viewRepoAction(),
             AlertAction.cancel()
             ])
         alert.popoverPresentationController?.setSourceView(sender)
@@ -363,6 +376,20 @@ IssueManagingNavSectionControllerDelegate {
             repo: model.repo
         )
         showDetailViewController(controller, sender: nil)
+    }
+
+    @objc func onNavigationTitle(sender: UIView) {
+
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+
+        alert.addActions([
+            viewOwnerAction(),
+            viewRepoAction(),
+            AlertAction.cancel()
+            ])
+        alert.popoverPresentationController?.setSourceView(sender)
+
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ListAdapterDataSource

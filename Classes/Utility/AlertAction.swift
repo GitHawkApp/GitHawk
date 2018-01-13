@@ -52,8 +52,9 @@ struct AlertAction {
         }
     }
 
-    func view(owner: String, url: URL) -> UIAlertAction {
+    func view(owner: String) -> UIAlertAction {
         return UIAlertAction(title: .localizedStringWithFormat("View @%@", owner), style: .default) { _ in
+            guard let url = URL(string: "https://github.com/\(owner)") else { return }
             self.rootViewController?.presentSafari(url: url)
         }
     }
