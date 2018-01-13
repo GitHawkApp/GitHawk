@@ -28,12 +28,13 @@ final class NavigationTitleDropdownView: UIControl {
         addSubview(chevron)
 
         label.backgroundColor = .clear
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.lineBreakMode = .byTruncatingHead
+        label.lineBreakMode = .byTruncatingMiddle
         label.adjustsFontSizeToFitWidth = true
-        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.minimumScaleFactor = 0.75
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         addSubview(label)
 
