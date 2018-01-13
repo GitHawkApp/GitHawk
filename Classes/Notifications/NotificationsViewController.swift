@@ -62,6 +62,7 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        makeBackBarItemEmpty()
         resetRightBarItem()
 
         switch inboxType {
