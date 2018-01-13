@@ -72,8 +72,12 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(IssuesViewController.onMore(sender:)))
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        let rightItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("Share", comment: "")
         return rightItem
     }
 
@@ -111,7 +115,15 @@ IssueManagingNavSectionControllerDelegate {
 
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
-        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)", accessibilityLabel: labelString)
+
+        let navigationTitle = NavigationTitleDropdownView()
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
+        navigationTitle.configure(
+            title: "#\(model.number)",
+            subtitle: "\(model.owner)/\(model.repo)",
+            accessibilityLabel: labelString
+        )
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -229,6 +241,12 @@ IssueManagingNavSectionControllerDelegate {
         navigationItem.rightBarButtonItems = items
     }
 
+    func viewOwnerAction() -> UIAlertAction? {
+        weak var weakSelf = self
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+            .view(owner: model.owner)
+    }
+
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
 
@@ -244,28 +262,13 @@ IssueManagingNavSectionControllerDelegate {
             .view(client: client, repo: repo)
     }
 
-    @objc func onMore(sender: UIButton) {
-        let issueType = result?.pullRequest == true
-            ? Constants.Strings.pullRequest
-            : Constants.Strings.issue
-
-        let alertTitle = "\(issueType) #\(model.number)"
-
-        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
-
-        weak var weakSelf = self
-        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-
-        alert.addActions([
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            viewRepoAction(),
-            AlertAction.cancel()
-            ])
-        alert.popoverPresentationController?.setSourceView(sender)
-
-        present(alert, animated: trueUnlessReduceMotionEnabled)
+    @objc func onMore(sender: UIBarButtonItem) {
+        let activityController = UIActivityViewController(
+            activityItems: [externalURL],
+            applicationActivities: [TUSafariActivity()]
+        )
+        activityController.popoverPresentationController?.barButtonItem = sender
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch(previous: Bool) {
@@ -363,6 +366,17 @@ IssueManagingNavSectionControllerDelegate {
             repo: model.repo
         )
         showDetailViewController(controller, sender: nil)
+    }
+
+    @objc func onNavigationTitle(sender: UIView) {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        alert.addActions([
+            viewOwnerAction(),
+            viewRepoAction(),
+            AlertAction.cancel()
+            ])
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ListAdapterDataSource

@@ -75,12 +75,27 @@ NewIssueTableViewControllerDelegate {
         })
 
         configureNavigationItems()
+        let navigationTitle = NavigationTitleDropdownView()
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         let labelFormat = NSLocalizedString("Repository %@ by %@", comment: "Accessibility label for a repository navigation item")
         let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
-        navigationItem.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
+        navigationTitle.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
     }
 
     // MARK: Private API
+
+    @objc func onNavigationTitle(sender: UIView) {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        weak var weakSelf = self
+        alert.addActions([
+            AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+                .view(owner: repo.owner),
+            AlertAction.cancel()
+            ])
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
 
     var repoUrl: URL {
         return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
@@ -124,7 +139,7 @@ NewIssueTableViewControllerDelegate {
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
-            AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
+            AlertAction(alertBuilder).view(owner: repo.owner),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)
