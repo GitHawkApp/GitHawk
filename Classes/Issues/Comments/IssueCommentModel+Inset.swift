@@ -11,41 +11,20 @@ import UIKit
 extension IssueCommentModel {
 
     var commentSectionControllerInset: UIEdgeInsets {
-        let gutter = Styles.Sizes.commentGutter
         let rowSpacing = Styles.Sizes.rowSpacing
 
         switch threadState {
         case .single:
             // title and other header objects will have bottom insetting
             if isRoot {
-                return UIEdgeInsets(
-                    top: 0,
-                    left: gutter,
-                    bottom: rowSpacing,
-                    right: gutter
-                )
+                return UIEdgeInsets(top: 12, left: 0, bottom: rowSpacing, right: 0)
             } else {
-                return UIEdgeInsets(
-                    top: rowSpacing,
-                    left: gutter,
-                    bottom: rowSpacing,
-                    right: gutter
-                )
+                return UIEdgeInsets(top: rowSpacing, left: 0, bottom: rowSpacing, right: 0)
             }
         case .neck:
-            return UIEdgeInsets(
-                top: 0,
-                left: gutter,
-                bottom: 0,
-                right: gutter
-            )
+            return .zero
         case .tail:
-            return UIEdgeInsets(
-                top: 0,
-                left: gutter,
-                bottom: rowSpacing,
-                right: gutter
-            )
+            return UIEdgeInsets(top: 0, left: 0, bottom: rowSpacing, right: 0)
         }
     }
 

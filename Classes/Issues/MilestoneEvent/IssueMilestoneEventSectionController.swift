@@ -12,7 +12,7 @@ import IGListKit
 final class IssueMilestoneEventSectionController: ListGenericSectionController<IssueMilestoneEventModel> {
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
+        guard let width = collectionContext?.insetContainerSize.width,
             let object = self.object
             else { fatalError("Collection context must be set") }
         return CGSize(

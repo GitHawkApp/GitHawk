@@ -19,7 +19,7 @@ final class IssueCommitSectionController: ListGenericSectionController<IssueComm
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
+        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
     }
 

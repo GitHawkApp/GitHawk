@@ -13,8 +13,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
 
     override init() {
         super.init()
-        let gutter = Styles.Sizes.commentGutter
-        self.inset = UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: gutter, bottom: 0, right: gutter)
+        self.inset = UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: 0, bottom: 0, right: 0)
         dataSource = self
     }
 
@@ -36,7 +35,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        let width = (collectionContext?.containerSize.width ?? 0) - inset.left - inset.right
+        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
         let height: CGFloat
         if let viewModel = viewModel as? NSAttributedStringSizing {
             height = viewModel.textViewSize(0).height

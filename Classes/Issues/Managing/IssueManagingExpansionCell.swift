@@ -38,7 +38,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(chevron)
         chevron.snp.makeConstraints { make in
             make.centerY.equalTo(contentView).offset(1)
-            make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
+            make.right.equalTo(contentView)
         }
 
         label.text = NSLocalizedString("Manage", comment: "")

@@ -11,6 +11,6 @@ import SnapKit
 
 final class IssueTitleCell: AttributedStringCell {
 
-    static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
+    static let inset = UIEdgeInsets.zero
 
 }

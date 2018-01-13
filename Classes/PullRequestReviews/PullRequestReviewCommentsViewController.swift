@@ -25,6 +25,7 @@ BaseListViewControllerDataSource {
             emptyErrorMessage: NSLocalizedString("Error loading review comments.", comment: ""),
             dataSource: self
         )
+        feed.collectionView.contentInset = Styles.Sizes.threadInset
         title = NSLocalizedString("Review Comments", comment: "")
     }
 
