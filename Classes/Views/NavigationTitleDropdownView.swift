@@ -46,7 +46,9 @@ final class NavigationTitleDropdownView: UIControl {
         }
 
         label.snp.makeConstraints { make in
-            make.center.equalTo(self)
+//            make.center.equalTo(self)
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview().offset(-2)
             make.top.bottom.left.lessThanOrEqualTo(self).priority(.high)
         }
     }
