@@ -28,6 +28,7 @@
 		29136BDD200A6C40007317BE /* IssueTitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BDC200A6C40007317BE /* IssueTitleModel.swift */; };
 		29136BDF200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */; };
 		29136BE1200A7D3D007317BE /* NavigationTitleDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BE0200A7D3D007317BE /* NavigationTitleDropdownView.swift */; };
+		29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */; };
 		291929421F3EA8CD0012067B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929411F3EA8CD0012067B /* File.swift */; };
 		291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929461F3EAB250012067B /* IssueDetailsModel.swift */; };
 		291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929481F3EAD2E0012067B /* IssueViewFilesSectionController.swift */; };
@@ -453,6 +454,7 @@
 		29136BDC200A6C40007317BE /* IssueTitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTitleModel.swift; sourceTree = "<group>"; };
 		29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+LeftRightSafeInset.swift"; sourceTree = "<group>"; };
 		29136BE0200A7D3D007317BE /* NavigationTitleDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleDropdownView.swift; sourceTree = "<group>"; };
+		29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+FilePathTitle.swift"; sourceTree = "<group>"; };
 		291929411F3EA8CD0012067B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		291929461F3EAB250012067B /* IssueDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailsModel.swift; sourceTree = "<group>"; };
 		291929481F3EAD2E0012067B /* IssueViewFilesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewFilesSectionController.swift; sourceTree = "<group>"; };
@@ -1462,6 +1464,7 @@
 				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
 				D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */,
 				29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */,
+				29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2444,6 +2447,7 @@
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
+				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
 				29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */,
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
