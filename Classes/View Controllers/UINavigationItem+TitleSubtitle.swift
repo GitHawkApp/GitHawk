@@ -34,6 +34,11 @@ extension UINavigationItem {
     }
 
     func configure(title: String?, subtitle: String?, accessibilityLabel: String? = nil) {
+        let view = NavigationTitleDropdownView()
+        view.configure(title: title, subtitle: subtitle, accessibilityLabel: accessibilityLabel)
+        titleView = view
+        return
+
         guard let title = title else { return }
 
         guard let subtitle = subtitle, !subtitle.isEmpty else {
