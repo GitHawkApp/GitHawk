@@ -12,7 +12,7 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 16 // comment gutter 2x
+        static let eventGutter: CGFloat = 8 // comment gutter 2x
         static let commentGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
@@ -44,7 +44,13 @@ enum Styles {
         static let labelSpacing: CGFloat = 4
         static let labelTextPadding: CGFloat = 4
         static let cardCornerRadius: CGFloat = 6
-        
+        static let threadInset = UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing / 2,
+            left: Styles.Sizes.commentGutter,
+            bottom: 0,
+            right: Styles.Sizes.commentGutter
+        )
+
         enum Text {
 
             private static func size(
@@ -77,7 +83,7 @@ enum Styles {
             static var secondary: CGFloat { return size(13) }
             static var title: CGFloat { return size(14) }
             static var button: CGFloat { return size(16) }
-            static var headline: CGFloat { return size(18) }
+            static var headline: CGFloat { return size(24) }
             static var smallTitle: CGFloat { return size(12) }
             static var h1: CGFloat { return size(24) }
             static var h2: CGFloat { return size(22) }

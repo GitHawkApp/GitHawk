@@ -29,7 +29,7 @@ final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
         button.titleLabel?.font = Styles.Fonts.body
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
             make.centerY.equalTo(contentView)
         }
 

@@ -201,7 +201,7 @@ PeopleViewControllerDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.containerSize.width
+        guard let containerWidth = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
 
         let height = IssueManagingActionCell.height

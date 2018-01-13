@@ -161,7 +161,7 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
 
         UIView.animate(withDuration: animationDuration) {
             // capture before changing the frame which might have weird side effects
-            let contentOffset = self.scrollView.contentOffset.y
+            let contentOffset = self.scrollView.contentOffset
 
             self.layout()
 
@@ -173,11 +173,11 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
             let newOffset = max(
                 min(
                     contentHeight - scrollViewHeight,
-                    contentOffset + self.keyboardHeight - previousKeyboardHeight - bottomSafeInset
+                    contentOffset.y + self.keyboardHeight - previousKeyboardHeight - bottomSafeInset
                 ),
                 -topInset
             )
-            self.scrollView.contentOffset = CGPoint(x: 0, y: newOffset)
+            self.scrollView.contentOffset = CGPoint(x: contentOffset.x, y: newOffset)
         }
     }
 

@@ -30,7 +30,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
             make.size.equalTo(Styles.Sizes.icon)
         }
 

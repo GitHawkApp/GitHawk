@@ -163,7 +163,7 @@ IssueCommentDoubleTapDelegate {
     }
 
     func edit(markdown: String) {
-        guard let width = collectionContext?.containerSize.width else { return }
+        guard let width = collectionContext?.insetContainerSize.width else { return }
         let options = commentModelOptions(owner: model.owner, repo: model.repo)
         let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
@@ -230,7 +230,7 @@ IssueCommentDoubleTapDelegate {
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        let width = (collectionContext?.containerSize.width ?? 0) - inset.left - inset.right
+        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {

@@ -19,8 +19,9 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-        minimumLineSpacing = Styles.Sizes.rowSpacing/2
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing, right: 0)
+        let spacing = Styles.Sizes.rowSpacing / 2
+        minimumLineSpacing = spacing
+        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -59,7 +60,7 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,

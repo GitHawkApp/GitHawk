@@ -62,7 +62,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
         let bounds = contentView.frame
         let inset = borderLayer.lineWidth / 2
-        let pixelSnapBounds = self.bounds.insetBy(dx: inset, dy: inset)
+        let pixelSnapBounds = bounds.insetBy(dx: inset, dy: inset)
         let cornerRadius = Styles.Sizes.cardCornerRadius
 
         let borderPath = UIBezierPath()

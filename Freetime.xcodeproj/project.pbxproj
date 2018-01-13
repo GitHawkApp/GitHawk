@@ -24,6 +24,9 @@
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
 		290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */; };
 		290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */; };
+		29136BDB200A626D007317BE /* FixedRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BDA200A626D007317BE /* FixedRefreshControl.swift */; };
+		29136BDD200A6C40007317BE /* IssueTitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BDC200A6C40007317BE /* IssueTitleModel.swift */; };
+		29136BDF200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */; };
 		291929421F3EA8CD0012067B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929411F3EA8CD0012067B /* File.swift */; };
 		291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929461F3EAB250012067B /* IssueDetailsModel.swift */; };
 		291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929481F3EAD2E0012067B /* IssueViewFilesSectionController.swift */; };
@@ -445,6 +448,9 @@
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
 		290EF5751F06BA06006A2160 /* NoNewNotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsCell.swift; sourceTree = "<group>"; };
 		290EF5781F06BAF4006A2160 /* NoNewNotificationsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNewNotificationsSectionController.swift; sourceTree = "<group>"; };
+		29136BDA200A626D007317BE /* FixedRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedRefreshControl.swift; sourceTree = "<group>"; };
+		29136BDC200A6C40007317BE /* IssueTitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTitleModel.swift; sourceTree = "<group>"; };
+		29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+LeftRightSafeInset.swift"; sourceTree = "<group>"; };
 		291929411F3EA8CD0012067B /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		291929461F3EAB250012067B /* IssueDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailsModel.swift; sourceTree = "<group>"; };
 		291929481F3EAD2E0012067B /* IssueViewFilesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewFilesSectionController.swift; sourceTree = "<group>"; };
@@ -1109,6 +1115,7 @@
 			children = (
 				292FCAF41EDFCC510026635E /* IssueTitleCell.swift */,
 				292FCAF51EDFCC510026635E /* IssueTitleSectionController.swift */,
+				29136BDC200A6C40007317BE /* IssueTitleModel.swift */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -1473,6 +1480,7 @@
 				D8C2AEF41F9AA94600A95945 /* DotListView.swift */,
 				29C167681ECA016500439D62 /* EmptyView.swift */,
 				291929541F3FAADF0012067B /* FeedRefresh.swift */,
+				29136BDA200A626D007317BE /* FixedRefreshControl.swift */,
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
 				29792B1E1FFB3E3A007A0C57 /* HangingChadItemWidth.swift */,
@@ -1499,6 +1507,7 @@
 				29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */,
 				29A4769F1ED0E6C6005D0953 /* UIColor+Overlay.swift */,
 				295B51471FC26F7F00C3993B /* UIImageView+Avatar.swift */,
+				29136BDE200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift */,
 				290744B91F26863100FD9E48 /* UIScrollView+ScrollToBottom.swift */,
 				294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */,
 				294A3D771FB29E2A000E81A4 /* UISearchBar+Keyboard.swift */,
@@ -2424,6 +2433,7 @@
 				292FCB181EDFCC510026635E /* IssueTitleCell.swift in Sources */,
 				292FCB191EDFCC510026635E /* IssueTitleSectionController.swift in Sources */,
 				294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */,
+				29136BDD200A6C40007317BE /* IssueTitleModel.swift in Sources */,
 				2919294B1F3EAD890012067B /* IssueViewFilesCell.swift in Sources */,
 				291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
@@ -2476,6 +2486,7 @@
 				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */,
+				29136BDB200A626D007317BE /* FixedRefreshControl.swift in Sources */,
 				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
@@ -2499,6 +2510,7 @@
 				2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */,
 				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,
 				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
+				29136BDF200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift in Sources */,
 				986B87381F2CB29700AAB55C /* RepositorySummaryCell.swift in Sources */,
 				986B87361F2CB28C00AAB55C /* RepositorySummarySectionController.swift in Sources */,
 				2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */,

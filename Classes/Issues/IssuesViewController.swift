@@ -28,7 +28,6 @@ IssueManagingNavSectionControllerDelegate {
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
     private var autocompleteController: AutocompleteController!
 
     private var needsScrollToBottom = false
@@ -37,12 +36,11 @@ IssueManagingNavSectionControllerDelegate {
     private var viewerIsCollaborator = false
     private let manageKey = "manageKey" as ListDiffable
 
-    lazy private var feed: Feed = { Feed(
-        viewController: self,
-        delegate: self,
-        collectionView: self.collectionView,
-        managesLayout: false
-        ) }()
+    lazy private var feed: Feed = {
+        let f = Feed(viewController: self, delegate: self, managesLayout: false)
+        f.collectionView.contentInset = Styles.Sizes.threadInset
+        return f
+    }()
 
     private var resultID: String? = nil {
         didSet {
@@ -119,7 +117,7 @@ IssueManagingNavSectionControllerDelegate {
         feed.adapter.dataSource = self
 
         // setup after feed is lazy loaded
-        setup(scrollView: collectionView)
+        setup(scrollView: feed.collectionView)
         setMessageView(hidden: true, animated: false)
 
         // override Feed bg color setting
@@ -133,7 +131,12 @@ IssueManagingNavSectionControllerDelegate {
         messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
         messageView.buttonTint = Styles.Colors.Blue.medium.color
         messageView.font = Styles.Fonts.body
-        messageView.inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: Styles.Sizes.gutter, bottom: 4, right: Styles.Sizes.gutter)
+        messageView.inset = UIEdgeInsets(
+            top: Styles.Sizes.gutter,
+            left: Styles.Sizes.gutter,
+            bottom: Styles.Sizes.rowSpacing / 2,
+            right: Styles.Sizes.gutter
+        )
         messageView.addButton(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
@@ -178,6 +181,13 @@ IssueManagingNavSectionControllerDelegate {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        }
     }
 
     // MARK: Private API
@@ -275,11 +285,16 @@ IssueManagingNavSectionControllerDelegate {
             }
         }
 
+        // assumptions here, but the collectionview may not have been laid out or content size found
+        // assume the collectionview is pinned to the view's bounds
+        let contentInset = feed.collectionView.contentInset
+        let width = view.bounds.width - contentInset.left - contentInset.right
+
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: view.bounds.width,
+            width: width,
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -335,7 +350,10 @@ IssueManagingNavSectionControllerDelegate {
         guard paddedMaxY > viewportHeight else { return }
 
         let offset = paddedMaxY - viewportHeight
-        collectionView.setContentOffset(CGPoint(x: 0, y: offset), animated: trueUnlessReduceMotionEnabled)
+        collectionView.setContentOffset(
+            CGPoint(x: collectionView.contentOffset.x, y: offset),
+            animated: trueUnlessReduceMotionEnabled
+        )
     }
 
     func onPreview() {
@@ -358,22 +376,27 @@ IssueManagingNavSectionControllerDelegate {
             objects.append(manageKey)
         }
 
-        objects.append(current.title)
-        objects.append(current.labels)
-
+        // BEGIN collect metadata that lives between title and root comment
+        var metadata = [ListDiffable]()
+        if current.labels.labels.count > 0 {
+            metadata.append(current.labels)
+        }
         if let milestone = current.milestone {
-            objects.append(milestone)
+            metadata.append(milestone)
         }
-
-        objects.append(current.assignee)
-
+        if current.assignee.users.count > 0 {
+            metadata.append(current.assignee)
+        }
         if let reviewers = current.reviewers {
-            objects.append(reviewers)
+            metadata.append(reviewers)
         }
-
         if let changes = current.fileChanges {
-            objects.append(IssueFileChangesModel(changes: changes))
+            metadata.append(IssueFileChangesModel(changes: changes))
         }
+        // END metadata collection
+
+        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
+        objects += metadata
 
         if let rootComment = current.rootComment {
             objects.append(rootComment)
@@ -402,7 +425,7 @@ IssueManagingNavSectionControllerDelegate {
         }
 
         switch object {
-        case is NSAttributedStringSizing: return IssueTitleSectionController()
+        case is IssueTitleModel: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,
@@ -517,7 +540,7 @@ IssueManagingNavSectionControllerDelegate {
     // MARK: IssueManagingNavSectionControllerDelegate
 
     func didSelect(managingNavController: IssueManagingNavSectionController) {
-        collectionView.scrollToBottom(animated: true)
+        feed.collectionView.scrollToBottom(animated: true)
     }
 
 }

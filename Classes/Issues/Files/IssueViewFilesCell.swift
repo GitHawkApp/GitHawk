@@ -20,7 +20,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
 
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
             make.centerY.equalTo(contentView)
         }
     }
