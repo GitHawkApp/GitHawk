@@ -10,10 +10,9 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable, CollapsibleCell {
+final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable {
 
     let label = UILabel()
-    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,22 +30,11 @@ final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable, Collaps
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        LayoutCollapsible(layer: overlay, view: contentView)
-    }
-
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentSummaryModel else { return }
         label.text = "▶ \(viewModel.summary)"
-    }
-
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
     }
 
 }

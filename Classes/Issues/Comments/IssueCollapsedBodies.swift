@@ -20,7 +20,7 @@ private func bodyIsCollapsible(body: Any) -> Bool {
 func IssueCollapsedBodies(bodies: [AnyObject], width: CGFloat) -> (AnyObject, CGFloat)? {
     let cap: CGFloat = 300
     // minimum height to collapse so expanding shows significant amount of content
-    let minDelta = CollapseCellMinHeight * 3
+    let minDelta = IssueCommentBaseCell.collapseCellMinHeight * 3
 
     var totalHeight: CGFloat = 0
     for body in bodies {
@@ -34,7 +34,7 @@ func IssueCollapsedBodies(bodies: [AnyObject], width: CGFloat) -> (AnyObject, CG
         if bodyIsCollapsible(body: body),
             totalHeight > cap,
             totalHeight - cap > minDelta {
-            let collapsedBodyHeight = max(cap - (totalHeight - height), CollapseCellMinHeight)
+            let collapsedBodyHeight = max(cap - (totalHeight - height), IssueCommentBaseCell.collapseCellMinHeight)
             return (body, collapsedBodyHeight)
         }
     }
