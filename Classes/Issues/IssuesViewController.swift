@@ -29,7 +29,6 @@ IssueManagingNavSectionControllerDelegate {
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
-    private let navigationTitle = NavigationTitleDropdownView()
 
     private var needsScrollToBottom = false
 
@@ -117,6 +116,7 @@ IssueManagingNavSectionControllerDelegate {
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
+        let navigationTitle = NavigationTitleDropdownView()
         navigationItem.titleView = navigationTitle
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
@@ -369,16 +369,13 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     @objc func onNavigationTitle(sender: UIView) {
-
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
-
         alert.addActions([
             viewOwnerAction(),
             viewRepoAction(),
             AlertAction.cancel()
             ])
         alert.popoverPresentationController?.setSourceView(sender)
-
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 

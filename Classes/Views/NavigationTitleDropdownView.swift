@@ -11,7 +11,7 @@ import SnapKit
 
 final class NavigationTitleDropdownView: UIControl {
 
-    private static let spacing: CGFloat = 2
+    private static let spacing: CGFloat = 4
 
     private let label = UILabel()
     private let chevron = UIImageView(image: UIImage(named: "chevron-down-small")?.withRenderingMode(.alwaysTemplate))
