@@ -14,6 +14,8 @@ protocol IssueCommentDoubleTapDelegate: class {
 
 class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
+    static let collapseCellMinHeight: CGFloat = 20
+
     enum BorderType {
         case head
         case neck
@@ -28,6 +30,8 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     private let borderLayer = CAShapeLayer()
     private let backgroundLayer = CAShapeLayer()
+    private let collapseLayer = CAGradientLayer()
+    private let collapseButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,6 +54,26 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         backgroundLayer.strokeColor = nil
         backgroundLayer.fillColor = UIColor.white.cgColor
         layer.insertSublayer(backgroundLayer, at: 0)
+
+        collapseLayer.isHidden = true
+        collapseLayer.colors = [
+            UIColor(white: 1, alpha: 0).cgColor,
+            UIColor(white: 1, alpha: 1).cgColor
+        ]
+
+        collapseButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        collapseButton.backgroundColor = Styles.Colors.Blue.medium.color
+        collapseButton.accessibilityTraits = UIAccessibilityTraitNone
+        collapseButton.tintColor = .white
+        collapseButton.titleLabel?.font = Styles.Fonts.smallTitle
+        collapseButton.clipsToBounds = true
+        collapseButton.isHidden = true
+        collapseButton.contentEdgeInsets = UIEdgeInsets(top: -2, left: 8, bottom: -2, right: 8)
+        collapseButton.imageEdgeInsets = .zero
+        collapseButton.sizeToFit()
+        collapseButton.layer.cornerRadius = collapseButton.bounds.height / 2
+        collapseButton.isUserInteractionEnabled = false // allow tap to pass through to cell
+        contentView.addSubview(collapseButton)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -114,6 +138,29 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
         borderLayer.frame = self.bounds
         backgroundLayer.frame = self.bounds
+
+        if collapseLayer.isHidden == false {
+            contentView.layer.addSublayer(collapseLayer)
+            contentView.bringSubview(toFront: collapseButton)
+
+            let collapseFrame = CGRect(
+                x: bounds.minX,
+                y: bounds.height - IssueCommentBaseCell.collapseCellMinHeight,
+                width: bounds.width,
+                height: IssueCommentBaseCell.collapseCellMinHeight
+            )
+
+            // disable implicit CALayer animations
+            CATransaction.begin()
+            CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+            collapseLayer.frame = collapseFrame
+            CATransaction.commit()
+
+            collapseButton.center = CGPoint(
+                x: collapseFrame.width / 2,
+                y: collapseFrame.minY + collapseButton.bounds.height / 2 - 3
+            )
+        }
     }
 
     override var backgroundColor: UIColor? {
@@ -128,6 +175,14 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     @objc private func onDoubleTap() {
         doubleTapDelegate?.didDoubleTap(cell: self)
+    }
+
+    var collapsed: Bool = false {
+        didSet {
+            collapseButton.isHidden = !collapsed
+            collapseLayer.isHidden = !collapsed
+            setNeedsLayout()
+        }
     }
 
     // MARK: UIGestureRecognizerDelegate
