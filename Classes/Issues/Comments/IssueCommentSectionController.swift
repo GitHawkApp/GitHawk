@@ -25,6 +25,7 @@ IssueCommentDoubleTapDelegate {
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
     private let autocomplete: IssueCommentAutocomplete
+    private var menuVisible = false
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -131,7 +132,7 @@ IssueCommentDoubleTapDelegate {
 
     @discardableResult
     private func uncollapse() -> Bool {
-        guard collapsed else { return false }
+        guard collapsed, !menuVisible else { return false }
         collapsed = false
         clearCollapseCells()
         update(animated: trueUnlessReduceMotionEnabled)
@@ -382,6 +383,14 @@ IssueCommentDoubleTapDelegate {
     }
 
     // MARK: IssueCommentReactionCellDelegate
+
+    func willShowMenu(cell: IssueCommentReactionCell) {
+        menuVisible = true
+    }
+
+    func didHideMenu(cell: IssueCommentReactionCell) {
+        menuVisible = false
+    }
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
         // don't add a reaction if already reacted
