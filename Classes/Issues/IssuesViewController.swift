@@ -244,7 +244,7 @@ IssueManagingNavSectionControllerDelegate {
     func viewOwnerAction() -> UIAlertAction? {
         weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(owner: model.owner)
+            .view(owner: "@\(model.owner)")
     }
 
     func viewRepoAction() -> UIAlertAction? {
