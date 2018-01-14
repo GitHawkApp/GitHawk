@@ -158,7 +158,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
             collapseButton.center = CGPoint(
                 x: collapseFrame.width / 2,
-                y: collapseFrame.minY + collapseButton.bounds.height / 2 - 3
+                y: collapseFrame.maxY - collapseButton.bounds.height / 2 - 1
             )
         }
     }
@@ -169,6 +169,12 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             return UIColor(cgColor: color)
         }
         set { backgroundLayer.fillColor = newValue?.cgColor}
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        collapseLayer.isHidden = true
+        collapseButton.isHidden = true
     }
 
     // MARK: Private API
