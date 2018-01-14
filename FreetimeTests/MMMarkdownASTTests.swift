@@ -18,7 +18,7 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_fileExists() {
-        XCTAssertTrue(testMarkdown.characters.count > 0)
+        XCTAssertTrue(testMarkdown.count > 0)
     }
 
     func test_createASTWorks() {
