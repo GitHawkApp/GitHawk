@@ -11,6 +11,8 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate: class {
+    func willShowMenu(cell: IssueCommentReactionCell)
+    func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
@@ -62,6 +64,20 @@ UICollectionViewDelegateFlowLayout {
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
             make.top.bottom.right.equalTo(contentView)
         }
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerWillShow(notification:)),
+            name: NSNotification.Name.UIMenuControllerWillShowMenu,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerDidHide(notification:)),
+            name: NSNotification.Name.UIMenuControllerDidHideMenu,
+            object: nil
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -170,6 +186,16 @@ UICollectionViewDelegateFlowLayout {
         guard let data = data(for: content) else { return }
         configure(cell: data.cell, model: reactions[data.path.item])
         data.cell.iterate(add: add)
+    }
+
+    // MARK: Notifications
+
+    @objc func onMenuControllerWillShow(notification: Notification) {
+        delegate?.willShowMenu(cell: self)
+    }
+
+    @objc func onMenuControllerDidHide(notification: Notification) {
+        delegate?.didHideMenu(cell: self)
     }
 
     // MARK: ListBindable
