@@ -139,7 +139,6 @@ NewIssueTableViewControllerDelegate {
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
-            AlertAction(alertBuilder).view(owner: repo.owner),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)
