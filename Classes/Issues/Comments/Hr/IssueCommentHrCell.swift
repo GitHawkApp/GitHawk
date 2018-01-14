@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class IssueCommentHrCell: UICollectionViewCell, ListBindable {
+final class IssueCommentHrCell: IssueCommentBaseCell, ListBindable {
 
     static let inset = UIEdgeInsets(
         top: 0,
