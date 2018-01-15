@@ -14,7 +14,7 @@ protocol IssueCommentDoubleTapDelegate: class {
 
 class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
-    static let collapseCellMinHeight: CGFloat = 20
+    static let collapseCellMinHeight: CGFloat = 30
 
     enum BorderType {
         case head
@@ -158,7 +158,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
             collapseButton.center = CGPoint(
                 x: collapseFrame.width / 2,
-                y: collapseFrame.maxY - collapseButton.bounds.height / 2 - 1
+                y: collapseFrame.maxY - collapseButton.bounds.height / 2
             )
         }
     }

@@ -64,7 +64,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
-    img{max-width:100%; box-sizing: border-box;}
+    img{max-width:100%; box-sizing: border-box; max-height: \(Styles.Sizes.maxImageHeight)px;}
     </style>
     </head><body>
     """
