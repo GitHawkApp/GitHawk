@@ -25,6 +25,10 @@ final class MilestonesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let emptyView = EmptyView()
+        emptyView.label.text = NSLocalizedString("No open milestones", comment: "")
+        tableView.backgroundView = emptyView
+
         tableView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
 
@@ -68,6 +72,7 @@ final class MilestonesViewController: UITableViewController {
             case .error:
                 ToastManager.showGenericError()
             }
+            self?.tableView.backgroundView?.isHidden = (self?.milestones.count ?? 0) > 0
             self?.feedRefresh.endRefreshing()
         }
     }
