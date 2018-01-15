@@ -50,6 +50,7 @@ enum Styles {
             bottom: 0,
             right: Styles.Sizes.commentGutter
         )
+        static let maxImageHeight: CGFloat = 300
 
         enum Text {
 
