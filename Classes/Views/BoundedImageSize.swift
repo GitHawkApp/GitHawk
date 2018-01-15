@@ -11,5 +11,5 @@ import UIKit
 func BoundedImageSize(originalSize: CGSize, containerWidth: CGFloat) -> CGSize {
     guard originalSize.width > containerWidth else { return originalSize }
     let ratio = originalSize.width / originalSize.height
-    return CGSize(width: containerWidth, height: ceil(containerWidth / ratio))
+    return CGSize(width: containerWidth, height: min(ceil(containerWidth / ratio), 300))
 }
