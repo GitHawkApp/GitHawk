@@ -131,11 +131,10 @@ FlatCacheListener {
             action: #selector(onMarkAll)
         )
         item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
-        navigationItem.rightBarButtonItem = item
-        updateUnreadState(count: notificationIDs.count)
+        updateUnreadState(count: notificationIDs.count, barItem: item)
     }
 
-    private func updateUnreadState(count: Int) {
+    private func updateUnreadState(count: Int, barItem: UIBarButtonItem?) {
         // don't update tab bar and badges when not showing only new notifications
         // prevents archives updating badge and tab #s
         switch inboxType {
@@ -144,7 +143,8 @@ FlatCacheListener {
         }
 
         let hasUnread = count > 0
-        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        barItem?.isEnabled = hasUnread
+        navigationItem.rightBarButtonItem = barItem
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
         BadgeNotifications.update(count: count)
     }
@@ -285,7 +285,7 @@ FlatCacheListener {
         }
 
         // every time the list is updated, update bar items and badges
-        updateUnreadState(count: models.count)
+        updateUnreadState(count: models.count, barItem: navigationItem.rightBarButtonItem)
 
         return models
     }
