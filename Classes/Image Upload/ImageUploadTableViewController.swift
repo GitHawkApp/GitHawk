@@ -8,6 +8,7 @@
 
 import UIKit
 import NYTPhotoViewer
+import MessageViewController
 
 protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
@@ -22,7 +23,7 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextField: UITextView!
+    @IBOutlet private var bodyTextView: MessageTextView!
     
     private var bodyPlaceholder: String?
     private var bodyTextColor: UIColor?
@@ -41,7 +42,7 @@ class ImageUploadTableViewController: UITableViewController {
     }
 
     private var descriptionText: String? {
-        let raw = bodyTextField.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let raw = bodyTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty { return nil }
         return raw
     }
@@ -76,16 +77,17 @@ class ImageUploadTableViewController: UITableViewController {
         setLeftBarItem()
 
         // Setup view colors and styles
-        bodyTextField.delegate = self
-        bodyTextField.font = Styles.Fonts.body
-        bodyTextField.textContainerInset = .zero
-        bodyTextField.textContainer.lineFragmentPadding = 0
-        setBodyPlaceholderVisible(true)
+        let placeholderText = NSLocalizedString("Optional", comment: "")
+        bodyTextView.placeholderText = placeholderText
+        bodyTextView.placeholderTextColor = Styles.Colors.Gray.light.color
+        bodyTextView.font = Styles.Fonts.body
+        bodyTextView.textContainerInset = .zero
+        bodyTextView.textContainer.lineFragmentPadding = 0
         
         titleTextField.textColor = Styles.Colors.Gray.dark.color
         titleTextField.font = Styles.Fonts.body
         titleTextField.attributedPlaceholder = NSAttributedString(
-            string: ImageUploadTableViewController.placeholderText,
+            string: placeholderText,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.light.color,
                 .font: Styles.Fonts.body
@@ -228,57 +230,7 @@ class ImageUploadTableViewController: UITableViewController {
 extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        bodyTextField.becomeFirstResponder()
+        bodyTextView.becomeFirstResponder()
         return false
-    }
-}
-
-// MARK: UITextViewDelegate (Placeholder)
-
-extension ImageUploadTableViewController: UITextViewDelegate {
-    
-    private static let placeholderText = NSLocalizedString("Optional", comment: "")
-    
-    private func setBodyPlaceholderVisible(_ visible: Bool) {
-        if visible {
-            bodyTextField.text = ImageUploadTableViewController.placeholderText
-            bodyTextField.textColor = Styles.Colors.Gray.light.color
-            
-            setCursorToStart(textView: bodyTextField)
-        } else {
-            bodyTextField.text = nil
-            bodyTextField.textColor = Styles.Colors.Gray.dark.color
-        }
-    }
-    
-    private func setCursorToStart(textView: UITextView) {
-        textView.selectedTextRange = textView.textRange(
-            from: textView.beginningOfDocument,
-            to: textView.beginningOfDocument
-        )
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text as NSString
-        let updatedText = currentText.replacingCharacters(in: range, with: text)
-        
-        // If updated text view will be empty, add the placeholder and set
-        // the cursor to the beginning of the text view.
-        // Otherwise prepare for the user's entry.
-        if updatedText.isEmpty {
-            setBodyPlaceholderVisible(true)
-            
-            return false
-        } else if textView.textColor == Styles.Colors.Gray.light.color && !text.isEmpty {
-            setBodyPlaceholderVisible(false)
-        }
-        
-        return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil && textView.textColor == Styles.Colors.Gray.light.color {
-            setCursorToStart(textView: textView)
-        }
     }
 }
