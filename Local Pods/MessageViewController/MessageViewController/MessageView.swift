@@ -13,7 +13,6 @@ public final class MessageView: UIView, MessageTextViewListener {
     public let textView = MessageTextView()
 
     internal weak var delegate: MessageViewDelegate?
-    internal let placeholderLabel = UILabel()
     internal let button = UIButton()
     internal let UITextViewContentSizeKeyPath = #keyPath(UITextView.contentSize)
     internal let topBorderLayer = CALayer()
@@ -24,13 +23,9 @@ public final class MessageView: UIView, MessageTextViewListener {
 
         backgroundColor = .white
 
-        addSubview(placeholderLabel)
         addSubview(textView)
         addSubview(button)
         layer.addSublayer(topBorderLayer)
-
-        // setup placeholder
-        placeholderLabel.backgroundColor = .clear
 
         // setup text view
         textView.contentInset = .zero
@@ -71,25 +66,10 @@ public final class MessageView: UIView, MessageTextViewListener {
 
     // MARK: Public API
 
-    public var placeholderText: String {
-        get { return placeholderLabel.text ?? "" }
-        set {
-            placeholderLabel.text = newValue
-            placeholderLayoutDidChange()
-        }
-    }
-
-    public var placeholderTextColor: UIColor {
-        get { return placeholderLabel.textColor }
-        set { placeholderLabel.textColor = newValue }
-    }
-
     public var font: UIFont? {
         get { return textView.font }
         set {
-            placeholderLabel.font = newValue
             textView.font = newValue
-            placeholderLayoutDidChange()
             delegate?.wantsLayout(messageView: self)
         }
     }
@@ -187,14 +167,6 @@ public final class MessageView: UIView, MessageTextViewListener {
         )
         textView.frame = textViewFrame
 
-        let placeholderSize = placeholderLabel.bounds.size
-        placeholderLabel.frame = CGRect(
-            x: textViewFrame.minX,
-            y: textViewFrame.minY,
-            width: placeholderSize.width,
-            height: placeholderSize.height
-        )
-
         // adjust by bottom offset so content is flush w/ text view
         button.frame = CGRect(
             x: textViewFrame.maxX + buttonLeftInset,
@@ -245,14 +217,8 @@ public final class MessageView: UIView, MessageTextViewListener {
 
     internal func updateEmptyTextStates() {
         let isEmpty = text.isEmpty
-        placeholderLabel.isHidden = !isEmpty
         button.isEnabled = !isEmpty
         button.alpha = isEmpty ? 0.25 : 1
-    }
-
-    internal func placeholderLayoutDidChange() {
-        placeholderLabel.sizeToFit()
-        setNeedsLayout()
     }
 
     internal func buttonLayoutDidChange() {
