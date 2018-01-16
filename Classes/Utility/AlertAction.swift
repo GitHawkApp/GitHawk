@@ -53,7 +53,7 @@ struct AlertAction {
     }
 
     func view(owner: String) -> UIAlertAction {
-        return UIAlertAction(title: owner, style: .default) { _ in
+        return UIAlertAction(title: "@\(owner)", style: .default) { _ in
             guard let url = URL(string: "https://github.com/\(owner)") else { return }
             self.rootViewController?.presentSafari(url: url)
         }
