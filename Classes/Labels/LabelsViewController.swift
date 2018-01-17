@@ -27,6 +27,7 @@ final class LabelsViewController: UITableViewController {
 
         let emptyView = EmptyView()
         emptyView.label.text = NSLocalizedString("No labels found", comment: "")
+        emptyView.isHidden = true
         tableView.backgroundView = emptyView
 
         tableView.refreshControl = feedRefresh.refreshControl

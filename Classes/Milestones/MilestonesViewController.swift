@@ -27,6 +27,7 @@ final class MilestonesViewController: UITableViewController {
 
         let emptyView = EmptyView()
         emptyView.label.text = NSLocalizedString("No open milestones", comment: "")
+        emptyView.isHidden = true
         tableView.backgroundView = emptyView
 
         tableView.refreshControl = feedRefresh.refreshControl
