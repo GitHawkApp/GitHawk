@@ -117,13 +117,13 @@ IssueManagingNavSectionControllerDelegate {
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
 
         let navigationTitle = NavigationTitleDropdownView()
-        navigationItem.titleView = navigationTitle
         navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
         navigationTitle.configure(
             title: "#\(model.number)",
             subtitle: "\(model.owner)/\(model.repo)",
             accessibilityLabel: labelString
         )
+        navigationItem.titleView = navigationTitle
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
@@ -244,7 +244,7 @@ IssueManagingNavSectionControllerDelegate {
     func viewOwnerAction() -> UIAlertAction? {
         weak var weakSelf = self
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(owner: "@\(model.owner)")
+            .view(owner: model.owner)
     }
 
     func viewRepoAction() -> UIAlertAction? {
