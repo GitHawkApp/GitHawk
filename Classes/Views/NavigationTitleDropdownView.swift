@@ -77,11 +77,6 @@ final class NavigationTitleDropdownView: UIControl {
         fadeControls(alpha: 1)
     }
 
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        fadeControls(alpha: 1)
-    }
-
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
         fadeControls(alpha: 1)
@@ -111,6 +106,11 @@ final class NavigationTitleDropdownView: UIControl {
         self.accessibilityLabel = accessibilityLabel ?? title
 
         invalidateIntrinsicContentSize()
+
+        translatesAutoresizingMaskIntoConstraints = false
+        layoutIfNeeded()
+        sizeToFit()
+        translatesAutoresizingMaskIntoConstraints = true
     }
 
     // MARK: Private API
