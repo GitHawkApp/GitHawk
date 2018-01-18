@@ -155,6 +155,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        // if the cell is hidden, its been put back in the reuse pool
         guard self.isHidden == false,
             let contentHeight = webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight") as NSString?
             else { return }
