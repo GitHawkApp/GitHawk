@@ -55,6 +55,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This enables you to save images to your Camera roll.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This enables you to upload and post photos to GitHub.</string>
 	<key>UIBackgroundModes</key>
