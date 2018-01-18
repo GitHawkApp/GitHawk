@@ -31,8 +31,6 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 
 final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewDelegate {
 
-    private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
-
     private static let ImgScheme = "freetime-img"
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
@@ -97,7 +95,6 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .clear
         webView.delegate = self
-        webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -110,10 +107,6 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        webView.removeObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath)
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
         webView.isHidden = true
@@ -122,6 +115,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     override func layoutSubviews() {
         super.layoutSubviews()
         if webView.frame != contentView.bounds {
+            print("previous frame: \(webView.frame)")
             webView.frame = contentView.bounds
         }
     }
@@ -161,20 +155,13 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        webView.isHidden = false
-    }
+        // if the cell is hidden, its been put back in the reuse pool
+        guard self.isHidden == false,
+            let contentHeight = webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight") as NSString?
+            else { return }
 
-    // MARK: KVO
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == IssueCommentHtmlCell.WebviewKeyPath {
-            delegate?.webViewDidResize(
-                cell: self,
-                html: body,
-                cellWidth: contentView.bounds.width,
-                size: webView.scrollView.contentSize
-            )
-        }
+        let size = CGSize(width: contentView.bounds.width, height: CGFloat(contentHeight.floatValue))
+        delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
     }
 
 }
