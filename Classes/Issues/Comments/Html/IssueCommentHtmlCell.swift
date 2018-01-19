@@ -32,8 +32,10 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewDelegate {
 
     private static let ImgScheme = "freetime-img"
+    private static let HeightScheme = "freetime-hgt"
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
+    * {margin: 0;padding: 0;}
     body{
     // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
     // lint compiled style with http://csslint.net/
@@ -77,6 +79,23 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('click', tapAction);
         }
+        function onElementHeightChange(elm, callback) {
+            var lastHeight = elm.offsetHeight, newHeight;
+            (function run() {
+                newHeight = elm.offsetHeight;
+                if(lastHeight != newHeight) {
+                    callback(newHeight);
+                }
+                lastHeight = newHeight;
+                if(elm.onElementHeightChangeTimer) {
+                    clearTimeout(elm.onElementHeightChangeTimer);
+                }
+                elm.onElementHeightChangeTimer = setTimeout(run, 300);
+            })();
+        }
+        onElementHeightChange(document.body, function(height) {
+            document.location = "\(HeightScheme)://" + height;
+        });
     </script>
     </body>
     </html>
@@ -95,6 +114,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .clear
         webView.delegate = self
+        webView.scrollView.bounces = false
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -109,13 +129,12 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        webView.isHidden = true
+        webView.alpha = 0
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         if webView.frame != contentView.bounds {
-            print("previous frame: \(webView.frame)")
             webView.frame = contentView.bounds
         }
     }
@@ -134,12 +153,19 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     // MARK: UIWebViewDelegate
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        guard let url = request.url else { return true }
+        // if the cell is hidden, its been put back in the reuse pool
+        guard isHidden == false, let url = request.url else { return true }
 
         if url.scheme == IssueCommentHtmlCell.ImgScheme,
             let host = url.host,
             let imageURL = URL(string: host) {
             imageDelegate?.webViewDidTapImage(cell: self, url: imageURL)
+            return false
+        } else if url.scheme == IssueCommentHtmlCell.HeightScheme,
+            let heightString = url.host as NSString? {
+            webView.alpha = 1
+            let size = CGSize(width: contentView.bounds.width, height: CGFloat(heightString.floatValue))
+            delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
             return false
         }
 
@@ -155,13 +181,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        // if the cell is hidden, its been put back in the reuse pool
-        guard self.isHidden == false,
-            let contentHeight = webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight") as NSString?
-            else { return }
-
-        let size = CGSize(width: contentView.bounds.width, height: CGFloat(contentHeight.floatValue))
-        delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
+        webView.alpha = 1
     }
 
 }

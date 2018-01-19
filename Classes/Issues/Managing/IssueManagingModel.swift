@@ -35,10 +35,9 @@ final class IssueManagingModel: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueManagingModel else { return false }
-        return pullRequest == object.pullRequest
-        && objectId == object.objectId
-        && role == object.role
+        guard object is IssueManagingModel else { return false }
+        // must be true for binding section controller
+        return true
     }
 
 }
