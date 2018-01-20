@@ -1,3 +1,7 @@
+# 2017-12-11 -- v2.0.8
+- Fixed a crash caused by a reflection call during logging.
+- Updating server with the latest parameters and deprecating old ones.
+
 # 2017-11-27 -- v2.0.7
 - Improve identity reset process, ensuring all information is reset during Identity deletion.
 

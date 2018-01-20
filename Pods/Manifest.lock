@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireNetworkActivityIndicator (2.1.0):
     - Alamofire (~> 4.1)
-  - Apollo (0.7.0-alpha.9):
-    - Apollo/Core (= 0.7.0-alpha.9)
-  - Apollo/Core (0.7.0-alpha.9)
+  - Apollo (0.7.0):
+    - Apollo/Core (= 0.7.0)
+  - Apollo/Core (0.7.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
@@ -13,24 +13,25 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Firebase/Core (4.7.0):
+  - Firebase/Core (4.8.0):
     - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - Firebase/Database (4.7.0):
+    - FirebaseCore (= 4.0.13)
+  - Firebase/Database (4.8.0):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.2)
+    - FirebaseDatabase (= 4.1.3)
   - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.12):
+  - FirebaseCore (4.0.13):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.2):
+  - FirebaseDatabase (4.1.3):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.7)
+  - FirebaseInstanceID (2.0.8):
+    - FirebaseCore (~> 4.0)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
@@ -112,14 +113,8 @@ EXTERNAL SOURCES:
   MessageViewController:
     :path: Local Pods/MessageViewController
   MMMarkdown:
-<<<<<<< HEAD
-    :path: Local Pods/MMMarkdown
-=======
     :branch: master
     :git: https://github.com/GitHawkApp/MMMarkdown.git
-  SlackTextViewController:
-    :path: Local Pods/SlackTextViewController
->>>>>>> move mmmarkdown to remote fork
   StyledText:
     :branch: master
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -134,7 +129,7 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 82b52b20502409d3724ab0bdbb36ab562eda9ebd
+    :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
     :git: https://github.com/Instagram/IGListKit.git
   MMMarkdown:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
@@ -146,15 +141,15 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
-  Apollo: 472b027285e3bd2a79d37d502e98f6f15a3bc528
+  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseDatabase: 18ecb23e15c7f58bb0c4527e9cace06897cc40ca
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
+  FirebaseDatabase: 7088bfc4af2cc00231bb36e1404fc2d7509eb4dc
+  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
@@ -177,22 +172,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-PODFILE CHECKSUM: c639f72d32f181c5681b99fa40dcecbcddb1041e
-=======
-PODFILE CHECKSUM: e6f338fb639df94c4e8f4122e92d3ad6ed81e2a5
->>>>>>> move styled text to remote pod
-=======
-PODFILE CHECKSUM: 218b2e85396820cc21d13781a72304b4b452b593
->>>>>>> move highlightr to remote fork
-=======
-PODFILE CHECKSUM: 80c5e9344b3bc1eb9019542ed8c06f1e2390fadf
->>>>>>> move mmmarkdown to remote fork
-=======
-PODFILE CHECKSUM: f10413f8e3ea804e1bafc14c42e2dd6706fd75d3
->>>>>>> move flatcache to remote repo
+PODFILE CHECKSUM: 588ba01705c436ac7a2b578c8c7ef9fb23dc7aaf
 
 COCOAPODS: 1.4.0.rc.1

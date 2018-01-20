@@ -31,11 +31,6 @@ pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch 
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
 # Local Pods w/ custom changes
-<<<<<<< HEAD
-pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
-=======
-pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
->>>>>>> move mmmarkdown to remote fork
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'MessageViewController', :path => 'Local Pods/MessageViewController'
 
