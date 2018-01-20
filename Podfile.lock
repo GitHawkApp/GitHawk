@@ -93,7 +93,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
-  - StyledText (from `Local Pods/StyledText`)
+  - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
   - Tabman (~> 1.1)
@@ -112,7 +112,8 @@ EXTERNAL SOURCES:
   MMMarkdown:
     :path: Local Pods/MMMarkdown
   StyledText:
-    :path: Local Pods/StyledText
+    :branch: master
+    :git: https://github.com/GitHawkApp/StyledText.git
   SwipeCellKit:
     :path: Local Pods/SwipeCellKit
 
@@ -120,6 +121,9 @@ CHECKOUT OPTIONS:
   IGListKit:
     :commit: 82b52b20502409d3724ab0bdbb36ab562eda9ebd
     :git: https://github.com/Instagram/IGListKit.git
+  StyledText:
+    :commit: 0567d1e9d036da143574856fd90844861d3d5166
+    :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -149,12 +153,16 @@ SPEC CHECKSUMS:
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  StyledText: 71f244279536f0d62e3f6c4f233336d4a161aaec
+  StyledText: 0da66d27eaab0269b1d43e2fd73f75984a88184d
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
+<<<<<<< HEAD
 PODFILE CHECKSUM: c639f72d32f181c5681b99fa40dcecbcddb1041e
+=======
+PODFILE CHECKSUM: e6f338fb639df94c4e8f4122e92d3ad6ed81e2a5
+>>>>>>> move styled text to remote pod
 
 COCOAPODS: 1.4.0.rc.1

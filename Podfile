@@ -22,6 +22,7 @@ pod 'Firebase/Database'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
+pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
 
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
@@ -31,7 +32,6 @@ pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
 pod 'Highlightr', :path => 'Local Pods/Highlightr'
-pod 'StyledText', :path => 'Local Pods/StyledText'
 pod 'MessageViewController', :path => 'Local Pods/MessageViewController'
 
 target 'Freetime' do
