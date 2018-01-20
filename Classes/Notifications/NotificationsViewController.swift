@@ -218,7 +218,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetRightBarItem()
+        updateUnreadState(count: notificationIDs.count)
     }
 
     private func rebuildAndUpdate(
