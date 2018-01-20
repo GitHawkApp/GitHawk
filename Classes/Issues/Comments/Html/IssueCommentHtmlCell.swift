@@ -33,6 +33,8 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
     private static let ImgScheme = "freetime-img"
     private static let HeightScheme = "freetime-hgt"
+    private static let JavaScriptHeight = "offsetHeight"
+
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
     * {margin: 0;padding: 0;}
@@ -80,9 +82,9 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
             imgs[i].addEventListener('click', tapAction);
         }
         function onElementHeightChange(elm, callback) {
-            var lastHeight = elm.offsetHeight, newHeight;
+            var lastHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight), newHeight;
             (function run() {
-                newHeight = elm.offsetHeight;
+                newHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight);
                 if(lastHeight != newHeight) {
                     callback(newHeight);
                 }
@@ -139,6 +141,15 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         }
     }
 
+    // MARK: Private API
+
+    func changed(height: CGFloat) {
+        guard isHidden == false, height != bounds.height else { return }
+
+        let size = CGSize(width: contentView.bounds.width, height: CGFloat(height))
+        delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -163,9 +174,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
             return false
         } else if url.scheme == IssueCommentHtmlCell.HeightScheme,
             let heightString = url.host as NSString? {
-            webView.alpha = 1
-            let size = CGSize(width: contentView.bounds.width, height: CGFloat(heightString.floatValue))
-            delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
+            changed(height: CGFloat(heightString.floatValue))
             return false
         }
 
@@ -182,6 +191,11 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         webView.alpha = 1
+
+        if let heightString = webView
+            .stringByEvaluatingJavaScript(from: "document.body.\(IssueCommentHtmlCell.JavaScriptHeight)") as NSString? {
+            changed(height: CGFloat(heightString.floatValue))
+        }
     }
 
 }
