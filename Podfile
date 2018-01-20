@@ -24,12 +24,17 @@ pod 'Firebase/Database'
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
 pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
 pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
+pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'
 
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
 # Local Pods w/ custom changes
+<<<<<<< HEAD
 pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
+=======
+pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
+>>>>>>> move mmmarkdown to remote fork
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
 pod 'MessageViewController', :path => 'Local Pods/MessageViewController'
