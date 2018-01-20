@@ -28,7 +28,6 @@ pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
 # Local Pods w/ custom changes
 pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
-pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'FlatCache', :path => 'Local Pods/FlatCache'
 pod 'Highlightr', :path => 'Local Pods/Highlightr'

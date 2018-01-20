@@ -13,7 +13,7 @@
         <scene sceneID="x3F-1M-8K8">
             <objects>
                 <tableViewController title="Upload Image" id="fex-dK-757" customClass="ImageUploadTableViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="kkt-cL-OgV">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="kkt-cL-OgV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -87,7 +87,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iqO-9E-R2C" customClass="SLKTextView">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iqO-9E-R2C" customClass="MessageTextView" customModule="MessageViewController">
                                                     <rect key="frame" x="16" y="8" width="343" height="133.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -122,7 +122,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="bodyTextField" destination="iqO-9E-R2C" id="aaV-Ga-YE8"/>
+                        <outlet property="bodyTextView" destination="iqO-9E-R2C" id="aaV-Ga-YE8"/>
                         <outlet property="previewImageView" destination="d7E-xB-fht" id="vag-wx-uwe"/>
                         <outlet property="titleTextField" destination="IrO-7N-7EE" id="8Xt-hT-Ycb"/>
                     </connections>

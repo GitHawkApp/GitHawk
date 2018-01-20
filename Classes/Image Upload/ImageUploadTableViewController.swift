@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import SlackTextViewController
 import NYTPhotoViewer
+import MessageViewController
 
 protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
@@ -23,7 +23,7 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextField: SLKTextView!
+    @IBOutlet private var bodyTextView: MessageTextView!
     
     private var bodyPlaceholder: String?
     private var bodyTextColor: UIColor?
@@ -42,7 +42,7 @@ class ImageUploadTableViewController: UITableViewController {
     }
 
     private var descriptionText: String? {
-        let raw = bodyTextField.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let raw = bodyTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty { return nil }
         return raw
     }
@@ -60,7 +60,7 @@ class ImageUploadTableViewController: UITableViewController {
 
         return viewController
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,13 +78,12 @@ class ImageUploadTableViewController: UITableViewController {
 
         // Setup view colors and styles
         let placeholderText = NSLocalizedString("Optional", comment: "")
-        bodyTextField.placeholder = placeholderText
-        bodyTextField.placeholderFont = Styles.Fonts.body
-        bodyTextField.placeholderColor = Styles.Colors.Gray.light.color
-        bodyTextField.font = Styles.Fonts.body
-        bodyTextField.textColor = Styles.Colors.Gray.dark.color
-        bodyTextField.textContainerInset = .zero
-        bodyTextField.textContainer.lineFragmentPadding = 0
+        bodyTextView.placeholderText = placeholderText
+        bodyTextView.placeholderTextColor = Styles.Colors.Gray.light.color
+        bodyTextView.font = Styles.Fonts.body
+        bodyTextView.textContainerInset = .zero
+        bodyTextView.textContainer.lineFragmentPadding = 0
+        
         titleTextField.textColor = Styles.Colors.Gray.dark.color
         titleTextField.font = Styles.Fonts.body
         titleTextField.attributedPlaceholder = NSAttributedString(
@@ -231,7 +230,7 @@ class ImageUploadTableViewController: UITableViewController {
 extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        bodyTextField.becomeFirstResponder()
+        bodyTextView.becomeFirstResponder()
         return false
     }
 }
