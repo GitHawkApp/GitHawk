@@ -85,7 +85,7 @@ DEPENDENCIES:
   - Firebase/Database
   - FlatCache (from `Local Pods/FlatCache`)
   - FLEX (~> 2.0)
-  - Highlightr (from `Local Pods/Highlightr`)
+  - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
   - MessageViewController (from `Local Pods/MessageViewController`)
@@ -103,7 +103,8 @@ EXTERNAL SOURCES:
   FlatCache:
     :path: Local Pods/FlatCache
   Highlightr:
-    :path: Local Pods/Highlightr
+    :branch: master
+    :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
@@ -118,6 +119,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  Highlightr:
+    :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
+    :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
     :commit: 82b52b20502409d3724ab0bdbb36ab562eda9ebd
     :git: https://github.com/Instagram/IGListKit.git
@@ -141,7 +145,7 @@ SPEC CHECKSUMS:
   FlatCache: 5f9dd86dc7a9086183150d87a38a841e7e1370db
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  Highlightr: c88eb21f65a35a22877b784f13c311494e1206d7
+  Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
@@ -160,9 +164,13 @@ SPEC CHECKSUMS:
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 PODFILE CHECKSUM: c639f72d32f181c5681b99fa40dcecbcddb1041e
 =======
 PODFILE CHECKSUM: e6f338fb639df94c4e8f4122e92d3ad6ed81e2a5
 >>>>>>> move styled text to remote pod
+=======
+PODFILE CHECKSUM: 218b2e85396820cc21d13781a72304b4b452b593
+>>>>>>> move highlightr to remote fork
 
 COCOAPODS: 1.4.0.rc.1
