@@ -102,6 +102,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/FlatCache</string>
+			<key>Title</key>
+			<string>FlatCache</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/FLEX</string>
 			<key>Title</key>
 			<string>FLEX</string>

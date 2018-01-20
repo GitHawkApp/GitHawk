@@ -83,7 +83,7 @@ DEPENDENCIES:
   - FBSnapshotTestCase
   - Firebase/Core
   - Firebase/Database
-  - FlatCache (from `Local Pods/FlatCache`)
+  - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
@@ -101,7 +101,8 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   FlatCache:
-    :path: Local Pods/FlatCache
+    :branch: master
+    :git: https://github.com/GitHawkApp/FlatCache.git
   Highlightr:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
@@ -126,6 +127,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  FlatCache:
+    :commit: beb697643eea11f40bb66683d1576a2772080d9d
+    :git: https://github.com/GitHawkApp/FlatCache.git
   Highlightr:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
@@ -152,7 +156,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 18ecb23e15c7f58bb0c4527e9cace06897cc40ca
   FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  FlatCache: 5f9dd86dc7a9086183150d87a38a841e7e1370db
+  FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
@@ -176,6 +180,7 @@ SPEC CHECKSUMS:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 PODFILE CHECKSUM: c639f72d32f181c5681b99fa40dcecbcddb1041e
 =======
 PODFILE CHECKSUM: e6f338fb639df94c4e8f4122e92d3ad6ed81e2a5
@@ -186,5 +191,8 @@ PODFILE CHECKSUM: 218b2e85396820cc21d13781a72304b4b452b593
 =======
 PODFILE CHECKSUM: 80c5e9344b3bc1eb9019542ed8c06f1e2390fadf
 >>>>>>> move mmmarkdown to remote fork
+=======
+PODFILE CHECKSUM: f10413f8e3ea804e1bafc14c42e2dd6706fd75d3
+>>>>>>> move flatcache to remote repo
 
 COCOAPODS: 1.4.0.rc.1
