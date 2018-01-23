@@ -46,7 +46,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
   - leveldb-library (1.20)
-  - MessageViewController (0.1.0)
+  - MessageViewController (0.1.1)
   - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -89,7 +89,7 @@ DEPENDENCIES:
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
-  - MessageViewController (from `Local Pods/MessageViewController`)
+  - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
@@ -111,7 +111,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :path: Local Pods/MessageViewController
+    :branch: master
+    :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
     :branch: master
     :git: https://github.com/GitHawkApp/MMMarkdown.git
@@ -131,6 +132,9 @@ CHECKOUT OPTIONS:
   IGListKit:
     :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
     :git: https://github.com/Instagram/IGListKit.git
+  MessageViewController:
+    :commit: 7f8252946b36ca1ae9b80f335763ff0897badf12
+    :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
     :git: https://github.com/GitHawkApp/MMMarkdown.git
@@ -158,7 +162,7 @@ SPEC CHECKSUMS:
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: 7ed4edae368f713b2b8a2ed16f462d923f92c8b3
+  MessageViewController: 218b3b8fae3a6e5ea446a08b666b5cf67337dbf5
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
@@ -172,6 +176,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 588ba01705c436ac7a2b578c8c7ef9fb23dc7aaf
+PODFILE CHECKSUM: 2a5c54767eabaf0ab1cc660a65301991cacc1648
 
 COCOAPODS: 1.4.0.rc.1
