@@ -123,7 +123,7 @@ FlatCacheListener {
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
-    func resetRightBarItem() {
+    func resetRightBarItem(updatingState updateState: Bool = true) {
         let item = UIBarButtonItem(
             image: UIImage(named: "check"),
             style: .plain,
@@ -132,7 +132,9 @@ FlatCacheListener {
         )
         item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
         navigationItem.rightBarButtonItem = item
-        updateUnreadState(count: notificationIDs.count)
+        if updateState {
+            updateUnreadState(count: notificationIDs.count)
+        }
     }
 
     private func updateUnreadState(count: Int) {
@@ -159,6 +161,10 @@ FlatCacheListener {
 
                 // clear all badges
                 BadgeNotifications.update(count: 0)
+
+                // change the spinner to the mark all item
+                // don't update state here; it is managed by `fetch`
+                self.resetRightBarItem(updatingState: false)
             } else {
                 generator.notificationOccurred(.error)
             }
@@ -218,7 +224,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetRightBarItem()
+        updateUnreadState(count: notificationIDs.count)
     }
 
     private func rebuildAndUpdate(
