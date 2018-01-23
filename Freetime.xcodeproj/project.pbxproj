@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1329A07BD115DC60EA06623D /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7EE45EC4BBE1693D3EA4EE /* Pods_FreetimeTests.framework */; };
 		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
 		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
 		2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */; };
@@ -353,7 +354,6 @@
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
-		525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
@@ -390,7 +390,7 @@
 		98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FD1F9CCFFE005A0266 /* ImageUploadTableViewController.swift */; };
 		98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */; };
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
-		C2FAAA639721846A5B477E5C /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */; };
+		C0B1CB4B3AC8154A118BF72C /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5BF36E820A86661758CB71A /* Pods_Freetime.framework */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -432,6 +432,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B7EE45EC4BBE1693D3EA4EE /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1635545ACA3FD52C19262BAD /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
 		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
 		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
 		2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -778,8 +780,6 @@
 		29FB942F1EE752280016E6D4 /* IssueLabeledCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabeledCell.swift; sourceTree = "<group>"; };
 		29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freetime-Bridging-Header.h"; sourceTree = "<group>"; };
 		29FF85A41EE1EA7A007B8762 /* ReactionContent+ReactionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ReactionContent+ReactionType.swift"; sourceTree = "<group>"; };
-		35E1CE59E98A2C8E7F451CA6 /* Pods-FreetimeTests.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.testflight.xcconfig"; sourceTree = "<group>"; };
-		3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringViewTests.swift; sourceTree = "<group>"; };
 		4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UserActivity.swift"; sourceTree = "<group>"; };
@@ -787,7 +787,6 @@
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
-		6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
@@ -795,7 +794,8 @@
 		7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
 		7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
 		7BF2239C1F91056C006CC9A2 /* File+Filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Filename.swift"; sourceTree = "<group>"; };
-		94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.debug.xcconfig"; sourceTree = "<group>"; };
+		80CEC437E0C86FC80BAE5998 /* Pods-FreetimeTests.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.testflight.xcconfig"; sourceTree = "<group>"; };
+		8A419176DBB76331E7AB575F /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
 		98003D8C1FCAD7FC00755C17 /* LabelDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetails.swift; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
 		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
@@ -823,8 +823,10 @@
 		98F9F3FD1F9CCFFE005A0266 /* ImageUploadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUploadTableViewController.swift; sourceTree = "<group>"; };
 		98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgurClient.swift; sourceTree = "<group>"; };
 		98F9F4021F9CD006005A0266 /* Image+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+Base64.swift"; sourceTree = "<group>"; };
-		B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
-		CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
+		A5BF36E820A86661758CB71A /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B92BF12A0DB328FAFB4FF585 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
+		BBECB5759736755E5DAB6D94 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
+		C7D994CEA95E1E7F133C18E9 /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
 		D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WrappingStaticSpacingFlowLayout.swift; sourceTree = "<group>"; };
@@ -853,8 +855,6 @@
 		DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionController.swift; sourceTree = "<group>"; };
 		DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkHeaderSectionController.swift; sourceTree = "<group>"; };
-		EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
-		F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -862,7 +862,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				525C147297BCEEF388B5FDBC /* Pods_Freetime.framework in Frameworks */,
+				C0B1CB4B3AC8154A118BF72C /* Pods_Freetime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,7 +870,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2FAAA639721846A5B477E5C /* Pods_FreetimeTests.framework in Frameworks */,
+				1329A07BD115DC60EA06623D /* Pods_FreetimeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,10 +1285,10 @@
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				292FCB2A1EE0546E0026635E /* gql */,
-				D0DC03D1591A6020CACD44F4 /* Pods */,
 				297AE8351EC0D58A00B44A1F /* Products */,
 				297AE86D1EC0D5C200B44A1F /* Resources */,
 				2930F2701F894AA10082BA26 /* Settings.bundle */,
+				2CC4308B8B6E1D5E0BB6131E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1683,6 +1683,19 @@
 			path = Labeled;
 			sourceTree = "<group>";
 		};
+		2CC4308B8B6E1D5E0BB6131E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1635545ACA3FD52C19262BAD /* Pods-Freetime.debug.xcconfig */,
+				BBECB5759736755E5DAB6D94 /* Pods-Freetime.release.xcconfig */,
+				B92BF12A0DB328FAFB4FF585 /* Pods-Freetime.testflight.xcconfig */,
+				C7D994CEA95E1E7F133C18E9 /* Pods-FreetimeTests.debug.xcconfig */,
+				8A419176DBB76331E7AB575F /* Pods-FreetimeTests.release.xcconfig */,
+				80CEC437E0C86FC80BAE5998 /* Pods-FreetimeTests.testflight.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1797,23 +1810,10 @@
 				298744CA1F24B75300D5DF30 /* SlackTextViewController.framework */,
 				292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */,
 				295F52D91EF1C0C7000B53CF /* MMMarkdown.framework */,
-				3DB749FB402B660C8A9F516C /* Pods_Freetime.framework */,
-				F2F33C5360D6CF79F44FFF42 /* Pods_FreetimeTests.framework */,
+				A5BF36E820A86661758CB71A /* Pods_Freetime.framework */,
+				0B7EE45EC4BBE1693D3EA4EE /* Pods_FreetimeTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D0DC03D1591A6020CACD44F4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */,
-				EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */,
-				B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */,
-				6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */,
-				CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */,
-				35E1CE59E98A2C8E7F451CA6 /* Pods-FreetimeTests.testflight.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		DC60C6CC1F98344B00241271 /* Mocks */ = {
@@ -1865,16 +1865,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297AE8511EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "Freetime" */;
 			buildPhases = (
-				D803031CFB0CF7AEEF2F2B69 /* [CP] Check Pods Manifest.lock */,
+				B76147DCFC3E180F4CF40F19 /* [CP] Check Pods Manifest.lock */,
 				9870B9041FC740460009719C /* Validate API Keys */,
 				292FCB261EE050F60026635E /* Generate Apollo GraphQL API */,
 				297AE8301EC0D58A00B44A1F /* Sources */,
 				297AE8311EC0D58A00B44A1F /* Frameworks */,
 				297AE8321EC0D58A00B44A1F /* Resources */,
-				46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */,
-				F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */,
 				DCF1A6481F9E3E1F00A7A4A0 /* SwiftLint */,
 				295B51391FC2342200C3993B /* Run Fabric */,
+				46ED67E64E246223C64C5EAE /* [CP] Embed Pods Frameworks */,
+				A76EE7BC0B51971FB0A808B8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1889,12 +1889,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297AE8541EC0D58A00B44A1F /* Build configuration list for PBXNativeTarget "FreetimeTests" */;
 			buildPhases = (
-				4EFAA4F1822BDDCE538693AB /* [CP] Check Pods Manifest.lock */,
+				693E6E8CDA8A5858E5B1B356 /* [CP] Check Pods Manifest.lock */,
 				297AE8441EC0D58A00B44A1F /* Sources */,
 				297AE8451EC0D58A00B44A1F /* Frameworks */,
 				297AE8461EC0D58A00B44A1F /* Resources */,
-				AF1FC06013FAAFD132676B25 /* [CP] Embed Pods Frameworks */,
-				96C731F68491692BBBF5E151 /* [CP] Copy Pods Resources */,
+				3B5D5EA42DE98FB17CDA298D /* [CP] Embed Pods Frameworks */,
+				00C360DCDB276F266E5247C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1989,6 +1989,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00C360DCDB276F266E5247C6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		292FCB261EE050F60026635E /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2017,116 +2032,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 45ebb3c197db95937d23c07145bb2da8226cd851 5a7c91261f303a0c7b657c8f26d0c46275893eb555f601427d7538e9a67c3b3d";
 		};
-		46D93019FA5858B5A35F7C0C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
-				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
-				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
-				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
-				"${BUILT_PRODUCTS_DIR}/MMMarkdown/MMMarkdown.framework",
-				"${BUILT_PRODUCTS_DIR}/MessageViewController/MessageViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
-				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/StyledText/StyledText.framework",
-				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
-				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
-				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMMarkdown.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledText.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4EFAA4F1822BDDCE538693AB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FreetimeTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		96C731F68491692BBBF5E151 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9870B9041FC740460009719C /* Validate API Keys */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Validate API Keys";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FAILED=false\n\nif [ -z \"${BUDDYBUILD_BUILD_NUMBER}\" ]; then\n  echo \"Script is not being run on CI\"\n  exit 0\nfi\n\nif [ -z \"${GITHUB_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"${GITHUB_CLIENT_SECRET}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"${IMGUR_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:16:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nsed -i \".tmp\" \"s|{GITHUBID}|${GITHUB_CLIENT_ID}|g; s|{GITHUBSECRET}|${GITHUB_CLIENT_SECRET}|g; s|{IMGURID}|${IMGUR_CLIENT_ID}|g\" \"${SRCROOT}/Classes/Systems/Secrets.swift\"\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi\n\necho \"All env values found!\"";
-		};
-		AF1FC06013FAAFD132676B25 /* [CP] Embed Pods Frameworks */ = {
+		3B5D5EA42DE98FB17CDA298D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2190,7 +2096,116 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D803031CFB0CF7AEEF2F2B69 /* [CP] Check Pods Manifest.lock */ = {
+		46ED67E64E246223C64C5EAE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
+				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
+				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
+				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MMMarkdown/MMMarkdown.framework",
+				"${BUILT_PRODUCTS_DIR}/MessageViewController/MessageViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/StyledText/StyledText.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MMMarkdown.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StyledText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		693E6E8CDA8A5858E5B1B356 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FreetimeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9870B9041FC740460009719C /* Validate API Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Validate API Keys";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FAILED=false\n\nif [ -z \"${BUDDYBUILD_BUILD_NUMBER}\" ]; then\n  echo \"Script is not being run on CI\"\n  exit 0\nfi\n\nif [ -z \"${GITHUB_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"${GITHUB_CLIENT_SECRET}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"${IMGUR_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:16:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nsed -i \".tmp\" \"s|{GITHUBID}|${GITHUB_CLIENT_ID}|g; s|{GITHUBSECRET}|${GITHUB_CLIENT_SECRET}|g; s|{IMGURID}|${IMGUR_CLIENT_ID}|g\" \"${SRCROOT}/Classes/Systems/Secrets.swift\"\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi\n\necho \"All env values found!\"";
+		};
+		A76EE7BC0B51971FB0A808B8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B76147DCFC3E180F4CF40F19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2221,21 +2236,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#\"${PODS_ROOT}/SwiftLint/swiftlint\"";
-		};
-		F8AD268F7DD148D9C5F574B2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2787,7 +2787,7 @@
 		};
 		297AE8521EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94840B8CCA6EA8A3EA37FA91 /* Pods-Freetime.debug.xcconfig */;
+			baseConfigurationReference = 1635545ACA3FD52C19262BAD /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2812,7 +2812,7 @@
 		};
 		297AE8531EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA08BE0B8263E4898B1DF86B /* Pods-Freetime.release.xcconfig */;
+			baseConfigurationReference = BBECB5759736755E5DAB6D94 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2837,7 +2837,7 @@
 		};
 		297AE8551EC0D58A00B44A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6079633B7825448DA6CAED21 /* Pods-FreetimeTests.debug.xcconfig */;
+			baseConfigurationReference = C7D994CEA95E1E7F133C18E9 /* Pods-FreetimeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2853,7 +2853,7 @@
 		};
 		297AE8561EC0D58A00B44A1F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD6851CDA1BB3DB6F779C307 /* Pods-FreetimeTests.release.xcconfig */;
+			baseConfigurationReference = 8A419176DBB76331E7AB575F /* Pods-FreetimeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2919,7 +2919,7 @@
 		};
 		98A8CA9A1F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9D4562D9138A112D9EDD9DD /* Pods-Freetime.testflight.xcconfig */;
+			baseConfigurationReference = B92BF12A0DB328FAFB4FF585 /* Pods-Freetime.testflight.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2951,7 +2951,7 @@
 		};
 		98A8CA9B1F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35E1CE59E98A2C8E7F451CA6 /* Pods-FreetimeTests.testflight.xcconfig */;
+			baseConfigurationReference = 80CEC437E0C86FC80BAE5998 /* Pods-FreetimeTests.testflight.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";

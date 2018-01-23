@@ -1,6 +1,0 @@
-framework module Pods_StyledTextTests {
-  umbrella header "Pods-StyledTextTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

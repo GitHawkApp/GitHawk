@@ -274,9 +274,9 @@ internal class HTMLUtils {
     //     decode("&foo;")    --> nil
     class func decode(_ entity : String) -> Character? {
         if entity.hasPrefix("&#x") || entity.hasPrefix("&#X"){
-            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 3)), base: 16)
+            return decodeNumeric(String(entity[entity.index(entity.startIndex, offsetBy: 3)...]), base: 16)
         } else if entity.hasPrefix("&#") {
-            return decodeNumeric(entity.substring(from: entity.characters.index(entity.startIndex, offsetBy: 2)), base: 10)
+            return decodeNumeric(String(entity[entity.index(entity.startIndex, offsetBy: 2)...]), base: 10)
         } else {
             return characterEntities[entity]
         }

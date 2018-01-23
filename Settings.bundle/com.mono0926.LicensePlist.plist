@@ -8,7 +8,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Alamofire</string>
 			<key>Title</key>
-			<string>Alamofire (4.4.0)</string>
+			<string>Alamofire</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -16,7 +16,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/AlamofireNetworkActivityIndicator</string>
 			<key>Title</key>
-			<string>AlamofireNetworkActivityIndicator (2.1.0)</string>
+			<string>AlamofireNetworkActivityIndicator</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -32,7 +32,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Crashlytics</string>
 			<key>Title</key>
-			<string>Crashlytics (3.9.3)</string>
+			<string>Crashlytics</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Fabric</string>
 			<key>Title</key>
-			<string>Fabric (1.7.2)</string>
+			<string>Fabric</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -48,7 +48,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FBSnapshotTestCase</string>
 			<key>Title</key>
-			<string>FBSnapshotTestCase (2.1.4)</string>
+			<string>FBSnapshotTestCase</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -56,7 +56,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Firebase</string>
 			<key>Title</key>
-			<string>Firebase (4.7.0)</string>
+			<string>Firebase</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -64,7 +64,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FirebaseAnalytics</string>
 			<key>Title</key>
-			<string>FirebaseAnalytics (4.0.5)</string>
+			<string>FirebaseAnalytics</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -72,7 +72,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FirebaseCore</string>
 			<key>Title</key>
-			<string>FirebaseCore (4.0.12)</string>
+			<string>FirebaseCore</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -80,7 +80,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FirebaseDatabase</string>
 			<key>Title</key>
-			<string>FirebaseDatabase (4.1.2)</string>
+			<string>FirebaseDatabase</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -88,7 +88,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FirebaseInstanceID</string>
 			<key>Title</key>
-			<string>FirebaseInstanceID (2.0.7)</string>
+			<string>FirebaseInstanceID</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -96,7 +96,15 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FLAnimatedImage</string>
 			<key>Title</key>
-			<string>FLAnimatedImage (1.0.12)</string>
+			<string>FLAnimatedImage</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/FlatCache</string>
+			<key>Title</key>
+			<string>FlatCache</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -104,7 +112,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FLEX</string>
 			<key>Title</key>
-			<string>FLEX (2.4.0)</string>
+			<string>FLEX</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -112,7 +120,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/GoogleToolboxForMac</string>
 			<key>Title</key>
-			<string>GoogleToolboxForMac (2.1.3)</string>
+			<string>GoogleToolboxForMac</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -120,7 +128,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Highlightr</string>
 			<key>Title</key>
-			<string>Highlightr (1.1.0)</string>
+			<string>Highlightr</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -128,7 +136,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/HTMLString</string>
 			<key>Title</key>
-			<string>HTMLString (4.0.1)</string>
+			<string>HTMLString</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -136,7 +144,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/IGListKit</string>
 			<key>Title</key>
-			<string>IGListKit (3.1.1)</string>
+			<string>IGListKit</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -144,7 +152,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/leveldb-library</string>
 			<key>Title</key>
-			<string>leveldb-library (1.20)</string>
+			<string>leveldb-library</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -152,7 +160,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/MMMarkdown</string>
 			<key>Title</key>
-			<string>MMMarkdown (0.5.5)</string>
+			<string>MMMarkdown</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -160,7 +168,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/nanopb</string>
 			<key>Title</key>
-			<string>nanopb (0.3.8)</string>
+			<string>nanopb</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -168,7 +176,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/NYTPhotoViewer</string>
 			<key>Title</key>
-			<string>NYTPhotoViewer (1.1.0)</string>
+			<string>NYTPhotoViewer</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -176,7 +184,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Pageboy</string>
 			<key>Title</key>
-			<string>Pageboy (2.2.0)</string>
+			<string>Pageboy</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -184,7 +192,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/PureLayout</string>
 			<key>Title</key>
-			<string>PureLayout (3.0.2)</string>
+			<string>PureLayout</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -192,7 +200,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SDWebImage</string>
 			<key>Title</key>
-			<string>SDWebImage (4.0.0)</string>
+			<string>SDWebImage</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -200,7 +208,15 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SnapKit</string>
 			<key>Title</key>
-			<string>SnapKit (4.0.0)</string>
+			<string>SnapKit</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/StyledText</string>
+			<key>Title</key>
+			<string>StyledText</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -208,7 +224,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SwiftLint</string>
 			<key>Title</key>
-			<string>SwiftLint (0.24.0)</string>
+			<string>SwiftLint</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -216,7 +232,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/SwipeCellKit</string>
 			<key>Title</key>
-			<string>SwipeCellKit (1.9.0)</string>
+			<string>SwipeCellKit</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -224,7 +240,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Tabman</string>
 			<key>Title</key>
-			<string>Tabman (1.2.0)</string>
+			<string>Tabman</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -232,7 +248,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/TUSafariActivity</string>
 			<key>Title</key>
-			<string>TUSafariActivity (1.0.4)</string>
+			<string>TUSafariActivity</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

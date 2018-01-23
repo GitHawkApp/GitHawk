@@ -55,7 +55,7 @@ open class Highlightr
             return nil
         }
         
-        guard setTheme(to: "pojoaque") else
+        guard setTheme(to: "pojoaque", fontSize: 14) else
         {
             return nil
         }
@@ -70,16 +70,15 @@ open class Highlightr
      - returns: true if it was possible to set the given theme, false otherwise
      */
     @discardableResult
-    open func setTheme(to name: String) -> Bool
+    open func setTheme(to name: String, fontSize: CGFloat) -> Bool
     {
         guard let defTheme = bundle.path(forResource: name+".min", ofType: "css") else
         {
             return false
         }
         let themeString = try! String.init(contentsOfFile: defTheme)
-        theme =  Theme(themeString: themeString)
+        theme =  Theme(themeString: themeString, fontSize: fontSize)
 
-        
         return true
     }
     
@@ -111,7 +110,7 @@ open class Highlightr
         }
         
         let res = jsContext.evaluateScript(command)
-        guard var string = res!.toString() else
+        guard var string = res!.toString(), string != "undefined" else
         {
             return nil
         }
@@ -123,13 +122,13 @@ open class Highlightr
         }else
         {
              string = "<style>"+theme.lightTheme+"</style><pre><code class=\"hljs\">"+string+"</code></pre>"
-             let opt = [
-             NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-             NSCharacterEncodingDocumentAttribute: String.Encoding.utf8
-             ] as [String : Any]
+            let opt: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+             .documentType: NSAttributedString.DocumentType.html,
+             .characterEncoding: String.Encoding.utf8
+             ]
             
              let data = string.data(using: String.Encoding.utf8)!
-             returnString = try! NSMutableAttributedString(data:data,options:opt as [String:AnyObject],documentAttributes:nil)
+             returnString = try! NSMutableAttributedString(data:data, options: opt, documentAttributes:nil)
 
         }
         
