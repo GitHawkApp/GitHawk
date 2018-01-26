@@ -26,13 +26,13 @@ pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branc
 pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
 pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'
 pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'
+pod 'MessageViewController', :git => 'https://github.com/GitHawkApp/MessageViewController.git', :branch => 'master'
 
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
 # Local Pods w/ custom changes
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
-pod 'MessageViewController', :path => 'Local Pods/MessageViewController'
 
 target 'Freetime' do
 

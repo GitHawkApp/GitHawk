@@ -141,8 +141,12 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
     internal func cache() {
         guard let key = fullCacheKey else { return }
         let text = messageView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else { return }
-        UserDefaults.standard.set(text, forKey: key)
+        let defaults = UserDefaults.standard
+        if text.isEmpty {
+            defaults.removeObject(forKey: key)
+        } else {
+            defaults.set(text, forKey: key)
+        }
     }
 
     var cachedText: String? {
