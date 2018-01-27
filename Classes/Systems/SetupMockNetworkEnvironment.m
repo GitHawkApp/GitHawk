@@ -15,9 +15,9 @@
 #define RECORDING_ENABLED 0
 #endif
 
-#ifndef PLAYBACK_ENABLED
-#define PLAYBACK_ENABLED 0
-#endif
+//#ifndef PLAYBACK_ENABLED
+//#define PLAYBACK_ENABLED 0
+//#endif
 
 static NSString *projectPath(void) {
     // set to $(PROJECT_DIR) in env vars
@@ -90,7 +90,9 @@ static void store(NSCachedURLResponse *cachedResponse, NSURLRequest *request) {
 @end
 
 BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
-    if (!RECORDING_ENABLED && !PLAYBACK_ENABLED) {
+    const BOOL playbackEnabled = [[[NSProcessInfo processInfo] arguments] containsObject:@"--network-playback"];
+
+    if (!RECORDING_ENABLED && !playbackEnabled) {
         return NO;
     }
 
@@ -102,7 +104,7 @@ BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
         config.URLCache = cache;
     }
 
-    if (PLAYBACK_ENABLED) {
+    if (playbackEnabled) {
         config.protocolClasses = @[[PlaybackURLProtocol class]];
     }
 
@@ -114,13 +116,11 @@ BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)task {
-    return PLAYBACK_ENABLED
-    && [[NSFileManager defaultManager] fileExistsAtPath:requestPath(task.originalRequest)];
+    return [[NSFileManager defaultManager] fileExistsAtPath:requestPath(task.originalRequest)];
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    return PLAYBACK_ENABLED
-    && [[NSFileManager defaultManager] fileExistsAtPath:requestPath(request)];
+    return [[NSFileManager defaultManager] fileExistsAtPath:requestPath(request)];
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {

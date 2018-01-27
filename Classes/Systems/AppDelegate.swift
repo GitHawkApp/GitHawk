@@ -13,8 +13,7 @@ import Fabric
 import Crashlytics
 import Firebase
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var showingLogin = false
