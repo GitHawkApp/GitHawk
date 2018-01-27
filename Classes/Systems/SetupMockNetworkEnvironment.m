@@ -15,10 +15,6 @@
 #define RECORDING_ENABLED 0
 #endif
 
-//#ifndef PLAYBACK_ENABLED
-//#define PLAYBACK_ENABLED 0
-//#endif
-
 static NSString *projectPath(void) {
     // set to $(PROJECT_DIR) in env vars
     NSString *path = [[NSProcessInfo processInfo] environment][@"NETWORK_RECORD_PATH"];
@@ -36,13 +32,16 @@ static NSString *recordsPath(void) {
 }
 
 static NSString *requestKey(NSURLRequest *request) {
-    // dont key using the access token
+    // dont key using the access token so that it can be faked in tests/playback
     NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
     NSMutableArray *queryItems = [[components queryItems] mutableCopy];
     [[components queryItems] enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSURLQueryItem *obj, NSUInteger idx, BOOL *stop) {
         if ([obj.name isEqualToString:@"access_token"]) {
             [queryItems removeObjectAtIndex:idx];
         }
+    }];
+    [queryItems sortUsingComparator:^NSComparisonResult(NSURLQueryItem *obj1, NSURLQueryItem *obj2) {
+        return [obj1.name compare:obj2.name];
     }];
     components.queryItems = queryItems;
 
