@@ -77,6 +77,7 @@ BaseListViewControllerDataSource {
             autocomplete: autocomplete
             )
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
+        // add case for reply model + SC. connect SC.delegate = self
         default: fatalError("Unhandled object: \(model)")
         }
     }
@@ -96,6 +97,16 @@ BaseListViewControllerDataSource {
         })
     }
 
-    // MARK: IssueCommentSectionControllerDelegate
+    // MARK: IssuePullRequestReviewReplySectionControllerDelegate
+
+    /**
+     - on tap, scroll to selected object-1 to start replying
+     - somehow set current thread as focus
+     - display the message VC, focus the kb
+     - add PR comment via v4 https://developer.github.com/v4/mutation/addpullrequestreviewcomment/
+     - need the inReplyTo which should be the previous comment? or the thread root?
+     - also requires pullRequestReviewId
+     - send and update the UI immediately
+     */
 
 }

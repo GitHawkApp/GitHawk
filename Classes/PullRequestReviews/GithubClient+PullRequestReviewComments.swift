@@ -95,6 +95,8 @@ extension GithubClient {
                                 isLast: i == thread.comments.count - 1
                             ))
                         }
+
+                        // reply model would go here
                     }
 
                     DispatchQueue.main.async {
