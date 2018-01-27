@@ -9,17 +9,19 @@
 import XCTest
 
 class LoginUITests: XCTestCase {
+
+    var app: XCUIApplication!
         
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-        launch(options: [.reset])
+        app = launch(options: [.reset])
     }
     
     func test_loginWithPAT() {
-        XCUIApplication().buttons["Personal Token"].tap()
+        app.buttons["personal_token"].tap()
 
-        let personalAccessTokenAlert = XCUIApplication().alerts["Personal Access Token"]
+        let personalAccessTokenAlert = app.alerts["Personal Access Token"]
         let personalAccessTokenTextField = personalAccessTokenAlert.textFields["Personal Access Token"]
         personalAccessTokenTextField.tap()
 
@@ -27,8 +29,8 @@ class LoginUITests: XCTestCase {
         personalAccessTokenTextField.typeText("1234")
         personalAccessTokenAlert.buttons["Sign in"].tap()
 
-        XCTAssertFalse(XCUIApplication().buttons["Personal Token"].exists)
-        XCTAssertTrue(XCUIApplication().navigationBars["Inbox"].exists)
+        // assert that the login view was dismissed
+        XCTAssertFalse(app.buttons["personal_token"].exists)
     }
     
 }

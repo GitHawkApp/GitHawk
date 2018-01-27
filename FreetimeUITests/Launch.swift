@@ -25,7 +25,7 @@ extension XCTestCase {
         return forward
     }
 
-    func launch(options: [LaunchOption]) {
+    func launch(options: [LaunchOption]) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--network-playback"] + options.map { $0.rawValue }
         app.launchEnvironment = forwardEnvironment(variables: [
@@ -35,6 +35,7 @@ extension XCTestCase {
             "NETWORK_RECORD_PATH",
             ])
         app.launch()
+        return app
     }
 
 }
