@@ -27,7 +27,10 @@ extension XCTestCase {
 
     func launch(options: [LaunchOption]) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["--network-playback"] + options.map { $0.rawValue }
+        app.launchArguments = [
+            "--network-playback",
+            "--fast-animations",
+            ] + options.map { $0.rawValue }
         app.launchEnvironment = forwardEnvironment(variables: [
             "GITHUB_CLIENT_SECRET",
             "GITHUB_CLIENT_ID",

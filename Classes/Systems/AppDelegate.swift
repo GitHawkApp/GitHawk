@@ -31,6 +31,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // initialize a webview at the start so webview startup later on isn't so slow
         _ = UIWebView()
 
+        if ProcessInfo.processInfo.arguments.contains("--fast-animations") {
+            window?.layer.speed = 100;
+        }
+
         // setup firebase
         FirebaseApp.configure()
         Database.database().isPersistenceEnabled = true
