@@ -27,9 +27,10 @@ func newGithubClient(
     config.httpAdditionalHeaders = additionalHeaders
     config.timeoutIntervalForRequest = 15
 
-    // disable URL caching for the v3 API
-    config.requestCachePolicy = .reloadIgnoringLocalCacheData
-    config.urlCache = nil
+    if !SetupMockNetworkEnvironment(config) {
+        // disable URL caching for the v3 API
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+    }
 
     let networker = Alamofire.SessionManager(configuration: config)
 
