@@ -80,6 +80,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "NETWORK_RECORD_PATH"
+            value = "$(PROJECT_DIR)"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "BUDDYBUILD_BUILD_NUMBER"
             value = "1234"
             isEnabled = "YES">
