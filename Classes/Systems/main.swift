@@ -30,10 +30,6 @@ enum AppReset {
 }
 
 _ = autoreleasepool {
-
-    print("PROCESS INFO ARGS")
-    print(ProcessInfo().arguments)
-    print("END process info args")
     if ProcessInfo.processInfo.arguments.contains("--reset") {
         AppReset.resetKeychain()
         AppReset.resetUserDefaults()
