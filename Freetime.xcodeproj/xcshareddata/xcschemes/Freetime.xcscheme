@@ -26,7 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      disableMainThreadChecker = "YES"
       language = ""
+      systemAttachmentLifetime = "keepNever"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -36,6 +38,16 @@
                BlueprintIdentifier = "297AE8471EC0D58A00B44A1F"
                BuildableName = "FreetimeTests.xctest"
                BlueprintName = "FreetimeTests"
+               ReferencedContainer = "container:Freetime.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "29B981FA201CE7E40002DA39"
+               BuildableName = "FreetimeUITests.xctest"
+               BlueprintName = "FreetimeUITests"
                ReferencedContainer = "container:Freetime.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -78,6 +90,11 @@
             key = "MALLOC_PROTECT_BEFORE"
             value = "1"
             isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "NETWORK_RECORD_PATH"
+            value = "$(PROJECT_DIR)"
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "BUDDYBUILD_BUILD_NUMBER"

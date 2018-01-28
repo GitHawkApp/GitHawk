@@ -13,8 +13,7 @@ import Fabric
 import Crashlytics
 import Firebase
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var showingLogin = false
@@ -31,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // initialize a webview at the start so webview startup later on isn't so slow
         _ = UIWebView()
+
+        if ProcessInfo.processInfo.arguments.contains("--fast-animations") {
+            window?.layer.speed = 100;
+        }
 
         // setup firebase
         FirebaseApp.configure()

@@ -62,6 +62,8 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        feed.collectionView.accessibilityIdentifier = "inbox-collectionView"
+
         makeBackBarItemEmpty()
         resetRightBarItem()
 

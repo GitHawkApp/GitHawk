@@ -127,6 +127,7 @@ IssueManagingNavSectionControllerDelegate {
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
+        feed.collectionView.accessibilityIdentifier = "issues-collectionView"
 
         // setup after feed is lazy loaded
         setup(scrollView: feed.collectionView)
