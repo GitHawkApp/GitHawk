@@ -15,6 +15,51 @@
 #define RECORDING_ENABLED 0
 #endif
 
+@interface RecordedResponse: NSObject<NSCoding>
+
+@property (nonatomic, strong) NSDictionary *headerFields;
+@property (nonatomic, strong) NSURL *url;
+@property (nonatomic, strong) NSData *data;
+@property (nonatomic, assign) NSInteger statusCode;
+
+@end
+
+@implementation RecordedResponse
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        _data = [aDecoder decodeObjectForKey:@"data"];
+        _statusCode = [aDecoder decodeIntegerForKey:@"statusCode"];
+        _url = [aDecoder decodeObjectForKey:@"url"];
+        _headerFields = [aDecoder decodeObjectForKey:@"headerFields"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.data forKey:@"data"];
+    [aCoder encodeInteger:self.statusCode forKey:@"statusCode"];
+    [aCoder encodeObject:self.headerFields forKey:@"headerFields"];
+    [aCoder encodeObject:self.url forKey:@"url"];
+}
+
+@end
+
+@interface NSString (EscapedFileName)
+
+- (NSString *)gh_escapedFileName;
+
+@end
+
+@implementation NSString (EscapedFileName)
+
+- (NSString *)gh_escapedFileName {
+    NSCharacterSet* illegalFileNameCharacters = [NSCharacterSet characterSetWithCharactersInString:@"/\\?%*|\"<>"];
+    return [[self componentsSeparatedByCharactersInSet:illegalFileNameCharacters] componentsJoinedByString:@""];
+}
+
+@end
+
 static NSString *projectPath(void) {
     // set to $(PROJECT_DIR) in env vars
     NSString *path = [[NSProcessInfo processInfo] environment][@"NETWORK_RECORD_PATH"];
@@ -32,22 +77,8 @@ static NSString *recordsPath(void) {
 }
 
 static NSString *requestKey(NSURLRequest *request) {
-    // dont key using the access token so that it can be faked in tests/playback
-    NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
-    NSMutableArray *queryItems = [[components queryItems] mutableCopy];
-    [[components queryItems] enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSURLQueryItem *obj, NSUInteger idx, BOOL *stop) {
-        if ([obj.name isEqualToString:@"access_token"]) {
-            [queryItems removeObjectAtIndex:idx];
-        }
-    }];
-    [queryItems sortUsingComparator:^NSComparisonResult(NSURLQueryItem *obj1, NSURLQueryItem *obj2) {
-        return [obj1.name compare:obj2.name];
-    }];
-    components.queryItems = queryItems;
-
     NSMutableString *raw = [NSMutableString new];
-    [raw appendString:request.HTTPMethod ?: @""];
-    [raw appendString:components.URL.absoluteString ?: @""];
+    [raw appendString:request.HTTPMethod ?: @"GET"];
     [raw appendString:[[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding] ?: @""];
 
     const char *cStr = [raw UTF8String];
@@ -62,31 +93,64 @@ static NSString *requestKey(NSURLRequest *request) {
 }
 
 static NSString *requestPath(NSURLRequest *request) {
-    NSString *key = requestKey(request);
-    return [recordsPath() stringByAppendingPathComponent:key];
+    NSString *path = recordsPath();
+    for (NSString *component in [request.URL.host componentsSeparatedByString:@"."]) {
+        path = [path stringByAppendingPathComponent:component];
+    }
+    path = [path stringByAppendingPathComponent:request.URL.path];
+
+    // dont key using the access token so that it can be faked in tests/playback
+    NSURLComponents *components = [NSURLComponents componentsWithURL:request.URL resolvingAgainstBaseURL:NO];
+    NSMutableArray *queryItems = [[components queryItems] mutableCopy];
+    [[components queryItems] enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSURLQueryItem *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj.name isEqualToString:@"access_token"]) {
+            [queryItems removeObjectAtIndex:idx];
+        }
+    }];
+    [queryItems sortUsingComparator:^NSComparisonResult(NSURLQueryItem *obj1, NSURLQueryItem *obj2) {
+        return [obj1.name compare:obj2.name];
+    }];
+    components.queryItems = queryItems;
+    path = [path stringByAppendingPathComponent:[components.query gh_escapedFileName]];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:nil]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+
+    return [path stringByAppendingPathComponent:requestKey(request)];
 }
 
-static void store(NSCachedURLResponse *cachedResponse, NSURLRequest *request) {
+static void store(NSURLResponse *response, NSData *data, NSURLRequest *request) {
     if (!RECORDING_ENABLED) {
         return;
     }
-    if (![cachedResponse.response isKindOfClass:[NSHTTPURLResponse class]]
-        || ![cachedResponse.response.MIMEType containsString:@"application/json"]) {
+    if (![response isKindOfClass:[NSHTTPURLResponse class]]
+        || ![response.MIMEType containsString:@"application/json"]) {
         return;
     }
     NSString *path = requestPath(request);
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         NSLog(@"WARNING: Overwriting file for request %@", request.URL.absoluteString);
     }
-    [cachedResponse.data writeToFile:requestPath(request) atomically:YES];
+
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+    RecordedResponse *record = [RecordedResponse new];
+    record.data = data;
+    record.statusCode = [httpResponse statusCode];
+    record.url = response.URL;
+    record.headerFields = [httpResponse allHeaderFields];
+    [NSKeyedArchiver archiveRootObject:record toFile:requestPath(request)];
 }
 
 
 @interface PlaybackURLProtocol: NSURLProtocol
 @end
 
-@interface RecordingURLCache : NSURLCache
+@interface RecordingURLProtocol: NSURLProtocol
 @end
+
+static NSURLSession *recordingSession = nil;
 
 BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
     const BOOL playbackEnabled = [[[NSProcessInfo processInfo] arguments] containsObject:@"--network-playback"];
@@ -96,11 +160,8 @@ BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
     }
 
     if (RECORDING_ENABLED) {
-        NSURLCache *cache = [[RecordingURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
-                                                                 diskCapacity:20 * 1024 * 1024
-                                                                     diskPath:nil];
-        [NSURLCache setSharedURLCache:cache];
-        config.URLCache = cache;
+        recordingSession = [NSURLSession sessionWithConfiguration:config];
+        config.protocolClasses = @[[RecordingURLProtocol class]];
     }
 
     if (playbackEnabled) {
@@ -137,14 +198,14 @@ BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
     NSURLRequest *request = _task.originalRequest ?: self.request;
     NSString *path = requestPath(request);
     NSLog(@"Loading request from disk: %@\n    path: %@", request.URL.absoluteString, path);
-    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-    NSCAssert(data.length > 0, @"Loaded empty data for request %@ at path %@", request.URL.absoluteString, path);
 
-    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL
-                                                              statusCode:200
+    RecordedResponse *record = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:record.url
+                                                              statusCode:record.statusCode
                                                              HTTPVersion:(NSString *)kCFHTTPVersion1_1
-                                                            headerFields:nil];
-    [self.client URLProtocol:self didLoadData:data];
+                                                            headerFields:record.headerFields];
+    [self.client URLProtocol:self didLoadData:record.data];
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     [self.client URLProtocolDidFinishLoading:self];
 }
@@ -153,26 +214,44 @@ BOOL SetupMockNetworkEnvironment(NSURLSessionConfiguration *config) {
 
 @end
 
-@implementation RecordingURLCache {
-    BOOL _isStoringRequest;
+@implementation RecordingURLProtocol {
+    NSURLSessionTask *_task;
 }
 
-- (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request {
-    if (!_isStoringRequest) {
-        store(cachedResponse, request);
-    }
-    _isStoringRequest = YES;
-    [super storeCachedResponse:cachedResponse forRequest:request];
-    _isStoringRequest = NO;
++ (BOOL)canInitWithTask:(NSURLSessionTask *)task {
+    return YES;
 }
 
-- (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forDataTask:(NSURLSessionDataTask *)dataTask {
-    if (!_isStoringRequest) {
-        store(cachedResponse, dataTask.originalRequest);
-    }
-    _isStoringRequest = YES;
-    [super storeCachedResponse:cachedResponse forDataTask:dataTask];
-    _isStoringRequest = NO;
++ (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    return YES;
 }
+
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+    return request;
+}
+
+- (instancetype)initWithTask:(NSURLSessionTask *)task cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id<NSURLProtocolClient>)client {
+    if (self = [super initWithTask:task cachedResponse:cachedResponse client:client]) {
+        _task = task;
+    }
+    return self;
+}
+
+- (void)startLoading {
+    __weak typeof(self) weakSelf = self;
+    id<NSURLProtocolClient> client = self.client;
+    NSURLRequest *request = _task.originalRequest ?: self.request;
+    NSURLSessionDataTask *task = [recordingSession
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                      store(response, data, request);
+                                      [client URLProtocol:weakSelf didLoadData:data];
+                                      [client URLProtocol:weakSelf didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                                      [client URLProtocolDidFinishLoading:weakSelf];
+                                  }];
+    [task resume];
+}
+
+- (void)stopLoading {}
 
 @end
