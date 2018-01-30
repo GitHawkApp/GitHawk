@@ -326,6 +326,9 @@
 		29DA1E881F5E2B8A0050C64B /* ClearAllHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */; };
 		29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E891F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift */; };
 		29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */; };
+		29DAA7AB20202A1A0029277A /* PullRequestReviewReplySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AA20202A1A0029277A /* PullRequestReviewReplySectionController.swift */; };
+		29DAA7AD20202A320029277A /* PullRequestReviewReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */; };
+		29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */; };
 		29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
@@ -755,6 +758,9 @@
 		29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearAllHeaderCell.swift; sourceTree = "<group>"; };
 		29DA1E891F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRecentHeaderSectionController.swift; sourceTree = "<group>"; };
 		29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAttribute.swift; sourceTree = "<group>"; };
+		29DAA7AA20202A1A0029277A /* PullRequestReviewReplySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplySectionController.swift; sourceTree = "<group>"; };
+		29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyCell.swift; sourceTree = "<group>"; };
+		29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyModel.swift; sourceTree = "<group>"; };
 		29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubHighlighting.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
@@ -1640,6 +1646,9 @@
 			children = (
 				29CC292E1FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift */,
 				29CC292F1FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift */,
+				29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */,
+				29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */,
+				29DAA7AA20202A1A0029277A /* PullRequestReviewReplySectionController.swift */,
 			);
 			path = PullRequestReviews;
 			sourceTree = "<group>";
@@ -2246,6 +2255,7 @@
 			files = (
 				D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */,
 				290744A91F24D2DA00FD9E48 /* AddCommentClient.swift in Sources */,
+				29DAA7AD20202A320029277A /* PullRequestReviewReplyCell.swift in Sources */,
 				29316DC51ECC9841007CAE3F /* Alamofire+GithubAPI.swift in Sources */,
 				75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */,
 				75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */,
@@ -2490,6 +2500,7 @@
 				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
+				29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */,
 				29A5AF3F1F9266370065D529 /* NotificationViewModel+Filterable.swift in Sources */,
 				29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */,
 				29C9FDD31EC65FEE00EE3A52 /* Repository.swift in Sources */,
@@ -2506,6 +2517,7 @@
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
 				2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */,
 				29EE1C1D1F3A33890046A54D /* RepositoryLabel.swift in Sources */,
+				29DAA7AB20202A1A0029277A /* PullRequestReviewReplySectionController.swift in Sources */,
 				29792B1D1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift in Sources */,
 				2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */,
 				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,

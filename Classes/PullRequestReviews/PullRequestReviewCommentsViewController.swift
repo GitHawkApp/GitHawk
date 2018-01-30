@@ -10,7 +10,8 @@ import UIKit
 import IGListKit
 
 final class PullRequestReviewCommentsViewController: BaseListViewController<NSNumber>,
-BaseListViewControllerDataSource {
+BaseListViewControllerDataSource,
+PullRequestReviewReplySectionControllerDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -77,6 +78,7 @@ BaseListViewControllerDataSource {
             autocomplete: autocomplete
             )
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
+        case is PullRequestReviewReplyModel: return PullRequestReviewReplySectionController(delegate: self)
         // add case for reply model + SC. connect SC.delegate = self
         default: fatalError("Unhandled object: \(model)")
         }
@@ -97,14 +99,19 @@ BaseListViewControllerDataSource {
         })
     }
 
-    // MARK: IssuePullRequestReviewReplySectionControllerDelegate
+    // MARK: PullRequestReviewReplySectionControllerDelegate
+
+    func didSelect(replySectionController: PullRequestReviewReplySectionController, reply: PullRequestReviewReplyModel) {
+        
+    }
 
     /**
      - on tap, scroll to selected object-1 to start replying
      - somehow set current thread as focus
      - display the message VC, focus the kb
-     - add PR comment via v4 https://developer.github.com/v4/mutation/addpullrequestreviewcomment/
-     - need the inReplyTo which should be the previous comment? or the thread root?
+     XXXX- add PR comment via v4 https://developer.github.com/v4/mutation/addpullrequestreviewcomment/
+     XXXX- need the inReplyTo which should be the previous comment? or the thread root?
+     - must use v3 API https://developer.github.com/v3/pulls/comments/#alternative-input
      - also requires pullRequestReviewId
      - send and update the UI immediately
      */

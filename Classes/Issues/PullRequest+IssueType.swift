@@ -383,7 +383,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         guard let node = thread.comments.nodes?.first, let firstComment = node else { return nil }
         let code = CreateDiffString(code: firstComment.diffHunk, limit: true)
         let text = NSAttributedStringSizing(containerWidth: 0, attributedText: code, inset: IssueDiffHunkPreviewCell.textViewInset)
-        return IssueDiffHunkModel(path: firstComment.path, preview: text)
+        return IssueDiffHunkModel(path: firstComment.path, preview: text, offset: 0)
     }
 
     private func commentModels(

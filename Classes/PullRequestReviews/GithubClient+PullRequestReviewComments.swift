@@ -83,7 +83,7 @@ extension GithubClient {
                             attributedText: code,
                             inset: IssueDiffHunkPreviewCell.textViewInset
                         )
-                        models.append(IssueDiffHunkModel(path: thread.path, preview: text))
+                        models.append(IssueDiffHunkModel(path: thread.path, preview: text, offset: models.count))
 
                         for (i, comment) in thread.comments.enumerated() {
                             models.append(createReviewComment(
@@ -92,11 +92,11 @@ extension GithubClient {
                                 model: comment,
                                 viewer: viewerUsername,
                                 width: width,
-                                isLast: i == thread.comments.count - 1
+                                isLast: false
                             ))
                         }
 
-                        // reply model would go here
+                        models.append(PullRequestReviewReplyModel(replyID: id))
                     }
 
                     DispatchQueue.main.async {

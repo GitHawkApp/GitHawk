@@ -13,16 +13,18 @@ final class IssueDiffHunkModel: ListDiffable {
 
     let path: String
     let preview: NSAttributedStringSizing
+    let offset: Int
 
-    init(path: String, preview: NSAttributedStringSizing) {
+    init(path: String, preview: NSAttributedStringSizing, offset: Int) {
         self.path = path
         self.preview = preview
+        self.offset = offset
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return preview.attributedText.string as NSObjectProtocol
+        return "\(preview.attributedText.string)-\(offset)" as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
