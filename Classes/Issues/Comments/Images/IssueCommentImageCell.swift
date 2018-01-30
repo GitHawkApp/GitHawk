@@ -19,9 +19,7 @@ protocol IssueCommentImageHeightCellDelegate: class {
     func imageDidFinishLoad(cell: IssueCommentImageCell, url: URL, size: CGSize)
 }
 
-final class IssueCommentImageCell: IssueCommentBaseCell,
-ListBindable,
-CollapsibleCell {
+final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueCommentImageCellDelegate?
     weak var heightDelegate: IssueCommentImageHeightCellDelegate?
@@ -29,7 +27,6 @@ CollapsibleCell {
     let imageView = FLAnimatedImageView()
 
     private let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    private let overlay = CreateCollapsibleOverlay()
     private var tapGesture: UITapGestureRecognizer!
 
     override init(frame: CGRect) {
@@ -59,7 +56,6 @@ CollapsibleCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        LayoutCollapsible(layer: overlay, view: contentView)
 
         var frame = bounds
         if let size = imageView.image?.size {
@@ -105,12 +101,6 @@ CollapsibleCell {
         }
     }
 
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
-    }
-
     // MARK: UIGestureRecognizerDelegate
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -120,7 +110,7 @@ CollapsibleCell {
         // only start the image tap gesture when an image exists
         // and the tap is within the actual image's bounds
         guard let image = imageView.image,
-            overlay.isHidden
+            collapsed == false
             else { return false }
 
         let imageSize = image.size

@@ -31,11 +31,13 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 
 final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewDelegate {
 
-    private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
-
     private static let ImgScheme = "freetime-img"
+    private static let HeightScheme = "freetime-hgt"
+    private static let JavaScriptHeight = "offsetHeight"
+
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
+    * {margin: 0;padding: 0;}
     body{
     // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
     // lint compiled style with http://csslint.net/
@@ -64,7 +66,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
-    img{max-width:100%; box-sizing: border-box;}
+    img{max-width:100%; box-sizing: border-box; max-height: \(Styles.Sizes.maxImageHeight)px; object-fit: contain;}
     </style>
     </head><body>
     """
@@ -79,6 +81,23 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('click', tapAction);
         }
+        function onElementHeightChange(elm, callback) {
+            var lastHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight), newHeight;
+            (function run() {
+                newHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight);
+                if(lastHeight != newHeight) {
+                    callback(newHeight);
+                }
+                lastHeight = newHeight;
+                if(elm.onElementHeightChangeTimer) {
+                    clearTimeout(elm.onElementHeightChangeTimer);
+                }
+                elm.onElementHeightChangeTimer = setTimeout(run, 300);
+            })();
+        }
+        onElementHeightChange(document.body, function(height) {
+            document.location = "\(HeightScheme)://" + height;
+        });
     </script>
     </body>
     </html>
@@ -97,7 +116,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
 
         webView.backgroundColor = .clear
         webView.delegate = self
-        webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
+        webView.scrollView.bounces = false
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -110,13 +129,9 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        webView.removeObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath)
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
-        webView.isHidden = true
+        webView.alpha = 0
     }
 
     override func layoutSubviews() {
@@ -124,6 +139,15 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         if webView.frame != contentView.bounds {
             webView.frame = contentView.bounds
         }
+    }
+
+    // MARK: Private API
+
+    func changed(height: CGFloat) {
+        guard isHidden == false, height != bounds.height else { return }
+
+        let size = CGSize(width: contentView.bounds.width, height: CGFloat(height))
+        delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
     }
 
     // MARK: ListBindable
@@ -140,12 +164,17 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     // MARK: UIWebViewDelegate
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        guard let url = request.url else { return true }
+        // if the cell is hidden, its been put back in the reuse pool
+        guard isHidden == false, let url = request.url else { return true }
 
         if url.scheme == IssueCommentHtmlCell.ImgScheme,
             let host = url.host,
             let imageURL = URL(string: host) {
             imageDelegate?.webViewDidTapImage(cell: self, url: imageURL)
+            return false
+        } else if url.scheme == IssueCommentHtmlCell.HeightScheme,
+            let heightString = url.host as NSString? {
+            changed(height: CGFloat(heightString.floatValue))
             return false
         }
 
@@ -161,19 +190,11 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        webView.isHidden = false
-    }
+        webView.alpha = 1
 
-    // MARK: KVO
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == IssueCommentHtmlCell.WebviewKeyPath {
-            delegate?.webViewDidResize(
-                cell: self,
-                html: body,
-                cellWidth: contentView.bounds.width,
-                size: webView.scrollView.contentSize
-            )
+        if let heightString = webView
+            .stringByEvaluatingJavaScript(from: "document.body.\(IssueCommentHtmlCell.JavaScriptHeight)") as NSString? {
+            changed(height: CGFloat(heightString.floatValue))
         }
     }
 

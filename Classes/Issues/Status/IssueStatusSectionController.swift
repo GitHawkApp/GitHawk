@@ -11,13 +11,8 @@ import IGListKit
 
 final class IssueStatusSectionController: ListGenericSectionController<IssueStatusModel> {
 
-    override init() {
-        super.init()
-//        inset = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
-    }
-
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
         return CGSize(width: floor(width / 2), height: Styles.Sizes.labelEventHeight)
     }

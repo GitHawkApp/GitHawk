@@ -90,7 +90,7 @@ open class CodeAttributedString : NSTextStorage
      
      - returns: Attributes
      */
-    open override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any]
+    open override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedStringKey : Any]
     {
         return stringStorage.attributes(at: location, effectiveRange: range)
     }
@@ -113,7 +113,7 @@ open class CodeAttributedString : NSTextStorage
      - parameter attrs: [String : AnyObject]
      - parameter range: NSRange
      */
-    open override func setAttributes(_ attrs: [String : Any]?, range: NSRange)
+    open override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange)
     {
         stringStorage.setAttributes(attrs, range: range)
         self.edited(NSTextStorageEditActions.editedAttributes, range: range, changeInLength: 0)

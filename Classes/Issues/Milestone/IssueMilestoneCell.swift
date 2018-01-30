@@ -23,7 +23,7 @@ final class IssueMilestoneCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
         }
 
         progress.progressTintColor = Styles.Colors.Green.medium.color
@@ -34,13 +34,18 @@ final class IssueMilestoneCell: UICollectionViewCell {
             make.height.equalTo(6)
             // fit to gutter on all iphones, cap in landscape or ipad
             make.width.lessThanOrEqualTo(300).priority(.required)
-            make.right.equalTo(-Styles.Sizes.gutter)
+            make.right.equalTo(contentView)
             make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API

@@ -36,7 +36,8 @@ IssueReviewViewCommentsCellDelegate {
         self.client = client
         self.autocomplete = autocomplete
         super.init()
-        self.inset = Styles.Sizes.listInsetLarge
+        let rowSpacing = Styles.Sizes.rowSpacing
+        self.inset = UIEdgeInsets(top: rowSpacing, left: 0, bottom: rowSpacing, right: 0)
         self.dataSource = self
     }
 
@@ -57,9 +58,10 @@ IssueReviewViewCommentsCellDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width,
-            let viewModel = viewModel as? ListDiffable
+        guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
+        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
+
         // use default if IssueReviewDetailsModel
         let height: CGFloat
         if viewModel === tailModel {

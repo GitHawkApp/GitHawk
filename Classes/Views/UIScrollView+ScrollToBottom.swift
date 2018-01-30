@@ -18,8 +18,8 @@ extension UIScrollView {
         guard contentHeight > viewportHeight else { return }
 
         let inset = contentInset
-        let offset = contentHeight - inset.bottom + inset.top - viewportHeight
-        setContentOffset(CGPoint(x: 0, y: offset), animated: animated)
+        let offset = contentHeight + inset.bottom - viewportHeight
+        setContentOffset(CGPoint(x: contentOffset.x, y: offset), animated: animated)
     }
 
 }

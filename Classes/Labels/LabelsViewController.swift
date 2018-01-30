@@ -25,6 +25,11 @@ final class LabelsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let emptyView = EmptyView()
+        emptyView.label.text = NSLocalizedString("No labels found", comment: "")
+        emptyView.isHidden = true
+        tableView.backgroundView = emptyView
+
         tableView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
 
@@ -62,6 +67,8 @@ final class LabelsViewController: UITableViewController {
         var contentSize = tableView.contentSize
         contentSize.height = max(minContentHeight, contentSize.height)
         navigationController?.preferredContentSize = contentSize
+
+        tableView.backgroundView?.isHidden = labels.count > 0
     }
 
     @IBAction func onDone() {

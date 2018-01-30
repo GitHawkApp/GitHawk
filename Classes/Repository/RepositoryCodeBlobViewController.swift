@@ -49,7 +49,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
-        navigationItem.configure(filePath: path)
+        configureTitle(filePath: path, target: self, action: #selector(onFileNavigationTitle(sender:)))
 
         view.backgroundColor = .white
 
@@ -74,6 +74,10 @@ final class RepositoryCodeBlobViewController: UIViewController {
     }
 
     // MARK: Private API
+
+    @objc func onFileNavigationTitle(sender: UIView) {
+        showAlert(filePath: path, sender: sender)
+    }
 
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload

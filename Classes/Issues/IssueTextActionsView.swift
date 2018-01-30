@@ -76,6 +76,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = Styles.Sizes.rowSpacing
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
         c.backgroundColor = .clear
         c.alwaysBounceVertical = false
@@ -130,7 +131,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
         return CGSize(
-            width: (operations[indexPath.item].icon?.size.width ?? 0) + Styles.Sizes.eventGutter*2,
+            width: (operations[indexPath.item].icon?.size.width ?? 0) + Styles.Sizes.rowSpacing*2,
             height: height
         )
     }

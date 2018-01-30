@@ -123,6 +123,24 @@ struct GithubClient {
     }
 
     @discardableResult
+    func graphQL(
+        parameters: Parameters,
+        completion: @escaping (DataResponse<Any>) -> Void
+        ) -> DataRequest {
+        let encoding: ParameterEncoding = JSONEncoding.default
+        return networker.request(
+            "https://api.github.com/graphql",
+            method: .post,
+            parameters: parameters,
+            encoding: encoding,
+            headers: ["Authorization": "bearer " + (userSession?.token ?? "")]
+            )
+            .responseJSON(completionHandler: { response in
+                completion(response)
+            })
+    }
+
+    @discardableResult
     func fetch<Query: GraphQLQuery>(
         query: Query,
         resultHandler: OperationResultHandler<Query>? = nil

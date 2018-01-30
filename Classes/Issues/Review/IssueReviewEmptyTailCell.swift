@@ -9,12 +9,11 @@
 import UIKit
 import IGListKit
 
-final class IssueReviewEmptyTailCell: UICollectionViewCell, ListBindable {
+final class IssueReviewEmptyTailCell: IssueCommentBaseCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
-        contentView.addBorder(.bottom)
+        border = .tail
     }
 
     required init?(coder aDecoder: NSCoder) {

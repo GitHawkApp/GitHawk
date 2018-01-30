@@ -28,20 +28,19 @@ IssueManagingNavSectionControllerDelegate {
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
-    private var needsScrollToBottom = false
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
     private var autocompleteController: AutocompleteController!
+
+    private var needsScrollToBottom = false
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
     private let manageKey = "manageKey" as ListDiffable
 
-    lazy private var feed: Feed = { Feed(
-        viewController: self,
-        delegate: self,
-        collectionView: self.collectionView,
-        managesLayout: false
-        ) }()
+    lazy private var feed: Feed = {
+        let f = Feed(viewController: self, delegate: self, managesLayout: false)
+        f.collectionView.contentInset = Styles.Sizes.threadInset
+        return f
+    }()
 
     private var resultID: String? = nil {
         didSet {
@@ -73,8 +72,12 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     var moreOptionsItem: UIBarButtonItem {
-        let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(IssuesViewController.onMore(sender:)))
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        let rightItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(IssuesViewController.onMore(sender:))
+        )
+        rightItem.accessibilityLabel = NSLocalizedString("Share", comment: "")
         return rightItem
     }
 
@@ -112,13 +115,21 @@ IssueManagingNavSectionControllerDelegate {
 
         let labelFormat = NSLocalizedString("#%d in repository %@ by %@", comment: "Accessibility label for an issue/pull request navigation item")
         let labelString = String(format: labelFormat, arguments: [model.number, model.repo, model.owner])
-        navigationItem.configure(title: "#\(model.number)", subtitle: "\(model.owner)/\(model.repo)", accessibilityLabel: labelString)
+
+        let navigationTitle = NavigationTitleDropdownView()
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
+        navigationTitle.configure(
+            title: "#\(model.number)",
+            subtitle: "\(model.owner)/\(model.repo)",
+            accessibilityLabel: labelString
+        )
+        navigationItem.titleView = navigationTitle
 
         feed.viewDidLoad()
         feed.adapter.dataSource = self
 
         // setup after feed is lazy loaded
-        setup(scrollView: collectionView)
+        setup(scrollView: feed.collectionView)
         setMessageView(hidden: true, animated: false)
 
         // override Feed bg color setting
@@ -126,13 +137,18 @@ IssueManagingNavSectionControllerDelegate {
 
         // setup message view properties
         borderColor = Styles.Colors.Gray.border.color
-        messageView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
-        messageView.placeholderTextColor = Styles.Colors.Gray.light.color
+        messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
+        messageView.textView.placeholderTextColor = Styles.Colors.Gray.light.color
         messageView.keyboardType = .twitter
         messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
         messageView.buttonTint = Styles.Colors.Blue.medium.color
         messageView.font = Styles.Fonts.body
-        messageView.inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: Styles.Sizes.gutter, bottom: 4, right: Styles.Sizes.gutter)
+        messageView.inset = UIEdgeInsets(
+            top: Styles.Sizes.gutter,
+            left: Styles.Sizes.gutter,
+            bottom: Styles.Sizes.rowSpacing / 2,
+            right: Styles.Sizes.gutter
+        )
         messageView.addButton(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
@@ -179,6 +195,13 @@ IssueManagingNavSectionControllerDelegate {
         feed.viewWillLayoutSubviews(view: view)
     }
 
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        }
+    }
+
     // MARK: Private API
 
     @objc func didPressButton(_ sender: Any?) {
@@ -218,6 +241,12 @@ IssueManagingNavSectionControllerDelegate {
         navigationItem.rightBarButtonItems = items
     }
 
+    func viewOwnerAction() -> UIAlertAction? {
+        weak var weakSelf = self
+        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+            .view(owner: model.owner)
+    }
+
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
 
@@ -233,28 +262,13 @@ IssueManagingNavSectionControllerDelegate {
             .view(client: client, repo: repo)
     }
 
-    @objc func onMore(sender: UIButton) {
-        let issueType = result?.pullRequest == true
-            ? Constants.Strings.pullRequest
-            : Constants.Strings.issue
-
-        let alertTitle = "\(issueType) #\(model.number)"
-
-        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
-
-        weak var weakSelf = self
-        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
-
-        alert.addActions([
-            AlertAction(alertBuilder).share([externalURL], activities: [TUSafariActivity()]) {
-                $0.popoverPresentationController?.setSourceView(sender)
-            },
-            viewRepoAction(),
-            AlertAction.cancel()
-            ])
-        alert.popoverPresentationController?.setSourceView(sender)
-
-        present(alert, animated: trueUnlessReduceMotionEnabled)
+    @objc func onMore(sender: UIBarButtonItem) {
+        let activityController = UIActivityViewController(
+            activityItems: [externalURL],
+            applicationActivities: [TUSafariActivity()]
+        )
+        activityController.popoverPresentationController?.barButtonItem = sender
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch(previous: Bool) {
@@ -274,11 +288,16 @@ IssueManagingNavSectionControllerDelegate {
             }
         }
 
+        // assumptions here, but the collectionview may not have been laid out or content size found
+        // assume the collectionview is pinned to the view's bounds
+        let contentInset = feed.collectionView.contentInset
+        let width = view.bounds.width - contentInset.left - contentInset.right
+
         client.fetch(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            width: view.bounds.width,
+            width: width,
             prependResult: previous ? result : nil
         ) { [weak self] resultType in
             guard let strongSelf = self else { return }
@@ -306,9 +325,38 @@ IssueManagingNavSectionControllerDelegate {
         feed.finishLoading(dismissRefresh: dismissRefresh) { [weak self] in
             if self?.needsScrollToBottom == true {
                 self?.needsScrollToBottom = false
-                self?.feed.collectionView.slk_scrollToBottom(animated: trueUnlessReduceMotionEnabled)
+                self?.scrollToLastContentElement()
             }
         }
+    }
+
+    func scrollToLastContentElement() {
+        let adapter = feed.adapter
+        let collectionView = feed.collectionView
+        let objects = adapter.objects()
+        guard objects.count > 1 else { return }
+
+        // assuming the last element is the "actions" when collaborator
+        let lastContent = objects[objects.count - (viewerIsCollaborator ? 2 : 1)]
+
+        guard let sectionController = adapter.sectionController(for: lastContent) else { return }
+
+        let lastItemIndex = sectionController.numberOfItems() - 1
+        let path = IndexPath(item: lastItemIndex, section: sectionController.section)
+
+        guard let attributes = feed.collectionView.layoutAttributesForItem(at: path) else { return }
+
+        let paddedMaxY = min(attributes.frame.maxY + Styles.Sizes.rowSpacing, collectionView.contentSize.height)
+        let viewportHeight = collectionView.bounds.height
+
+        // make sure not already at the top
+        guard paddedMaxY > viewportHeight else { return }
+
+        let offset = paddedMaxY - viewportHeight
+        collectionView.setContentOffset(
+            CGPoint(x: collectionView.contentOffset.x, y: offset),
+            animated: trueUnlessReduceMotionEnabled
+        )
     }
 
     func onPreview() {
@@ -318,6 +366,17 @@ IssueManagingNavSectionControllerDelegate {
             repo: model.repo
         )
         showDetailViewController(controller, sender: nil)
+    }
+
+    @objc func onNavigationTitle(sender: UIView) {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        alert.addActions([
+            viewOwnerAction(),
+            viewRepoAction(),
+            AlertAction.cancel()
+            ])
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ListAdapterDataSource
@@ -331,22 +390,27 @@ IssueManagingNavSectionControllerDelegate {
             objects.append(manageKey)
         }
 
-        objects.append(current.title)
-        objects.append(current.labels)
-
+        // BEGIN collect metadata that lives between title and root comment
+        var metadata = [ListDiffable]()
+        if current.labels.labels.count > 0 {
+            metadata.append(current.labels)
+        }
         if let milestone = current.milestone {
-            objects.append(milestone)
+            metadata.append(milestone)
         }
-
-        objects.append(current.assignee)
-
+        if current.assignee.users.count > 0 {
+            metadata.append(current.assignee)
+        }
         if let reviewers = current.reviewers {
-            objects.append(reviewers)
+            metadata.append(reviewers)
         }
-
         if let changes = current.fileChanges {
-            objects.append(IssueFileChangesModel(changes: changes))
+            metadata.append(IssueFileChangesModel(changes: changes))
         }
+        // END metadata collection
+
+        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
+        objects += metadata
 
         if let rootComment = current.rootComment {
             objects.append(rootComment)
@@ -358,8 +422,12 @@ IssueManagingNavSectionControllerDelegate {
 
         objects += current.timelineViewModels
 
-        if viewerIsCollaborator {
-            objects.append(IssueManagingModel(objectId: current.id, pullRequest: current.pullRequest))
+        if viewerIsCollaborator || current.viewerCanUpdate {
+            objects.append(IssueManagingModel(
+                objectId: current.id,
+                pullRequest: current.pullRequest,
+                role: viewerIsCollaborator ? .collaborator : .author
+            ))
         }
 
         return objects
@@ -371,7 +439,7 @@ IssueManagingNavSectionControllerDelegate {
         }
 
         switch object {
-        case is NSAttributedStringSizing: return IssueTitleSectionController()
+        case is IssueTitleModel: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,
@@ -486,7 +554,7 @@ IssueManagingNavSectionControllerDelegate {
     // MARK: IssueManagingNavSectionControllerDelegate
 
     func didSelect(managingNavController: IssueManagingNavSectionController) {
-        collectionView.scrollToBottom(animated: true)
+        feed.collectionView.scrollToBottom(animated: true)
     }
 
 }

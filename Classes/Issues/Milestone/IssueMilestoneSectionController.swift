@@ -19,7 +19,7 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
+        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Missing context") }
         return CGSize(
             width: width,
             height: Styles.Fonts.secondary.lineHeight + Styles.Sizes.rowSpacing

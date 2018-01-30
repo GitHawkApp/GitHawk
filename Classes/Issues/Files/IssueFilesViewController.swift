@@ -78,7 +78,7 @@ ListSingleSectionControllerDelegate {
             cell.configure(path: file.filename, additions: file.additions.intValue, deletions: file.deletions.intValue)
         }
         let size: (Any, ListCollectionContext?) -> CGSize = { (file, context) in
-            guard let width = context?.containerSize.width else { fatalError("Missing context") }
+            guard let width = context?.insetContainerSize.width else { fatalError("Missing context") }
             return CGSize(width: width, height: Styles.Sizes.tableCellHeightLarge)
         }
         let controller = ListSingleSectionController(
@@ -100,8 +100,8 @@ ListSingleSectionControllerDelegate {
                 let strongSelf = self
                 else { return .zero }
             return CGSize(
-                width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+                width: context.insetContainerSize.width,
+                height: context.insetContainerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
             )
         }
         let controller = ListSingleSectionController(

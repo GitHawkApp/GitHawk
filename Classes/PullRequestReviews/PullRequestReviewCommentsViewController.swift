@@ -25,11 +25,19 @@ BaseListViewControllerDataSource {
             emptyErrorMessage: NSLocalizedString("Error loading review comments.", comment: ""),
             dataSource: self
         )
+        feed.collectionView.contentInset = Styles.Sizes.threadInset
         title = NSLocalizedString("Review Comments", comment: "")
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        }
     }
 
     // MARK: Overrides

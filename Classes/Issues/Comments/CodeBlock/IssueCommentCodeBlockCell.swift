@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable, CollapsibleCell {
+final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
 
     static let scrollViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -26,7 +26,6 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable, Colla
 
     let textView = AttributedStringView()
     let scrollView = UIScrollView()
-    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,7 +57,6 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable, Colla
             width: contentView.bounds.width - inset.left - inset.right,
             height: scrollView.contentSize.height
         )
-        LayoutCollapsible(layer: overlay, view: contentView)
     }
 
     // MARK: ListBindable
@@ -70,12 +68,6 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable, Colla
         scrollView.contentSize = contentSize
 
         textView.configureAndSizeToFit(text: viewModel.code, width: 0)
-    }
-
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
     }
 
 }

@@ -9,13 +9,13 @@
 import Foundation
 import IGListKit
 
-final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
+final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
 
     static let textViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.gutter,
+        left: Styles.Sizes.commentGutter,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
+        right: Styles.Sizes.commentGutter
     )
 
     let scrollView = UIScrollView()
@@ -23,11 +23,9 @@ final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
-
         contentView.addSubview(scrollView)
         scrollView.addSubview(textView)
+        border = .head
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -36,7 +34,6 @@ final class IssueDiffHunkPreviewCell: UICollectionViewCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         scrollView.frame = CGRect(
             x: 0,
             y: 0,

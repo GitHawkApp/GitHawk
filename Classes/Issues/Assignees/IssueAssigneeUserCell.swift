@@ -30,7 +30,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
             make.size.equalTo(Styles.Sizes.icon)
         }
 
@@ -46,6 +46,11 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: ListBindable

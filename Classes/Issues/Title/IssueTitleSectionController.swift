@@ -9,24 +9,33 @@
 import UIKit
 import IGListKit
 
-final class IssueTitleSectionController: ListGenericSectionController<NSAttributedStringSizing> {
+final class IssueTitleSectionController: ListSectionController {
 
-    override init() {
-        super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing, right: 0)
+    var object: IssueTitleModel?
+
+    override func didUpdate(to object: Any) {
+        guard let object = object as? IssueTitleModel else { return }
+        self.object = object
+        let rowSpacing = Styles.Sizes.rowSpacing
+        inset = UIEdgeInsets(
+            top: rowSpacing,
+            left: 0,
+            bottom: rowSpacing / 2 + (object.trailingMetadata ? rowSpacing : 0),
+            right: 0
+        )
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: self.object?.textViewSize(width).height ?? 0)
+        return CGSize(width: width, height: self.object?.attributedString.textViewSize(width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: IssueTitleCell.self, for: self, at: index) as? IssueTitleCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
-        cell.set(attributedText: object)
+        cell.set(attributedText: object.attributedString)
         return cell
     }
 

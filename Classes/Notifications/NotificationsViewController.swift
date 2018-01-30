@@ -30,7 +30,6 @@ FlatCacheListener {
     private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
-    private var subscriptionController: NotificationSubscriptionsController?
 
     // set to nil and update to dismiss the rating control
     private var ratingToken: RatingToken? = RatingController.inFeedToken()
@@ -51,7 +50,6 @@ FlatCacheListener {
             title = NSLocalizedString("Archived", comment: "")
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
-            self.subscriptionController = NotificationSubscriptionsController(viewController: self, client: client)
         case .repo(let repo):
             title = repo.name
         }
@@ -64,6 +62,7 @@ FlatCacheListener {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        makeBackBarItemEmpty()
         resetRightBarItem()
 
         switch inboxType {
@@ -72,7 +71,7 @@ FlatCacheListener {
                 image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
-                action: #selector(NotificationsViewController.onMore)
+                action: #selector(NotificationsViewController.onMore(sender:))
             )
             item.accessibilityLabel = NSLocalizedString("More options", comment: "")
             navigationItem.leftBarButtonItem = item
@@ -84,7 +83,7 @@ FlatCacheListener {
 
     // MARK: Private API
 
-    @objc func onMore() {
+    @objc func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         alert.add(action: UIAlertAction(
@@ -93,10 +92,30 @@ FlatCacheListener {
             handler: { [weak self] _ in
                 self?.onViewAll()
         }))
-        subscriptionController?.actions.forEach { alert.add(action: $0) }
+
+        let cache = client.githubClient.cache
+        var repoNames = Set<String>()
+        for id in notificationIDs {
+            guard let notification = cache.get(id: id) as NotificationViewModel?,
+                !repoNames.contains(notification.repo)
+                else { continue }
+            repoNames.insert(notification.repo)
+            alert.add(action: UIAlertAction(title: notification.repo, style: .default, handler: { [weak self] _ in
+                self?.pushRepoNotifications(owner: notification.owner, repo: notification.repo)
+            }))
+        }
+
         alert.add(action: AlertAction.cancel())
 
+        alert.popoverPresentationController?.barButtonItem = sender
+
         present(alert, animated: true)
+    }
+
+    func pushRepoNotifications(owner: String, repo: String) {
+        let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
+        let controller = NotificationsViewController(client: client, inboxType: .repo(model))
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     func onViewAll() {
@@ -104,7 +123,7 @@ FlatCacheListener {
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
-    func resetRightBarItem() {
+    func resetRightBarItem(updatingState updateState: Bool = true) {
         let item = UIBarButtonItem(
             image: UIImage(named: "check"),
             style: .plain,
@@ -113,7 +132,9 @@ FlatCacheListener {
         )
         item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
         navigationItem.rightBarButtonItem = item
-        updateUnreadState(count: notificationIDs.count)
+        if updateState {
+            updateUnreadState(count: notificationIDs.count)
+        }
     }
 
     private func updateUnreadState(count: Int) {
@@ -140,6 +161,10 @@ FlatCacheListener {
 
                 // clear all badges
                 BadgeNotifications.update(count: 0)
+
+                // change the spinner to the mark all item
+                // don't update state here; it is managed by `fetch`
+                self.resetRightBarItem(updatingState: false)
             } else {
                 generator.notificationOccurred(.error)
             }
@@ -199,7 +224,7 @@ FlatCacheListener {
         }
 
         // set after updating so self.models has already been changed
-        self.resetRightBarItem()
+        updateUnreadState(count: notificationIDs.count)
     }
 
     private func rebuildAndUpdate(
@@ -226,8 +251,6 @@ FlatCacheListener {
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
-        subscriptionController?.fetchSubscriptions()
-
         let width = view.bounds.width
 
         let repo: NotificationClient.NotificationRepository?

@@ -11,6 +11,8 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate: class {
+    func willShowMenu(cell: IssueCommentReactionCell)
+    func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
@@ -29,6 +31,7 @@ UICollectionViewDelegateFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
@@ -61,6 +64,20 @@ UICollectionViewDelegateFlowLayout {
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
             make.top.bottom.right.equalTo(contentView)
         }
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerWillShow(notification:)),
+            name: NSNotification.Name.UIMenuControllerWillShowMenu,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerDidHide(notification:)),
+            name: NSNotification.Name.UIMenuControllerDidHideMenu,
+            object: nil
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -171,6 +188,16 @@ UICollectionViewDelegateFlowLayout {
         data.cell.iterate(add: add)
     }
 
+    // MARK: Notifications
+
+    @objc func onMenuControllerWillShow(notification: Notification) {
+        delegate?.willShowMenu(cell: self)
+    }
+
+    @objc func onMenuControllerDidHide(notification: Notification) {
+        delegate?.didHideMenu(cell: self)
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -233,8 +260,9 @@ UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
-        let modifier = CGFloat(reactions[indexPath.item].count.description.count - 1)
-        return CGSize(width: 50 + modifier * 5, height: collectionView.bounds.height)
+        let reaction = reactions[indexPath.item]
+        let width = IssueReactionCell.width(emoji: reaction.content.emoji, count: reaction.count)
+        return CGSize(width: width, height: collectionView.bounds.height)
     }
 
     // MARK: UICollectionViewDelegate

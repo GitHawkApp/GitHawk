@@ -2,9 +2,9 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireNetworkActivityIndicator (2.1.0):
     - Alamofire (~> 4.1)
-  - Apollo (0.7.0-alpha.9):
-    - Apollo/Core (= 0.7.0-alpha.9)
-  - Apollo/Core (0.7.0-alpha.9)
+  - Apollo (0.7.0):
+    - Apollo/Core (= 0.7.0)
+  - Apollo/Core (0.7.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
@@ -13,24 +13,25 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Firebase/Core (4.7.0):
+  - Firebase/Core (4.8.0):
     - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - Firebase/Database (4.7.0):
+    - FirebaseCore (= 4.0.13)
+  - Firebase/Database (4.8.0):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.2)
+    - FirebaseDatabase (= 4.1.3)
   - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.12):
+  - FirebaseCore (4.0.13):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.2):
+  - FirebaseDatabase (4.1.3):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.7)
+  - FirebaseInstanceID (2.0.8):
+    - FirebaseCore (~> 4.0)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
@@ -45,7 +46,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
   - leveldb-library (1.20)
-  - MessageViewController (0.1.0)
+  - MessageViewController (0.1.1)
   - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -59,19 +60,18 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.1.0)
+  - Pageboy (2.2.0)
   - PureLayout (3.0.2)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - SlackTextViewController (1.9.5)
   - SnapKit (4.0.0)
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.1.2):
-    - Pageboy (~> 2.0)
+  - Tabman (1.2.0):
+    - Pageboy (~> 2.2.0)
     - PureLayout (~> 3.0)
   - TUSafariActivity (1.0.4)
 
@@ -84,18 +84,17 @@ DEPENDENCIES:
   - FBSnapshotTestCase
   - Firebase/Core
   - Firebase/Database
-  - FlatCache (from `Local Pods/FlatCache`)
+  - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
-  - Highlightr (from `Local Pods/Highlightr`)
+  - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
-  - MessageViewController (from `Local Pods/MessageViewController`)
-  - MMMarkdown (from `Local Pods/MMMarkdown`)
+  - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
+  - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
-  - SlackTextViewController (from `Local Pods/SlackTextViewController`)
   - SnapKit (~> 4.0.0)
-  - StyledText (from `Local Pods/StyledText`)
+  - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
   - Tabman (~> 1.1)
@@ -103,40 +102,58 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   FlatCache:
-    :path: Local Pods/FlatCache
+    :branch: master
+    :git: https://github.com/GitHawkApp/FlatCache.git
   Highlightr:
-    :path: Local Pods/Highlightr
+    :branch: master
+    :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
     :branch: master
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :path: Local Pods/MessageViewController
+    :branch: master
+    :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
-    :path: Local Pods/MMMarkdown
-  SlackTextViewController:
-    :path: Local Pods/SlackTextViewController
+    :branch: master
+    :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :path: Local Pods/StyledText
+    :branch: master
+    :git: https://github.com/GitHawkApp/StyledText.git
   SwipeCellKit:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  FlatCache:
+    :commit: beb697643eea11f40bb66683d1576a2772080d9d
+    :git: https://github.com/GitHawkApp/FlatCache.git
+  Highlightr:
+    :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
+    :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 296baf5f854f57150ed12ca5bd8d3903db492734
+    :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
     :git: https://github.com/Instagram/IGListKit.git
+  MessageViewController:
+    :commit: 7f8252946b36ca1ae9b80f335763ff0897badf12
+    :git: https://github.com/GitHawkApp/MessageViewController.git
+  MMMarkdown:
+    :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
+    :git: https://github.com/GitHawkApp/MMMarkdown.git
+  StyledText:
+    :commit: 0567d1e9d036da143574856fd90844861d3d5166
+    :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
-  Apollo: 472b027285e3bd2a79d37d502e98f6f15a3bc528
+  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseDatabase: 18ecb23e15c7f58bb0c4527e9cace06897cc40ca
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
+  FirebaseDatabase: 7088bfc4af2cc00231bb36e1404fc2d7509eb4dc
+  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
@@ -145,21 +162,20 @@ SPEC CHECKSUMS:
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: 0c6fb72f0e70a6229458bb19fe69adadb747793f
+  MessageViewController: 218b3b8fae3a6e5ea446a08b666b5cf67337dbf5
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: f137e98cdb92c1913401d9d3c8888951ff81a630
+  Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StyledText: 0da66d27eaab0269b1d43e2fd73f75984a88184d
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
-  SwipeCellKit: c5199021f354565c955fe8e2f45f79d3b1713e41
-  Tabman: 94692b62fc58ed4945220be2f3f0ad7406aa3699
+  SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
+  Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 5a070bcf9f5c5b3be9879b87c3ff4c18924cd6ad
+PODFILE CHECKSUM: 2a5c54767eabaf0ab1cc660a65301991cacc1648
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0.rc.1

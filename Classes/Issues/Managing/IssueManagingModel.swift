@@ -11,12 +11,19 @@ import IGListKit
 
 final class IssueManagingModel: ListDiffable {
 
+    enum Role: Int {
+        case author
+        case collaborator
+    }
+
     let objectId: String
     let pullRequest: Bool
+    let role: Role
 
-    init(objectId: String, pullRequest: Bool) {
+    init(objectId: String, pullRequest: Bool, role: Role) {
         self.objectId = objectId
         self.pullRequest = pullRequest
+        self.role = role
     }
 
     // MARK: ListDiffable
@@ -28,9 +35,9 @@ final class IssueManagingModel: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueManagingModel else { return false }
-        return pullRequest == object.pullRequest
-        && objectId == object.objectId
+        guard object is IssueManagingModel else { return false }
+        // must be true for binding section controller
+        return true
     }
 
 }

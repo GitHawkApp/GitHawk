@@ -67,6 +67,7 @@ PeopleViewControllerDelegate {
         self.model = model
         self.client = client
         super.init()
+        inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: 0, bottom: Styles.Sizes.gutter, right: 0)
         selectionDelegate = self
         dataSource = self
     }
@@ -171,23 +172,26 @@ PeopleViewControllerDelegate {
             let result = issueResult
             else { fatalError("Object not correct type") }
 
-        var models: [ListDiffable] = [
-            Action.labels,
-            Action.milestone,
-            Action.assignees,
+        var models = [ListDiffable]()
+        if object.role == .collaborator {
+            models += [
+                Action.labels,
+                Action.milestone,
+                Action.assignees,
             ]
-        if object.pullRequest {
-            models.append(Action.reviewers)
+            if object.pullRequest {
+                models.append(Action.reviewers)
+            }
+            if result.status.locked {
+                models.append(Action.unlock)
+            } else {
+                models.append(Action.lock)
+            }
         }
         switch result.status.status {
         case .closed: models.append(Action.reopen)
         case .open: models.append(Action.close)
         case .merged: break // can't do anything
-        }
-        if result.status.locked {
-            models.append(Action.unlock)
-        } else {
-            models.append(Action.lock)
         }
         return models
     }
@@ -197,7 +201,7 @@ PeopleViewControllerDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.containerSize.width
+        guard let containerWidth = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
 
         let height = IssueManagingActionCell.height

@@ -14,7 +14,12 @@ final class IssueCommentTableCell: IssueCommentBaseCell,
     UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
 
-    static let inset = UIEdgeInsets(top: 0, left: 4, bottom: Styles.Sizes.rowSpacing, right: 4)
+    static let inset = UIEdgeInsets(
+        top: 0,
+        left: Styles.Sizes.rowSpacing / 2,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.rowSpacing / 2
+    )
 
     weak var delegate: AttributedStringViewDelegate?
 
