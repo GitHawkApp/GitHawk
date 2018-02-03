@@ -133,7 +133,7 @@ CHECKOUT OPTIONS:
     :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: 7f8252946b36ca1ae9b80f335763ff0897badf12
+    :commit: 22d322559c6dc7b667ea44f13a6f8d52627fd4a7
     :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
@@ -162,7 +162,7 @@ SPEC CHECKSUMS:
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: 218b3b8fae3a6e5ea446a08b666b5cf67337dbf5
+  MessageViewController: ee8b83e59faf8ed6368dcf39b2a48118134c3ce2
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
@@ -178,4 +178,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2a5c54767eabaf0ab1cc660a65301991cacc1648
 
-COCOAPODS: 1.4.0.rc.1
+COCOAPODS: 1.4.0
