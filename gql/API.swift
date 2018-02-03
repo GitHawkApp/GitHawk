@@ -12497,6 +12497,134 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
   }
 }
 
+public final class FetchProfileQuery: GraphQLQuery {
+  public static let operationString =
+    "query FetchProfile {\n  viewer {\n    __typename\n    id\n    login\n    name\n    bio\n    location\n    avatarUrl\n  }\n}"
+
+  public init() {
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("viewer", type: .nonNull(.object(Viewer.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(viewer: Viewer) {
+      self.init(snapshot: ["__typename": "Query", "viewer": viewer.snapshot])
+    }
+
+    /// The currently authenticated user.
+    public var viewer: Viewer {
+      get {
+        return Viewer(snapshot: snapshot["viewer"]! as! Snapshot)
+      }
+      set {
+        snapshot.updateValue(newValue.snapshot, forKey: "viewer")
+      }
+    }
+
+    public struct Viewer: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("bio", type: .scalar(String.self)),
+        GraphQLField("location", type: .scalar(String.self)),
+        GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, login: String, name: String? = nil, bio: String? = nil, location: String? = nil, avatarUrl: String) {
+        self.init(snapshot: ["__typename": "User", "id": id, "login": login, "name": name, "bio": bio, "location": location, "avatarUrl": avatarUrl])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      /// The username used to login.
+      public var login: String {
+        get {
+          return snapshot["login"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "login")
+        }
+      }
+
+      /// The user's public profile name.
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      /// The user's public profile bio.
+      public var bio: String? {
+        get {
+          return snapshot["bio"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "bio")
+        }
+      }
+
+      /// The user's public profile location.
+      public var location: String? {
+        get {
+          return snapshot["location"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "location")
+        }
+      }
+
+      /// A URL pointing to the user's public avatar.
+      public var avatarUrl: String {
+        get {
+          return snapshot["avatarUrl"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "avatarUrl")
+        }
+      }
+    }
+  }
+}
+
 public final class RemoveReactionMutation: GraphQLMutation {
   public static let operationString =
     "mutation RemoveReaction($subject_id: ID!, $content: ReactionContent!) {\n  removeReaction(input: {subjectId: $subject_id, content: $content}) {\n    __typename\n    subject {\n      __typename\n      ...reactionFields\n    }\n  }\n}"

@@ -1,0 +1,10 @@
+query FetchProfile {
+  viewer {
+    id
+    login
+    name
+    bio
+    location
+    avatarUrl
+  }
+}

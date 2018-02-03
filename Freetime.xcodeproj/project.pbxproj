@@ -355,6 +355,9 @@
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
+		5C7E4E2E202613CF002673CB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E4E2D202613CF002673CB /* ProfileViewController.swift */; };
+		5CB3EB9520261EEA00C3A346 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */; };
+		5CFBBB54202616E3001C63A6 /* GithubClient+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
@@ -785,6 +788,9 @@
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
+		5C7E4E2D202613CF002673CB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
+		5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Profile.swift"; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		6065C0A62BB1B4DD03BEABA4 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
@@ -1341,6 +1347,7 @@
 				98B5A07E1F6C73A2000617D6 /* New Issue */,
 				29C9FDD91EC6613F00EE3A52 /* Notifications */,
 				295B513E1FC26AB200C3993B /* People */,
+				5C7E4E2C202613C4002673CB /* Profile */,
 				29CC292D1FF421DC006B6DE7 /* PullRequestReviews */,
 				986B872E1F2CA8E800AAB55C /* Repository */,
 				986B87171F2B873200AAB55C /* Search */,
@@ -1689,6 +1696,16 @@
 				45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */,
 			);
 			path = "Snapshot Tests";
+			sourceTree = "<group>";
+		};
+		5C7E4E2C202613C4002673CB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5C7E4E2D202613CF002673CB /* ProfileViewController.swift */,
+				5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */,
+				5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		7BBFEE551F8A8A0400C68E47 /* SearchBar */ = {
@@ -2400,6 +2417,7 @@
 				29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */,
 				29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */,
 				2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */,
+				5C7E4E2E202613CF002673CB /* ProfileViewController.swift in Sources */,
 				DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */,
 				2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */,
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
@@ -2450,6 +2468,7 @@
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
 				29921BCA1EF6233200C1E848 /* MMElement+Attributes.swift in Sources */,
+				5CFBBB54202616E3001C63A6 /* GithubClient+Profile.swift in Sources */,
 				29921BD01EF6261C00C1E848 /* MMElement+CodeBlock.swift in Sources */,
 				29921BCE1EF624F500C1E848 /* MMElement+Image.swift in Sources */,
 				297406A11F0EE51E003A6BFB /* MMElement+Table.swift in Sources */,
@@ -2517,6 +2536,7 @@
 				2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */,
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
+				5CB3EB9520261EEA00C3A346 /* ProfileResult.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
 				292FA33B1FBCDF8F00BBB0BB /* MilestonesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,

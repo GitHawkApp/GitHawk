@@ -74,6 +74,7 @@ final class RootNavigationManager: GithubSessionListener {
             newNotificationsRootViewController(client: client),
             newSearchRootViewController(client: client),
             newBookmarksRootViewController(client: client),
+            newProfileRootViewController(client: client),
             settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
     }
