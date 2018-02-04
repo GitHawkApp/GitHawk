@@ -15,9 +15,14 @@ final class PullRequestReviewReplyCell: IssueCommentBaseCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
+
+        let buttonTitle = NSLocalizedString("Reply", comment: "")
+        accessibilityLabel = buttonTitle
 
         let color = Styles.Colors.Blue.medium.color
-        button.setTitle(NSLocalizedString("Reply", comment: ""), for: .normal)
+        button.setTitle(buttonTitle, for: .normal)
         button.setImage(UIImage(named: "reply")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = color
         button.setTitleColor(color, for: .normal)
