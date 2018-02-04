@@ -1503,6 +1503,7 @@
 				98835BD11F1A158D005BA24F /* LabelCell.swift */,
 				D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */,
 				D8BAD0631FDF221900C41071 /* LabelListView.swift */,
+				297A6CE52027880C0027E03B /* MessageView+Styles.swift */,
 				29136BE0200A7D3D007317BE /* NavigationTitleDropdownView.swift */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
 				29C33FDE1F128D4400EC8D40 /* SelectableCell.swift */,
@@ -1528,7 +1529,6 @@
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
-				297A6CE52027880C0027E03B /* MessageView+Styles.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

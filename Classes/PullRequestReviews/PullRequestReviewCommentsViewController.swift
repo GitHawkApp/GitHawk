@@ -36,7 +36,6 @@ PullRequestReviewReplySectionControllerDelegate {
 
         super.init(nibName: nil, bundle: nil)
 
-        feed.collectionView.contentInset = Styles.Sizes.threadInset
         title = NSLocalizedString("Review Comments", comment: "")
     }
 
