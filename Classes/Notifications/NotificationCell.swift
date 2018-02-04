@@ -12,7 +12,7 @@ import SnapKit
 final class NotificationCell: SwipeSelectableCell {
 
     static let labelInset = UIEdgeInsets(
-        top: Styles.Fonts.title.lineHeight + 2*Styles.Sizes.rowSpacing,
+        top: Styles.Text.title.preferredFont.lineHeight + 2*Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter + Styles.Sizes.icon.width + Styles.Sizes.columnSpacing
@@ -22,7 +22,7 @@ final class NotificationCell: SwipeSelectableCell {
         // comment icon
         return Styles.Sizes.icon.height
             // date, comment count labels
-            + 2 * Styles.Fonts.secondary.lineHeight
+            + 2 * Styles.Text.secondary.preferredFont.lineHeight
             // padding
             + 3 * Styles.Sizes.rowSpacing
     }
@@ -49,7 +49,7 @@ final class NotificationCell: SwipeSelectableCell {
         contentView.addSubview(commentLabel)
 
         titleLabel.numberOfLines = 1
-        titleLabel.font = Styles.Fonts.title
+        titleLabel.font = Styles.Text.title.preferredFont
         titleLabel.textColor = Styles.Colors.Gray.light.color
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -61,7 +61,7 @@ final class NotificationCell: SwipeSelectableCell {
 
         dateLabel.backgroundColor = .clear
         dateLabel.numberOfLines = 1
-        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.light.color
         dateLabel.textAlignment = .right
         dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -122,12 +122,12 @@ final class NotificationCell: SwipeSelectableCell {
 
     func configure(_ viewModel: NotificationViewModel) {
         var titleAttributes = [
-            NSAttributedStringKey.font: Styles.Fonts.title,
+            NSAttributedStringKey.font: Styles.Text.title.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
         let title = NSMutableAttributedString(string: "\(viewModel.owner)/\(viewModel.repo) ", attributes: titleAttributes)
 
-        titleAttributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
+        titleAttributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
         switch viewModel.identifier {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break

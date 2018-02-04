@@ -26,7 +26,7 @@ final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
         button.setTitle(NSLocalizedString("View Comments", comment: ""), for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
         button.addTarget(self, action: #selector(IssueReviewViewCommentsCell.onButton), for: .touchUpInside)
-        button.titleLabel?.font = Styles.Fonts.body
+        button.titleLabel?.font = Styles.Text.body.preferredFont
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.commentGutter)

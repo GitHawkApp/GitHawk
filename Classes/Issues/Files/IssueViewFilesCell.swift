@@ -43,7 +43,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
         attributedText.append(NSAttributedString(
             string: String(format: actionFormat, changes.changedFiles),
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Blue.medium.color
             ]
         ))
@@ -51,7 +51,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
             attributedText.append(NSAttributedString(
                 string: "+\(changes.additions) ", // note trailing space
                 attributes: [
-                    .font: Styles.Fonts.secondaryBold,
+                    .font: Styles.Text.secondaryBold.preferredFont,
                     .foregroundColor: Styles.Colors.Green.medium.color
                 ]
             ))
@@ -60,7 +60,7 @@ final class IssueViewFilesCell: UICollectionViewCell {
             attributedText.append(NSAttributedString(
                 string: "-\(changes.deletions)",
                 attributes: [
-                    .font: Styles.Fonts.secondaryBold,
+                    .font: Styles.Text.secondaryBold.preferredFont,
                     .foregroundColor: Styles.Colors.Red.medium.color
                 ]
             ))

@@ -12,7 +12,7 @@ import SnapKit
 final class SearchRepoResultCell: SelectableCell {
 
     static let labelInset = UIEdgeInsets(
-        top: Styles.Fonts.title.lineHeight + Styles.Fonts.secondary.lineHeight + 3*Styles.Sizes.rowSpacing,
+        top: Styles.Text.title.preferredFont.lineHeight + Styles.Text.secondary.preferredFont.lineHeight + 3*Styles.Sizes.rowSpacing,
         left: Styles.Sizes.gutter,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
@@ -46,7 +46,7 @@ final class SearchRepoResultCell: SelectableCell {
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        languageLabel.font = Styles.Fonts.secondary
+        languageLabel.font = Styles.Text.secondary.preferredFont
         languageLabel.textColor = Styles.Colors.Gray.light.color
         languageLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
@@ -62,7 +62,7 @@ final class SearchRepoResultCell: SelectableCell {
             make.height.equalTo(languageColorWidth)
         }
 
-        starsLabel.font = Styles.Fonts.secondary
+        starsLabel.font = Styles.Text.secondary.preferredFont
         starsLabel.textColor = Styles.Colors.Gray.light.color
         starsLabel.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
@@ -70,7 +70,7 @@ final class SearchRepoResultCell: SelectableCell {
             make.right.equalTo(languageLabel)
         }
 
-        descriptionLabel.font = Styles.Fonts.secondary
+        descriptionLabel.font = Styles.Text.secondary.preferredFont
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(starsLabel)

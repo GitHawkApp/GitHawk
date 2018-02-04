@@ -30,7 +30,7 @@ class IssueLabelCellTests: XCTestCase {
     }
 
     func test_label_styling() {
-        let expectedFont = Styles.Fonts.smallTitle
+        let expectedFont = Styles.Text.smallTitle.preferredFont
         let actualFont = issueLabelCell.label.font
 
         XCTAssertEqual(expectedFont, actualFont)

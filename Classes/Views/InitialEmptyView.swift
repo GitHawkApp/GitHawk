@@ -32,7 +32,7 @@ final class InitialEmptyView: UIView {
             make.centerY.equalTo(self).offset(-(imageView.image?.size.height ?? 0)/2)
         }
 
-        titleLabel.font = Styles.Fonts.title
+        titleLabel.font = Styles.Text.title.preferredFont
         titleLabel.text = title
         titleLabel.textColor = Styles.Colors.Gray.light.color
         titleLabel.backgroundColor = .clear
@@ -44,7 +44,7 @@ final class InitialEmptyView: UIView {
 
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
-        descriptionLabel.font = Styles.Fonts.body
+        descriptionLabel.font = Styles.Text.body.preferredFont
         descriptionLabel.text = description
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
         descriptionLabel.backgroundColor = .clear

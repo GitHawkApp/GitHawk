@@ -48,7 +48,7 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
     guard let date = node.repoEventFields.createdAt.githubDate else { return nil }
 
     let attributes = [
-        NSAttributedStringKey.font: Styles.Fonts.body,
+        NSAttributedStringKey.font: Styles.Text.body.preferredFont,
         NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
     ]
     let title = NSAttributedStringSizing(

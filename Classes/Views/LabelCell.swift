@@ -21,7 +21,7 @@ final class LabelCell: UICollectionViewCell {
 
         label.backgroundColor = .clear
         label.textAlignment = .center
-        label.font = Styles.Fonts.button
+        label.font = Styles.Text.button.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalTo(contentView)
