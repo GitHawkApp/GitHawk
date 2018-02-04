@@ -12,6 +12,8 @@ import FlatCache
 struct ProfileResult: Cachable {
   let id: String
   let login: String
-  let name: String
-  let bio: String
+  let name: String?
+  let bio: String?
+  let avatarUrl: URL?
+  let location: String?
 }

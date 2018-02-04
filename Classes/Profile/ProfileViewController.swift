@@ -7,9 +7,19 @@
 //
 
 import UIKit
+import Theodolite
 
 final class ProfileViewController: UIViewController {
   let client: GithubClient
+
+  lazy var hostingView: ComponentHostingView = {
+    return ComponentHostingView { [weak self] in
+      guard let client = self?.client else {
+        fatalError("ooops")
+      }
+      return ProfileLoadingComponent((client))
+    }
+  }()
   
   init(client: GithubClient) {
     self.client = client
@@ -22,8 +32,12 @@ final class ProfileViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    client.fetchProfile { (result) in
-      print(result)
-    }
+    view.addSubview(hostingView)
+    hostingView.frame = view.bounds.insetBy(dx: 0, dy: 100)
+    hostingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
   }
 }

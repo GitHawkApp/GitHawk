@@ -357,6 +357,8 @@
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5C7E4E2E202613CF002673CB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E4E2D202613CF002673CB /* ProfileViewController.swift */; };
 		5CB3EB9520261EEA00C3A346 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */; };
+		5CB3EB972026271F00C3A346 /* ProfileLoadingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3EB962026271F00C3A346 /* ProfileLoadingComponent.swift */; };
+		5CB3EB992026773000C3A346 /* ProfileComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB3EB982026773000C3A346 /* ProfileComponent.swift */; };
 		5CFBBB54202616E3001C63A6 /* GithubClient+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
@@ -790,6 +792,8 @@
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5C7E4E2D202613CF002673CB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
+		5CB3EB962026271F00C3A346 /* ProfileLoadingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLoadingComponent.swift; sourceTree = "<group>"; };
+		5CB3EB982026773000C3A346 /* ProfileComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileComponent.swift; sourceTree = "<group>"; };
 		5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Profile.swift"; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		6065C0A62BB1B4DD03BEABA4 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
@@ -1704,6 +1708,8 @@
 				5C7E4E2D202613CF002673CB /* ProfileViewController.swift */,
 				5CFBBB53202616E3001C63A6 /* GithubClient+Profile.swift */,
 				5CB3EB9420261EEA00C3A346 /* ProfileResult.swift */,
+				5CB3EB962026271F00C3A346 /* ProfileLoadingComponent.swift */,
+				5CB3EB982026773000C3A346 /* ProfileComponent.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -2037,6 +2043,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/Flexbox/Flexbox.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
@@ -2052,6 +2059,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/Theodolite/Theodolite.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
@@ -2064,6 +2072,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flexbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
@@ -2079,6 +2088,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Theodolite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
@@ -2205,6 +2215,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/Flexbox/Flexbox.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
@@ -2220,6 +2231,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/Theodolite/Theodolite.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -2231,6 +2243,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flexbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
@@ -2246,6 +2259,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Theodolite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -2380,6 +2394,7 @@
 				29CC294F1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift in Sources */,
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFileCell.swift in Sources */,
+				5CB3EB992026773000C3A346 /* ProfileComponent.swift in Sources */,
 				98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */,
 				291929511F3F76B10012067B /* IssueFilesViewController.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
@@ -2574,6 +2589,7 @@
 				293971891F904C82002FAC4B /* Toast.swift in Sources */,
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
+				5CB3EB972026271F00C3A346 /* ProfileLoadingComponent.swift in Sources */,
 				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
