@@ -118,12 +118,17 @@ PullRequestReviewReplySectionControllerDelegate {
 
     // MARK: Private API
 
+    var insetWidth: CGFloat {
+        let contentInset = feed.collectionView.contentInset
+        return view.bounds.width - contentInset.left - contentInset.right
+    }
+
     func fetch() {
         client.fetchPRComments(
         owner: model.owner,
         repo: model.repo,
         number: model.number,
-        width: view.bounds.width
+        width: insetWidth
         ) { [weak self] (result) in
             switch result {
             case .error: ToastManager.showGenericError()
@@ -135,7 +140,35 @@ PullRequestReviewReplySectionControllerDelegate {
     }
 
     @objc func didPressButton(_ sender: Any) {
-        print("press")
+        guard let reply = focusedReplyModel else { return }
+
+        let text = messageView.text
+        messageView.text = ""
+        messageView.textView.resignFirstResponder()
+        setMessageView(hidden: true, animated: true)
+
+        client.sendComment(
+            body: text,
+            inReplyTo: reply.replyID,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            width: insetWidth
+        ) { [weak self] result in
+            switch result {
+            case .error: break
+            case .success(let comment): self?.insertComment(model: comment, reply: reply)
+            }
+        }
+
+    }
+
+    func insertComment(model: IssueCommentModel, reply: PullRequestReviewReplyModel) {
+        let section = feed.adapter.section(for: reply)
+        guard section < NSNotFound && section < results.count else { return }
+
+        results.insert(model, at: section)
+        feed.adapter.performUpdates(animated: true)
     }
 
     // MARK: ListAdapterDataSource
