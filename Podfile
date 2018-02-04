@@ -18,7 +18,7 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'Tabman', '~> 1.1'
 pod 'Firebase/Core'
-pod 'Firebase/Database' 
+pod 'Firebase/Database'
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
@@ -27,6 +27,7 @@ pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branc
 pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'
 pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'
 pod 'MessageViewController', :git => 'https://github.com/GitHawkApp/MessageViewController.git', :branch => 'master'
+pod 'Theodolite', :git => 'https://github.com/TheodoliteGroup/Theodolite.git', :branch => 'master'
 
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']

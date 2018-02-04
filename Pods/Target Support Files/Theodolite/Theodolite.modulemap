@@ -1,0 +1,6 @@
+framework module Theodolite {
+  umbrella header "Theodolite-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -60,3 +60,15 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     nav.tabBarItem.title = title
     return nav
 }
+
+func newProfileRootViewController(client: GithubClient) -> UIViewController {
+  let title = Constants.Strings.profile
+  let controller = ProfileViewController(client: client)
+  controller.makeBackBarItemEmpty()
+  controller.title = title
+  let nav = UINavigationController(rootViewController: controller)
+  nav.tabBarItem.image = UIImage(named: "tab-bookmark")?.withRenderingMode(.alwaysOriginal)
+  nav.tabBarItem.selectedImage = UIImage(named: "tab-bookmark-selected")?.withRenderingMode(.alwaysOriginal)
+  nav.tabBarItem.title = title
+  return nav
+}
