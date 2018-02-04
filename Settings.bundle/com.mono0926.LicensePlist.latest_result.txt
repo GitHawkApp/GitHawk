@@ -39,6 +39,11 @@ body: The MIT License
 
 Cop…
 
+name: Flexbox, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
 name: GoogleToolboxForMac, nameSpecified: 
 body: 
                    …
@@ -98,6 +103,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: Theodolite, nameSpecified: 
+body: Copyright 2017 Olive…
 
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
@@ -146,6 +154,11 @@ body: The MIT License
 
 Cop…
 
+name: Flexbox, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
 name: GoogleToolboxForMac, nameSpecified: 
 body: 
                    …
@@ -205,6 +218,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: Theodolite, nameSpecified: 
+body: Copyright 2017 Olive…
 
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
