@@ -106,6 +106,28 @@ extension GithubClient {
         }))
     }
 
+    func sendComment(
+        body: String,
+        inReplyTo: Int,
+        owner: String,
+        repo: String,
+        number: Int,
+        completion: @escaping (Error?) -> ()
+        ) {
+        // https://developer.github.com/v3/pulls/comments/#alternative-input
+        request(Request(
+            path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
+            method: .post,
+            parameters: ["body": body, "in_reply_to": inReplyTo],
+            completion: { (response, _) in
+                if response.response?.statusCode == 201 {
+                    completion(nil)
+                } else {
+                    completion(response.error)
+                }
+        }))
+    }
+
 }
 
 private func createReviewCommentModel(id: Int, json: [String: Any]) -> GithubClient.ReviewComment? {

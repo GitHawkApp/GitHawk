@@ -173,10 +173,11 @@ PullRequestReviewReplySectionControllerDelegate {
     // MARK: PullRequestReviewReplySectionControllerDelegate
 
     func didSelect(replySectionController: PullRequestReviewReplySectionController, reply: PullRequestReviewReplyModel) {
-        focusedReplyModel = reply
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         feed.adapter.scroll(to: reply, padding: Styles.Sizes.rowSpacing)
+
+        focusedReplyModel = reply
     }
 
     /**
