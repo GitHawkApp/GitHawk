@@ -136,8 +136,7 @@ IssueManagingNavSectionControllerDelegate {
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        configure()
-        messageView.addButton(target: self, action: #selector(didPressButton(_:)))
+        configure(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""

@@ -11,7 +11,7 @@ import MessageViewController
 
 extension MessageViewController {
 
-    func configure() {
+    func configure(target: Any, action: Selector) {
         // setup message view properties
         borderColor = Styles.Colors.Gray.border.color
         messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
@@ -26,7 +26,7 @@ extension MessageViewController {
             bottom: Styles.Sizes.rowSpacing / 2,
             right: Styles.Sizes.gutter
         )
-        messageView.addButton(target: self, action: #selector(didPressButton(_:)))
+        messageView.addButton(target: target, action: action)
     }
 
 }
