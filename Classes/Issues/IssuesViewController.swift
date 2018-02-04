@@ -332,31 +332,12 @@ IssueManagingNavSectionControllerDelegate {
 
     func scrollToLastContentElement() {
         let adapter = feed.adapter
-        let collectionView = feed.collectionView
         let objects = adapter.objects()
         guard objects.count > 1 else { return }
 
         // assuming the last element is the "actions" when collaborator
         let lastContent = objects[objects.count - (viewerIsCollaborator ? 2 : 1)]
-
-        guard let sectionController = adapter.sectionController(for: lastContent) else { return }
-
-        let lastItemIndex = sectionController.numberOfItems() - 1
-        let path = IndexPath(item: lastItemIndex, section: sectionController.section)
-
-        guard let attributes = feed.collectionView.layoutAttributesForItem(at: path) else { return }
-
-        let paddedMaxY = min(attributes.frame.maxY + Styles.Sizes.rowSpacing, collectionView.contentSize.height)
-        let viewportHeight = collectionView.bounds.height
-
-        // make sure not already at the top
-        guard paddedMaxY > viewportHeight else { return }
-
-        let offset = paddedMaxY - viewportHeight
-        collectionView.setContentOffset(
-            CGPoint(x: collectionView.contentOffset.x, y: offset),
-            animated: trueUnlessReduceMotionEnabled
-        )
+        adapter.scroll(to: lastContent, padding: Styles.Sizes.rowSpacing)
     }
 
     func onPreview() {

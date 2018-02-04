@@ -22,6 +22,7 @@ final class PullRequestReviewReplyCell: IssueCommentBaseCell {
         button.tintColor = color
         button.setTitleColor(color, for: .normal)
         button.titleLabel?.font = Styles.Fonts.body
+        button.isUserInteractionEnabled = false
 
         let spacing = Styles.Sizes.columnSpacing / 2
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
