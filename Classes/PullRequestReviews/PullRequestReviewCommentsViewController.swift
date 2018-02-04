@@ -58,19 +58,7 @@ PullRequestReviewReplySectionControllerDelegate {
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        borderColor = Styles.Colors.Gray.border.color
-        messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
-        messageView.textView.placeholderTextColor = Styles.Colors.Gray.light.color
-        messageView.keyboardType = .twitter
-        messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        messageView.buttonTint = Styles.Colors.Blue.medium.color
-        messageView.font = Styles.Fonts.body
-        messageView.inset = UIEdgeInsets(
-            top: Styles.Sizes.gutter,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing / 2,
-            right: Styles.Sizes.gutter
-        )
+        configure()
         messageView.addButton(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
@@ -212,16 +200,5 @@ PullRequestReviewReplySectionControllerDelegate {
 
         focusedReplyModel = reply
     }
-
-    /**
-     - on tap, scroll to selected object-1 to start replying
-     - somehow set current thread as focus
-     - display the message VC, focus the kb
-     XXXX- add PR comment via v4 https://developer.github.com/v4/mutation/addpullrequestreviewcomment/
-     XXXX- need the inReplyTo which should be the previous comment? or the thread root?
-     - must use v3 API https://developer.github.com/v3/pulls/comments/#alternative-input
-     - also requires pullRequestReviewId
-     - send and update the UI immediately
-     */
 
 }
