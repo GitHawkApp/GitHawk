@@ -19,7 +19,7 @@ extension MessageViewController {
         messageView.keyboardType = .twitter
         messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
         messageView.buttonTint = Styles.Colors.Blue.medium.color
-        messageView.font = Styles.Fonts.body
+        messageView.font = Styles.Text.body.preferredFont
         messageView.inset = UIEdgeInsets(
             top: Styles.Sizes.gutter,
             left: Styles.Sizes.gutter,
