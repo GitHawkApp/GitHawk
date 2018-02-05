@@ -83,23 +83,60 @@ extension GithubClient {
                             attributedText: code,
                             inset: IssueDiffHunkPreviewCell.textViewInset
                         )
-                        models.append(IssueDiffHunkModel(path: thread.path, preview: text))
+                        models.append(IssueDiffHunkModel(path: thread.path, preview: text, offset: models.count))
 
-                        for (i, comment) in thread.comments.enumerated() {
+                        for comment in thread.comments {
                             models.append(createReviewComment(
                                 owner: owner,
                                 repo: repo,
                                 model: comment,
                                 viewer: viewerUsername,
-                                width: width,
-                                isLast: i == thread.comments.count - 1
+                                width: width
                             ))
                         }
+
+                        models.append(PullRequestReviewReplyModel(replyID: id))
                     }
 
                     DispatchQueue.main.async {
                         completion(.success((models, nextPage?.next)))
                     }
+                }
+        }))
+    }
+
+    func sendComment(
+        body: String,
+        inReplyTo: Int,
+        owner: String,
+        repo: String,
+        number: Int,
+        width: CGFloat,
+        completion: @escaping (Result<IssueCommentModel>) -> ()
+        ) {
+        let viewer = userSession?.username
+
+        // https://developer.github.com/v3/pulls/comments/#alternative-input
+        request(Request(
+            path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
+            method: .post,
+            parameters: ["body": body, "in_reply_to": inReplyTo],
+            completion: { (response, _) in
+                if response.response?.statusCode == 201,
+                    let json = response.value as? [String: Any],
+                    let id = json["id"] as? Int,
+                    let model = createReviewCommentModel(id: id, json: json) {
+                    let comment = createReviewComment(
+                        owner: owner,
+                        repo: repo,
+                        model: model,
+                        viewer: viewer,
+                        width: width
+                    )
+                    completion(.success(comment))
+                } else {
+                    ToastManager.showGenericError()
+                    completion(.error(response.error))
                 }
         }))
     }
@@ -128,8 +165,7 @@ private func createReviewComment(
     repo: String,
     model: GithubClient.ReviewComment,
     viewer: String?,
-    width: CGFloat,
-    isLast: Bool
+    width: CGFloat
     ) -> IssueCommentModel {
     let details = IssueCommentDetailsViewModel(
         date: model.created,
@@ -150,7 +186,7 @@ private func createReviewComment(
         bodyModels: bodies,
         reactions: reactions,
         collapse: nil,
-        threadState: isLast ? .tail : .neck,
+        threadState: .neck,
         rawMarkdown: model.body,
         viewerCanUpdate: false,
         viewerCanDelete: false,
