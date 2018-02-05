@@ -21,7 +21,7 @@ final class PullRequestReviewReplyCell: IssueCommentBaseCell {
         button.setImage(UIImage(named: "reply")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.tintColor = color
         button.setTitleColor(color, for: .normal)
-        button.titleLabel?.font = Styles.Fonts.body
+        button.titleLabel?.font = Styles.Text.body.preferredFont
         button.isUserInteractionEnabled = false
 
         let spacing = Styles.Sizes.columnSpacing / 2

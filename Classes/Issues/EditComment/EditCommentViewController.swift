@@ -191,6 +191,7 @@ MessageTextViewListener {
         navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
     }
 
+    func willChangeRange(textView: MessageTextView, to range: NSRange) {}
     func didChangeSelection(textView: MessageTextView) {}
 
 }
