@@ -36,7 +36,7 @@ final class IssueRequestModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: actor,
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
                 MarkdownAttribute.username: actor
             ]
@@ -52,14 +52,14 @@ final class IssueRequestModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: phrase,
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color
             ]
         ))
         attributedText.append(NSAttributedString(
             string: " \(user)",
             attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.dark.color,
                 MarkdownAttribute.username: user
             ]
@@ -67,7 +67,7 @@ final class IssueRequestModel: ListDiffable {
         attributedText.append(NSAttributedString(
             string: " \(date.agoString)",
             attributes: [
-                .font: Styles.Fonts.secondary,
+                .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
             ]

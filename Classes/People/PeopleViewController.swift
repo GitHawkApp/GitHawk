@@ -48,7 +48,7 @@ final class PeopleViewController: UITableViewController {
 
     func updateSelectionCount() {
         let label = UILabel()
-        label.font = Styles.Fonts.body
+        label.font = Styles.Text.body.preferredFont
         label.backgroundColor = .clear
         label.textColor = Styles.Colors.Gray.light.color
         label.text = "\(selections.count)/\(selectionLimit)"

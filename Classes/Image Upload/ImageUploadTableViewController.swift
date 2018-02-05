@@ -80,17 +80,17 @@ class ImageUploadTableViewController: UITableViewController {
         let placeholderText = NSLocalizedString("Optional", comment: "")
         bodyTextView.placeholderText = placeholderText
         bodyTextView.placeholderTextColor = Styles.Colors.Gray.light.color
-        bodyTextView.font = Styles.Fonts.body
+        bodyTextView.font = Styles.Text.body.preferredFont
         bodyTextView.textContainerInset = .zero
         bodyTextView.textContainer.lineFragmentPadding = 0
         
         titleTextField.textColor = Styles.Colors.Gray.dark.color
-        titleTextField.font = Styles.Fonts.body
+        titleTextField.font = Styles.Text.body.preferredFont
         titleTextField.attributedPlaceholder = NSAttributedString(
             string: placeholderText,
             attributes: [
                 .foregroundColor: Styles.Colors.Gray.light.color,
-                .font: Styles.Fonts.body
+                .font: Styles.Text.body.preferredFont
             ]
         )
         

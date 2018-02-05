@@ -61,7 +61,7 @@ final class SearchRecentViewModel: NSObject, ListDiffable {
 
     private var standardAttributes: [NSAttributedStringKey: Any] {
         return [
-            .font: Styles.Fonts.body,
+            .font: Styles.Text.body.preferredFont,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ]
     }

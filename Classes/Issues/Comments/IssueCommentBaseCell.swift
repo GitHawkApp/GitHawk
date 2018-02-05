@@ -65,7 +65,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         collapseButton.backgroundColor = Styles.Colors.Blue.medium.color
         collapseButton.accessibilityTraits = UIAccessibilityTraitNone
         collapseButton.tintColor = .white
-        collapseButton.titleLabel?.font = Styles.Fonts.smallTitle
+        collapseButton.titleLabel?.font = Styles.Text.smallTitle.preferredFont
         collapseButton.clipsToBounds = true
         collapseButton.isHidden = true
         collapseButton.contentEdgeInsets = UIEdgeInsets(top: -2, left: 8, bottom: -2, right: 8)

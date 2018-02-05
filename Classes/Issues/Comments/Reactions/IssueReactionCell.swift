@@ -13,8 +13,8 @@ final class IssueReactionCell: UICollectionViewCell {
 
     private static var cache = [String: CGFloat]()
     private static let spacing: CGFloat = 4
-    private static var emojiFont: UIFont { return UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2) }
-    private static var countFont: UIFont { return Styles.Fonts.body }
+    private static var emojiFont: UIFont { return UIFont.systemFont(ofSize: Styles.Text.body.size + 2) }
+    private static var countFont: UIFont { return Styles.Text.body.preferredFont }
 
     static func width(emoji: String, count: Int) -> CGFloat {
         let key = "\(emoji)\(count)"
@@ -41,7 +41,7 @@ final class IssueReactionCell: UICollectionViewCell {
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
         // hint bigger emoji than labels
-        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2)
+        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Text.body.size + 2)
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -50,7 +50,7 @@ final class IssueReactionCell: UICollectionViewCell {
 
         countLabel.textAlignment = .center
         countLabel.backgroundColor = .clear
-        countLabel.font = Styles.Fonts.body
+        countLabel.font = Styles.Text.body.preferredFont
         countLabel.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in

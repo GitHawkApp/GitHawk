@@ -15,7 +15,7 @@ final class CodeView: UITextView {
 
         backgroundColor = .clear
 
-        font = Styles.Fonts.code
+        font = Styles.Text.code.preferredFont
         isEditable = false
         contentInset = .zero
         textContainerInset = UIEdgeInsets(

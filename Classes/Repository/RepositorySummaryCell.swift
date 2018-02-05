@@ -57,7 +57,7 @@ final class RepositorySummaryCell: SelectableCell {
         }
 
         secondaryLabel.numberOfLines = 1
-        secondaryLabel.font = Styles.Fonts.secondary
+        secondaryLabel.font = Styles.Text.secondary.preferredFont
         secondaryLabel.textColor = Styles.Colors.Gray.light.color
 
         labelListView.snp.makeConstraints { make in

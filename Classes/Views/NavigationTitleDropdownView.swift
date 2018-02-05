@@ -90,7 +90,7 @@ final class NavigationTitleDropdownView: UIControl {
         guard let title = title else { return }
 
         let titleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.bodyBold,
+            .font: Styles.Text.bodyBold.preferredFont,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ]
 
@@ -98,7 +98,7 @@ final class NavigationTitleDropdownView: UIControl {
         if let subtitle = subtitle {
             attributedTitle.append(NSAttributedString(string: "\n"))
             attributedTitle.append(NSAttributedString(string: subtitle, attributes: [
-                .font: Styles.Fonts.secondaryBold,
+                .font: Styles.Text.secondaryBold.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.light.color
                 ]))
         }

@@ -16,7 +16,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
     private let imageView = UIImageView()
 
     static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 3
-    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Sizes.Text.secondary)
+    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Text.secondary.size)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,7 +38,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         }
 
         label.textColor = tint
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)

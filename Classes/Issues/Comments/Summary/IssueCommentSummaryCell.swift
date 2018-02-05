@@ -18,7 +18,7 @@ final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable {
         super.init(frame: frame)
 
         label.textColor = Styles.Colors.Gray.dark.color
-        label.font = Styles.Fonts.body
+        label.font = Styles.Text.body.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.commentGutter)
