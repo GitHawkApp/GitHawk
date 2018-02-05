@@ -17,6 +17,7 @@ public final class MessageView: UIView, MessageTextViewListener {
     internal let UITextViewContentSizeKeyPath = #keyPath(UITextView.contentSize)
     internal let topBorderLayer = CALayer()
     internal var contentView: UIView?
+    internal var buttonAction: Selector?
 
     internal override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +33,7 @@ public final class MessageView: UIView, MessageTextViewListener {
         textView.textContainerInset = .zero
         textView.backgroundColor = .clear
         textView.addObserver(self, forKeyPath: UITextViewContentSizeKeyPath, options: [.new], context: nil)
+        textView.font = .systemFont(ofSize: UIFont.systemFontSize)
         textView.add(listener: self)
 
         // setup TextKit props to defaults
@@ -50,10 +52,6 @@ public final class MessageView: UIView, MessageTextViewListener {
         button.imageEdgeInsets = .zero
 
         updateEmptyTextStates()
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(becomeFirstResponder))
-        tap.cancelsTouchesInView = false
-        addGestureRecognizer(tap)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -135,6 +133,12 @@ public final class MessageView: UIView, MessageTextViewListener {
 
     public func addButton(target: Any, action: Selector) {
         button.addTarget(target, action: action, for: .touchUpInside)
+        buttonAction = action
+    }
+
+    public override var keyCommands: [UIKeyCommand]? {
+        guard let action = buttonAction else { return nil }
+        return [UIKeyCommand(input: "\r", modifierFlags: .command, action: action)]
     }
 
     // MARK: Overrides
@@ -194,10 +198,6 @@ public final class MessageView: UIView, MessageTextViewListener {
         return textView.resignFirstResponder()
     }
 
-    public override func becomeFirstResponder() -> Bool {
-        return textView.becomeFirstResponder()
-    }
-
     // MARK: Private API
 
     internal var height: CGFloat {
@@ -208,7 +208,7 @@ public final class MessageView: UIView, MessageTextViewListener {
     }
 
     internal var textViewHeight: CGFloat {
-        return min(maxHeight, textView.contentSize.height)
+        return min(maxHeight, max(textView.font?.lineHeight ?? 0, textView.contentSize.height))
     }
 
     internal var maxHeight: CGFloat {
@@ -240,5 +240,7 @@ public final class MessageView: UIView, MessageTextViewListener {
     public func didChangeSelection(textView: MessageTextView) {
         delegate?.selectionDidChange(messageView: self)
     }
+    
+    public func willChangeRange(textView: MessageTextView, to range: NSRange) {}
 
 }
