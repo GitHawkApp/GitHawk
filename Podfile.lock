@@ -139,7 +139,7 @@ CHECKOUT OPTIONS:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
     :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :commit: 0567d1e9d036da143574856fd90844861d3d5166
+    :commit: 2c609c8660c3842dba895dbb93122013f1cbda33
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
@@ -170,7 +170,7 @@ SPEC CHECKSUMS:
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  StyledText: 0da66d27eaab0269b1d43e2fd73f75984a88184d
+  StyledText: d7bbd77b11888e2bee8ddceb05cc578ab7d6d148
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431

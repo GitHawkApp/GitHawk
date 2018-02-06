@@ -4,13 +4,13 @@
   "license": {
     "type": "MIT"
   },
-  "homepage": "https://github.com/rnystrom/GitHawk",
+  "homepage": "https://github.com/GitHawkApp/StyledText",
   "authors": {
     "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
   },
-  "summary": "NSAttributedString building..",
+  "summary": "NSAttributedString building.",
   "source": {
-    "git": "https://github.com/rnystrom/GitHawk.git",
+    "git": "https://github.com/GitHawkApp/StyledText/StyledText.git",
     "tag": "#{s.version}"
   },
   "source_files": "StyledText/*.swift",
