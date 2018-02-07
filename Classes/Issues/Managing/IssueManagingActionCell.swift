@@ -25,16 +25,16 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
 
         let tint = Styles.Colors.Blue.medium.color
 
+        contentView.layer.cornerRadius = Styles.Sizes.cardCornerRadius
+
         let iconSize = IssueManagingActionCell.iconHeight
         imageView.contentMode = .center
-        imageView.layer.cornerRadius = iconSize/2
-        imageView.backgroundColor = tint
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: iconSize, height: iconSize))
             make.centerX.equalTo(contentView)
-            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
+            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing/2)
         }
 
         label.textColor = tint
@@ -42,12 +42,19 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)
-            make.top.equalTo(imageView.snp.bottom).offset(ceil(Styles.Sizes.rowSpacing / 2))
+            make.top.equalTo(imageView.snp.bottom).offset(-Styles.Sizes.rowSpacing)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let height = bounds.height - Styles.Sizes.rowSpacing
+        contentView.frame = CGRect(x: 0, y: 0, width: height, height: height)
+        contentView.center = CGPoint(x: bounds.width/2, y: bounds.height/2)
     }
 
     override var isSelected: Bool {
@@ -77,7 +84,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         label.text = viewModel.label
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = viewModel.color
-        imageView.backgroundColor = viewModel.color.withAlphaComponent(0.2)
+        contentView.backgroundColor = viewModel.color.withAlphaComponent(0.2)
         label.textColor = viewModel.color
     }
 
