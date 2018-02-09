@@ -66,7 +66,7 @@ MessageAutocompleteControllerDelegate {
             prefix: messageAutocompleteController.selection?.prefix,
             indexPath: indexPath
             ) {
-            messageAutocompleteController.accept(autocomplete: accepted + " ", keepPrefix: false)
+            messageAutocompleteController.accept(autocomplete: accepted, keepPrefix: false)
         }
     }
 
@@ -79,6 +79,10 @@ MessageAutocompleteControllerDelegate {
     func didChangeStore(autocomplete: IssueCommentAutocomplete) {
         for prefix in autocomplete.prefixes {
             messageAutocompleteController.register(prefix: prefix)
+
+            if let attributes = autocomplete.highlightAttributes(prefix: prefix) {
+                messageAutocompleteController.registerAutocomplete(prefix: prefix, attributes: attributes)
+            }
         }
         messageAutocompleteController.tableView.reloadData()
     }
