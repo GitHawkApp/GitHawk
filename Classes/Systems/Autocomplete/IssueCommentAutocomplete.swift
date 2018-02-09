@@ -46,6 +46,10 @@ final class IssueCommentAutocomplete {
         return map.map { $0.key }
     }
 
+    func highlightAttributes(prefix: String) -> [NSAttributedStringKey: Any]? {
+        return map[prefix]?.highlightAttributes
+    }
+
     func resultCount(prefix: String?) -> Int {
         guard let prefix = prefix, let autocomplete = map[prefix] else { return 0 }
         return autocomplete.resultsCount
