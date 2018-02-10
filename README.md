@@ -42,8 +42,19 @@ GitHawk will be released with (at least) a three-phased rollout:
 
 ## Installation
 
-If you want to build GitHawk locally, run `npm install`. It will install [apollo-codegen](https://github.com/apollographql/apollo-codegen) that is required to generate the
-GraphQL models.
+To get started, you will need to install node (`brew install node`), then run these instructions:
+
+```sh
+git clone https://github.com/rnystrom/GitHawk.git
+cd GitHawk
+bundle
+bundle exec pod install
+npm install
+open Freetime.xcworkspace/
+```
+
+Next up you will need to set up a [Client ID and Client Secret](Setup.md) for GitHub.
+
 
 ## Open Source & Copying
 
