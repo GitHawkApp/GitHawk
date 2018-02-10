@@ -70,6 +70,7 @@ final class SearchRepoResultCell: SelectableCell {
             make.right.equalTo(languageLabel)
         }
 
+        descriptionLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         descriptionLabel.font = Styles.Text.secondary.preferredFont
         descriptionLabel.textColor = Styles.Colors.Gray.light.color
         descriptionLabel.snp.makeConstraints { make in
