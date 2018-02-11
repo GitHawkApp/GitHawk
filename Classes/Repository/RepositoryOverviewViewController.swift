@@ -76,8 +76,7 @@ BaseListViewControllerDataSource {
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
         return RepositoryEmptyResultsSectionController(
             topInset: 0,
-            topLayoutGuide: topLayoutGuide,
-            bottomLayoutGuide: bottomLayoutGuide,
+            layoutInsets: view.safeAreaInsets, 
             type: .readme
         )
     }

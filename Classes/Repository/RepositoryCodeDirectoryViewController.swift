@@ -121,7 +121,7 @@ ListSingleSectionControllerDelegate {
                 else { return .zero }
             return CGSize(
                 width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+                height: context.containerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
             )
         })
     }

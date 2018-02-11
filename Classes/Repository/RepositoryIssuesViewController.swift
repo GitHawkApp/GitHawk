@@ -112,8 +112,7 @@ SearchBarSectionControllerDelegate {
         }
         return RepositoryEmptyResultsSectionController(
             topInset: 0,
-            topLayoutGuide: topLayoutGuide,
-            bottomLayoutGuide: bottomLayoutGuide,
+            layoutInsets: view.safeAreaInsets,
             type: empty
         )
     }

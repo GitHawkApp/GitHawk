@@ -11,19 +11,17 @@ import IGListKit
 final class SearchNoResultsSectionController: ListSectionController {
 
     let topInset: CGFloat
-    let topLayoutGuide: UILayoutSupport
-    let bottomLayoutGuide: UILayoutSupport
-
-    init(topInset: CGFloat, topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
+    let layoutInsets: UIEdgeInsets
+    
+    init(topInset: CGFloat, layoutInsets: UIEdgeInsets) {
         self.topInset = topInset
-        self.topLayoutGuide = topLayoutGuide
-        self.bottomLayoutGuide = bottomLayoutGuide
+        self.layoutInsets = layoutInsets
         super.init()
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let size = collectionContext?.containerSize else { fatalError("Missing context") }
-        return CGSize(width: size.width, height: size.height - topInset - topLayoutGuide.length - bottomLayoutGuide.length)
+        return CGSize(width: size.width, height: size.height - topInset - layoutInsets.top - layoutInsets.bottom)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

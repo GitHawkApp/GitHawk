@@ -50,7 +50,7 @@ final class ScrollViewKeyboardAdjuster {
 
         let converted = viewController.view.convert(frame, from: nil)
         let intersection = converted.intersection(frame)
-        let bottomInset = intersection.height - viewController.bottomLayoutGuide.length
+        let bottomInset = intersection.height - viewController.view.safeAreaInsets.bottom
 
         inset.bottom = bottomInset
 

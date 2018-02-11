@@ -101,7 +101,7 @@ ListSingleSectionControllerDelegate {
                 else { return .zero }
             return CGSize(
                 width: context.insetContainerSize.width,
-                height: context.insetContainerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+                height: context.insetContainerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
             )
         }
         let controller = ListSingleSectionController(
