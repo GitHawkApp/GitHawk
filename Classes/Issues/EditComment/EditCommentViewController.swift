@@ -68,7 +68,6 @@ MessageTextViewListener {
         )
 
         textView.githawkConfigure(inset: true)
-        textView.keyboardType = .twitter
         view.addSubview(textView)
         textView.snp.makeConstraints { make in
             make.edges.equalTo(view)

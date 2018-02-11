@@ -16,7 +16,6 @@ extension MessageViewController {
         borderColor = Styles.Colors.Gray.border.color
         messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
         messageView.textView.placeholderTextColor = Styles.Colors.Gray.light.color
-        messageView.keyboardType = .twitter
         messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
         messageView.buttonTint = Styles.Colors.Blue.medium.color
         messageView.font = Styles.Text.body.preferredFont
