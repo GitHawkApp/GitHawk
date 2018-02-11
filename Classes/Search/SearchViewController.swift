@@ -159,10 +159,10 @@ SearchResultSectionControllerDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
+            
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
-                topLayoutGuide: topLayoutGuide,
-                bottomLayoutGuide: bottomLayoutGuide
+                layoutInsets: view.safeAreaInsets
             )
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)

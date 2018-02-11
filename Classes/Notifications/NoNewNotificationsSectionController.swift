@@ -13,8 +13,7 @@ import Crashlytics
 final class NoNewNotificationSectionController: ListSectionController {
 
     private let topInset: CGFloat
-    private let topLayoutGuide: UILayoutSupport
-    private let bottomLayoutGuide: UILayoutSupport
+    private let layoutInsets: UIEdgeInsets
     private let client = NotificationEmptyMessageClient()
 
     enum State {
@@ -24,10 +23,9 @@ final class NoNewNotificationSectionController: ListSectionController {
     }
     private var state: State = .loading
 
-    init(topInset: CGFloat, topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
+    init(topInset: CGFloat, layoutInsets: UIEdgeInsets) {
         self.topInset = topInset
-        self.topLayoutGuide = topLayoutGuide
-        self.bottomLayoutGuide = bottomLayoutGuide
+        self.layoutInsets = layoutInsets
         super.init()
         client.fetch { [weak self] (result) in
             self?.handleFinished(result)
@@ -37,7 +35,7 @@ final class NoNewNotificationSectionController: ListSectionController {
     override func sizeForItem(at index: Int) -> CGSize {
         guard let size = collectionContext?.containerSize
             else { fatalError("Missing context") }
-        return CGSize(width: size.width, height: size.height - topInset - topLayoutGuide.length - bottomLayoutGuide.length)
+        return CGSize(width: size.width, height: size.height - topInset - layoutInsets.top - layoutInsets.bottom)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
