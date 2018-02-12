@@ -250,6 +250,14 @@
 		2993046F1FBA9D31007B9737 /* IssueManagingActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993046E1FBA9D31007B9737 /* IssueManagingActionCell.swift */; };
 		29973E561F68BFDE0004B693 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29973E551F68BFDE0004B693 /* Signature.swift */; };
 		29987DD91F53EB3700801F21 /* GithubClient+APIStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */; };
+		2999972620310E9700995FFD /* IssueMergeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972520310E9700995FFD /* IssueMergeModel.swift */; };
+		2999972820310F3100995FFD /* IssueMergeContextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972720310F3100995FFD /* IssueMergeContextModel.swift */; };
+		2999972A20311B3800995FFD /* IssueMergeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972920311B3800995FFD /* IssueMergeSectionController.swift */; };
+		2999972C20311DD700995FFD /* IssueMergeSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972B20311DD700995FFD /* IssueMergeSummaryCell.swift */; };
+		2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972D203120E300995FFD /* IssueMergeButtonCell.swift */; };
+		299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */; };
+		299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299997312031242500995FFD /* IssueMergeSummaryModel.swift */; };
+		29999734203135E100995FFD /* IssueMergeContextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29999733203135E100995FFD /* IssueMergeContextCell.swift */; };
 		299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */; };
 		299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
@@ -681,6 +689,14 @@
 		2993046E1FBA9D31007B9737 /* IssueManagingActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingActionCell.swift; sourceTree = "<group>"; };
 		29973E551F68BFDE0004B693 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
 		29987DD81F53EB3700801F21 /* GithubClient+APIStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+APIStatus.swift"; sourceTree = "<group>"; };
+		2999972520310E9700995FFD /* IssueMergeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeModel.swift; sourceTree = "<group>"; };
+		2999972720310F3100995FFD /* IssueMergeContextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeContextModel.swift; sourceTree = "<group>"; };
+		2999972920311B3800995FFD /* IssueMergeSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeSectionController.swift; sourceTree = "<group>"; };
+		2999972B20311DD700995FFD /* IssueMergeSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeSummaryCell.swift; sourceTree = "<group>"; };
+		2999972D203120E300995FFD /* IssueMergeButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeButtonCell.swift; sourceTree = "<group>"; };
+		2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeButtonModel.swift; sourceTree = "<group>"; };
+		299997312031242500995FFD /* IssueMergeSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeSummaryModel.swift; sourceTree = "<group>"; };
+		29999733203135E100995FFD /* IssueMergeContextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeContextCell.swift; sourceTree = "<group>"; };
 		299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialEmptyView.swift; sourceTree = "<group>"; };
 		299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewViewCommentsCell.swift; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
@@ -1006,6 +1022,7 @@
 				29FB942A1EE750720016E6D4 /* Labeled */,
 				292FCAEC1EDFCC510026635E /* Labels */,
 				299304671FBA8A66007B9737 /* Managing */,
+				2999972420310E7400995FFD /* Merge */,
 				293189291F5397D400EF0911 /* Milestone */,
 				292EB08B1F1FF57B0046865D /* MilestoneEvent */,
 				29F7F05D1F2A833E00F6075D /* NeckLoad */,
@@ -1580,6 +1597,21 @@
 				299304681FBA8A88007B9737 /* IssueManagingSectionController.swift */,
 			);
 			path = Managing;
+			sourceTree = "<group>";
+		};
+		2999972420310E7400995FFD /* Merge */ = {
+			isa = PBXGroup;
+			children = (
+				2999972D203120E300995FFD /* IssueMergeButtonCell.swift */,
+				2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */,
+				2999972720310F3100995FFD /* IssueMergeContextModel.swift */,
+				2999972520310E9700995FFD /* IssueMergeModel.swift */,
+				2999972920311B3800995FFD /* IssueMergeSectionController.swift */,
+				2999972B20311DD700995FFD /* IssueMergeSummaryCell.swift */,
+				299997312031242500995FFD /* IssueMergeSummaryModel.swift */,
+				29999733203135E100995FFD /* IssueMergeContextCell.swift */,
+			);
+			path = Merge;
 			sourceTree = "<group>";
 		};
 		29AF1E801F8AAB1D0008A0EF /* EditComment */ = {
@@ -2275,6 +2307,7 @@
 				290744B81F250A7200FD9E48 /* AutocompleteType.swift in Sources */,
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
 				29459A6F1FE61E0500034A04 /* MarkdownCheckboxModel.swift in Sources */,
+				299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */,
 				2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
@@ -2317,6 +2350,7 @@
 				299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */,
 				29316DBD1ECC8970007CAE3F /* GithubUserSession.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,
+				299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */,
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
@@ -2328,6 +2362,8 @@
 				297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */,
 				297403DB1F18550200ABA95A /* IssueAssigneeSummaryModel.swift in Sources */,
 				297403DD1F185A8700ABA95A /* IssueAssigneeUserCell.swift in Sources */,
+				2999972620310E9700995FFD /* IssueMergeModel.swift in Sources */,
+				2999972820310F3100995FFD /* IssueMergeContextModel.swift in Sources */,
 				29CC294B1FF83488006B6DE7 /* IssueCommentModel+Inset.swift in Sources */,
 				297403D31F1850DC00ABA95A /* IssueAssigneeViewModel.swift in Sources */,
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
@@ -2403,6 +2439,7 @@
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
+				2999972A20311B3800995FFD /* IssueMergeSectionController.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
@@ -2475,6 +2512,7 @@
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */,
+				2999972C20311DD700995FFD /* IssueMergeSummaryCell.swift in Sources */,
 				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
 				290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */,
 				29C9FDCE1EC65FEE00EE3A52 /* NotificationResponse.swift in Sources */,
@@ -2527,6 +2565,7 @@
 				29DAA7AB20202A1A0029277A /* PullRequestReviewReplySectionController.swift in Sources */,
 				29792B1D1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift in Sources */,
 				2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */,
+				29999734203135E100995FFD /* IssueMergeContextCell.swift in Sources */,
 				29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */,
 				29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */,
 				29136BDF200A7A75007317BE /* UIScrollView+LeftRightSafeInset.swift in Sources */,
@@ -2589,6 +2628,7 @@
 				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
+				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,

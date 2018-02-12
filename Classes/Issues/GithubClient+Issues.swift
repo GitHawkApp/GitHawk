@@ -127,7 +127,8 @@ extension GithubClient {
                         hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository?.defaultBranchRef?.name ?? "master",
-                        fileChanges: issueType.fileChanges
+                        fileChanges: issueType.fileChanges,
+                        mergeModel: issueType.mergeModel
                     )
 
                     DispatchQueue.main.async {

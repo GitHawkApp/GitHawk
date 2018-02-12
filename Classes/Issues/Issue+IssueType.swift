@@ -55,6 +55,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return nil
     }
 
+    var mergeModel: IssueMergeModel? {
+        return nil
+    }
+
     func timelineViewModels(
         owner: String,
         repo: String,

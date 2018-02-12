@@ -397,6 +397,12 @@ IssueManagingNavSectionControllerDelegate {
                 role: viewerIsCollaborator ? .collaborator : .author
             ))
         }
+        
+        if viewerIsCollaborator,
+            current.status.status != .merged,
+            let merge = current.mergeModel {
+            objects.append(merge)
+        }
 
         return objects
     }
@@ -434,6 +440,7 @@ IssueManagingNavSectionControllerDelegate {
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
         case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
+        case is IssueMergeModel: return IssueMergeSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }
