@@ -11,16 +11,10 @@ import IGListKit
 
 final class IssueMergeButtonModel: ListDiffable {
 
-    enum MergeType: Int {
-        case merge
-        case rebase
-        case squash
-    }
-
     let enabled: Bool
-    let type: MergeType
+    let type: IssueMergeType
 
-    init(enabled: Bool, type: MergeType) {
+    init(enabled: Bool, type: IssueMergeType) {
         self.enabled = enabled
         self.type = type
     }
@@ -36,6 +30,6 @@ final class IssueMergeButtonModel: ListDiffable {
         if self === object { return true }
         guard let object = object as? IssueMergeButtonModel else { return false }
         return enabled == object.enabled
-        type == object.type
+        && type == object.type
     }
 }

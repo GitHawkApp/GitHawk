@@ -12,9 +12,24 @@ import IGListKit
 final class IssueMergeSectionController: ListBindingSectionController<IssueMergeModel>,
 ListBindingSectionControllerDataSource {
 
-    override init() {
+    private let model: IssueDetailsModel
+
+    init(model: IssueDetailsModel) {
+        self.model = model
         super.init()
         dataSource = self
+    }
+
+    // MARK: Private API
+
+    var preferredMergeTypeKey: String {
+        return "com.freetime.IssueMergeSectionController.PreferredMergeType.\(model.repo).\(model.owner)"
+    }
+
+    var preferredMergeType: IssueMergeType {
+        guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey))
+            else { return .merge }
+        return type
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -47,8 +62,7 @@ ListBindingSectionControllerDataSource {
             state: mergeable ? .success : .warning
         ))
 
-        // TODO get preferred query from store
-        viewModels.append(IssueMergeButtonModel(enabled: mergeable, type: .merge))
+        viewModels.append(IssueMergeButtonModel(enabled: mergeable, type: preferredMergeType))
 
         return viewModels
     }

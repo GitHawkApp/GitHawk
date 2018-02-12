@@ -258,6 +258,8 @@
 		299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */; };
 		299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299997312031242500995FFD /* IssueMergeSummaryModel.swift */; };
 		29999734203135E100995FFD /* IssueMergeContextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29999733203135E100995FFD /* IssueMergeContextCell.swift */; };
+		299997362031DAC000995FFD /* MergeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299997352031DAC000995FFD /* MergeButton.swift */; };
+		299997382031DEB300995FFD /* IssueMergeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299997372031DEB300995FFD /* IssueMergeType.swift */; };
 		299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */; };
 		299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
@@ -697,6 +699,8 @@
 		2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeButtonModel.swift; sourceTree = "<group>"; };
 		299997312031242500995FFD /* IssueMergeSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeSummaryModel.swift; sourceTree = "<group>"; };
 		29999733203135E100995FFD /* IssueMergeContextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeContextCell.swift; sourceTree = "<group>"; };
+		299997352031DAC000995FFD /* MergeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeButton.swift; sourceTree = "<group>"; };
+		299997372031DEB300995FFD /* IssueMergeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMergeType.swift; sourceTree = "<group>"; };
 		299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialEmptyView.swift; sourceTree = "<group>"; };
 		299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewViewCommentsCell.swift; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
@@ -1604,12 +1608,14 @@
 			children = (
 				2999972D203120E300995FFD /* IssueMergeButtonCell.swift */,
 				2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */,
+				29999733203135E100995FFD /* IssueMergeContextCell.swift */,
 				2999972720310F3100995FFD /* IssueMergeContextModel.swift */,
 				2999972520310E9700995FFD /* IssueMergeModel.swift */,
 				2999972920311B3800995FFD /* IssueMergeSectionController.swift */,
 				2999972B20311DD700995FFD /* IssueMergeSummaryCell.swift */,
 				299997312031242500995FFD /* IssueMergeSummaryModel.swift */,
-				29999733203135E100995FFD /* IssueMergeContextCell.swift */,
+				299997372031DEB300995FFD /* IssueMergeType.swift */,
+				299997352031DAC000995FFD /* MergeButton.swift */,
 			);
 			path = Merge;
 			sourceTree = "<group>";
@@ -2379,10 +2385,12 @@
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
 				294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */,
 				292FCAFB1EDFCC510026635E /* IssueCommentImageCell.swift in Sources */,
+				299997362031DAC000995FFD /* MergeButton.swift in Sources */,
 				29AF1E8A1F8AB1C30008A0EF /* TextActionsController.swift in Sources */,
 				292FCAFC1EDFCC510026635E /* IssueCommentImageModel.swift in Sources */,
 				292FCAFE1EDFCC510026635E /* IssueCommentModel.swift in Sources */,
 				292CD3C51F0C9EB200D3D57B /* IssueCommentModelHandling.swift in Sources */,
+				299997382031DEB300995FFD /* IssueMergeType.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,

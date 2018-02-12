@@ -440,7 +440,7 @@ IssueManagingNavSectionControllerDelegate {
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
         case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
-        case is IssueMergeModel: return IssueMergeSectionController()
+        case is IssueMergeModel: return IssueMergeSectionController(model: model)
         default: fatalError("Unhandled object: \(object)")
         }
     }
