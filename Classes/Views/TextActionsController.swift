@@ -30,10 +30,17 @@ final class TextActionsController: NSObject,
 
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
         switch operation.operation {
-        case .execute(let block): block()
-        case .wrap(let left, let right): textView?.replace(left: left, right: right, atLineStart: false)
-        case .line(let left): textView?.replace(left: left, right: nil, atLineStart: true)
-        case .uploadImage: displayUploadImage()
+        case .wrap(let left, let right):
+            textView?.replace(left: left, right: right, atLineStart: false)
+            if operation.name == "Wrap text as URL" && UIPasteboard.general.hasURLs {
+                UIMenuController.shared.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+            }
+        case .line(let left):
+            textView?.replace(left: left, right: nil, atLineStart: true)
+        case .execute(let block):
+            block()
+        case .uploadImage:
+            displayUploadImage()
         }
     }
 
