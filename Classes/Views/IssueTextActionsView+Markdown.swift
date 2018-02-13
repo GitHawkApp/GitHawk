@@ -64,7 +64,14 @@ extension IssueTextActionsView {
                 name: NSLocalizedString("Make text indented", comment: "The name of the action for making text indented from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-link"),
-                operation: .wrap("[", "](\(UITextView.cursorToken))"),
+                operation: .multi([
+                    .wrap("[", "](\(UITextView.cursorToken))"),
+                    .execute({
+                        if UIPasteboard.general.hasURLs {
+                            UIMenuController.shared.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+                        }
+                    })
+                ]),
                 name: NSLocalizedString("Wrap text as URL", comment: "The name of the action to wrap text in a markdown URL from the markdown actions bar"))
         ]
 

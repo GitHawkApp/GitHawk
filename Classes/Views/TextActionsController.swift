@@ -29,19 +29,21 @@ final class TextActionsController: NSObject,
     // MARK: IssueTextActionsViewDelegate
 
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
-        switch operation.operation {
-        case .wrap(let left, let right):
-            textView?.replace(left: left, right: right, atLineStart: false)
-            if operation.name == "Wrap text as URL" && UIPasteboard.general.hasURLs {
-                UIMenuController.shared.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+        func handle(_ operation: IssueTextActionOperation.Operation) {
+            switch operation {
+            case .wrap(let left, let right):
+                textView?.replace(left: left, right: right, atLineStart: false)
+            case .line(let left):
+                textView?.replace(left: left, right: nil, atLineStart: true)
+            case .execute(let block):
+                block()
+            case .uploadImage:
+                displayUploadImage()
+            case .multi(let operations):
+                operations.forEach { handle($0) }
             }
-        case .line(let left):
-            textView?.replace(left: left, right: nil, atLineStart: true)
-        case .execute(let block):
-            block()
-        case .uploadImage:
-            displayUploadImage()
         }
+        handle(operation.operation)
     }
 
     // MARK: Image Upload
