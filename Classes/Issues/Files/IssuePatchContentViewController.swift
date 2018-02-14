@@ -34,7 +34,7 @@ final class IssuePatchContentViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        codeView.frame = view.bounds
+        codeView.frame = view.safeAreaLayoutGuide.layoutFrame
     }
 
 }
