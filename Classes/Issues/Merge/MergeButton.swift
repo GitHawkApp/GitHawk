@@ -109,7 +109,7 @@ final class MergeButton: UIView {
     }
 
     @objc func onTap(recognizer: UITapGestureRecognizer) {
-        guard recognizer.state == .began else { return }
+        guard recognizer.state == .ended else { return }
 
         if optionIconView.frame.contains(recognizer.location(in: self)) {
             delegate?.didSelectOptions(button: self)

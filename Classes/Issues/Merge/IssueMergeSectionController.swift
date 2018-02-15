@@ -10,7 +10,8 @@ import Foundation
 import IGListKit
 
 final class IssueMergeSectionController: ListBindingSectionController<IssueMergeModel>,
-ListBindingSectionControllerDataSource {
+ListBindingSectionControllerDataSource,
+MergeButtonDelegate {
 
     private let model: IssueDetailsModel
 
@@ -30,6 +31,10 @@ ListBindingSectionControllerDataSource {
         guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey))
             else { return .merge }
         return type
+    }
+
+    func set(preferredMergeType: IssueMergeType) {
+        UserDefaults.standard.set(preferredMergeType.rawValue, forKey: preferredMergeTypeKey)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -77,7 +82,6 @@ ListBindingSectionControllerDataSource {
         let height: CGFloat
         switch viewModel {
         case is IssueMergeButtonModel: height = Styles.Sizes.tableCellHeightLarge
-//        case is IssueMergeContextModel: height = Styles.Sizes.labelRowHeight
         default: height = Styles.Sizes.tableCellHeight
         }
         return CGSize(width: width, height: height)
@@ -101,8 +105,45 @@ ListBindingSectionControllerDataSource {
         if let cell = cell as? IssueCommentBaseCell {
             cell.border = index == 0 ? .head : index == self.viewModels.count - 1 ? .tail : .neck
         }
+        if let cell = cell as? IssueMergeButtonCell {
+            cell.delegate = self
+        }
 
         return cell
+    }
+
+    // MARK: MergeButtonDelegate
+
+    func didSelect(button: MergeButton) {
+        print("select")
+    }
+
+    func didSelectOptions(button: MergeButton) {
+        print("select option")
+
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+
+        for type in [IssueMergeType.merge, IssueMergeType.rebase, IssueMergeType.squash] {
+
+            let title: String
+            switch type {
+            case .merge: title = NSLocalizedString("Merge", comment: "")
+            case .rebase: title = NSLocalizedString("Rebase", comment: "")
+            case .squash: title = NSLocalizedString("Squash", comment: "")
+            }
+
+            alert.add(action: AlertAction(AlertActionBuilder {
+                $0.title = title
+                $0.style = .default
+            }).get { [weak self] _ in
+                self?.set(preferredMergeType: type)
+                self?.update(animated: true)
+            })
+        }
+
+        alert.add(action: AlertAction.cancel())
+
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

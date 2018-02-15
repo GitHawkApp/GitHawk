@@ -10,9 +10,12 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeButtonCell: IssueCommentBaseCell,
-ListBindable,
-MergeButtonDelegate {
+final class IssueMergeButtonCell: IssueCommentBaseCell, ListBindable {
+
+    var delegate: MergeButtonDelegate? {
+        get { return mergeButton.delegate }
+        set { mergeButton.delegate = newValue }
+    }
 
     private let mergeButton = MergeButton()
 
@@ -21,7 +24,6 @@ MergeButtonDelegate {
 
         contentView.addSubview(mergeButton)
 
-        mergeButton.delegate = self
         mergeButton.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(
                 top: Styles.Sizes.rowSpacing/2,
@@ -48,16 +50,6 @@ MergeButtonDelegate {
         case .rebase: title = NSLocalizedString("Rebase and merge", comment: "")
         }
         mergeButton.configure(title: title, enabled: viewModel.enabled)
-    }
-
-    // MARK: MergeButtonDelegate
-
-    func didSelect(button: MergeButton) {
-        print("select")
-    }
-
-    func didSelectOptions(button: MergeButton) {
-        print("select option")
     }
     
 }
