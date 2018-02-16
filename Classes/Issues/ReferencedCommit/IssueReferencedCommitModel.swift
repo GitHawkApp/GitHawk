@@ -45,7 +45,7 @@ final class IssueReferencedCommitModel: ListDiffable {
             ]
         ))
         attributedText.append(NSAttributedString(
-            string: NSLocalizedString("referenced ", comment: ""),
+            string: NSLocalizedString(" referenced ", comment: ""),
             attributes: [
                 .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
