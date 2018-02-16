@@ -58,6 +58,7 @@ struct IssueTextActionOperation {
         case line(String)
         case wrap(String, String)
         case execute(() -> Void)
+        case multi([Operation])
         case uploadImage
     }
 
