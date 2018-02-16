@@ -375,6 +375,13 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
             }
           }
         }
+        commits(last: 1) {
+          nodes {
+            commit {
+              ...commitContext
+            }
+          }
+        }
         milestone{...milestoneFields}
         ...reactionFields
         ...commentFields
@@ -390,6 +397,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         changedFiles
         additions
         deletions
+        mergeable
       }
     }
   }
