@@ -28,7 +28,7 @@ extension IssueTextActionsView {
                 name: NSLocalizedString("Message Preview", comment: "The name of the action for previewing a message from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-mention"),
-                operation: .line("@"),
+                operation: .wrap("@", ""),
                 name: NSLocalizedString("Add mention to text", comment: "The name of the action for making text a mention from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-bold"),
