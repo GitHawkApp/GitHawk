@@ -31,6 +31,7 @@ IssueManagingNavSectionControllerDelegate {
     private var autocompleteController: AutocompleteController!
 
     private var needsScrollToBottom = false
+    private var lastTimelineElement: ListDiffable?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -318,13 +319,10 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     func scrollToLastContentElement() {
-        let adapter = feed.adapter
-        let objects = adapter.objects()
-        guard objects.count > 1 else { return }
+        guard let lastTimeline = lastTimelineElement else { return }
 
         // assuming the last element is the "actions" when collaborator
-        let lastContent = objects[objects.count - (viewerIsCollaborator ? 2 : 1)]
-        adapter.scroll(to: lastContent, padding: Styles.Sizes.rowSpacing)
+        feed.adapter.scroll(to: lastTimeline, padding: Styles.Sizes.rowSpacing)
     }
 
     func onPreview() {
@@ -389,6 +387,9 @@ IssueManagingNavSectionControllerDelegate {
         }
 
         objects += current.timelineViewModels
+
+        // side effect so to jump to the last element when auto scrolling
+        lastTimelineElement = objects.last
 
         if viewerIsCollaborator || current.viewerCanUpdate {
             objects.append(IssueManagingModel(
