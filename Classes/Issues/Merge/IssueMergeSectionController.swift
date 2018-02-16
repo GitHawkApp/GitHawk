@@ -14,9 +14,13 @@ ListBindingSectionControllerDataSource,
 MergeButtonDelegate {
 
     private let model: IssueDetailsModel
+    private let client: GithubClient
+    private let resultID: String?
 
-    init(model: IssueDetailsModel) {
+    init(model: IssueDetailsModel, client: GithubClient, resultID: String?) {
         self.model = model
+        self.client = client
+        self.resultID = resultID
         super.init()
         dataSource = self
     }
@@ -35,6 +39,19 @@ MergeButtonDelegate {
 
     func set(preferredMergeType: IssueMergeType) {
         UserDefaults.standard.set(preferredMergeType.rawValue, forKey: preferredMergeTypeKey)
+    }
+
+    func merge() {
+        guard let id = resultID,
+            let previous: IssueResult = client.cache.get(id: id)
+            else { return }
+        client.merge(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            type: preferredMergeType
+        )
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -115,13 +132,26 @@ MergeButtonDelegate {
     // MARK: MergeButtonDelegate
 
     func didSelect(button: MergeButton) {
-        print("select")
+        let alert = UIAlertController.configured(
+            title: NSLocalizedString("Confirm merge", comment: ""),
+            message: NSLocalizedString("Are you sure you want to merge this pull request?", comment: ""),
+            preferredStyle: .alert
+        )
+        alert.addActions([
+            AlertAction.cancel(),
+            AlertAction(AlertActionBuilder {
+                $0.title = NSLocalizedString("Merge", comment: "")
+                $0.style = .default
+            }).get { [weak self] _ in
+                self?.merge()
+            }
+            ])
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func didSelectOptions(button: MergeButton) {
-        print("select option")
-
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = button.optionIconView
 
         for type in [IssueMergeType.merge, IssueMergeType.rebase, IssueMergeType.squash] {
 

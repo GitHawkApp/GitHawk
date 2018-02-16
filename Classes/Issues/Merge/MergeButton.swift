@@ -18,8 +18,10 @@ final class MergeButton: UIView {
 
     weak var delegate: MergeButtonDelegate?
 
+    // public to use as source view for popover
+    let optionIconView = UIImageView()
+
     private let mergeLabel = UILabel()
-    private let optionIconView = UIImageView()
     private let optionBorder = UIView()
     private var enabled = true
 

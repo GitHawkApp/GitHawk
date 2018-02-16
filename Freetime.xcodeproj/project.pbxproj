@@ -147,6 +147,7 @@
 		294563F01EE5036A00DBCD35 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563EF1EE5036A00DBCD35 /* IssueType.swift */; };
 		29459A6F1FE61E0500034A04 /* MarkdownCheckboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29459A6E1FE61E0500034A04 /* MarkdownCheckboxModel.swift */; };
 		29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */; };
+		2946FA5120367FC100C37435 /* GithubClient+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2946FA5020367FC100C37435 /* GithubClient+Merge.swift */; };
 		2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674B1EF9716400B1CF1A /* IssueCommentHrModel.swift */; };
 		2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */; };
 		294967511EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */; };
@@ -581,6 +582,7 @@
 		294563EF1EE5036A00DBCD35 /* IssueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueType.swift; sourceTree = "<group>"; };
 		29459A6E1FE61E0500034A04 /* MarkdownCheckboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownCheckboxModel.swift; sourceTree = "<group>"; };
 		29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEnvironmentInformation.swift; sourceTree = "<group>"; };
+		2946FA5020367FC100C37435 /* GithubClient+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Merge.swift"; sourceTree = "<group>"; };
 		2949674B1EF9716400B1CF1A /* IssueCommentHrModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrModel.swift; sourceTree = "<group>"; };
 		2949674D1EF9719300B1CF1A /* IssueCommentHrCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHrCell.swift; sourceTree = "<group>"; };
 		294967501EFC1E9E00B1CF1A /* IssueCommentHtmlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentHtmlModel.swift; sourceTree = "<group>"; };
@@ -1606,6 +1608,7 @@
 		2999972420310E7400995FFD /* Merge */ = {
 			isa = PBXGroup;
 			children = (
+				2946FA5020367FC100C37435 /* GithubClient+Merge.swift */,
 				2999972D203120E300995FFD /* IssueMergeButtonCell.swift */,
 				2999972F2031227E00995FFD /* IssueMergeButtonModel.swift */,
 				29999733203135E100995FFD /* IssueMergeContextCell.swift */,
@@ -2447,6 +2450,7 @@
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
+				2946FA5120367FC100C37435 /* GithubClient+Merge.swift in Sources */,
 				2999972A20311B3800995FFD /* IssueMergeSectionController.swift in Sources */,
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
