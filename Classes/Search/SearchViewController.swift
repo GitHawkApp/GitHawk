@@ -130,7 +130,7 @@ SearchResultSectionControllerDelegate {
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
-            self?.handle(resultType: resultType, animated: true)
+            self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }
         state = .loading(request, query)
 
@@ -159,10 +159,10 @@ SearchResultSectionControllerDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
+            
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
-                topLayoutGuide: topLayoutGuide,
-                bottomLayoutGuide: bottomLayoutGuide
+                layoutInsets: view.safeAreaInsets
             )
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)
@@ -209,7 +209,7 @@ SearchResultSectionControllerDelegate {
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
+        searchBar.setShowsCancelButton(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -220,7 +220,7 @@ SearchResultSectionControllerDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.setShowsCancelButton(false, animated: trueUnlessReduceMotionEnabled)
         searchBar.text = ""
         searchBar.resignFirstResponder()
 
@@ -232,7 +232,7 @@ SearchResultSectionControllerDelegate {
 
     func didTap(emptyView: InitialEmptyView) {
         searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.setShowsCancelButton(false, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: SearchRecentSectionControllerDelegate
@@ -258,7 +258,7 @@ SearchResultSectionControllerDelegate {
 
         // always animate this transition b/c IGListKit disables global animations
         // otherwise pushing the next view controller wont be animated
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
 
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         let navigation = UINavigationController(rootViewController: repoViewController)
@@ -278,18 +278,18 @@ SearchResultSectionControllerDelegate {
             AlertAction.clearAll({ [weak self] _ in
                 guard let strongSelf = self else { return }
                 strongSelf.recentStore.clear()
-                strongSelf.adapter.performUpdates(animated: true)
+                strongSelf.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
             }),
             AlertAction.cancel()
         ])
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: TabNavRootViewControllerType
 
     func didSingleTapTab() {
-        collectionView.scrollToTop(animated: true)
+        collectionView.scrollToTop(animated: trueUnlessReduceMotionEnabled)
     }
 
     func didDoubleTapTab() {
@@ -300,13 +300,13 @@ SearchResultSectionControllerDelegate {
 
     func didSelect(sectionController: SearchResultSectionController, repo: RepositoryDetails) {
         recentStore.add(.recentlyViewed(repo))
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
         searchBar.resignFirstResponder()
     }
 
     func didDelete(recentSectionController: SearchRecentSectionController, viewModel: SearchRecentViewModel) {
         recentStore.remove(viewModel.query)
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: Private API

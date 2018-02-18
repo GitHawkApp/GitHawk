@@ -21,11 +21,11 @@ extension UIButton {
     func setupAsLabel(icon: Bool = true) {
         accessibilityTraits = UIAccessibilityTraitNone
         tintColor = .white
-        titleLabel?.font = Styles.Fonts.smallTitle
-        layer.cornerRadius = Styles.Sizes.avatarCornerRadius
+        titleLabel?.font = Styles.Text.smallTitle.preferredFont
+        layer.cornerRadius = Styles.Sizes.labelCornerRadius
         clipsToBounds = true
 
-        let magnitude: CGFloat = 2
+        let magnitude = Styles.Sizes.buttonTopPadding
         if icon {
             imageEdgeInsets = UIEdgeInsets(top: 0, left: -Styles.Sizes.columnSpacing, bottom: 0, right: 0)
             contentEdgeInsets = UIEdgeInsets(top: magnitude, left: Styles.Sizes.columnSpacing + magnitude, bottom: magnitude, right: magnitude * 2)

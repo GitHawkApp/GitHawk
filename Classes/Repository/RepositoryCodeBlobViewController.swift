@@ -12,7 +12,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     private let client: GithubClient
     private let branch: String
-    private let path: String
+    private let path: FilePath
     private let repo: RepositoryDetails
     private let codeView = CodeView()
     private let feedRefresh = FeedRefresh()
@@ -28,13 +28,17 @@ final class RepositoryCodeBlobViewController: UIViewController {
         return barButtonItem
     }()
 
-    init(client: GithubClient, repo: RepositoryDetails, branch: String, path: String) {
+    init(
+        client: GithubClient,
+        repo: RepositoryDetails,
+        branch: String,
+        path: FilePath
+        ) {
         self.client = client
         self.repo = repo
         self.branch = branch
         self.path = path
         super.init(nibName: nil, bundle: nil)
-        self.title = path
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,15 +48,17 @@ final class RepositoryCodeBlobViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        makeBackBarItemEmpty()
+        configureTitle(filePath: path, target: self, action: #selector(onFileNavigationTitle(sender:)))
+
         view.backgroundColor = .white
 
         emptyView.isHidden = true
         view.addSubview(emptyView)
-
         view.addSubview(codeView)
 
         codeView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(RepositoryCodeBlobViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         navigationItem.rightBarButtonItem = sharingButton
 
@@ -69,6 +75,10 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     // MARK: Private API
 
+    @objc func onFileNavigationTitle(sender: UIView) {
+        showAlert(filePath: path, sender: sender)
+    }
+
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
         sharingButton.isEnabled = true
@@ -83,11 +93,16 @@ final class RepositoryCodeBlobViewController: UIViewController {
         let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
         activityController.popoverPresentationController?.barButtonItem = sender
 
-        present(activityController, animated: true)
+        present(activityController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch() {
-        client.fetchFile(owner: repo.owner, repo: repo.name, branch: branch, path: path) { [weak self] (result) in
+        client.fetchFile(
+        owner: repo.owner,
+        repo: repo.name,
+        branch: branch,
+        path: path.path
+        ) { [weak self] (result) in
             self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let text):
@@ -111,7 +126,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text)
+        codeView.set(code: text, language: path.fileExtension)
     }
 
 }

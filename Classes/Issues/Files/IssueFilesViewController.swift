@@ -25,8 +25,8 @@ ListSingleSectionControllerDelegate {
             emptyErrorMessage: NSLocalizedString("Cannot load changes.", comment: ""),
             dataSource: self
         )
-        let titleFormat = NSLocalizedString("Files (%zi)", comment: "")
-        title = String.localizedStringWithFormat(titleFormat, fileCount)
+        let titleFormat = NSLocalizedString("Files (%d)", comment: "")
+        title = String(format: titleFormat, fileCount)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,9 +56,9 @@ ListSingleSectionControllerDelegate {
             } else {
                 self.files = files
             }
-            update(page: next as NSNumber?, animated: true)
+            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
         case .error:
-            error(animated: true)
+            error(animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -78,7 +78,7 @@ ListSingleSectionControllerDelegate {
             cell.configure(path: file.filename, additions: file.additions.intValue, deletions: file.deletions.intValue)
         }
         let size: (Any, ListCollectionContext?) -> CGSize = { (file, context) in
-            guard let width = context?.containerSize.width else { fatalError("Missing context") }
+            guard let width = context?.insetContainerSize.width else { fatalError("Missing context") }
             return CGSize(width: width, height: Styles.Sizes.tableCellHeightLarge)
         }
         let controller = ListSingleSectionController(
@@ -100,8 +100,8 @@ ListSingleSectionControllerDelegate {
                 let strongSelf = self
                 else { return .zero }
             return CGSize(
-                width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+                width: context.insetContainerSize.width,
+                height: context.insetContainerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
             )
         }
         let controller = ListSingleSectionController(

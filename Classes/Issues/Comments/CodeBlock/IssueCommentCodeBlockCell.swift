@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, CollapsibleCell {
+final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
 
     static let scrollViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
@@ -19,20 +19,16 @@ final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, Collaps
     )
     static let textViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.gutter,
+        left: Styles.Sizes.commentGutter,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter
+        right: Styles.Sizes.commentGutter
     )
 
     let textView = AttributedStringView()
     let scrollView = UIScrollView()
-    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
-        contentView.clipsToBounds = true
 
         // make didSelectItem work for the cell
         // https://stackoverflow.com/a/24853578/940936
@@ -51,7 +47,6 @@ final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, Collaps
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
 
         // size the scrollview to the width of the cell but match its height to its content size
         // that way when the cell is collapsed, the scroll view isn't vertically scrollable
@@ -62,7 +57,6 @@ final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, Collaps
             width: contentView.bounds.width - inset.left - inset.right,
             height: scrollView.contentSize.height
         )
-        LayoutCollapsible(layer: overlay, view: contentView)
     }
 
     // MARK: ListBindable
@@ -74,12 +68,6 @@ final class IssueCommentCodeBlockCell: DoubleTappableCell, ListBindable, Collaps
         scrollView.contentSize = contentSize
 
         textView.configureAndSizeToFit(text: viewModel.code, width: 0)
-    }
-
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
     }
 
 }

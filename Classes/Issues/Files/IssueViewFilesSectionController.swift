@@ -18,25 +18,32 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
         self.issueModel = issueModel
         self.client = client
         super.init()
+        let spacing = Styles.Sizes.rowSpacing / 2
+        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
+        return CGSize(
+            width: width,
+            height: Styles.Text.secondary.preferredFont.lineHeight
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: IssueViewFilesCell.self, for: self, at: index)
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueViewFilesCell.self, for: self, at: index) as? IssueViewFilesCell,
+            let object = self.object
             else { fatalError("Missing collection context") }
+        cell.configure(changes: object.changes)
         return cell
     }
 
     override func didSelectItem(at index: Int) {
         guard let object = self.object else { return }
 
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
+        collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
 
-        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes)
+        let controller = IssueFilesViewController(model: issueModel, client: client, fileCount: object.changes.changedFiles)
         viewController?.show(controller, sender: nil)
     }
 

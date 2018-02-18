@@ -10,20 +10,12 @@ import UIKit
 
 final class IssueTextActionsCell: SelectableCell {
 
-    let label = UILabel()
     let imageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let color = Styles.Colors.Gray.dark.color
-
-        label.textAlignment = .center
-        label.textColor = color
-        label.backgroundColor = .clear
-        contentView.addSubview(label)
-
-        imageView.tintColor = color
+        imageView.tintColor = Styles.Colors.Gray.dark.color
         imageView.contentMode = .center
         contentView.addSubview(imageView)
     }
@@ -34,13 +26,11 @@ final class IssueTextActionsCell: SelectableCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        label.text = ""
         imageView.image = nil
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = contentView.bounds
         imageView.frame = contentView.bounds
     }
 
@@ -68,6 +58,7 @@ struct IssueTextActionOperation {
         case line(String)
         case wrap(String, String)
         case execute(() -> Void)
+        case multi([Operation])
         case uploadImage
     }
 
@@ -86,6 +77,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = Styles.Sizes.rowSpacing
         let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
         c.backgroundColor = .clear
         c.alwaysBounceVertical = false
@@ -133,14 +125,14 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         delegate?.didSelect(actionsView: self, operation: operations[indexPath.item])
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
         return CGSize(
-            width: (operations[indexPath.item].icon?.size.width ?? 0) + Styles.Sizes.eventGutter*2,
+            width: (operations[indexPath.item].icon?.size.width ?? 0) + Styles.Sizes.rowSpacing*2,
             height: height
         )
     }

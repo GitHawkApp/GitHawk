@@ -14,15 +14,10 @@ func PushAttributes(
     current: [NSAttributedStringKey: Any],
     listLevel: Int
     ) -> [NSAttributedStringKey: Any] {
-    let currentFont: UIFont = current[.font] as? UIFont ?? Styles.Fonts.body
+    let currentFont: UIFont = current[.font] as? UIFont ?? Styles.Text.body.preferredFont
 
     // TODO: cleanup
-    let paragraphStyleCopy: NSMutableParagraphStyle
-    if let para = (current[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle {
-        paragraphStyleCopy = para
-    } else {
-        paragraphStyleCopy = NSMutableParagraphStyle()
-    }
+    let paragraphStyleCopy: NSMutableParagraphStyle = paragraphStyle(for: current)
 
     var newAttributes: [NSAttributedStringKey: Any]
     switch element.type {
@@ -38,36 +33,40 @@ func PushAttributes(
         .font: currentFont.addingTraits(traits: .traitItalic)
         ]
     case .codeSpan: newAttributes = [
-        .font: Styles.Fonts.code,
-        NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
-        .foregroundColor: Styles.Colors.Gray.dark.color,
-        MarkdownAttribute.usernameDisabled: true,
-        MarkdownAttribute.linkShorteningDisabled: true
+            .font: Styles.Text.code.preferredFont,
+            NSAttributedStringKey.backgroundColor: Styles.Colors.Gray.lighter.color,
+            MarkdownAttribute.usernameDisabled: true,
+            MarkdownAttribute.linkShorteningDisabled: true
         ]
-    case .link: newAttributes = [
+        // Apply color Grey only if the link style was not applied on this element.
+        if current[MarkdownAttribute.url] == nil {
+            newAttributes[.foregroundColor] = Styles.Colors.Gray.dark.color
+        }
+    case .link:
+        newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,
         MarkdownAttribute.url: element.href ?? ""
         ]
     case .header:
         switch element.level {
         case 1: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h1)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h1.size)
             ]
         case 2: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h2)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h2.size)
             ]
         case 3: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h3)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h3.size)
             ]
         case 4: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h4)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h4.size)
             ]
         case 5: newAttributes = [
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h5)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h5.size)
             ]
         default: newAttributes = [
             .foregroundColor: Styles.Colors.Gray.medium.color,
-            .font: UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.h6)
+            .font: UIFont.boldSystemFont(ofSize: Styles.Text.h6.size)
             ]
         }
     case .bulletedList, .numberedList:
@@ -88,6 +87,28 @@ func PushAttributes(
         .foregroundColor: Styles.Colors.Blue.medium.color,
         MarkdownAttribute.email: element.href ?? ""
         ]
+    case .username:
+        if let username = element.username {
+            newAttributes = [
+                .font: currentFont.addingTraits(traits: .traitBold),
+                MarkdownAttribute.username: username
+            ]
+        } else {
+            newAttributes = [:]
+        }
+    case .shorthandIssues:
+        if let repo = element.repository, let owner = element.owner {
+            newAttributes = [
+                .foregroundColor: Styles.Colors.Blue.medium.color,
+                MarkdownAttribute.issue: IssueDetailsModel(
+                    owner: owner,
+                    repo: repo,
+                    number: element.number
+                )
+            ]
+        } else {
+            newAttributes = [:]
+        }
     default: newAttributes = [:]
     }
     var attributes = current
@@ -95,4 +116,11 @@ func PushAttributes(
         attributes[k] = v
     }
     return attributes
+}
+
+fileprivate func paragraphStyle(for current:  [NSAttributedStringKey: Any]) -> NSMutableParagraphStyle {
+    guard let para = (current[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle  else {
+        return NSMutableParagraphStyle()
+    }
+    return para
 }

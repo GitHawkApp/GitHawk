@@ -29,7 +29,7 @@ IssueCommentHtmlCellImageDelegate {
         let photo = IssueCommentPhoto(image: image, data: animatedImageData)
         let photosViewController = NYTPhotosViewController(photos: [photo])
         photosViewController.delegate = self
-        viewController?.present(photosViewController, animated: true)
+        viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: NYTPhotosViewControllerDelegate
@@ -41,6 +41,9 @@ IssueCommentHtmlCellImageDelegate {
     // MARK: IssueCommentHtmlCellImageDelegate
 
     func webViewDidTapImage(cell: IssueCommentHtmlCell, url: URL) {
+        // cannot download svgs yet
+        guard url.pathExtension != "svg" else { return }
+
         SDWebImageDownloader.shared().downloadImage(
             with: url,
             options: [.highPriority],
@@ -49,7 +52,7 @@ IssueCommentHtmlCellImageDelegate {
             if let image = image {
                 let photo = IssueCommentPhoto(image: image, data: nil)
                 let photosViewController = NYTPhotosViewController(photos: [photo])
-                self?.viewController?.present(photosViewController, animated: true)
+                self?.viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
             } else {
                 ToastManager.showGenericError()
             }

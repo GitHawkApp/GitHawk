@@ -28,9 +28,9 @@ struct GitHubMarkdownOptions {
     let flavors: [GitHubFlavors]
 }
 
-func createCommentAST(markdown: String) -> MMDocument? {
+func createCommentAST(markdown: String, owner: String, repository: String) -> MMDocument? {
     guard !markdown.isEmpty else { return nil }
-    let parser = MMParser(extensions: .gitHubFlavored)
+    let parser = MMParser(extensions: .gitHubFlavored, owner: owner, repository: repository)
     var error: NSError? = nil
     let document = parser.parseMarkdown(markdown, error: &error)
     if let error = error {
@@ -41,7 +41,7 @@ func createCommentAST(markdown: String) -> MMDocument? {
 
 func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
     let attributes = [
-        .font: Styles.Fonts.body.addingTraits(traits: .traitItalic),
+        .font: Styles.Text.body.preferredFont.addingTraits(traits: .traitItalic),
         .foregroundColor: Styles.Colors.Gray.medium.color,
         NSAttributedStringKey.backgroundColor: UIColor.white
     ]
@@ -65,15 +65,17 @@ func CreateCommentModels(
 
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
-    let replaceCheckmarks = annotateCheckmarks(markdown: replaceHTMLentities)
 
-    guard let document = createCommentAST(markdown: replaceCheckmarks)
-        else { return [emptyDescriptionModel(width: width)] }
+    guard let document = createCommentAST(
+        markdown: replaceHTMLentities,
+        owner: options.owner,
+        repository: options.repo
+        ) else { return [emptyDescriptionModel(width: width)] }
 
     var results = [ListDiffable]()
 
     let baseAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Fonts.body,
+        .font: Styles.Text.body.preferredFont,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         .paragraphStyle: {
             let para = NSMutableParagraphStyle()
@@ -84,7 +86,7 @@ func CreateCommentModels(
     ]
 
     let seedString = NSMutableAttributedString()
-
+    
     for element in document.elements {
         travelAST(
             markdown: document.markdown,
@@ -258,12 +260,34 @@ func travelAST(
         attributedString.removeAll()
     }
 
-    if element.type == .none || element.type == .entity || element.type == .mailTo {
+    if element.type == .none
+        || element.type == .entity
+        || element.type == .mailTo
+        || element.type == .username
+        || element.type == .shorthandIssues {
         let substring = substringOrNewline(text: markdown, range: element.range)
 
         // hack: dont allow newlines within lists
         if substring != newlineString || listLevel == 0 {
             attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
+        }
+    } else if element.type == .checkbox {
+        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
+        if let image = UIImage(named: (element.checked ? "checked" : "unchecked") + appendDisabled) {
+            let attachment = NSTextAttachment()
+            attachment.image = image
+            // nudge bounds to align better with baseline text
+            attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
+
+            if let attachmentString = NSAttributedString(attachment: attachment).mutableCopy() as? NSMutableAttributedString {
+                attachmentString.addAttribute(
+                    MarkdownAttribute.checkbox,
+                    value: MarkdownCheckboxModel(checked: element.checked, originalMarkdownRange: element.range),
+                    range: attachmentString.string.nsrange
+                )
+                attributedString.append(attachmentString)
+                attributedString.append(NSAttributedString(string: " ", attributes: pushedAttributes))
+            }
         }
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
@@ -324,67 +348,6 @@ func travelAST(
     }
 }
 
-private let usernameRegex = try! NSRegularExpression(pattern: "\\B@([a-zA-Z0-9_-]+)", options: [])
-func updateUsernames(
-    attributedString: NSAttributedString,
-    options: GitHubMarkdownOptions
-    ) -> NSAttributedString {
-    guard options.flavors.contains(.usernames) else { return attributedString }
-
-    let string = attributedString.string
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = usernameRegex.matches(in: string, options: [], range: string.nsrange)
-
-    for match in matches {
-        let range = match.range(at: 0)
-        guard let substring = string.substring(with: range) else { continue }
-
-        var attributes = attributedString.attributes(at: range.location, effectiveRange: nil)
-
-        // manually disable username highlighting for some text (namely code)
-        guard attributes[MarkdownAttribute.usernameDisabled] == nil else { continue }
-
-        let font = attributes[.font] as? UIFont ?? Styles.Fonts.body
-        attributes[.font] = font.addingTraits(traits: .traitBold)
-        attributes[MarkdownAttribute.username] = substring.replacingOccurrences(of: "@", with: "")
-
-        let usernameAttributedString = NSAttributedString(string: substring, attributes: attributes)
-        mutableAttributedString.replaceCharacters(in: range, with: usernameAttributedString)
-    }
-    return mutableAttributedString
-}
-
-private let issueShorthandRegex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
-func updateIssueShorthand(
-    attributedString: NSAttributedString,
-    options: GitHubMarkdownOptions
-    ) -> NSAttributedString {
-    guard options.flavors.contains(.issueShorthand) else { return attributedString }
-
-    let string = attributedString.string
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = issueShorthandRegex.matches(in: string, options: [], range: string.nsrange)
-
-    for match in matches {
-        let ownerRange = match.range(at: 3)
-        let repoRange = match.range(at: 4)
-        let numberRange = match.range(at: 5)
-        guard let numberSubstring = string.substring(with: numberRange) else { continue }
-
-        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
-        attributes[.foregroundColor] = Styles.Colors.Blue.medium.color
-
-        attributes[MarkdownAttribute.issue] = IssueDetailsModel(
-            owner: string.substring(with: ownerRange) ?? options.owner,
-            repo: string.substring(with: repoRange) ?? options.repo,
-            number: (numberSubstring as NSString).integerValue
-        )
-
-        mutableAttributedString.setAttributes(attributes, range: match.range)
-    }
-    return mutableAttributedString
-}
-
 // TODO: REVISE
 private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 func shortenGitHubLinks(attributedString: NSAttributedString,
@@ -433,40 +396,6 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
     return mutableAttributedString
 }
 
-private let checkedIdentifier = ">/CHECKED>/"
-private let uncheckedIdentifier = ">/UNCHECKED>/"
-private let checkmarkRegex = try! NSRegularExpression(pattern: "^- (\\[([ |x])\\])", options: [.anchorsMatchLines])
-private func annotateCheckmarks(markdown: String) -> String {
-    let matches = checkmarkRegex.matches(in: markdown, options: [], range: markdown.nsrange)
-    let result = NSMutableString(string: markdown)
-    for match in matches.reversed() {
-        let checked = markdown.substring(with: match.range(at: 2)) == "x"
-        result.replaceCharacters(in: match.range(at: 1), with: checked ? checkedIdentifier : uncheckedIdentifier)
-    }
-    return result as String
-}
-
-private let checkmarkIdentifierRegex = try! NSRegularExpression(pattern: "(\(checkedIdentifier)|\(uncheckedIdentifier))", options: [])
-func addCheckmarkAttachments(
-    attributedString: NSAttributedString,
-    viewerCanUpdate: Bool
-    ) -> NSAttributedString {
-    let string = attributedString.string
-    let matches = checkmarkIdentifierRegex.matches(in: string, options: [], range: string.nsrange)
-    let result = NSMutableAttributedString(attributedString: attributedString)
-    for match in matches.reversed() {
-        let checked = string.substring(with: match.range) == checkedIdentifier
-        let attachment = NSTextAttachment()
-        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
-        guard let image = UIImage(named: (checked ? "checked" : "unchecked") + appendDisabled) else { continue }
-        attachment.image = image
-        // nudge bounds to align better with baseline text
-        attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
-        result.replaceCharacters(in: match.range, with: NSAttributedString(attachment: attachment))
-    }
-    return result
-}
-
 func createTextModelUpdatingGitHubFeatures(
     attributedString: NSAttributedString,
     width: CGFloat,
@@ -475,14 +404,11 @@ func createTextModelUpdatingGitHubFeatures(
     viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing {
 
-    let usernames = updateUsernames(attributedString: attributedString, options: options)
-    let issues = updateIssueShorthand(attributedString: usernames, options: options)
-    let shorten = shortenGitHubLinks(attributedString: issues, options: options)
-    let checkmarked = addCheckmarkAttachments(attributedString: shorten, viewerCanUpdate: viewerCanUpdate)
+    let shorten = shortenGitHubLinks(attributedString: attributedString, options: options)
 
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: checkmarked,
+        attributedText: shorten,
         inset: inset
     )
 }

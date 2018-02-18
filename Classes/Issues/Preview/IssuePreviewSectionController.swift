@@ -38,7 +38,7 @@ ListBindingSectionControllerDataSource {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
+        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Missing context") }
         let height = BodyHeightForComment(
             viewModel: viewModel,
             width: width,
@@ -66,7 +66,7 @@ ListBindingSectionControllerDataSource {
             htmlNavigationDelegate: nil,
             htmlImageDelegate: nil,
             attributedDelegate: nil,
-            issueAttributedDelegate: nil,
+            extrasAttributedDelegate: nil,
             imageHeightDelegate: imageCache
         )
 

@@ -10,15 +10,27 @@ import UIKit
 import IGListKit
 import SnapKit
 
+final class IssueManagingRoundedBackgroundView: UIView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
+    }
+}
+
 final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
 
     private let label = UILabel()
     private let chevron = UIImageView(image: UIImage(named: "chevron-down-small")?.withRenderingMode(.alwaysTemplate))
+    private let backgroundHighlightView = IssueManagingRoundedBackgroundView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
+
+        backgroundHighlightView.backgroundColor = UIColor(white: 0, alpha: 0.07)
+        backgroundHighlightView.alpha = 0
+        contentView.addSubview(backgroundHighlightView)
         
         let tint = Styles.Colors.Blue.medium.color
 
@@ -26,21 +38,33 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(chevron)
         chevron.snp.makeConstraints { make in
             make.centerY.equalTo(contentView).offset(1)
-            make.right.equalTo(contentView).offset(-Styles.Sizes.gutter)
+            make.right.equalTo(contentView)
         }
 
         label.text = NSLocalizedString("Manage", comment: "")
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         label.textColor = tint
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.right.equalTo(chevron.snp.left).offset(-Styles.Sizes.rowSpacing+3)
         }
+
+        backgroundHighlightView.snp.makeConstraints { make in
+            make.left.equalTo(label).offset(-Styles.Sizes.rowSpacing)
+            make.right.equalTo(chevron).offset(Styles.Sizes.rowSpacing)
+            make.height.equalTo(label).offset(4)
+            make.centerY.equalTo(contentView)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     override var isSelected: Bool {
@@ -73,13 +97,14 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
             initialSpringVelocity: 0,
             options: [],
             animations: {
-                self.rotateChevron(expanded: expanded)
+                self.expand(expanded: expanded)
         })
     }
 
     // MARK: Private API
 
-    private func rotateChevron(expanded: Bool) {
+    private func expand(expanded: Bool) {
+        backgroundHighlightView.alpha = expanded ? 1 : 0
         // nudging the angles let's us control the animation direction
         chevron.transform = expanded
             ? CGAffineTransform(rotationAngle: CGFloat.pi + 0.00001)
@@ -89,8 +114,8 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueManagingModel else { return }
-        rotateChevron(expanded: viewModel.expanded)
+        guard let viewModel = viewModel as? IssueManagingExpansionModel else { return }
+        expand(expanded: viewModel.expanded)
     }
 
     // MARK: Accessibility

@@ -25,6 +25,11 @@ final class LabelsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let emptyView = EmptyView()
+        emptyView.label.text = NSLocalizedString("No labels found", comment: "")
+        emptyView.isHidden = true
+        tableView.backgroundView = emptyView
+
         tableView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
 
@@ -62,6 +67,8 @@ final class LabelsViewController: UITableViewController {
         var contentSize = tableView.contentSize
         contentSize.height = max(minContentHeight, contentSize.height)
         navigationController?.preferredContentSize = contentSize
+
+        tableView.backgroundView?.isHidden = labels.count > 0
     }
 
     @IBAction func onDone() {
@@ -72,7 +79,7 @@ final class LabelsViewController: UITableViewController {
             }
         }
         delegate?.didDismiss(controller: self, selectedLabels: selected)
-        dismiss(animated: true)
+        dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: UITableViewDataSource
@@ -92,7 +99,7 @@ final class LabelsViewController: UITableViewController {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         let name = labels[indexPath.row].name
         if selectedLabels.contains(name) {
             selectedLabels.remove(name)

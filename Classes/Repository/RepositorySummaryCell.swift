@@ -11,7 +11,6 @@ import SnapKit
 
 final class RepositorySummaryCell: SelectableCell {
 
-    static let labelDotSize = CGSize(width: 10, height: 10)
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
@@ -23,7 +22,7 @@ final class RepositorySummaryCell: SelectableCell {
     private let titleView = AttributedStringView()
     private let detailsStackView = UIStackView()
     private let secondaryLabel = UILabel()
-    private let labelDotView = DotListView(dotSize: RepositorySummaryCell.labelDotSize)
+    private let labelListView = LabelListView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +49,7 @@ final class RepositorySummaryCell: SelectableCell {
         detailsStackView.distribution = .fill
         detailsStackView.spacing = Styles.Sizes.rowSpacing
         detailsStackView.addArrangedSubview(secondaryLabel)
-        detailsStackView.addArrangedSubview(labelDotView)
+        detailsStackView.addArrangedSubview(labelListView)
         detailsStackView.snp.makeConstraints { (make) in
             make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
             make.left.equalTo(reasonImageView.snp.right).offset(Styles.Sizes.columnSpacing)
@@ -58,11 +57,11 @@ final class RepositorySummaryCell: SelectableCell {
         }
 
         secondaryLabel.numberOfLines = 1
-        secondaryLabel.font = Styles.Fonts.secondary
+        secondaryLabel.font = Styles.Text.secondary.preferredFont
         secondaryLabel.textColor = Styles.Colors.Gray.light.color
 
-        labelDotView.snp.makeConstraints { make in
-            make.height.equalTo(RepositorySummaryCell.labelDotSize.height)
+        labelListView.snp.makeConstraints { make in
+            make.height.equalTo(0)
             make.left.right.equalTo(detailsStackView)
         }
 
@@ -76,6 +75,18 @@ final class RepositorySummaryCell: SelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         titleView.reposition(width: contentView.bounds.width)
+        resizeLabelListView(labels: labelListView.labels, cacheKey: labelListView.labels.reduce("", {$0 + $1.name}))
+    }
+    
+    private func resizeLabelListView(labels: [RepositoryLabel], cacheKey: String) {
+        let width = contentView.frame.width - (Styles.Sizes.columnSpacing * 2)
+        let height = LabelListView.height(width: width, labels: labels, cacheKey: cacheKey)
+        //check if height has changed before updating
+        if height != labelListView.frame.height {
+            labelListView.snp.updateConstraints { make in
+                make.height.equalTo(height)
+            }
+        }
     }
 
     // MARK: Public API
@@ -84,7 +95,7 @@ final class RepositorySummaryCell: SelectableCell {
         titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
-        secondaryLabel.text = String.localizedStringWithFormat(format, model.number, model.created.agoString, model.author)
+        secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString, model.author])
 
         let imageName: String
         let tint: UIColor
@@ -104,11 +115,11 @@ final class RepositorySummaryCell: SelectableCell {
         reasonImageView.tintColor = tint
 
         if model.labels.count > 0 {
-            labelDotView.isHidden = false
-            let colors = model.labels.map { UIColor.fromHex($0.color) }
-            labelDotView.configure(colors: colors)
+            labelListView.isHidden = false
+            labelListView.configure(labels: model.labels)
+            resizeLabelListView(labels: model.labels, cacheKey: model.labelSummary)
         } else {
-            labelDotView.isHidden = true
+            labelListView.isHidden = true
         }
     }
 

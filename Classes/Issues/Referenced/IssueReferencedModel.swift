@@ -25,6 +25,8 @@ final class IssueReferencedModel: ListDiffable {
     let state: State
     let date: Date
     let title: String
+    let actor: String
+    let attributedText: NSAttributedStringSizing
 
     init(
         id: String,
@@ -34,7 +36,9 @@ final class IssueReferencedModel: ListDiffable {
         pullRequest: Bool,
         state: State,
         date: Date,
-        title: String
+        title: String,
+        actor: String,
+        width: CGFloat
         ) {
         self.id = id
         self.owner = owner
@@ -44,6 +48,53 @@ final class IssueReferencedModel: ListDiffable {
         self.state = state
         self.date = date
         self.title = title
+        self.actor = actor
+
+        let attributedText = NSMutableAttributedString()
+        attributedText.append(NSAttributedString(
+            string: actor,
+            attributes: [
+                .font: Styles.Text.secondaryBold.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                MarkdownAttribute.username: actor
+            ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: NSLocalizedString(" referenced ", comment: ""),
+            attributes: [
+                .font: Styles.Text.secondary.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: date.agoString,
+            attributes: [
+                .font: Styles.Text.secondary.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
+            ]
+        ))
+        attributedText.append(NSAttributedString(string: "\n"))
+        attributedText.append(NSAttributedString(
+            string: title,
+            attributes: [
+                .font: Styles.Text.secondaryBold.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.dark.color,
+            ]
+        ))
+        attributedText.append(NSAttributedString(
+            string: " #\(number)",
+            attributes: [
+                .font: Styles.Text.secondary.preferredFont,
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+            ]
+        ))
+        self.attributedText = NSAttributedStringSizing(
+            containerWidth: width,
+            attributedText: attributedText,
+            inset: IssueReferencedCell.inset,
+            backgroundColor: Styles.Colors.background
+        )
     }
 
     // MARK: ListDiffable

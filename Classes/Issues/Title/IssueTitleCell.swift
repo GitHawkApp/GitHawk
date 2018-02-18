@@ -9,29 +9,8 @@
 import UIKit
 import SnapKit
 
-final class IssueTitleCell: UICollectionViewCell {
+final class IssueTitleCell: AttributedStringCell {
 
-    static let inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
-
-    let label = UILabel()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        label.numberOfLines = 0
-        contentView.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(IssueTitleCell.inset)
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-    }
+    static let inset = UIEdgeInsets.zero
 
 }

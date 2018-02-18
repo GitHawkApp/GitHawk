@@ -18,11 +18,11 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_fileExists() {
-        XCTAssertTrue(testMarkdown.characters.count > 0)
+        XCTAssertTrue(testMarkdown.count > 0)
     }
 
     func test_createASTWorks() {
-        let document = createCommentAST(markdown: testMarkdown)
+        let document = createCommentAST(markdown: testMarkdown, owner: "testowner", repository: "testrepo")
         XCTAssertNotNil(document)
         XCTAssertTrue(document!.elements.count > 0)
     }

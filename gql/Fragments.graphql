@@ -81,11 +81,30 @@ fragment milestoneFields on Milestone {
   title
   url
   dueOn
+  openCount: issues(states:[OPEN]) {totalCount}
+  totalCount: issues {totalCount}
 }
 
 fragment repoEventFields on Comment {
   createdAt
   author {
     login
+  }
+}
+
+fragment commitContext on Commit {
+  id
+  status {
+    contexts {
+      id
+      context
+      state
+      creator {
+        login
+        avatarUrl
+      }
+      description
+    }
+    state
   }
 }

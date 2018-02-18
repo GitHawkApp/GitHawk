@@ -36,6 +36,7 @@
 #import "IGListBindingSectionControllerDataSource.h"
 #import "IGListBindingSectionControllerSelectionDelegate.h"
 #import "IGListCollectionContext.h"
+#import "IGListCollectionView.h"
 #import "IGListCollectionViewLayout.h"
 #import "IGListDisplayDelegate.h"
 #import "IGListGenericSectionController.h"

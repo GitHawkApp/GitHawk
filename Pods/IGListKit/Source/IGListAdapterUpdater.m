@@ -13,10 +13,10 @@
 #import <IGListKit/IGListAssert.h>
 #import <IGListKit/IGListBatchUpdateData.h>
 #import <IGListKit/IGListDiff.h>
+#import <IGListKit/IGListIndexSetResultInternal.h>
+#import <IGListKit/IGListMoveIndexPathInternal.h>
 
 #import "UICollectionView+IGListBatchUpdateData.h"
-#import "IGListIndexSetResultInternal.h"
-#import "IGListMoveIndexPathInternal.h"
 #import "IGListReloadIndexPath.h"
 #import "IGListArrayUtilsInternal.h"
 
@@ -190,9 +190,10 @@
 
     // block used as the second param of -[UICollectionView performBatchUpdates:completion:]
     void (^batchUpdatesCompletionBlock)(BOOL) = ^(BOOL finished) {
+        IGListBatchUpdateData *oldApplyingUpdateData = self.applyingUpdateData;
         executeCompletionBlocks(finished);
 
-        [delegate listAdapterUpdater:self didPerformBatchUpdates:(id)self.applyingUpdateData collectionView:collectionView];
+        [delegate listAdapterUpdater:self didPerformBatchUpdates:oldApplyingUpdateData collectionView:collectionView];
 
         // queue another update in case something changed during batch updates. this method will bail next runloop if
         // there are no changes
@@ -263,8 +264,8 @@ void convertReloadToDeleteInsert(NSMutableIndexSet *reloads,
             [inserts addIndex:to];
         } else {
             IGAssert([result.deletes containsIndex:idx],
-                     @"Reloaded section %zi was not found in deletes with from: %zi, to: %zi, deletes: %@",
-                     idx, from, to, deletes);
+                     @"Reloaded section %zi was not found in deletes with from: %zi, to: %zi, deletes: %@, fromClass: %@",
+                     idx, from, to, deletes, [(id)fromObjects[idx] class]);
         }
     }];
 }
@@ -308,6 +309,11 @@ void convertReloadToDeleteInsert(NSMutableIndexSet *reloads,
     }
     [itemDeletes addObjectsFromArray:[reloadDeletePaths allObjects]];
     [itemInserts addObjectsFromArray:[reloadInsertPaths allObjects]];
+
+    if (IGListExperimentEnabled(self.experiments, IGListExperimentDedupeItemUpdates)) {
+        itemDeletes = [[[NSSet setWithArray:itemDeletes] allObjects] mutableCopy];
+        itemInserts = [[[NSSet setWithArray:itemInserts] allObjects] mutableCopy];
+    }
 
     IGListBatchUpdateData *updateData = [[IGListBatchUpdateData alloc] initWithInsertSections:inserts
                                                                                deleteSections:deletes
@@ -384,9 +390,10 @@ void convertReloadToDeleteInsert(NSMutableIndexSet *reloads,
 #pragma mark - IGListUpdatingDelegate
 
 static BOOL IGListIsEqual(const void *a, const void *b, NSUInteger (*size)(const void *item)) {
-    const id<IGListDiffable> left = (__bridge id<IGListDiffable>)a;
-    const id<IGListDiffable> right = (__bridge id<IGListDiffable>)b;
-    return [[left diffIdentifier] isEqual:[right diffIdentifier]];
+    const id<IGListDiffable, NSObject> left = (__bridge id<IGListDiffable, NSObject>)a;
+    const id<IGListDiffable, NSObject> right = (__bridge id<IGListDiffable, NSObject>)b;
+    return [left class] == [right class]
+    && [[left diffIdentifier] isEqual:[right diffIdentifier]];
 }
 
 // since the diffing algo used in this updater keys items based on their -diffIdentifier, we must use a map table that

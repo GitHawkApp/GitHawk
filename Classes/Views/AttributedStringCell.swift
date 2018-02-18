@@ -16,6 +16,7 @@ class AttributedStringCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(textView)
+        isAccessibilityElement = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -26,6 +27,13 @@ class AttributedStringCell: UICollectionViewCell {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
         textView.reposition(width: contentView.bounds.width)
+    }
+    
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
     }
 
     // MARK: Public API

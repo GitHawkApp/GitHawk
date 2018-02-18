@@ -14,7 +14,7 @@ final class BookmarkCell: SwipeSelectableCell {
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Fonts.secondary.lineHeight + 2*Styles.Sizes.rowSpacing,
+        bottom: Styles.Text.secondary.preferredFont.lineHeight + 2*Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
 
@@ -82,14 +82,14 @@ final class BookmarkCell: SwipeSelectableCell {
             let detailString = NSMutableAttributedString(
                 string: "\(viewModel.bookmark.owner)/\(viewModel.bookmark.name)",
                 attributes: [
-                    .font: Styles.Fonts.secondaryBold,
+                    .font: Styles.Text.secondaryBold.preferredFont,
                     .foregroundColor: Styles.Colors.Gray.light.color,
                     ]
             )
             detailString.append(NSAttributedString(
                 string: " #\(viewModel.bookmark.number)",
                 attributes: [
-                    .font: Styles.Fonts.secondary,
+                    .font: Styles.Text.secondary.preferredFont,
                     .foregroundColor: Styles.Colors.Gray.light.color,
                 ]
             ))
@@ -98,5 +98,7 @@ final class BookmarkCell: SwipeSelectableCell {
             detailLabel.text = ""
         }
         detailLabel.sizeToFit()
+
+        setNeedsLayout()
     }
 }

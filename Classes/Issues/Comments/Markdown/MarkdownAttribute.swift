@@ -18,4 +18,18 @@ enum MarkdownAttribute {
     static let details = NSAttributedStringKey(rawValue: "com.freetime.Markdown.details")
     static let label = NSAttributedStringKey(rawValue: "com.freetime.Markdown.label")
     static let commit = NSAttributedStringKey(rawValue: "com.freetime.Markdown.commit")
+    static let checkbox = NSAttributedStringKey(rawValue: "com.freetime.Markdown.checkbox")
+
+    static let all = Set<NSAttributedStringKey>([
+        url,
+        email,
+        username,
+        usernameDisabled,
+        linkShorteningDisabled,
+        issue,
+        details,
+        label,
+        commit,
+        checkbox,
+        ])
 }

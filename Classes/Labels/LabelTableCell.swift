@@ -14,6 +14,9 @@ final class LabelTableCell: StyledTableCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
+
         button.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
         button.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
         button.layer.borderWidth = 1 / UIScreen.main.scale
@@ -25,6 +28,15 @@ final class LabelTableCell: StyledTableCell {
             bottom: Styles.Sizes.inlineSpacing,
             right: Styles.Sizes.columnSpacing
         )
+    }
+
+    // MARK: Accessibility
+
+    override var accessibilityLabel: String? {
+        get {
+            return AccessibilityHelper.generatedLabel(forCell: self)
+        }
+        set { }
     }
 
     // MARK: Public API

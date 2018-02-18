@@ -24,10 +24,20 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
             let object = object else {
                 fatalError("Missing context or object")
         }
+        
+        let labelListViewHeightAndSpacing: CGFloat = {
+            guard object.labels.count > 0 else { return 0 }
+            let labelListViewWidth = width - (Styles.Sizes.columnSpacing * 2)
+            let labelListViewHeight = LabelListView.height(width: labelListViewWidth,
+                                                           labels: object.labels,
+                                                           cacheKey: object.labelSummary)
+            return labelListViewHeight + Styles.Sizes.rowSpacing
+        }()
+        
         let height = object.title.textViewSize(width).height
-            + Styles.Fonts.secondary.lineHeight
+            + Styles.Text.secondary.preferredFont.lineHeight
             + Styles.Sizes.rowSpacing
-            + (object.labels.count > 0 ? RepositorySummaryCell.labelDotSize.height + Styles.Sizes.rowSpacing : 0)
+            + labelListViewHeightAndSpacing
         return CGSize(width: width, height: ceil(height))
     }
 
@@ -45,7 +55,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
         guard let number = self.object?.number else { return }
         let issueModel = IssueDetailsModel(owner: repo.owner, repo: repo.name, number: number)
         let controller = IssuesViewController(client: client, model: issueModel)
-        viewController?.navigationController?.pushViewController(controller, animated: true)
+        viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

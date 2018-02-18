@@ -13,13 +13,14 @@ func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizin
     let attributedString = NSAttributedString(
         string: title,
         attributes: [
-            NSAttributedStringKey.font: Styles.Fonts.headline,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
+            .font: Styles.Text.headline.preferredFont,
+            .foregroundColor: Styles.Colors.Gray.dark.color
         ])
     return NSAttributedStringSizing(
         containerWidth: width,
         attributedText: attributedString,
-        inset: IssueTitleCell.inset
+        inset: IssueTitleCell.inset,
+        backgroundColor: Styles.Colors.background
     )
 }
 
@@ -62,14 +63,9 @@ func createCommentModel(
     isRoot: Bool
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
-        let date = GithubAPIDateFormatter().date(from: commentFields.createdAt),
+        let date = commentFields.createdAt.githubDate,
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
-
-    let editedAt: Date? = {
-        guard let editedDate = commentFields.lastEditedAt else { return nil }
-        return GithubAPIDateFormatter().date(from: editedDate)
-    }()
 
     let details = IssueCommentDetailsViewModel(
         date: date,
@@ -77,7 +73,7 @@ func createCommentModel(
         avatarURL: avatarURL,
         didAuthor: commentFields.viewerDidAuthor,
         editedBy: commentFields.editor?.login,
-        editedAt: editedAt
+        editedAt: commentFields.lastEditedAt?.githubDate
     )
 
     let options = commentModelOptions(owner: owner, repo: repo)

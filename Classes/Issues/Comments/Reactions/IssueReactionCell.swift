@@ -11,6 +11,24 @@ import SnapKit
 
 final class IssueReactionCell: UICollectionViewCell {
 
+    private static var cache = [String: CGFloat]()
+    private static let spacing: CGFloat = 4
+    private static var emojiFont: UIFont { return UIFont.systemFont(ofSize: Styles.Text.body.size + 2) }
+    private static var countFont: UIFont { return Styles.Text.body.preferredFont }
+
+    static func width(emoji: String, count: Int) -> CGFloat {
+        let key = "\(emoji)\(count)"
+        if let cached = cache[key] {
+            return cached
+        }
+
+        let emojiWidth = (emoji as NSString).size(withAttributes: [.font: emojiFont]).width
+        let countWidth = ("\(count)" as NSString).size(withAttributes: [.font: countFont]).width
+        let width = emojiWidth + countWidth + 3 * spacing
+        cache[key] = width
+        return width
+    }
+
     private let emojiLabel = UILabel()
     private let countLabel = ShowMoreDetailsLabel()
     private var detailText = ""
@@ -20,26 +38,24 @@ final class IssueReactionCell: UICollectionViewCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
-        let offset: CGFloat = 6
-
         emojiLabel.textAlignment = .center
         emojiLabel.backgroundColor = .clear
         // hint bigger emoji than labels
-        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Sizes.Text.body + 2)
+        emojiLabel.font = UIFont.systemFont(ofSize: Styles.Text.body.size + 2)
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.centerX.equalTo(contentView).offset(-offset)
+            make.left.equalTo(contentView).offset(IssueReactionCell.spacing)
         }
 
         countLabel.textAlignment = .center
         countLabel.backgroundColor = .clear
-        countLabel.font = Styles.Fonts.body
+        countLabel.font = Styles.Text.body.preferredFont
         countLabel.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(countLabel)
         countLabel.snp.makeConstraints { make in
             make.centerY.equalTo(emojiLabel)
-            make.left.equalTo(emojiLabel.snp.right).offset(offset)
+            make.left.equalTo(emojiLabel.snp.right).offset(IssueReactionCell.spacing)
         }
 
         let longPress = UILongPressGestureRecognizer(
@@ -125,7 +141,7 @@ final class IssueReactionCell: UICollectionViewCell {
             UIMenuItem(title: detailText, action: #selector(IssueReactionCell.empty))
         ]
         menu.setTargetRect(contentView.bounds, in: self)
-        menu.setMenuVisible(true, animated: true)
+        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func empty() {}

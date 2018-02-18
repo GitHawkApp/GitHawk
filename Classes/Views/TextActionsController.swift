@@ -29,31 +29,31 @@ final class TextActionsController: NSObject,
     // MARK: IssueTextActionsViewDelegate
 
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
-        switch operation.operation {
-        case .execute(let block): block()
-        case .wrap(let left, let right): textView?.replace(left: left, right: right, atLineStart: false)
-        case .line(let left): textView?.replace(left: left, right: nil, atLineStart: true)
-        case .uploadImage: displayUploadImage()
+        func handle(_ operation: IssueTextActionOperation.Operation) {
+            switch operation {
+            case .wrap(let left, let right):
+                textView?.replace(left: left, right: right, atLineStart: false)
+            case .line(let left):
+                textView?.replace(left: left, right: nil, atLineStart: true)
+            case .execute(let block):
+                block()
+            case .uploadImage:
+                displayUploadImage()
+            case .multi(let operations):
+                operations.forEach { handle($0) }
+            }
         }
+        handle(operation.operation)
     }
 
     // MARK: Image Upload
 
     func displayUploadImage() {
-        guard let superview = textView?.superview else { return }
-
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .popover
-        imagePicker.popoverPresentationController?.canOverlapSourceViewRect = true
+        imagePicker.modalPresentationStyle = .formSheet
 
-        let sourceFrame = superview.frame
-        let sourceRect = CGRect(origin: CGPoint(x: sourceFrame.midX, y: sourceFrame.minY), size: CGSize(width: 1, height: 1))
-        imagePicker.popoverPresentationController?.sourceView = superview
-        imagePicker.popoverPresentationController?.sourceRect = sourceRect
-        imagePicker.popoverPresentationController?.permittedArrowDirections = .up
-
-        viewController?.present(imagePicker, animated: true, completion: nil)
+        viewController?.present(imagePicker, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: UIImagePickerControllerDelegate
@@ -64,17 +64,17 @@ final class TextActionsController: NSObject,
         let username = client?.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
         guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
 
-        picker.pushViewController(uploadController, animated: true)
+        picker.pushViewController(uploadController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: ImageUploadDelegate
 
     func imageUploaded(link: String, altText: String) {
-        textView?.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: true)
+        textView?.replace(left: "![\(altText)](\(link))", right: nil, atLineStart: false)
     }
 
 }

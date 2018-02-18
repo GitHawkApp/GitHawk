@@ -17,19 +17,22 @@ pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Tabman', '~> 1.1'
-pod 'Highlightr', '~> 1.1'
+pod 'Firebase/Core'
+pod 'Firebase/Database' 
 
 # prerelease pods
 pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
+pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
+pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
+pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'
+pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'
+pod 'MessageViewController', :git => 'https://github.com/GitHawkApp/MessageViewController.git', :branch => 'master'
 
 # debugging pods
 pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 
-# local pods w/ custom changes
-pod 'MMMarkdown', :path => 'Local Pods/MMMarkdown'
-pod 'SlackTextViewController', :path => 'Local Pods/SlackTextViewController'
+# Local Pods w/ custom changes
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
-pod 'FlatCache', :path => 'Local Pods/FlatCache'
 
 target 'Freetime' do
 
@@ -41,14 +44,4 @@ end
 
 post_install do |installer|
   system("sh tools/generateAcknowledgements.sh")
-
-  # convert incompatible pods back to Swift 3.2
-  myTargets = ['Highlightr']  
-  installer.pods_project.targets.each do |target|
-    if myTargets.include? target.name
-      target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '3.2'
-      end
-    end
-  end
 end

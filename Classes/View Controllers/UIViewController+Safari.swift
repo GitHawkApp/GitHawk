@@ -13,11 +13,11 @@ extension UIViewController {
 
     func presentSafari(url: URL) {
 		guard let safariViewController = try? SFSafariViewController.configured(with: url) else { return }
-		present(safariViewController, animated: true)
+		present(safariViewController, animated: trueUnlessReduceMotionEnabled)
     }
 
     func presentProfile(login: String) {
-        present(CreateProfileViewController(login: login), animated: true)
+        present(CreateProfileViewController(login: login), animated: trueUnlessReduceMotionEnabled)
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {

@@ -1,0 +1,6 @@
+framework module MessageViewController {
+  umbrella header "MessageViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

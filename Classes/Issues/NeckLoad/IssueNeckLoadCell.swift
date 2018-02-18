@@ -19,7 +19,7 @@ final class IssueNeckLoadCell: SelectableCell {
 
         label.text = NSLocalizedString("Load More", comment: "")
         label.textColor = Styles.Colors.Blue.medium.color
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalTo(contentView)

@@ -10,6 +10,18 @@ import Foundation
 import IGListKit
 import UIKit
 
+struct FileChanges: Equatable {
+    let additions: Int
+    let deletions: Int
+    let changedFiles: Int
+
+    static func == (lhs: FileChanges, rhs: FileChanges) -> Bool {
+        return lhs.additions == rhs.additions
+        && lhs.deletions == rhs.deletions
+        && lhs.changedFiles == rhs.changedFiles
+    }
+}
+
 protocol IssueType {
 
     var id: String { get }
@@ -26,9 +38,10 @@ protocol IssueType {
     var locked: Bool { get }
     var headPaging: HeadPaging { get }
     var viewerCanUpdate: Bool { get }
-    var changedFileCount: Int { get }
+    var fileChanges: FileChanges? { get }
 
     var reviewRequestModel: IssueAssigneesModel? { get }
+    var mergeModel: IssueMergeModel? { get }
 
     func timelineViewModels(
         owner: String,

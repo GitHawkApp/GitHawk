@@ -23,7 +23,7 @@ final class IssueNeckLoadSectionController: ListSectionController {
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Collection context must be set") }
+        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
     }
 
@@ -36,7 +36,7 @@ final class IssueNeckLoadSectionController: ListSectionController {
 
     override func didSelectItem(at index: Int) {
         delegate?.didSelect(sectionController: self)
-        collectionContext?.performBatch(animated: true, updates: { context in
+        collectionContext?.performBatch(animated: trueUnlessReduceMotionEnabled, updates: { context in
             self.loadingOverride = true
             context.reload(self)
         })

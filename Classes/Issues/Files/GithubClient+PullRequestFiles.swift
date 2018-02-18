@@ -50,7 +50,7 @@ extension GithubClient {
                         let data = Data(base64Encoded: content.content, options: [.ignoreUnknownCharacters]),
                         let text = String(data: data, encoding: .utf8) {
                         let attributes = [
-                            NSAttributedStringKey.font: Styles.Fonts.code,
+                            NSAttributedStringKey.font: Styles.Text.code.preferredFont,
                             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
                         ]
                         let attributedText = NSAttributedString(string: text, attributes: attributes)

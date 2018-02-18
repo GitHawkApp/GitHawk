@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import StyledText
 
 enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 8
+        static let eventGutter: CGFloat = 8 // comment gutter 2x
+        static let commentGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
+        static let buttonTopPadding: CGFloat = 2
         static let barButton = CGRect(x: 0, y: 0, width: 30, height: 44)
         static let avatarCornerRadius: CGFloat = 3
+        static let labelCornerRadius: CGFloat = 3
         static let columnSpacing: CGFloat = 8
         static let rowSpacing: CGFloat = 8
         static let cellSpacing: CGFloat = 15
@@ -30,12 +34,6 @@ enum Styles {
         static let listInsetLargeHead = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-        static let textCellInset = UIEdgeInsets(
-            top: 0,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
-        )
         static let textViewInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing,
             left: Styles.Sizes.gutter,
@@ -43,21 +41,17 @@ enum Styles {
             right: Styles.Sizes.gutter
         )
         static let labelEventHeight: CGFloat = 30
-
-        enum Text {
-            static let body: CGFloat = 16
-            static let secondary: CGFloat = 13
-            static let title: CGFloat = 14
-            static let button: CGFloat = 16
-            static let headline: CGFloat = 18
-            static let smallTitle: CGFloat = 12
-            static let h1: CGFloat = 24
-            static let h2: CGFloat = 22
-            static let h3: CGFloat = 20
-            static let h4: CGFloat = 18
-            static let h5: CGFloat = 16
-            static let h6: CGFloat = 16
-        }
+        static let labelRowHeight: CGFloat = 18
+        static let labelSpacing: CGFloat = 4
+        static let labelTextPadding: CGFloat = 4
+        static let cardCornerRadius: CGFloat = 6
+        static let threadInset = UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing / 2,
+            left: Styles.Sizes.commentGutter,
+            bottom: Styles.Sizes.rowSpacing,
+            right: Styles.Sizes.commentGutter
+        )
+        static let maxImageHeight: CGFloat = 300
 
         enum HTML {
             static let boldWeight = 600
@@ -65,18 +59,28 @@ enum Styles {
         }
     }
 
-    enum Fonts {
-        static let body = UIFont.systemFont(ofSize: Styles.Sizes.Text.body)
-        static let bodyBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.body)
-        static let bodyItalic = UIFont.italicSystemFont(ofSize: Styles.Sizes.Text.body)
-        static let secondary = UIFont.systemFont(ofSize: Styles.Sizes.Text.secondary)
-        static let secondaryBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.secondary)
-        static let title = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.title)
-        static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
-        static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)
-        static let smallTitle = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.smallTitle)
-        static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
-        static let secondaryCode = UIFont(name: "Courier", size: Styles.Sizes.Text.secondary)!
+    enum Text {
+
+        private static let semibold = UIFont.boldSystemFont(ofSize: 1).fontDescriptor
+        static let body = TextStyle(size: 16)
+        static let bodyBold = TextStyle(fontDescriptor: semibold, size: 16)
+        static let bodyItalic = TextStyle(size: 16, traits: .traitItalic)
+        static let secondary = TextStyle(size: 13)
+        static let secondaryBold = TextStyle(fontDescriptor: semibold, size: 13)
+        static let title = TextStyle(fontDescriptor: semibold, size: 14)
+        static let button = TextStyle(size: 16)
+        static let headline = TextStyle(fontDescriptor: semibold, size: 18)
+        static let smallTitle = TextStyle(fontDescriptor: semibold, size: 12)
+        static let code = TextStyle(name: "Courier", size: 16)
+        static let secondaryCode = TextStyle(name: "Courier", size: 13)
+
+        static let h1 = TextStyle(fontDescriptor: semibold, size: 24)
+        static let h2 = TextStyle(fontDescriptor: semibold, size: 20)
+        static let h3 = TextStyle(fontDescriptor: semibold, size: 20)
+        static let h4 = TextStyle(fontDescriptor: semibold, size: 18)
+        static let h5 = TextStyle(fontDescriptor: semibold, size: 16)
+        static let h6 = TextStyle(fontDescriptor: semibold, size: 16)
+
     }
 
     enum Colors {
@@ -121,6 +125,21 @@ enum Styles {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
+    }
+
+}
+
+extension TextStyle {
+
+    var preferredFont: UIFont {
+        return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+    }
+
+    func with(foreground: UIColor? = nil, background: UIColor? = nil) -> TextStyle {
+        var attributes = self.attributes
+        attributes[.foregroundColor] = foreground ?? attributes[.foregroundColor]
+        attributes[.backgroundColor] = background ?? attributes[.backgroundColor]
+        return TextStyle(fontDescriptor: fontDescriptor, size: size, attributes: attributes, minSize: minSize, maxSize: maxSize)
     }
 
 }

@@ -23,9 +23,13 @@ extension IssueTextActionsView {
                 icon: UIImage(named: "bar-eye"),
                 operation: .execute({ [weak viewController] in
                 let controller = IssuePreviewViewController(markdown: getMarkdownBlock(), owner: owner, repo: repo)
-                viewController?.navigationController?.pushViewController(controller, animated: true)
+                viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
             }),
                 name: NSLocalizedString("Message Preview", comment: "The name of the action for previewing a message from the markdown actions bar")),
+            IssueTextActionOperation(
+                icon: UIImage(named: "bar-mention"),
+                operation: .wrap("@", ""),
+                name: NSLocalizedString("Add mention to text", comment: "The name of the action for making text a mention from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-bold"),
                 operation: .wrap("**", "**"),
@@ -60,7 +64,14 @@ extension IssueTextActionsView {
                 name: NSLocalizedString("Make text indented", comment: "The name of the action for making text indented from the markdown actions bar")),
             IssueTextActionOperation(
                 icon: UIImage(named: "bar-link"),
-                operation: .wrap("[", "](\(UITextView.cursorToken))"),
+                operation: .multi([
+                    .wrap("[", "](\(UITextView.cursorToken))"),
+                    .execute({
+                        if UIPasteboard.general.hasURLs {
+                            UIMenuController.shared.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+                        }
+                    })
+                ]),
                 name: NSLocalizedString("Wrap text as URL", comment: "The name of the action to wrap text in a markdown URL from the markdown actions bar"))
         ]
 

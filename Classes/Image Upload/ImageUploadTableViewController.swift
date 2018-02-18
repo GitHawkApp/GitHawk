@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import SlackTextViewController
 import NYTPhotoViewer
+import MessageViewController
 
 protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
@@ -23,7 +23,7 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextField: SLKTextView!
+    @IBOutlet private var bodyTextView: MessageTextView!
     
     private var bodyPlaceholder: String?
     private var bodyTextColor: UIColor?
@@ -42,7 +42,7 @@ class ImageUploadTableViewController: UITableViewController {
     }
 
     private var descriptionText: String? {
-        let raw = bodyTextField.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let raw = bodyTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty { return nil }
         return raw
     }
@@ -60,7 +60,7 @@ class ImageUploadTableViewController: UITableViewController {
 
         return viewController
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -75,6 +75,24 @@ class ImageUploadTableViewController: UITableViewController {
 
         // Set the left button item to cancel
         setLeftBarItem()
+
+        // Setup view colors and styles
+        let placeholderText = NSLocalizedString("Optional", comment: "")
+        bodyTextView.placeholderText = placeholderText
+        bodyTextView.placeholderTextColor = Styles.Colors.Gray.light.color
+        bodyTextView.font = Styles.Text.body.preferredFont
+        bodyTextView.textContainerInset = .zero
+        bodyTextView.textContainer.lineFragmentPadding = 0
+        
+        titleTextField.textColor = Styles.Colors.Gray.dark.color
+        titleTextField.font = Styles.Text.body.preferredFont
+        titleTextField.attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: [
+                .foregroundColor: Styles.Colors.Gray.light.color,
+                .font: Styles.Text.body.preferredFont
+            ]
+        )
         
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
@@ -122,7 +140,7 @@ class ImageUploadTableViewController: UITableViewController {
 
     @IBAction func didPressCancel() {
         let dismissBlock = {
-            self.dismiss(animated: true)
+            self.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
         if titleText == nil && descriptionText == nil {
@@ -141,7 +159,7 @@ class ImageUploadTableViewController: UITableViewController {
             }
         ])
 
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     @IBAction func didPressUpload() {
@@ -189,14 +207,12 @@ class ImageUploadTableViewController: UITableViewController {
 
                 switch result {
                 case .error:
-                    print("error")
                     ToastManager.showGenericError()
                     self?.setRightBarItemIdle()
 
                 case .success(let link):
-                    print("success")
                     self?.delegate?.imageUploaded(link: link, altText: name)
-                    self?.dismiss(animated: true, completion: nil)
+                    self?.dismiss(animated: trueUnlessReduceMotionEnabled)
                 }
 
             }
@@ -205,7 +221,7 @@ class ImageUploadTableViewController: UITableViewController {
     
     @IBAction func didPressPreviewImage() {
         let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
-        present(previewViewController, animated: true, completion: nil)
+        present(previewViewController, animated: trueUnlessReduceMotionEnabled)
     }
 }
 
@@ -214,7 +230,7 @@ class ImageUploadTableViewController: UITableViewController {
 extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        bodyTextField.becomeFirstResponder()
+        bodyTextView.becomeFirstResponder()
         return false
     }
 }

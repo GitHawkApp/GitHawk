@@ -40,7 +40,7 @@ final class RepositoryFileCell: SelectableCell {
             make.centerY.equalTo(contentView)
         }
 
-        label.font = Styles.Fonts.body
+        label.font = Styles.Text.body.preferredFont
         label.textColor = Styles.Colors.Gray.dark.color
         label.lineBreakMode = .byTruncatingHead
         contentView.addSubview(label)
@@ -75,7 +75,7 @@ final class RepositoryFileCell: SelectableCell {
         let imageName = isDirectory ? "file-directory" : "file"
         imageView.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
 
-        disclosure.isHighlighted = !isDirectory
+        disclosure.isHidden = !isDirectory
     }
 
 }

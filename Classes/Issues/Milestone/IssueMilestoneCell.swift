@@ -9,18 +9,33 @@
 import UIKit
 import SnapKit
 
-final class IssueMilestoneCell: SelectableCell {
+final class IssueMilestoneCell: UICollectionViewCell {
 
     private let titleLabel = UILabel()
+    private let progress = UIProgressView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         titleLabel.backgroundColor = .clear
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
+        }
+
+        progress.progressTintColor = Styles.Colors.Green.medium.color
+        progress.trackTintColor = Styles.Colors.Gray.border.color
+        contentView.addSubview(progress)
+        progress.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.height.equalTo(6)
+            // fit to gutter on all iphones, cap in landscape or ipad
+            make.width.lessThanOrEqualTo(300).priority(.required)
+            make.right.equalTo(contentView)
+            make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
         }
     }
 
@@ -28,23 +43,34 @@ final class IssueMilestoneCell: SelectableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
+    }
+
     // MARK: Public API
 
-    func configure(title: String) {
-        let milestoneAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondary
+    func configure(milestone: Milestone) {
+        let milestoneAttributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: Styles.Colors.Gray.light.color,
+            .font: Styles.Text.secondary.preferredFont
         ]
         let titleText = NSMutableAttributedString(
             string: NSLocalizedString("Milestone: ", comment: ""),
             attributes: milestoneAttributes
         )
-        let titleAttributes = [
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold
+        let titleAttributes: [NSAttributedStringKey: Any] = [
+            .foregroundColor: Styles.Colors.Gray.dark.color,
+            .font: Styles.Text.secondaryBold.preferredFont
         ]
-        titleText.append(NSAttributedString(string: title, attributes: titleAttributes))
+        titleText.append(NSAttributedString(string: milestone.title, attributes: titleAttributes))
         titleLabel.attributedText = titleText
+
+        progress.progress = Float(milestone.totalIssueCount - milestone.openIssueCount) / Float(milestone.totalIssueCount)
+
+        let milestoneFormat = NSLocalizedString("Milestone: %@, %.0f percent completed.", comment: "The accessibility label for a repositories' milestone")
+        let percentProgress = progress.progress * 100
+        accessibilityLabel = String(format: milestoneFormat, arguments: [milestone.title, percentProgress])
     }
 
 }

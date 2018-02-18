@@ -22,7 +22,7 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(contentView)
         }
 
         lockedButton.setTitle(Constants.Strings.locked, for: .normal)

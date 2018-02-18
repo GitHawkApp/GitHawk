@@ -29,42 +29,44 @@ private final class IssueCommentHtmlCellWebView: UIWebView {
 
 }
 
-final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDelegate {
-
-    private static let WebviewKeyPath = #keyPath(UIWebView.scrollView.contentSize)
+final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewDelegate {
 
     private static let ImgScheme = "freetime-img"
+    private static let HeightScheme = "freetime-hgt"
+    private static let JavaScriptHeight = "offsetHeight"
+
     private static let htmlHead = """
     <!DOCTYPE html><html><head><style>
+    * {margin: 0;padding: 0;}
     body{
     // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
     // lint compiled style with http://csslint.net/
-    font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;
+    font-family: -apple-system; font-size: \(Styles.Text.body.size)px;
     color: #\(Styles.Colors.Gray.dark);
-    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px 0;
+    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px 0;
     margin: 0;
     }
-    * { font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px; }
+    * { font-family: -apple-system; font-size: \(Styles.Text.body.size)px; }
     b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
     i, em{font-style: italic;}
     a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}
-    h1{font-size: \(Styles.Sizes.Text.h1);}
-    h2{font-size: \(Styles.Sizes.Text.h2);}
-    h3{font-size: \(Styles.Sizes.Text.h3);}
-    h4{font-size: \(Styles.Sizes.Text.h4);}
-    h5{font-size: \(Styles.Sizes.Text.h5);}
-    h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}
+    h1{font-size: \(Styles.Text.h1.size);}
+    h2{font-size: \(Styles.Text.h2.size);}
+    h3{font-size: \(Styles.Text.h3.size);}
+    h4{font-size: \(Styles.Text.h4.size);}
+    h5{font-size: \(Styles.Text.h5.size);}
+    h6, h7, h8{font-size: \(Styles.Text.h6.size)px; color: #\(Styles.Colors.Gray.medium);}
     dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}
     dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
-    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.gutter)px;}
-    sub{font-size: \(Styles.Sizes.Text.secondary)px;}
-    sub a{font-size: \(Styles.Sizes.Text.secondary)px;}
+    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px;}
+    sub{font-size: \(Styles.Text.secondary.size)px;}
+    sub a{font-size: \(Styles.Text.secondary.size)px;}
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
-    img{max-width:100%; box-sizing: border-box;}
+    img{max-width:100%; box-sizing: border-box; max-height: \(Styles.Sizes.maxImageHeight)px; object-fit: contain;}
     </style>
     </head><body>
     """
@@ -79,6 +81,23 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('click', tapAction);
         }
+        function onElementHeightChange(elm, callback) {
+            var lastHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight), newHeight;
+            (function run() {
+                newHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight);
+                if(lastHeight != newHeight) {
+                    callback(newHeight);
+                }
+                lastHeight = newHeight;
+                if(elm.onElementHeightChangeTimer) {
+                    clearTimeout(elm.onElementHeightChangeTimer);
+                }
+                elm.onElementHeightChangeTimer = setTimeout(run, 300);
+            })();
+        }
+        onElementHeightChange(document.body, function(height) {
+            document.location = "\(HeightScheme)://" + height;
+        });
     </script>
     </body>
     </html>
@@ -95,11 +114,9 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
-
-        webView.backgroundColor = .white
+        webView.backgroundColor = .clear
         webView.delegate = self
-        webView.addObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath, options: [.new], context: nil)
+        webView.scrollView.bounces = false
 
         let scrollView = webView.scrollView
         scrollView.scrollsToTop = false
@@ -112,21 +129,25 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        webView.removeObserver(self, forKeyPath: IssueCommentHtmlCell.WebviewKeyPath)
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
-        webView.isHidden = true
+        webView.alpha = 0
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         if webView.frame != contentView.bounds {
             webView.frame = contentView.bounds
         }
+    }
+
+    // MARK: Private API
+
+    func changed(height: CGFloat) {
+        guard isHidden == false, height != bounds.height else { return }
+
+        let size = CGSize(width: contentView.bounds.width, height: CGFloat(height))
+        delegate?.webViewDidResize(cell: self, html: body, cellWidth: size.width, size: size)
     }
 
     // MARK: ListBindable
@@ -143,12 +164,17 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     // MARK: UIWebViewDelegate
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        guard let url = request.url else { return true }
+        // if the cell is hidden, its been put back in the reuse pool
+        guard isHidden == false, let url = request.url else { return true }
 
         if url.scheme == IssueCommentHtmlCell.ImgScheme,
             let host = url.host,
             let imageURL = URL(string: host) {
             imageDelegate?.webViewDidTapImage(cell: self, url: imageURL)
+            return false
+        } else if url.scheme == IssueCommentHtmlCell.HeightScheme,
+            let heightString = url.host as NSString? {
+            changed(height: CGFloat(heightString.floatValue))
             return false
         }
 
@@ -164,19 +190,11 @@ final class IssueCommentHtmlCell: DoubleTappableCell, ListBindable, UIWebViewDel
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        webView.isHidden = false
-    }
+        webView.alpha = 1
 
-    // MARK: KVO
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == IssueCommentHtmlCell.WebviewKeyPath {
-            delegate?.webViewDidResize(
-                cell: self,
-                html: body,
-                cellWidth: contentView.bounds.width,
-                size: webView.scrollView.contentSize
-            )
+        if let heightString = webView
+            .stringByEvaluatingJavaScript(from: "document.body.\(IssueCommentHtmlCell.JavaScriptHeight)") as NSString? {
+            changed(height: CGFloat(heightString.floatValue))
         }
     }
 

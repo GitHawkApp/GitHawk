@@ -17,6 +17,16 @@ final class NotificationViewModel: ListDiffable, Cachable {
         case hash(String)
     }
 
+    // combining possible issue and PR states
+    // https://developer.github.com/v4/enum/issuestate/
+    // https://developer.github.com/v4/enum/pullrequeststate/
+    enum State: String {
+        case pending
+        case closed = "CLOSED"
+        case merged = "MERGED"
+        case open = "OPEN"
+    }
+
     let id: String
     let title: NSAttributedStringSizing
     let type: NotificationType
@@ -25,6 +35,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
     let owner: String
     let repo: String
     let identifier: Identifier
+    let state: State
+    let commentCount: Int
 
     init(
     id: String,
@@ -34,7 +46,9 @@ final class NotificationViewModel: ListDiffable, Cachable {
     read: Bool,
     owner: String,
     repo: String,
-    identifier: Identifier
+    identifier: Identifier,
+    state: State,
+    commentCount: Int
         ) {
         self.id = id
         self.title = title
@@ -44,6 +58,8 @@ final class NotificationViewModel: ListDiffable, Cachable {
         self.owner = owner
         self.repo = repo
         self.identifier = identifier
+        self.state = state
+        self.commentCount = commentCount
     }
 
     convenience init(
@@ -58,7 +74,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         containerWidth: CGFloat
         ) {
         let attributes = [
-            NSAttributedStringKey.font: Styles.Fonts.body,
+            NSAttributedStringKey.font: Styles.Text.body.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let title = NSAttributedStringSizing(
@@ -74,7 +90,37 @@ final class NotificationViewModel: ListDiffable, Cachable {
             read: read,
             owner: owner,
             repo: repo,
-            identifier: identifier
+            identifier: identifier,
+            state: .pending,
+            commentCount: 0
+        )
+    }
+
+    // MARK: Public API
+
+    func updated(
+        id: String? = nil,
+        title: NSAttributedStringSizing? = nil,
+        type: NotificationType? = nil,
+        date: Date? = nil,
+        read: Bool? = nil,
+        owner: String? = nil,
+        repo: String? = nil,
+        identifier: Identifier? = nil,
+        state: State? = nil,
+        commentCount: Int? = nil
+        ) -> NotificationViewModel {
+        return NotificationViewModel(
+            id: id ?? self.id,
+            title: title ?? self.title,
+            type: type ?? self.type,
+            date: date ?? self.date,
+            read: read ?? self.read,
+            owner: owner ?? self.owner,
+            repo: repo ?? self.repo,
+            identifier: identifier ?? self.identifier,
+            state: state ?? self.state,
+            commentCount: commentCount ?? self.commentCount
         )
     }
 
@@ -92,6 +138,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
             && date == object.date
             && repo == object.repo
             && owner == object.owner
+            && state == object.state
             && title.attributedText.string == object.title.attributedText.string
     }
 

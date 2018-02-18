@@ -9,19 +9,21 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleCell {
+final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
-    static let inset = Styles.Sizes.textCellInset
+    static let inset = UIEdgeInsets(
+        top: 0,
+        left: Styles.Sizes.commentGutter,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.commentGutter
+    )
 
     let textView = AttributedStringView()
-    let overlay = CreateCollapsibleOverlay()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         isAccessibilityElement = true
-
-        backgroundColor = .white
-        contentView.clipsToBounds = true
 
         contentView.addSubview(textView)
     }
@@ -32,8 +34,6 @@ final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleC
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
-        LayoutCollapsible(layer: overlay, view: contentView)
         textView.reposition(width: contentView.bounds.width)
     }
 
@@ -51,12 +51,6 @@ final class IssueCommentTextCell: DoubleTappableCell, ListBindable, CollapsibleC
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
         textView.configureAndSizeToFit(text: viewModel, width: contentView.bounds.width)
-    }
-
-    // MARK: CollapsibleCell
-
-    func setCollapse(visible: Bool) {
-        overlay.isHidden = !visible
     }
 
 }

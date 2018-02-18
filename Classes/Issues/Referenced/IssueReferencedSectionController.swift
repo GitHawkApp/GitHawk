@@ -16,12 +16,16 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     init(client: GithubClient) {
         self.client = client
         super.init()
-        self.inset = Styles.Sizes.listInsetTight
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
-        return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
+        guard let width = collectionContext?.insetContainerSize.width,
+            let object = self.object
+            else { fatalError("Missing context") }
+        return CGSize(
+            width: width,
+            height: object.attributedText.textViewSize(width).height
+        )
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -29,6 +33,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
         let object = self.object
             else { fatalError("Missing context, model, or cell wrong type") }
         cell.configure(object)
+        cell.delegate = viewController
         return cell
     }
 
@@ -39,7 +44,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
             client: client,
             model: model
         )
-        viewController?.showDetailViewController(controller, sender: nil)
+        viewController?.show(controller, sender: nil)
     }
 
 }

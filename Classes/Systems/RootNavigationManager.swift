@@ -80,7 +80,7 @@ final class RootNavigationManager: GithubSessionListener {
 
     public func pushLoginViewController(nav: UINavigationController) {
         let login = newLoginViewController()
-        nav.pushViewController(login, animated: true)
+        nav.pushViewController(login, animated: trueUnlessReduceMotionEnabled)
     }
 
     @discardableResult
@@ -95,7 +95,7 @@ final class RootNavigationManager: GithubSessionListener {
         resetRootViewController(userSession: userSession)
 
         if dismiss {
-            rootViewController?.presentedViewController?.dismiss(animated: true)
+            rootViewController?.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
     }
 
@@ -109,7 +109,7 @@ final class RootNavigationManager: GithubSessionListener {
         }
 
         detailNavigationController?.viewControllers = [SplitPlaceholderViewController()]
-        showLogin(animated: true)
+        showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
     func didReceiveRedirect(manager: GithubSessionManager, code: String) {}

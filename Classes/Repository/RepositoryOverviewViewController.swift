@@ -9,25 +9,20 @@
 import UIKit
 import IGListKit
 
-class RepositoryOverviewViewController: UIViewController,
-FeedDelegate,
-ListAdapterDataSource {
+class RepositoryOverviewViewController: BaseListViewController<NSString>,
+BaseListViewControllerDataSource {
 
-    private lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private let repo: RepositoryDetails
     private let client: RepositoryClient
-
-    enum State {
-        case initial
-        case readme(RepositoryReadmeModel)
-        case error
-    }
-    private var state = State.initial
+    private var readme: RepositoryReadmeModel?
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
-        super.init(nibName: nil, bundle: nil)
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: ""),
+            dataSource: self
+        )
         title = NSLocalizedString("Overview", comment: "")
     }
 
@@ -37,93 +32,53 @@ ListAdapterDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        feed.viewDidLoad()
-        feed.adapter.dataSource = self
-
-        // set the frame in -viewDidLoad is required when working with TabMan
-        feed.collectionView.frame = view.bounds
-
-        if #available(iOS 11.0, *) {
-            feed.collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        makeBackBarItemEmpty()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        rz_smoothlyDeselectRows(collectionView: feed.collectionView)
-    }
+    // MARK: Overrides
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        feed.viewDidAppear(animated)
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        feed.viewWillLayoutSubviews(view: view)
-    }
-
-    // MARK: Private API
-
-    func fetch() {
+    override func fetch(page: NSString?) {
         let repo = self.repo
         let width = view.bounds.width
-        let feed = self.feed
-
         client.fetchReadme { [weak self] result in
             switch result {
             case .error:
-                self?.state = .error
-                feed.finishLoading(dismissRefresh: true, animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let readme):
                 DispatchQueue.global().async {
                     let options = GitHubMarkdownOptions(owner: repo.owner, repo: repo.name, flavors: [.baseURL])
                     let models = CreateCommentModels(markdown: readme, width: width, options: options)
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
-                        self?.state = .readme(model)
-                        feed.finishLoading(dismissRefresh: true, animated: true)
+                        self?.readme = model
+                        self?.update(animated: trueUnlessReduceMotionEnabled)
                     }
                 }
             }
         }
     }
 
-    // MARK: FeedDelegate
+    // MARK: BaseListViewControllerDataSource
 
-    func loadFromNetwork(feed: Feed) {
-        fetch()
+    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
     }
 
-    func loadNextPage(feed: Feed) -> Bool {
-        return false
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        guard let readme = self.readme else { return [] }
+        return [readme]
     }
 
-    // MARK: ListAdapterDataSource
-
-    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        switch state {
-        case .error: return ["empty" as ListDiffable]
-        case .readme(let readme): return [readme]
-        case .initial: return []
-        }
+    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        return RepositoryReadmeSectionController()
     }
 
-    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        switch object {
-        case is RepositoryReadmeModel: return RepositoryReadmeSectionController()
-        default: return RepositoryEmptyResultsSectionController(
+    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+        return RepositoryEmptyResultsSectionController(
             topInset: 0,
-            topLayoutGuide: topLayoutGuide,
-            bottomLayoutGuide: bottomLayoutGuide,
+            layoutInsets: view.safeAreaInsets, 
             type: .readme
-            )
-        }
-    }
-
-    func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+        )
     }
 
 }

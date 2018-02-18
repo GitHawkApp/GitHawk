@@ -11,11 +11,13 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate: class {
+    func willShowMenu(cell: IssueCommentReactionCell)
+    func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
 }
 
-final class IssueCommentReactionCell: DoubleTappableCell,
+final class IssueCommentReactionCell: IssueCommentBaseCell,
 ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
@@ -29,18 +31,16 @@ UICollectionViewDelegateFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.register(IssueReactionCell.self, forCellWithReuseIdentifier: IssueCommentReactionCell.reuse)
         return view
     }()
     private var reactions = [ReactionViewModel]()
-    private var border: UIView?
     private var queuedOperation: (content: ReactionContent, operation: IssueReactionOperation)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        backgroundColor = .white
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
@@ -52,8 +52,8 @@ UICollectionViewDelegateFlowLayout {
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter)
-            make.centerY.equalTo(contentView)
+            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
         }
 
         collectionView.backgroundColor = .clear
@@ -65,16 +65,23 @@ UICollectionViewDelegateFlowLayout {
             make.top.bottom.right.equalTo(contentView)
         }
 
-        border = addBorder(.bottom, useSafeMargins: false)
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerWillShow(notification:)),
+            name: NSNotification.Name.UIMenuControllerWillShowMenu,
+            object: nil
+        )
+        nc.addObserver(
+            self,
+            selector: #selector(onMenuControllerDidHide(notification:)),
+            name: NSNotification.Name.UIMenuControllerDidHideMenu,
+            object: nil
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API
@@ -87,7 +94,7 @@ UICollectionViewDelegateFlowLayout {
     }
 
     func configure(borderVisible: Bool) {
-        self.border?.isHidden = !borderVisible
+        border = borderVisible ? .tail : .neck
     }
 
     // MARK: Private API
@@ -115,7 +122,7 @@ UICollectionViewDelegateFlowLayout {
         let menu = UIMenuController.shared
         menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
         menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
-        menu.setMenuVisible(true, animated: true)
+        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -181,6 +188,16 @@ UICollectionViewDelegateFlowLayout {
         data.cell.iterate(add: add)
     }
 
+    // MARK: Notifications
+
+    @objc func onMenuControllerWillShow(notification: Notification) {
+        delegate?.willShowMenu(cell: self)
+    }
+
+    @objc func onMenuControllerDidHide(notification: Notification) {
+        delegate?.didHideMenu(cell: self)
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -243,8 +260,9 @@ UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
         ) -> CGSize {
-        let modifier = CGFloat(reactions[indexPath.item].count.description.count - 1)
-        return CGSize(width: 50 + modifier * 5, height: collectionView.bounds.height)
+        let reaction = reactions[indexPath.item]
+        let width = IssueReactionCell.width(emoji: reaction.content.emoji, count: reaction.count)
+        return CGSize(width: width, height: collectionView.bounds.height)
     }
 
     // MARK: UICollectionViewDelegate

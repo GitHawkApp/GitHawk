@@ -11,11 +11,15 @@ import UIKit
 extension UIScrollView {
 
     func scrollToBottom(animated: Bool) {
-        let inset = contentInset
         let contentHeight = contentSize.height
         let viewportHeight = bounds.height
-        let offset = contentHeight - inset.bottom + inset.top - viewportHeight
-        setContentOffset(CGPoint(x: 0, y: offset), animated: animated)
+
+        // make sure not already at the top
+        guard contentHeight > viewportHeight else { return }
+
+        let inset = contentInset
+        let offset = contentHeight + inset.bottom - viewportHeight
+        setContentOffset(CGPoint(x: contentOffset.x, y: offset), animated: animated)
     }
 
 }

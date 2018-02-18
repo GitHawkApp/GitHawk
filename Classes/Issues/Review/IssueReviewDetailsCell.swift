@@ -14,7 +14,7 @@ protocol IssueReviewDetailsCellDelegate: class {
     func didTapActor(cell: IssueReviewDetailsCell)
 }
 
-final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
+final class IssueReviewDetailsCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueReviewDetailsCellDelegate?
 
@@ -25,8 +25,6 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
-
         let iconSize = Styles.Sizes.icon
         icon.clipsToBounds = true
         icon.layer.cornerRadius = iconSize.width/2
@@ -35,7 +33,7 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         icon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
             make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.gutter)
+            make.left.equalTo(Styles.Sizes.commentGutter)
         }
 
         actorButton.addTarget(self, action: #selector(IssueReviewDetailsCell.onActorTapped), for: .touchUpInside)
@@ -46,23 +44,18 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         }
 
         contentView.addSubview(dateLabel)
-        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         dateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(actorButton)
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.columnSpacing/2)
         }
 
-        contentView.addBorder(.top)
+        border = .head
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Private API
@@ -115,12 +108,12 @@ final class IssueReviewDetailsCell: UICollectionViewCell, ListBindable {
         icon.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
 
         var attributes = [
-            NSAttributedStringKey.font: Styles.Fonts.title,
+            NSAttributedStringKey.font: Styles.Text.title.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         let mActorString = NSMutableAttributedString(string: viewModel.actor, attributes: attributes)
 
-        attributes[NSAttributedStringKey.font] = Styles.Fonts.secondary
+        attributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
         mActorString.append(NSAttributedString(string: " \(action)", attributes: attributes))
         actorButton.setAttributedTitle(mActorString, for: .normal)
     }

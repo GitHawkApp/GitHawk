@@ -15,6 +15,7 @@ protocol LoadMoreSectionControllerDelegate: class {
 final class LoadMoreSectionController: ListSectionController {
 
     private weak var delegate: LoadMoreSectionControllerDelegate?
+    private var loadingOverride = false
 
     init(delegate: LoadMoreSectionControllerDelegate) {
         self.delegate = delegate
@@ -26,15 +27,19 @@ final class LoadMoreSectionController: ListSectionController {
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: LoadMoreCell.self, for: self, at: index) else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: IssueNeckLoadCell.self, for: self, at: index) as? IssueNeckLoadCell else {
             fatalError("Missing context, or cell is wrong type")
         }
-
+        cell.configure(loading: loadingOverride)
         return cell
     }
 
     override func didSelectItem(at index: Int) {
         delegate?.didSelect(sectionController: self)
+        collectionContext?.performBatch(animated: trueUnlessReduceMotionEnabled, updates: { context in
+            self.loadingOverride = true
+            context.reload(self)
+        })
     }
 
 }

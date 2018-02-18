@@ -9,7 +9,11 @@
 import UIKit
 
 protocol PeopleViewControllerDelegate: class {
-    func didDismiss(controller: PeopleViewController, selections: [User])
+    func didDismiss(
+        controller: PeopleViewController,
+        type: PeopleViewController.PeopleType,
+        selections: [User]
+    )
 }
 
 final class PeopleViewController: UITableViewController {
@@ -33,7 +37,7 @@ final class PeopleViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         feedRefresh.beginRefreshing()
         fetch()
@@ -44,7 +48,7 @@ final class PeopleViewController: UITableViewController {
 
     func updateSelectionCount() {
         let label = UILabel()
-        label.font = Styles.Fonts.body
+        label.font = Styles.Text.body.preferredFont
         label.backgroundColor = .clear
         label.textColor = Styles.Colors.Gray.light.color
         label.text = "\(selections.count)/\(selectionLimit)"
@@ -71,8 +75,8 @@ final class PeopleViewController: UITableViewController {
 
     @IBAction func onDone(_ sender: Any) {
         let selections = users.filter { self.selections.contains($0.login) }
-        delegate?.didDismiss(controller: self, selections: selections)
-        dismiss(animated: true)
+        delegate?.didDismiss(controller: self, type: type, selections: selections)
+        dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: Public API
@@ -117,7 +121,7 @@ final class PeopleViewController: UITableViewController {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
 
         let login = users[indexPath.row].login
         if selections.contains(login) {

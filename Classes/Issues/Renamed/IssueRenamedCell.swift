@@ -35,11 +35,11 @@ final class IssueRenamedCell: UICollectionViewCell {
         actorLabel.addTarget(self, action: #selector(IssueRenamedCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.columnSpacing)
+            make.left.equalTo(IssueRenamedCell.titleInset.left)
             make.top.equalTo(0)
         }
 
-        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -70,12 +70,12 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     func configure(_ model: IssueRenamedModel) {
         let actorAttributes = [
-            NSAttributedStringKey.font: Styles.Fonts.secondaryBold,
+            NSAttributedStringKey.font: Styles.Text.secondaryBold.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let actor = NSMutableAttributedString(string: model.actor, attributes: actorAttributes)
         let referencedAttributes = [
-            NSAttributedStringKey.font: Styles.Fonts.secondary,
+            NSAttributedStringKey.font: Styles.Text.secondary.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color
         ]
         actor.append(NSAttributedString(

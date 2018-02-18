@@ -25,7 +25,7 @@ enum Signature {
     static func signed(text: String) -> String {
         guard enabled else { return text }
         let format = NSLocalizedString("Sent with %@", comment: "")
-        let signature = String.localizedStringWithFormat(format, "<a href=\"http://githawk.com\">GitHawk</a>")
+        let signature = String(format: format, "<a href=\"http://githawk.com\">GitHawk</a>")
         return text + "\n\n<sub>\(signature)</sub>"
     }
 

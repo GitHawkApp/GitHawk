@@ -15,35 +15,41 @@ ListSingleSectionControllerDelegate {
 
     private let client: GithubClient
     private let branch: String
-    private let file: String
-    private let path: String
+    private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
-    private let isRoot: Bool
 
     init(
         client: GithubClient,
         repo: RepositoryDetails,
         branch: String,
-        path: String,
-        file: String,
-        isRoot: Bool
+        path: FilePath
         ) {
         self.client = client
         self.repo = repo
         self.branch = branch
-        self.isRoot = isRoot
-        self.file = file
         self.path = path
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: ""),
+            emptyErrorMessage: NSLocalizedString("Cannot load directory.", comment: ""),
             dataSource: self
         )
 
         // set on init in case used by Tabman
         self.title = NSLocalizedString("Code", comment: "")
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureTitle(filePath: path, target: self, action: #selector(onFileNavigationTitle(sender:)))
+        makeBackBarItemEmpty()
+    }
+
+    // MARK: Public API
 
     static func createRoot(
         client: GithubClient,
@@ -54,36 +60,31 @@ ListSingleSectionControllerDelegate {
             client: client,
             repo: repo,
             branch: branch,
-            path: "",
-            file: "", 
-            isRoot: true)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationItem.configure(title: file, subtitle: path)
+            path: FilePath(components: [])
+        )
     }
 
     // MARK: Private API
 
-    var fullPath: String {
-        return path.isEmpty ? file : "\(path)/\(file)"
+    @objc func onFileNavigationTitle(sender: UIView) {
+        showAlert(filePath: path, sender: sender)
     }
 
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
-        client.fetchFiles(owner: repo.owner, repo: repo.name, branch: branch, path: fullPath) { [weak self] (result) in
+        client.fetchFiles(
+        owner: repo.owner,
+        repo: repo.name,
+        branch: branch,
+        path: path.path
+        ) { [weak self] (result) in
             switch result {
             case .error:
-                self?.error(animated: true)
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             case .success(let files):
                 self?.files = files
-                self?.update(animated: true)
+                self?.update(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }
@@ -120,7 +121,7 @@ ListSingleSectionControllerDelegate {
                 else { return .zero }
             return CGSize(
                 width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.topLayoutGuide.length - strongSelf.bottomLayoutGuide.length
+                height: context.containerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
             )
         })
     }
@@ -129,20 +130,24 @@ ListSingleSectionControllerDelegate {
 
     func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
         guard let file = object as? RepositoryFile else { return }
+        let next = path.appending(file.name)
         let controller: UIViewController
         if file.isDirectory {
             controller = RepositoryCodeDirectoryViewController(
                 client: client,
                 repo: repo,
                 branch: branch,
-                path: fullPath,
-                file: file.name,
-                isRoot: false
+                path: next
             )
         } else {
-            controller = RepositoryCodeBlobViewController(client: client, repo: repo, branch: branch, path: fullPath)
+            controller = RepositoryCodeBlobViewController(
+                client: client,
+                repo: repo,
+                branch: branch,
+                path: next
+            )
         }
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }

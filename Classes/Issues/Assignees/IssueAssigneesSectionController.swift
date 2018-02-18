@@ -19,6 +19,9 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
+        let spacing = Styles.Sizes.rowSpacing / 2
+        minimumLineSpacing = spacing
+        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -57,9 +60,13 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width
+        guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
+        return CGSize(
+            width: width,
+            // secondary label OR the avatar, w/e is bigger. changes when dynamic content sizes
+            height: max(Styles.Sizes.icon.height, Styles.Text.secondary.preferredFont.lineHeight)
+        )
     }
 
     func sectionController(
@@ -89,7 +96,7 @@ ListBindingSectionControllerSelectionDelegate {
         ) {
         if viewModel is IssueAssigneeSummaryModel {
             expanded = !expanded
-            update(animated: true)
+            update(animated: trueUnlessReduceMotionEnabled)
         } else if let viewModel = viewModel as? IssueAssigneeViewModel {
             viewController?.presentProfile(login: viewModel.login)
         }

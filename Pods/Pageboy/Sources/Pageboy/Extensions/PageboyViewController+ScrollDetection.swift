@@ -52,20 +52,24 @@ extension PageboyViewController: UIPageViewControllerDelegate, UIScrollViewDeleg
             self.updateCurrentPageIndexIfNeeded(index)
         }
     }
-    
-    public func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        guard showsPageControl else {
-            return -1
-        }
-        return pageCount ?? 0
-    }
-    
-    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard showsPageControl else {
-            return -1
-        }
-        return targetIndex ?? 0
-    }
+
+    // TODO - Enable this when issue in iOS 11.2 is resolved.
+    //
+    // See here: https://github.com/uias/Pageboy/issues/128
+    //
+//    public func presentationCount(for pageViewController: UIPageViewController) -> Int {
+//        guard showsPageControl else {
+//            return -1
+//        }
+//        return pageCount ?? 0
+//    }
+//
+//    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+//        guard showsPageControl else {
+//            return -1
+//        }
+//        return targetIndex ?? 0
+//    }
     
     // MARK: UIScrollViewDelegate
     

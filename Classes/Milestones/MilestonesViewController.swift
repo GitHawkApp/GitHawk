@@ -25,6 +25,11 @@ final class MilestonesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let emptyView = EmptyView()
+        emptyView.label.text = NSLocalizedString("No open milestones", comment: "")
+        emptyView.isHidden = true
+        tableView.backgroundView = emptyView
+
         tableView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
 
@@ -52,7 +57,7 @@ final class MilestonesViewController: UITableViewController {
 
     @IBAction func onDone(_ sender: Any) {
         delegate?.didDismiss(controller: self, selected: selected)
-        dismiss(animated: true)
+        dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
     @objc func onRefresh() {
@@ -68,6 +73,7 @@ final class MilestonesViewController: UITableViewController {
             case .error:
                 ToastManager.showGenericError()
             }
+            self?.tableView.backgroundView?.isHidden = (self?.milestones.count ?? 0) > 0
             self?.feedRefresh.endRefreshing()
         }
     }
@@ -94,7 +100,7 @@ final class MilestonesViewController: UITableViewController {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         let milestone = milestones[indexPath.row]
         if milestone == selected {
             selected = nil

@@ -18,7 +18,6 @@ struct RepositoryDetails: Codable {
         // TODO: REVISE
         return URL(string: "https://github.com/\(owner)")!
     }
-
 }
 
 extension RepositoryDetails: Equatable {

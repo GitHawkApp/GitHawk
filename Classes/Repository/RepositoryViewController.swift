@@ -60,25 +60,42 @@ NewIssueTableViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+
         makeBackBarItemEmpty()
 
-//        automaticallyAdjustsChildScrollViewInsets = false
         dataSource = self
         delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
         bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Fonts.button
+            appearance.text.font = Styles.Text.button.preferredFont
             appearance.state.color = Styles.Colors.Gray.light.color
             appearance.state.selectedColor = Styles.Colors.Blue.medium.color
             appearance.indicator.color = Styles.Colors.Blue.medium.color
         })
 
         configureNavigationItems()
-        navigationItem.configure(title: repo.name, subtitle: repo.owner)
-        navigationItem.titleView?.accessibilityLabel = .localizedStringWithFormat("Repository, %@", "\(repo.owner)/\(repo.name)")
+        let navigationTitle = NavigationTitleDropdownView()
+        navigationItem.titleView = navigationTitle
+        navigationTitle.addTarget(self, action: #selector(onNavigationTitle(sender:)), for: .touchUpInside)
+        let labelFormat = NSLocalizedString("Repository %@ by %@", comment: "Accessibility label for a repository navigation item")
+        let accessibilityLabel = String(format: labelFormat, arguments: [repo.name, repo.owner])
+        navigationTitle.configure(title: repo.name, subtitle: repo.owner, accessibilityLabel: accessibilityLabel)
     }
 
     // MARK: Private API
+
+    @objc func onNavigationTitle(sender: UIView) {
+        let alert = UIAlertController.configured(preferredStyle: .actionSheet)
+        weak var weakSelf = self
+        alert.addActions([
+            AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
+                .view(owner: repo.owner),
+            AlertAction.cancel()
+            ])
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
 
     var repoUrl: URL {
         return URL(string: client.userSession!.client.repoUrl(owner: repo.owner, name: repo.name))!
@@ -122,12 +139,11 @@ NewIssueTableViewControllerDelegate {
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
-            AlertAction(alertBuilder).view(owner: repo.owner, url: repo.ownerURL),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)
 
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: PageboyViewControllerDataSource
@@ -150,38 +166,5 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         show(issuesViewController, sender: self)
     }
-
-    // MARK: PageboyViewControllerDelegate
-
-//    override func pageboyViewController(
-//        _ pageboyViewController: PageboyViewController,
-//        willScrollToPageAt index: PageboyViewController.PageIndex,
-//        direction: PageboyViewController.NavigationDirection,
-//        animated: Bool
-//        ) {
-//        super.pageboyViewController(
-//            pageboyViewController,
-//            willScrollToPageAt: index,
-//            direction: direction,
-//            animated: animated
-//        )
-//
-//        return
-//
-//        // hack to fix Tabman not applying top (nav bar) and bottom (tab bar) insets simultaneously
-//        var inset: UIEdgeInsets
-//        if #available(iOS 11.0, *) {
-//            inset = view.safeAreaInsets
-//        } else {
-//            inset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomLayoutGuide.length, right: 0)
-//        }
-//        inset.top += bar.requiredInsets.bar
-//        for view in controllers[index].view.subviews {
-//            if let scrollView = view as? UIScrollView {
-//                scrollView.contentInset = inset
-//                scrollView.scrollIndicatorInsets = inset
-//            }
-//        }
-//    }
 
 }

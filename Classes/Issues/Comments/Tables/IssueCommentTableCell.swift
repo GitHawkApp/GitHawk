@@ -9,12 +9,17 @@
 import UIKit
 import IGListKit
 
-final class IssueCommentTableCell: DoubleTappableCell,
+final class IssueCommentTableCell: IssueCommentBaseCell,
     ListBindable,
     UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
 
-    static let inset = UIEdgeInsets(top: 0, left: 4, bottom: Styles.Sizes.rowSpacing, right: 4)
+    static let inset = UIEdgeInsets(
+        top: 0,
+        left: Styles.Sizes.rowSpacing / 2,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.rowSpacing / 2
+    )
 
     weak var delegate: AttributedStringViewDelegate?
 
@@ -31,7 +36,6 @@ UICollectionViewDelegateFlowLayout {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
 
         collectionView.register(IssueCommentTableCollectionCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.delegate = self
@@ -48,7 +52,6 @@ UICollectionViewDelegateFlowLayout {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         collectionView.frame = contentView.bounds
     }
 

@@ -10,7 +10,7 @@ import UIKit
 
 final class FeedRefresh {
 
-    let refreshControl = UIRefreshControl()
+    let refreshControl = FixedRefreshControl()
 
     private var refreshBegin: TimeInterval = -1
 
@@ -24,9 +24,12 @@ final class FeedRefresh {
     func beginRefreshing() {
         refreshControl.beginRefreshing()
         if let scrollView = refreshControl.superview as? UIScrollView {
+            let contentOffset = scrollView.contentOffset
             scrollView.setContentOffset(
-                CGPoint(x: 0, y: scrollView.contentOffset.y - refreshControl.bounds.height),
-                animated: true
+                CGPoint(
+                    x: contentOffset.x,
+                    y: contentOffset.y - refreshControl.bounds.height),
+                animated: trueUnlessReduceMotionEnabled
             )
         }
         setRefreshing()
