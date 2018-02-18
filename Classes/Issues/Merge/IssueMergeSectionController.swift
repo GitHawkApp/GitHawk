@@ -16,6 +16,7 @@ MergeButtonDelegate {
     private let model: IssueDetailsModel
     private let client: GithubClient
     private let resultID: String?
+    private var loading = false
 
     init(model: IssueDetailsModel, client: GithubClient, resultID: String?) {
         self.model = model
@@ -45,13 +46,19 @@ MergeButtonDelegate {
         guard let id = resultID,
             let previous: IssueResult = client.cache.get(id: id)
             else { return }
+        loading = true
+        update(animated: true)
+
         client.merge(
             previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            type: preferredMergeType
-        )
+            type: preferredMergeType,
+            error: { [weak self] in
+                self?.loading = false
+                self?.update(animated: true)
+        })
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -84,7 +91,11 @@ MergeButtonDelegate {
             state: mergeable ? .success : .warning
         ))
 
-        viewModels.append(IssueMergeButtonModel(enabled: mergeable, type: preferredMergeType))
+        viewModels.append(IssueMergeButtonModel(
+            enabled: mergeable,
+            type: preferredMergeType,
+            loading: loading
+        ))
 
         return viewModels
     }

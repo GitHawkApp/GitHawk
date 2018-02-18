@@ -23,7 +23,7 @@ final class MergeButton: UIView {
 
     private let mergeLabel = UILabel()
     private let optionBorder = UIView()
-    private var enabled = true
+    private let activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +31,7 @@ final class MergeButton: UIView {
         addSubview(mergeLabel)
         addSubview(optionIconView)
         addSubview(optionBorder)
+        addSubview(activityView)
 
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
 
@@ -57,6 +58,12 @@ final class MergeButton: UIView {
             make.right.equalTo(optionIconView.snp.left)
         }
 
+        activityView.hidesWhenStopped = true
+        activityView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalTo(mergeLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
+        }
+
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap(recognizer:))))
     }
 
@@ -66,12 +73,13 @@ final class MergeButton: UIView {
 
     // MARK: Public
 
-    func configure(title: String, enabled: Bool) {
-        self.enabled = enabled
+    func configure(title: String, enabled: Bool, loading: Bool) {
+        isUserInteractionEnabled = enabled && !loading
 
-        backgroundColor = enabled
+        backgroundColor = (enabled
             ? Styles.Colors.Green.medium.color
-            : Styles.Colors.Gray.light.color
+            : Styles.Colors.Gray.light.color)
+            .withAlphaComponent(loading ? 0.2 : 1)
         alpha = enabled ? 1 : 0.3
 
         let titleColor = enabled ? .white : Styles.Colors.Gray.dark.color
@@ -80,6 +88,12 @@ final class MergeButton: UIView {
         optionBorder.backgroundColor = titleColor
 
         mergeLabel.text = title
+
+        if loading {
+            activityView.startAnimating()
+        } else {
+            activityView.stopAnimating()
+        }
     }
 
     // MARK: Overrides
@@ -106,7 +120,7 @@ final class MergeButton: UIView {
     // MARK: Private API
 
     func highlight(_ highlight: Bool) {
-        guard enabled else { return }
+        guard isUserInteractionEnabled else { return }
         alpha = highlight ? 0.5 : 1
     }
 

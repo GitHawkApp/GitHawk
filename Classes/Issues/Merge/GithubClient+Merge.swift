@@ -15,7 +15,8 @@ extension GithubClient {
         owner: String,
         repo: String,
         number: Int,
-        type: IssueMergeType
+        type: IssueMergeType,
+        error: @escaping () -> Void
         ) {
         let newStatus = IssueStatusModel(
             status: .merged,
@@ -35,17 +36,14 @@ extension GithubClient {
             timelinePages: previous.timelinePages(appending: [newEvent])
         )
 
-        let cache = self.cache
-
-        // optimistically update the cache, listeners can react as appropriate
-        cache.set(value: optimisticResult)
-
         let methodString: String
         switch type {
         case .merge: methodString = "merge"
         case .rebase: methodString = "rebase"
         case .squash: methodString = "squash"
         }
+
+        let cache = self.cache
 
         // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
@@ -54,9 +52,15 @@ extension GithubClient {
             parameters: [ "merge_method": methodString ],
             completion: { (response, _) in
                 // rewind to a previous object if response isn't a success
-                if response.response?.statusCode != 200 {
-                    cache.set(value: previous)
-                    ToastManager.showGenericError()
+                if response.response?.statusCode == 200 {
+                    cache.set(value: optimisticResult)
+                } else {
+                    if let json = response.value as? [String:Any], let error = json["message"] as? String {
+                        ToastManager.showError(message: error)
+                    } else {
+                        ToastManager.showGenericError()
+                    }
+                    error()
                 }
         }))
     }
