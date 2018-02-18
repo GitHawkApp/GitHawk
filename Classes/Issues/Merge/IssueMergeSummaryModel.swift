@@ -13,6 +13,7 @@ final class IssueMergeSummaryModel: ListDiffable {
 
     enum State: Int {
         case success
+        case pending
         case failure
         case warning
     }
