@@ -68,11 +68,12 @@ MergeButtonDelegate {
             let states = object.contexts.map { $0.state }
             let state: IssueMergeSummaryModel.State
             let stateDescription: String
+            let failureDescription = NSLocalizedString("Some checks failed", comment: "")
             let containsFailure = states.contains(.failure) || states.contains(.error)
             switch states {
             case _ where containsFailure:
                 state = .failure
-                stateDescription = NSLocalizedString("Some checks failed", comment: "")
+                stateDescription = failureDescription
             case let states where states.contains(.pending) && !containsFailure:
                 state = .pending
                 stateDescription = NSLocalizedString("Merge status pending", comment: "")
@@ -80,7 +81,9 @@ MergeButtonDelegate {
                 state = .success
                 stateDescription = NSLocalizedString("All checks passed", comment: "")
             default:
-                fatalError()
+                assert(false, "This should only occur when any of the `states` are of type `.expected`, which we have no clue of when it is used. The documentation (https://developer.github.com/v4/enum/statusstate/) doesn't answer that question either.")
+                state = .failure
+                stateDescription = failureDescription
             }
             
             viewModels.append(IssueMergeSummaryModel(title: stateDescription, state: state))
