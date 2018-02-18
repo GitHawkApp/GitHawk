@@ -65,13 +65,25 @@ MergeButtonDelegate {
         var viewModels = [ListDiffable]()
 
         if object.contexts.count > 0 {
-            let success = object.contexts.reduce(true, { $0 && $1.state == .success })
-            viewModels.append(IssueMergeSummaryModel(
-                title: success ?
-                    NSLocalizedString("All checks passed", comment: "")
-                    : NSLocalizedString("Some checks failed", comment: ""),
-                state: success ? .success : .failure
-            ))
+            let states = object.contexts.map { $0.state }
+            let state: IssueMergeSummaryModel.State
+            let stateDescription: String
+            let containsFailure = states.contains(.failure) || states.contains(.error)
+            switch states {
+            case _ where containsFailure:
+                state = .failure
+                stateDescription = NSLocalizedString("Some checks failed", comment: "")
+            case let states where states.contains(.pending) && !containsFailure:
+                state = .pending
+                stateDescription = NSLocalizedString("Merge status pending", comment: "")
+            case let states where states.reduce(true, { $0 && $1 == .success }):
+                state = .success
+                stateDescription = NSLocalizedString("All checks passed", comment: "")
+            default:
+                fatalError()
+            }
+            
+            viewModels.append(IssueMergeSummaryModel(title: stateDescription, state: state))
         }
 
         viewModels += object.contexts as [ListDiffable]
