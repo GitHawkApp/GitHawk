@@ -77,9 +77,16 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         var tapAction = function(e) {
             document.location = "\(ImgScheme)://" + encodeURIComponent(e.target.src);
         };
-        var imgs = document.getElementsByTagName('img')
+        function removeRootPath(img) {
+            var src = img.getAttribute('src');
+            if(src.length > 1 && src.indexOf('/') === 0) {
+                img.src = src.substring(1, src.length);
+            }
+        }
+        var imgs = document.getElementsByTagName('img');
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('click', tapAction);
+            removeRootPath(imgs[i]);
         }
         function onElementHeightChange(elm, callback) {
             var lastHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight), newHeight;
