@@ -61,25 +61,23 @@ enum Styles {
 
     enum Text {
 
-        private static let semibold = UIFont.boldSystemFont(ofSize: 1).fontDescriptor
         static let body = TextStyle(size: 16)
-        static let bodyBold = TextStyle(fontDescriptor: semibold, size: 16)
-        static let bodyItalic = TextStyle(size: 16, traits: .traitItalic)
+        static let bodyBold = TextStyle(font: .system(.bold), size: 16)
         static let secondary = TextStyle(size: 13)
-        static let secondaryBold = TextStyle(fontDescriptor: semibold, size: 13)
-        static let title = TextStyle(fontDescriptor: semibold, size: 14)
+        static let secondaryBold = TextStyle(font: .system(.bold), size: 13)
+        static let title = TextStyle(font: .system(.bold), size: 14)
         static let button = TextStyle(size: 16)
-        static let headline = TextStyle(fontDescriptor: semibold, size: 18)
-        static let smallTitle = TextStyle(fontDescriptor: semibold, size: 12)
-        static let code = TextStyle(name: "Courier", size: 16)
-        static let secondaryCode = TextStyle(name: "Courier", size: 13)
+        static let headline = TextStyle(font: .system(.bold), size: 18)
+        static let smallTitle = TextStyle(font: .system(.bold), size: 12)
+        static let code = TextStyle(font: .name("Courier"), size: 16)
+        static let secondaryCode = TextStyle(font: .name("Courier"), size: 13)
 
-        static let h1 = TextStyle(fontDescriptor: semibold, size: 24)
-        static let h2 = TextStyle(fontDescriptor: semibold, size: 20)
-        static let h3 = TextStyle(fontDescriptor: semibold, size: 20)
-        static let h4 = TextStyle(fontDescriptor: semibold, size: 18)
-        static let h5 = TextStyle(fontDescriptor: semibold, size: 16)
-        static let h6 = TextStyle(fontDescriptor: semibold, size: 16)
+        static let h1 = TextStyle(font: .system(.bold), size: 24)
+        static let h2 = TextStyle(font: .system(.bold), size: 20)
+        static let h3 = TextStyle(font: .system(.bold), size: 20)
+        static let h4 = TextStyle(font: .system(.bold), size: 18)
+        static let h5 = TextStyle(font: .system(.bold), size: 16)
+        static let h6 = TextStyle(font: .system(.bold), size: 16)
 
     }
 
@@ -139,7 +137,7 @@ extension TextStyle {
         var attributes = self.attributes
         attributes[.foregroundColor] = foreground ?? attributes[.foregroundColor]
         attributes[.backgroundColor] = background ?? attributes[.backgroundColor]
-        return TextStyle(fontDescriptor: fontDescriptor, size: size, attributes: attributes, minSize: minSize, maxSize: maxSize)
+        return TextStyle(font: font, size: size, attributes: attributes, minSize: minSize, maxSize: maxSize)
     }
 
 }
