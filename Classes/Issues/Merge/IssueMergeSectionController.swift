@@ -69,12 +69,11 @@ MergeButtonDelegate {
             let state: IssueMergeSummaryModel.State
             let stateDescription: String
             let failureDescription = NSLocalizedString("Some checks failed", comment: "")
-            let containsFailure = states.contains(.failure) || states.contains(.error)
             switch states {
-            case _ where containsFailure:
+            case let states where states.contains(.failure) || states.contains(.error):
                 state = .failure
                 stateDescription = failureDescription
-            case let states where states.contains(.pending) && !containsFailure:
+            case let states where states.contains(.pending):
                 state = .pending
                 stateDescription = NSLocalizedString("Merge status pending", comment: "")
             case let states where states.reduce(true, { $0 && $1 == .success }):
