@@ -13,10 +13,12 @@ final class IssueMergeButtonModel: ListDiffable {
 
     let enabled: Bool
     let type: IssueMergeType
+    let loading: Bool
 
-    init(enabled: Bool, type: IssueMergeType) {
+    init(enabled: Bool, type: IssueMergeType, loading: Bool) {
         self.enabled = enabled
         self.type = type
+        self.loading = loading
     }
 
     // MARK: ListDiffable
@@ -31,5 +33,6 @@ final class IssueMergeButtonModel: ListDiffable {
         guard let object = object as? IssueMergeButtonModel else { return false }
         return enabled == object.enabled
         && type == object.type
+        && loading == object.loading
     }
 }

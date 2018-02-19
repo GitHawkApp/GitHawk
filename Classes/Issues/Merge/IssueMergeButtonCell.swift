@@ -49,7 +49,7 @@ final class IssueMergeButtonCell: IssueCommentBaseCell, ListBindable {
         case .squash: title = NSLocalizedString("Squash and merge", comment: "")
         case .rebase: title = NSLocalizedString("Rebase and merge", comment: "")
         }
-        mergeButton.configure(title: title, enabled: viewModel.enabled)
+        mergeButton.configure(title: title, enabled: viewModel.enabled, loading: viewModel.loading)
     }
     
 }
