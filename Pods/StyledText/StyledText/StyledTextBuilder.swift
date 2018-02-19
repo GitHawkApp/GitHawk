@@ -76,13 +76,17 @@ public final class StyledTextBuilder: Hashable, Equatable {
 
         let nextStyle: TextStyle
         if let traits = traits {
-            let tipFontDescriptor = tip.style.fontDescriptor
+
+            let tipFontDescriptor: UIFontDescriptor
+            switch tip.style.font {
+            case .descriptor(let descriptor): tipFontDescriptor = descriptor
+            default: tipFontDescriptor = tip.style.font(contentSizeCategory: .medium).fontDescriptor
+            }
+
             nextStyle = TextStyle(
-//                name: tip.style.name,
-                fontDescriptor: tipFontDescriptor.withSymbolicTraits(traits) ?? tipFontDescriptor,
+                font: .descriptor(tipFontDescriptor.withSymbolicTraits(traits) ?? tipFontDescriptor),
                 size: tip.style.size,
                 attributes: nextAttributes,
-//                traits: tip.style.traits.union(traits),
                 minSize: tip.style.minSize,
                 maxSize: tip.style.maxSize
             )

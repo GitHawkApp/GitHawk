@@ -10,59 +10,52 @@ import UIKit
 
 public struct TextStyle: Hashable, Equatable {
 
-    public let fontDescriptor: UIFontDescriptor
+    public let font: Font
     public let size: CGFloat
     public let attributes: [NSAttributedStringKey: Any]
     public let minSize: CGFloat
     public let maxSize: CGFloat
 
     public init(
-        fontDescriptor: UIFontDescriptor = UIFont.systemFont(ofSize: 1).fontDescriptor,
+        font: Font = .system(.default),
         size: CGFloat = UIFont.systemFontSize,
         attributes: [NSAttributedStringKey: Any] = [:],
         minSize: CGFloat = 0,
         maxSize: CGFloat = .greatestFiniteMagnitude
         ) {
-        self.fontDescriptor = fontDescriptor
+        self.font = font
         self.size = size
         self.attributes = attributes
         self.minSize = minSize
         self.maxSize = maxSize
 
-        self._hashValue = fontDescriptor
+        self._hashValue = font
             .combineHash(with: size)
             .combineHash(with: attributes.count)
             .combineHash(with: minSize)
             .combineHash(with: maxSize)
     }
 
-    public init(
-        name: String = UIFont.systemFont(ofSize: 1).fontName,
-        size: CGFloat = UIFont.systemFontSize,
-        attributes: [NSAttributedStringKey: Any] = [:],
-        traits: UIFontDescriptorSymbolicTraits = [],
-        minSize: CGFloat = 0,
-        maxSize: CGFloat = .greatestFiniteMagnitude
-        ) {
-
-        let baseFontDescriptor = UIFontDescriptor()
-            .addingAttributes([.name: name])
-        let traitFontDescriptor = baseFontDescriptor.withSymbolicTraits(traits)
-        if traitFontDescriptor == nil {
-            print("WARNING: No font found for name \"\(name)\" with traits \(traits)")
-        }
-        self.init(
-            fontDescriptor: traitFontDescriptor ?? UIFontDescriptor(name: name, size: size),
-            size: size,
-            attributes: attributes,
-            minSize: minSize,
-            maxSize: maxSize
-        )
-    }
-
     public func font(contentSizeCategory: UIContentSizeCategory) -> UIFont {
         let preferredSize = contentSizeCategory.preferredContentSize(size)
-        return UIFont(descriptor: fontDescriptor, size: preferredSize)
+
+        switch font {
+        case .name(let name):
+            guard let font = UIFont(name: name, size: preferredSize) else {
+                print("WARNING: Font with name \"\(name)\" not found. Falling back to system font.")
+                return UIFont.systemFont(ofSize: preferredSize)
+            }
+            return font
+        case .descriptor(let descriptor): return UIFont(descriptor: descriptor, size: preferredSize)
+        case .system(let system):
+            switch system {
+            case .default: return UIFont.systemFont(ofSize: preferredSize)
+            case .bold: return UIFont.boldSystemFont(ofSize: preferredSize)
+            case .italic: return UIFont.italicSystemFont(ofSize: preferredSize)
+            case .weighted(let weight): return UIFont.systemFont(ofSize: preferredSize, weight: weight)
+            case .monospaced(let weight): return UIFont.monospacedDigitSystemFont(ofSize: preferredSize, weight: weight)
+            }
+        }
     }
 
     internal let _hashValue: Int
@@ -74,9 +67,8 @@ public struct TextStyle: Hashable, Equatable {
         return lhs.size == rhs.size
             && lhs.minSize == rhs.minSize
             && rhs.maxSize == rhs.maxSize
-            && lhs.fontDescriptor == rhs.fontDescriptor
+            && lhs.font == rhs.font
             && NSDictionary(dictionary: lhs.attributes).isEqual(to: rhs.attributes)
     }
 
 }
-
