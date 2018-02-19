@@ -81,23 +81,8 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "GITHUB_CLIENT_SECRET"
-            value = "SET ON CI"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
             key = "NETWORK_RECORD_PATH"
             value = "$(PROJECT_DIR)"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "GITHUB_CLIENT_ID"
-            value = "SET ON CI"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "IMGUR_CLIENT_ID"
-            value = "SET ON CI"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
