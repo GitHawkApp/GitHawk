@@ -21,7 +21,12 @@ struct GithubClient {
 
     struct Request {
 
-        let url: String
+        enum RequestType {
+            case api, site, status
+        }
+
+        let path: String
+        let type: RequestType
         let method: HTTPMethod
         let parameters: Parameters?
         let headers: HTTPHeaders?
@@ -37,7 +42,8 @@ struct GithubClient {
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) -> Request {
             return Request(
-                url: "https://api.github.com/\(path)",
+                type: .api,
+                path: path,
                 method: method,
                 parameters: parameters,
                 headers: headers,
@@ -55,7 +61,8 @@ struct GithubClient {
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) -> Request {
             return Request(
-                url: "https://github.com/\(path)",
+                type: .site,
+                path: path,
                 method: method,
                 parameters: parameters,
                 headers: headers,
@@ -72,7 +79,8 @@ struct GithubClient {
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) -> Request {
             return Request(
-                url: "https://status.github.com/api/status.json",
+                type: .status,
+                path: "status.json",
                 method: method,
                 parameters: parameters,
                 headers: headers,
@@ -82,14 +90,16 @@ struct GithubClient {
         }
 
         private init(
-            url: String,
+            type: RequestType,
+            path: String,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
             logoutOnAuthFailure: Bool = true,
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) {
-            self.url = url
+            self.type = type
+            self.path = path
             self.method = method
             self.parameters = parameters
             self.headers = headers
@@ -127,7 +137,8 @@ struct GithubClient {
     func request(
         _ request: GithubClient.Request
         ) -> DataRequest {
-        print("Requesting \(request.method.rawValue): \(request.url)")
+        let url = constructURL(from: request)
+        print("Requesting \(request.method.rawValue): \(url)")
 
         let encoding: ParameterEncoding
         switch request.method {
@@ -138,7 +149,7 @@ struct GithubClient {
         var parameters = request.parameters ?? [:]
         parameters["access_token"] = userSession?.token
 
-        return networker.request(request.url,
+        return networker.request(url,
                                  method: request.method,
                                  parameters: parameters,
                                  encoding: encoding,
@@ -201,6 +212,21 @@ struct GithubClient {
 
     static func url(baseURL: String = "https://github.com/", path: String) -> URL? {
         return URL(string: "\(baseURL)\(path)")
+    }
+
+    // MARK: Private
+    private func constructURL(from request: Request) -> String {
+        let baseURL: String
+        switch request.type {
+        case .api:
+            baseURL = "https://api.github.com/"
+        case .site:
+            baseURL = "https://github.com/"
+        case .status:
+            baseURL = "https://status.github.com/api/"
+        }
+
+        return "\(baseURL)\(request.path)"
     }
 
 }
