@@ -14,6 +14,7 @@ final class GithubUserSession: NSObject, NSCoding {
         static let token = "token"
         static let authMethod = "authMethod"
         static let username = "username"
+        static let enterpriseURL = "enterpriseURL"
     }
 
     enum AuthMethod: String {
@@ -26,15 +27,18 @@ final class GithubUserSession: NSObject, NSCoding {
     // mutable to handle migration from time when username wasn't captured
     // can freely mutate and manually update. caller must then save updated session.
     var username: String?
+    let enterpriseURL: String?
 
     init(
         token: String,
         authMethod: AuthMethod,
-        username: String?
+        username: String?,
+        enterpriseURL: String? = nil
         ) {
         self.token = token
         self.authMethod = authMethod
         self.username = username
+        self.enterpriseURL = enterpriseURL
     }
 
     // MARK: NSCoding
@@ -47,11 +51,13 @@ final class GithubUserSession: NSObject, NSCoding {
         let authMethod = storedAuthMethod.flatMap(AuthMethod.init) ?? .oauth
 
         let username = aDecoder.decodeObject(forKey: Keys.username) as? String
+        let enterpriseURL = aDecoder.decodeObject(forKey: Keys.enterpriseURL) as? String
 
         self.init(
             token: token,
             authMethod: authMethod,
-            username: username
+            username: username,
+            enterpriseURL: enterpriseURL
         )
     }
 
@@ -59,6 +65,7 @@ final class GithubUserSession: NSObject, NSCoding {
         aCoder.encode(token, forKey: Keys.token)
         aCoder.encode(authMethod.rawValue, forKey: Keys.authMethod)
         aCoder.encode(username, forKey: Keys.username)
+        aCoder.encode(enterpriseURL, forKey: Keys.enterpriseURL)
     }
 
 }
