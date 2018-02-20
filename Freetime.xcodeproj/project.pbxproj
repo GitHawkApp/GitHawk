@@ -648,7 +648,7 @@
 		297A372F1F1704C10081C04E /* IssueRequestSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRequestSectionController.swift; sourceTree = "<group>"; };
 		297A6CE3202774830027E03B /* ListAdapter+Scrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListAdapter+Scrolling.swift"; sourceTree = "<group>"; };
 		297A6CE52027880C0027E03B /* MessageView+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageView+Styles.swift"; sourceTree = "<group>"; };
-		297AE8341EC0D58A00B44A1F /* Freetime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freetime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		297AE8341EC0D58A00B44A1F /* GitHawk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHawk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreetimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
 		297AE84E1EC0D58A00B44A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1328,7 +1328,7 @@
 		297AE8351EC0D58A00B44A1F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				297AE8341EC0D58A00B44A1F /* Freetime.app */,
+				297AE8341EC0D58A00B44A1F /* GitHawk.app */,
 				297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */,
 			);
 			name = Products;
@@ -1938,7 +1938,7 @@
 			);
 			name = Freetime;
 			productName = Freetime;
-			productReference = 297AE8341EC0D58A00B44A1F /* Freetime.app */;
+			productReference = 297AE8341EC0D58A00B44A1F /* GitHawk.app */;
 			productType = "com.apple.product-type.application";
 		};
 		297AE8471EC0D58A00B44A1F /* FreetimeTests */ = {
@@ -2876,7 +2876,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies -Onone -Xfrontend -warn-long-function-bodies=200 -Xfrontend -warn-long-expression-type-checking=200";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GitHawk;
 				PROVISIONING_PROFILE = "d3f38ecf-9904-45ba-91d7-ef0fe549d855";
 				PROVISIONING_PROFILE_SPECIFIER = "Freetime Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Resources/Freetime-Bridging-Header.h";
@@ -2904,7 +2904,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GitHawk;
 				PROVISIONING_PROFILE = "18731a67-7865-4308-accb-344bb0642ad5";
 				PROVISIONING_PROFILE_SPECIFIER = "Freetime Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "Resources/Freetime-Bridging-Header.h";
@@ -3020,7 +3020,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.freetime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GitHawk;
 				PROVISIONING_PROFILE = "18731a67-7865-4308-accb-344bb0642ad5";
 				PROVISIONING_PROFILE_SPECIFIER = "Freetime Distribution";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TESTFLIGHT;
