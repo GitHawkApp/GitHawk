@@ -12,8 +12,8 @@ import Foundation
 extension NotificationViewModel {
     var stateAlias: (number: Int, key: String)? {
         switch identifier {
-        case .hash:
-            // commits don't have states, always merged
+        case .hash, .release:
+            // commits and releases don't have states, always "merged"
             return nil
         case .number(let number):
             // graphQL alias must be an alpha-numeric string and start w/ alpha

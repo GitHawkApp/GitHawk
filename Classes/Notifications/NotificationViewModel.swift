@@ -15,6 +15,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     enum Identifier {
         case number(Int)
         case hash(String)
+        case release(String)
     }
 
     // combining possible issue and PR states
