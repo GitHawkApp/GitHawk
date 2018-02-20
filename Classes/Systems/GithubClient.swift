@@ -28,15 +28,15 @@ struct GithubClient {
         let logoutOnAuthFailure: Bool
         let completion: (DataResponse<Any>, Page?) -> Void
 
-        init(
+        static func api(
             path: String,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
             logoutOnAuthFailure: Bool = true,
             completion: @escaping (DataResponse<Any>, Page?) -> Void
-            ) {
-            self.init(
+            ) -> Request {
+            return Request(
                 url: "https://api.github.com/" + path,
                 method: method,
                 parameters: parameters,
@@ -46,7 +46,42 @@ struct GithubClient {
             )
         }
 
-        init(
+        static func site(
+            path: String,
+            method: HTTPMethod = .get,
+            parameters: Parameters? = nil,
+            headers: HTTPHeaders? = nil,
+            logoutOnAuthFailure: Bool = true,
+            completion: @escaping (DataResponse<Any>, Page?) -> Void
+            ) -> Request {
+            return Request(
+                url: "https://github.com/" + path,
+                method: method,
+                parameters: parameters,
+                headers: headers,
+                logoutOnAuthFailure: logoutOnAuthFailure,
+                completion: completion
+            )
+        }
+
+        static func status(
+            method: HTTPMethod = .get,
+            parameters: Parameters? = nil,
+            headers: HTTPHeaders? = nil,
+            logoutOnAuthFailure: Bool = true,
+            completion: @escaping (DataResponse<Any>, Page?) -> Void
+            ) -> Request {
+            return Request(
+                url: "https://status.github.com/api/status.json",
+                method: method,
+                parameters: parameters,
+                headers: headers,
+                logoutOnAuthFailure: logoutOnAuthFailure,
+                completion: completion
+            )
+        }
+
+        private init(
             url: String,
             method: HTTPMethod = .get,
             parameters: Parameters? = nil,

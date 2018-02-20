@@ -73,7 +73,7 @@ final class NotificationClient {
             parameters["before"] = GithubAPIDateFormatter().string(from: before)
         }
 
-        githubClient.request(GithubClient.Request(
+        githubClient.request(GithubClient.Request.api(
             path: path(repo: repo),
             method: .get,
             parameters: parameters,
@@ -161,7 +161,7 @@ final class NotificationClient {
             }
         }
 
-        githubClient.request(GithubClient.Request(
+        githubClient.request(GithubClient.Request.api(
             path: "notifications/threads/\(id)",
             method: .patch) { [weak self] response, _ in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
@@ -181,7 +181,7 @@ final class NotificationClient {
             return
         }
 
-        githubClient.request(GithubClient.Request(
+        githubClient.request(GithubClient.Request.api(
             path: "users/\(viewer)/subscriptions"
         ) { response, _ in
             // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
@@ -210,7 +210,7 @@ final class NotificationClient {
     }
 
     func markNotifications(repo: NotificationRepository? = nil, completion: @escaping (Bool) -> Void) {
-        githubClient.request(GithubClient.Request(
+        githubClient.request(GithubClient.Request.api(
             path: path(repo: repo),
             method: .put
         ) { response, _ in
