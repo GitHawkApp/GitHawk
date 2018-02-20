@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,19 +19,19 @@
                         <sections>
                             <tableViewSection id="s1r-s0-sed">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="bPq-Rw-PLO">
-                                        <rect key="frame" x="0.0" y="35" width="375" height="120"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="300" id="bPq-Rw-PLO">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bPq-Rw-PLO" id="ItG-Cs-Vvc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d7E-xB-fht">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMZ-yn-I5R">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
                                                     <connections>
                                                         <action selector="didPressPreviewImage" destination="fex-dK-757" eventType="touchUpInside" id="pwI-Uk-KaF"/>
                                                     </connections>
@@ -55,7 +54,7 @@
                             <tableViewSection headerTitle="TITLE" id="8bB-fg-hEC">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="qHM-9o-Ifd">
-                                        <rect key="frame" x="0.0" y="211" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="391" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qHM-9o-Ifd" id="J4O-t2-43c">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -73,32 +72,6 @@
                                                 <constraint firstAttribute="bottom" secondItem="IrO-7N-7EE" secondAttribute="bottom" constant="8" id="gyI-NQ-tjp"/>
                                                 <constraint firstItem="IrO-7N-7EE" firstAttribute="top" secondItem="J4O-t2-43c" secondAttribute="top" constant="8" id="ixF-ZB-OQV"/>
                                                 <constraint firstAttribute="trailing" secondItem="IrO-7N-7EE" secondAttribute="trailing" constant="16" id="vAQ-Z2-CMk"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="DESCRIPTION" id="nli-98-Nxa">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="150" id="FD5-IO-LTm">
-                                        <rect key="frame" x="0.0" y="311" width="375" height="150"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FD5-IO-LTm" id="58C-S9-icB">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iqO-9E-R2C" customClass="MessageTextView" customModule="MessageViewController">
-                                                    <rect key="frame" x="16" y="8" width="343" height="133.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="iqO-9E-R2C" firstAttribute="top" secondItem="58C-S9-icB" secondAttribute="top" constant="8" id="CxK-BZ-dH5"/>
-                                                <constraint firstAttribute="bottom" secondItem="iqO-9E-R2C" secondAttribute="bottom" constant="8" id="gD8-pz-f3L"/>
-                                                <constraint firstAttribute="trailing" secondItem="iqO-9E-R2C" secondAttribute="trailing" constant="16" id="kfh-DG-Twc"/>
-                                                <constraint firstItem="iqO-9E-R2C" firstAttribute="leading" secondItem="58C-S9-icB" secondAttribute="leading" constant="16" id="kqI-9T-iR3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -122,7 +95,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="bodyTextView" destination="iqO-9E-R2C" id="aaV-Ga-YE8"/>
                         <outlet property="previewImageView" destination="d7E-xB-fht" id="vag-wx-uwe"/>
                         <outlet property="titleTextField" destination="IrO-7N-7EE" id="8Xt-hT-Ycb"/>
                     </connections>
