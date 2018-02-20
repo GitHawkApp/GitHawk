@@ -175,7 +175,7 @@ struct GithubClient {
         ) -> DataRequest {
         let encoding: ParameterEncoding = JSONEncoding.default
         return networker.request(
-            "https://api.github.com/graphql",
+            graphQLEndpoint,
             method: .post,
             parameters: parameters,
             encoding: encoding,
@@ -217,16 +217,36 @@ struct GithubClient {
     // MARK: Private
     private func constructURL(from request: Request) -> String {
         let baseURL: String
-        switch request.type {
-        case .api:
-            baseURL = "https://api.github.com/"
-        case .site:
-            baseURL = "https://github.com/"
-        case .status:
-            baseURL = "https://status.github.com/api/"
+        if let enterpriseURL = userSession?.enterpriseURL {
+            switch request.type {
+            case .api:
+                baseURL = "\(enterpriseURL)api/v3"
+            case .site:
+                baseURL = enterpriseURL
+            case .status:
+                assert(false, "Status checking is unsupported in GitHub Enterprise")
+                baseURL = "invalid-url"
+            }
+        } else {
+            switch request.type {
+            case .api:
+                baseURL = "https://api.github.com/"
+            case .site:
+                baseURL = "https://github.com/"
+            case .status:
+                baseURL = "https://status.github.com/api/"
+            }
         }
 
         return "\(baseURL)\(request.path)"
+    }
+
+    private var graphQLEndpoint: String {
+        if let enterpriseURL = userSession?.enterpriseURL {
+            return "\(enterpriseURL)/api/graphql"
+        } else {
+            return "https://api.github.com/graphql"
+        }
     }
 
 }
