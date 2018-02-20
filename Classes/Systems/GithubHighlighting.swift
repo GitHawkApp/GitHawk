@@ -20,5 +20,8 @@ enum GithubHighlighting {
     static func highlight(_ code: String, as language: String) -> NSAttributedString? {
         return shared?.highlight(code, as: language, fastRender: true)
     }
-
+    
+    static func highlight(_ code: String) -> NSAttributedString? {
+        return shared?.highlight(code)
+    }
 }
