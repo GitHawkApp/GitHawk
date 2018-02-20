@@ -75,6 +75,7 @@ class ImageUploadTableViewController: UITableViewController {
                 .font: Styles.Text.body.preferredFont
             ]
         )
+        titleTextField.delegate = self
         
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
@@ -174,7 +175,7 @@ class ImageUploadTableViewController: UITableViewController {
                 return
             }
 
-            var name = "GitHawk Upload"
+            var name = self?.titleText ?? "GitHawk Upload"
 
             if let username = self?.username {
                 name += " by \(username)"
@@ -211,6 +212,7 @@ class ImageUploadTableViewController: UITableViewController {
 extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
         return true
     }
 }
