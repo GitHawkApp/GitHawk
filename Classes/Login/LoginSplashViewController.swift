@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
+private let loginURL = GithubClient.url(path: "login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
 private let callbackURLScheme = "freetime://"
 
 final class LoginSplashViewController: UIViewController, GithubSessionListener {

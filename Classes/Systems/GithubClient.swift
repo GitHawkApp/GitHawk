@@ -37,7 +37,7 @@ struct GithubClient {
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) -> Request {
             return Request(
-                url: "https://api.github.com/" + path,
+                url: "https://api.github.com/\(path)",
                 method: method,
                 parameters: parameters,
                 headers: headers,
@@ -55,7 +55,7 @@ struct GithubClient {
             completion: @escaping (DataResponse<Any>, Page?) -> Void
             ) -> Request {
             return Request(
-                url: "https://github.com/" + path,
+                url: "https://github.com/\(path)",
                 method: method,
                 parameters: parameters,
                 headers: headers,
@@ -197,6 +197,10 @@ struct GithubClient {
             NetworkActivityIndicatorManager.shared.decrementActivityCount()
             resultHandler?(result, error)
         })
+    }
+
+    static func url(baseURL: String = "https://github.com/", path: String) -> URL? {
+        return URL(string: "\(baseURL)\(path)")
     }
 
 }

@@ -98,7 +98,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)")!
+        return GithubClient.url(path: "\(repo.owner)/\(repo.name)")!
     }
 
     func configureNavigationItems() {
