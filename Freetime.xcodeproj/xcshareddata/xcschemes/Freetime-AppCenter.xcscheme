@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "297AE8331EC0D58A00B44A1F"
-               BuildableName = "Freetime.app"
+               BuildableName = "GitHawk.app"
                BlueprintName = "Freetime"
                ReferencedContainer = "container:Freetime.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "297AE8331EC0D58A00B44A1F"
-            BuildableName = "Freetime.app"
+            BuildableName = "GitHawk.app"
             BlueprintName = "Freetime"
             ReferencedContainer = "container:Freetime.xcodeproj">
          </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "297AE8331EC0D58A00B44A1F"
-            BuildableName = "Freetime.app"
+            BuildableName = "GitHawk.app"
             BlueprintName = "Freetime"
             ReferencedContainer = "container:Freetime.xcodeproj">
          </BuildableReference>
@@ -100,7 +100,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "297AE8331EC0D58A00B44A1F"
-            BuildableName = "Freetime.app"
+            BuildableName = "GitHawk.app"
             BlueprintName = "Freetime"
             ReferencedContainer = "container:Freetime.xcodeproj">
          </BuildableReference>

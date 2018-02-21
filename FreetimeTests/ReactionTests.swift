@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Freetime
+@testable import GitHawk
 
 private let viewer = "rnystrom"
 

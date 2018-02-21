@@ -8,7 +8,7 @@
 
 import XCTest
 import FBSnapshotTestCase
-@testable import Freetime
+@testable import GitHawk
 
 class AttributedStringViewTests: FBSnapshotTestCase {
 //    let initialFrame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
