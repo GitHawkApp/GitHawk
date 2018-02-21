@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import GitHawk
+@testable import Freetime
 class SearchQueryTests: XCTestCase {
 
     var encoder: JSONEncoder!

@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import GitHawk
+@testable import Freetime
 class SearchRecentViewModelTests: XCTestCase {
 
     var searchQuery: SearchQuery!

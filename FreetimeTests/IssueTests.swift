@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import GitHawk
+@testable import Freetime
 
 class IssueTests: XCTestCase {
 
