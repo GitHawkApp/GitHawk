@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Freetime
+@testable import GitHawk
 
 class SecretsTests: XCTestCase {
     

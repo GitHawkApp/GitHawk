@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import Freetime
+@testable import GitHawk
 class SignatureTests: XCTestCase {
 
     func test_enabled_customSetter() {

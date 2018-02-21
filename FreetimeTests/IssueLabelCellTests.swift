@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import Freetime
+@testable import GitHawk
 class IssueLabelCellTests: XCTestCase {
 
     var issueLabelCell: IssueLabelCell!

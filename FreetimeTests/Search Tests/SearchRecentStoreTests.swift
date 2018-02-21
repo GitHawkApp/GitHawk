@@ -10,7 +10,7 @@ import Foundation
 
 import XCTest
 
-@testable import Freetime
+@testable import GitHawk
 class SearchRecentStoreTests: XCTestCase {
     var store: SearchRecentStore!
 
