@@ -8,7 +8,7 @@
 
 import Foundation
 import IGListKit
-@testable import GitHawk
+@testable import Freetime
 
 class ListTestKit: NSObject, ListAdapterDataSource {
 
