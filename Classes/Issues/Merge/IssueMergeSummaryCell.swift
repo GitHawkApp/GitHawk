@@ -61,7 +61,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         case .failure:
             imageViewBackground = Styles.Colors.Red.medium.color
             iconName = "merge-x"
-        case .warning:
+        case .warning, .pending:
             imageViewBackground = Styles.Colors.Gray.medium.color
             iconName = "merge-alert"
         }
