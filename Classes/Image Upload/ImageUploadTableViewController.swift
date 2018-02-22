@@ -23,10 +23,6 @@ class ImageUploadTableViewController: UITableViewController {
         }
     }
     @IBOutlet private var titleTextField: UITextField!
-    @IBOutlet private var bodyTextView: MessageTextView!
-    
-    private var bodyPlaceholder: String?
-    private var bodyTextColor: UIColor?
 
     private var image: UIImage! // Set through the create function
     private var username: String?
@@ -37,12 +33,6 @@ class ImageUploadTableViewController: UITableViewController {
 
     private var titleText: String? {
         guard let raw = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
-        if raw.isEmpty { return nil }
-        return raw
-    }
-
-    private var descriptionText: String? {
-        let raw = bodyTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty { return nil }
         return raw
     }
@@ -67,8 +57,6 @@ class ImageUploadTableViewController: UITableViewController {
         // Set the preview image
         previewImageView.image = image
 
-        // Set title field delegate so return moves to next field
-        titleTextField.delegate = self
 
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
@@ -78,12 +66,6 @@ class ImageUploadTableViewController: UITableViewController {
 
         // Setup view colors and styles
         let placeholderText = NSLocalizedString("Optional", comment: "")
-        bodyTextView.placeholderText = placeholderText
-        bodyTextView.placeholderTextColor = Styles.Colors.Gray.light.color
-        bodyTextView.font = Styles.Text.body.preferredFont
-        bodyTextView.textContainerInset = .zero
-        bodyTextView.textContainer.lineFragmentPadding = 0
-        
         titleTextField.textColor = Styles.Colors.Gray.dark.color
         titleTextField.font = Styles.Text.body.preferredFont
         titleTextField.attributedPlaceholder = NSAttributedString(
@@ -93,6 +75,7 @@ class ImageUploadTableViewController: UITableViewController {
                 .font: Styles.Text.body.preferredFont
             ]
         )
+        titleTextField.delegate = self
         
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
@@ -143,7 +126,7 @@ class ImageUploadTableViewController: UITableViewController {
             self.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
-        if titleText == nil && descriptionText == nil {
+        if titleText == nil {
             dismissBlock()
             return
         }
@@ -192,7 +175,7 @@ class ImageUploadTableViewController: UITableViewController {
                 return
             }
 
-            var name = "GitHawk Upload"
+            var name = self?.titleText ?? "GitHawk Upload"
 
             if let username = self?.username {
                 name += " by \(username)"
@@ -203,7 +186,7 @@ class ImageUploadTableViewController: UITableViewController {
                 base64Image: compressionData,
                 name: name,
                 title: self?.titleText ?? "",
-                description: self?.descriptionText ?? "") { [weak self] result in
+                description: "") { [weak self] result in
 
                 switch result {
                 case .error:
@@ -226,11 +209,10 @@ class ImageUploadTableViewController: UITableViewController {
 }
 
 // MARK: UITextFieldDelegate
-
 extension ImageUploadTableViewController: UITextFieldDelegate {
     /// Called when the user taps return on the title field, moves their cursor to the body
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        bodyTextView.becomeFirstResponder()
-        return false
+        view.endEditing(true)
+        return true
     }
 }
