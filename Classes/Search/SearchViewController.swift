@@ -126,7 +126,6 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
-        recentStore.add(query)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
