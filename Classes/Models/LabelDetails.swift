@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LabelDetails {
+final class LabelRepoDetails {
     
     let owner: String
     let repo: String
