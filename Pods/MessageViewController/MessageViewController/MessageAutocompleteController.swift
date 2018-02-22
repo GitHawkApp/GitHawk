@@ -46,8 +46,17 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     private var typingTextAttributes: [NSAttributedStringKey: Any] {
         var attributes = defaultTextAttributes
         attributes[NSAttributedAutocompleteKey] = false
+        attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
+    
+    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
+    private let paragraphStyle: NSMutableParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.paragraphSpacingBefore = 2
+        style.lineHeightMultiple = 1
+        return style
+    }()
 
     internal var registeredPrefixes = Set<String>()
     internal let border = CALayer()
@@ -165,6 +174,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
 
     public func registerAutocomplete(prefix: String, attributes: [NSAttributedStringKey: Any]) {
         autocompleteTextAttributes[prefix] = attributes
+        autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }
 
     // MARK: Private API
@@ -227,25 +237,24 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     
     public func willChangeRange(textView: MessageTextView, to range: NSRange) {
         
-        // range.length > 0: Backspace/removing text
+        // range.length == 1: Remove single character
         // range.lowerBound < textView.selectedRange.lowerBound: Ignore trying to delete
         //      the substring if the user is already doing so
-        if range.length > 0, range.lowerBound < textView.selectedRange.lowerBound {
+        if range.length == 1, range.lowerBound < textView.selectedRange.lowerBound {
             
             // Backspace/removing text
             let attribute = textView.attributedText
                 .attributes(at: range.lowerBound, longestEffectiveRange: nil, in: range)
                 .filter { return $0.key == NSAttributedAutocompleteKey }
-            
-            if (attribute[NSAttributedAutocompleteKey] as? Bool ?? false) == true {
-                
+
+            if let isAutocomplete = attribute[NSAttributedAutocompleteKey] as? Bool, isAutocomplete {
                 // Remove the autocompleted substring
                 let lowerRange = NSRange(location: 0, length: range.location + 1)
                 textView.attributedText.enumerateAttribute(NSAttributedAutocompleteKey, in: lowerRange, options: .reverse, using: { (_, range, stop) in
-                    
+
                     // Only delete the first found range
                     defer { stop.pointee = true }
-                    
+
                     let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
                     textView.selectedRange = NSRange(location: range.location, length: 0)
