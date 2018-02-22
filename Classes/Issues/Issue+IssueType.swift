@@ -106,9 +106,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         lastModel.actor == unlabeled.actor?.login {
                         added = lastModel.added
                         removed = lastModel.removed
-                        removed.append(newDetails)
                         results.removeLast()
                     }
+                    removed.append(newDetails)
                     let newModel = IssueLabeledModel(
                         actor: unlabeled.actor?.login ?? Constants.Strings.unknown,
                         added: added,
@@ -132,9 +132,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         lastModel.actor == labeled.actor?.login {
                         added = lastModel.added
                         removed = lastModel.removed
-                        removed.append(newDetails)
                         results.removeLast()
                     }
+                    added.append(newDetails)
                     let newModel = IssueLabeledModel(
                         actor: labeled.actor?.login ?? Constants.Strings.unknown,
                         added: added,

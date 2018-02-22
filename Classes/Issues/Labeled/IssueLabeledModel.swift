@@ -113,10 +113,10 @@ final class IssueLabeledModel: ListDiffable {
             }
         }
 
-        let lastDate = added.last?.date ?? removed.last?.date ?? Date()
+        let lastDate = min(added.last?.date ?? Date(), removed.last?.date ?? Date())
 
         attributedString.append(NSAttributedString(
-            string: "  labels \(lastDate.agoString)",
+            string: " labels \(lastDate.agoString)",
             attributes: [
                 .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
