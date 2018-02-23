@@ -15,8 +15,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
     private let label = UILabel()
     private let imageView = UIImageView()
 
-    static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 3
-    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Text.secondary.size)
+    static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 2
+    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Text.secondary.preferredFont.lineHeight)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,13 +28,13 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         contentView.layer.cornerRadius = Styles.Sizes.cardCornerRadius
 
         let iconSize = IssueManagingActionCell.iconHeight
-        imageView.contentMode = .center
+        imageView.contentMode = .bottom
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: iconSize, height: iconSize))
-            make.centerX.equalTo(contentView)
-            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing/2)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-iconSize/2)
         }
 
         label.textColor = tint
@@ -42,19 +42,12 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)
-            make.top.equalTo(imageView.snp.bottom).offset(-Styles.Sizes.rowSpacing)
+            make.top.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing/2 + 2)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let height = bounds.height - Styles.Sizes.rowSpacing
-        contentView.frame = CGRect(x: 0, y: 0, width: height, height: height)
-        contentView.center = CGPoint(x: bounds.width/2, y: bounds.height/2)
     }
 
     override var isSelected: Bool {
