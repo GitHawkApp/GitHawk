@@ -106,13 +106,6 @@ final class NavigationTitleDropdownView: UIControl {
         label.attributedText = attributedTitle
 
         self.accessibilityLabel = accessibilityLabel ?? title
-
-        invalidateIntrinsicContentSize()
-
-        translatesAutoresizingMaskIntoConstraints = false
-        layoutIfNeeded()
-        sizeToFit()
-        translatesAutoresizingMaskIntoConstraints = true
     }
 
     // MARK: Private API
