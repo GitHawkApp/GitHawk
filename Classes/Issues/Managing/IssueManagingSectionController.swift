@@ -68,6 +68,8 @@ PeopleViewControllerDelegate {
         self.client = client
         super.init()
         inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: 0, bottom: Styles.Sizes.gutter, right: 0)
+        minimumInteritemSpacing = Styles.Sizes.rowSpacing
+        minimumLineSpacing = Styles.Sizes.rowSpacing
         selectionDelegate = self
         dataSource = self
     }
@@ -205,14 +207,10 @@ PeopleViewControllerDelegate {
             else { fatalError("Collection context must be set") }
 
         let height = IssueManagingActionCell.height
-        let width = HangingChadItemWidth(
-            index: index,
-            count: viewModels.count,
-            containerWidth: containerWidth,
-            desiredItemWidth: height
-        )
+
+        let rawRowCount = min(CGFloat(viewModels.count), floor(containerWidth / (height + minimumInteritemSpacing)))
         return CGSize(
-            width: width,
+            width: floor((containerWidth - (rawRowCount - 1) * minimumInteritemSpacing) / rawRowCount),
             height: height
         )
     }
