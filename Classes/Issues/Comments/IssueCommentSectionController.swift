@@ -390,6 +390,9 @@ IssueCommentDoubleTapDelegate {
 
     func didHideMenu(cell: IssueCommentReactionCell) {
         menuVisible = false
+        collectionContext?.performBatch(animated: false, updates: { (updates) in
+            updates.reload(self)
+        }, completion: nil)
     }
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
