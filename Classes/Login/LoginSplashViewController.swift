@@ -63,23 +63,17 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     // MARK: Private API
 
     @IBAction func onSignInButton(_ sender: Any) {
-        if #available(iOS 11.0, *) {
-            self.authSession = SFAuthenticationSession(url: loginURL, callbackURLScheme: callbackURLScheme, completionHandler: { [weak self] (callbackUrl, error) in
-                guard error == nil, let callbackUrl = callbackUrl else {
-                    switch error! {
-                    case SFAuthenticationError.canceledLogin: break
-                    default: self?.handleError()
-                    }
-                    return
+        self.authSession = SFAuthenticationSession(url: loginURL, callbackURLScheme: callbackURLScheme, completionHandler: { [weak self] (callbackUrl, error) in
+            guard error == nil, let callbackUrl = callbackUrl else {
+                switch error! {
+                case SFAuthenticationError.canceledLogin: break
+                default: self?.handleError()
                 }
-                self?.client.sessionManager.receivedCodeRedirect(url: callbackUrl)
-            })
-            self.authSession?.start()
-        } else {
-            guard let safariController = try? SFSafariViewController.configured(with: loginURL) else { return }
-            self.safariController = safariController
-            present(safariController, animated: trueUnlessReduceMotionEnabled)
-        }
+                return
+            }
+            self?.client.sessionManager.receivedCodeRedirect(url: callbackUrl)
+        })
+        self.authSession?.start()
     }
 
     @IBAction func onPersonalAccessTokenButton(_ sender: Any) {

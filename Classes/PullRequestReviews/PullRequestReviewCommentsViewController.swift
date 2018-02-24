@@ -86,10 +86,9 @@ PullRequestReviewReplySectionControllerDelegate {
     }
 
     override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        }
+        super.viewSafeAreaInsetsDidChange()
+        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        
     }
 
     // MARK: FeedDelegate

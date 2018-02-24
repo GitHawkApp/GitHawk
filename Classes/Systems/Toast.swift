@@ -175,12 +175,7 @@ private func rubberBandDistance(offset: CGFloat, dimension: CGFloat) -> CGFloat 
 }
 
 private func anchor(view: UIView, referenceView: UIView) -> CGPoint {
-    let safeBottom: CGFloat
-    if #available(iOS 11.0, *) {
-        safeBottom = referenceView.safeAreaInsets.bottom
-    } else {
-        safeBottom = 0
-    }
+    let safeBottom: CGFloat = referenceView.safeAreaInsets.bottom
 
     let bounds = referenceView.bounds
     let tabBarHeight: CGFloat = 49
