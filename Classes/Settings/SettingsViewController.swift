@@ -9,8 +9,9 @@
 import UIKit
 import SafariServices
 
+private let logoutUrl = URL(string: "http://github.com/logout")
 final class SettingsViewController: UITableViewController,
-NewIssueTableViewControllerDelegate {
+NewIssueTableViewControllerDelegate, SFSafariViewControllerDelegate {
 
     // must be injected
     var sessionManager: GithubSessionManager!
@@ -157,7 +158,10 @@ NewIssueTableViewControllerDelegate {
     }
 
     func signout() {
-        sessionManager.logout()
+        guard let logoutUrl = logoutUrl else { return }
+        let safariViewController = SFSafariViewController(url: logoutUrl)
+        safariViewController.delegate = self
+        present(safariViewController, animated: true)
     }
 
     @objc func updateBadge() {
@@ -244,5 +248,11 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
+    }
+
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.sessionManager.logout()
+        }
     }
 }
