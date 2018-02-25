@@ -36,12 +36,9 @@ extension UIView {
             switch position {
             case .top, .bottom:
                 make.height.equalTo(size)
-                if useSafeMargins, #available(iOS 11.0, *) {
+                if useSafeMargins {
                     make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(left)
                     make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).offset(right)
-                } else {
-                    make.left.equalTo(left)
-                    make.right.equalTo(right)
                 }
             case .left, .right:
                 make.width.equalTo(size)
@@ -53,16 +50,12 @@ extension UIView {
             case .top: make.top.equalTo(self)
             case .bottom: make.bottom.equalTo(self)
             case .left:
-                if useSafeMargins, #available(iOS 11.0, *) {
+                if useSafeMargins {
                     make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin)
-                } else {
-                    make.left.equalTo(self)
                 }
             case .right:
-                if useSafeMargins, #available(iOS 11.0, *) {
+                if useSafeMargins {
                     make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin)
-                } else {
-                    make.right.equalTo(self)
                 }
             }
         }
