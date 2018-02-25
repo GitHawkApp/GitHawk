@@ -33,9 +33,7 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
         super.init(frame: frame)
 
         imageView.contentMode = .scaleAspectFit
-        if #available(iOS 11, *) {
-            imageView.accessibilityIgnoresInvertColors = true
-        }
+        imageView.accessibilityIgnoresInvertColors = true
         contentView.addSubview(imageView)
 
         spinner.hidesWhenStopped = true

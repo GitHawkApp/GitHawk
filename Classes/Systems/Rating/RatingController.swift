@@ -74,10 +74,8 @@ final class RatingController {
     // MARK: Private API
 
     private class func requestSystem() {
-        if #available(iOS 10.3, *) {
-            prompted()
-            SKStoreReviewController.requestReview()
-        }
+        prompted()
+        SKStoreReviewController.requestReview()
     }
 
     private class func openAppStore() {
