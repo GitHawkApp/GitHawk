@@ -64,7 +64,18 @@ SwipeCollectionViewCellDelegate {
             let navigation = UINavigationController(rootViewController: controller)
             viewController?.showDetailViewController(navigation, sender: nil)
         case .release(let release):
-            viewController?.presentRelease(owner: object.owner, repo: object.repo, release: release)
+            client.fetchReleaseTag(
+                owner: object.owner,
+                repo: object.repo,
+                id: release,
+                completion: { [weak self] (result) in
+                    switch result {
+                    case .success(let tag):
+                        self?.viewController?.presentRelease(owner: object.owner, repo: object.repo, release: tag)
+                    case .error:
+                        ToastManager.showGenericError()
+                    }
+            })
         }
     }
 

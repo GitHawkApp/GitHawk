@@ -199,6 +199,19 @@ final class NotificationClient {
         })
     }
 
+    func fetchReleaseTag(owner: String, repo: String, id: String, completion: @escaping (Result<String>) -> Void) {
+        githubClient.request(GithubClient.Request(
+            path: "repos/\(owner)/\(repo)/releases/\(id)"
+        ) { response, _ in
+            if let json = response.value as? [String: Any],
+                let tag = json["tag_name"] as? String {
+                completion(.success(tag))
+            } else {
+                completion(.error(response.error))
+            }
+        })
+    }
+
     // MARK: Private API
 
     func path(repo: NotificationRepository?) -> String {
