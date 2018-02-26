@@ -373,6 +373,8 @@
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		620FD1910224D67E26A05955 /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7EF1344D18510D671EAD0A1 /* Pods_FreetimeTests.framework */; };
+		65A315292044369D0074E3B6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A315282044369D0074E3B6 /* TabBarController.swift */; };
+		65A3152B2044376D0074E3B6 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3152A2044376D0074E3B6 /* Route.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
@@ -818,6 +820,8 @@
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
+		65A315282044369D0074E3B6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		65A3152A2044376D0074E3B6 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
@@ -1455,6 +1459,7 @@
 				298BA08C1EC90A9000B01946 /* NSAttributedStringSizing.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
 				2980033A1F51E82400BE90F4 /* Rating */,
+				65A3152A2044376D0074E3B6 /* Route.swift */,
 				293189271F5391F700EF0911 /* Result.swift */,
 				29316DC21ECC981D007CAE3F /* RootNavigationManager.swift */,
 				294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */,
@@ -1496,6 +1501,7 @@
 				D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */,
 				29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */,
 				29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */,
+				65A315282044369D0074E3B6 /* TabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2489,6 +2495,7 @@
 				DCA5ED101FAEDF290072F074 /* BookmarkStore.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
+				65A315292044369D0074E3B6 /* TabBarController.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
 				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */,
@@ -2644,6 +2651,7 @@
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
+				65A3152B2044376D0074E3B6 /* Route.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				29A08FC11F12F08100C5368E /* String+HashDisplay.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,

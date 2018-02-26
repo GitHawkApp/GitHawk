@@ -89,6 +89,12 @@ final class RootNavigationManager: GithubSessionListener {
         return tabBarController?.selectedViewController
     }
 
+    @discardableResult
+    public func selectViewController(atTab tab: TabBarController.Tab) -> UIViewController? {
+        tabBarController?.showTab(tab)
+        return tabBarController?.selectedViewController
+    }
+
     // MARK: GithubSessionListener
 
     func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
@@ -141,8 +147,8 @@ final class RootNavigationManager: GithubSessionListener {
         return rootViewController?.viewControllers.last as? UINavigationController
     }
 
-    private var tabBarController: UITabBarController? {
-        return rootViewController?.viewControllers.first as? UITabBarController
+    private var tabBarController: TabBarController? {
+        return rootViewController?.viewControllers.first as? TabBarController
     }
 
     private func newLoginViewController() -> UIViewController {
