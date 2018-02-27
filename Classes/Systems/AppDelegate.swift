@@ -68,7 +68,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(ShortcutHandler.handle(shortcutItem: shortcutItem,
+        guard let route = Route(shortcutItem: shortcutItem) else {
+            completionHandler(false)
+            return
+        }
+        completionHandler(ShortcutHandler.handle(route: route,
                                                  sessionManager: sessionManager,
                                                  navigationManager: rootNavigationManager))
     }

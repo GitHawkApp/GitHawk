@@ -10,10 +10,7 @@ import Foundation
 
 struct ShortcutHandler {
 
-    static private let searchViewControllerIndex = 1
-    static private let bookmarksViewControllerIndex = 2
-
-    private enum Items: String {
+    enum Items: String {
         case search
         case bookmarks
         case switchAccount
@@ -23,19 +20,17 @@ struct ShortcutHandler {
         application.shortcutItems = generateItems(sessionManager: sessionManager)
     }
 
-    static func handle(shortcutItem item: UIApplicationShortcutItem,
-                       sessionManager: GithubSessionManager,
-                       navigationManager: RootNavigationManager) -> Bool {
-        guard let itemType = Items(rawValue: item.type) else { return false }
-        switch itemType {
-        case .search:
-            navigationManager.selectViewController(atIndex: searchViewControllerIndex)
+    static func handle(
+        route: Route,
+        sessionManager: GithubSessionManager,
+        navigationManager: RootNavigationManager
+        ) -> Bool {
+        switch route {
+        case .tab(let tab):
+            navigationManager.selectViewController(atTab: tab)
             return true
-        case .bookmarks:
-            navigationManager.selectViewController(atIndex: bookmarksViewControllerIndex)
-            return true
-        case .switchAccount:
-            if let index = item.userInfo?["sessionIndex"] as? Int {
+        case .switchAccount(let sessionIndex):
+            if let index = sessionIndex {
                 let session = sessionManager.userSessions[index]
                 sessionManager.focus(session, dismiss: false)
             }
@@ -57,9 +52,9 @@ struct ShortcutHandler {
         // Bookmarks
         let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmark")
         let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
-                                                   localizedTitle: Constants.Strings.bookmarks,
-                                                   localizedSubtitle: nil,
-                                                   icon: bookmarkIcon)
+                                                     localizedTitle: Constants.Strings.bookmarks,
+                                                     localizedSubtitle: nil,
+                                                     icon: bookmarkIcon)
         items.append(bookmarkItem)
         
         // Switchuser
