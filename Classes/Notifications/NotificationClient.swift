@@ -12,8 +12,8 @@ import Foundation
 extension NotificationViewModel {
     var stateAlias: (number: Int, key: String)? {
         switch identifier {
-        case .hash:
-            // commits don't have states, always merged
+        case .hash, .release:
+            // commits and releases don't have states, always "merged"
             return nil
         case .number(let number):
             // graphQL alias must be an alpha-numeric string and start w/ alpha
@@ -193,6 +193,19 @@ final class NotificationClient {
                     }
                 }
                 completion(.success(repos.sorted { $0.name < $1.name }))
+            } else {
+                completion(.error(response.error))
+            }
+        })
+    }
+
+    func fetchReleaseTag(owner: String, repo: String, id: String, completion: @escaping (Result<String>) -> Void) {
+        githubClient.request(GithubClient.Request(
+            path: "repos/\(owner)/\(repo)/releases/\(id)"
+        ) { response, _ in
+            if let json = response.value as? [String: Any],
+                let tag = json["tag_name"] as? String {
+                completion(.success(tag))
             } else {
                 completion(.error(response.error))
             }

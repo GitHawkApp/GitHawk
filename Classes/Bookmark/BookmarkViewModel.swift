@@ -36,6 +36,9 @@ final class BookmarkViewModel: ListDiffable {
                 ]
             ))
             attributedText = mAttributedText
+        case .release:
+            // TODO does this even exist?
+            attributedText = NSAttributedString(string: bookmark.title, attributes: attributes)
         }
 
         text = NSAttributedStringSizing(
