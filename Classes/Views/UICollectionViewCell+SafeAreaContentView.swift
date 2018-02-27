@@ -15,12 +15,7 @@ extension UICollectionViewCell {
     }
 
     func layoutContentViewForSafeAreaInsets(bounds: CGRect) {
-        let insets: UIEdgeInsets
-        if #available(iOS 11.0, *) {
-            insets = safeAreaInsets
-        } else {
-            insets = .zero
-        }
+        let insets: UIEdgeInsets = safeAreaInsets
         contentView.frame = CGRect(
             x: insets.left,
             y: bounds.minY,

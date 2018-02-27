@@ -52,9 +52,7 @@ SearchBarSectionControllerDelegate {
 
         // set the frame in -viewDidLoad is required when working with TabMan
         feed.collectionView.frame = view.bounds
-        if #available(iOS 11.0, *) {
-            feed.collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        feed.collectionView.contentInsetAdjustmentBehavior = .never
     }
 
     // MARK: Overrides
