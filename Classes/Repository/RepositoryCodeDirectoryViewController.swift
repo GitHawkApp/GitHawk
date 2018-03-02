@@ -159,8 +159,12 @@ extension RepositoryCodeDirectoryViewController {
     private func showFile(at path: FilePath) {
         var controller: UIViewController
 
-        if path.path.isNonPlain {
-            controller = RepositoryWebViewController()
+        if path.path.hasBinarySuffix {
+            controller = RepositoryWebViewController(
+                repo: repo,
+                branch: branch,
+                path: path
+            )
         } else {
             controller = RepositoryCodeBlobViewController(
                 client: client,

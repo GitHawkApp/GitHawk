@@ -22,6 +22,10 @@ final class RepositoryWebViewController: UIViewController {
 
     // MARK: Instance Variables
 
+    private let branch: String
+    private let path: FilePath
+    private let repo: RepositoryDetails
+
     private var state = State.idle {
         didSet {
             switch state {
@@ -33,6 +37,12 @@ final class RepositoryWebViewController: UIViewController {
         }
     }
 
+    private var resourceURL: URL? {
+        get {
+            return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(path.path)")
+        }
+    }
+
     private let webView = UIWebView()
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -41,6 +51,23 @@ final class RepositoryWebViewController: UIViewController {
 
         return activityIndicator
     }()
+
+    // MARK: Init
+
+    init(
+        repo: RepositoryDetails,
+        branch: String,
+        path: FilePath
+        ) {
+        self.repo = repo
+        self.branch = branch
+        self.path = path
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: UIViewController Lifecycle
 
@@ -86,7 +113,10 @@ extension RepositoryWebViewController: UIWebViewDelegate {
 extension RepositoryWebViewController {
 
     private func fetch() {
-        let url = URL(string: "https://github.com/vanyaland/mlcourse_open_homeworks/raw/master/notes/1-1.Vvedenie.pdf")!
+        guard let url = resourceURL else {
+            return showError(NSLocalizedString("Failed to build destination path.", comment: ""))
+        }
+
         state = .fetching
 
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
@@ -97,7 +127,7 @@ extension RepositoryWebViewController {
             DispatchQueue.main.async {
                 strongSelf.webView.load(
                     data,
-                    mimeType: "application/pdf",
+                    mimeType: strongSelf.path.path.mimeType ?? "text/plain",
                     textEncodingName: "UTF-8",
                     baseURL: url
                 )
@@ -123,11 +153,13 @@ extension RepositoryWebViewController {
         view.addSubview(activityIndicator)
     }
 
-    private func showError() {
+    private func showError(
+        _ message: String = NSLocalizedString("Failed to execute your request.", comment: "RepositoryWebViewController fetch request.")
+        ) {
         state = .error
         showAlert(
             title: NSLocalizedString("Error", comment: ""),
-            message: NSLocalizedString("Failed to execute your request.", comment: "RepositoryWebViewController fetch request.")
+            message: message
         )
     }
 
