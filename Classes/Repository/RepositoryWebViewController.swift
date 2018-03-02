@@ -17,7 +17,7 @@ final class RepositoryWebViewController: UIViewController {
     private enum State {
         case idle
         case fetching
-        case error
+        case error(String?)
     }
 
     // MARK: Instance Variables
@@ -29,10 +29,19 @@ final class RepositoryWebViewController: UIViewController {
     private var state = State.idle {
         didSet {
             switch state {
-            case .idle, .error:
+            case .idle:
                 activityIndicator.stopAnimating()
+                emptyView.isHidden = true
+                webView.isHidden = false
             case .fetching:
                 activityIndicator.startAnimating()
+                emptyView.isHidden = true
+                webView.isHidden = false
+            case .error(let message):
+                activityIndicator.stopAnimating()
+                webView.isHidden = true
+                emptyView.isHidden = false
+                emptyView.label.text = message
             }
         }
     }
@@ -48,6 +57,7 @@ final class RepositoryWebViewController: UIViewController {
     }
 
     private let webView = UIWebView()
+    private let emptyView = EmptyView()
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -84,7 +94,10 @@ final class RepositoryWebViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        webView.frame = view.bounds
+        let bounds = view.bounds
+        emptyView.frame = bounds
+        webView.frame = bounds
+
         activityIndicator.center = view.center
     }
 
@@ -103,7 +116,7 @@ extension RepositoryWebViewController: UIWebViewDelegate {
     }
 
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        showError()
+        showError(cannotLoad: true)
     }
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
@@ -117,18 +130,17 @@ extension RepositoryWebViewController: UIWebViewDelegate {
 extension RepositoryWebViewController {
 
     private func fetch() {
-        guard let url = resourceURL else {
-            return showError(NSLocalizedString("Failed to build destination path.", comment: ""))
-        }
+        guard let url = resourceURL else { return showError(cannotLoad: false) }
 
         state = .fetching
 
-        URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
-            guard let strongSelf = self else { return }
-            guard error == nil else { return strongSelf.showError() }
-            guard let data = data else { return strongSelf.showError() }
 
+        URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             DispatchQueue.main.async {
+                guard let strongSelf = self else { return }
+                guard error == nil else { return strongSelf.showError(cannotLoad: true) }
+                guard let data = data else { return strongSelf.showError(cannotLoad: true) }
+
                 strongSelf.webView.load(
                     data,
                     mimeType: strongSelf.path.path.mimeType ?? "text/plain",
@@ -163,22 +175,24 @@ extension RepositoryWebViewController {
             action: #selector(onFileNavigationTitle(sender:))
         )
 
+        state = .idle
+
         webView.isOpaque = false
         webView.backgroundColor = .white
         webView.delegate = self
 
+        emptyView.isHidden = true
+
         view.backgroundColor = .white
+        view.addSubview(emptyView)
         view.addSubview(webView)
         view.addSubview(activityIndicator)
     }
 
-    private func showError(
-        _ message: String = NSLocalizedString("Failed to execute your request.", comment: "RepositoryWebViewController fetch request.")
-        ) {
-        state = .error
-        showAlert(
-            title: NSLocalizedString("Error", comment: ""),
-            message: message
+    private func showError(cannotLoad: Bool) {
+        state = .error(cannotLoad
+            ? NSLocalizedString("Cannot display file", comment: "")
+            : NSLocalizedString("Error loading file", comment: "")
         )
     }
 
