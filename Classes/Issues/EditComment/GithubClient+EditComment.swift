@@ -24,7 +24,7 @@ extension GithubClient {
             ? "repos/\(owner)/\(repo)/issues/\(issueNumber)"
             // https://developer.github.com/v3/issues/comments/#edit-a-comment
             : "repos/\(owner)/\(repo)/issues/comments/\(commentID)"
-        request(Request(
+        request(Request.api(
             path: path,
             method: .patch,
             parameters: ["body": body],

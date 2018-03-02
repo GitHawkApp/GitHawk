@@ -21,7 +21,7 @@ extension UIViewController {
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/commit/\(hash)") else { return }
+        guard let url = GithubClient.url(path: "\(owner)/\(repo)/commit/\(hash)") else { return }
         presentSafari(url: url)
     }
 
@@ -31,12 +31,12 @@ extension UIViewController {
     }
 
     func presentLabels(owner: String, repo: String, label: String) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/labels/\(label)") else { return }
+        guard let url = GithubClient.url(path: "\(owner)/\(repo)/labels/\(label)") else { return }
         presentSafari(url: url)
     }
 
     func presentMilestone(owner: String, repo: String, milestone: Int) {
-        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/milestone/\(milestone)") else { return }
+        guard let url = GithubClient.url(path: "\(owner)/\(repo)/milestone/\(milestone)") else { return }
         presentSafari(url: url)
     }
 

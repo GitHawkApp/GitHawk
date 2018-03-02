@@ -27,7 +27,7 @@ extension GithubClient {
         completion: @escaping (Result<([ListDiffable], Int?)>) -> ()
         ) {
         let viewerUsername = userSession?.username
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
             completion: { (response, nextPage) in
 
@@ -117,7 +117,7 @@ extension GithubClient {
         let viewer = userSession?.username
 
         // https://developer.github.com/v3/pulls/comments/#alternative-input
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
             method: .post,
             parameters: ["body": body, "in_reply_to": inReplyTo],

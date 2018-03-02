@@ -16,7 +16,7 @@ extension GithubClient {
         completion: @escaping (Result<[User]>) -> Void
         ) {
         // https://developer.github.com/v3/issues/assignees/#list-assignees
-        request(GithubClient.Request(
+        request(GithubClient.Request.api(
             path: "repos/\(owner)/\(repo)/assignees"
         ) { (response, _) in
             if let jsonArr = response.value as? [[String: Any]] {

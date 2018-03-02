@@ -205,7 +205,7 @@ extension GithubClient {
         let stateString = close ? "closed" : "open"
 
         // https://developer.github.com/v3/issues/#edit-an-issue
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
             parameters: [ "state": stateString ],
@@ -219,7 +219,7 @@ extension GithubClient {
     }
 
     func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> Void) {
-        request(Request(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
+        request(Request.api(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
             // As per documentation this endpoint returns no content, so all we can validate is that
             // the status code is "204 No Content".
             if response.response?.statusCode == 204 {
@@ -261,7 +261,7 @@ extension GithubClient {
         // optimistically update the cache, listeners can react as appropriate
         cache.set(value: optimisticResult)
 
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
             method: locked ? .put : .delete,
             completion: { (response, _) in
@@ -308,7 +308,7 @@ extension GithubClient {
         }
 
         // https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/collaborators/\(viewer)/permission",
             headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
             completion: { (response, _) in
@@ -377,7 +377,7 @@ extension GithubClient {
         let cache = self.cache
         cache.set(value: optimistic)
 
-        request(GithubClient.Request(
+        request(GithubClient.Request.api(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
             parameters: ["labels": labels.map { $0.name }]
@@ -489,7 +489,7 @@ extension GithubClient {
         // https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
         // https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
         if added.count > 0 {
-            request(GithubClient.Request(
+            request(GithubClient.Request.api(
                 path: path,
                 method: .post,
                 parameters: [param: added]
@@ -501,7 +501,7 @@ extension GithubClient {
         // https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
         // https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
         if removed.count > 0 {
-            request(GithubClient.Request(
+            request(GithubClient.Request.api(
                 path: path,
                 method: .delete,
                 parameters: [param: removed]

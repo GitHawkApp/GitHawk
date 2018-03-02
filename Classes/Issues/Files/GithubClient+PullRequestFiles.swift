@@ -17,7 +17,7 @@ extension GithubClient {
         page: Int,
         completion: @escaping (Result<([File], Int?)>) -> Void
         ) {
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/files",
             parameters: [
                 "per_page": 50,
@@ -37,40 +37,4 @@ extension GithubClient {
                 }
         }))
     }
-
-    func fetchContents(
-        contentsURLString: String,
-        completion: @escaping (Result<(NSAttributedStringSizing, Content)>) -> Void
-        ) {
-        request(Request(url: contentsURLString, completion: { (response, _) in
-            if let json = response.value as? [String: Any] {
-                DispatchQueue.global().async {
-                    if let content = Content(json: json),
-                        let data = Data(base64Encoded: content.content, options: [.ignoreUnknownCharacters]),
-                        let text = String(data: data, encoding: .utf8) {
-                        let attributes = [
-                            NSAttributedStringKey.font: Styles.Text.code.preferredFont,
-                            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-                        ]
-                        let attributedText = NSAttributedString(string: text, attributes: attributes)
-                        let sizing = NSAttributedStringSizing(
-                            containerWidth: 0,
-                            attributedText: attributedText,
-                            inset: Styles.Sizes.textViewInset
-                        )
-                        DispatchQueue.main.async {
-                            completion(.success((sizing, content)))
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            completion(.error(nil))
-                        }
-                    }
-                }
-            } else {
-                completion(.error(nil))
-            }
-        }))
-    }
-
 }

@@ -204,7 +204,7 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     var externalURL: URL {
-        return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
+        return GithubClient.url(path: "\(model.owner)/\(model.repo)/issues/\(model.number)")!
     }
 
     var bookmark: Bookmark? {

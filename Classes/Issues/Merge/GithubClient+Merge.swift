@@ -46,7 +46,7 @@ extension GithubClient {
         let cache = self.cache
 
         // https://developer.github.com/v3/issues/#edit-an-issue
-        request(Request(
+        request(Request.api(
             path: "repos/\(owner)/\(repo)/pulls/\(number)/merge",
             method: .put,
             parameters: [ "merge_method": methodString ],

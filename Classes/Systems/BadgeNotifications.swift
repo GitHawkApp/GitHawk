@@ -72,7 +72,7 @@ final class BadgeNotifications {
             else { return }
 
         let client = newGithubClient(sessionManager: manager, userSession: session)
-        client.request(GithubClient.Request(
+        client.request(GithubClient.Request.api(
             path: "notifications",
             method: .get,
             parameters: ["all": "false"],
