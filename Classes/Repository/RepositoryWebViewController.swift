@@ -137,19 +137,34 @@ extension RepositoryWebViewController {
 
 }
 
+// MARK: - RepositoryWebViewController (Actions) -
+
+extension RepositoryWebViewController {
+
+    @objc private func onFileNavigationTitle(sender: UIView) {
+        showAlert(filePath: path, sender: sender)
+    }
+
+}
+
 // MARK: - RepositoryWebViewController (Private Helpers) -
 
 extension RepositoryWebViewController {
 
     private func setup() {
         makeBackBarItemEmpty()
-        view.backgroundColor = .white
+        configureTitle(
+            filePath: path,
+            target: self,
+            action: #selector(onFileNavigationTitle(sender:))
+        )
 
         webView.isOpaque = false
         webView.backgroundColor = .white
         webView.delegate = self
-        view.addSubview(webView)
 
+        view.backgroundColor = .white
+        view.addSubview(webView)
         view.addSubview(activityIndicator)
     }
 
