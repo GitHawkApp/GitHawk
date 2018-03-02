@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 // MARK: RepositoryWebViewController: UIViewController
 
@@ -56,7 +57,15 @@ final class RepositoryWebViewController: UIViewController {
         }
     }
 
-    private let webView = UIWebView()
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.navigationDelegate = self
+        webView.backgroundColor = .white
+
+        return webView
+    }()
+
     private let emptyView = EmptyView()
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -94,33 +103,30 @@ final class RepositoryWebViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        let bounds = view.bounds
-        emptyView.frame = bounds
-        webView.frame = bounds
-
+        emptyView.frame = view.bounds
         activityIndicator.center = view.center
-    }
 
-    deinit {
-        webView.delegate = nil
+        if let tabBarController = tabBarController {
+            webView.scrollView.contentInset.bottom = tabBarController.tabBar.bounds.height
+        }
     }
 
 }
 
 // MARK: - RepositoryWebViewController (UIWebViewDelegate) -
 
-extension RepositoryWebViewController: UIWebViewDelegate {
+extension RepositoryWebViewController: WKNavigationDelegate {
 
-    func webViewDidStartLoad(_ webView: UIWebView) {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         state = .fetching
     }
 
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        showError(cannotLoad: true)
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        state = .idle
     }
 
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        state = .idle
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showError(cannotLoad: true)
     }
 
 }
@@ -131,9 +137,7 @@ extension RepositoryWebViewController {
 
     private func fetch() {
         guard let url = resourceURL else { return showError(cannotLoad: false) }
-
         state = .fetching
-
 
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             DispatchQueue.main.async {
@@ -144,7 +148,7 @@ extension RepositoryWebViewController {
                 strongSelf.webView.load(
                     data,
                     mimeType: strongSelf.path.path.mimeType ?? "text/plain",
-                    textEncodingName: "UTF-8",
+                    characterEncodingName: "UTF-8",
                     baseURL: url
                 )
             }
@@ -176,17 +180,19 @@ extension RepositoryWebViewController {
         )
 
         state = .idle
-
-        webView.isOpaque = false
-        webView.backgroundColor = .white
-        webView.delegate = self
-
         emptyView.isHidden = true
 
         view.backgroundColor = .white
         view.addSubview(emptyView)
         view.addSubview(webView)
         view.addSubview(activityIndicator)
+
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     private func showError(cannotLoad: Bool) {
