@@ -39,7 +39,11 @@ final class RepositoryWebViewController: UIViewController {
 
     private var resourceURL: URL? {
         get {
-            return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(path.path)")
+            guard let encodedPath = path.path.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+                return nil
+            }
+
+            return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(encodedPath)")
         }
     }
 
