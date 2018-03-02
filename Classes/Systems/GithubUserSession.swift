@@ -9,11 +9,12 @@
 import Foundation
 
 final class GithubUserSession: NSObject, NSCoding {
-
+    
     enum Keys {
         static let token = "token"
         static let authMethod = "authMethod"
         static let username = "username"
+        static let client = "client"
     }
 
     enum AuthMethod: String {
@@ -22,6 +23,7 @@ final class GithubUserSession: NSObject, NSCoding {
 
     let token: String
     let authMethod: AuthMethod
+    let client: Client
 
     // mutable to handle migration from time when username wasn't captured
     // can freely mutate and manually update. caller must then save updated session.
@@ -30,11 +32,13 @@ final class GithubUserSession: NSObject, NSCoding {
     init(
         token: String,
         authMethod: AuthMethod,
-        username: String?
+        username: String?,
+        client: Client = Client() // Defaults to GitHub.com
         ) {
         self.token = token
         self.authMethod = authMethod
         self.username = username
+        self.client = client
     }
 
     // MARK: NSCoding
@@ -47,11 +51,13 @@ final class GithubUserSession: NSObject, NSCoding {
         let authMethod = storedAuthMethod.flatMap(AuthMethod.init) ?? .oauth
 
         let username = aDecoder.decodeObject(forKey: Keys.username) as? String
+        let client = aDecoder.decodeObject(of: Client.self, forKey: Keys.client) ?? Client()
 
         self.init(
             token: token,
             authMethod: authMethod,
-            username: username
+            username: username,
+            client: client
         )
     }
 
@@ -59,6 +65,7 @@ final class GithubUserSession: NSObject, NSCoding {
         aCoder.encode(token, forKey: Keys.token)
         aCoder.encode(authMethod.rawValue, forKey: Keys.authMethod)
         aCoder.encode(username, forKey: Keys.username)
+        aCoder.encode(client, forKey: Keys.client)
     }
 
 }

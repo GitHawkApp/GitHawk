@@ -16,6 +16,7 @@ extension GithubClient {
         completion: @escaping (Result<[Milestone]>) -> Void
         ) {
         request(GithubClient.Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/milestones"
         ) { (response, _) in
             if let jsonArr = response.value as? [[String: Any]] {
@@ -85,6 +86,7 @@ extension GithubClient {
 
         // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,
             parameters: [ "milestone": milestone?.number ?? NSNull() ],

@@ -74,6 +74,7 @@ final class NotificationClient {
         }
 
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: path(repo: repo),
             method: .get,
             parameters: parameters,
@@ -162,6 +163,7 @@ final class NotificationClient {
         }
 
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "notifications/threads/\(id)",
             method: .patch) { [weak self] response, _ in
                 // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
@@ -182,6 +184,7 @@ final class NotificationClient {
         }
 
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: "users/\(viewer)/subscriptions"
         ) { response, _ in
             // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
@@ -224,6 +227,7 @@ final class NotificationClient {
 
     func markNotifications(repo: NotificationRepository? = nil, completion: @escaping (Bool) -> Void) {
         githubClient.request(GithubClient.Request(
+            client: githubClient.userSession?.client,
             path: path(repo: repo),
             method: .put
         ) { response, _ in

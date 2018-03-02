@@ -47,6 +47,7 @@ extension GithubClient {
 
         // https://developer.github.com/v3/issues/#edit-an-issue
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/pulls/\(number)/merge",
             method: .put,
             parameters: [ "merge_method": methodString ],

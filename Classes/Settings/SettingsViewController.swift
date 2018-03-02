@@ -90,8 +90,10 @@ NewIssueTableViewControllerDelegate {
     // MARK: Private API
 
     func onReviewAccess() {
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
+        guard let urlString = client.userSession?.client.reviewAccessUrl, let url = URL(string: urlString) else {
+            return
+        }
+        
         // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
         UIApplication.shared.open(url, options: [:])
         
@@ -108,8 +110,10 @@ NewIssueTableViewControllerDelegate {
     }
     
     func onGitHubStatus() {
-        guard let url = URL(string: "https://status.github.com/messages")
-            else { fatalError("Should always create GitHub Status URL") }
+        guard let urlString = client.userSession?.client.statusUrl, let url = URL(string: urlString) else {
+            return
+        }
+        
         presentSafari(url: url)
     }
 

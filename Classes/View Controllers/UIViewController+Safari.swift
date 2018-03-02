@@ -21,6 +21,7 @@ extension UIViewController {
     }
 
     func presentCommit(owner: String, repo: String, hash: String) {
+        // TODO: REVISE
         guard let url = URL(string: "https://github.com/\(owner)/\(repo)/commit/\(hash)") else { return }
         presentSafari(url: url)
     }
@@ -31,11 +32,13 @@ extension UIViewController {
     }
 
     func presentLabels(owner: String, repo: String, label: String) {
+        // TODO: REVISE
         guard let url = URL(string: "https://github.com/\(owner)/\(repo)/labels/\(label)") else { return }
         presentSafari(url: url)
     }
 
     func presentMilestone(owner: String, repo: String, milestone: Int) {
+        // TODO: REVISE
         guard let url = URL(string: "https://github.com/\(owner)/\(repo)/milestone/\(milestone)") else { return }
         presentSafari(url: url)
     }

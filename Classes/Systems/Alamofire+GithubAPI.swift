@@ -32,8 +32,9 @@ func newGithubClient(
     config.urlCache = nil
 
     let networker = Alamofire.SessionManager(configuration: config)
-
-    let gqlURL = URL(string: "https://api.github.com/graphql")!
+    
+    let client = userSession?.client ?? Client()
+    let gqlURL = URL(string: client.graphQLUrl)!
     let transport = HTTPNetworkTransport(url: gqlURL, configuration: config)
     let apollo = ApolloClient(networkTransport: transport)
 

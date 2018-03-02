@@ -18,6 +18,7 @@ extension GithubClient {
         completion: @escaping (Result<([File], Int?)>) -> Void
         ) {
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/pulls/\(number)/files",
             parameters: [
                 "per_page": 50,

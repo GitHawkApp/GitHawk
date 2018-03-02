@@ -27,8 +27,9 @@ extension GithubClient {
         let headers = [
             "Accept": "application/json"
         ]
+        
         request(Request(
-            url: "https://github.com/login/oauth/access_token",
+            url: Client().loginOauthUrl, // Assumes GitHub.com due to login flow 
             method: .post,
             parameters: parameters,
             headers: headers,
@@ -58,8 +59,10 @@ extension GithubClient {
             "Accept": "application/json",
             "Authorization": "token \(token)"
         ]
+        
         request(Request(
-            url: "https://api.github.com/user",
+            client: Client(), // Assumes GitHub.com due to login flow
+            path: "user",
             method: .get,
             headers: headers,
             logoutOnAuthFailure: false,

@@ -28,6 +28,7 @@ extension GithubClient {
         ) {
         let viewerUsername = userSession?.username
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
             completion: { (response, nextPage) in
 
@@ -118,6 +119,7 @@ extension GithubClient {
 
         // https://developer.github.com/v3/pulls/comments/#alternative-input
         request(Request(
+            client: userSession?.client,
             path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
             method: .post,
             parameters: ["body": body, "in_reply_to": inReplyTo],
