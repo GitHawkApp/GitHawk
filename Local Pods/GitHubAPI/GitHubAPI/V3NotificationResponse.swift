@@ -9,13 +9,6 @@
 import Foundation
 
 public struct V3NotificationResponse: V3Request {
-
     public typealias ResponseType = V3Response<[V3Notification]>
-
     public let pathComponents: [String] = ["notifications"]
-    public let method: HTTPMethod = .get
-    public let parameters: [String: Any]? = nil
-    public let headers: [String: String]? = nil
-    public let logoutOnAuthFailure: Bool = true
-
 }

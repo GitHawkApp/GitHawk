@@ -18,6 +18,10 @@ public extension V3Request {
     var url: String {
         return "https://api.github.com/" + pathComponents.joined(separator: "/")
     }
+    public var logoutOnAuthFailure: Bool { return true }
+    public var method: HTTPMethod { return .get }
+    public var parameters: [String : Any]? { return nil }
+    public var headers: [String : String]? { return nil }
 }
 
 public struct V3Response<T: Codable>: EntityResponse {
