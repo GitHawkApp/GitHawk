@@ -8,11 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		1C2ACBA928D16F9A59AEA732 /* Pods_GitHubAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE2113A3C241513410001EF8 /* Pods_GitHubAPITests.framework */; };
+		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
+		2958050D204B5C3A009CFD51 /* V3NotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationResponse.swift */; };
 		29C1A9CD204B04E700CB6995 /* GitHubAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C1A9CB204B04E700CB6995 /* GitHubAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9D3204B05AE00CB6995 /* Request.swift */; };
 		29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */; };
 		29C1A9EE204B22A200CB6995 /* GitHubAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9ED204B22A200CB6995 /* GitHubAPITests.swift */; };
 		29C1A9F0204B22A200CB6995 /* GitHubAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */; };
+		29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9F6204B497A00CB6995 /* V3Request.swift */; };
+		29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABB204B545F00E5CA32 /* V3User.swift */; };
+		29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABD204B56BC00E5CA32 /* V3Repository.swift */; };
+		29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */; };
+		29F8BAC2204B57EC00E5CA32 /* V3Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */; };
 		8EA63097A702A4F8EB2C09FD /* Pods_GitHubAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE89CC2E4B519CD9E3C1D0D /* Pods_GitHubAPI.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
+		2958050C204B5C3A009CFD51 /* V3NotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationResponse.swift; sourceTree = "<group>"; };
 		29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C1A9CB204B04E700CB6995 /* GitHubAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubAPI.h; sourceTree = "<group>"; };
 		29C1A9CC204B04E700CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,6 +44,11 @@
 		29C1A9EB204B22A200CB6995 /* GitHubAPITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubAPITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C1A9ED204B22A200CB6995 /* GitHubAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPITests.swift; sourceTree = "<group>"; };
 		29C1A9EF204B22A200CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29C1A9F6204B497A00CB6995 /* V3Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Request.swift; sourceTree = "<group>"; };
+		29F8BABB204B545F00E5CA32 /* V3User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3User.swift; sourceTree = "<group>"; };
+		29F8BABD204B56BC00E5CA32 /* V3Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Repository.swift; sourceTree = "<group>"; };
+		29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationSubject.swift; sourceTree = "<group>"; };
+		29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Notification.swift; sourceTree = "<group>"; };
 		74134BF9E5BC193846C88627 /* Pods-GitHubAPITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubAPITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests.release.xcconfig"; sourceTree = "<group>"; };
 		8965F079442DA6E0B084749E /* Pods-GitHubAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubAPI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubAPI/Pods-GitHubAPI.debug.xcconfig"; sourceTree = "<group>"; };
 		8BE89CC2E4B519CD9E3C1D0D /* Pods_GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,10 +101,16 @@
 		29C1A9CA204B04E700CB6995 /* GitHubAPI */ = {
 			isa = PBXGroup;
 			children = (
-				29C1A9D3204B05AE00CB6995 /* Request.swift */,
+				29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */,
 				29C1A9CB204B04E700CB6995 /* GitHubAPI.h */,
 				29C1A9CC204B04E700CB6995 /* Info.plist */,
-				29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */,
+				29C1A9D3204B05AE00CB6995 /* Request.swift */,
+				2958050C204B5C3A009CFD51 /* V3NotificationResponse.swift */,
+				29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */,
+				29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */,
+				29F8BABD204B56BC00E5CA32 /* V3Repository.swift */,
+				29C1A9F6204B497A00CB6995 /* V3Request.swift */,
+				29F8BABB204B545F00E5CA32 /* V3User.swift */,
 			);
 			path = GitHubAPI;
 			sourceTree = "<group>";
@@ -98,6 +118,7 @@
 		29C1A9EC204B22A200CB6995 /* GitHubAPITests */ = {
 			isa = PBXGroup;
 			children = (
+				2958050A204B5A68009CFD51 /* notifications.json */,
 				29C1A9ED204B22A200CB6995 /* GitHubAPITests.swift */,
 				29C1A9EF204B22A200CB6995 /* Info.plist */,
 			);
@@ -230,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2958050B204B5A68009CFD51 /* notifications.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +351,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29F8BAC2204B57EC00E5CA32 /* V3Notification.swift in Sources */,
+				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
+				29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */,
+				29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
+				29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */,
+				2958050D204B5C3A009CFD51 /* V3NotificationResponse.swift in Sources */,
 				29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

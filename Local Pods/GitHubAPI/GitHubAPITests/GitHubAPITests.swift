@@ -15,8 +15,10 @@ struct TestResponse: EntityResponse {
 
     let data: String
 
-    init?(input: [String: Any]) {
-        guard let data = input["Test"] as? String else { return nil }
+    init(input: [String: Any]) throws {
+        guard let data = input["Test"] as? String else {
+            throw ResponseError.parsing("Missing Test key")
+        }
         self.data = data
     }
 }
@@ -70,6 +72,28 @@ class GitHubAPITests: XCTestCase {
         switch result {
         case .failure: XCTFail()
         case .success(let response): XCTAssertEqual(response.data, "foo")
+        }
+    }
+
+    func test_processResponse_whenNetworkError() {
+        let result = processResponse(request: TestRequest(), input: ["Test":"bar"], error: NSError(domain: "networking", code: 500, userInfo: nil))
+        switch result {
+        case .failure(let error):
+            switch error! {
+            case .network: break
+            case .mismatchedInput, .outputNil, .unauthorized: XCTFail()
+            }
+        case .success: XCTFail()
+        }
+    }
+
+    func test_notificationsJSON() {
+        let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "notifications", withExtension: "json")!)
+        let result = processResponse(request: V3NotificationResponse(), input: data, error: nil)
+        switch result {
+        case .failure: XCTFail()
+        case .success(let response):
+            XCTAssertEqual(response.data.count, 50)
         }
     }
     

@@ -9,10 +9,14 @@
 import Foundation
 import Apollo
 
+public enum ResponseError: Error {
+    case parsing(String?)
+}
+
 public protocol Response {
     associatedtype InputType
     associatedtype OutputType
-    init?(input: InputType)
+    init(input: InputType) throws
 }
 
 public protocol EntityResponse: Response {
@@ -61,7 +65,7 @@ public enum Result<Response> {
 public enum ClientError: Error {
     case unauthorized
     case mismatchedInput
-    case outputNil
+    case outputNil(Error?)
     case network(Error?)
 }
 
@@ -82,13 +86,35 @@ internal func processResponse<T: Request>(request: T, input: Any?, error: Error?
     guard error == nil else {
         return .failure(ClientError.network(error))
     }
-    guard let output = T.ResponseType(input: input) else {
-        return .failure(ClientError.outputNil)
+    do {
+        let output = try T.ResponseType(input: input)
+        return .success(output)
+    } catch {
+        return .failure(ClientError.outputNil(error))
     }
-    return .success(output)
+}
+
+internal func asyncProcessResponse<T: Request>(
+    request: T,
+    input: Any?,
+    error: Error?,
+    completion: @escaping (Result<T.ResponseType>) -> Void
+    ) {
+    DispatchQueue.global().async {
+        let result = processResponse(request: request, input: input, error: error)
+        DispatchQueue.main.async {
+            completion(result)
+        }
+    }
+}
+
+protocol ClientDelegate: class {
+    func didUnauthorize(client: Client)
 }
 
 public class Client {
+
+    weak var delegate: ClientDelegate?
 
     private let httpPerformer: HTTPPerformer
     private let apollo: ApolloClient
@@ -106,26 +132,29 @@ public class Client {
             url: request.url,
             method: request.method,
             parameters: request.parameters,
-            headers: request.headers) { (response, json, error) in
+            headers: request.headers) { [weak self] (response, json, error) in
+                guard let strongSelf = self else { return }
+
                 if request.logoutOnAuthFailure,
                     let statusCode = response?.statusCode,
                     statusCode == 401 {
                     completion(.failure(ClientError.unauthorized))
+                    strongSelf.delegate?.didUnauthorize(client: strongSelf)
                 } else {
-                    completion(processResponse(request: request, input: json, error: error))
+                    asyncProcessResponse(request: request, input: json, error: error, completion: completion)
                 }
         }
     }
 
     public func query<T: GitHubGraphQLQueryRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) {
         apollo.fetch(query: request.query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
-            completion(processResponse(request: request, input: response, error: error))
+            asyncProcessResponse(request: request, input: response, error: error, completion: completion)
         }
     }
 
     public func mutate<T: GitHubGraphQLMutationRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) {
         apollo.perform(mutation: request.mutation) { (response, error) in
-            completion(processResponse(request: request, input: response, error: error))
+            asyncProcessResponse(request: request, input: response, error: error, completion: completion)
         }
     }
 
