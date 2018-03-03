@@ -27,6 +27,8 @@ final class MergeButton: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
 
         addSubview(mergeLabel)
         addSubview(optionIconView)
@@ -36,9 +38,11 @@ final class MergeButton: UIView {
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
 
         let image = UIImage(named: "chevron-down")?.withRenderingMode(.alwaysTemplate)
-        let optionButtonWidth = (image?.size.width ?? 0) + 2*Styles.Sizes.gutter
+        let optionButtonWidth = (image?.size.width ?? 0) + (2 * Styles.Sizes.gutter)
         optionIconView.contentMode = .center
         optionIconView.image = image
+        optionIconView.isAccessibilityElement = true
+        optionIconView.accessibilityTraits |= UIAccessibilityTraitButton
         optionIconView.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
             make.width.equalTo(optionButtonWidth)
@@ -94,6 +98,10 @@ final class MergeButton: UIView {
         } else {
             activityView.stopAnimating()
         }
+
+        accessibilityLabel = title
+        // FIXME: This is currently not accessible in VoiceOver.
+        optionIconView.accessibilityLabel = NSLocalizedString("More merging options", comment: "More options button for merging")
     }
 
     // MARK: Overrides
