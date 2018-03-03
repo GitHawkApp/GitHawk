@@ -368,6 +368,8 @@
 		49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF91B0204B416500DFF325 /* MergeTests.swift */; };
 		49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF91B2204B4A6000DFF325 /* MergeHelper.swift */; };
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
+		49FE18FD204B5D32001681E8 /* Sequence+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */; };
+		49FE18FF204B6508001681E8 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE18FE204B6508001681E8 /* SequenceTests.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
@@ -816,6 +818,8 @@
 		49AF91B0204B416500DFF325 /* MergeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeTests.swift; sourceTree = "<group>"; };
 		49AF91B2204B4A6000DFF325 /* MergeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeHelper.swift; sourceTree = "<group>"; };
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
+		49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Contains.swift"; sourceTree = "<group>"; };
+		49FE18FE204B6508001681E8 /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
@@ -1359,6 +1363,7 @@
 				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				49AF91B0204B416500DFF325 /* MergeTests.swift */,
+				49FE18FE204B6508001681E8 /* SequenceTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 			);
 			path = FreetimeTests;
@@ -1828,6 +1833,7 @@
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
+				49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2344,6 +2350,7 @@
 				291929551F3FAADF0012067B /* FeedRefresh.swift in Sources */,
 				2993046F1FBA9D31007B9737 /* IssueManagingActionCell.swift in Sources */,
 				54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */,
+				49FE18FD204B5D32001681E8 /* Sequence+Contains.swift in Sources */,
 				291929421F3EA8CD0012067B /* File.swift in Sources */,
 				299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */,
 				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
@@ -2716,6 +2723,7 @@
 				DC60C6D31F983BB900241271 /* SignatureTests.swift in Sources */,
 				293A45791F296B7E00DD1006 /* MMMarkdownASTTests.swift in Sources */,
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
+				49FE18FF204B6508001681E8 /* SequenceTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
 				9870B9081FC74E300009719C /* SecretsTests.swift in Sources */,
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
