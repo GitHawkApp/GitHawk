@@ -17,6 +17,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
 
         contentView.addSubview(imageView)
         contentView.addSubview(label)
@@ -67,6 +68,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         }
         imageView.backgroundColor = imageViewBackground
         imageView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
+        accessibilityLabel = .localizedStringWithFormat("%@. (state: %@)", viewModel.title, viewModel.state.description)
     }
     
 }
