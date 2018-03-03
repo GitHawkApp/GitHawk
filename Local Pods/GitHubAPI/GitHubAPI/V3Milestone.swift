@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct V3Milestone: Codable {
+public struct V3Milestone: Codable {
 
     let creator: V3User
     let createdAt: Date
