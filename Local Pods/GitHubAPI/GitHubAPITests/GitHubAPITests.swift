@@ -94,6 +94,13 @@ class GitHubAPITests: XCTestCase {
         case .failure: XCTFail()
         case .success(let response):
             XCTAssertEqual(response.data.count, 50)
+
+            let first = response.data.first!
+            XCTAssertEqual(first.id, "309092405")
+            XCTAssertEqual(first.reason, .subscribed)
+            XCTAssertEqual(first.repository.name, "GitHawk")
+            XCTAssertEqual(first.repository.owner.login, "rnystrom")
+            XCTAssertEqual(first.subject.title, "Add merge status tests")
         }
     }
     
