@@ -368,6 +368,8 @@
 		3E79A2FF1F8A7DA700E1126B /* ShortcutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */; };
 		45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */; };
 		4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */; };
+		49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF91B0204B416500DFF325 /* MergeTests.swift */; };
+		49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AF91B2204B4A6000DFF325 /* MergeHelper.swift */; };
 		49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D028FF1F91D90C00E39094 /* ReactionTests.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
@@ -816,6 +818,8 @@
 		3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutHandler.swift; sourceTree = "<group>"; };
 		45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringViewTests.swift; sourceTree = "<group>"; };
 		4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UserActivity.swift"; sourceTree = "<group>"; };
+		49AF91B0204B416500DFF325 /* MergeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeTests.swift; sourceTree = "<group>"; };
+		49AF91B2204B4A6000DFF325 /* MergeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeHelper.swift; sourceTree = "<group>"; };
 		49D028FF1F91D90C00E39094 /* ReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
@@ -1360,6 +1364,7 @@
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
 				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
+				49AF91B0204B416500DFF325 /* MergeTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 			);
 			path = FreetimeTests;
@@ -1621,6 +1626,7 @@
 				2999972720310F3100995FFD /* IssueMergeContextModel.swift */,
 				2999972520310E9700995FFD /* IssueMergeModel.swift */,
 				2999972920311B3800995FFD /* IssueMergeSectionController.swift */,
+				49AF91B2204B4A6000DFF325 /* MergeHelper.swift */,
 				2999972B20311DD700995FFD /* IssueMergeSummaryCell.swift */,
 				299997312031242500995FFD /* IssueMergeSummaryModel.swift */,
 				299997372031DEB300995FFD /* IssueMergeType.swift */,
@@ -2645,6 +2651,7 @@
 				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
+				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
@@ -2711,6 +2718,7 @@
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				29792B221FFB3EE8007A0C57 /* HangingChadItemWidth.swift in Sources */,
+				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,
 				2986B35F1FD462B300E3CFC6 /* FilePath.swift in Sources */,
 				293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */,
 				296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */,
