@@ -59,7 +59,7 @@ class GitHubAPITests: XCTestCase {
         let result = processResponse(request: TestRequest(), input: ["foo":"bar"], error: nil)
         switch result {
         case .failure(let error):
-            switch error! {
+            switch error as! ClientError {
             case .mismatchedInput, .network, .unauthorized: XCTFail()
             case .outputNil: break
             }
@@ -79,7 +79,7 @@ class GitHubAPITests: XCTestCase {
         let result = processResponse(request: TestRequest(), input: ["Test":"bar"], error: NSError(domain: "networking", code: 500, userInfo: nil))
         switch result {
         case .failure(let error):
-            switch error! {
+            switch error as! ClientError {
             case .network: break
             case .mismatchedInput, .outputNil, .unauthorized: XCTFail()
             }
