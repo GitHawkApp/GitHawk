@@ -122,7 +122,10 @@ IssueManagingNavSectionControllerDelegate {
         navigationTitle.configure(
             title: "#\(model.number)",
             subtitle: "\(model.owner)/\(model.repo)",
-            accessibilityLabel: labelString
+            accessibilityLabel: labelString,
+            accessibilityHint: NSLocalizedString(
+                "Gives the option to view the repository's overview or owner",
+                comment: "The hint for tapping the navigationBar's repository information.")
         )
         navigationItem.titleView = navigationTitle
 

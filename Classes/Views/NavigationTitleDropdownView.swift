@@ -86,7 +86,12 @@ final class NavigationTitleDropdownView: UIControl {
 
     // MARK: Public API
 
-    func configure(title: String?, subtitle: String?, accessibilityLabel: String? = nil) {
+    func configure(
+        title: String?,
+        subtitle: String?,
+        accessibilityLabel: String? = nil,
+        accessibilityHint: String? = nil
+        ) {
         guard let title = title else { return }
 
         let titleAttributes: [NSAttributedStringKey: Any] = [
@@ -106,6 +111,7 @@ final class NavigationTitleDropdownView: UIControl {
         label.attributedText = attributedTitle
 
         self.accessibilityLabel = accessibilityLabel ?? title
+        self.accessibilityHint = accessibilityHint
     }
 
     // MARK: Private API
