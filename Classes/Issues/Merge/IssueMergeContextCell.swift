@@ -20,6 +20,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
 
         contentView.addSubview(avatarView)
         contentView.addSubview(iconView)
@@ -28,6 +29,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
 
         avatarView.clipsToBounds = true
         avatarView.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
+        avatarView.accessibilityIgnoresInvertColors = true
         avatarView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalToSuperview()
@@ -83,6 +85,9 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
         }
         iconView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
         iconView.tintColor = iconColor
+
+        let stateString = viewModel.state.rawValue.lowercased()
+        accessibilityLabel = .localizedStringWithFormat("Status for %@: %@. Context: %@.", viewModel.context, stateString, viewModel.description)
     }
 
 }
