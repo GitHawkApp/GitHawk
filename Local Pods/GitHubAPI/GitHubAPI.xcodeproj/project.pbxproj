@@ -17,6 +17,7 @@
 		29580517204B62FC009CFD51 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580516204B62FC009CFD51 /* Result.swift */; };
 		29580519204B6310009CFD51 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580518204B6310009CFD51 /* ClientError.swift */; };
 		2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051A204B634F009CFD51 /* GitHubGraphQL.swift */; };
+		2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051C204B656C009CFD51 /* V3Milestone.swift */; };
 		29C1A9CD204B04E700CB6995 /* GitHubAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C1A9CB204B04E700CB6995 /* GitHubAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9D3204B05AE00CB6995 /* Request.swift */; };
 		29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */; };
@@ -50,6 +51,7 @@
 		29580516204B62FC009CFD51 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		29580518204B6310009CFD51 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		2958051A204B634F009CFD51 /* GitHubGraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubGraphQL.swift; sourceTree = "<group>"; };
+		2958051C204B656C009CFD51 /* V3Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Milestone.swift; sourceTree = "<group>"; };
 		29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C1A9CB204B04E700CB6995 /* GitHubAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubAPI.h; sourceTree = "<group>"; };
 		29C1A9CC204B04E700CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				29580514204B62DC009CFD51 /* Response.swift */,
 				29580516204B62FC009CFD51 /* Result.swift */,
 				29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */,
+				2958051C204B656C009CFD51 /* V3Milestone.swift */,
 				2958050C204B5C3A009CFD51 /* V3NotificationResponse.swift */,
 				29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */,
 				29F8BABD204B56BC00E5CA32 /* V3Repository.swift */,
@@ -377,6 +380,7 @@
 				29580513204B62BE009CFD51 /* HTTPRequest.swift in Sources */,
 				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,
 				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
+				2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */,
 				29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */,
 				29580515204B62DC009CFD51 /* Response.swift in Sources */,
 				29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */,

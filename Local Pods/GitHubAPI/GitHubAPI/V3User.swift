@@ -21,7 +21,7 @@ public struct V3User: Codable {
     let siteAdmin: Bool
     let type: UserType
 
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case avatarUrl = "avatar_url"
         case id
         case login

@@ -31,7 +31,7 @@ public struct V3Notification: Codable {
     let unread: Bool
     let updatedAt: Date
 
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case lastReadAt = "last_read_at"
         case reason

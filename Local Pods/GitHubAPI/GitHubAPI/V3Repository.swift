@@ -18,7 +18,7 @@ public struct V3Repository: Codable {
     let owner: V3User
     let isPrivate: Bool // custom
 
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case description
         case fork
         case fullName = "full_name"
