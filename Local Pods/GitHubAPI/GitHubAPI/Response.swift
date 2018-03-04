@@ -15,7 +15,7 @@ public enum ResponseError: Error {
 public protocol Response {
     associatedtype InputType
     associatedtype OutputType
-    init(input: InputType) throws
+    init(input: InputType, response: HTTPURLResponse?) throws
 }
 
 public protocol EntityResponse: Response {

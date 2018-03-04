@@ -15,7 +15,7 @@ public struct V3DataResponse<T: Codable>: EntityResponse {
     public typealias InputType = Data
     public typealias OutputType = T
 
-    public init(input: Data) throws {
+    public init(input: Data, response: HTTPURLResponse?) throws {
         let decoder = JSONDecoder()
 
         // https://developer.github.com/v3/#schema

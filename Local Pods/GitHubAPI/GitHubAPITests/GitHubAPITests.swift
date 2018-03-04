@@ -15,7 +15,7 @@ struct TestResponse: EntityResponse {
 
     let data: String
 
-    init(input: [String: Any]) throws {
+    init(input: [String: Any], response: HTTPURLResponse?) throws {
         guard let data = input["Test"] as? String else {
             throw ResponseError.parsing("Missing Test key")
         }
@@ -48,7 +48,7 @@ struct TestHTTPPerformer: HTTPPerformer {
 class GitHubAPITests: XCTestCase {
     
     func test_processResponse_whenWrongInput() {
-        let result = processResponse(request: TestRequest(), input: 42, error: nil)
+        let result = processResponse(request: TestRequest(), input: 42)
         switch result {
         case .success: XCTFail()
         case .failure: break
@@ -56,7 +56,7 @@ class GitHubAPITests: XCTestCase {
     }
 
     func test_processResponse_whenOutputNil() {
-        let result = processResponse(request: TestRequest(), input: ["foo":"bar"], error: nil)
+        let result = processResponse(request: TestRequest(), input: ["foo":"bar"])
         switch result {
         case .failure(let error):
             switch error as! ClientError {
@@ -68,7 +68,7 @@ class GitHubAPITests: XCTestCase {
     }
 
     func test_processResponse_whenOutputExists() {
-        let result = processResponse(request: TestRequest(), input: ["Test":"foo"], error: nil)
+        let result = processResponse(request: TestRequest(), input: ["Test":"foo"])
         switch result {
         case .failure: XCTFail()
         case .success(let response): XCTAssertEqual(response.data, "foo")
@@ -89,7 +89,7 @@ class GitHubAPITests: XCTestCase {
 
     func test_notificationsJSON() {
         let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "notifications", withExtension: "json")!)
-        let result = processResponse(request: V3NotificationResponse(), input: data, error: nil)
+        let result = processResponse(request: V3NotificationRequest(), input: data)
         switch result {
         case .failure: XCTFail()
         case .success(let response):

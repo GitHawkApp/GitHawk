@@ -1,5 +1,5 @@
 //
-//  V3RepositoryNotificationResponse.swift
+//  V3MilestoneRequest.swift
 //  GitHubAPI
 //
 //  Created by Ryan Nystrom on 3/3/18.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public struct V3RepositoryNotificationResponse: V3Request {
-    public typealias ResponseType = V3DataResponse<[V3Notification]>
+public struct V3MilestoneRequest: V3Request {
+    public typealias ResponseType = V3DataResponse<[V3Milestone]>
     public var pathComponents: [String] {
-        return ["repos", owner, repo, "notifications"]
+        return ["repos", owner, repo, "milestones"]
     }
 
     public let owner: String

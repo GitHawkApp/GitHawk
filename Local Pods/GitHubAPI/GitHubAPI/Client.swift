@@ -52,20 +52,38 @@ public class Client {
                     completion(.failure(ClientError.unauthorized))
                     strongSelf.delegate?.didUnauthorize(client: strongSelf)
                 } else {
-                    asyncProcessResponse(request: request, input: json, error: error, completion: completion)
+                    asyncProcessResponse(request: request, input: json, response: response, error: error, completion: completion)
                 }
         }
     }
 
-    public func query<T: GitHubGraphQLQueryRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) {
+    public func query<T: GitHubGraphQLQueryRequest>(
+        _ request: T,
+        completion: @escaping (Result<T.ResponseType>) -> Void
+        ) {
         apollo.fetch(query: request.query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
-            asyncProcessResponse(request: request, input: response, error: error, completion: completion)
+            asyncProcessResponse(
+                request: request,
+                input: response,
+                response: nil,
+                error: error,
+                completion: completion
+            )
         }
     }
 
-    public func mutate<T: GitHubGraphQLMutationRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) {
+    public func mutate<T: GitHubGraphQLMutationRequest>(
+        _ request: T,
+        completion: @escaping (Result<T.ResponseType>) -> Void
+        ) {
         apollo.perform(mutation: request.mutation) { (response, error) in
-            asyncProcessResponse(request: request, input: response, error: error, completion: completion)
+            asyncProcessResponse(
+                request: request,
+                input: response,
+                response: nil,
+                error: error,
+                completion: completion
+            )
         }
     }
 
