@@ -152,21 +152,4 @@ final class RepositoryClient {
         )
     }
 
-    func fetchReadme(
-        completion: @escaping (Result<String>) -> Void
-        ) {
-        githubClient.request(GithubClient.Request(
-            path: "repos/\(owner)/\(name)/readme",
-            completion: { (response, _) in
-                if let json = response.value as? [String: Any],
-                    let content = json["content"] as? String,
-                    let data = Data(base64Encoded: content, options: [.ignoreUnknownCharacters]),
-                    let text = String(data: data, encoding: .utf8) {
-                    completion(.success(text))
-                } else {
-                    completion(.error(response.error))
-                }
-        }))
-    }
-
 }
