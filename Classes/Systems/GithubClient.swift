@@ -9,13 +9,10 @@
 import Foundation
 import Alamofire
 import Apollo
-import AlamofireNetworkActivityIndicator
 import FlatCache
 import GitHubAPI
 
 struct GithubClient {
-
-    private let sessionManager: GithubSessionManager
 
     let userSession: GithubUserSession?
     let cache = FlatCache()
@@ -23,12 +20,10 @@ struct GithubClient {
     let client: Client
 
     init(
-        sessionManager: GithubSessionManager,
         apollo: ApolloClient,
         networker: Alamofire.SessionManager,
         userSession: GithubUserSession? = nil
         ) {
-        self.sessionManager = sessionManager
         self.userSession = userSession
 
         self.client = Client(httpPerformer: networker, apollo: apollo, token: userSession?.token)

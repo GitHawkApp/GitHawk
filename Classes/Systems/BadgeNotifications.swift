@@ -73,7 +73,7 @@ final class BadgeNotifications {
             isEnabled
             else { return }
 
-        let client = newGithubClient(sessionManager: manager, userSession: session)
+        let client = newGithubClient(userSession: session)
         client.client.send(V3NotificationRequest(all: false)) { result in
             switch result {
             case .success(let response):
