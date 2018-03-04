@@ -22,6 +22,10 @@
 		290890B6204BCCBA00D088BC /* V3Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B5204BCCBA00D088BC /* V3Content.swift */; };
 		290890B8204BCD2600D088BC /* V3SetMilestonesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */; };
 		290890BA204BCD8F00D088BC /* V3MergePullRequestReqeust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */; };
+		290890BE204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890BD204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift */; };
+		290890C0204BDDD900D088BC /* V3PullRequestCommentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890BF204BDDD900D088BC /* V3PullRequestCommentsRequest.swift */; };
+		290890C2204BDE2A00D088BC /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890C1204BDE2A00D088BC /* JSONResponse.swift */; };
+		290890C4204BDF9E00D088BC /* V3EditCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */; };
 		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
 		2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */; };
 		2958050F204B6258009CFD51 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050E204B6258009CFD51 /* Client.swift */; };
@@ -87,6 +91,10 @@
 		290890B5204BCCBA00D088BC /* V3Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Content.swift; sourceTree = "<group>"; };
 		290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SetMilestonesRequest.swift; sourceTree = "<group>"; };
 		290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MergePullRequestReqeust.swift; sourceTree = "<group>"; };
+		290890BD204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SendPullRequestCommentRequest.swift; sourceTree = "<group>"; };
+		290890BF204BDDD900D088BC /* V3PullRequestCommentsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3PullRequestCommentsRequest.swift; sourceTree = "<group>"; };
+		290890C1204BDE2A00D088BC /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
+		290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3EditCommentRequest.swift; sourceTree = "<group>"; };
 		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationRequest.swift; sourceTree = "<group>"; };
 		2958050E204B6258009CFD51 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -194,31 +202,35 @@
 				29580532204B9B7F009CFD51 /* String+V3Links.swift */,
 				2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */,
 				290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */,
+				290890B5204BCCBA00D088BC /* V3Content.swift */,
 				290890A9204BC58A00D088BC /* V3CreateIssueRequest.swift */,
 				29580522204B713C009CFD51 /* V3DataResponse.swift */,
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
-				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
-				290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */,
 				290890B3204BCC3100D088BC /* V3File.swift */,
+				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
 				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
 				29580524204B73A8009CFD51 /* V3MarkThreadsRequest.swift */,
+				290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */,
 				2958051C204B656C009CFD51 /* V3Milestone.swift */,
 				2958051E204B664F009CFD51 /* V3MilestoneRequest.swift */,
 				29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */,
 				2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */,
 				29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */,
+				290890BF204BDDD900D088BC /* V3PullRequestCommentsRequest.swift */,
+				290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */,
+				290890C1204BDE2A00D088BC /* JSONResponse.swift */,
 				29580526204B778B009CFD51 /* V3Release.swift */,
 				29580528204B77B1009CFD51 /* V3ReleaseRequest.swift */,
 				29F8BABD204B56BC00E5CA32 /* V3Repository.swift */,
 				29580520204B6706009CFD51 /* V3RepositoryNotificationRequest.swift */,
 				290890A5204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift */,
-				290890B5204BCCBA00D088BC /* V3Content.swift */,
 				29C1A9F6204B497A00CB6995 /* V3Request.swift */,
+				290890BD204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift */,
+				290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */,
 				290890AF204BCB2100D088BC /* V3SetIssueStatusRequest.swift */,
-				2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */,
 				290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */,
-				290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */,
+				2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */,
 				2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */,
 				2958052A204B785F009CFD51 /* V3StatusCodeResponse.swift */,
 				29F8BABB204B545F00E5CA32 /* V3User.swift */,
@@ -471,6 +483,7 @@
 				290890AC204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift in Sources */,
 				290890A8204BC4B400D088BC /* GitHubAPIStatusRequest.swift in Sources */,
 				29580517204B62FC009CFD51 /* Result.swift in Sources */,
+				290890C2204BDE2A00D088BC /* JSONResponse.swift in Sources */,
 				29580529204B77B1009CFD51 /* V3ReleaseRequest.swift in Sources */,
 				290890B6204BCCBA00D088BC /* V3Content.swift in Sources */,
 				29580527204B778B009CFD51 /* V3Release.swift in Sources */,
@@ -480,6 +493,7 @@
 				2958052D204B7AB2009CFD51 /* V3DeleteCommentRequest.swift in Sources */,
 				29580513204B62BE009CFD51 /* HTTPRequest.swift in Sources */,
 				29580537204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift in Sources */,
+				290890C4204BDF9E00D088BC /* V3EditCommentRequest.swift in Sources */,
 				2958051F204B664F009CFD51 /* V3MilestoneRequest.swift in Sources */,
 				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,
 				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
@@ -503,8 +517,10 @@
 				290890A4204BBE9F00D088BC /* V3AssigneesRequest.swift in Sources */,
 				2958053D204BAD77009CFD51 /* ManualGraphQLRequest.swift in Sources */,
 				2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */,
+				290890C0204BDDD900D088BC /* V3PullRequestCommentsRequest.swift in Sources */,
 				29580533204B9B7F009CFD51 /* String+V3Links.swift in Sources */,
 				29580525204B73A8009CFD51 /* V3MarkThreadsRequest.swift in Sources */,
+				290890BE204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift in Sources */,
 				290890B0204BCB2100D088BC /* V3SetIssueStatusRequest.swift in Sources */,
 				29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */,
 				2958050F204B6258009CFD51 /* Client.swift in Sources */,

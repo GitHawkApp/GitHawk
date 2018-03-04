@@ -432,17 +432,17 @@ IssueCommentDoubleTapDelegate {
         let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
         edit(markdown: edited)
 
-        client.editComment(
+        client.client.send(V3EditCommentRequest(
             owner: model.owner,
             repo: model.repo,
             issueNumber: model.number,
             commentID: commentID,
             body: edited,
-            isRoot: isRoot
-        ) { [weak self] (result) in
+            isRoot: isRoot)
+        ) { [weak self] result in
             switch result {
-            case .success: break;
-            case .error:
+            case .success: break
+            case .failure:
                 self?.edit(markdown: originalMarkdown)
                 ToastManager.showGenericError()
             }

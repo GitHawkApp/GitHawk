@@ -117,7 +117,7 @@ PullRequestReviewReplySectionControllerDelegate {
         ) { [weak self] (result) in
             switch result {
             case .error: ToastManager.showGenericError()
-            case .success(let models, _):
+            case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
             }

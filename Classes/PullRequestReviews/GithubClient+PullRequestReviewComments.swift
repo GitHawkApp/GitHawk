@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 extension GithubClient {
 
@@ -24,19 +25,16 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<([ListDiffable], Int?)>) -> ()
+        completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
-        request(Request(
-            path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
-            completion: { (response, nextPage) in
 
-                guard let jsonArr = response.value as? [ [String: Any] ] else {
-                    ToastManager.showGenericError()
-                    completion(.error(response.error))
-                    return
-                }
-
+        client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
+            switch result {
+            case .failure(let error):
+                ToastManager.showGenericError()
+                completion(.error(error))
+            case .success(let response):
                 struct Thread {
                     let hunk: String
                     let path: String
@@ -47,7 +45,7 @@ extension GithubClient {
                     var threadIDs = [Int]()
                     var threads = [Int: Thread]()
 
-                    for json in jsonArr {
+                    for json in response.data {
                         guard let id = json["id"] as? Int,
                             let reviewComment = createReviewCommentModel(id: id, json: json)
                             else { continue }
@@ -99,10 +97,11 @@ extension GithubClient {
                     }
 
                     DispatchQueue.main.async {
-                        completion(.success((models, nextPage?.next)))
+                        completion(.success(models))
                     }
                 }
-        }))
+            }
+        }
     }
 
     func sendComment(
@@ -116,16 +115,16 @@ extension GithubClient {
         ) {
         let viewer = userSession?.username
 
-        // https://developer.github.com/v3/pulls/comments/#alternative-input
-        request(Request(
-            path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
-            method: .post,
-            parameters: ["body": body, "in_reply_to": inReplyTo],
-            completion: { (response, _) in
-                if response.response?.statusCode == 201,
-                    let json = response.value as? [String: Any],
-                    let id = json["id"] as? Int,
-                    let model = createReviewCommentModel(id: id, json: json) {
+        client.send(V3SendPullRequestCommentRequest(
+            owner: owner,
+            repo: repo,
+            number: number,
+            body: body,
+            inReplyTo: inReplyTo)
+        ) { result in
+            switch result {
+            case .success(let response):
+                if let model = createReviewCommentModel(id: response.id, json: response.data) {
                     let comment = createReviewComment(
                         owner: owner,
                         repo: repo,
@@ -136,9 +135,13 @@ extension GithubClient {
                     completion(.success(comment))
                 } else {
                     ToastManager.showGenericError()
-                    completion(.error(response.error))
+                    completion(.error(nil))
                 }
-        }))
+            case .failure(let error):
+                ToastManager.showGenericError()
+                completion(.error(error))
+            }
+        }
     }
 
 }
