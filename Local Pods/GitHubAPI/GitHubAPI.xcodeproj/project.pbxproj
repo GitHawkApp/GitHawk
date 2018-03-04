@@ -10,6 +10,7 @@
 		01C348D0522C94F4BB7B1DAE /* Pods_GitHubAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D897DD47D55AE56059FEB3F4 /* Pods_GitHubAPITests.framework */; };
 		2908909E204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */; };
 		290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */; };
+		290890A4204BBE9F00D088BC /* V3AssigneesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */; };
 		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
 		2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */; };
 		2958050F204B6258009CFD51 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050E204B6258009CFD51 /* Client.swift */; };
@@ -63,6 +64,7 @@
 		19A028CA5245EA9BA03B85FA /* Pods_GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SetRepositoryLabelsRequest.swift; sourceTree = "<group>"; };
 		2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3AddPeopleRequest.swift; sourceTree = "<group>"; };
+		290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3AssigneesRequest.swift; sourceTree = "<group>"; };
 		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationRequest.swift; sourceTree = "<group>"; };
 		2958050E204B6258009CFD51 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
 				2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */,
+				290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */,
 				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
 				29580524204B73A8009CFD51 /* V3MarkThreadsRequest.swift */,
 				2958051C204B656C009CFD51 /* V3Milestone.swift */,
@@ -454,6 +457,7 @@
 				29580539204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift in Sources */,
 				29580521204B6706009CFD51 /* V3RepositoryNotificationRequest.swift in Sources */,
 				29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */,
+				290890A4204BBE9F00D088BC /* V3AssigneesRequest.swift in Sources */,
 				2958053D204BAD77009CFD51 /* ManualGraphQLRequest.swift in Sources */,
 				2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */,
 				29580533204B9B7F009CFD51 /* String+V3Links.swift in Sources */,

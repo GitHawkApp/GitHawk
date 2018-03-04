@@ -294,13 +294,12 @@ PeopleViewControllerDelegate {
     func didDismiss(
         controller: PeopleViewController,
         type: PeopleViewController.PeopleType,
-        selections: [User]
+        selections: [V3User]
         ) {
         guard let previous = issueResult else { return }
         var assignees = [IssueAssigneeViewModel]()
         for user in selections {
-            guard let url = URL(string: user.avatar_url) else { continue }
-            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: url))
+            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl))
         }
 
         let mutationType: V3AddPeopleRequest.PeopleType
