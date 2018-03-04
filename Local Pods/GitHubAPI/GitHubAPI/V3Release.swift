@@ -10,7 +10,7 @@ import Foundation
 
 public struct V3Release: Codable {
 
-    let tagName: String
+    public let tagName: String
 
     enum CodingKeys: String, CodingKey {
         case tagName = "tag_name"

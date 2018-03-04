@@ -30,6 +30,9 @@
 		29580531204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580530204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift */; };
 		29580533204B9B7F009CFD51 /* String+V3Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580532204B9B7F009CFD51 /* String+V3Links.swift */; };
 		29580535204B9DD0009CFD51 /* HTTPLinkNextPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580534204B9DD0009CFD51 /* HTTPLinkNextPageTests.swift */; };
+		29580537204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */; };
+		29580539204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */; };
+		2958053B204BAB1A009CFD51 /* V3StatusCode205.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */; };
 		29C1A9CD204B04E700CB6995 /* GitHubAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C1A9CB204B04E700CB6995 /* GitHubAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9D3204B05AE00CB6995 /* Request.swift */; };
 		29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */; };
@@ -77,6 +80,9 @@
 		29580530204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3ViewerIsCollaboratorRequest.swift; sourceTree = "<group>"; };
 		29580532204B9B7F009CFD51 /* String+V3Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+V3Links.swift"; sourceTree = "<group>"; };
 		29580534204B9DD0009CFD51 /* HTTPLinkNextPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPLinkNextPageTests.swift; sourceTree = "<group>"; };
+		29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MarkNotificationsRequest.swift; sourceTree = "<group>"; };
+		29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MarkRepositoryNotificationsRequest.swift; sourceTree = "<group>"; };
+		2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3StatusCode205.swift; sourceTree = "<group>"; };
 		29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C1A9CB204B04E700CB6995 /* GitHubAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubAPI.h; sourceTree = "<group>"; };
 		29C1A9CC204B04E700CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -157,6 +163,9 @@
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580524204B73A8009CFD51 /* V3MarkThreadsRequest.swift */,
+				2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */,
+				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
+				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
 				2958051C204B656C009CFD51 /* V3Milestone.swift */,
 				2958051E204B664F009CFD51 /* V3MilestoneRequest.swift */,
 				29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */,
@@ -419,6 +428,7 @@
 				2958052B204B785F009CFD51 /* V3StatusCodeResponse.swift in Sources */,
 				2958052D204B7AB2009CFD51 /* V3DeleteCommentRequest.swift in Sources */,
 				29580513204B62BE009CFD51 /* HTTPRequest.swift in Sources */,
+				29580537204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift in Sources */,
 				2958051F204B664F009CFD51 /* V3MilestoneRequest.swift in Sources */,
 				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,
 				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
@@ -430,6 +440,7 @@
 				29580511204B629B009CFD51 /* Processing.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
 				29580531204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift in Sources */,
+				29580539204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift in Sources */,
 				29580521204B6706009CFD51 /* V3RepositoryNotificationRequest.swift in Sources */,
 				29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */,
 				2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */,
@@ -438,6 +449,7 @@
 				29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */,
 				2958050F204B6258009CFD51 /* Client.swift in Sources */,
 				29580519204B6310009CFD51 /* ClientError.swift in Sources */,
+				2958053B204BAB1A009CFD51 /* V3StatusCode205.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

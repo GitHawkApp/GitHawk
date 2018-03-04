@@ -9,7 +9,7 @@
 import Foundation
 
 public struct V3ReleaseRequest: V3Request {
-    public typealias ResponseType = V3DataResponse<[V3Release]>
+    public typealias ResponseType = V3DataResponse<V3Release>
     public var pathComponents: [String] {
         return ["repos", owner, repo, "releases", id]
     }
@@ -17,4 +17,10 @@ public struct V3ReleaseRequest: V3Request {
     public let owner: String
     public let repo: String
     public let id: String
+
+    public init(owner: String, repo: String, id: String) {
+        self.owner = owner
+        self.repo = repo
+        self.id = id
+    }
 }

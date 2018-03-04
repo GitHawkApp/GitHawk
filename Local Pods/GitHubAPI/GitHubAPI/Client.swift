@@ -29,20 +29,26 @@ public class Client {
 
     private let httpPerformer: HTTPPerformer
     private let apollo: ApolloClient?
+    private let token: String?
 
     public init(
         httpPerformer: HTTPPerformer,
-        apollo: ApolloClient? = nil
+        apollo: ApolloClient? = nil,
+        token: String? = nil
         ) {
         self.httpPerformer = httpPerformer
         self.apollo = apollo
+        self.token = token
     }
 
     public func send<T: HTTPRequest>(_ request: T, completion: @escaping (Result<T.ResponseType>) -> Void) {
+        var parameters = request.parameters ?? [:]
+        parameters["access_token"] = token
+
         httpPerformer.send(
             url: request.url,
             method: request.method,
-            parameters: request.parameters,
+            parameters: parameters,
             headers: request.headers) { [weak self] (response, json, error) in
                 guard let strongSelf = self else { return }
 

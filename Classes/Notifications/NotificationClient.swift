@@ -119,11 +119,21 @@ final class NotificationClient {
     }
 
     func markAllNotifications(completion: @escaping (Bool) -> Void) {
-        markNotifications(repo: nil, completion: completion)
+        githubClient.client.send(V3MarkNotificationsRequest()) { result in
+            switch result {
+            case .success: completion(true)
+            case .failure: completion(false)
+            }
+        }
     }
 
     func markRepoNotifications(repo: NotificationRepository, completion: @escaping (Bool) -> Void) {
-        markNotifications(repo: repo, completion: completion)
+        githubClient.client.send(V3MarkRepositoryNotificationsRequest(owner: repo.owner, repo: repo.name)) { result in
+            switch result {
+            case .success: completion(true)
+            case .failure: completion(false)
+            }
+        }
     }
 
     func notificationOpened(id: String) -> Bool {
@@ -143,75 +153,17 @@ final class NotificationClient {
             }
         }
 
-        githubClient.request(GithubClient.Request(
-            path: "notifications/threads/\(id)",
-            method: .patch) { [weak self] response, _ in
-                // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
-                if response.response?.statusCode != 205 {
-                    if isOpen {
-                        self?.openedNotificationIDs.remove(id)
-                    } else if let old = oldModel {
-                        self?.githubClient.cache.set(value: old)
-                    }
+        githubClient.client.send(V3MarkThreadsRequest(id: id)) { [weak self] result in
+            switch result {
+            case .success: break
+            case .failure:
+                if isOpen {
+                    self?.openedNotificationIDs.remove(id)
+                } else if let old = oldModel {
+                    self?.githubClient.cache.set(value: old)
                 }
-        })
-    }
-
-    func fetchWatchedRepositories(completion: @escaping (Result<[Repository]>) -> Void) {
-        guard let viewer = githubClient.userSession?.username else {
-            completion(.error(nil))
-            return
-        }
-
-        githubClient.request(GithubClient.Request(
-            path: "users/\(viewer)/subscriptions"
-        ) { response, _ in
-            // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
-            if let jsonArr = response.value as? [ [String: Any] ] {
-                var repos = [Repository]()
-                for json in jsonArr {
-                    if let repo = Repository(json: json) {
-                        repos.append(repo)
-                    }
-                }
-                completion(.success(repos.sorted { $0.name < $1.name }))
-            } else {
-                completion(.error(response.error))
             }
-        })
-    }
-
-    func fetchReleaseTag(owner: String, repo: String, id: String, completion: @escaping (Result<String>) -> Void) {
-        githubClient.request(GithubClient.Request(
-            path: "repos/\(owner)/\(repo)/releases/\(id)"
-        ) { response, _ in
-            if let json = response.value as? [String: Any],
-                let tag = json["tag_name"] as? String {
-                completion(.success(tag))
-            } else {
-                completion(.error(response.error))
-            }
-        })
-    }
-
-    // MARK: Private API
-
-    func path(repo: NotificationRepository?) -> String {
-        if let repo = repo {
-            return "repos/\(repo.owner)/\(repo.name)/notifications"
-        } else {
-            return "notifications"
         }
-    }
-
-    func markNotifications(repo: NotificationRepository? = nil, completion: @escaping (Bool) -> Void) {
-        githubClient.request(GithubClient.Request(
-            path: path(repo: repo),
-            method: .put
-        ) { response, _ in
-            let success = response.response?.statusCode == 205
-            completion(success)
-        })
     }
 
 }

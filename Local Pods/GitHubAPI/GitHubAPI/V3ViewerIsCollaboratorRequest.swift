@@ -39,7 +39,7 @@ public struct V3ViewerIsCollaboratorResponse: EntityResponse {
 }
 
 public struct V3ViewerIsCollaboratorRequest: V3Request {
-    public typealias ResponseType = V3StatusCodeResponse<V3MarkThreadsStatusCode>
+    public typealias ResponseType = V3ViewerIsCollaboratorResponse
     public var pathComponents: [String] {
         return ["repos", owner, repo, "collaborators", viewer, "permission"]
     }

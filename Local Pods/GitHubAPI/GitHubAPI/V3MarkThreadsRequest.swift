@@ -8,18 +8,16 @@
 
 import Foundation
 
-public struct V3MarkThreadsStatusCode: V3StatusCodeSuccess {
-    public static func success(statusCode: Int) -> Bool {
-        return statusCode == 205
-    }
-}
-
 public struct V3MarkThreadsRequest: V3Request {
-    public typealias ResponseType = V3StatusCodeResponse<V3MarkThreadsStatusCode>
+    public typealias ResponseType = V3StatusCodeResponse<V3StatusCode205>
     public var pathComponents: [String] {
         return ["notifications", "threads", id]
     }
     public var method: HTTPMethod { return .patch }
 
     public let id: String
+
+    public init(id: String) {
+        self.id = id
+    }
 }

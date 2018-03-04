@@ -83,7 +83,7 @@ struct GithubClient {
         self.networker = networker
         self.userSession = userSession
 
-        self.client = Client(httpPerformer: networker, apollo: apollo)
+        self.client = Client(httpPerformer: networker, apollo: apollo, token: userSession?.token)
 
         if let token = userSession?.token {
             self.bookmarksStore = BookmarkStore(token: token)
