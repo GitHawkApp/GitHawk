@@ -64,6 +64,7 @@ final class PeopleViewController: UITableViewController {
 
     func fetch() {
         client.client.send(V3AssigneesRequest(owner: owner, repo: repo)) { [weak self] result in
+            self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let response):
                 self?.users = response.data.sorted { $0.login.lowercased() < $1.login.lowercased() }

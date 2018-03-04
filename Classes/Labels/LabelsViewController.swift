@@ -47,6 +47,7 @@ final class LabelsViewController: UITableViewController {
         client.client.query(request, result: { data in
             data.repository?.labels?.nodes
         }) { [weak self] result in
+            self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let nodes):
                 self?.update(labels: nodes.flatMap {

@@ -28,7 +28,9 @@ extension GithubClient {
             switch result {
             case .failure(let error):
                 completion(.error(error))
-                ToastManager.showGenericError()
+                if !isCancellationError(error) {
+                    ToastManager.showGenericError()
+                }
             case .success(let data):
                 DispatchQueue.global().async {
                     var builder = [SearchRepoResult]()

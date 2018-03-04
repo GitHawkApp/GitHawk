@@ -46,7 +46,6 @@ public struct V3ViewerIsCollaboratorRequest: V3Request {
     public var headers: [String : String]? {
         return ["Accept": "application/vnd.github.hellcat-preview+json"]
     }
-    public var method: HTTPMethod { return .patch }
 
     public let owner: String
     public let repo: String
