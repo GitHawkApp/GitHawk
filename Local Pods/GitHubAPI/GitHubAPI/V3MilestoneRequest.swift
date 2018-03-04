@@ -16,4 +16,9 @@ public struct V3MilestoneRequest: V3Request {
 
     public let owner: String
     public let repo: String
+
+    public init(owner: String, repo: String) {
+        self.owner = owner
+        self.repo = repo
+    }
 }

@@ -8,6 +8,8 @@
 
 import Foundation
 
+import GitHubAPI
+
 extension GithubClient {
 
     func fetchMilestones(
@@ -15,17 +17,11 @@ extension GithubClient {
         repo: String,
         completion: @escaping (Result<[Milestone]>) -> Void
         ) {
-        request(GithubClient.Request(
-            path: "repos/\(owner)/\(repo)/milestones"
-        ) { (response, _) in
-            if let jsonArr = response.value as? [[String: Any]] {
-                var milestones = [Milestone]()
-                for json in jsonArr {
-                    if let milestone = Milestone(json: json) {
-                        milestones.append(milestone)
-                    }
-                }
-                milestones.sort { lhs, rhs in
+
+        client.send(V3MilestoneRequest(owner: owner, repo: repo)) { result in
+            switch result {
+            case .success(let response):
+                let milestones = response.data.sorted { lhs, rhs in
                     switch (lhs.dueOn, rhs.dueOn) {
                     case (let lhsDue?, let rhsDue?):
                         return lhsDue.compare(rhsDue) == .orderedAscending
@@ -37,11 +33,19 @@ extension GithubClient {
                         return lhs.title < rhs.title
                     }
                 }
-                completion(.success(milestones))
-            } else {
-                completion(.error(response.error))
+                completion(.success(milestones.map {
+                    Milestone(
+                        number: $0.number,
+                        title: $0.title,
+                        dueOn: $0.dueOn,
+                        openIssueCount: $0.openIssues,
+                        totalIssueCount: $0.openIssues + $0.closedIssues
+                    )
+                }))
+            case .failure(let error):
+                completion(.error(error))
             }
-        })
+        }
     }
 
     func setMilestone(
