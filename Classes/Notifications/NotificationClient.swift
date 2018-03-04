@@ -87,35 +87,31 @@ final class NotificationClient {
 
         let cache = githubClient.cache
 
-        githubClient.graphQL(
-        parameters: ["query": query]) { response in
+        githubClient.client.send(ManualGraphQLRequest(query: query)) { result in
             let processedNotifications: [NotificationViewModel]
-            if let json = response.value as? [String: Any],
-                let data = json["data"] as? [String: Any] {
-
+            switch result {
+            case .success(let json):
                 var updatedNotifications = [NotificationViewModel]()
                 for notification in notifications {
                     if let alias = notification.stateAlias,
-                        let result = data[alias.key] as? [String: Any],
+                        let result = json.data[alias.key] as? [String: Any],
                         let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
                         let stateString = issueOrPullRequest["state"] as? String,
                         let state = NotificationViewModel.State(rawValue: stateString),
-                    let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
-                    let commentCount = commentsJSON["totalCount"] as? Int {
+                        let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
+                        let commentCount = commentsJSON["totalCount"] as? Int {
                         updatedNotifications.append(notification.updated(state: state, commentCount: commentCount))
                     } else {
                         updatedNotifications.append(notification)
                     }
                 }
-
                 processedNotifications = updatedNotifications
-            } else {
+            case .failure:
                 processedNotifications = notifications
             }
             cache.set(values: processedNotifications)
             completion(.success((processedNotifications, page)))
         }
-
     }
 
     func markAllNotifications(completion: @escaping (Bool) -> Void) {
