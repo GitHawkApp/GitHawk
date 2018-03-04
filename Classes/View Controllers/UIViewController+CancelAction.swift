@@ -20,7 +20,7 @@ extension UIViewController {
         }
 
         // dismiss if all text entries are empty
-        let canDismissNow = texts.containsAll { $0 == nil || $0!.isEmpty }
+        let canDismissNow = texts.containsOnly { $0 == nil || $0!.isEmpty }
         if canDismissNow {
             dismissBlock()
         } else {

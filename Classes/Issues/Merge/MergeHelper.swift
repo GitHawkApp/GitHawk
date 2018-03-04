@@ -21,7 +21,7 @@ enum MergeHelper {
         case let states where states.contains(.pending):
             state = .pending
             stateDescription = NSLocalizedString("Merge status pending", comment: "")
-        case let states where states.containsAll(.success):
+        case let states where states.containsOnly(.success):
             state = .success
             stateDescription = NSLocalizedString("All checks passed", comment: "")
         default:
