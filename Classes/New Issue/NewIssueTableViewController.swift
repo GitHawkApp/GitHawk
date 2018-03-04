@@ -8,6 +8,8 @@
 
 import UIKit
 
+import GitHubAPI
+
 enum IssueSignatureType {
     case bugReport
     case sentWithGitHawk
@@ -149,20 +151,25 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
 
         let signature = self.signature?.addition ?? ""
 
-        client.createIssue(owner: owner, repo: repo, title: titleText, body: (bodyText ?? "") + signature) { [weak self] model in
+        client.client.send(V3CreateIssueRequest(
+            owner: owner,
+            repo: repo,
+            title: titleText,
+            body: (bodyText ?? "") + signature)
+        ) { [weak self] result in
             guard let strongSelf = self else { return }
-
             strongSelf.setRightBarItemIdle()
 
-            guard let model = model else {
+            switch result {
+            case .success(let response):
+                let model = IssueDetailsModel(owner: strongSelf.owner, repo: strongSelf.repo, number: response.data.number)
+                let delegate = strongSelf.delegate
+                strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
+                    delegate?.didDismissAfterCreatingIssue(model: model)
+                })
+            case .failure:
                 ToastManager.showGenericError()
-                return
             }
-
-            let delegate = strongSelf.delegate
-            strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
-                delegate?.didDismissAfterCreatingIssue(model: model)
-            })
         }
     }
 

@@ -17,7 +17,7 @@ public struct V3LockIssueStatusCode: V3StatusCodeSuccess {
 public struct V3LockIssueRequest: V3Request {
     public typealias ResponseType = V3StatusCodeResponse<V3LockIssueStatusCode>
     public var pathComponents: [String] {
-        return ["repos", owner, repo, "issues", id, "lock"]
+        return ["repos", owner, repo, "issues", number, "lock"]
     }
     public var method: HTTPMethod {
         return locked ? .put : .delete
@@ -25,6 +25,13 @@ public struct V3LockIssueRequest: V3Request {
 
     public let owner: String
     public let repo: String
-    public let id: String
+    public let number: String
     public let locked: Bool
+
+    public init(owner: String, repo: String, number: String, locked: Bool) {
+        self.owner = owner
+        self.repo = repo
+        self.number = number
+        self.locked = locked
+    }
 }

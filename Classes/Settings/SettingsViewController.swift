@@ -9,6 +9,8 @@
 import UIKit
 import SafariServices
 
+import GitHubAPI
+
 final class SettingsViewController: UITableViewController,
 NewIssueTableViewControllerDelegate {
 
@@ -56,7 +58,8 @@ NewIssueTableViewControllerDelegate {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
-        client?.fetchAPIStatus { [weak self] result in
+
+        client.client.send(GitHubAPIStatusRequest()) { [weak self] result in
             self?.update(statusResult: result)
         }
     }
@@ -199,16 +202,16 @@ NewIssueTableViewControllerDelegate {
         NotificationClient.setReadOnOpen(open: markReadSwitch.isOn)
     }
 
-    func update(statusResult: Result<GithubClient.APIStatus>) {
+    func update(statusResult: GitHubAPI.Result<APIStatus>) {
         switch statusResult {
-        case .error:
+        case .failure:
             apiStatusView.isHidden = true
             apiStatusLabel.text = NSLocalizedString("error", comment: "")
-        case .success(let status):
+        case .success(let response):
 
             let text: String
             let color: UIColor
-            switch status {
+            switch response.status {
             case .good:
                 text = NSLocalizedString("Good", comment: "")
                 color = Styles.Colors.Green.medium.color

@@ -12,6 +12,16 @@
 		290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */; };
 		290890A4204BBE9F00D088BC /* V3AssigneesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */; };
 		290890A6204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890A5204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift */; };
+		290890A8204BC4B400D088BC /* GitHubAPIStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890A7204BC4B400D088BC /* GitHubAPIStatusRequest.swift */; };
+		290890AA204BC58A00D088BC /* V3CreateIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890A9204BC58A00D088BC /* V3CreateIssueRequest.swift */; };
+		290890AC204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890AB204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift */; };
+		290890AE204BC8F800D088BC /* GitHubAccessTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890AD204BC8F800D088BC /* GitHubAccessTokenRequest.swift */; };
+		290890B0204BCB2100D088BC /* V3SetIssueStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890AF204BCB2100D088BC /* V3SetIssueStatusRequest.swift */; };
+		290890B2204BCBD200D088BC /* V3PullRequestFilesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */; };
+		290890B4204BCC3100D088BC /* V3File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B3204BCC3100D088BC /* V3File.swift */; };
+		290890B6204BCCBA00D088BC /* V3Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B5204BCCBA00D088BC /* V3Content.swift */; };
+		290890B8204BCD2600D088BC /* V3SetMilestonesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */; };
+		290890BA204BCD8F00D088BC /* V3MergePullRequestReqeust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */; };
 		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
 		2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */; };
 		2958050F204B6258009CFD51 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050E204B6258009CFD51 /* Client.swift */; };
@@ -67,6 +77,16 @@
 		2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3AddPeopleRequest.swift; sourceTree = "<group>"; };
 		290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3AssigneesRequest.swift; sourceTree = "<group>"; };
 		290890A5204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3RepositoryReadmeRequest.swift; sourceTree = "<group>"; };
+		290890A7204BC4B400D088BC /* GitHubAPIStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIStatusRequest.swift; sourceTree = "<group>"; };
+		290890A9204BC58A00D088BC /* V3CreateIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3CreateIssueRequest.swift; sourceTree = "<group>"; };
+		290890AB204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3VerifyPersonalAccessTokenRequest.swift; sourceTree = "<group>"; };
+		290890AD204BC8F800D088BC /* GitHubAccessTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAccessTokenRequest.swift; sourceTree = "<group>"; };
+		290890AF204BCB2100D088BC /* V3SetIssueStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SetIssueStatusRequest.swift; sourceTree = "<group>"; };
+		290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3PullRequestFilesRequest.swift; sourceTree = "<group>"; };
+		290890B3204BCC3100D088BC /* V3File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3File.swift; sourceTree = "<group>"; };
+		290890B5204BCCBA00D088BC /* V3Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Content.swift; sourceTree = "<group>"; };
+		290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SetMilestonesRequest.swift; sourceTree = "<group>"; };
+		290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MergePullRequestReqeust.swift; sourceTree = "<group>"; };
 		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationRequest.swift; sourceTree = "<group>"; };
 		2958050E204B6258009CFD51 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -160,7 +180,9 @@
 				29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */,
 				2958050E204B6258009CFD51 /* Client.swift */,
 				29580518204B6310009CFD51 /* ClientError.swift */,
+				290890AD204BC8F800D088BC /* GitHubAccessTokenRequest.swift */,
 				29C1A9CB204B04E700CB6995 /* GitHubAPI.h */,
+				290890A7204BC4B400D088BC /* GitHubAPIStatusRequest.swift */,
 				2958051A204B634F009CFD51 /* GitHubGraphQL.swift */,
 				29580512204B62BE009CFD51 /* HTTPRequest.swift */,
 				29C1A9CC204B04E700CB6995 /* Info.plist */,
@@ -172,9 +194,12 @@
 				29580532204B9B7F009CFD51 /* String+V3Links.swift */,
 				2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */,
 				290890A3204BBE9F00D088BC /* V3AssigneesRequest.swift */,
+				290890A9204BC58A00D088BC /* V3CreateIssueRequest.swift */,
 				29580522204B713C009CFD51 /* V3DataResponse.swift */,
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
+				290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */,
+				290890B3204BCC3100D088BC /* V3File.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
 				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
 				29580524204B73A8009CFD51 /* V3MarkThreadsRequest.swift */,
@@ -188,11 +213,16 @@
 				29F8BABD204B56BC00E5CA32 /* V3Repository.swift */,
 				29580520204B6706009CFD51 /* V3RepositoryNotificationRequest.swift */,
 				290890A5204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift */,
+				290890B5204BCCBA00D088BC /* V3Content.swift */,
 				29C1A9F6204B497A00CB6995 /* V3Request.swift */,
+				290890AF204BCB2100D088BC /* V3SetIssueStatusRequest.swift */,
 				2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */,
+				290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */,
+				290890B9204BCD8F00D088BC /* V3MergePullRequestReqeust.swift */,
 				2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */,
 				2958052A204B785F009CFD51 /* V3StatusCodeResponse.swift */,
 				29F8BABB204B545F00E5CA32 /* V3User.swift */,
+				290890AB204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift */,
 				29580530204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift */,
 			);
 			path = GitHubAPI;
@@ -435,9 +465,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290890BA204BCD8F00D088BC /* V3MergePullRequestReqeust.swift in Sources */,
+				290890B4204BCC3100D088BC /* V3File.swift in Sources */,
 				29F8BAC2204B57EC00E5CA32 /* V3Notification.swift in Sources */,
+				290890AC204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift in Sources */,
+				290890A8204BC4B400D088BC /* GitHubAPIStatusRequest.swift in Sources */,
 				29580517204B62FC009CFD51 /* Result.swift in Sources */,
 				29580529204B77B1009CFD51 /* V3ReleaseRequest.swift in Sources */,
+				290890B6204BCCBA00D088BC /* V3Content.swift in Sources */,
 				29580527204B778B009CFD51 /* V3Release.swift in Sources */,
 				29580523204B713C009CFD51 /* V3DataResponse.swift in Sources */,
 				2958052B204B785F009CFD51 /* V3StatusCodeResponse.swift in Sources */,
@@ -452,20 +487,25 @@
 				290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */,
 				29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */,
 				290890A6204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift in Sources */,
+				290890AE204BC8F800D088BC /* GitHubAccessTokenRequest.swift in Sources */,
 				2958052F204B7B5D009CFD51 /* V3LockIssueRequest.swift in Sources */,
 				29580515204B62DC009CFD51 /* Response.swift in Sources */,
 				29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */,
 				29580511204B629B009CFD51 /* Processing.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
+				290890B2204BCBD200D088BC /* V3PullRequestFilesRequest.swift in Sources */,
 				29580531204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift in Sources */,
+				290890AA204BC58A00D088BC /* V3CreateIssueRequest.swift in Sources */,
 				29580539204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift in Sources */,
 				29580521204B6706009CFD51 /* V3RepositoryNotificationRequest.swift in Sources */,
+				290890B8204BCD2600D088BC /* V3SetMilestonesRequest.swift in Sources */,
 				29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */,
 				290890A4204BBE9F00D088BC /* V3AssigneesRequest.swift in Sources */,
 				2958053D204BAD77009CFD51 /* ManualGraphQLRequest.swift in Sources */,
 				2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */,
 				29580533204B9B7F009CFD51 /* String+V3Links.swift in Sources */,
 				29580525204B73A8009CFD51 /* V3MarkThreadsRequest.swift in Sources */,
+				290890B0204BCB2100D088BC /* V3SetIssueStatusRequest.swift in Sources */,
 				29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */,
 				2958050F204B6258009CFD51 /* Client.swift in Sources */,
 				29580519204B6310009CFD51 /* ClientError.swift in Sources */,

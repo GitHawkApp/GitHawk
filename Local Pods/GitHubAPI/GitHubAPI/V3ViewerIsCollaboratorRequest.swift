@@ -18,7 +18,7 @@ public struct V3Permission: Codable {
         case none
     }
 
-    let permission: Permission
+    public let permission: Permission
 
 }
 
@@ -51,4 +51,10 @@ public struct V3ViewerIsCollaboratorRequest: V3Request {
     public let owner: String
     public let repo: String
     public let viewer: String
+
+    public init(owner: String, repo: String, viewer: String) {
+        self.owner = owner
+        self.repo = repo
+        self.viewer = viewer
+    }
 }

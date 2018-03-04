@@ -24,4 +24,10 @@ public struct V3DeleteCommentRequest: V3Request {
     public let owner: String
     public let repo: String
     public let commentID: String
+
+    public init(owner: String, repo: String, commentID: String) {
+        self.owner = owner
+        self.repo = repo
+        self.commentID = commentID
+    }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 final class IssueFilesViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
@@ -36,29 +37,34 @@ ListSingleSectionControllerDelegate {
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
-        client.fetchFiles(
+        client.client.send(V3PullRequestFilesRequest(
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            page: page?.intValue ?? 1
-        ) { [weak self] (result) in
-                self?.handle(result: result, append: page != nil)
-        }
-    }
-
-    // MARK: Private API
-
-    func handle(result: Result<([File], Int?)>, append: Bool) {
-        switch result {
-        case .success(let files, let next):
-            if append {
-                self.files += files
-            } else {
-                self.files = files
+            page: page?.intValue)
+        ) { [weak self] result in
+            switch result {
+            case .success(let response):
+                let files = response.data.map {
+                    File(
+                        status: $0.status,
+                        changes: $0.changes as NSNumber,
+                        filename: $0.filename,
+                        additions: $0.additions as NSNumber,
+                        deletions: $0.deletions as NSNumber,
+                        sha: $0.sha,
+                        patch: $0.patch
+                    )
+                }
+                if page != nil {
+                    self?.files += files
+                } else {
+                    self?.files = files
+                }
+                self?.update(page: response.next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
+            case .failure:
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             }
-            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
-        case .error:
-            error(animated: trueUnlessReduceMotionEnabled)
         }
     }
 

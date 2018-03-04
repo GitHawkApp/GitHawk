@@ -205,30 +205,14 @@ extension GithubClient {
 
         let stateString = close ? "closed" : "open"
 
-        // https://developer.github.com/v3/issues/#edit-an-issue
-        request(Request(
-            path: "repos/\(owner)/\(repo)/issues/\(number)",
-            method: .patch,
-            parameters: [ "state": stateString ],
-            completion: { (response, _) in
-                // rewind to a previous object if response isn't a success
-                if response.response?.statusCode != 200 {
-                    cache.set(value: previous)
-                    ToastManager.showGenericError()
-                }
-        }))
-    }
-
-    func deleteComment(owner: String, repo: String, commentID: Int, completion: @escaping (Result<Bool>) -> Void) {
-        request(Request(path: "repos/\(owner)/\(repo)/issues/comments/\(commentID)", method: .delete, completion: { (response, _) in
-            // As per documentation this endpoint returns no content, so all we can validate is that
-            // the status code is "204 No Content".
-            if response.response?.statusCode == 204 {
-                completion(.success(true))
-            } else {
-                completion(.error(response.error))
+        client.send(V3SetIssueStatusRequest(owner: owner, repo: repo, number: number, state: stateString)) { result in
+            switch result {
+            case .success: break
+            case .failure:
+                cache.set(value: previous)
+                ToastManager.showGenericError()
             }
-        }))
+        }
     }
 
     func setLocked(
@@ -262,20 +246,16 @@ extension GithubClient {
         // optimistically update the cache, listeners can react as appropriate
         cache.set(value: optimisticResult)
 
-        request(Request(
-            path: "repos/\(owner)/\(repo)/issues/\(number)/lock",
-            method: locked ? .put : .delete,
-            completion: { (response, _) in
-                // As per documentation this endpoint returns no content, so all we can validate is that
-                // the status code is "204 No Content".
-                if response.response?.statusCode == 204 {
-                    completion?(.success(true))
-                } else {
-                    cache.set(value: previous)
-                    ToastManager.showGenericError()
-                    completion?(.error(nil))
-                }
-        }))
+        client.send(V3LockIssueRequest(owner: owner, repo: repo, number: "\(number)", locked: locked)) { result in
+            switch result {
+            case .success:
+                completion?(.success(true))
+            case .failure:
+                cache.set(value: previous)
+                ToastManager.showGenericError()
+                completion?(.error(nil))
+            }
+        }
     }
 
     enum CollaboratorPermission: String {
@@ -301,29 +281,21 @@ extension GithubClient {
     func fetchViewerCollaborator(
         owner: String,
         repo: String,
-        completion: @escaping (Result<CollaboratorPermission>) -> Void
+        completion: @escaping (Result<V3Permission.Permission>) -> Void
         ) {
         guard let viewer = userSession?.username else {
             completion(.error(nil))
             return
         }
 
-        // https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level
-        request(Request(
-            path: "repos/\(owner)/\(repo)/collaborators/\(viewer)/permission",
-            headers: ["Accept": "application/vnd.github.hellcat-preview+json"],
-            completion: { (response, _) in
-                let statusCode = response.response?.statusCode
-                if statusCode == 200,
-                    let json = response.value as? [String: Any],
-                    let permission = json["permission"] as? String {
-                    completion(.success(CollaboratorPermission.from(permission)))
-                } else if statusCode == 403 {
-                    completion(.success(.none))
-                } else {
-                    completion(.error(response.error))
-                }
-        }))
+        client.send(V3ViewerIsCollaboratorRequest(owner: owner, repo: repo, viewer: viewer)) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response.data))
+            case .failure(let error):
+                completion(.error(error))
+            }
+        }
     }
 
     func mutateLabels(
