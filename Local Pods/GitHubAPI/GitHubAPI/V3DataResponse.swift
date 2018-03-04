@@ -11,6 +11,7 @@ import Foundation
 public struct V3DataResponse<T: Codable>: EntityResponse {
 
     public let data: T
+    public let next: Int?
 
     public typealias InputType = Data
     public typealias OutputType = T
@@ -22,5 +23,6 @@ public struct V3DataResponse<T: Codable>: EntityResponse {
         decoder.dateDecodingStrategy = .iso8601
 
         self.data = try decoder.decode(T.self, from: input)
+        self.next = (response?.allHeaderFields["Link"] as? String)?.httpNextPageNumber
     }
 }

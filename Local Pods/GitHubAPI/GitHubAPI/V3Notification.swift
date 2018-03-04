@@ -10,7 +10,7 @@ import Foundation
 
 public struct V3Notification: Codable {
 
-    enum Reason: String, Codable {
+    public enum Reason: String, Codable {
         case assign = "assign"
         case author = "author"
         case comment = "comment"
@@ -23,13 +23,13 @@ public struct V3Notification: Codable {
         case reviewRequested = "review_requested"
     }
 
-    let id: String
-    let lastReadAt: Date?
-    let reason: Reason
-    let repository: V3Repository
-    let subject: V3NotificationSubject
-    let unread: Bool
-    let updatedAt: Date
+    public let id: String
+    public let lastReadAt: Date?
+    public let reason: Reason
+    public let repository: V3Repository
+    public let subject: V3NotificationSubject
+    public let unread: Bool
+    public let updatedAt: Date
 
     enum CodingKeys: String, CodingKey {
         case id

@@ -10,16 +10,16 @@ import Foundation
 
 public struct V3User: Codable {
 
-    enum UserType: String, Codable {
+    public enum UserType: String, Codable {
         case user = "User"
         case organization = "Organization"
     }
 
-    let avatarUrl: URL
-    let id: Int
-    let login: String
-    let siteAdmin: Bool
-    let type: UserType
+    public let avatarUrl: URL
+    public let id: Int
+    public let login: String
+    public let siteAdmin: Bool
+    public let type: UserType
 
     enum CodingKeys: String, CodingKey {
         case avatarUrl = "avatar_url"

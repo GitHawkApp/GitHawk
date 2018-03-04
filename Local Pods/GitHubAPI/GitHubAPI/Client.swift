@@ -9,7 +9,7 @@
 import Foundation
 import Apollo
 
-protocol HTTPPerformer {
+public protocol HTTPPerformer {
     func send(
         url: String,
         method: HTTPMethod,
@@ -19,7 +19,7 @@ protocol HTTPPerformer {
     )
 }
 
-protocol ClientDelegate: class {
+public protocol ClientDelegate: class {
     func didUnauthorize(client: Client)
 }
 
@@ -28,11 +28,11 @@ public class Client {
     weak var delegate: ClientDelegate?
 
     private let httpPerformer: HTTPPerformer
-    private let apollo: ApolloClient
+    private let apollo: ApolloClient?
 
-    init(
+    public init(
         httpPerformer: HTTPPerformer,
-        apollo: ApolloClient
+        apollo: ApolloClient? = nil
         ) {
         self.httpPerformer = httpPerformer
         self.apollo = apollo
@@ -61,7 +61,7 @@ public class Client {
         _ request: T,
         completion: @escaping (Result<T.ResponseType>) -> Void
         ) {
-        apollo.fetch(query: request.query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
+        apollo?.fetch(query: request.query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
             asyncProcessResponse(
                 request: request,
                 input: response,
@@ -76,7 +76,7 @@ public class Client {
         _ request: T,
         completion: @escaping (Result<T.ResponseType>) -> Void
         ) {
-        apollo.perform(mutation: request.mutation) { (response, error) in
+        apollo?.perform(mutation: request.mutation) { (response, error) in
             asyncProcessResponse(
                 request: request,
                 input: response,

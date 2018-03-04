@@ -103,5 +103,21 @@ class GitHubAPITests: XCTestCase {
             XCTAssertEqual(first.subject.title, "Add merge status tests")
         }
     }
+
+    func test_sendingNotifications() {
+        let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "notifications", withExtension: "json")!)
+        let performer = TestHTTPPerformer(mockResponse: data, mockError: nil)
+        let client = Client(httpPerformer: performer)
+
+        let expectation = XCTestExpectation()
+        client.send(V3NotificationRequest()) { (result) in
+            switch result {
+            case .success(let response): XCTAssertEqual(response.data.count, 50)
+            case .failure: XCTFail()
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 15)
+    }
     
 }

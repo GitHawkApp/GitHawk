@@ -11,7 +11,7 @@ import Alamofire
 
 extension Alamofire.SessionManager: HTTPPerformer {
 
-    func send(
+    public func send(
         url: String,
         method: HTTPMethod,
         parameters: [String : Any]?,
@@ -40,7 +40,7 @@ extension Alamofire.SessionManager: HTTPPerformer {
             parameters: parameters,
             encoding: encoding,
             headers: headers
-            ).responseJSON { response in
+            ).responseData { response in
                 completion(response.response, response.value, response.error)
         }
     }

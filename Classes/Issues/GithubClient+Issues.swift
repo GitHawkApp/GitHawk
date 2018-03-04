@@ -377,6 +377,8 @@ extension GithubClient {
         let cache = self.cache
         cache.set(value: optimistic)
 
+        
+
         request(GithubClient.Request(
             path: "repos/\(owner)/\(repo)/issues/\(number)",
             method: .patch,

@@ -35,6 +35,9 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
+  - GitHubAPI (0.1.0):
+    - Alamofire (~> 4.4.0)
+    - Apollo (~> 0.7.0-alpha.5)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/NSData+zlib (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
@@ -76,9 +79,7 @@ PODS:
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.4.0)
   - AlamofireNetworkActivityIndicator (~> 2.1)
-  - Apollo (~> 0.7.0-alpha.5)
   - Crashlytics
   - Fabric
   - FBSnapshotTestCase
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - Firebase/Database
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
+  - GitHubAPI (from `Local Pods/GitHubAPI`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
@@ -104,6 +106,8 @@ EXTERNAL SOURCES:
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHubAPI:
+    :path: Local Pods/GitHubAPI
   Highlightr:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
@@ -157,6 +161,7 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  GitHubAPI: 5f94ecbc0bf565950343eae44c0fe08c00ef3b73
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
@@ -176,6 +181,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 2a5c54767eabaf0ab1cc660a65301991cacc1648
+PODFILE CHECKSUM: 0ae442e9e6a77e8db90837044da623c607bc6879
 
 COCOAPODS: 1.4.0

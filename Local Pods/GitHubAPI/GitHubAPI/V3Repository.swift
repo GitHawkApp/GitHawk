@@ -10,13 +10,13 @@ import Foundation
 
 public struct V3Repository: Codable {
 
-    let description: String
-    let fork: Bool
-    let fullName: String // custom
-    let id: Int
-    let name: String
-    let owner: V3User
-    let isPrivate: Bool // custom
+    public let description: String
+    public let fork: Bool
+    public let fullName: String // custom
+    public let id: Int
+    public let name: String
+    public let owner: V3User
+    public let isPrivate: Bool // custom
 
     enum CodingKeys: String, CodingKey {
         case description

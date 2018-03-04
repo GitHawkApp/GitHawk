@@ -8,6 +8,8 @@
 
 import UIKit
 
+import GitHubAPI
+
 extension String {
 
     var notificationIdentifier: NotificationViewModel.Identifier? {
@@ -44,6 +46,33 @@ func CreateViewModels(
             title: notification.subject.title,
             type: type,
             date: date,
+            read: !notification.unread,
+            owner: notification.repository.owner.login,
+            repo: notification.repository.name,
+            identifier: identifier,
+            containerWidth: containerWidth
+        )
+        viewModels.append(model)
+    }
+
+    return viewModels
+}
+
+func CreateViewModels(
+    containerWidth: CGFloat,
+    v3notifications: [V3Notification]) -> [NotificationViewModel] {
+    var viewModels = [NotificationViewModel]()
+
+    for notification in v3notifications {
+        guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
+            let identifier = notification.subject.url.absoluteString.notificationIdentifier
+            else { continue }
+
+        let model = NotificationViewModel(
+            id: notification.id,
+            title: notification.subject.title,
+            type: type,
+            date: notification.updatedAt,
             read: !notification.unread,
             owner: notification.repository.owner.login,
             repo: notification.repository.name,

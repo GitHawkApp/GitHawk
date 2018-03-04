@@ -8,6 +8,8 @@
 
 import Foundation
 
+import GitHubAPI
+
 // used to request states via graphQL
 extension NotificationViewModel {
     var stateAlias: (number: Int, key: String)? {
@@ -53,39 +55,19 @@ final class NotificationClient {
     func fetchNotifications(
         repo: NotificationRepository? = nil,
         all: Bool = false,
-        participating: Bool = false,
-        since: Date? = nil,
         page: Int = 1,
-        before: Date? = nil,
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        var parameters: [String: Any] = [
-            "all": all ? "true" : "false",
-            "participating": participating ? "true" : "false",
-            "page": page,
-            "per_page": "50"
-            ]
-        if let since = since {
-            parameters["since"] = GithubAPIDateFormatter().string(from: since)
-        }
-        if let before = before {
-            parameters["before"] = GithubAPIDateFormatter().string(from: before)
-        }
-
-        githubClient.request(GithubClient.Request(
-            path: path(repo: repo),
-            method: .get,
-            parameters: parameters,
-            headers: nil
-        ) { response, nextPage in
-            if let notifications = (response.value as? [[String:Any]])?.flatMap({ NotificationResponse(json: $0) }) {
-                let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
-                self.fetchStates(for: viewModels, page: nextPage?.next, completion: completion)
-            } else {
-                completion(.error(response.error))
+        githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
+            switch result {
+            case .success(let response):
+                let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                self.fetchStates(for: viewModels, page: response.next, completion: completion)
+            case .failure(let error):
+                completion(.error(error))
             }
-        })
+        }
     }
 
     private func fetchStates(

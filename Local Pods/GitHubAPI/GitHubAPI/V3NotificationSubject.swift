@@ -10,15 +10,16 @@ import Foundation
 
 public struct V3NotificationSubject: Codable {
 
-    enum SubjectType: String, Codable {
-        case release = "Release"
+    public enum SubjectType: String, Codable {
         case issue = "Issue"
         case pullRequest = "PullRequest"
         case commit = "Commit"
+        case repo = "Repository"
+        case release = "Release"
     }
 
-    let title: String
-    let type: SubjectType
-    let url: URL
+    public let title: String
+    public let type: SubjectType
+    public let url: URL
 
 }

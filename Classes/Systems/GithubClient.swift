@@ -11,6 +11,7 @@ import Alamofire
 import Apollo
 import AlamofireNetworkActivityIndicator
 import FlatCache
+import GitHubAPI
 
 struct GithubClient {
 
@@ -22,7 +23,7 @@ struct GithubClient {
     struct Request {
 
         let url: String
-        let method: HTTPMethod
+        let method: Alamofire.HTTPMethod
         let parameters: Parameters?
         let headers: HTTPHeaders?
         let logoutOnAuthFailure: Bool
@@ -30,7 +31,7 @@ struct GithubClient {
 
         init(
             path: String,
-            method: HTTPMethod = .get,
+            method: Alamofire.HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
             logoutOnAuthFailure: Bool = true,
@@ -48,7 +49,7 @@ struct GithubClient {
 
         init(
             url: String,
-            method: HTTPMethod = .get,
+            method: Alamofire.HTTPMethod = .get,
             parameters: Parameters? = nil,
             headers: HTTPHeaders? = nil,
             logoutOnAuthFailure: Bool = true,
@@ -69,6 +70,7 @@ struct GithubClient {
     let userSession: GithubUserSession?
     let cache = FlatCache()
     let bookmarksStore: BookmarkStore?
+    let client: Client
 
     init(
         sessionManager: GithubSessionManager,
@@ -80,6 +82,8 @@ struct GithubClient {
         self.apollo = apollo
         self.networker = networker
         self.userSession = userSession
+
+        self.client = Client(httpPerformer: networker, apollo: apollo)
 
         if let token = userSession?.token {
             self.bookmarksStore = BookmarkStore(token: token)

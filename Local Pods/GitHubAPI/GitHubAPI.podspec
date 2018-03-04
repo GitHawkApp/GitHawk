@@ -5,7 +5,9 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/rnystrom/githawk'
   spec.authors      = { 'Ryan Nystrom' => 'rnystrom@whoisryannystrom.com' }
   spec.summary      = '.'
-  #spec.source       = { :git => 'https://github.com/GitHawkApp/StyledText/StyledText.git', :tag => '#{s.version}' }
+  spec.source       = { :git => 'https://github.com/rnystrom/githawk/githawk.git', :tag => '#{s.version}' }
   spec.source_files = 'GitHubAPI/*.swift'
-  spec.platform     = :ios, '11.0'
+  spec.platform     = :ios, '10.0'
+  spec.dependency 'Alamofire', '~> 4.4.0'
+  spec.dependency 'Apollo', '~> 0.7.0-alpha.5'
 end
