@@ -20,6 +20,7 @@
 		2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051C204B656C009CFD51 /* V3Milestone.swift */; };
 		2958051F204B664F009CFD51 /* V3MilestoneResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051E204B664F009CFD51 /* V3MilestoneResponse.swift */; };
 		29580521204B6706009CFD51 /* V3RepositoryNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580520204B6706009CFD51 /* V3RepositoryNotificationResponse.swift */; };
+		29580523204B713C009CFD51 /* V3DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580522204B713C009CFD51 /* V3DataResponse.swift */; };
 		29C1A9CD204B04E700CB6995 /* GitHubAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 29C1A9CB204B04E700CB6995 /* GitHubAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29C1A9D4204B05AE00CB6995 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9D3204B05AE00CB6995 /* Request.swift */; };
 		29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9E3204B182200CB6995 /* Alamofire+GitHubAPI.swift */; };
@@ -56,6 +57,7 @@
 		2958051C204B656C009CFD51 /* V3Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Milestone.swift; sourceTree = "<group>"; };
 		2958051E204B664F009CFD51 /* V3MilestoneResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MilestoneResponse.swift; sourceTree = "<group>"; };
 		29580520204B6706009CFD51 /* V3RepositoryNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3RepositoryNotificationResponse.swift; sourceTree = "<group>"; };
+		29580522204B713C009CFD51 /* V3DataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3DataResponse.swift; sourceTree = "<group>"; };
 		29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C1A9CB204B04E700CB6995 /* GitHubAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubAPI.h; sourceTree = "<group>"; };
 		29C1A9CC204B04E700CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				29C1A9D3204B05AE00CB6995 /* Request.swift */,
 				29580514204B62DC009CFD51 /* Response.swift */,
 				29580516204B62FC009CFD51 /* Result.swift */,
+				29580522204B713C009CFD51 /* V3DataResponse.swift */,
 				2958051C204B656C009CFD51 /* V3Milestone.swift */,
 				2958051E204B664F009CFD51 /* V3MilestoneResponse.swift */,
 				29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */,
@@ -383,6 +386,7 @@
 			files = (
 				29F8BAC2204B57EC00E5CA32 /* V3Notification.swift in Sources */,
 				29580517204B62FC009CFD51 /* Result.swift in Sources */,
+				29580523204B713C009CFD51 /* V3DataResponse.swift in Sources */,
 				29580513204B62BE009CFD51 /* HTTPRequest.swift in Sources */,
 				2958051F204B664F009CFD51 /* V3MilestoneResponse.swift in Sources */,
 				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,

@@ -9,6 +9,6 @@
 import Foundation
 
 public struct V3NotificationResponse: V3Request {
-    public typealias ResponseType = V3Response<[V3Notification]>
+    public typealias ResponseType = V3DataResponse<[V3Notification]>
     public let pathComponents: [String] = ["notifications"]
 }

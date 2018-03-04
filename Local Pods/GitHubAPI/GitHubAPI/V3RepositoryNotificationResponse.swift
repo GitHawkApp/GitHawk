@@ -9,7 +9,7 @@
 import Foundation
 
 public struct V3RepositoryNotificationResponse: V3Request {
-    public typealias ResponseType = V3Response<[V3Notification]>
+    public typealias ResponseType = V3DataResponse<[V3Notification]>
     public var pathComponents: [String] {
         return ["repos", owner, repo, "notifications"]
     }
