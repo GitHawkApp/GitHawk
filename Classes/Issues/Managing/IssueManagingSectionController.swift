@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import GitHubAPI
 
 final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
 ListBindingSectionControllerDataSource,
@@ -302,10 +303,10 @@ PeopleViewControllerDelegate {
             assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: url))
         }
 
-        let mutationType: GithubClient.AddPeopleType
+        let mutationType: V3AddPeopleRequest.PeopleType
         switch type {
-        case .assignee: mutationType = .assignee
-        case .reviewer: mutationType = .reviewer
+        case .assignee: mutationType = .assignees
+        case .reviewer: mutationType = .reviewers
         }
 
         client.addPeople(

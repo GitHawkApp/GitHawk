@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 private func uniqueAutocompleteUsers(
     left: [AutocompleteUser],
@@ -377,31 +378,23 @@ extension GithubClient {
         let cache = self.cache
         cache.set(value: optimistic)
 
-        
-
-        request(GithubClient.Request(
-            path: "repos/\(owner)/\(repo)/issues/\(number)",
-            method: .patch,
-            parameters: ["labels": labels.map { $0.name }]
-        ) { (response, _) in
-            if let statusCode = response.response?.statusCode, statusCode != 200 {
+        client.send(V3SetRepositoryLabelsRequest(
+            owner: owner,
+            repo: repo,
+            number: number,
+            labels: labels.map { $0.name })
+        ) { result in
+            switch result {
+            case .success: break
+            case .failure:
                 cache.set(value: previous)
-                if statusCode == 403 {
-                    ToastManager.showPermissionsError()
-                } else {
-                    ToastManager.showGenericError()
-                }
+                ToastManager.showGenericError()
             }
-        })
-    }
-
-    enum AddPeopleType {
-        case assignee
-        case reviewer
+        }
     }
 
     func addPeople(
-        type: AddPeopleType,
+        type: V3AddPeopleRequest.PeopleType,
         previous: IssueResult,
         owner: String,
         repo: String,
@@ -416,13 +409,13 @@ extension GithubClient {
         let removedType: IssueRequestModel.Event
         let oldAssigness: Set<String>
         switch type {
-        case .assignee:
+        case .assignees:
             path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
             param = "assignees"
             addedType = .assigned
             removedType = .unassigned
             oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
-        case .reviewer:
+        case .reviewers:
             path = "repos/\(owner)/\(repo)/pulls/\(number)/requested_reviewers"
             param = "reviewers"
             addedType = .reviewRequested
@@ -466,12 +459,12 @@ extension GithubClient {
         let timelinePages = previous.timelinePages(appending: newEvents)
         let optimistic: IssueResult
         switch type {
-        case .assignee:
+        case .assignees:
             optimistic = previous.updated(
                 assignee: IssueAssigneesModel(users: people, type: .assigned),
                 timelinePages: timelinePages
             )
-        case .reviewer:
+        case .reviewers:
             optimistic = previous.withReviewers(
                 IssueAssigneesModel(users: people, type: .reviewRequested),
                 timelinePages: timelinePages
@@ -481,35 +474,44 @@ extension GithubClient {
         let cache = self.cache
         cache.set(value: optimistic)
 
-        let handler: (Int, Int?) -> Void = { (expect, status) in
-            if status != expect {
-                cache.set(value: previous)
-                ToastManager.showGenericError()
-            }
-        }
-
         // https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
         // https://developer.github.com/v3/pulls/review_requests/#create-a-review-request
         if added.count > 0 {
-            request(GithubClient.Request(
-                path: path,
-                method: .post,
-                parameters: [param: added]
-            ) { (response, _) in
-                handler(201, response.response?.statusCode)
-            })
+            client.send(V3AddPeopleRequest(
+                owner: owner,
+                repo: repo,
+                number: number,
+                type: type,
+                add: true,
+                people: added)
+            ) { result in
+                switch result {
+                case .success: break
+                case .failure:
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
+                }
+            }
         }
 
         // https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
         // https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request
         if removed.count > 0 {
-            request(GithubClient.Request(
-                path: path,
-                method: .delete,
-                parameters: [param: removed]
-            ) { (response, _) in
-                handler(200, response.response?.statusCode)
-            })
+            client.send(V3AddPeopleRequest(
+                owner: owner,
+                repo: repo,
+                number: number,
+                type: type,
+                add: false,
+                people: added)
+            ) { result in
+                switch result {
+                case .success: break
+                case .failure:
+                    cache.set(value: previous)
+                    ToastManager.showGenericError()
+                }
+            }
         }
     }
 

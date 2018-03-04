@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		01C348D0522C94F4BB7B1DAE /* Pods_GitHubAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D897DD47D55AE56059FEB3F4 /* Pods_GitHubAPITests.framework */; };
+		2908909E204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */; };
+		290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */; };
 		2958050B204B5A68009CFD51 /* notifications.json in Resources */ = {isa = PBXBuildFile; fileRef = 2958050A204B5A68009CFD51 /* notifications.json */; };
 		2958050D204B5C3A009CFD51 /* V3NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */; };
 		2958050F204B6258009CFD51 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958050E204B6258009CFD51 /* Client.swift */; };
@@ -59,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		19A028CA5245EA9BA03B85FA /* Pods_GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SetRepositoryLabelsRequest.swift; sourceTree = "<group>"; };
+		2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3AddPeopleRequest.swift; sourceTree = "<group>"; };
 		2958050A204B5A68009CFD51 /* notifications.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notifications.json; sourceTree = "<group>"; };
 		2958050C204B5C3A009CFD51 /* V3NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationRequest.swift; sourceTree = "<group>"; };
 		2958050E204B6258009CFD51 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				29C1A9CC204B04E700CB6995 /* Info.plist */,
 				2958053C204BAD77009CFD51 /* ManualGraphQLRequest.swift */,
 				29580510204B629B009CFD51 /* Processing.swift */,
+				2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */,
 				29C1A9D3204B05AE00CB6995 /* Request.swift */,
 				29580514204B62DC009CFD51 /* Response.swift */,
 				29580516204B62FC009CFD51 /* Result.swift */,
@@ -166,6 +171,7 @@
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
+				2908909F204BB63000D088BC /* V3AddPeopleRequest.swift */,
 				29580538204BAAFA009CFD51 /* V3MarkRepositoryNotificationsRequest.swift */,
 				29580524204B73A8009CFD51 /* V3MarkThreadsRequest.swift */,
 				2958051C204B656C009CFD51 /* V3Milestone.swift */,
@@ -429,6 +435,7 @@
 				29580527204B778B009CFD51 /* V3Release.swift in Sources */,
 				29580523204B713C009CFD51 /* V3DataResponse.swift in Sources */,
 				2958052B204B785F009CFD51 /* V3StatusCodeResponse.swift in Sources */,
+				2908909E204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift in Sources */,
 				2958052D204B7AB2009CFD51 /* V3DeleteCommentRequest.swift in Sources */,
 				29580513204B62BE009CFD51 /* HTTPRequest.swift in Sources */,
 				29580537204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift in Sources */,
@@ -436,6 +443,7 @@
 				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,
 				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
 				2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */,
+				290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */,
 				29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */,
 				2958052F204B7B5D009CFD51 /* V3LockIssueRequest.swift in Sources */,
 				29580515204B62DC009CFD51 /* Response.swift in Sources */,
