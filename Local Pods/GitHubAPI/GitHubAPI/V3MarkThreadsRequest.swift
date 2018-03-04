@@ -8,26 +8,18 @@
 
 import Foundation
 
-public struct V3MarkThreadsResponse: EntityResponse {
-    public let data: String
-
-    public typealias InputType = Data
-    public typealias OutputType = String
-
-    public init(input: Data, response: HTTPURLResponse?) throws {
-        // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
-        guard response?.statusCode == 205 else {
-            throw ResponseError.parsing("Failure marking thread read")
-        }
-        self.data = "success"
+public struct V3MarkThreadsStatusCode: V3StatusCodeSuccess {
+    public static func success(statusCode: Int) -> Bool {
+        return statusCode == 205
     }
 }
 
 public struct V3MarkThreadsRequest: V3Request {
-    public typealias ResponseType = V3DataResponse<[V3Notification]>
+    public typealias ResponseType = V3StatusCodeResponse<V3MarkThreadsStatusCode>
     public var pathComponents: [String] {
         return ["notifications", "threads", id]
     }
+    public var method: HTTPMethod { return .patch }
 
     public let id: String
 }
