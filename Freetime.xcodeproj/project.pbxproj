@@ -263,7 +263,6 @@
 		299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */; };
 		299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */; };
 		299C06D81F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */; };
-		299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */; };
 		299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
 		299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 299E86481EFD9DBB00E5FE70 /* FlexController.m */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
@@ -706,7 +705,6 @@
 		299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialEmptyView.swift; sourceTree = "<group>"; };
 		299A04A01FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewViewCommentsCell.swift; sourceTree = "<group>"; };
 		299C06D71F0DD17B00C2828E /* IssueReviewEmptyTailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueReviewEmptyTailCell.swift; sourceTree = "<group>"; };
-		299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Paging.swift"; sourceTree = "<group>"; };
 		299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
 		299E86471EFD9DBB00E5FE70 /* FlexController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexController.h; sourceTree = "<group>"; };
 		299E86481EFD9DBB00E5FE70 /* FlexController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlexController.m; sourceTree = "<group>"; };
@@ -1445,7 +1443,6 @@
 				29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
-				299C06D91F0DD87F00C2828E /* GithubClient+Paging.swift */,
 				2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */,
 				29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */,
 				299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */,
@@ -2356,7 +2353,6 @@
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
 				98B5A0841F6C87A7000617D6 /* GitHubClient+NewIssue.swift in Sources */,
-				299C06DA1F0DD87F00C2828E /* GithubClient+Paging.swift in Sources */,
 				2919294D1F3F746B0012067B /* GithubClient+PullRequestFiles.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
