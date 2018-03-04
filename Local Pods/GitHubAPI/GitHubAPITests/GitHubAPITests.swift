@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import GitHubAPI
+import Apollo
 
 struct TestResponse: EntityResponse {
     typealias InputType = [String: Any]
@@ -107,7 +108,7 @@ class GitHubAPITests: XCTestCase {
     func test_sendingNotifications() {
         let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "notifications", withExtension: "json")!)
         let performer = TestHTTPPerformer(mockResponse: data, mockError: nil)
-        let client = Client(httpPerformer: performer)
+        let client = Client(httpPerformer: performer, apollo: ApolloClient(url: URL(string: "http://google.com")!))
 
         let expectation = XCTestExpectation()
         client.send(V3NotificationRequest()) { (result) in

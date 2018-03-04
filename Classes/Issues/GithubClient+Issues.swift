@@ -55,14 +55,20 @@ extension GithubClient {
 
         let cache = self.cache
 
-        fetch(query: query) { (result, error) in
-            let repository = result?.data?.repository
-            let issueOrPullRequest = repository?.issueOrPullRequest
-            if let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest {
+        client.query(query, result: { $0.repository }) { result in
+            switch result {
+            case .failure:
+                completion(.error(nil))
+                ToastManager.showGenericError()
+            case .success(let repository):
+                let issueOrPullRequest = repository.issueOrPullRequest
+                guard let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest else {
+                    completion(.error(nil))
+                    return
+                }
+
                 DispatchQueue.global().async {
-
                     let status: IssueStatus = issueType.merged ? .merged : issueType.closableFields.closed ? .closed : .open
-
                     let rootComment = createCommentModel(
                         id: issueType.id,
                         commentFields: issueType.commentFields,
@@ -89,7 +95,7 @@ extension GithubClient {
 
                     let mentionableUsers = uniqueAutocompleteUsers(
                         left: mentionedUsers,
-                        right: repository?.mentionableUsers.autocompleteUsers ?? []
+                        right: repository.mentionableUsers.autocompleteUsers
                     )
 
                     let paging = issueType.headPaging
@@ -111,7 +117,7 @@ extension GithubClient {
                         milestoneModel = nil
                     }
 
-                    let canAdmin = repository?.viewerCanAdminister ?? false
+                    let canAdmin = repository.viewerCanAdminister
 
                     let issueResult = IssueResult(
                         id: issueType.id,
@@ -125,9 +131,9 @@ extension GithubClient {
                         milestone: milestoneModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
-                        hasIssuesEnabled: repository?.hasIssuesEnabled ?? false,
+                        hasIssuesEnabled: repository.hasIssuesEnabled,
                         viewerCanAdminister: canAdmin,
-                        defaultBranch: repository?.defaultBranchRef?.name ?? "master",
+                        defaultBranch: repository.defaultBranchRef?.name ?? "master",
                         fileChanges: issueType.fileChanges,
                         mergeModel: issueType.mergeModel
                     )
@@ -135,14 +141,10 @@ extension GithubClient {
                     DispatchQueue.main.async {
                         // update the cache so all listeners receive the new model
                         cache.set(value: issueResult)
-
                         completion(.success((issueResult, mentionableUsers)))
                     }
                 }
-            } else {
-                completion(.error(nil))
             }
-            ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }
     }
 

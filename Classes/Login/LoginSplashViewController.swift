@@ -19,7 +19,8 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         case fetchingToken
     }
 
-    var client: GithubClient!
+    private var client: GithubClient!
+    private var sessionManager: GithubSessionManager!
 
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -56,8 +57,15 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     override func viewDidLoad() {
         super.viewDidLoad()
         state = .idle
-        client.sessionManager.addListener(listener: self)
+        sessionManager.addListener(listener: self)
         signInButton.layer.cornerRadius = Styles.Sizes.eventGutter
+    }
+
+    // MARK: Public API
+
+    func config(client: GithubClient, sessionManager: GithubSessionManager) {
+        self.client = client
+        self.sessionManager = sessionManager
     }
 
     // MARK: Private API
@@ -71,7 +79,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
                 }
                 return
             }
-            self?.client.sessionManager.receivedCodeRedirect(url: callbackUrl)
+            self?.sessionManager.receivedCodeRedirect(url: callbackUrl)
         })
         self.authSession?.start()
     }
@@ -124,7 +132,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     }
 
     private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
-        client.sessionManager.focus(
+        sessionManager.focus(
             GithubUserSession(token: token, authMethod: authMethod, username: username),
             dismiss: true
         )

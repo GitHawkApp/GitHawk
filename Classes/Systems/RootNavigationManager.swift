@@ -156,7 +156,10 @@ final class RootNavigationManager: GithubSessionListener {
             name: "OauthLogin",
             bundle: Bundle(for: AppDelegate.self))
             .instantiateInitialViewController() as! LoginSplashViewController
-        controller.client = newGithubClient(sessionManager: sessionManager)
+        controller.config(
+            client: newGithubClient(sessionManager: sessionManager),
+            sessionManager: sessionManager
+        )
         return controller
     }
 

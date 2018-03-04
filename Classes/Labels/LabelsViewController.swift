@@ -44,16 +44,16 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        client.fetch(query: request) { [weak self] (result, _) in
-            self?.feedRefresh.endRefreshing()
-            if let nodes = result?.data?.repository?.labels?.nodes {
-                var labels = [RepositoryLabel]()
-                for node in nodes {
-                    guard let node = node else { continue }
-                    labels.append(RepositoryLabel(color: node.color, name: node.name))
-                }
-                self?.update(labels: labels)
-            } else {
+        client.client.query(request, result: { data in
+            data.repository?.labels?.nodes
+        }) { [weak self] result in
+            switch result {
+            case .success(let nodes):
+                self?.update(labels: nodes.flatMap {
+                    guard let node = $0 else { return nil }
+                    return RepositoryLabel(color: node.color, name: node.name)
+                })
+            case .failure:
                 ToastManager.showGenericError()
             }
         }

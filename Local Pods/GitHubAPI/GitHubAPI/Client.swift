@@ -28,12 +28,12 @@ public class Client {
     weak var delegate: ClientDelegate?
 
     private let httpPerformer: HTTPPerformer
-    private let apollo: ApolloClient?
+    private let apollo: ApolloClient
     private let token: String?
 
     public init(
         httpPerformer: HTTPPerformer,
-        apollo: ApolloClient? = nil,
+        apollo: ApolloClient,
         token: String? = nil
         ) {
         self.httpPerformer = httpPerformer
@@ -63,12 +63,13 @@ public class Client {
         }
     }
 
+    @discardableResult
     public func query<T: GraphQLQuery, Q>(
         _ query: T,
         result: @escaping (T.Data) -> Q?,
         completion: @escaping (Result<Q>) -> Void
-        ) {
-        apollo?.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
+        ) -> Cancellable {
+        return apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
             if let data = response?.data, let q = result(data) {
                 completion(.success(q))
             } else {
@@ -77,12 +78,13 @@ public class Client {
         }
     }
 
+    @discardableResult
     public func mutate<T: GraphQLMutation, Q>(
         _ mutation: T,
         result: @escaping (T.Data) -> Q?,
         completion: @escaping (Result<Q>) -> Void
-        ) {
-        apollo?.perform(mutation: mutation) { (response, error) in
+        ) -> Cancellable {
+        return apollo.perform(mutation: mutation) { (response, error) in
             if let data = response?.data, let q = result(data) {
                 completion(.success(q))
             } else {

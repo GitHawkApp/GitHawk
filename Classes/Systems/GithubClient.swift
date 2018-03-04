@@ -15,9 +15,8 @@ import GitHubAPI
 
 struct GithubClient {
 
-    let sessionManager: GithubSessionManager
-    let apollo: ApolloClient
-    let networker: Alamofire.SessionManager
+    private let sessionManager: GithubSessionManager
+
     let userSession: GithubUserSession?
     let cache = FlatCache()
     let bookmarksStore: BookmarkStore?
@@ -30,8 +29,6 @@ struct GithubClient {
         userSession: GithubUserSession? = nil
         ) {
         self.sessionManager = sessionManager
-        self.apollo = apollo
-        self.networker = networker
         self.userSession = userSession
 
         self.client = Client(httpPerformer: networker, apollo: apollo, token: userSession?.token)
@@ -41,18 +38,6 @@ struct GithubClient {
         } else {
             self.bookmarksStore = nil
         }
-    }
-
-    @discardableResult
-    func fetch<Query: GraphQLQuery>(
-        query: Query,
-        resultHandler: OperationResultHandler<Query>? = nil
-        ) -> Cancellable {
-        NetworkActivityIndicatorManager.shared.incrementActivityCount()
-        return apollo.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, resultHandler: { (result, error) in
-            NetworkActivityIndicatorManager.shared.decrementActivityCount()
-            resultHandler?(result, error)
-        })
     }
 
 }

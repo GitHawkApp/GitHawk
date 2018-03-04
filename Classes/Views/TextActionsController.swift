@@ -61,7 +61,7 @@ final class TextActionsController: NSObject,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
 
-        let username = client?.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+        let username = client?.userSession?.username ?? Constants.Strings.unknown
         guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
 
         picker.pushViewController(uploadController, animated: trueUnlessReduceMotionEnabled)
