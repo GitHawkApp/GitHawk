@@ -63,33 +63,31 @@ public class Client {
         }
     }
 
-    public func query<T: GitHubGraphQLQueryRequest>(
-        _ request: T,
-        completion: @escaping (Result<T.ResponseType>) -> Void
+    public func query<T: GraphQLQuery, Q>(
+        _ query: T,
+        result: @escaping (T.Data) -> Q?,
+        completion: @escaping (Result<Q>) -> Void
         ) {
-        apollo?.fetch(query: request.query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
-            asyncProcessResponse(
-                request: request,
-                input: response,
-                response: nil,
-                error: error,
-                completion: completion
-            )
+        apollo?.fetch(query: query, cachePolicy: .fetchIgnoringCacheData) { (response, error) in
+            if let data = response?.data, let q = result(data) {
+                completion(.success(q))
+            } else {
+                completion(.failure(error))
+            }
         }
     }
 
-    public func mutate<T: GitHubGraphQLMutationRequest>(
-        _ request: T,
-        completion: @escaping (Result<T.ResponseType>) -> Void
+    public func mutate<T: GraphQLMutation, Q>(
+        _ mutation: T,
+        result: @escaping (T.Data) -> Q?,
+        completion: @escaping (Result<Q>) -> Void
         ) {
-        apollo?.perform(mutation: request.mutation) { (response, error) in
-            asyncProcessResponse(
-                request: request,
-                input: response,
-                response: nil,
-                error: error,
-                completion: completion
-            )
+        apollo?.perform(mutation: mutation) { (response, error) in
+            if let data = response?.data, let q = result(data) {
+                completion(.success(q))
+            } else {
+                completion(.failure(error))
+            }
         }
     }
 

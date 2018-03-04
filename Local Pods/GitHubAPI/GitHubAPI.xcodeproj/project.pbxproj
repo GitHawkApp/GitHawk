@@ -34,7 +34,6 @@
 		29580515204B62DC009CFD51 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580514204B62DC009CFD51 /* Response.swift */; };
 		29580517204B62FC009CFD51 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580516204B62FC009CFD51 /* Result.swift */; };
 		29580519204B6310009CFD51 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580518204B6310009CFD51 /* ClientError.swift */; };
-		2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051A204B634F009CFD51 /* GitHubGraphQL.swift */; };
 		2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051C204B656C009CFD51 /* V3Milestone.swift */; };
 		2958051F204B664F009CFD51 /* V3MilestoneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958051E204B664F009CFD51 /* V3MilestoneRequest.swift */; };
 		29580521204B6706009CFD51 /* V3RepositoryNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29580520204B6706009CFD51 /* V3RepositoryNotificationRequest.swift */; };
@@ -103,7 +102,6 @@
 		29580514204B62DC009CFD51 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		29580516204B62FC009CFD51 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		29580518204B6310009CFD51 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
-		2958051A204B634F009CFD51 /* GitHubGraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubGraphQL.swift; sourceTree = "<group>"; };
 		2958051C204B656C009CFD51 /* V3Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Milestone.swift; sourceTree = "<group>"; };
 		2958051E204B664F009CFD51 /* V3MilestoneRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3MilestoneRequest.swift; sourceTree = "<group>"; };
 		29580520204B6706009CFD51 /* V3RepositoryNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3RepositoryNotificationRequest.swift; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 				290890AD204BC8F800D088BC /* GitHubAccessTokenRequest.swift */,
 				29C1A9CB204B04E700CB6995 /* GitHubAPI.h */,
 				290890A7204BC4B400D088BC /* GitHubAPIStatusRequest.swift */,
-				2958051A204B634F009CFD51 /* GitHubGraphQL.swift */,
 				29580512204B62BE009CFD51 /* HTTPRequest.swift */,
 				29C1A9CC204B04E700CB6995 /* Info.plist */,
 				2958053C204BAD77009CFD51 /* ManualGraphQLRequest.swift */,
@@ -495,7 +492,6 @@
 				29580537204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift in Sources */,
 				290890C4204BDF9E00D088BC /* V3EditCommentRequest.swift in Sources */,
 				2958051F204B664F009CFD51 /* V3MilestoneRequest.swift in Sources */,
-				2958051B204B634F009CFD51 /* GitHubGraphQL.swift in Sources */,
 				29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */,
 				2958051D204B656C009CFD51 /* V3Milestone.swift in Sources */,
 				290890A0204BB63000D088BC /* V3AddPeopleRequest.swift in Sources */,

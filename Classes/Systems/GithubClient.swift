@@ -55,16 +55,4 @@ struct GithubClient {
         })
     }
 
-    @discardableResult
-    func perform<Mutation: GraphQLMutation>(
-        mutation: Mutation,
-        resultHandler: OperationResultHandler<Mutation>?
-        ) -> Cancellable {
-        NetworkActivityIndicatorManager.shared.incrementActivityCount()
-        return apollo.perform(mutation: mutation, resultHandler: { (result, error) in
-            NetworkActivityIndicatorManager.shared.decrementActivityCount()
-            resultHandler?(result, error)
-        })
-    }
-
 }

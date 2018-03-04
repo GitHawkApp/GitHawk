@@ -152,24 +152,25 @@ extension GithubClient {
         isAdd: Bool,
         completion: @escaping (IssueCommentReactionViewModel?) -> Void
         ) {
+
+        let handler: (GitHubAPI.Result<ReactionFields>) -> Void = { result in
+            switch result {
+            case .success(let data):
+                completion(createIssueReactions(reactions: data))
+            case .failure:
+                completion(nil)
+                ToastManager.showGenericError()
+            }
+        }
+
         if isAdd {
-            perform(mutation: AddReactionMutation(subject_id: subjectID, content: content)) { (result, error) in
-                if let reactionFields = result?.data?.addReaction?.subject.fragments.reactionFields {
-                    completion(createIssueReactions(reactions: reactionFields))
-                } else {
-                    completion(nil)
-                }
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-            }
+            client.mutate(AddReactionMutation(subject_id: subjectID, content: content), result: { data in
+                data.addReaction?.subject.fragments.reactionFields
+            }, completion: handler)
         } else {
-            perform(mutation: RemoveReactionMutation(subject_id: subjectID, content: content)) { (result, error) in
-                if let reactionFields = result?.data?.removeReaction?.subject.fragments.reactionFields {
-                    completion(createIssueReactions(reactions: reactionFields))
-                } else {
-                    completion(nil)
-                }
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-            }
+            client.mutate(RemoveReactionMutation(subject_id: subjectID, content: content), result: { data in
+                data.removeReaction?.subject.fragments.reactionFields
+            }, completion: handler)
         }
     }
 
@@ -375,21 +376,15 @@ extension GithubClient {
         ) {
         guard let actor = userSession?.username else { return }
 
-        let path: String
-        let param: String
         let addedType: IssueRequestModel.Event
         let removedType: IssueRequestModel.Event
         let oldAssigness: Set<String>
         switch type {
         case .assignees:
-            path = "repos/\(owner)/\(repo)/issues/\(number)/assignees"
-            param = "assignees"
             addedType = .assigned
             removedType = .unassigned
             oldAssigness = Set<String>(previous.assignee.users.map { $0.login })
         case .reviewers:
-            path = "repos/\(owner)/\(repo)/pulls/\(number)/requested_reviewers"
-            param = "reviewers"
             addedType = .reviewRequested
             removedType = .reviewRequestRemoved
             oldAssigness = Set<String>(previous.reviewers?.users.map { $0.login } ?? [])
