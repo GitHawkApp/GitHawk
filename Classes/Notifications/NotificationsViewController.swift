@@ -12,7 +12,6 @@ import SnapKit
 import FlatCache
 
 class NotificationsViewController: BaseListViewController<NSNumber>,
-//    NotificationClientListener,
 ForegroundHandlerDelegate,
 RatingSectionControllerDelegate,
 PrimaryViewController,
