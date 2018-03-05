@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 class RepositoryOverviewViewController: BaseListViewController<NSString>,
 BaseListViewControllerDataSource {
@@ -40,20 +41,22 @@ BaseListViewControllerDataSource {
     override func fetch(page: NSString?) {
         let repo = self.repo
         let width = view.bounds.width
-        client.fetchReadme { [weak self] result in
+
+        client.githubClient.client
+            .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name)) { [weak self] result in
             switch result {
-            case .error:
-                self?.error(animated: trueUnlessReduceMotionEnabled)
-            case .success(let readme):
+            case .success(let response):
                 DispatchQueue.global().async {
                     let options = GitHubMarkdownOptions(owner: repo.owner, repo: repo.name, flavors: [.baseURL])
-                    let models = CreateCommentModels(markdown: readme, width: width, options: options)
+                    let models = CreateCommentModels(markdown: response.data.content, width: width, options: options)
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model
                         self?.update(animated: trueUnlessReduceMotionEnabled)
                     }
                 }
+            case .failure:
+                self?.error(animated: trueUnlessReduceMotionEnabled)
             }
         }
     }

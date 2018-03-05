@@ -8,6 +8,8 @@
 
 import Foundation
 
+import GitHubAPI
+
 extension GithubClient {
 
     struct AccessTokenUser {
@@ -19,57 +21,36 @@ extension GithubClient {
         code: String,
         completion: @escaping (Result<AccessTokenUser>) -> Void
         ) {
-        let parameters = [
-            "code": code,
-            "client_id": Secrets.GitHub.clientId,
-            "client_secret": Secrets.GitHub.clientSecret
-        ]
-        let headers = [
-            "Accept": "application/json"
-        ]
-        request(Request(
-            url: "https://github.com/login/oauth/access_token",
-            method: .post,
-            parameters: parameters,
-            headers: headers,
-            logoutOnAuthFailure: false,
-            completion: { (response, _) in
-            if let json = response.value as? [String: Any],
-                let token = json["access_token"] as? String {
-
-                // after acquiring token, fetch the username so a complete user session can be stored
-                self.verifyPersonalAccessToken(token: token, completion: { result in
-                    switch result {
+        client.send(GitHubAccessTokenRequest(
+            code: code,
+            clientId: Secrets.GitHub.clientId,
+            clientSecret: Secrets.GitHub.clientSecret)
+        ) { result in
+            switch result {
+            case .success(let response):
+                self.verifyPersonalAccessToken(token: response.data.accessToken) { result2 in
+                    switch result2 {
                     case .success(let user): completion(.success(user))
-                    case .error: completion(.error(nil))
+                    case .error(let error): completion(.error(error))
                     }
-                })
-            } else {
-                completion(.error(nil))
+                }
+            case .failure(let error):
+                completion(.error(error))
             }
-        }))
+        }
     }
 
     func verifyPersonalAccessToken(
         token: String,
         completion: @escaping (Result<AccessTokenUser>) -> Void
         ) {
-        let headers = [
-            "Accept": "application/json",
-            "Authorization": "token \(token)"
-        ]
-        request(Request(
-            url: "https://api.github.com/user",
-            method: .get,
-            headers: headers,
-            logoutOnAuthFailure: false,
-            completion: { (response, _) in
-                if let json = response.value as? [String: Any],
-                    let username = json["login"] as? String {
-                    completion(.success(AccessTokenUser(token: token, username: username)))
-                } else {
-                    completion(.error(nil))
-                }
-        }))
+        client.send(V3VerifyPersonalAccessTokenRequest(token: token)) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(AccessTokenUser(token: token, username: response.data.login)))
+            case .failure(let error):
+                completion(.error(error))
+            }
+        }
     }
 }

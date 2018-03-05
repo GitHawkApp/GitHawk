@@ -8,6 +8,8 @@
 
 import Foundation
 
+import GitHubAPI
+
 // used to request states via graphQL
 extension NotificationViewModel {
     var stateAlias: (number: Int, key: String)? {
@@ -53,39 +55,19 @@ final class NotificationClient {
     func fetchNotifications(
         repo: NotificationRepository? = nil,
         all: Bool = false,
-        participating: Bool = false,
-        since: Date? = nil,
         page: Int = 1,
-        before: Date? = nil,
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        var parameters: [String: Any] = [
-            "all": all ? "true" : "false",
-            "participating": participating ? "true" : "false",
-            "page": page,
-            "per_page": "50"
-            ]
-        if let since = since {
-            parameters["since"] = GithubAPIDateFormatter().string(from: since)
-        }
-        if let before = before {
-            parameters["before"] = GithubAPIDateFormatter().string(from: before)
-        }
-
-        githubClient.request(GithubClient.Request(
-            path: path(repo: repo),
-            method: .get,
-            parameters: parameters,
-            headers: nil
-        ) { response, nextPage in
-            if let notifications = (response.value as? [[String:Any]])?.flatMap({ NotificationResponse(json: $0) }) {
-                let viewModels = CreateViewModels(containerWidth: width, notifications: notifications)
-                self.fetchStates(for: viewModels, page: nextPage?.next, completion: completion)
-            } else {
-                completion(.error(response.error))
+        githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
+            switch result {
+            case .success(let response):
+                let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                self.fetchStates(for: viewModels, page: response.next, completion: completion)
+            case .failure(let error):
+                completion(.error(error))
             }
-        })
+        }
     }
 
     private func fetchStates(
@@ -105,43 +87,49 @@ final class NotificationClient {
 
         let cache = githubClient.cache
 
-        githubClient.graphQL(
-        parameters: ["query": query]) { response in
+        githubClient.client.send(ManualGraphQLRequest(query: query)) { result in
             let processedNotifications: [NotificationViewModel]
-            if let json = response.value as? [String: Any],
-                let data = json["data"] as? [String: Any] {
-
+            switch result {
+            case .success(let json):
                 var updatedNotifications = [NotificationViewModel]()
                 for notification in notifications {
                     if let alias = notification.stateAlias,
-                        let result = data[alias.key] as? [String: Any],
+                        let result = json.data[alias.key] as? [String: Any],
                         let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
                         let stateString = issueOrPullRequest["state"] as? String,
                         let state = NotificationViewModel.State(rawValue: stateString),
-                    let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
-                    let commentCount = commentsJSON["totalCount"] as? Int {
+                        let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
+                        let commentCount = commentsJSON["totalCount"] as? Int {
                         updatedNotifications.append(notification.updated(state: state, commentCount: commentCount))
                     } else {
                         updatedNotifications.append(notification)
                     }
                 }
-
                 processedNotifications = updatedNotifications
-            } else {
+            case .failure:
                 processedNotifications = notifications
             }
             cache.set(values: processedNotifications)
             completion(.success((processedNotifications, page)))
         }
-
     }
 
     func markAllNotifications(completion: @escaping (Bool) -> Void) {
-        markNotifications(repo: nil, completion: completion)
+        githubClient.client.send(V3MarkNotificationsRequest()) { result in
+            switch result {
+            case .success: completion(true)
+            case .failure: completion(false)
+            }
+        }
     }
 
     func markRepoNotifications(repo: NotificationRepository, completion: @escaping (Bool) -> Void) {
-        markNotifications(repo: repo, completion: completion)
+        githubClient.client.send(V3MarkRepositoryNotificationsRequest(owner: repo.owner, repo: repo.name)) { result in
+            switch result {
+            case .success: completion(true)
+            case .failure: completion(false)
+            }
+        }
     }
 
     func notificationOpened(id: String) -> Bool {
@@ -161,75 +149,17 @@ final class NotificationClient {
             }
         }
 
-        githubClient.request(GithubClient.Request(
-            path: "notifications/threads/\(id)",
-            method: .patch) { [weak self] response, _ in
-                // https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
-                if response.response?.statusCode != 205 {
-                    if isOpen {
-                        self?.openedNotificationIDs.remove(id)
-                    } else if let old = oldModel {
-                        self?.githubClient.cache.set(value: old)
-                    }
+        githubClient.client.send(V3MarkThreadsRequest(id: id)) { [weak self] result in
+            switch result {
+            case .success: break
+            case .failure:
+                if isOpen {
+                    self?.openedNotificationIDs.remove(id)
+                } else if let old = oldModel {
+                    self?.githubClient.cache.set(value: old)
                 }
-        })
-    }
-
-    func fetchWatchedRepositories(completion: @escaping (Result<[Repository]>) -> Void) {
-        guard let viewer = githubClient.userSession?.username else {
-            completion(.error(nil))
-            return
-        }
-
-        githubClient.request(GithubClient.Request(
-            path: "users/\(viewer)/subscriptions"
-        ) { response, _ in
-            // https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
-            if let jsonArr = response.value as? [ [String: Any] ] {
-                var repos = [Repository]()
-                for json in jsonArr {
-                    if let repo = Repository(json: json) {
-                        repos.append(repo)
-                    }
-                }
-                completion(.success(repos.sorted { $0.name < $1.name }))
-            } else {
-                completion(.error(response.error))
             }
-        })
-    }
-
-    func fetchReleaseTag(owner: String, repo: String, id: String, completion: @escaping (Result<String>) -> Void) {
-        githubClient.request(GithubClient.Request(
-            path: "repos/\(owner)/\(repo)/releases/\(id)"
-        ) { response, _ in
-            if let json = response.value as? [String: Any],
-                let tag = json["tag_name"] as? String {
-                completion(.success(tag))
-            } else {
-                completion(.error(response.error))
-            }
-        })
-    }
-
-    // MARK: Private API
-
-    func path(repo: NotificationRepository?) -> String {
-        if let repo = repo {
-            return "repos/\(repo.owner)/\(repo.name)/notifications"
-        } else {
-            return "notifications"
         }
-    }
-
-    func markNotifications(repo: NotificationRepository? = nil, completion: @escaping (Bool) -> Void) {
-        githubClient.request(GithubClient.Request(
-            path: path(repo: repo),
-            method: .put
-        ) { response, _ in
-            let success = response.response?.statusCode == 205
-            completion(success)
-        })
     }
 
 }

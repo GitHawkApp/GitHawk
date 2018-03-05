@@ -8,11 +8,13 @@
 
 import UIKit
 
+import GitHubAPI
+
 protocol PeopleViewControllerDelegate: class {
     func didDismiss(
         controller: PeopleViewController,
         type: PeopleViewController.PeopleType,
-        selections: [User]
+        selections: [V3User]
     )
 }
 
@@ -28,7 +30,7 @@ final class PeopleViewController: UITableViewController {
     private var owner: String!
     private var repo: String!
     private var client: GithubClient!
-    private var users = [User]()
+    private var users = [V3User]()
     private let feedRefresh = FeedRefresh()
     private var type: PeopleType!
     private var selections = Set<String>()
@@ -61,13 +63,13 @@ final class PeopleViewController: UITableViewController {
     }
 
     func fetch() {
-        client.fetchAssignees(owner: owner, repo: repo) { [weak self] result in
+        client.client.send(V3AssigneesRequest(owner: owner, repo: repo)) { [weak self] result in
             self?.feedRefresh.endRefreshing()
             switch result {
-            case .success(let users):
-                self?.users = users
+            case .success(let response):
+                self?.users = response.data.sorted { $0.login.lowercased() < $1.login.lowercased() }
                 self?.tableView.reloadData()
-            case .error:
+            case .failure:
                 ToastManager.showGenericError()
             }
         }
@@ -111,9 +113,9 @@ final class PeopleViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let user = users[indexPath.row]
-        if let cell = cell as? PeopleCell, let avatarURL = URL(string: user.avatar_url) {
+        if let cell = cell as? PeopleCell {
             let login = user.login
-            cell.configure(avatarURL: avatarURL, username: login, showCheckmark: selections.contains(login))
+            cell.configure(avatarURL: user.avatarUrl, username: login, showCheckmark: selections.contains(login))
         }
         return cell
     }

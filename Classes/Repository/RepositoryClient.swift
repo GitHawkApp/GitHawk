@@ -103,26 +103,25 @@ final class RepositoryClient {
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> Void
     ) where T: RepositoryQuery {
-        githubClient.fetch(query: query) { (result, error) in
-            guard error == nil, result?.errors == nil, let data = result?.data else {
-                ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
+        githubClient.client.query(query, result: { $0 }) { result in
+            switch result {
+            case .failure:
+                ToastManager.showGenericError()
                 completion(.error(nil))
-                return
-            }
-
-            DispatchQueue.global().async {
-                // jump to a bg queue to parse models and presize text
-                let summary = createSummaryModel(
-                    query: query,
-                    data: data,
-                    containerWidth: containerWidth
-                )
-
-                DispatchQueue.main.async {
-                    completion(.success(RepositoryPayload(
-                        models: summary.models,
-                        nextPage: summary.nextPage
-                    )))
+            case .success(let data):
+                DispatchQueue.global().async {
+                    // jump to a bg queue to parse models and presize text
+                    let summary = createSummaryModel(
+                        query: query,
+                        data: data,
+                        containerWidth: containerWidth
+                    )
+                    DispatchQueue.main.async {
+                        completion(.success(RepositoryPayload(
+                            models: summary.models,
+                            nextPage: summary.nextPage
+                        )))
+                    }
                 }
             }
         }
@@ -150,23 +149,6 @@ final class RepositoryClient {
             containerWidth: containerWidth,
             completion: completion
         )
-    }
-
-    func fetchReadme(
-        completion: @escaping (Result<String>) -> Void
-        ) {
-        githubClient.request(GithubClient.Request(
-            path: "repos/\(owner)/\(name)/readme",
-            completion: { (response, _) in
-                if let json = response.value as? [String: Any],
-                    let content = json["content"] as? String,
-                    let data = Data(base64Encoded: content, options: [.ignoreUnknownCharacters]),
-                    let text = String(data: data, encoding: .utf8) {
-                    completion(.success(text))
-                } else {
-                    completion(.error(response.error))
-                }
-        }))
     }
 
 }

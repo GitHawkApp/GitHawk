@@ -58,7 +58,7 @@ final class RootNavigationManager: GithubSessionListener {
     public func resetRootViewController(userSession: GithubUserSession?) {
         guard let userSession = userSession else { return }
 
-        let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
+        let client = newGithubClient(userSession: userSession)
         lastClient = client
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
@@ -156,7 +156,10 @@ final class RootNavigationManager: GithubSessionListener {
             name: "OauthLogin",
             bundle: Bundle(for: AppDelegate.self))
             .instantiateInitialViewController() as! LoginSplashViewController
-        controller.client = newGithubClient(sessionManager: sessionManager)
+        controller.config(
+            client: newGithubClient(),
+            sessionManager: sessionManager
+        )
         return controller
     }
 

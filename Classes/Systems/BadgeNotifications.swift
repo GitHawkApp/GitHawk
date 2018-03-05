@@ -9,6 +9,8 @@
 import UIKit
 import UserNotifications
 
+import GitHubAPI
+
 final class BadgeNotifications {
 
     private static let userKey = "com.freetime.BadgeNotifications.user-enabled"
@@ -71,18 +73,15 @@ final class BadgeNotifications {
             isEnabled
             else { return }
 
-        let client = newGithubClient(sessionManager: manager, userSession: session)
-        client.request(GithubClient.Request(
-            path: "notifications",
-            method: .get,
-            parameters: ["all": "false"],
-            completion: { (response, _) in
-                if let notes = response.value as? [ [String: Any] ] {
-                    handler(update(application: application, count: notes.count) ? .newData : .noData)
-                } else {
-                    handler(.failed)
-                }
-        }))
+        let client = newGithubClient(userSession: session)
+        client.client.send(V3NotificationRequest(all: false)) { result in
+            switch result {
+            case .success(let response):
+                handler(update(application: application, count: response.data.count) ? .newData : .noData)
+            case .failure:
+                handler(.failed)
+            }
+        }
     }
 
     @discardableResult

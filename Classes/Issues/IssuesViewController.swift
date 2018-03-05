@@ -265,7 +265,12 @@ IssueManagingNavSectionControllerDelegate {
             ) { [weak self] (result) in
                 switch result {
                 case .success(let permission):
-                    self?.viewerIsCollaborator = permission.canManage
+                    let collab: Bool
+                    switch permission {
+                    case .admin, .write: collab = true
+                    case .read, .none: collab = false
+                    }
+                    self?.viewerIsCollaborator = collab
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:

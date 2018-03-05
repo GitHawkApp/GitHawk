@@ -11,7 +11,6 @@ import Alamofire
 import Apollo
 
 func newGithubClient(
-    sessionManager: GithubSessionManager,
     userSession: GithubUserSession? = nil
     ) -> GithubClient {
     var additionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
@@ -38,7 +37,6 @@ func newGithubClient(
     let apollo = ApolloClient(networkTransport: transport)
 
     return GithubClient(
-        sessionManager: sessionManager,
         apollo: apollo,
         networker: networker,
         userSession: userSession

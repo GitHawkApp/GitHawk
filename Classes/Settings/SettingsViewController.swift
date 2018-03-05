@@ -9,6 +9,8 @@
 import UIKit
 import SafariServices
 
+import GitHubAPI
+
 final class SettingsViewController: UITableViewController,
 NewIssueTableViewControllerDelegate {
 
@@ -56,8 +58,33 @@ NewIssueTableViewControllerDelegate {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
-        client?.fetchAPIStatus { [weak self] result in
-            self?.update(statusResult: result)
+
+        client.client.send(GitHubAPIStatusRequest()) { [weak self] result in
+            guard let strongSelf = self else { return }
+
+            switch result {
+            case .failure:
+                strongSelf.apiStatusView.isHidden = true
+                strongSelf.apiStatusLabel.text = NSLocalizedString("error", comment: "")
+            case .success(let response):
+                let text: String
+                let color: UIColor
+                switch response.data.status {
+                case .good:
+                    text = NSLocalizedString("Good", comment: "")
+                    color = Styles.Colors.Green.medium.color
+                case .minor:
+                    text = NSLocalizedString("Minor", comment: "")
+                    color = Styles.Colors.Yellow.medium.color
+                case .major:
+                    text = NSLocalizedString("Major", comment: "")
+                    color = Styles.Colors.Red.medium.color
+                }
+                strongSelf.apiStatusView.isHidden = false
+                strongSelf.apiStatusView.backgroundColor = color
+                strongSelf.apiStatusLabel.text = text
+                strongSelf.apiStatusLabel.textColor = color
+            }
         }
     }
 
@@ -197,33 +224,6 @@ NewIssueTableViewControllerDelegate {
 
     @IBAction func onMarkRead(_ sender: Any) {
         NotificationClient.setReadOnOpen(open: markReadSwitch.isOn)
-    }
-
-    func update(statusResult: Result<GithubClient.APIStatus>) {
-        switch statusResult {
-        case .error:
-            apiStatusView.isHidden = true
-            apiStatusLabel.text = NSLocalizedString("error", comment: "")
-        case .success(let status):
-
-            let text: String
-            let color: UIColor
-            switch status {
-            case .good:
-                text = NSLocalizedString("Good", comment: "")
-                color = Styles.Colors.Green.medium.color
-            case .minor:
-                text = NSLocalizedString("Minor", comment: "")
-                color = Styles.Colors.Yellow.medium.color
-            case .major:
-                text = NSLocalizedString("Major", comment: "")
-                color = Styles.Colors.Red.medium.color
-            }
-            apiStatusView.isHidden = false
-            apiStatusView.backgroundColor = color
-            apiStatusLabel.text = text
-            apiStatusLabel.textColor = color
-        }
     }
 
 	private func style() {

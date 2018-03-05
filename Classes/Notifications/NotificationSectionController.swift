@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import SwipeCellKit
+import GitHubAPI
 
 final class NotificationSectionController: ListGenericSectionController<NotificationViewModel>,
 SwipeCollectionViewCellDelegate {
@@ -64,18 +65,18 @@ SwipeCollectionViewCellDelegate {
             let navigation = UINavigationController(rootViewController: controller)
             viewController?.showDetailViewController(navigation, sender: nil)
         case .release(let release):
-            client.fetchReleaseTag(
-                owner: object.owner,
-                repo: object.repo,
-                id: release,
-                completion: { [weak self] (result) in
+            client.githubClient.client
+                .send(V3ReleaseRequest(owner: object.owner, repo: object.repo, id: release)) { [weak self] result in
                     switch result {
-                    case .success(let tag):
-                        self?.viewController?.presentRelease(owner: object.owner, repo: object.repo, release: tag)
-                    case .error:
-                        ToastManager.showGenericError()
+                    case .success(let response):
+                        self?.viewController?.presentRelease(
+                            owner: object.owner,
+                            repo: object.repo,
+                            release: response.data.tagName
+                        )
+                    case .failure: ToastManager.showGenericError()
                     }
-            })
+            }
         }
     }
 
