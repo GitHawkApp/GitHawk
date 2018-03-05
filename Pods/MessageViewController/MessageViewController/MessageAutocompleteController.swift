@@ -85,10 +85,8 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     }
 
     public final func show(_ doShow: Bool) {
-        if doShow {
-            tableView.reloadData()
-            tableView.layoutIfNeeded()
-        }
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
         tableView.isHidden = !doShow
         border.isHidden = !doShow
         layoutDelegate?.needsLayout(controller: self)
