@@ -7,21 +7,26 @@
 //
 
 import UIKit
+import GitHubAPI
 
 final class SettingsAccountsViewController: UITableViewController, GithubSessionListener {
 
-    var client: GithubClient!
-    var sessionManager: GithubSessionManager! {
-        didSet {
-            sessionManager.addListener(listener: self)
-            updateUserSessions()
-        }
-    }
+    private var client: Client!
+    private var sessionManager: GithubSessionManager!
     private var userSessions = [GithubUserSession]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = NSLocalizedString("Accounts", comment: "")
+    }
+
+    // MARK: Public API
+
+    func config(client: Client, sessionManager: GithubSessionManager) {
+        self.client = client
+        self.sessionManager = sessionManager
+        sessionManager.addListener(listener: self)
+        updateUserSessions()
     }
 
     // MARK: Private API
@@ -42,20 +47,18 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
                 alert?.actions.forEach { $0.isEnabled = false }
 
                 let token = alert?.textFields?.first?.text ?? ""
-                self?.client.verifyPersonalAccessToken(token: token) { result in
-                    self?.handle(result: result, authMethod: .pat)
+                self?.client.send(V3VerifyPersonalAccessTokenRequest(token: token)) { result in
+                    switch result {
+                    case .failure:
+                        self?.handleError()
+                    case .success(let user):
+                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                    }
                 }
             })
         ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
-        switch result {
-        case .error: handleError()
-        case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
-        }
     }
 
     private func handleError() {

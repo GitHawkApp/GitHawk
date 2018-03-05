@@ -133,7 +133,6 @@
 		29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29416BF81F1138B700D03E1A /* OauthLogin.storyboard */; };
 		29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */; };
 		29416BFD1F118DD700D03E1A /* String+QueryItemValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */; };
-		29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */; };
 		294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */; };
 		294563E61EE4EE6F00DBCD35 /* IssueStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */; };
 		294563E81EE4EED200DBCD35 /* IssueStatusSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */; };
@@ -255,6 +254,7 @@
 		299E86431EFD8D8200E5FE70 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E86421EFD8D8200E5FE70 /* AttributedStringView.swift */; };
 		299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 299E86481EFD9DBB00E5FE70 /* FlexController.m */; };
 		299F2A121EC3BCF0006CE9D7 /* GithubSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */; };
+		299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */; };
 		29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */; };
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
@@ -554,7 +554,6 @@
 		29416BF81F1138B700D03E1A /* OauthLogin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OauthLogin.storyboard; sourceTree = "<group>"; };
 		29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSplashViewController.swift; sourceTree = "<group>"; };
 		29416BFC1F118DD700D03E1A /* String+QueryItemValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+QueryItemValue.swift"; sourceTree = "<group>"; };
-		29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+AccessToken.swift"; sourceTree = "<group>"; };
 		294434E01FB1F2DA00050C06 /* BookmarkNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkNavigationController.swift; sourceTree = "<group>"; };
 		294563E51EE4EE6F00DBCD35 /* IssueStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusModel.swift; sourceTree = "<group>"; };
 		294563E71EE4EED200DBCD35 /* IssueStatusSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusSectionController.swift; sourceTree = "<group>"; };
@@ -685,6 +684,7 @@
 		299E86471EFD9DBB00E5FE70 /* FlexController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlexController.h; sourceTree = "<group>"; };
 		299E86481EFD9DBB00E5FE70 /* FlexController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlexController.m; sourceTree = "<group>"; };
 		299F2A111EC3BCF0006CE9D7 /* GithubSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSessionManager.swift; sourceTree = "<group>"; };
+		299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+AccessToken.swift"; sourceTree = "<group>"; };
 		29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitCell.swift; sourceTree = "<group>"; };
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1362,9 +1362,9 @@
 		297AE8581EC0D5C100B44A1F /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				29416BF81F1138B700D03E1A /* OauthLogin.storyboard */,
+				299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */,
 				29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */,
-				29416BFE1F1195D400D03E1A /* GithubClient+AccessToken.swift */,
+				29416BF81F1138B700D03E1A /* OauthLogin.storyboard */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2305,7 +2305,6 @@
 				299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */,
 				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
-				29416BFF1F1195D400D03E1A /* GithubClient+AccessToken.swift in Sources */,
 				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
@@ -2402,6 +2401,7 @@
 				292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */,
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
+				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
