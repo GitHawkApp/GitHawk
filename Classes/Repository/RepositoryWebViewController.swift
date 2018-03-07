@@ -48,13 +48,11 @@ final class RepositoryWebViewController: UIViewController {
     }
 
     private var resourceURL: URL? {
-        get {
-            guard let encodedPath = path.path.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-                return nil
-            }
-
-            return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(encodedPath)")
+        guard let encodedPath = path.path.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return nil
         }
+
+        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/raw/\(branch)/\(encodedPath)")
     }
 
     private lazy var webView: WKWebView = {
@@ -147,7 +145,7 @@ extension RepositoryWebViewController {
 
                 strongSelf.webView.load(
                     data,
-                    mimeType: strongSelf.path.path.mimeType ?? "text/plain",
+                    mimeType: strongSelf.path.mimeType ?? "text/plain",
                     characterEncodingName: "UTF-8",
                     baseURL: url
                 )
