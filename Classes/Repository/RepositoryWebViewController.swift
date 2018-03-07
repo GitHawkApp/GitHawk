@@ -140,8 +140,8 @@ extension RepositoryWebViewController {
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             DispatchQueue.main.async {
                 guard let strongSelf = self else { return }
-                guard error == nil else { return strongSelf.showError(cannotLoad: true) }
-                guard let data = data else { return strongSelf.showError(cannotLoad: true) }
+                guard error == nil,
+                    let data = data else { return strongSelf.showError(cannotLoad: true) }
 
                 strongSelf.webView.load(
                     data,
