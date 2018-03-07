@@ -128,8 +128,7 @@ NewIssueTableViewControllerDelegate {
         if let navigationController = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "accountsNavigationController") as? UINavigationController,
             let accountsController = navigationController.topViewController as? SettingsAccountsViewController,
             let client = self.client {
-            accountsController.client = client
-            accountsController.sessionManager = sessionManager
+            accountsController.config(client: client.client, sessionManager: sessionManager)
             self.navigationController?.showDetailViewController(navigationController, sender: self)
         }
     }

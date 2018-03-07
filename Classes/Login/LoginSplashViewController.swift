@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import GitHubAPI
 
 private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
 private let callbackURLScheme = "freetime://"
@@ -19,7 +20,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         case fetchingToken
     }
 
-    private var client: GithubClient!
+    private var client: Client!
     private var sessionManager: GithubSessionManager!
 
     @IBOutlet weak var signInButton: UIButton!
@@ -63,7 +64,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
 
     // MARK: Public API
 
-    func config(client: GithubClient, sessionManager: GithubSessionManager) {
+    func config(client: Client, sessionManager: GithubSessionManager) {
         self.client = client
         self.sessionManager = sessionManager
     }
@@ -103,20 +104,18 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
                 self?.state = .fetchingToken
 
                 let token = alert?.textFields?.first?.text ?? ""
-                self?.client.verifyPersonalAccessToken(token: token) { result in
-                    self?.handle(result: result, authMethod: .pat)
+                self?.client.send(V3VerifyPersonalAccessTokenRequest(token: token)) { result in
+                    switch result {
+                    case .failure:
+                        self?.handleError()
+                    case .success(let user):
+                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                    }
                 }
             })
         ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
-        switch result {
-        case .error: handleError()
-        case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
-        }
     }
 
     private func handleError() {
@@ -144,8 +143,13 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         safariController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         state = .fetchingToken
 
-        client.requestAccessToken(code: code) { result in
-            self.handle(result: result, authMethod: .oauth)
+        client.requestAccessToken(code: code) { [weak self] result in
+            switch result {
+            case .error:
+                self?.handleError()
+            case .success(let user):
+                self?.finishLogin(token: user.token, authMethod: .oauth, username: user.username)
+            }
         }
     }
 

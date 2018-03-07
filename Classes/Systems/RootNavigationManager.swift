@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+import GitHubAPI
 
 final class RootNavigationManager: GithubSessionListener {
 
@@ -130,15 +130,15 @@ final class RootNavigationManager: GithubSessionListener {
         // only required when there is no username
         guard userSession.username == nil else { return }
 
-        client.verifyPersonalAccessToken(token: userSession.token) { result in
+        client.client.send(V3VerifyPersonalAccessTokenRequest(token: userSession.token)) { result in
             switch result {
             case .success(let user):
-                userSession.username = user.username
+                userSession.username = user.data.login
 
                 // user session ref is same session that manager should be using
                 // update w/ mutated session
                 sessionManager.save()
-            default: break
+            case .failure: break
             }
         }
     }
@@ -157,7 +157,7 @@ final class RootNavigationManager: GithubSessionListener {
             bundle: Bundle(for: AppDelegate.self))
             .instantiateInitialViewController() as! LoginSplashViewController
         controller.config(
-            client: newGithubClient(),
+            client: newGithubClient().client,
             sessionManager: sessionManager
         )
         return controller
