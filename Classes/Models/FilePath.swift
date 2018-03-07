@@ -61,19 +61,19 @@ extension FilePath {
     ///
     /// Supported types: **pdf**.
     var hasBinarySuffix: Bool {
-        return getBinarySuffix() != nil
+        return binarySuffix != nil
     }
 
     /// Returns mime type for the supported binary files.
     var mimeType: String? {
-        guard let type = getBinarySuffix() else { return nil }
+        guard let type = binarySuffix else { return nil }
 
         return FilePath.supportedBinaries[type]
     }
 
     // MARK: Private API
 
-    private func getBinarySuffix() -> String? {
+    private var binarySuffix: String? {
         return FilePath.supportedBinaries.keys.first(where: { path.hasSuffix($0) })
     }
 
