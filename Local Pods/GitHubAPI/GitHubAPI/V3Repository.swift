@@ -10,7 +10,7 @@ import Foundation
 
 public struct V3Repository: Codable {
 
-    public let description: String
+    public let description: String?
     public let fork: Bool
     public let fullName: String // custom
     public let id: Int
