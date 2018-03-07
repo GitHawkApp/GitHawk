@@ -157,26 +157,24 @@ extension RepositoryCodeDirectoryViewController {
     }
 
     private func showFile(at path: FilePath) {
+        let controller: UIViewController
+
         if path.hasBinarySuffix {
-            navigationController?.pushViewController(
-                RepositoryWebViewController(
-                    repo: repo,
-                    branch: branch,
-                    path: path
-                ),
-                animated: trueUnlessReduceMotionEnabled
+            controller = RepositoryWebViewController(
+                repo: repo,
+                branch: branch,
+                path: path
             )
         } else {
-            navigationController?.pushViewController(
-                RepositoryCodeBlobViewController(
-                    client: client,
-                    repo: repo,
-                    branch: branch,
-                    path: path
-                ),
-                animated: trueUnlessReduceMotionEnabled
+            controller = RepositoryCodeBlobViewController(
+                client: client,
+                repo: repo,
+                branch: branch,
+                path: path
             )
         }
+
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
 }
