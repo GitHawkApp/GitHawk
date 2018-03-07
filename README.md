@@ -1,6 +1,5 @@
 <a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/githawk-pulse.gif" /></a>
-
-<a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/app-store-badge.png" width="250" /></a>
+<p align="center"><a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/app-store-badge.png" width="250" /></a></p>
 
 [![Build Status](https://www.bitrise.io/app/a912ff037bca7072/status.svg?token=PMpBs9u-C7CBIKPwNLSJrg&branch=master)](https://www.bitrise.io/app/a912ff037bca7072)
 
