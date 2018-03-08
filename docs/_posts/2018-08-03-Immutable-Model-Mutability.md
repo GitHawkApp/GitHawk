@@ -110,6 +110,7 @@ protocol AutoMutatable {}
 Then our Stencil template is as simple as:
 
 ```
+{% raw %}
 {% for type in types.implementing.AutoMutatable %}
 extension {{ type.name }} {
   func update(
@@ -135,6 +136,7 @@ extension {{ type.name }} {
   {% endfor %}
 }
 {% endfor %}
+{% endraw %}
 ```
 
 When Sourcery runs, we get an auto-generated extension that looks like:
