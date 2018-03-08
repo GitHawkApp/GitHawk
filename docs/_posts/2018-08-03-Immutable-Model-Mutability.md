@@ -6,7 +6,7 @@ title: Immutable Model Mutability
 
 GitHawk is powered by an architecture and a [few](https://github.com/GitHawkApp/FlatCache) [libraries](https://github.com/Instagram/IGListKit) that shine when fed with _immutable models_.
 
-Why? Because once a model is initialized it cannot be changed, making it safe read its values across threads and contexts.
+Why? Because once a model is initialized it cannot be changed, making it safe to read its values across threads and contexts.
 
 Imagine we're building an employee management app with the following model:
 
@@ -37,7 +37,7 @@ let newJob = Person(name: me.name, job: "Manager")
 
 Hurray! We have a new _immutable_ model with our updated values.
 
-However that's a lot of code to change a single value. What happens if we add a new property:
+However that's a lot of code to change a single value. What happens if we add a new property?
 
 ```swift
 Person {
@@ -55,8 +55,8 @@ We can take advantage of Swift's default parameter values by adding a function:
 
 ```swift
 func update(
-  name: String?,
-  age: Int?
+  name: String? = nil,
+  age: Int? = nil
   ) -> Person {
   return Person(
     name: name ?? self.name,
@@ -96,7 +96,7 @@ _Full disclosure, this is the first time I've ever used Sourcery._
 
 Saving time from writing boilerplate code is _exactly_ what [Sourcery](https://github.com/krzysztofzablocki/Sourcery) was made for.
 
-We need a template that does 2 things:
+We need a template that does two things:
 
 1. Create an `update(...)` function with every non-optional property as a parameter.
 2. Create a `with(...)` function for every optional property.
@@ -115,7 +115,7 @@ Then our Stencil template creates the `update(...)` and each `with(...)` functio
 extension {{ type.name }} {
   func update(
   {% for variable in type.storedVariables where not variable.isOptional %}
-    {{ variable.name }}: {{ variable.typeName }}?{% if not forloop.last %},{% endif %}
+    {{ variable.name }}: {{ variable.typeName }}? = nil{% if not forloop.last %},{% endif %}
   {% endfor %}
     ) -> {{ type.name }} {
     return {{ type.name }}(
@@ -139,13 +139,13 @@ extension {{ type.name }} {
 {% endraw %}
 ```
 
-When Sourcery runs, we get an auto-generated extension that looks like:
+When Sourcery runs, we get an auto-generated extension that looks like this:
 
 ```swift
 extension Person {
   func update(
-    name: String?,
-    age: Int?
+    name: String? = nil,
+    age: Int? = nil
     ) -> Person {
     return Person(
       name: name ?? self.name,
