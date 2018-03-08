@@ -8,12 +8,13 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 protocol PeopleViewControllerDelegate: class {
     func didDismiss(
         controller: PeopleViewController,
         type: PeopleViewController.PeopleType,
-        selections: [User]
+        selections: [V3User]
     )
 }
 
@@ -31,7 +32,7 @@ PeopleSectionControllerDelegate {
     private var owner: String!
     private var repo: String!
     private var client: GithubClient!
-    private var users = [User]()
+    private var users = [V3User]()
     private var type: PeopleType!
     private var selections = Set<String>()
 
@@ -81,27 +82,32 @@ PeopleSectionControllerDelegate {
     }
 
     override func fetch(page: NSNumber?) {
-        client.fetchAssignees(
-            owner: owner,
-            repo: repo,
-            page: page?.intValue ?? 1
+        client.client.send(
+            V3AssigneesRequest(
+                owner: owner,
+                repo: repo,
+                page: page?.intValue ?? 1
+            )
         ) { [weak self] result in
-            self?.handle(result: result, append: page != nil)
+            switch result {
+            case .success(let response):
+                let sortedUsers = response.data.sorted {
+                    $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
+                }
+                if page != nil {
+                    self?.users += sortedUsers
+                } else {
+                    self?.users = sortedUsers
+                }
+                self?.update(page: response.next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
+            case .failure:
+                ToastManager.showGenericError()
+            }
         }
     }
 
-    func handle(result: Result<([User], Int?)>, append: Bool) {
-        switch result {
-        case .success(let users, let next):
-            if append {
-                self.users += users
-            } else {
-                self.users = users
-            }
-            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
-        case .error:
-            ToastManager.showGenericError()
-        }
+    func handle(result: Result<V3DataResponse<[V3User]>>, append: Bool) {
+
     }
 
     @IBAction func onDone(_ sender: Any) {
@@ -117,9 +123,8 @@ PeopleSectionControllerDelegate {
     }
 
     func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        let models = users.flatMap { user -> IssueAssigneeViewModel? in
-            guard let avatarURL = URL(string: user.avatar_url) else { return nil }
-            return IssueAssigneeViewModel(login: user.login, avatarURL: avatarURL)
+        let models = users.map { user -> IssueAssigneeViewModel in
+            return IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl)
         }
         return models
     }
