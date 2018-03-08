@@ -18,7 +18,7 @@ protocol PeopleViewControllerDelegate: class {
 }
 
 final class PeopleViewController: BaseListViewController<NSNumber>,
-    BaseListViewControllerDataSource,
+BaseListViewControllerDataSource,
 PeopleSectionControllerDelegate {
 
     enum PeopleType {
