@@ -7,18 +7,19 @@
 //
 
 import UIKit
-
-import GitHubAPI
+import IGListKit
 
 protocol PeopleViewControllerDelegate: class {
     func didDismiss(
         controller: PeopleViewController,
         type: PeopleViewController.PeopleType,
-        selections: [V3User]
+        selections: [User]
     )
 }
 
-final class PeopleViewController: UITableViewController {
+final class PeopleViewController: BaseListViewController<NSNumber>,
+    BaseListViewControllerDataSource,
+PeopleSectionControllerDelegate {
 
     enum PeopleType {
         case assignee
@@ -30,20 +31,41 @@ final class PeopleViewController: UITableViewController {
     private var owner: String!
     private var repo: String!
     private var client: GithubClient!
-    private var users = [V3User]()
-    private let feedRefresh = FeedRefresh()
+    private var users = [User]()
     private var type: PeopleType!
     private var selections = Set<String>()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init(selections: [String],
+         type: PeopleType,
+         client: GithubClient,
+         delegate: PeopleViewControllerDelegate,
+         owner: String,
+         repo: String
+        ) {
+        self.selections = Set<String>(selections)
+        self.type = type
+        self.client = client
+        self.delegate = delegate
+        self.owner = owner
+        self.repo = repo
 
-        tableView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        super.init(emptyErrorMessage: "Cannot load users.", dataSource: self)
 
-        feedRefresh.beginRefreshing()
-        fetch()
+        switch type {
+        case .assignee: title = NSLocalizedString("Assignees", comment: "")
+        case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
+        }
+
         updateSelectionCount()
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done",
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(onDone(_:)))
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: Private API
@@ -58,20 +80,27 @@ final class PeopleViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
-    @objc func onRefresh() {
-        fetch()
+    override func fetch(page: NSNumber?) {
+        client.fetchAssignees(
+            owner: owner,
+            repo: repo,
+            page: page?.intValue ?? 1
+        ) { [weak self] result in
+            self?.handle(result: result, append: page != nil)
+        }
     }
 
-    func fetch() {
-        client.client.send(V3AssigneesRequest(owner: owner, repo: repo)) { [weak self] result in
-            self?.feedRefresh.endRefreshing()
-            switch result {
-            case .success(let response):
-                self?.users = response.data.sorted { $0.login.lowercased() < $1.login.lowercased() }
-                self?.tableView.reloadData()
-            case .failure:
-                ToastManager.showGenericError()
+    func handle(result: Result<([User], Int?)>, append: Bool) {
+        switch result {
+        case .success(let users, let next):
+            if append {
+                self.users += users
+            } else {
+                self.users = users
             }
+            update(page: next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
+        case .error:
+            ToastManager.showGenericError()
         }
     }
 
@@ -81,60 +110,54 @@ final class PeopleViewController: UITableViewController {
         dismiss(animated: trueUnlessReduceMotionEnabled)
     }
 
-    // MARK: Public API
+    // MARK: BaseListViewControllerDataSource
 
-    func configure(
-        selections: [String],
-        type: PeopleType,
-        client: GithubClient,
-        delegate: PeopleViewControllerDelegate,
-        owner: String,
-        repo: String
-        ) {
-        self.selections = Set<String>(selections)
-        self.type = type
-        self.client = client
-        self.delegate = delegate
-        self.owner = owner
-        self.repo = repo
+    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
+        return []
+    }
 
-        switch type {
-        case .assignee: title = NSLocalizedString("Assignees", comment: "")
-        case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
+    func models(listAdapter: ListAdapter) -> [ListDiffable] {
+        let models = users.flatMap { user -> IssueAssigneeViewModel? in
+            guard let avatarURL = URL(string: user.avatar_url) else { return nil }
+            return IssueAssigneeViewModel(login: user.login, avatarURL: avatarURL)
         }
+        return models
     }
 
-    // MARK: UITableViewDataSource
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
+        guard let user = model as? IssueAssigneeViewModel else { fatalError("Incorrect model type") }
+        let isSelected = selections.contains(user.login)
+        return PeopleSectionController(isSelected: isSelected, delegate: self)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let user = users[indexPath.row]
-        if let cell = cell as? PeopleCell {
-            let login = user.login
-            cell.configure(avatarURL: user.avatarUrl, username: login, showCheckmark: selections.contains(login))
-        }
-        return cell
+    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
+        return ListSingleSectionController(cellClass: LabelCell.self, configureBlock: { (_, cell: UICollectionViewCell) in
+            guard let cell = cell as? LabelCell else { return }
+            cell.label.text = NSLocalizedString("No users found.", comment: "")
+        }, sizeBlock: { [weak self] (_, context: ListCollectionContext?) -> CGSize in
+            guard let context = context,
+                let strongSelf = self
+                else { return .zero }
+            return CGSize(
+                width: context.containerSize.width,
+                height: context.containerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
+            )
+        })
     }
 
-    // MARK: UITableViewDelegate
+    // MARK: PeopleSectionControllerDelegate
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
-
-        let login = users[indexPath.row].login
-        if selections.contains(login) {
+    func shouldUpdateCellForUser(login: String) -> Bool {
+        let isSelected = selections.contains(login)
+        if isSelected {
             selections.remove(login)
-        } else {
-            if selections.count < selectionLimit {
-                selections.insert(login)
-            }
+            updateSelectionCount()
+            return true
+        } else if !isSelected && selections.count < selectionLimit {
+            selections.insert(login)
+            updateSelectionCount()
+            return true
         }
-        updateSelectionCount()
-        tableView.reloadData()
+        return false
     }
-
 }
