@@ -47,7 +47,7 @@ extension GithubClient {
 
         let cache = self.cache
 
-        client.send(V3MergePullRequestReqeust(owner: owner, repo: repo, number: number, type: mergeType)) { result in
+        client.send(V3MergePullRequestRequest(owner: owner, repo: repo, number: number, type: mergeType)) { result in
             switch result {
             case .success:
                 cache.set(value: optimisticResult)
