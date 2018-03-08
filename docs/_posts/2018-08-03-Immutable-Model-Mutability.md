@@ -17,9 +17,9 @@ Person {
 }
 ```
 
-we can toss this simple, lightweight model to different threads and controllers without concern for crashes, bugs, or performance issues.
+We can toss this simple, lightweight model to different threads and controllers without concern for crashes, bugs, or performance issues.
 
-However sometimes need to change a model's values. Say this app let's users update the employee's job title.
+However sometimes we need to change a model's values. Say this app has a feature that lets you update an employee's job title.
 
 ```swift
 let me = Person(name: "Ryan", job: "Engineer")
@@ -28,30 +28,30 @@ me.job = "Manager" // ERROR
 
 ## New Mutated Models
 
-Instead of changing the model instance, we can initialize a _new instance_ with the new values.
+Instead of changing the model instance, we can initialize a _new instance_ with the updated values.
 
 ```swift
 let me = Person(name: "Ryan", job: "Engineer")
 let newJob = Person(name: me.name, job: "Manager")
 ```
 
-Hurray! We have a new _immutable_ model with our new values.
+Hurray! We have a new _immutable_ model with our updated values.
 
 However that's a lot of code to change a single value. What happens if we add a new property:
 
 ```swift
 Person {
   let name: String
-  let age: Int
+  let age: Int // new
   let job: String?
 }
 ```
 
-We're going to spend the rest of the day chasing down compiler errors. Boo.
+We're going to spend the rest of the day chasing down compiler errors. Boo!
 
 ## Less Code with Default Values
 
-We can use Swift's default parameter values to our advantage.
+We can take advantage of Swift's default parameter values by adding a function:
 
 ```swift
 func update(
@@ -74,9 +74,9 @@ let birthday = me.update(age: 30)
 print(birthday.name) // "Ryan"
 ```
 
-Notice how we left out the `job` field. That's because it's **optional**. If someone wanted to change it to `nil`, then `job ?? self.job` would maintain the _old_ value instead of setting `job` to `nil`.
+We didn't include `job` in the parameters because it's **optional**. If someone wanted to change `job` to `nil`, then `job ?? self.job` would maintain the _old_ value instead of setting it to `nil`.
 
-We can create another function for optional values:
+We can solve this by creating a function for each optional value:
 
 ```swift
 func with(job: String?) -> Person {
@@ -88,7 +88,7 @@ func with(job: String?) -> Person {
 }
 ```
 
-The `Person` model only has 3 properties. If this were a more complex model, just imagine how much code we'd have to write!
+Bear in mind that `Person` only has 3 properties. If this were a more complex model, just imagine how much code we'd have to write! 😱
 
 ## Saved by Sourcery
 
@@ -107,7 +107,7 @@ We add a new, empty protocol to tell Sourcery which models to run this template 
 protocol AutoMutatable {}
 ```
 
-Then our Stencil template is as simple as:
+Then our Stencil template creates the `update(...)` and each `with(...)` function based on the type's variables:
 
 ```
 {% raw %}
