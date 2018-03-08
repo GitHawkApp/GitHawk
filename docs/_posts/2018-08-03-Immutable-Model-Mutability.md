@@ -112,27 +112,27 @@ Then our Stencil template is as simple as:
 ```
 {% for type in types.implementing.AutoMutatable %}
 extension {{ type.name }} {
-    func update(
-    {% for variable in type.storedVariables where not variable.isOptional %}
-        {{ variable.name }}: {{ variable.typeName }}?{% if not forloop.last %},{% endif %}
+  func update(
+  {% for variable in type.storedVariables where not variable.isOptional %}
+    {{ variable.name }}: {{ variable.typeName }}?{% if not forloop.last %},{% endif %}
+  {% endfor %}
+    ) -> {{ type.name }} {
+    return {{ type.name }}(
+    {% for param in type.storedVariables %}
+      {{ param.name }}: {% if not param.isOptional %}{{ param.name}} ?? {% endif %}self.{{ param.name }}{% if not forloop.last %},{% endif %}
     {% endfor %}
-        ) -> {{ type.name }} {
-        return {{ type.name }}(
-        {% for param in type.storedVariables %}
-            {{ param.name }}: {% if not param.isOptional %}{{ param.name}} ?? {% endif %}self.{{ param.name }}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        )
-    }
+    )
+  }
 
-    {% for variable in type.storedVariables where variable.isOptional %}
-    func with({{ variable.name}}: {{ variable.typeName}}) -> {{ type.name }} {
-        return {{ type.name }}(
-        {% for param in type.storedVariables %}
-            {{ param.name }}: {% if not param.isOptional %}self.{% endif %}{{ param.name }}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        )
-    }
+  {% for variable in type.storedVariables where variable.isOptional %}
+  func with({{ variable.name}}: {{ variable.typeName}}) -> {{ type.name }} {
+    return {{ type.name }}(
+    {% for param in type.storedVariables %}
+      {{ param.name }}: {% if not param.isOptional %}self.{% endif %}{{ param.name }}{% if not forloop.last %},{% endif %}
     {% endfor %}
+    )
+  }
+  {% endfor %}
 }
 {% endfor %}
 ```
@@ -141,24 +141,24 @@ When Sourcery runs, we get an auto-generated extension that looks like:
 
 ```swift
 extension Person {
-    func update(
-        name: String?,
-        age: Int?
-        ) -> Person {
-        return Person(
-            name: name ?? self.name,
-            age: age ?? self.age,
-            job: self.job
-        )
-    }
+  func update(
+    name: String?,
+    age: Int?
+    ) -> Person {
+    return Person(
+      name: name ?? self.name,
+      age: age ?? self.age,
+      job: self.job
+    )
+  }
 
-    func with(job: String?) -> Person {
-        return Person(
-            name: self.name,
-            age: self.age,
-            job: job
-        )
-    }
+  func with(job: String?) -> Person {
+    return Person(
+      name: self.name,
+      age: self.age,
+      job: job
+    )
+  }
 }
 ```
 
