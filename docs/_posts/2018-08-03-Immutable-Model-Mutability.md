@@ -163,3 +163,7 @@ extension Person {
 ```
 
 Now any time we make a change to the `Person` model or add new `AutoMutatable` models, Sourcery will create mutation methods while keeping our app architecture safe from _actual_ mutable models.
+
+## Where to now?
+
+GitHawk isn't actually using Sourcery yet. We have some big [IGListKit changes](https://github.com/Instagram/IGListKit/pull/1081) that have to land, and then embark on some model refactors. However we've been using this [immutable-model-mutability architecture](https://github.com/rnystrom/GitHawk/blob/master/Classes/Issues/IssueResult.swift) for a little while with [great results](https://github.com/rnystrom/GitHawk/blob/45335eb4a0822c07abfb10e9b6f8bc5d1d85282b/Classes/Issues/Merge/GithubClient%2BMerge.swift#L36-L39)!
