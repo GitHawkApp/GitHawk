@@ -1,5 +1,5 @@
 //
-//  V3MergePullRequestReqeust.swift
+//  V3MergePullRequestRequest.swift
 //  GitHubAPI
 //
 //  Created by Ryan Nystrom on 3/4/18.
@@ -14,7 +14,7 @@ public enum MergeType: String {
     case squash
 }
 
-public struct V3MergePullRequestReqeust: V3Request {
+public struct V3MergePullRequestRequest: V3Request {
     public typealias ResponseType = V3StatusCodeResponse<V3StatusCode200>
     public var pathComponents: [String] {
         return ["repos", owner, repo, "pulls", "\(number)", "merge"]
