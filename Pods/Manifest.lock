@@ -92,7 +92,7 @@ DEPENDENCIES:
   - GitHubAPI (from `Local Pods/GitHubAPI`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
-  - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
+  - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
@@ -117,7 +117,7 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :branch: master
+    :branch: swift
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :branch: master
@@ -142,7 +142,7 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
+    :commit: 9e7974d472b61837b69bcc38da150e72d42ca75e
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
@@ -174,7 +174,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
-  IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
+  IGListKit: 2f46c3390be7e0fd70b401abb34b3737d4730c19
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
@@ -190,6 +190,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 5751727c1f1a847eb5db2909f000ec6055ed7ecb
+PODFILE CHECKSUM: bfa33cd3be0112111356f7957b3670a9c765a06c
 
 COCOAPODS: 1.4.0
