@@ -46,3 +46,35 @@ struct FilePath {
     }
 
 }
+
+// MARK: - FilePath (BinaryFile) -
+
+extension FilePath {
+
+    private static let supportedBinaries = [
+        "pdf": "application/pdf"
+    ]
+
+    // MARK: Public API
+
+    /// A Boolean value indicating whether a string has binary file suffix.
+    ///
+    /// Supported types: **pdf**.
+    var hasBinarySuffix: Bool {
+        return binarySuffix != nil
+    }
+
+    /// Returns mime type for the supported binary files.
+    var mimeType: String? {
+        guard let type = binarySuffix else { return nil }
+
+        return FilePath.supportedBinaries[type]
+    }
+
+    // MARK: Private API
+
+    private var binarySuffix: String? {
+        return FilePath.supportedBinaries.keys.first(where: { path.hasSuffix($0) })
+    }
+
+}

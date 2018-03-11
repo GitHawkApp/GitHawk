@@ -130,23 +130,50 @@ ListSingleSectionControllerDelegate {
 
     func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
         guard let file = object as? RepositoryFile else { return }
-        let next = path.appending(file.name)
-        let controller: UIViewController
+        let nextPath = path.appending(file.name)
+
         if file.isDirectory {
-            controller = RepositoryCodeDirectoryViewController(
-                client: client,
+            showDirectory(at: nextPath)
+        } else {
+            showFile(at: nextPath)
+        }
+    }
+
+}
+
+// MARK: - RepositoryCodeDirectoryViewController (Navigation) -
+
+extension RepositoryCodeDirectoryViewController {
+
+    private func showDirectory(at path: FilePath) {
+        let controller = RepositoryCodeDirectoryViewController(
+            client: client,
+            repo: repo,
+            branch: branch,
+            path: path
+        )
+
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+    }
+
+    private func showFile(at path: FilePath) {
+        let controller: UIViewController
+
+        if path.hasBinarySuffix {
+            controller = RepositoryWebViewController(
                 repo: repo,
                 branch: branch,
-                path: next
+                path: path
             )
         } else {
             controller = RepositoryCodeBlobViewController(
                 client: client,
                 repo: repo,
                 branch: branch,
-                path: next
+                path: path
             )
         }
+
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 

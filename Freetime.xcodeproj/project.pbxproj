@@ -359,6 +359,7 @@
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		65A315292044369D0074E3B6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A315282044369D0074E3B6 /* TabBarController.swift */; };
 		65A3152B2044376D0074E3B6 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3152A2044376D0074E3B6 /* Route.swift */; };
+		7509865A2048959D00D1E37A /* RepositoryWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750986592048959D00D1E37A /* RepositoryWebViewController.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
 		75A0ACF51F79A82D0062D99A /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A0ACF41F79A82D0062D99A /* AlertAction.swift */; };
@@ -795,6 +796,7 @@
 		63A98647141C04CBCFCA7923 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
 		65A315282044369D0074E3B6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		65A3152A2044376D0074E3B6 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		750986592048959D00D1E37A /* RepositoryWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryWebViewController.swift; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
 		75A0ACF41F79A82D0062D99A /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
@@ -1759,6 +1761,7 @@
 				986B873D1F2E1CE400AAB55C /* RepositoryClient.swift */,
 				29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */,
 				29AF1E8B1F8ABC5A0008A0EF /* RepositoryCodeDirectoryViewController.swift */,
+				750986592048959D00D1E37A /* RepositoryWebViewController.swift */,
 				295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */,
 				29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */,
 				29B94E6E1FCB743900715D7E /* RepositoryFileCell.swift */,
@@ -2333,6 +2336,7 @@
 				297403DD1F185A8700ABA95A /* IssueAssigneeUserCell.swift in Sources */,
 				2999972620310E9700995FFD /* IssueMergeModel.swift in Sources */,
 				2999972820310F3100995FFD /* IssueMergeContextModel.swift in Sources */,
+				7509865A2048959D00D1E37A /* RepositoryWebViewController.swift in Sources */,
 				29CC294B1FF83488006B6DE7 /* IssueCommentModel+Inset.swift in Sources */,
 				297403D31F1850DC00ABA95A /* IssueAssigneeViewModel.swift in Sources */,
 				292FCAFD1EDFCC510026635E /* IssueCollapsedBodies.swift in Sources */,
