@@ -1,5 +1,5 @@
 //
-//  GithubUserSession.swift
+//  GitHubUserSession.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 5/17/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class GithubUserSession: NSObject, NSCoding {
+public class GitHubUserSession: NSObject, NSCoding {
 
     enum Keys {
         static let token = "token"
@@ -16,18 +16,18 @@ final class GithubUserSession: NSObject, NSCoding {
         static let username = "username"
     }
 
-    enum AuthMethod: String {
+    public enum AuthMethod: String {
         case oauth, pat
     }
 
-    let token: String
-    let authMethod: AuthMethod
+    public let token: String
+    public let authMethod: AuthMethod
 
     // mutable to handle migration from time when username wasn't captured
     // can freely mutate and manually update. caller must then save updated session.
-    var username: String?
+    public var username: String?
 
-    init(
+    public init(
         token: String,
         authMethod: AuthMethod,
         username: String?
@@ -39,7 +39,7 @@ final class GithubUserSession: NSObject, NSCoding {
 
     // MARK: NSCoding
 
-    convenience init?(coder aDecoder: NSCoder) {
+    public convenience required init?(coder aDecoder: NSCoder) {
         guard let token = aDecoder.decodeObject(forKey: Keys.token) as? String
             else { return nil }
 
@@ -55,7 +55,7 @@ final class GithubUserSession: NSObject, NSCoding {
         )
     }
 
-    func encode(with aCoder: NSCoder) {
+    public func encode(with aCoder: NSCoder) {
         aCoder.encode(token, forKey: Keys.token)
         aCoder.encode(authMethod.rawValue, forKey: Keys.authMethod)
         aCoder.encode(username, forKey: Keys.username)

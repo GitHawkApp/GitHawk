@@ -11,10 +11,11 @@ import Alamofire
 import Apollo
 import FlatCache
 import GitHubAPI
+import GitHubSession
 
 struct GithubClient {
 
-    let userSession: GithubUserSession?
+    let userSession: GitHubUserSession?
     let cache = FlatCache()
     let bookmarksStore: BookmarkStore?
     let client: Client
@@ -22,7 +23,7 @@ struct GithubClient {
     init(
         apollo: ApolloClient,
         networker: Alamofire.SessionManager,
-        userSession: GithubUserSession? = nil
+        userSession: GitHubUserSession? = nil
         ) {
         self.userSession = userSession
 

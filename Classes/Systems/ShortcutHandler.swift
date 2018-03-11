@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GitHubSession
 
 struct ShortcutHandler {
 
@@ -16,13 +17,13 @@ struct ShortcutHandler {
         case switchAccount
     }
 
-    static func configure(application: UIApplication, sessionManager: GithubSessionManager) {
+    static func configure(application: UIApplication, sessionManager: GitHubSessionManager) {
         application.shortcutItems = generateItems(sessionManager: sessionManager)
     }
 
     static func handle(
         route: Route,
-        sessionManager: GithubSessionManager,
+        sessionManager: GitHubSessionManager,
         navigationManager: RootNavigationManager
         ) -> Bool {
         switch route {
@@ -38,7 +39,7 @@ struct ShortcutHandler {
         }
     }
 
-    private static func generateItems(sessionManager: GithubSessionManager) -> [UIApplicationShortcutItem] {
+    private static func generateItems(sessionManager: GitHubSessionManager) -> [UIApplicationShortcutItem] {
         var items: [UIApplicationShortcutItem] = []
 
         // Search

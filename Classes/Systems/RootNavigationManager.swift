@@ -8,10 +8,11 @@
 
 import UIKit
 import GitHubAPI
+import GitHubSession
 
-final class RootNavigationManager: GithubSessionListener {
+final class RootNavigationManager: GitHubSessionListener {
 
-    private let sessionManager: GithubSessionManager
+    private let sessionManager: GitHubSessionManager
     private let splitDelegate = SplitViewControllerDelegate()
     private let tabDelegate = TabBarControllerDelegate()
 
@@ -24,7 +25,7 @@ final class RootNavigationManager: GithubSessionListener {
     private var lastClient: GithubClient?
 
     init(
-        sessionManager: GithubSessionManager,
+        sessionManager: GitHubSessionManager,
         rootViewController: UISplitViewController
         ) {
         self.sessionManager = sessionManager
@@ -55,7 +56,7 @@ final class RootNavigationManager: GithubSessionListener {
         }
     }
 
-    public func resetRootViewController(userSession: GithubUserSession?) {
+    public func resetRootViewController(userSession: GitHubUserSession?) {
         guard let userSession = userSession else { return }
 
         let client = newGithubClient(userSession: userSession)
@@ -95,9 +96,9 @@ final class RootNavigationManager: GithubSessionListener {
         return tabBarController?.selectedViewController
     }
 
-    // MARK: GithubSessionListener
+    // MARK: GitHubSessionListener
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         resetRootViewController(userSession: userSession)
 
         if dismiss {
@@ -105,7 +106,7 @@ final class RootNavigationManager: GithubSessionListener {
         }
     }
 
-    func didLogout(manager: GithubSessionManager) {
+    func didLogout(manager: GitHubSessionManager) {
         settingsRootViewController = nil
 
         for vc in tabBarController?.viewControllers ?? [] {
@@ -118,14 +119,14 @@ final class RootNavigationManager: GithubSessionListener {
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
-    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
 
     // MARK: Private API
 
     private func fetchUsernameForMigrationIfNecessary(
         client: GithubClient,
-        userSession: GithubUserSession,
-        sessionManager: GithubSessionManager
+        userSession: GitHubUserSession,
+        sessionManager: GitHubSessionManager
         ) {
         // only required when there is no username
         guard userSession.username == nil else { return }
