@@ -8,14 +8,14 @@
 
 import UIKit
 import SafariServices
-
 import GitHubAPI
+import GitHubSession
 
 final class SettingsViewController: UITableViewController,
 NewIssueTableViewControllerDelegate {
 
     // must be injected
-    var sessionManager: GithubSessionManager!
+    var sessionManager: GitHubSessionManager!
     weak var rootNavigationManager: RootNavigationManager?
 
     var client: GithubClient!

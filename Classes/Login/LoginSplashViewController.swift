@@ -9,11 +9,12 @@
 import UIKit
 import SafariServices
 import GitHubAPI
+import GitHubSession
 
 private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
 private let callbackURLScheme = "freetime://"
 
-final class LoginSplashViewController: UIViewController, GithubSessionListener {
+final class LoginSplashViewController: UIViewController, GitHubSessionListener {
 
     enum State {
         case idle
@@ -21,7 +22,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
     }
 
     private var client: Client!
-    private var sessionManager: GithubSessionManager!
+    private var sessionManager: GitHubSessionManager!
 
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -64,7 +65,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
 
     // MARK: Public API
 
-    func config(client: Client, sessionManager: GithubSessionManager) {
+    func config(client: Client, sessionManager: GitHubSessionManager) {
         self.client = client
         self.sessionManager = sessionManager
     }
@@ -130,16 +131,16 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
+    private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
         sessionManager.focus(
-            GithubUserSession(token: token, authMethod: authMethod, username: username),
+            GitHubUserSession(token: token, authMethod: authMethod, username: username),
             dismiss: true
         )
     }
 
-    // MARK: GithubSessionListener
+    // MARK: GitHubSessionListener
 
-    func didReceiveRedirect(manager: GithubSessionManager, code: String) {
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {
         safariController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         state = .fetchingToken
 
@@ -153,7 +154,7 @@ final class LoginSplashViewController: UIViewController, GithubSessionListener {
         }
     }
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {}
-    func didLogout(manager: GithubSessionManager) {}
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {}
+    func didLogout(manager: GitHubSessionManager) {}
 
 }

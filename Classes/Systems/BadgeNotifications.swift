@@ -8,8 +8,8 @@
 
 import UIKit
 import UserNotifications
-
 import GitHubAPI
+import GitHubSession
 
 final class BadgeNotifications {
 
@@ -68,7 +68,7 @@ final class BadgeNotifications {
     }
 
     static func fetch(application: UIApplication = UIApplication.shared, handler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let manager = GithubSessionManager()
+        let manager = GitHubSessionManager()
         guard let session = manager.focusedUserSession,
             isEnabled
             else { return }

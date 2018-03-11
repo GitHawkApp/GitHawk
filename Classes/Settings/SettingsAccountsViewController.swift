@@ -8,12 +8,13 @@
 
 import UIKit
 import GitHubAPI
+import GitHubSession
 
-final class SettingsAccountsViewController: UITableViewController, GithubSessionListener {
+final class SettingsAccountsViewController: UITableViewController, GitHubSessionListener {
 
     private var client: Client!
-    private var sessionManager: GithubSessionManager!
-    private var userSessions = [GithubUserSession]()
+    private var sessionManager: GitHubSessionManager!
+    private var userSessions = [GitHubUserSession]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
 
     // MARK: Public API
 
-    func config(client: Client, sessionManager: GithubSessionManager) {
+    func config(client: Client, sessionManager: GitHubSessionManager) {
         self.client = client
         self.sessionManager = sessionManager
         sessionManager.addListener(listener: self)
@@ -71,9 +72,9 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
+    private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
         sessionManager.focus(
-            GithubUserSession(token: token, authMethod: authMethod, username: username),
+            GitHubUserSession(token: token, authMethod: authMethod, username: username),
             dismiss: false
         )
     }
@@ -108,14 +109,14 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         sessionManager.focus(selectedSession, dismiss: false)
     }
 
-    // MARK: GithubSessionListener
+    // MARK: GitHubSessionListener
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         updateUserSessions()
         tableView.reloadData()
     }
 
-    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
-    func didLogout(manager: GithubSessionManager) {}
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
+    func didLogout(manager: GitHubSessionManager) {}
 
 }

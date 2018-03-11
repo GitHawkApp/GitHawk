@@ -9,9 +9,10 @@
 import Foundation
 import Alamofire
 import Apollo
+import GitHubSession
 
 func newGithubClient(
-    userSession: GithubUserSession? = nil
+    userSession: GitHubUserSession? = nil
     ) -> GithubClient {
     var additionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
 

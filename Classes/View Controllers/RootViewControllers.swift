@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import GitHubSession
 
 func newSettingsRootViewController(
-    sessionManager: GithubSessionManager,
+    sessionManager: GitHubSessionManager,
     client: GithubClient,
     rootNavigationManager: RootNavigationManager
     ) -> UIViewController {

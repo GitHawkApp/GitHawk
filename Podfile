@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 use_frameworks!
 inhibit_all_warnings!
@@ -35,6 +35,7 @@ pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 # Local Pods w/ custom changes
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'GitHubAPI', :path => 'Local Pods/GitHubAPI'
+pod 'GitHubSession', :path => 'Local Pods/GitHubSession'
 
 target 'Freetime' do
 
