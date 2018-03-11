@@ -106,10 +106,6 @@ PeopleSectionControllerDelegate {
         }
     }
 
-    func handle(result: Result<V3DataResponse<[V3User]>>, append: Bool) {
-
-    }
-
     @IBAction func onDone(_ sender: Any) {
         let selections = users.filter { self.selections.contains($0.login) }
         delegate?.didDismiss(controller: self, type: type, selections: selections)

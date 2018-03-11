@@ -115,7 +115,6 @@ PeopleViewControllerDelegate {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-
         return PeopleViewController(selections: selections, type: type,
                                     client: client, delegate: self,
                                     owner: model.owner, repo: model.repo)
