@@ -10,7 +10,7 @@ import UIKit
 
 extension ContextMenu: ContextMenuPresentationControllerDelegate {
 
-    internal func willDismiss(presentationController: ContextMenuPresentationController) {
+    func willDismiss(presentationController: ContextMenuPresentationController) {
         guard item?.viewController === presentationController.presentedViewController else { return }
         item = nil
     }

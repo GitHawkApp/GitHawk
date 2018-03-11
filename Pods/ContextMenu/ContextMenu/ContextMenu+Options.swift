@@ -10,11 +10,19 @@ import UIKit
 
 extension ContextMenu {
 
+    /// Display and behavior options for a menu.
     public struct Options {
 
+        /// Animation durations and properties.
         let durations: AnimationDurations
+
+        /// Appearance properties for the menu container.
         let containerStyle: ContainerStyle
+
+        /// Style options for menu behavior.
         let menuStyle: MenuStyle
+
+        /// Trigger haptic feedback when the menu is shown.
         let haptics: Bool
 
         public init(

@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class ContextMenuDismissing: NSObject, UIViewControllerAnimatedTransitioning {
+class ContextMenuDismissing: NSObject, UIViewControllerAnimatedTransitioning {
 
     private let item: ContextMenu.Item
 
@@ -16,7 +16,7 @@ internal class ContextMenuDismissing: NSObject, UIViewControllerAnimatedTransiti
         self.item = item
     }
 
-    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: .from) else { return }
 
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
@@ -26,7 +26,7 @@ internal class ContextMenuDismissing: NSObject, UIViewControllerAnimatedTransiti
         }
     }
 
-    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return item.options.durations.dismiss
     }
 

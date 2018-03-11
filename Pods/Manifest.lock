@@ -133,7 +133,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ContextMenu:
-    :commit: ff3271aa693bbcd2489c4c693461ee601bebd26b
+    :commit: cf9de9be8c9270b3c08c08a2bdb9476fed8f2aa6
     :git: https://github.com/GitHawkApp/ContextMenu.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
@@ -158,7 +158,7 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
-  ContextMenu: d36f4d47e46453285e91bc8c5d376272d6355026
+  ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a

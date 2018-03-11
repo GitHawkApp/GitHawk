@@ -10,13 +10,28 @@ import UIKit
 
 extension ContextMenu {
 
+    /// Animation durations and properties.
     public struct AnimationDurations {
 
+        /// The duration of the presentation animation.
         public let present: TimeInterval
+
+        /// The duration of the spring animation during presentation. Setting a longer duration than `present` results
+        /// in a more natural transition.
         public let springPresent: TimeInterval
+
+        /// The spring damping to use in the presentation. See `UIView.animate(withDuration:, delay:,
+        /// usingSpringWithDamping:, initialSpringVelocity:, options:, animations: , completion:)`
         public let springDamping: CGFloat
+
+        /// The spring velocity to use in the presentation. See `UIView.animate(withDuration:, delay:,
+        /// usingSpringWithDamping:, initialSpringVelocity:, options:, animations: , completion:)`
         public let springVelocity: CGFloat
+
+        /// The duration of the dismiss animation.
         public let dismiss: TimeInterval
+
+        /// The animation duration when the `preferredContentSize` changes.
         public let resize: TimeInterval
 
         public init(

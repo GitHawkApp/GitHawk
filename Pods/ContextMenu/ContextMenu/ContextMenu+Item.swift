@@ -10,7 +10,7 @@ import UIKit
 
 extension ContextMenu {
 
-    internal class Item {
+    class Item {
 
         let options: Options
         let viewController: ClippedContainerViewController

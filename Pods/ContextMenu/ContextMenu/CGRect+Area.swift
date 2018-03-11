@@ -10,25 +10,26 @@ import UIKit
 
 extension CGRect {
 
-    internal func rect(point: CGPoint, xRemainder: Bool, yRemainder: Bool) -> CGRect {
+    func rect(point: CGPoint, xRemainder: Bool, yRemainder: Bool) -> CGRect {
         let xDiv = divided(atDistance: point.x, from: .minXEdge)
         let x = xRemainder ? xDiv.remainder : xDiv.slice
         let yDiv = x.divided(atDistance: point.y, from: .minYEdge)
         return yRemainder ? yDiv.remainder : yDiv.slice
     }
 
-    internal func area(corner: SourceViewCorner) -> CGFloat {
-        let frame: CGRect
+    func area(corner: SourceViewCorner) -> CGFloat {
+        let (xRemainder, yRemainder): (Bool, Bool)
         switch corner.position {
         case .topLeft:
-            frame = rect(point: corner.point, xRemainder: false, yRemainder: false)
+            (xRemainder, yRemainder) = (false, false)
         case .topRight:
-            frame = rect(point: corner.point, xRemainder: true, yRemainder: false)
+            (xRemainder, yRemainder) = (true, false)
         case .bottomLeft:
-            frame = rect(point: corner.point, xRemainder: false, yRemainder: true)
+            (xRemainder, yRemainder) = (false, true)
         case .bottomRight:
-            frame = rect(point: corner.point, xRemainder: true, yRemainder: true)
+            (xRemainder, yRemainder) = (true, true)
         }
+        let frame = rect(point: corner.point, xRemainder: xRemainder, yRemainder: yRemainder)
         return frame.width * frame.height
     }
 

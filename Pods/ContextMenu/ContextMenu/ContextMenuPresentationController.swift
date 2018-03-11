@@ -8,11 +8,11 @@
 
 import UIKit
 
-internal protocol ContextMenuPresentationControllerDelegate: class {
+protocol ContextMenuPresentationControllerDelegate: class {
     func willDismiss(presentationController: ContextMenuPresentationController)
 }
 
-internal class ContextMenuPresentationController: UIPresentationController {
+class ContextMenuPresentationController: UIPresentationController {
 
     weak var contextDelegate: ContextMenuPresentationControllerDelegate?
     let item: ContextMenu.Item
@@ -126,7 +126,6 @@ internal class ContextMenuPresentationController: UIPresentationController {
             delay: 0,
             usingSpringWithDamping: item.options.durations.springDamping,
             initialSpringVelocity: item.options.durations.springVelocity,
-            options: [],
             animations: {
                 self.presentedView?.layer.transform = CATransform3DIdentity
         })

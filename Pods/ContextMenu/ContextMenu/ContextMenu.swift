@@ -8,21 +8,35 @@
 
 import UIKit
 
+/// The interface for displaying context menus, typically interacted with via the `ContextMenu.shared` object.
 public class ContextMenu: NSObject {
 
+    /// A singleton controller global context menus.
     public static let shared = ContextMenu()
 
-    internal var item: Item?
-    internal let haptics = UISelectionFeedbackGenerator()
+    var item: Item?
+    let haptics = UIImpactFeedbackGenerator(style: .medium)
 
+
+    /// Show a context menu from a view controller with given options.
+    ///
+    /// - Parameters:
+    ///   - sourceViewController: The view controller to present from
+    ///   - viewController: A content view controller to use inside the menu.
+    ///   - options: Display and behavior options for a menu.
+    ///   - sourceView: A source view for menu context. If nil, menu displays from the center of the screen.
     public func show(
         sourceViewController: UIViewController,
         viewController: UIViewController,
         options: Options = Options(),
         sourceView: UIView? = nil
         ) {
+        if let previous = self.item {
+            previous.viewController.dismiss(animated: false)
+        }
+
         if options.haptics {
-            haptics.selectionChanged()
+            haptics.impactOccurred()
         }
 
         let item = Item(

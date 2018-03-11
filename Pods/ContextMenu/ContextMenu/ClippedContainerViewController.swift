@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class ClippedContainerViewController: UIViewController {
+class ClippedContainerViewController: UIViewController {
 
     private let options: ContextMenu.Options
     private let containedViewController: UINavigationController
@@ -17,6 +17,7 @@ internal class ClippedContainerViewController: UIViewController {
         self.options = options
         self.containedViewController = UINavigationController(rootViewController: viewController)
         super.init(nibName: nil, bundle: nil)
+        self.containedViewController.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -29,6 +30,7 @@ internal class ClippedContainerViewController: UIViewController {
         view.layer.shadowRadius = options.containerStyle.shadowRadius
         view.layer.shadowOpacity = options.containerStyle.shadowOpacity
         view.layer.shadowColor = UIColor.black.cgColor
+        view.backgroundColor = options.containerStyle.backgroundColor
 
         if options.containerStyle.motionEffect {
             let amount = 12
@@ -77,6 +79,14 @@ internal class ClippedContainerViewController: UIViewController {
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
         preferredContentSize = container.preferredContentSize
+    }
+
+}
+
+extension ClippedContainerViewController: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        viewController.view.backgroundColor = options.containerStyle.backgroundColor
     }
 
 }
