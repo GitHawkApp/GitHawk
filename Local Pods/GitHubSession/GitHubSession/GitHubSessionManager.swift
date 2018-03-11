@@ -35,7 +35,7 @@ public class GitHubSessionManager: NSObject {
         defaults = UserDefaults(suiteName: "group.com.whoisryannystrom.freetime") ?? .standard
 
         // Support migration outside of Freetime app workspace/module
-        NSKeyedUnarchiver.setClass(GitHubUserSession.self, forClassName: "Freetime.DemoNote")
+        NSKeyedUnarchiver.setClass(GitHubUserSession.self, forClassName: "Freetime.GithubUserSession")
 
         // if a migration occurs, immediately save to disk
         var migrated = false
