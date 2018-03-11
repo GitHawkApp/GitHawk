@@ -21,7 +21,7 @@ pod 'Firebase/Core'
 pod 'Firebase/Database' 
 
 # prerelease pods
-pod 'IGListKit', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'master'
+pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
 pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
 pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
 pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'

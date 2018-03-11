@@ -14,6 +14,7 @@
 #import <vector>
 
 #import <IGListKit/IGListAssert.h>
+#import <IGListKit/IGListCollectionViewDelegateLayout.h>
 
 static CGFloat UIEdgeInsetsLeadingInsetInDirection(UIEdgeInsets insets, UICollectionViewScrollDirection direction) {
     switch (direction) {
@@ -205,6 +206,30 @@ static void adjustZIndexForAttributes(UICollectionViewLayoutAttributes *attribut
 }
 
 #pragma mark - UICollectionViewLayout
+
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+    id<IGListCollectionViewDelegateLayout> delegate = (id<IGListCollectionViewDelegateLayout>)self.collectionView.delegate;
+    if ([delegate respondsToSelector:@selector(collectionView:layout:customizedInitialLayoutAttributes:atIndexPath:)]) {
+        return [delegate collectionView:self.collectionView
+                                 layout:self
+      customizedInitialLayoutAttributes:attributes
+                            atIndexPath:itemIndexPath];
+    }
+    return attributes;
+}
+
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
+    UICollectionViewLayoutAttributes *attributes = [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
+    id<IGListCollectionViewDelegateLayout> delegate = (id<IGListCollectionViewDelegateLayout>)self.collectionView.delegate;
+    if ([delegate respondsToSelector:@selector(collectionView:layout:customizedFinalLayoutAttributes:atIndexPath:)]) {
+        return [delegate collectionView:self.collectionView
+                                 layout:self
+        customizedFinalLayoutAttributes:attributes
+                            atIndexPath:itemIndexPath];
+    }
+    return attributes;
+}
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     IGAssertMainThread();
@@ -445,7 +470,7 @@ static void adjustZIndexForAttributes(UICollectionViewLayoutAttributes *attribut
     CGFloat nextRowCoordInScrollDirection = 0.0;
 
     // union item frames and optionally the header to find a bounding box of the entire section
-    CGRect rollingSectionBounds;
+    CGRect rollingSectionBounds = CGRectZero;
 
     // populate last valid section information
     const NSInteger lastValidSection = _minimumInvalidatedSection - 1;
@@ -552,7 +577,7 @@ static void adjustZIndexForAttributes(UICollectionViewLayoutAttributes *attribut
             }
         }
 
-        const CGRect headerBounds =  (self.scrollDirection == UICollectionViewScrollDirectionVertical) ?
+        const CGRect headerBounds = (self.scrollDirection == UICollectionViewScrollDirectionVertical) ?
                 CGRectMake(insets.left,
                         CGRectGetMinY(rollingSectionBounds) - headerSize.height,
                         paddedLengthInFixedDirection,

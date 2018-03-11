@@ -7,14 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
+internal extension ListSwiftDiffable {
 
-#import <IGListKit/IGListAdapter.h>
-#import <IGListKit/IGListCollectionViewDelegateLayout.h>
+    var boxed: ListDiffable {
+        return ListDiffableBox(value: self)
+    }
 
-@interface IGListAdapter (UICollectionView)
-<
-UICollectionViewDataSource,
-IGListCollectionViewDelegateLayout
->
-@end
+}

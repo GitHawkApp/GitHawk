@@ -7,14 +7,18 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-#import <IGListKit/IGListAdapter.h>
-#import <IGListKit/IGListCollectionViewDelegateLayout.h>
+/**
+ :nodoc:
+ */
+internal extension ListDiffable {
 
-@interface IGListAdapter (UICollectionView)
-<
-UICollectionViewDataSource,
-IGListCollectionViewDelegateLayout
->
-@end
+    /**
+     :nodoc:
+     */
+    var functionLookupHash: Int {
+        return ObjectIdentifier(self).hashValue
+    }
+
+}

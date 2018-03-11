@@ -20,7 +20,7 @@
   "platforms": {
     "ios": "8.0",
     "tvos": "9.0",
-    "osx": "10.10"
+    "osx": "10.11"
   },
   "ios": {
     "frameworks": "UIKit"
@@ -62,6 +62,23 @@
           "Source/Internal/*.h",
           "Source/Common/Internal/*.h"
         ]
+      }
+    },
+    {
+      "name": "Swift",
+      "dependencies": {
+        "IGListKit/Default": [
+
+        ]
+      },
+      "ios": {
+        "source_files": "Source/Swift/*"
+      },
+      "tvos": {
+        "source_files": "Source/Swift/*"
+      },
+      "pod_target_xcconfig": {
+        "SWIFT_VERSION": "4.0"
       }
     }
   ]
