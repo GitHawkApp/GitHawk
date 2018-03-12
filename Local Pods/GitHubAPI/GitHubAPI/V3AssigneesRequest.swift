@@ -14,11 +14,17 @@ public struct V3AssigneesRequest: V3Request {
         return ["repos", owner, repo, "assignees"]
     }
 
+    public var parameters: [String : Any]? {
+        return ["per_page": 50, "page": page]
+    }
+
     public let owner: String
     public let repo: String
+    public let page: Int
 
-    public init(owner: String, repo: String) {
+    public init(owner: String, repo: String, page: Int) {
         self.owner = owner
         self.repo = repo
+        self.page = page
     }
 }

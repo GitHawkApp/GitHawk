@@ -109,24 +109,15 @@ PeopleViewControllerDelegate {
     }
 
     func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateInitialViewController() as? PeopleViewController
-            else { fatalError("Missing people view controller") }
 
         let selections: [String]
         switch type {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-
-        controller.configure(
-            selections: selections,
-            type: type,
-            client: client,
-            delegate: self,
-            owner: model.owner,
-            repo: model.repo
-        )
-        return controller
+        return PeopleViewController(selections: selections, type: type,
+                                    client: client, delegate: self,
+                                    owner: model.owner, repo: model.repo)
     }
 
     func present(controller: UIViewController, from cell: UICollectionViewCell) {
