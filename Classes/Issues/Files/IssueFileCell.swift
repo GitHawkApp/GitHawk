@@ -55,7 +55,7 @@ final class IssueFileCell: SelectableCell {
 
     // MARK: Public API
 
-    func configure(path: String, additions: Int, deletions: Int) {
+    func configure(path: String, additions: Int, deletions: Int, disclosureHidden: Bool) {
         let changeString = NSMutableAttributedString()
         var attributes: [NSAttributedStringKey: Any] = [
             .font: Styles.Text.secondaryBold.preferredFont
@@ -72,7 +72,7 @@ final class IssueFileCell: SelectableCell {
         }
 
         changeLabel.attributedText = changeString
-
+        disclosure.isHidden = disclosureHidden
         pathLabel.text = path
     }
 
