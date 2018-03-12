@@ -15,5 +15,5 @@ public struct V3File: Codable {
     public let additions: Int
     public let deletions: Int
     public let sha: String
-    public let patch: String
+    public let patch: String?
 }

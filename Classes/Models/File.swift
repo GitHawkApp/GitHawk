@@ -15,7 +15,7 @@ final class File: NSObject, NSCoding {
   let additions: NSNumber
   let deletions: NSNumber
   let sha: String
-  let patch: String
+  let patch: String?
   convenience init?(json: [String: Any]?) {
     guard let status = json?[Keys.status] as? String else { return nil }
     guard let changes = json?[Keys.changes] as? NSNumber else { return nil }
@@ -41,7 +41,7 @@ final class File: NSObject, NSCoding {
     additions: NSNumber,
     deletions: NSNumber,
     sha: String,
-    patch: String
+    patch: String?
     ) {
     self.status = status
     self.changes = changes

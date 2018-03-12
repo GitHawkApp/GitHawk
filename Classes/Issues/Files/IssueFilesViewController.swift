@@ -81,7 +81,12 @@ ListSingleSectionControllerDelegate {
     func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
         let configure: (Any, UICollectionViewCell) -> Void = { (file, cell) in
             guard let file = file as? File, let cell = cell as? IssueFileCell else { return }
-            cell.configure(path: file.filename, additions: file.additions.intValue, deletions: file.deletions.intValue)
+            cell.configure(
+                path: file.filename,
+                additions: file.additions.intValue,
+                deletions: file.deletions.intValue,
+                disclosureHidden: file.patch == nil
+            )
         }
         let size: (Any, ListCollectionContext?) -> CGSize = { (file, context) in
             guard let width = context?.insetContainerSize.width else { fatalError("Missing context") }
@@ -121,8 +126,8 @@ ListSingleSectionControllerDelegate {
     // MARK: ListSingleSectionControllerDelegate
 
     func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
-        guard let object = object as? File else { return }
-        let controller = IssuePatchContentViewController(file: object, client: client)
+        guard let object = object as? File, let patch = object.patch else { return }
+        let controller = IssuePatchContentViewController(patch: patch, fileName: object.actualFileName)
         show(controller, sender: nil)
     }
 
