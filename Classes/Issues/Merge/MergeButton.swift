@@ -27,8 +27,6 @@ final class MergeButton: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        isAccessibilityElement = true
-        accessibilityTraits |= UIAccessibilityTraitButton
 
         addSubview(mergeLabel)
         addSubview(optionIconView)
@@ -42,7 +40,7 @@ final class MergeButton: UIView {
         optionIconView.contentMode = .center
         optionIconView.image = image
         optionIconView.isAccessibilityElement = true
-        optionIconView.accessibilityTraits |= UIAccessibilityTraitButton
+        optionIconView.accessibilityTraits = UIAccessibilityTraitButton
         optionIconView.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
             make.width.equalTo(optionButtonWidth)
@@ -99,8 +97,8 @@ final class MergeButton: UIView {
             activityView.stopAnimating()
         }
 
-        accessibilityLabel = title
-        // FIXME: This is currently not accessible in VoiceOver.
+        let mergeButtonElement = mergeElement(withAccessibilityLabel: title)
+        accessibilityElements = [mergeButtonElement, optionIconView]
         optionIconView.accessibilityLabel = NSLocalizedString("More merging options", comment: "More options button for merging")
     }
 
@@ -126,6 +124,20 @@ final class MergeButton: UIView {
     }
 
     // MARK: Private API
+
+    private func mergeElement(withAccessibilityLabel accessibilityLabel: String) -> UIAccessibilityElement {
+        let element = UIAccessibilityElement(accessibilityContainer: self)
+        element.accessibilityLabel = accessibilityLabel
+        element.accessibilityFrameInContainerSpace = CGRect(
+            origin: bounds.origin,
+            size: CGSize(
+                width: bounds.size.width - optionIconView.bounds.size.width,
+                height: bounds.size.height
+            )
+        )
+        element.accessibilityTraits |= UIAccessibilityTraitButton
+        return element
+    }
 
     func highlight(_ highlight: Bool) {
         guard isUserInteractionEnabled else { return }
