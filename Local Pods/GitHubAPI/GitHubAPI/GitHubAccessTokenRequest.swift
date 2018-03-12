@@ -21,7 +21,7 @@ public struct GitHubAccessTokenRequest: HTTPRequest {
     public var url: String { return "https://github.com/login/oauth/access_token" }
     public var logoutOnAuthFailure: Bool { return false }
     public var method: HTTPMethod { return .post }
-    public var headers: [String : String]? { return nil }
+    public var headers: [String : String]? { return ["Accept": "application/json"] }
 
     public var parameters: [String : Any]? {
         return [
