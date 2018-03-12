@@ -313,41 +313,44 @@ extension GithubClient {
         let oldLabelNames = Set<String>(previous.labels.labels.map { $0.name })
         let newLabelNames = Set<String>(labels.map { $0.name })
 
-        var newEvents = [IssueLabeledModel]()
+        var addedDetails = [IssueLabeledModel.LabelDetails]()
+        var removedDetails = [IssueLabeledModel.LabelDetails]()
+
         for newLabel in labels {
             if !oldLabelNames.contains(newLabel.name) {
-                newEvents.append(IssueLabeledModel(
+                addedDetails.append(IssueLabeledModel.LabelDetails(
                     id: UUID().uuidString,
-                    actor: actor,
                     title: newLabel.name,
                     color: newLabel.color,
                     date: Date(),
-                    type: .added,
-                    repoOwner: owner,
-                    repoName: repo,
-                    width: 0
-                ))
-            }
-        }
-        for oldLabel in previous.labels.labels {
-            if !newLabelNames.contains(oldLabel.name) {
-                newEvents.append(IssueLabeledModel(
-                    id: UUID().uuidString,
-                    actor: actor,
-                    title: oldLabel.name,
-                    color: oldLabel.color,
-                    date: Date(),
-                    type: .removed,
-                    repoOwner: owner,
-                    repoName: repo,
-                    width: 0
+                    type: .added
                 ))
             }
         }
 
+        for oldLabel in previous.labels.labels {
+            if !newLabelNames.contains(oldLabel.name) {
+                removedDetails.append(IssueLabeledModel.LabelDetails(
+                    id: UUID().uuidString,
+                    title: oldLabel.name,
+                    color: oldLabel.color,
+                    date: Date(),
+                    type: .added
+                ))
+            }
+        }
+
+        let labelEvent = IssueLabeledModel(
+            actor: actor,
+            added: addedDetails,
+            removed: removedDetails,
+            repoOwner: owner,
+            repoName: repo,
+            width: 0)
+
         let optimistic = previous.updated(
             labels: IssueLabelsModel(labels: labels),
-            timelinePages: previous.timelinePages(appending: newEvents)
+            timelinePages: previous.timelinePages(appending: [labelEvent])
         )
 
         let cache = self.cache

@@ -117,32 +117,56 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 }
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = unlabeled.createdAt.githubDate {
-                let model = IssueLabeledModel(
+                let newDetails = IssueLabeledModel.LabelDetails(
                     id: unlabeled.fragments.nodeFields.id,
-                    actor: unlabeled.actor?.login ?? Constants.Strings.unknown,
                     title: unlabeled.label.name,
                     color: unlabeled.label.color,
                     date: date,
-                    type: .removed,
+                    type: .removed)
+                var removed = [IssueLabeledModel.LabelDetails]()
+                var added = [IssueLabeledModel.LabelDetails]()
+
+                if let lastModel = results.last as? IssueLabeledModel,
+                    lastModel.actor == unlabeled.actor?.login {
+                    added = lastModel.added
+                    removed = lastModel.removed
+                    removed.append(newDetails)
+                    results.removeLast()
+                }
+                let newModel = IssueLabeledModel(
+                    actor: unlabeled.actor?.login ?? Constants.Strings.unknown,
+                    added: added,
+                    removed: removed,
                     repoOwner: owner,
                     repoName: repo,
-                    width: width
-                )
-                results.append(model)
+                    width: width)
+                results.append(newModel)
             } else if let labeled = node.asLabeledEvent,
                 let date = labeled.createdAt.githubDate {
-                let model = IssueLabeledModel(
+                let newDetails = IssueLabeledModel.LabelDetails(
                     id: labeled.fragments.nodeFields.id,
-                    actor: labeled.actor?.login ?? Constants.Strings.unknown,
                     title: labeled.label.name,
                     color: labeled.label.color,
                     date: date,
-                    type: .added,
+                    type: .added)
+                var removed = [IssueLabeledModel.LabelDetails]()
+                var added = [IssueLabeledModel.LabelDetails]()
+
+                if let lastModel = results.last as? IssueLabeledModel,
+                    lastModel.actor == labeled.actor?.login {
+                    added = lastModel.added
+                    removed = lastModel.removed
+                    removed.append(newDetails)
+                    results.removeLast()
+                }
+                let newModel = IssueLabeledModel(
+                    actor: labeled.actor?.login ?? Constants.Strings.unknown,
+                    added: added,
+                    removed: removed,
                     repoOwner: owner,
                     repoName: repo,
-                    width: width
-                )
-                results.append(model)
+                    width: width)
+                results.append(newModel)
             } else if let closed = node.asClosedEvent,
                 let date = closed.createdAt.githubDate {
                 let model = IssueStatusEventModel(

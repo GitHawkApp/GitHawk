@@ -16,32 +16,36 @@ final class IssueLabeledModel: ListDiffable {
         case removed
     }
 
+    struct LabelDetails {
+        let id: String
+        let title: String
+        let color: String
+        let date: Date
+        let type: EventType
+    }
+
     let id: String
     let actor: String
-    let title: String
-    let color: String
-    let date: Date
-    let type: EventType
-    let attributedString: NSAttributedStringSizing
+    let added: [LabelDetails]
+    let removed: [LabelDetails]
+    let repoOwner: String
+    let repoName: String
+    let width: CGFloat
 
-    init(
-        id: String,
-        actor: String,
-        title: String,
-        color: String,
-        date: Date,
-        type: EventType,
-        repoOwner: String,
-        repoName: String,
-        width: CGFloat
-        ) {
-        self.id = id
-        self.actor = actor
-        self.title = title
-        self.color = color
-        self.date = date
-        self.type = type
-        
+    lazy var attributedString: NSAttributedStringSizing = {
+
+        var seenAdded = [String: LabelDetails]()
+        var seenRemoved = [String: LabelDetails]()
+
+        let combinedLabels = added + removed
+
+        for label in combinedLabels {
+            switch label.type {
+            case .added: seenAdded[label.title] = label
+            case .removed: seenRemoved[label.title] = label
+            }
+        }
+
         let attributedString = NSMutableAttributedString(
             string: actor,
             attributes: [
@@ -51,47 +55,100 @@ final class IssueLabeledModel: ListDiffable {
             ]
         )
 
-        let actionString: String
-        switch type {
-        case .added: actionString = NSLocalizedString(" added  ", comment: "")
-        case .removed: actionString = NSLocalizedString(" removed  ", comment: "")
-        }
-        attributedString.append(NSAttributedString(
-            string: actionString,
-            attributes: [
+        if !seenAdded.isEmpty {
+            let plainAttributes: [NSAttributedStringKey: Any] = [
                 .foregroundColor: Styles.Colors.Gray.medium.color,
                 .font: Styles.Text.secondary.preferredFont
             ]
-        ))
+            attributedString.append(NSAttributedString(
+                string: NSLocalizedString(" added  ", comment: ""),
+                attributes: plainAttributes
+            ))
+            let spaceString = NSAttributedString(string: " ", attributes: plainAttributes)
+            for (title, label) in seenAdded {
+                let labelColor = label.color.color
+                attributedString.append(NSAttributedString(
+                    string: title,
+                    attributes: [
+                        .font: Styles.Text.smallTitle.preferredFont,
+                        .backgroundColor: labelColor,
+                        .foregroundColor: labelColor.textOverlayColor ?? .black,
+                        .baselineOffset: 1, // offset for better rounded background colors
+                        MarkdownAttribute.label: LabelRepoDetails(owner: repoOwner, repo: repoName, label: title)
+                    ]
+                ))
+                attributedString.append(spaceString)
+            }
+            if !seenRemoved.isEmpty {
+                attributedString.append(NSAttributedString(
+                    string: "and",
+                    attributes: plainAttributes
+                ))
+            }
+        }
 
-        let labelColor = color.color
-        attributedString.append(NSAttributedString(
-            string: title,
-            attributes: [
-                .font: Styles.Text.smallTitle.preferredFont,
-                .backgroundColor: labelColor,
-                .foregroundColor: labelColor.textOverlayColor ?? .black,
-                .baselineOffset: 1, // offset for better rounded background colors
-                MarkdownAttribute.label: LabelDetails(owner: repoOwner, repo: repoName, label: title)
+        if !seenRemoved.isEmpty {
+            let plainAttributes: [NSAttributedStringKey: Any] = [
+                .foregroundColor: Styles.Colors.Gray.medium.color,
+                .font: Styles.Text.secondary.preferredFont
             ]
-        ))
+            attributedString.append(NSAttributedString(
+                string: NSLocalizedString(" removed  ", comment: ""),
+                attributes: plainAttributes
+            ))
+            let spaceString = NSAttributedString(string: " ", attributes: plainAttributes)
+            for (title, label) in seenRemoved {
+                let labelColor = label.color.color
+                attributedString.append(NSAttributedString(
+                    string: "\(title) ",
+                    attributes: [
+                        .font: Styles.Text.smallTitle.preferredFont,
+                        .backgroundColor: labelColor,
+                        .foregroundColor: labelColor.textOverlayColor ?? .black,
+                        .baselineOffset: 1, // offset for better rounded background colors
+                        MarkdownAttribute.label: LabelRepoDetails(owner: repoOwner, repo: repoName, label: title)
+                    ]
+                ))
+                attributedString.append(spaceString)
+            }
+        }
+
+        let lastDate = min(added.last?.date ?? Date(), removed.last?.date ?? Date())
 
         attributedString.append(NSAttributedString(
-            string: "  \(date.agoString)",
+            string: " labels \(lastDate.agoString)",
             attributes: [
                 .font: Styles.Text.secondary.preferredFont,
                 .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
+                MarkdownAttribute.details: DateDetailsFormatter().string(from: lastDate)
             ]
         ))
 
-        self.attributedString = NSAttributedStringSizing(
+        return NSAttributedStringSizing(
             containerWidth: width,
             attributedText: attributedString,
             inset: IssueLabeledCell.insets,
             backgroundColor: Styles.Colors.Gray.lighter.color
         )
-        
+    }()
+
+    init(
+        actor: String,
+        added: [LabelDetails],
+        removed: [LabelDetails],
+        repoOwner: String,
+        repoName: String,
+        width: CGFloat
+        ) {
+
+        self.actor = actor
+        self.added = added
+        self.removed = removed
+        self.repoOwner = repoOwner
+        self.repoName = repoName
+        self.width = width
+        self.id = (added + removed).reduce("") { $0 + $1.id }
+
     }
 
     // MARK: ListDiffable

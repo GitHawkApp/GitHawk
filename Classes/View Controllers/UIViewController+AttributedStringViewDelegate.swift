@@ -23,7 +23,7 @@ extension UIViewController: AttributedStringViewDelegate {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
-    func didTapLabel(view: AttributedStringView, label: LabelDetails) {
+    func didTapLabel(view: AttributedStringView, label: LabelRepoDetails) {
         presentLabels(owner: label.owner, repo: label.repo, label: label.label)
     }
 
