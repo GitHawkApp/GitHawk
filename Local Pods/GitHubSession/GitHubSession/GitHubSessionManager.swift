@@ -25,6 +25,7 @@ public class GitHubSessionManager: NSObject {
         enum v1 { static let session = "com.github.sessionmanager.session.1" }
         enum v2 { static let session = "com.github.sessionmanager.session.2" }
         enum v3 { static let session = "com.github.sessionmanager.shared.session" }
+        static let latest = v3.session
     }
 
     private let _userSessions = NSMutableOrderedSet()
@@ -104,9 +105,9 @@ public class GitHubSessionManager: NSObject {
 
     public func save() {
         if _userSessions.count > 0 {
-            defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.v2.session)
+            defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.latest)
         } else {
-            defaults.removeObject(forKey: Keys.v2.session)
+            defaults.removeObject(forKey: Keys.latest)
         }
     }
 
