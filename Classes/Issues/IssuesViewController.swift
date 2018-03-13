@@ -32,6 +32,7 @@ IssueManagingNavSectionControllerDelegate {
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
+    private var pullRequestBranches: String?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -322,7 +323,7 @@ IssueManagingNavSectionControllerDelegate {
             guard let strongSelf = self else { return }
             switch resultType {
             case .success(let result):
-                // FIXME: Get data from result
+                strongSelf.pullRequestBranches = "From \(result.head.ref) to \(result.base.ref)"
                 break
                 
             case .error(_):
@@ -399,6 +400,12 @@ IssueManagingNavSectionControllerDelegate {
         // END metadata collection
 
         objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
+        
+        if let pullRequestBranches = pullRequestBranches {
+            let str = NSAttributedStringSizing(containerWidth: view.bounds.width, attributedText: NSAttributedString(string: pullRequestBranches))
+            objects.append(IssueBranchesModel(attributedString: str, trailingMetadata: metadata.count > 0))
+        }
+        
         objects += metadata
 
         if let rootComment = current.rootComment {
