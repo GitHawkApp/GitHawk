@@ -313,6 +313,23 @@ IssueManagingNavSectionControllerDelegate {
                 strongSelf.updateAndScrollIfNeeded()
             }
         }
+        
+        client.fetchBranches(
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number
+        ) { [weak self] resultType in
+            guard let strongSelf = self else { return }
+            switch resultType {
+            case .success(let result):
+                // FIXME: Get data from result
+                break
+                
+            case .error(_):
+                break
+            }
+            
+        }
     }
 
     func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
@@ -421,6 +438,7 @@ IssueManagingNavSectionControllerDelegate {
 
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
+        case is IssueBranchesModel: return IssueBranchesSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,

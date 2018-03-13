@@ -484,4 +484,23 @@ extension GithubClient {
         }
     }
 
+    func fetchBranches(
+        owner: String,
+        repo: String,
+        number: Int,
+        completion: @escaping (Result<[String: Any]>) -> Void
+        ) {
+        
+        client.send(V3PullRequestRequest(owner: owner, repo: repo, number: number)) { result in
+            switch result {
+            case .success(let response):
+                print(response.data)
+                completion(.success(response.data))
+            case .failure(let error):
+                completion(.error(error))
+            }
+        }
+        
+    }
+    
 }
