@@ -399,12 +399,16 @@ IssueManagingNavSectionControllerDelegate {
         }
         // END metadata collection
 
-        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
-        
         if let pullRequestBranches = pullRequestBranches {
-            let str = NSAttributedStringSizing(containerWidth: view.bounds.width, attributedText: NSAttributedString(string: pullRequestBranches))
-            objects.append(IssueBranchesModel(attributedString: str, trailingMetadata: metadata.count > 0))
+            
+            let string = NSAttributedStringSizing(containerWidth: view.bounds.width,
+                                                  attributedText: NSAttributedString(string: pullRequestBranches),
+                                                  backgroundColor: Styles.Colors.Gray.lighter.color)
+            
+            objects.append(IssueBranchesModel(attributedString: string, trailingMetadata: metadata.count > 0))
         }
+        
+        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
         
         objects += metadata
 
