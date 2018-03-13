@@ -33,7 +33,8 @@ final class PeopleCell: UICollectionViewCell {
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
         }
 
-        checkmarkImageView.image = UIImage(named: "check")
+        checkmarkImageView.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+        checkmarkImageView.tintColor = Styles.Colors.Blue.medium.color
         checkmarkImageView.contentMode = .scaleAspectFit
 
         checkmarkImageView.snp.makeConstraints { make in
@@ -43,6 +44,8 @@ final class PeopleCell: UICollectionViewCell {
         }
 
         avatarImageView.configureForAvatar()
+
+        contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
     }
 
     required init?(coder aDecoder: NSCoder) {

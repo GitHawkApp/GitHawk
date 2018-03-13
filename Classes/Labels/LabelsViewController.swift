@@ -35,6 +35,8 @@ final class LabelsViewController: UITableViewController {
 
         feedRefresh.beginRefreshing()
         fetch()
+
+        preferredContentSize = CGSize(width: 200, height: 240)
     }
 
     // MARK: Private API
@@ -64,11 +66,6 @@ final class LabelsViewController: UITableViewController {
         self.labels = labels.sorted { $0.name < $1.name }
         tableView.reloadData()
         tableView.layoutIfNeeded()
-
-        var contentSize = tableView.contentSize
-        contentSize.height = max(minContentHeight, contentSize.height)
-        navigationController?.preferredContentSize = contentSize
-
         tableView.backgroundView?.isHidden = labels.count > 0
     }
 
