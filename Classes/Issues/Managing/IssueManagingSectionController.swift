@@ -9,6 +9,7 @@
 import Foundation
 import IGListKit
 import GitHubAPI
+import ContextMenu
 
 final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
 ListBindingSectionControllerDataSource,
@@ -121,11 +122,12 @@ PeopleViewControllerDelegate {
     }
 
     func present(controller: UIViewController, from cell: UICollectionViewCell) {
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .popover
-        nav.popoverPresentationController?.sourceView = cell
-        nav.popoverPresentationController?.sourceRect = cell.bounds
-        viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
+        guard let viewController = self.viewController else { return }
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: controller,
+            sourceView: cell
+        )
     }
 
     func close(_ doClose: Bool) {
@@ -232,8 +234,7 @@ PeopleViewControllerDelegate {
             else { return }
 
         if viewModel === Action.labels {
-            let controller = newLabelsController()
-            present(controller: controller, from: cell)
+            present(controller: newLabelsController(), from: cell)
         } else if viewModel === Action.milestone {
             let controller = newMilestonesController()
             present(controller: controller, from: cell)

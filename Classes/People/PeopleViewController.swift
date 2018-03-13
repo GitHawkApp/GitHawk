@@ -69,6 +69,12 @@ PeopleSectionControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        feed.collectionView.backgroundColor = .white
+        preferredContentSize = CGSize(width: 280, height: 240)
+    }
+
     // MARK: Private API
 
     func updateSelectionCount() {

@@ -31,10 +31,12 @@ final class MilestonesViewController: UITableViewController {
         tableView.backgroundView = emptyView
 
         tableView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         feedRefresh.beginRefreshing()
         fetch()
+
+        preferredContentSize = CGSize(width: 200, height: 240)
     }
 
     // MARK: Public API
