@@ -27,10 +27,10 @@ struct ShortcutHandler {
         navigationManager: RootNavigationManager
         ) -> Bool {
         switch route {
-        case .tab(let tab):
+        case let .tab(tab):
             navigationManager.selectViewController(atTab: tab)
             return true
-        case .switchAccount(let sessionIndex):
+        case let .switchAccount(sessionIndex):
             if let index = sessionIndex {
                 let session = sessionManager.userSessions[index]
                 sessionManager.focus(session, dismiss: false)
@@ -57,18 +57,23 @@ struct ShortcutHandler {
                                                      localizedSubtitle: nil,
                                                      icon: bookmarkIcon)
         items.append(bookmarkItem)
-        
+
         // Switchuser
-        if sessionManager.userSessions.count >= 2 {
-            let userSession = sessionManager.userSessions[1]
-            if let username = userSession.username {
-                let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-                let userItem = UIApplicationShortcutItem(type: Items.switchAccount.rawValue,
-                                                         localizedTitle: NSLocalizedString("Switch Account", comment: ""),
-                                                         localizedSubtitle: username,
-                                                         icon: userIcon,
-                                                         userInfo: ["sessionIndex": 1])
-                items.append(userItem)
+        if sessionManager.userSessions.count > 1 {
+            let focusedUserSession = sessionManager.focusedUserSession
+
+            if let focusedUsername = focusedUserSession?.username {
+                for userSession in sessionManager.userSessions where userSession.username != focusedUsername {
+                    let userSessionIndex = sessionManager.userSessions.index(of: userSession)
+                    let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
+                    let userItem = UIApplicationShortcutItem(
+                        type: Items.switchAccount.rawValue,
+                        localizedTitle: NSLocalizedString("Switch to \(userSession.username ?? "")", comment: ""),
+                        localizedSubtitle: "From \(focusedUsername)",
+                        icon: userIcon,
+                        userInfo: ["sessionIndex": userSessionIndex ?? 1])
+                    items.append(userItem)
+                }
             }
         }
 
