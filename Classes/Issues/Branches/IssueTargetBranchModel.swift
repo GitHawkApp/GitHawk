@@ -1,5 +1,5 @@
 //
-//  IssueBranchesModel.swift
+//  IssueTargetBranchModel.swift
 //  Freetime
 //
 //  Created by Yury Bogdanov on 13/03/2018.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueBranchesModel: ListDiffable {
+final class IssueTargetBranchModel: ListDiffable {
     
     let attributedString: NSAttributedStringSizing
     let trailingMetadata: Bool
@@ -27,7 +27,7 @@ final class IssueBranchesModel: ListDiffable {
     
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueBranchesModel else { return false }
+        guard let object = object as? IssueTargetBranchModel else { return false }
         return trailingMetadata == object.trailingMetadata
             && attributedString.isEqual(toDiffableObject: object)
     }

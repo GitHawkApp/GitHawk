@@ -1,5 +1,5 @@
 //
-//  IssueBranchesCell.swift
+//  IssueTargetBranchCell.swift
 //  Freetime
 //
 //  Created by Yury Bogdanov on 13/03/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueBranchesCell: AttributedStringCell {
+final class IssueTargetBranchCell: AttributedStringCell {
     
     static let inset = UIEdgeInsets.zero
     

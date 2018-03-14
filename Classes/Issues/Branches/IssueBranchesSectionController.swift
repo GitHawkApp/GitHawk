@@ -9,12 +9,12 @@
 import UIKit
 import IGListKit
 
-final class IssueBranchesSectionController: ListSectionController {
+final class IssueTargetBranchSectionController: ListSectionController {
     
-    var object: IssueBranchesModel?
+    var object: IssueTargetBranchModel?
     
     override func didUpdate(to object: Any) {
-        guard let object = object as? IssueBranchesModel else { return }
+        guard let object = object as? IssueTargetBranchModel else { return }
         self.object = object
         inset = UIEdgeInsets.zero
     }
@@ -26,7 +26,7 @@ final class IssueBranchesSectionController: ListSectionController {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let object = self.object,
-            let cell = collectionContext?.dequeueReusableCell(of: IssueBranchesCell.self, for: self, at: index) as? IssueBranchesCell
+            let cell = collectionContext?.dequeueReusableCell(of: IssueTargetBranchCell.self, for: self, at: index) as? IssueTargetBranchCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
         cell.set(attributedText: object.attributedString)
         return cell
