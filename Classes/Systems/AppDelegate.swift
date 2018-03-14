@@ -76,8 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler(ShortcutHandler.handle(route: route,
                                                  sessionManager: sessionManager,
                                                  navigationManager: rootNavigationManager))
-
-        ShortcutHandler.configure(application: application, sessionManager: sessionManager)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

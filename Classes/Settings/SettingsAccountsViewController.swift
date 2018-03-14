@@ -113,6 +113,7 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         updateUserSessions()
+        ShortcutHandler.configure(application: UIApplication.shared, sessionManager: sessionManager)
         tableView.reloadData()
     }
 
