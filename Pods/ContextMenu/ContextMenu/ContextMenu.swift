@@ -25,11 +25,13 @@ public class ContextMenu: NSObject {
     ///   - viewController: A content view controller to use inside the menu.
     ///   - options: Display and behavior options for a menu.
     ///   - sourceView: A source view for menu context. If nil, menu displays from the center of the screen.
+    ///   - delegate: A delegate the receives events when the menu changes.
     public func show(
         sourceViewController: UIViewController,
         viewController: UIViewController,
         options: Options = Options(),
-        sourceView: UIView? = nil
+        sourceView: UIView? = nil,
+        delegate: ContextMenuDelegate? = nil
         ) {
         if let previous = self.item {
             previous.viewController.dismiss(animated: false)
@@ -42,7 +44,8 @@ public class ContextMenu: NSObject {
         let item = Item(
             viewController: viewController,
             options: options,
-            sourceView: sourceView
+            sourceView: sourceView,
+            delegate: delegate
         )
         self.item = item
 

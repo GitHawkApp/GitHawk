@@ -10,10 +10,13 @@ import UIKit
 
 class ClippedContainerViewController: UIViewController {
 
+    let viewController: UIViewController
+
     private let options: ContextMenu.Options
     private let containedViewController: UINavigationController
 
     init(options: ContextMenu.Options, viewController: UIViewController) {
+        self.viewController = viewController
         self.options = options
         self.containedViewController = UINavigationController(rootViewController: viewController)
         super.init(nibName: nil, bundle: nil)
@@ -32,7 +35,7 @@ class ClippedContainerViewController: UIViewController {
         view.layer.shadowColor = UIColor.black.cgColor
         view.backgroundColor = options.containerStyle.backgroundColor
 
-        if options.containerStyle.motionEffect {
+        if options.containerStyle.motionEffect && UIAccessibilityIsReduceMotionEnabled() == false {
             let amount = 12
             let tiltX = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
             tiltX.minimumRelativeValue = -amount

@@ -137,7 +137,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ContextMenu:
-    :commit: cf9de9be8c9270b3c08c08a2bdb9476fed8f2aa6
+    :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
     :git: https://github.com/GitHawkApp/ContextMenu.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
