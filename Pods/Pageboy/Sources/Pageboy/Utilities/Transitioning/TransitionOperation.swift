@@ -3,7 +3,7 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 29/05/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -24,7 +24,7 @@ internal protocol TransitionOperationDelegate: class {
     ///   - operation: The operation.
     ///   - percentComplete: The percent that the operation is complete.
     func transitionOperation(_ operation: TransitionOperation,
-                        didUpdateWith percentComplete: CGFloat)
+                             didUpdateWith percentComplete: CGFloat)
 }
 
 /// An operation for performing a PageboyViewController transition
@@ -64,7 +64,9 @@ internal class TransitionOperation: NSObject, CAAnimationDelegate {
     }
     /// The percent that the transition is complete.
     var percentComplete: CGFloat {
-        guard self.isAnimating else { return 0.0 }
+        guard self.isAnimating else {
+            return 0.0
+        }
         
         let percent = CGFloat((CACurrentMediaTime() - (startTime ?? CACurrentMediaTime())) / duration)
         return max(0.0, min(1.0, percent))
@@ -113,7 +115,9 @@ internal class TransitionOperation: NSObject, CAAnimationDelegate {
     
     /// Perform a frame tick on the transition.
     func tick() {
-        guard isAnimating else { return }
+        guard isAnimating else {
+            return
+        }
         delegate?.transitionOperation(self, didUpdateWith: percentComplete)
     }
     
@@ -130,4 +134,3 @@ internal class TransitionOperation: NSObject, CAAnimationDelegate {
         self.animation = nil
     }
 }
-

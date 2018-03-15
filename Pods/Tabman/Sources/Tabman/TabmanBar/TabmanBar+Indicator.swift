@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 15/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 import Pageboy
 
 // MARK: - TabmanBar Indicator creation and mutation

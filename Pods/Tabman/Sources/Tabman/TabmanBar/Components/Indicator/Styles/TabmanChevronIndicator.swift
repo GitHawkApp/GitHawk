@@ -3,17 +3,14 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 17/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 
 internal class TabmanChevronIndicator: TabmanIndicator {
     
-    //
     // MARK: Properties
-    //
     
     private var chevronView = ChevronView()
     
@@ -28,9 +25,7 @@ internal class TabmanChevronIndicator: TabmanIndicator {
         return false
     }
     
-    //
     // MARK: Lifecycle
-    //
     
     public override var intrinsicContentSize: CGSize {
         return CGSize(width: 0.0, height: 10.0)
@@ -41,10 +36,10 @@ internal class TabmanChevronIndicator: TabmanIndicator {
         chevronView.backgroundColor = self.tintColor
         
         self.addSubview(chevronView)
-        chevronView.autoSetDimension(.height, toSize: self.intrinsicContentSize.height - 2.0)
-        chevronView.autoSetDimension(.width, toSize: self.intrinsicContentSize.height)
-        chevronView.autoAlignAxis(toSuperviewAxis: .vertical)
-        chevronView.autoPinEdge(toSuperviewEdge: .bottom)
+        chevronView.set(.height, to: intrinsicContentSize.height - 2.0)
+        chevronView.set(.width, to: intrinsicContentSize.height)
+        chevronView.alignToSuperviewAxis(.vertical)
+        chevronView.pinToSuperviewEdge(.bottom)
     }
     
     override func itemTransitionType() -> TabmanItemTransition.Type? {

@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 17/02/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -124,7 +124,7 @@ internal extension TabmanBar {
             return
         }
         
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight = UIApplication.safeShared?.statusBarFrame.height ?? 0.0
         if safeAreaInsets.top == statusBarHeight {
             topPinConstraint.constant = -statusBarHeight
         }

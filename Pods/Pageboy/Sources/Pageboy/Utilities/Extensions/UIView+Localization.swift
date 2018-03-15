@@ -3,7 +3,7 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 18/06/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,7 @@ extension UIView {
         if #available(iOS 9.0, *) {
             return UIView.userInterfaceLayoutDirection(for: self.semanticContentAttribute) == .rightToLeft
         } else {
-            return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+            return UIApplication.safeShared?.userInterfaceLayoutDirection == .rightToLeft
         }
     }
     

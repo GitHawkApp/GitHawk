@@ -5,6 +5,7 @@ PODS:
   - Apollo (0.7.0):
     - Apollo/Core (= 0.7.0)
   - Apollo/Core (0.7.0)
+  - AutoInsetter (1.2.1)
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
@@ -65,8 +66,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.2.0)
-  - PureLayout (3.0.2)
+  - Pageboy (2.4.0)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
@@ -75,9 +75,9 @@ PODS:
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.2.0):
-    - Pageboy (~> 2.2.0)
-    - PureLayout (~> 3.0)
+  - Tabman (1.6.0):
+    - AutoInsetter (~> 1.2.0)
+    - Pageboy (~> 2.4.0)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
@@ -162,6 +162,7 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
+  AutoInsetter: d90171b54341b801edd4ab68eee9eec54fdc92b7
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
@@ -185,14 +186,13 @@ SPEC CHECKSUMS:
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
-  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Pageboy: b04cee5c1315a865fb49321129d12635e8465144
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StyledText: d7bbd77b11888e2bee8ddceb05cc578ab7d6d148
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
+  Tabman: a9be97d1c75b4b7f40eec416021f614c4ccbb670
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
 PODFILE CHECKSUM: c3145960b3748a927a48bb86cba31b39025107a8

@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 22/02/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 
 public extension TabmanBar {
  
@@ -52,7 +51,7 @@ public extension TabmanBar {
         
         private func configure() {
             self.addSubview(self.backgroundContainer)
-            self.backgroundContainer.autoPinEdgesToSuperviewEdges()
+            self.backgroundContainer.pinToSuperviewEdges()
             
             self.updateBackground(for: style)
         }
@@ -69,13 +68,13 @@ public extension TabmanBar {
             case .blur(let style):
                 let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
                 self.backgroundContainer.addSubview(blurView)
-                blurView.autoPinEdgesToSuperviewEdges()
+                blurView.pinToSuperviewEdges()
                 
             case .solid(let color):
                 let colorView = UIView()
                 colorView.backgroundColor = color
                 self.backgroundContainer.addSubview(colorView)
-                colorView.autoPinEdgesToSuperviewEdges()
+                colorView.pinToSuperviewEdges()
                 
             default:()
             }

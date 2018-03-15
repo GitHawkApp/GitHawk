@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 03/04/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -89,7 +89,7 @@ public extension TabmanViewController {
         
         bar.removeFromSuperview()
         view.addSubview(bar)
-        bar.autoPinEdgesToSuperviewEdges()
+        bar.pinToSuperviewEdges()
         setNeedsChildAutoInsetUpdate()
         
         view.layoutIfNeeded()

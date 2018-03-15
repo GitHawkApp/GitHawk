@@ -2,29 +2,43 @@
     <img src="Artwork/logo.png" width="890" alt="Pageboy"/>
 </p>
 
-[![Build Status](https://travis-ci.org/uias/Pageboy.svg?branch=master)](https://travis-ci.org/uias/Pageboy)
-[![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://developer.apple.com/swift/)
-[![CocoaPods](https://img.shields.io/cocoapods/v/Pageboy.svg)](https://cocoapods.org/pods/Pageboy)
-[![Platforms](https://img.shields.io/cocoapods/p/Pageboy.svg)](https://cocoapods.org/pods/Pageboy)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![codecov](https://codecov.io/gh/uias/Pageboy/branch/master/graph/badge.svg)](https://codecov.io/gh/uias/Pageboy)
-[![GitHub release](https://img.shields.io/github/release/uias/Pageboy.svg)](https://github.com/uias/Pageboy/releases)
+<p align="center">
+    <a href="https://travis-ci.org/uias/Pageboy">
+        <img src="https://travis-ci.org/uias/Pageboy.svg?branch=master" />
+    </a>
+    <img src="https://img.shields.io/badge/Swift-4-orange.svg?style=flat" />
+    <a href="https://cocoapods.org/pods/Pageboy">
+        <img src="https://img.shields.io/cocoapods/v/Pageboy.svg" alt="CocoaPods" />
+    </a>
+	<a href="https://cocoapods.org/pods/Pageboy">
+        <img src="https://img.shields.io/cocoapods/p/Pageboy.svg" alt="Platforms" />
+    </a>
+	<a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
+    </a>
+	<a href="https://codecov.io/gh/uias/Pageboy">
+        <img src="https://codecov.io/gh/uias/Pageboy/branch/master/graph/badge.svg" />
+    </a>
+	<a href="https://github.com/uias/Pageboy/releases">
+        <img src="https://img.shields.io/github/release/uias/Pageboy.svg" />
+    </a>
+</p>
 
 **TL;DR** *UIPageViewController done properly.*
 
 **Pageboy** is a simple, highly informative page view controller.
 
-## Features
+## ⭐️ Features
 - [x] Simplified data source management.
 - [x] Enhanced delegation; featuring exact relative positional data and reliable updates.
 - [x] Infinite scrolling support.
 - [x] Automatic timer-based page transitioning.
 - [x] Support for custom page transitions.
 
-## Requirements
-Pageboy requires iOS 9.0 / tvOS 10.0 and Swift 4.0 or above.
+## 📋 Requirements
+Pageboy requires iOS 9 / tvOS 10 or above; and is written in Swift 4.
 
-## Installation
+## 📲 Installation
 ### CocoaPods
 Pageboy is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 ```ruby
@@ -46,7 +60,7 @@ Add Pageboy to your `Cartfile`:
 github "uias/Pageboy" ~> 2.0
 ```
 
-## Usage
+## 🚀 Usage
 ### Getting Started
 
 1) Create an instance of a `PageboyViewController` and provide it with a `PageboyViewControllerDataSource`.
@@ -54,11 +68,11 @@ github "uias/Pageboy" ~> 2.0
 ```swift
 class PageViewController: PageboyViewController, PageboyViewControllerDataSource {
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		self.dataSource = self
-	}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+	
+	self.dataSource = self
+    }
 }
 ```
 
@@ -124,7 +138,7 @@ func pageboyViewController(_ pageboyViewController: PageboyViewController,
                            currentPageIndex: PageboyViewController.PageIndex)
 ```
 
-## Other useful stuff
+## 🔮 Other useful stuff
 
 - `reloadPages` - Reload the view controllers in the page view controller. (Refreshes the data source).
 
@@ -159,6 +173,8 @@ The following styles are available:
 - `.moveIn`
 - `.reveal`
 
+*Note: By default this is set to `nil`, which uses the standard animation provided by `UIPageViewController`.*
+
 ### Auto Scrolling
 `PageboyAutoScroller` is available to set up timer based automatic scrolling of the `PageboyViewController`:
 
@@ -167,12 +183,12 @@ pageboyViewController.autoScroller.enable()
 ```
 Support for custom intermission duration and other scroll behaviors is also available.
 
-## About
+## 👨🏻‍💻 About
 - Created by [Merrick Sapsford](https://github.com/msaps) ([@MerrickSapsford](https://twitter.com/MerrickSapsford))
 - Contributed to by a growing [list of others](https://github.com/uias/Pageboy/graphs/contributors).
 
-## Contributing
+## ❤️ Contributing
 Bug reports and pull requests are welcome on GitHub at [https://github.com/uias/Pageboy](https://github.com/uias/Pageboy).
 
-## License
+## 👮🏻‍♂️ License
 The library is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

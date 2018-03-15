@@ -3,7 +3,7 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 24/11/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -55,4 +55,27 @@ public protocol PageboyViewControllerDelegate: class {
     func pageboyViewController(_ pageboyViewController: PageboyViewController,
                                didReloadWith currentViewController: UIViewController,
                                currentPageIndex: PageboyViewController.PageIndex)
+}
+
+// MARK: - PageboyViewControllerDelegate default implementations
+public extension PageboyViewControllerDelegate {
+    
+    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+                               willScrollToPageAt index: Int,
+                               direction: PageboyViewController.NavigationDirection,
+                               animated: Bool) {}
+    
+    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+                               didScrollTo position: CGPoint,
+                               direction: PageboyViewController.NavigationDirection,
+                               animated: Bool) {}
+    
+    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+                               didScrollToPageAt index: Int,
+                               direction: PageboyViewController.NavigationDirection,
+                               animated: Bool) {}
+    
+    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+                               didReloadWith currentViewController: UIViewController,
+                               currentPageIndex: PageboyViewController.PageIndex){}
 }

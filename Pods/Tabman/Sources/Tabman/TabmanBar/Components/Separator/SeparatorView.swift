@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 21/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 
 internal class SeparatorView: UIView {
     
@@ -70,8 +69,8 @@ internal class SeparatorView: UIView {
     func addAsSubview(to parent: UIView) {
         
         parent.addSubview(self)
-        autoPinEdge(toSuperviewEdge: .bottom)
-        leftPinConstraint = autoPinEdge(toSuperviewEdge: .leading)
-        rightPinConstraint = autoPinEdge(toSuperviewEdge: .trailing)
+        pinToSuperviewEdge(.bottom)
+        leftPinConstraint = pinToSuperviewEdge(.leading)
+        rightPinConstraint = pinToSuperviewEdge(.right)
     }
 }
