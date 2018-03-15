@@ -21,14 +21,14 @@ final class IssueTargetBranchSectionController: ListSectionController {
     
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: self.object?.attributedString.textViewSize(width).height ?? 0)
+        return CGSize(width: width, height: self.object?.targetBranchText.textViewSize(width).height ?? 0)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: IssueTargetBranchCell.self, for: self, at: index) as? IssueTargetBranchCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
-        cell.set(attributedText: object.attributedString)
+        cell.set(attributedText: object.targetBranchText)
         return cell
     }
 }

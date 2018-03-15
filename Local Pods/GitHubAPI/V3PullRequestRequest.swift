@@ -13,7 +13,6 @@ public struct V3PullRequest: Codable {
     }
     
     public let base: Branch
-    public let head: Branch
 }
 
 public struct V3PullRequestResponse: EntityResponse {

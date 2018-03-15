@@ -32,7 +32,7 @@ IssueManagingNavSectionControllerDelegate {
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
-    private var pullRequestBranches: String?
+    private var targetBranch: String?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -323,7 +323,8 @@ IssueManagingNavSectionControllerDelegate {
             guard let strongSelf = self else { return }
             switch resultType {
             case .success(let result):
-                strongSelf.pullRequestBranches = "From \(result.head.ref) to \(result.base.ref)"
+                //strongSelf.targetBranchText(with: result.base.ref)
+                strongSelf.targetBranch = result.base.ref
                 break
                 
             case .error(_):
@@ -398,17 +399,13 @@ IssueManagingNavSectionControllerDelegate {
             metadata.append(IssueFileChangesModel(changes: changes))
         }
         // END metadata collection
-
-        if let pullRequestBranches = pullRequestBranches {
-            
-            let string = NSAttributedStringSizing(containerWidth: view.bounds.width,
-                                                  attributedText: NSAttributedString(string: pullRequestBranches),
-                                                  backgroundColor: Styles.Colors.Gray.lighter.color)
-            
-            objects.append(IssueBranchesModel(attributedString: string, trailingMetadata: metadata.count > 0))
-        }
         
-        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: metadata.count > 0))
+        let titleTrailingMetadata = metadata.count > 0 && result?.pullRequest == false
+        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: titleTrailingMetadata))
+        
+        if let targetBranch = targetBranch {
+            objects.append(IssueTargetBranchModel(branch: targetBranch, width: view.bounds.width, trailingMetadata: metadata.count > 0))
+        }
         
         objects += metadata
 
@@ -449,7 +446,7 @@ IssueManagingNavSectionControllerDelegate {
 
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueBranchesModel: return IssueBranchesSectionController()
+        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,

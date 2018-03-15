@@ -11,24 +11,38 @@ import IGListKit
 
 final class IssueTargetBranchModel: ListDiffable {
     
-    let attributedString: NSAttributedStringSizing
+    let targetBranchText: NSAttributedStringSizing
     let trailingMetadata: Bool
+
     
-    init(attributedString: NSAttributedStringSizing, trailingMetadata: Bool) {
-        self.attributedString = attributedString
+    init(branch: String, width: CGFloat, trailingMetadata: Bool) {
         self.trailingMetadata = trailingMetadata
+        
+        let branchTitleAttributes: [NSAttributedStringKey: Any] = [
+            .font: Styles.Text.secondaryCode.preferredFont,
+        ]
+        let titleAttributes: [NSAttributedStringKey: Any] = [
+            .font: Styles.Text.secondaryBold.preferredFont
+        ]
+        
+        let titleAttributedText = NSMutableAttributedString(string: "Target branch: ", attributes: titleAttributes)
+        let branchAttributedTitle = NSAttributedString(string: branch, attributes: branchTitleAttributes)
+        
+        titleAttributedText.append(branchAttributedTitle)
+        
+        self.targetBranchText = NSAttributedStringSizing(containerWidth: width, attributedText: titleAttributedText, inset: IssueTargetBranchCell.inset, backgroundColor: Styles.Colors.Gray.lighter.color)
     }
     
     // MARK: ListDiffable
     
     func diffIdentifier() -> NSObjectProtocol {
-        return attributedString.diffIdentifier()
+        return targetBranchText.diffIdentifier()
     }
     
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueTargetBranchModel else { return false }
         return trailingMetadata == object.trailingMetadata
-            && attributedString.isEqual(toDiffableObject: object)
+            && targetBranchText.isEqual(toDiffableObject: object)
     }
 }
