@@ -91,3 +91,20 @@ fragment repoEventFields on Comment {
     login
   }
 }
+
+fragment commitContext on Commit {
+  id
+  status {
+    contexts {
+      id
+      context
+      state
+      creator {
+        login
+        avatarUrl
+      }
+      description
+    }
+    state
+  }
+}

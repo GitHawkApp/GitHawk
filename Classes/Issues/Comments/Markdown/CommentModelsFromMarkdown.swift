@@ -41,7 +41,7 @@ func createCommentAST(markdown: String, owner: String, repository: String) -> MM
 
 func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
     let attributes = [
-        .font: Styles.Fonts.body.addingTraits(traits: .traitItalic),
+        .font: Styles.Text.body.preferredFont.addingTraits(traits: .traitItalic),
         .foregroundColor: Styles.Colors.Gray.medium.color,
         NSAttributedStringKey.backgroundColor: UIColor.white
     ]
@@ -75,7 +75,7 @@ func CreateCommentModels(
     var results = [ListDiffable]()
 
     let baseAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Fonts.body,
+        .font: Styles.Text.body.preferredFont,
         .foregroundColor: Styles.Colors.Gray.dark.color,
         .paragraphStyle: {
             let para = NSMutableParagraphStyle()

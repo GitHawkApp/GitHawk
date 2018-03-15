@@ -40,7 +40,7 @@ final class RepositoryFileCell: SelectableCell {
             make.centerY.equalTo(contentView)
         }
 
-        label.font = Styles.Fonts.body
+        label.font = Styles.Text.body.preferredFont
         label.textColor = Styles.Colors.Gray.dark.color
         label.lineBreakMode = .byTruncatingHead
         contentView.addSubview(label)

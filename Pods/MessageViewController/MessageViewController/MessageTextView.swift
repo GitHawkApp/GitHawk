@@ -10,6 +10,7 @@ import UIKit
 public protocol MessageTextViewListener: class {
     func didChange(textView: MessageTextView)
     func didChangeSelection(textView: MessageTextView)
+    func willChangeRange(textView: MessageTextView, to range: NSRange)
 }
 
 open class MessageTextView: UITextView, UITextViewDelegate {
@@ -130,6 +131,11 @@ open class MessageTextView: UITextView, UITextViewDelegate {
 
     public func textViewDidChangeSelection(_ textView: UITextView) {
         enumerateListeners { $0.didChangeSelection(textView: self) }
+    }
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        enumerateListeners { $0.willChangeRange(textView: self, to: range) }
+        return true
     }
 
 }

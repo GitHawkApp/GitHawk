@@ -36,7 +36,7 @@ final class IssueFileCell: SelectableCell {
             make.right.lessThanOrEqualTo(disclosure.snp.left).offset(-Styles.Sizes.rowSpacing)
         }
 
-        pathLabel.font = Styles.Fonts.body
+        pathLabel.font = Styles.Text.body.preferredFont
         pathLabel.textColor = Styles.Colors.Gray.dark.color
         pathLabel.lineBreakMode = .byTruncatingHead
         contentView.addSubview(pathLabel)
@@ -55,10 +55,10 @@ final class IssueFileCell: SelectableCell {
 
     // MARK: Public API
 
-    func configure(path: String, additions: Int, deletions: Int) {
+    func configure(path: String, additions: Int, deletions: Int, disclosureHidden: Bool) {
         let changeString = NSMutableAttributedString()
         var attributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Fonts.secondaryBold
+            .font: Styles.Text.secondaryBold.preferredFont
         ]
 
         if additions > 0 {
@@ -72,7 +72,7 @@ final class IssueFileCell: SelectableCell {
         }
 
         changeLabel.attributedText = changeString
-
+        disclosure.isHidden = disclosureHidden
         pathLabel.text = path
     }
 

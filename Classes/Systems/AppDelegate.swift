@@ -12,6 +12,7 @@ import AlamofireNetworkActivityIndicator
 import Fabric
 import Crashlytics
 import Firebase
+import GitHubSession
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     private var showingLogin = false
     private let flexController = FlexController()
-    private let sessionManager = GithubSessionManager()
+    private let sessionManager = GitHubSessionManager()
 
     private lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
@@ -68,7 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(ShortcutHandler.handle(shortcutItem: shortcutItem,
+        guard let route = Route(shortcutItem: shortcutItem) else {
+            completionHandler(false)
+            return
+        }
+        completionHandler(ShortcutHandler.handle(route: route,
                                                  sessionManager: sessionManager,
                                                  navigationManager: rootNavigationManager))
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StyledText
 
 enum Styles {
 
@@ -47,54 +48,10 @@ enum Styles {
         static let threadInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing / 2,
             left: Styles.Sizes.commentGutter,
-            bottom: 0,
+            bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.commentGutter
         )
         static let maxImageHeight: CGFloat = 300
-
-        enum Text {
-
-            private static func size(
-                _ base: CGFloat,
-                minSize: CGFloat = 0,
-                maxSize: CGFloat = CGFloat.greatestFiniteMagnitude
-                ) -> CGFloat {
-                let multiplier: CGFloat
-                // https://github.com/mapbox/mapbox-navigation-ios/blob/master/MapboxNavigation/UIFont.swift#L8-L19
-                switch UIApplication.shared.preferredContentSizeCategory {
-                case .accessibilityExtraExtraExtraLarge: multiplier = 23 / 16
-                case .accessibilityExtraExtraLarge: multiplier = 22 / 16
-                case .accessibilityExtraLarge: multiplier = 21 / 16
-                case .accessibilityLarge: multiplier = 20 / 16
-                case .accessibilityMedium: multiplier = 19 / 16
-                case .extraExtraExtraLarge: multiplier = 19 / 16
-                case .extraExtraLarge: multiplier = 18 / 16
-                case .extraLarge: multiplier = 17 / 16
-                case .large: multiplier = 1
-                case .medium: multiplier = 15 / 16
-                case .small: multiplier = 14 / 16
-                case .extraSmall: multiplier = 13 / 16
-                default: multiplier = 1
-                }
-                let result = base * multiplier
-                return min(max(result, minSize), maxSize)
-            }
-
-            static var body: CGFloat { return size(16) }
-            static var secondary: CGFloat { return size(13) }
-            static var title: CGFloat { return size(14) }
-            static var button: CGFloat { return size(16) }
-            static var headline: CGFloat { return size(24) }
-            static var smallTitle: CGFloat { return size(12) }
-            static var h1: CGFloat { return size(24) }
-            static var h2: CGFloat { return size(22) }
-            static var h3: CGFloat { return size(20) }
-            static var h4: CGFloat { return size(18) }
-            static var h5: CGFloat { return size(16) }
-            static var h6: CGFloat { return size(16) }
-            static var code: CGFloat { return size(14) }
-
-        }
 
         enum HTML {
             static let boldWeight = 600
@@ -102,18 +59,26 @@ enum Styles {
         }
     }
 
-    enum Fonts {
-        static let body = UIFont.systemFont(ofSize: Styles.Sizes.Text.body)
-        static let bodyBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.body)
-        static let bodyItalic = UIFont.italicSystemFont(ofSize: Styles.Sizes.Text.body)
-        static let secondary = UIFont.systemFont(ofSize: Styles.Sizes.Text.secondary)
-        static let secondaryBold = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.secondary)
-        static let title = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.title)
-        static let button = UIFont.systemFont(ofSize: Styles.Sizes.Text.button)
-        static let headline = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.headline)
-        static let smallTitle = UIFont.boldSystemFont(ofSize: Styles.Sizes.Text.smallTitle)
-        static let code = UIFont(name: "Courier", size: Styles.Sizes.Text.body)!
-        static let secondaryCode = UIFont(name: "Courier", size: Styles.Sizes.Text.secondary)!
+    enum Text {
+
+        static let body = TextStyle(size: 16)
+        static let bodyBold = TextStyle(font: .system(.bold), size: 16)
+        static let secondary = TextStyle(size: 13)
+        static let secondaryBold = TextStyle(font: .system(.bold), size: 13)
+        static let title = TextStyle(font: .system(.bold), size: 14)
+        static let button = TextStyle(size: 16)
+        static let headline = TextStyle(font: .system(.bold), size: 18)
+        static let smallTitle = TextStyle(font: .system(.bold), size: 12)
+        static let code = TextStyle(font: .name("Courier"), size: 16)
+        static let secondaryCode = TextStyle(font: .name("Courier"), size: 13)
+
+        static let h1 = TextStyle(font: .system(.bold), size: 24)
+        static let h2 = TextStyle(font: .system(.bold), size: 20)
+        static let h3 = TextStyle(font: .system(.bold), size: 20)
+        static let h4 = TextStyle(font: .system(.bold), size: 18)
+        static let h5 = TextStyle(font: .system(.bold), size: 16)
+        static let h6 = TextStyle(font: .system(.bold), size: 16)
+
     }
 
     enum Colors {
@@ -158,6 +123,21 @@ enum Styles {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
+    }
+
+}
+
+extension TextStyle {
+
+    var preferredFont: UIFont {
+        return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+    }
+
+    func with(foreground: UIColor? = nil, background: UIColor? = nil) -> TextStyle {
+        var attributes = self.attributes
+        attributes[.foregroundColor] = foreground ?? attributes[.foregroundColor]
+        attributes[.backgroundColor] = background ?? attributes[.backgroundColor]
+        return TextStyle(font: font, size: size, attributes: attributes, minSize: minSize, maxSize: maxSize)
     }
 
 }

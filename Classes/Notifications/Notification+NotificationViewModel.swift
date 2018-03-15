@@ -8,6 +8,8 @@
 
 import UIKit
 
+import GitHubAPI
+
 extension String {
 
     var notificationIdentifier: NotificationViewModel.Identifier? {
@@ -15,9 +17,13 @@ extension String {
         guard split.count > 2,
             let identifier = split.last
             else { return nil }
-        if split[split.count - 2] == "commits" {
+        let type = split[split.count - 2]
+        switch type {
+        case "commits":
             return .hash(identifier)
-        } else {
+        case "releases":
+            return .release(identifier)
+        default:
             return .number((identifier as NSString).integerValue)
         }
     }
@@ -26,20 +32,19 @@ extension String {
 
 func CreateViewModels(
     containerWidth: CGFloat,
-    notifications: [NotificationResponse]) -> [NotificationViewModel] {
+    v3notifications: [V3Notification]) -> [NotificationViewModel] {
     var viewModels = [NotificationViewModel]()
 
-    for notification in notifications {
-        guard let type = NotificationType(rawValue: notification.subject.type),
-            let date = notification.updated_at.githubDate,
-            let identifier = notification.subject.url.notificationIdentifier
+    for notification in v3notifications {
+        guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
+            let identifier = notification.subject.url.absoluteString.notificationIdentifier
             else { continue }
 
         let model = NotificationViewModel(
             id: notification.id,
             title: notification.subject.title,
             type: type,
-            date: date,
+            date: notification.updatedAt,
             read: !notification.unread,
             owner: notification.repository.owner.login,
             repo: notification.repository.name,
@@ -50,38 +55,4 @@ func CreateViewModels(
     }
 
     return viewModels
-}
-
-func CreateNotificationViewModels(
-    containerWidth: CGFloat,
-    notifications: [NotificationResponse],
-    completion: @escaping ([NotificationViewModel]) -> Void
-    ) {
-    DispatchQueue.global().async {
-        var viewModels = [NotificationViewModel]()
-
-        for notification in notifications {
-            guard let type = NotificationType(rawValue: notification.subject.type),
-                let date = notification.updated_at.githubDate,
-                let identifier = notification.subject.url.notificationIdentifier
-                else { continue }
-
-            let model = NotificationViewModel(
-                id: notification.id,
-                title: notification.subject.title,
-                type: type,
-                date: date,
-                read: !notification.unread,
-                owner: notification.repository.owner.login,
-                repo: notification.repository.name,
-                identifier: identifier,
-                containerWidth: containerWidth
-            )
-            viewModels.append(model)
-        }
-
-        DispatchQueue.main.async {
-            completion(viewModels)
-        }
-    }
 }

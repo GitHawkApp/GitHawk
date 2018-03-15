@@ -68,7 +68,7 @@ NewIssueTableViewControllerDelegate {
         delegate = self
         bar.items = controllers.map { Item(title: $0.title ?? "" ) }
         bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Fonts.button
+            appearance.text.font = Styles.Text.button.preferredFont
             appearance.state.color = Styles.Colors.Gray.light.color
             appearance.state.selectedColor = Styles.Colors.Blue.medium.color
             appearance.indicator.color = Styles.Colors.Blue.medium.color

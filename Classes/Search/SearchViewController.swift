@@ -126,7 +126,6 @@ SearchResultSectionControllerDelegate {
     func search(term: String) {
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
-        recentStore.add(query)
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
@@ -159,10 +158,10 @@ SearchResultSectionControllerDelegate {
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
+            
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
-                topLayoutGuide: topLayoutGuide,
-                bottomLayoutGuide: bottomLayoutGuide
+                layoutInsets: view.safeAreaInsets
             )
         } else if object === recentHeaderKey {
             return SearchRecentHeaderSectionController(delegate: self)

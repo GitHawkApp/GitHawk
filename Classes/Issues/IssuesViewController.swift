@@ -31,6 +31,7 @@ IssueManagingNavSectionControllerDelegate {
     private var autocompleteController: AutocompleteController!
 
     private var needsScrollToBottom = false
+    private var lastTimelineElement: ListDiffable?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -121,7 +122,10 @@ IssueManagingNavSectionControllerDelegate {
         navigationTitle.configure(
             title: "#\(model.number)",
             subtitle: "\(model.owner)/\(model.repo)",
-            accessibilityLabel: labelString
+            accessibilityLabel: labelString,
+            accessibilityHint: NSLocalizedString(
+                "Gives the option to view the repository's overview or owner",
+                comment: "The hint for tapping the navigationBar's repository information.")
         )
         navigationItem.titleView = navigationTitle
 
@@ -136,20 +140,7 @@ IssueManagingNavSectionControllerDelegate {
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        borderColor = Styles.Colors.Gray.border.color
-        messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
-        messageView.textView.placeholderTextColor = Styles.Colors.Gray.light.color
-        messageView.keyboardType = .twitter
-        messageView.set(buttonIcon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        messageView.buttonTint = Styles.Colors.Blue.medium.color
-        messageView.font = Styles.Fonts.body
-        messageView.inset = UIEdgeInsets(
-            top: Styles.Sizes.gutter,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing / 2,
-            right: Styles.Sizes.gutter
-        )
-        messageView.addButton(target: self, action: #selector(didPressButton(_:)))
+        configure(target: self, action: #selector(didPressButton(_:)))
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -196,10 +187,8 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        }
+        super.viewSafeAreaInsetsDidChange()
+        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
     }
 
     // MARK: Private API
@@ -279,7 +268,12 @@ IssueManagingNavSectionControllerDelegate {
             ) { [weak self] (result) in
                 switch result {
                 case .success(let permission):
-                    self?.viewerIsCollaborator = permission.canManage
+                    let collab: Bool
+                    switch permission {
+                    case .admin, .write: collab = true
+                    case .read, .none: collab = false
+                    }
+                    self?.viewerIsCollaborator = collab
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:
@@ -331,32 +325,10 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     func scrollToLastContentElement() {
-        let adapter = feed.adapter
-        let collectionView = feed.collectionView
-        let objects = adapter.objects()
-        guard objects.count > 1 else { return }
+        guard let lastTimeline = lastTimelineElement else { return }
 
         // assuming the last element is the "actions" when collaborator
-        let lastContent = objects[objects.count - (viewerIsCollaborator ? 2 : 1)]
-
-        guard let sectionController = adapter.sectionController(for: lastContent) else { return }
-
-        let lastItemIndex = sectionController.numberOfItems() - 1
-        let path = IndexPath(item: lastItemIndex, section: sectionController.section)
-
-        guard let attributes = feed.collectionView.layoutAttributesForItem(at: path) else { return }
-
-        let paddedMaxY = min(attributes.frame.maxY + Styles.Sizes.rowSpacing, collectionView.contentSize.height)
-        let viewportHeight = collectionView.bounds.height
-
-        // make sure not already at the top
-        guard paddedMaxY > viewportHeight else { return }
-
-        let offset = paddedMaxY - viewportHeight
-        collectionView.setContentOffset(
-            CGPoint(x: collectionView.contentOffset.x, y: offset),
-            animated: trueUnlessReduceMotionEnabled
-        )
+        feed.adapter.scroll(to: lastTimeline, padding: Styles.Sizes.rowSpacing)
     }
 
     func onPreview() {
@@ -422,12 +394,21 @@ IssueManagingNavSectionControllerDelegate {
 
         objects += current.timelineViewModels
 
+        // side effect so to jump to the last element when auto scrolling
+        lastTimelineElement = objects.last
+
         if viewerIsCollaborator || current.viewerCanUpdate {
             objects.append(IssueManagingModel(
                 objectId: current.id,
                 pullRequest: current.pullRequest,
                 role: viewerIsCollaborator ? .collaborator : .author
             ))
+        }
+        
+        if viewerIsCollaborator,
+            current.status.status != .merged,
+            let merge = current.mergeModel {
+            objects.append(merge)
         }
 
         return objects
@@ -466,6 +447,7 @@ IssueManagingNavSectionControllerDelegate {
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
         case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
+        case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
         default: fatalError("Unhandled object: \(object)")
         }
     }

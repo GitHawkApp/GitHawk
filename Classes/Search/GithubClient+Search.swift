@@ -24,50 +24,49 @@ extension GithubClient {
         completion: @escaping (SearchResultType) -> Void
         ) -> Cancellable {
         let query = SearchReposQuery(search: query, before: before)
-
-        return fetch(query: query) { (result, error) in
-            guard error == nil, result?.errors == nil else {
-                if !isCancellationError(error) {
-                    ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
-                }
+        return client.query(query, result: { $0 }) { result in
+            switch result {
+            case .failure(let error):
                 completion(.error(error))
-                return
-            }
-
-            DispatchQueue.global().async {
-                var builder = [SearchRepoResult]()
-
-                result?.data?.search.nodes?.forEach {
-                    guard let repo = $0?.asRepository else { return }
-
-                    let primaryLanguage: GithubLanguage?
-                    if let language = repo.primaryLanguage {
-                        primaryLanguage = GithubLanguage(name: language.name, color: language.color?.color)
-                    } else {
-                        primaryLanguage = nil
-                    }
-
-                    let model = SearchRepoResult(
-                        id: repo.id,
-                        owner: repo.owner.login,
-                        name: repo.name,
-                        description: repo.description ?? "",
-                        stars: repo.stargazers.totalCount,
-                        hasIssuesEnabled: repo.hasIssuesEnabled,
-                        primaryLanguage: primaryLanguage,
-                        defaultBranch: repo.defaultBranchRef?.name ?? "master"
-                    )
-                    builder.append(model)
+                if !isCancellationError(error) {
+                    ToastManager.showGenericError()
                 }
+            case .success(let data):
+                DispatchQueue.global().async {
+                    var builder = [SearchRepoResult]()
 
-                DispatchQueue.main.async {
-                    let nextPage: String?
-                    if let pageInfo = result?.data?.search.pageInfo, pageInfo.hasNextPage {
-                        nextPage = pageInfo.endCursor
-                    } else {
-                        nextPage = nil
+                    data.search.nodes?.forEach {
+                        guard let repo = $0?.asRepository else { return }
+
+                        let primaryLanguage: GithubLanguage?
+                        if let language = repo.primaryLanguage {
+                            primaryLanguage = GithubLanguage(name: language.name, color: language.color?.color)
+                        } else {
+                            primaryLanguage = nil
+                        }
+
+                        let model = SearchRepoResult(
+                            id: repo.id,
+                            owner: repo.owner.login,
+                            name: repo.name,
+                            description: repo.description ?? "",
+                            stars: repo.stargazers.totalCount,
+                            hasIssuesEnabled: repo.hasIssuesEnabled,
+                            primaryLanguage: primaryLanguage,
+                            defaultBranch: repo.defaultBranchRef?.name ?? "master"
+                        )
+                        builder.append(model)
                     }
-                    completion(.success(nextPage, builder))
+
+                    DispatchQueue.main.async {
+                        let nextPage: String?
+                        if data.search.pageInfo.hasNextPage {
+                            nextPage = data.search.pageInfo.endCursor
+                        } else {
+                            nextPage = nil
+                        }
+                        completion(.success(nextPage, builder))
+                    }
                 }
             }
         }

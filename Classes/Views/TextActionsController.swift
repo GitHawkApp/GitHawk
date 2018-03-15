@@ -29,12 +29,21 @@ final class TextActionsController: NSObject,
     // MARK: IssueTextActionsViewDelegate
 
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation) {
-        switch operation.operation {
-        case .execute(let block): block()
-        case .wrap(let left, let right): textView?.replace(left: left, right: right, atLineStart: false)
-        case .line(let left): textView?.replace(left: left, right: nil, atLineStart: true)
-        case .uploadImage: displayUploadImage()
+        func handle(_ operation: IssueTextActionOperation.Operation) {
+            switch operation {
+            case .wrap(let left, let right):
+                textView?.replace(left: left, right: right, atLineStart: false)
+            case .line(let left):
+                textView?.replace(left: left, right: nil, atLineStart: true)
+            case .execute(let block):
+                block()
+            case .uploadImage:
+                displayUploadImage()
+            case .multi(let operations):
+                operations.forEach { handle($0) }
+            }
         }
+        handle(operation.operation)
     }
 
     // MARK: Image Upload
@@ -52,7 +61,7 @@ final class TextActionsController: NSObject,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
 
-        let username = client?.sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
+        let username = client?.userSession?.username ?? Constants.Strings.unknown
         guard let uploadController = ImageUploadTableViewController.create(image, username: username, delegate: self) else { return }
 
         picker.pushViewController(uploadController, animated: trueUnlessReduceMotionEnabled)

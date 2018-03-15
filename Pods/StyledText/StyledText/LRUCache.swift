@@ -127,6 +127,9 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
 
     // unsafe to call w/out nested in lock
     private func newHead(node: Node?) {
+        // fill in the gap and break cycles
+        node?.previous?.next = node?.next
+
         head?.previous = node
 
         node?.next = head

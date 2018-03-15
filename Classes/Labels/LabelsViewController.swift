@@ -35,6 +35,8 @@ final class LabelsViewController: UITableViewController {
 
         feedRefresh.beginRefreshing()
         fetch()
+
+        preferredContentSize = CGSize(width: 200, height: 240)
     }
 
     // MARK: Private API
@@ -44,16 +46,17 @@ final class LabelsViewController: UITableViewController {
     }
 
     func fetch() {
-        client.fetch(query: request) { [weak self] (result, _) in
+        client.client.query(request, result: { data in
+            data.repository?.labels?.nodes
+        }) { [weak self] result in
             self?.feedRefresh.endRefreshing()
-            if let nodes = result?.data?.repository?.labels?.nodes {
-                var labels = [RepositoryLabel]()
-                for node in nodes {
-                    guard let node = node else { continue }
-                    labels.append(RepositoryLabel(color: node.color, name: node.name))
-                }
-                self?.update(labels: labels)
-            } else {
+            switch result {
+            case .success(let nodes):
+                self?.update(labels: nodes.flatMap {
+                    guard let node = $0 else { return nil }
+                    return RepositoryLabel(color: node.color, name: node.name)
+                })
+            case .failure:
                 ToastManager.showGenericError()
             }
         }
@@ -63,11 +66,6 @@ final class LabelsViewController: UITableViewController {
         self.labels = labels.sorted { $0.name < $1.name }
         tableView.reloadData()
         tableView.layoutIfNeeded()
-
-        var contentSize = tableView.contentSize
-        contentSize.height = max(minContentHeight, contentSize.height)
-        navigationController?.preferredContentSize = contentSize
-
         tableView.backgroundView?.isHidden = labels.count > 0
     }
 

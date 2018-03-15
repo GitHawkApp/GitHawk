@@ -63,4 +63,12 @@ final class UserAutocomplete: AutocompleteType {
         return prefix + results[index].login
     }
 
+    var highlightAttributes: [NSAttributedStringKey : Any]? {
+        return [
+            .font: Styles.Text.body.preferredFont,
+            .foregroundColor: Styles.Colors.Blue.medium.color,
+            .backgroundColor: Styles.Colors.Blue.medium.color.withAlphaComponent(0.1),
+        ]
+    }
+
 }

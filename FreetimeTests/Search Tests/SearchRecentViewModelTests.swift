@@ -72,14 +72,14 @@ class SearchRecentViewModelTests: XCTestCase {
 
     private var standardAttributes: [NSAttributedStringKey: Any] {
         return [
-            .font: Styles.Fonts.body,
+            .font: Styles.Text.body.preferredFont,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ]
     }
 
     private var boldAttributes: [NSAttributedStringKey: Any] {
         return [
-            .font: Styles.Fonts.bodyBold,
+            .font: Styles.Text.bodyBold.preferredFont,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ]
     }

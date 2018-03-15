@@ -51,6 +51,28 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return IssueAssigneesModel(users: models, type: .reviewRequested)
     }
 
+    var mergeModel: IssueMergeModel? {
+        guard let commit = commits.nodes?.first??.commit
+            else { return nil }
+
+        var contexts = [IssueMergeContextModel]()
+        for context in commit.status?.contexts ?? [] {
+            guard let creator = context.creator,
+                let avatarURL = URL(string: creator.avatarUrl)
+                else { continue }
+            contexts.append(IssueMergeContextModel(
+                id: context.id,
+                context: context.context,
+                state: context.state,
+                login: creator.login,
+                avatarURL: avatarURL,
+                description: context.description ?? ""
+            ))
+        }
+
+        return IssueMergeModel(id: commit.id, state: mergeable, contexts: contexts)
+    }
+
     var headPaging: HeadPaging {
         return timeline.pageInfo.fragments.headPaging
     }
@@ -383,7 +405,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         guard let node = thread.comments.nodes?.first, let firstComment = node else { return nil }
         let code = CreateDiffString(code: firstComment.diffHunk, limit: true)
         let text = NSAttributedStringSizing(containerWidth: 0, attributedText: code, inset: IssueDiffHunkPreviewCell.textViewInset)
-        return IssueDiffHunkModel(path: firstComment.path, preview: text)
+        return IssueDiffHunkModel(path: firstComment.path, preview: text, offset: 0)
     }
 
     private func commentModels(

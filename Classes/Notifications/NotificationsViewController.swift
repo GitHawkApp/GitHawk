@@ -12,7 +12,6 @@ import SnapKit
 import FlatCache
 
 class NotificationsViewController: BaseListViewController<NSNumber>,
-//    NotificationClientListener,
 ForegroundHandlerDelegate,
 RatingSectionControllerDelegate,
 PrimaryViewController,
@@ -307,8 +306,7 @@ FlatCacheListener {
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
         return NoNewNotificationSectionController(
             topInset: 0,
-            topLayoutGuide: topLayoutGuide,
-            bottomLayoutGuide: bottomLayoutGuide
+            layoutInsets: view.safeAreaInsets
         )
     }
 

@@ -43,8 +43,12 @@ final class AddCommentClient {
     func addComment(subjectId: String, body: String) {
         let bodyWithSignature = Signature.signed(text: body)
 
-        client.perform(mutation: AddCommentMutation(subject_id: subjectId, body: bodyWithSignature)) { (result, error) in
-            if let commentNode = result?.data?.addComment?.commentEdge.node {
+        let mutation = AddCommentMutation(subject_id: subjectId, body: bodyWithSignature)
+        client.client.mutate(mutation, result: { data in
+            data.addComment?.commentEdge.node
+        }) { result in
+            switch result {
+            case .success(let commentNode):
                 let fragments = commentNode.fragments
                 for listener in self.listeners {
                     listener.listener?.didSendComment(
@@ -56,13 +60,12 @@ final class AddCommentClient {
                         viewerCanDelete: fragments.deletableFields.viewerCanDelete
                     )
                 }
-            } else {
+            case .failure:
                 for listener in self.listeners {
                     listener.listener?.didFailSendingComment(client: self, subjectId: subjectId, body: body)
                 }
+                ToastManager.showGenericError()
             }
-
-            ShowErrorStatusBar(graphQLErrors: result?.errors, networkError: error)
         }
     }
 

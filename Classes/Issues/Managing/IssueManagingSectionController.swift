@@ -8,6 +8,8 @@
 
 import Foundation
 import IGListKit
+import GitHubAPI
+import ContextMenu
 
 final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
 ListBindingSectionControllerDataSource,
@@ -68,6 +70,8 @@ PeopleViewControllerDelegate {
         self.client = client
         super.init()
         inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: 0, bottom: Styles.Sizes.gutter, right: 0)
+        minimumInteritemSpacing = Styles.Sizes.rowSpacing
+        minimumLineSpacing = Styles.Sizes.rowSpacing
         selectionDelegate = self
         dataSource = self
     }
@@ -106,32 +110,24 @@ PeopleViewControllerDelegate {
     }
 
     func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
-        guard let controller = UIStoryboard(name: "People", bundle: nil).instantiateInitialViewController() as? PeopleViewController
-            else { fatalError("Missing people view controller") }
 
         let selections: [String]
         switch type {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-
-        controller.configure(
-            selections: selections,
-            type: type,
-            client: client,
-            delegate: self,
-            owner: model.owner,
-            repo: model.repo
-        )
-        return controller
+        return PeopleViewController(selections: selections, type: type,
+                                    client: client, delegate: self,
+                                    owner: model.owner, repo: model.repo)
     }
 
     func present(controller: UIViewController, from cell: UICollectionViewCell) {
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .popover
-        nav.popoverPresentationController?.sourceView = cell
-        nav.popoverPresentationController?.sourceRect = cell.bounds
-        viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
+        guard let viewController = self.viewController else { return }
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: controller,
+            sourceView: cell
+        )
     }
 
     func close(_ doClose: Bool) {
@@ -205,14 +201,10 @@ PeopleViewControllerDelegate {
             else { fatalError("Collection context must be set") }
 
         let height = IssueManagingActionCell.height
-        let width = HangingChadItemWidth(
-            index: index,
-            count: viewModels.count,
-            containerWidth: containerWidth,
-            desiredItemWidth: height
-        )
+
+        let rawRowCount = min(CGFloat(viewModels.count), floor(containerWidth / (height + minimumInteritemSpacing)))
         return CGSize(
-            width: width,
+            width: floor((containerWidth - (rawRowCount - 1) * minimumInteritemSpacing) / rawRowCount),
             height: height
         )
     }
@@ -242,8 +234,7 @@ PeopleViewControllerDelegate {
             else { return }
 
         if viewModel === Action.labels {
-            let controller = newLabelsController()
-            present(controller: controller, from: cell)
+            present(controller: newLabelsController(), from: cell)
         } else if viewModel === Action.milestone {
             let controller = newMilestonesController()
             present(controller: controller, from: cell)
@@ -295,19 +286,18 @@ PeopleViewControllerDelegate {
     func didDismiss(
         controller: PeopleViewController,
         type: PeopleViewController.PeopleType,
-        selections: [User]
+        selections: [V3User]
         ) {
         guard let previous = issueResult else { return }
         var assignees = [IssueAssigneeViewModel]()
         for user in selections {
-            guard let url = URL(string: user.avatar_url) else { continue }
-            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: url))
+            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl))
         }
 
-        let mutationType: GithubClient.AddPeopleType
+        let mutationType: V3AddPeopleRequest.PeopleType
         switch type {
-        case .assignee: mutationType = .assignee
-        case .reviewer: mutationType = .reviewer
+        case .assignee: mutationType = .assignees
+        case .reviewer: mutationType = .reviewers
         }
 
         client.addPeople(

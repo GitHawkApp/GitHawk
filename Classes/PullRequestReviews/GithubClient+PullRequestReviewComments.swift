@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import GitHubAPI
 
 extension GithubClient {
 
@@ -24,19 +25,16 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<([ListDiffable], Int?)>) -> ()
+        completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
-        request(Request(
-            path: "repos/\(owner)/\(repo)/pulls/\(number)/comments",
-            completion: { (response, nextPage) in
 
-                guard let jsonArr = response.value as? [ [String: Any] ] else {
-                    ToastManager.showGenericError()
-                    completion(.error(response.error))
-                    return
-                }
-
+        client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
+            switch result {
+            case .failure(let error):
+                ToastManager.showGenericError()
+                completion(.error(error))
+            case .success(let response):
                 struct Thread {
                     let hunk: String
                     let path: String
@@ -47,7 +45,7 @@ extension GithubClient {
                     var threadIDs = [Int]()
                     var threads = [Int: Thread]()
 
-                    for json in jsonArr {
+                    for json in response.data {
                         guard let id = json["id"] as? Int,
                             let reviewComment = createReviewCommentModel(id: id, json: json)
                             else { continue }
@@ -83,25 +81,67 @@ extension GithubClient {
                             attributedText: code,
                             inset: IssueDiffHunkPreviewCell.textViewInset
                         )
-                        models.append(IssueDiffHunkModel(path: thread.path, preview: text))
+                        models.append(IssueDiffHunkModel(path: thread.path, preview: text, offset: models.count))
 
-                        for (i, comment) in thread.comments.enumerated() {
+                        for comment in thread.comments {
                             models.append(createReviewComment(
                                 owner: owner,
                                 repo: repo,
                                 model: comment,
                                 viewer: viewerUsername,
-                                width: width,
-                                isLast: i == thread.comments.count - 1
+                                width: width
                             ))
                         }
+
+                        models.append(PullRequestReviewReplyModel(replyID: id))
                     }
 
                     DispatchQueue.main.async {
-                        completion(.success((models, nextPage?.next)))
+                        completion(.success(models))
                     }
                 }
-        }))
+            }
+        }
+    }
+
+    func sendComment(
+        body: String,
+        inReplyTo: Int,
+        owner: String,
+        repo: String,
+        number: Int,
+        width: CGFloat,
+        completion: @escaping (Result<IssueCommentModel>) -> ()
+        ) {
+        let viewer = userSession?.username
+
+        client.send(V3SendPullRequestCommentRequest(
+            owner: owner,
+            repo: repo,
+            number: number,
+            body: body,
+            inReplyTo: inReplyTo)
+        ) { result in
+            switch result {
+            case .success(let response):
+                if let model = createReviewCommentModel(id: response.id, json: response.data) {
+                    let comment = createReviewComment(
+                        owner: owner,
+                        repo: repo,
+                        model: model,
+                        viewer: viewer,
+                        width: width
+                    )
+                    completion(.success(comment))
+                } else {
+                    ToastManager.showGenericError()
+                    completion(.error(nil))
+                }
+            case .failure(let error):
+                ToastManager.showGenericError()
+                completion(.error(error))
+            }
+        }
     }
 
 }
@@ -128,8 +168,7 @@ private func createReviewComment(
     repo: String,
     model: GithubClient.ReviewComment,
     viewer: String?,
-    width: CGFloat,
-    isLast: Bool
+    width: CGFloat
     ) -> IssueCommentModel {
     let details = IssueCommentDetailsViewModel(
         date: model.created,
@@ -150,7 +189,7 @@ private func createReviewComment(
         bodyModels: bodies,
         reactions: reactions,
         collapse: nil,
-        threadState: isLast ? .tail : .neck,
+        threadState: .neck,
         rawMarkdown: model.body,
         viewerCanUpdate: false,
         viewerCanDelete: false,

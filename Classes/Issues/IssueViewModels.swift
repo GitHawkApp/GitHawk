@@ -13,7 +13,7 @@ func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizin
     let attributedString = NSAttributedString(
         string: title,
         attributes: [
-            .font: Styles.Fonts.headline,
+            .font: Styles.Text.headline.preferredFont,
             .foregroundColor: Styles.Colors.Gray.dark.color
         ])
     return NSAttributedStringSizing(

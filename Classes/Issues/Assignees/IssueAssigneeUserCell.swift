@@ -24,9 +24,8 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         imageView.layer.borderColor = Styles.Colors.Gray.light.color.cgColor
         imageView.layer.borderWidth = 1.0 / UIScreen.main.scale
         imageView.clipsToBounds = true
-        if #available(iOS 11, *) {
-            imageView.accessibilityIgnoresInvertColors = true
-        }
+        imageView.accessibilityIgnoresInvertColors = true
+        
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -34,7 +33,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
             make.size.equalTo(Styles.Sizes.icon)
         }
 
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         label.textColor = Styles.Colors.Gray.dark.color
         label.backgroundColor = .clear
         contentView.addSubview(label)

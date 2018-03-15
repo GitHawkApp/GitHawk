@@ -15,8 +15,8 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
     private let label = UILabel()
     private let imageView = UIImageView()
 
-    static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 3
-    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Sizes.Text.secondary)
+    static let iconHeight = Styles.Sizes.buttonIcon.height + Styles.Sizes.rowSpacing * 2
+    static let height = ceil(iconHeight + Styles.Sizes.rowSpacing * 2.5 + Styles.Text.secondary.preferredFont.lineHeight)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,24 +25,24 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
 
         let tint = Styles.Colors.Blue.medium.color
 
+        contentView.layer.cornerRadius = Styles.Sizes.cardCornerRadius
+
         let iconSize = IssueManagingActionCell.iconHeight
-        imageView.contentMode = .center
-        imageView.layer.cornerRadius = iconSize/2
-        imageView.backgroundColor = tint
+        imageView.contentMode = .bottom
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: iconSize, height: iconSize))
-            make.centerX.equalTo(contentView)
-            make.top.equalTo(contentView).offset(Styles.Sizes.rowSpacing)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-iconSize/2)
         }
 
         label.textColor = tint
-        label.font = Styles.Fonts.secondaryBold
+        label.font = Styles.Text.secondaryBold.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerX.equalTo(imageView)
-            make.top.equalTo(imageView.snp.bottom).offset(ceil(Styles.Sizes.rowSpacing / 2))
+            make.top.equalTo(imageView.snp.bottom).offset(Styles.Sizes.rowSpacing/2 + 2)
         }
     }
 
@@ -77,7 +77,7 @@ final class IssueManagingActionCell: UICollectionViewCell, ListBindable {
         label.text = viewModel.label
         imageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = viewModel.color
-        imageView.backgroundColor = viewModel.color.withAlphaComponent(0.2)
+        contentView.backgroundColor = viewModel.color.withAlphaComponent(0.2)
         label.textColor = viewModel.color
     }
 

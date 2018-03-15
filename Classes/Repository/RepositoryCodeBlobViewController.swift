@@ -126,7 +126,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
     func handle(text: String) {
         emptyView.isHidden = true
         didFetchPayload(text)
-        codeView.set(code: text, language: path.fileExtension)
+        codeView.set(code: text)
     }
 
 }

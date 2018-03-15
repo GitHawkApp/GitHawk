@@ -47,9 +47,8 @@ final class IssueCommitCell: UICollectionViewCell {
             target: self,
             action: #selector(IssueCommitCell.onAvatar))
         )
-        if #available(iOS 11, *) {
-            avatarImageView.accessibilityIgnoresInvertColors = true
-        }
+        avatarImageView.accessibilityIgnoresInvertColors = true
+        
         contentView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -58,7 +57,7 @@ final class IssueCommitCell: UICollectionViewCell {
         }
 
         messageLabel.backgroundColor = .clear
-        messageLabel.font = Styles.Fonts.secondaryCode
+        messageLabel.font = Styles.Text.secondaryCode.preferredFont
         messageLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make in

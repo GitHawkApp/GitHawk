@@ -41,28 +41,28 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     body{
     // html whitelist: https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/sanitization_filter.rb#L45-L49
     // lint compiled style with http://csslint.net/
-    font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px;
+    font-family: -apple-system; font-size: \(Styles.Text.body.size)px;
     color: #\(Styles.Colors.Gray.dark);
     padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px 0;
     margin: 0;
     }
-    * { font-family: -apple-system; font-size: \(Styles.Sizes.Text.body)px; }
+    * { font-family: -apple-system; font-size: \(Styles.Text.body.size)px; }
     b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
     i, em{font-style: italic;}
     a{color: #\(Styles.Colors.Blue.medium); text-decoration: none;}
-    h1{font-size: \(Styles.Sizes.Text.h1);}
-    h2{font-size: \(Styles.Sizes.Text.h2);}
-    h3{font-size: \(Styles.Sizes.Text.h3);}
-    h4{font-size: \(Styles.Sizes.Text.h4);}
-    h5{font-size: \(Styles.Sizes.Text.h5);}
-    h6, h7, h8{font-size: \(Styles.Sizes.Text.h6)px; color: #\(Styles.Colors.Gray.medium);}
+    h1{font-size: \(Styles.Text.h1.size);}
+    h2{font-size: \(Styles.Text.h2.size);}
+    h3{font-size: \(Styles.Text.h3.size);}
+    h4{font-size: \(Styles.Text.h4.size);}
+    h5{font-size: \(Styles.Text.h5.size);}
+    h6, h7, h8{font-size: \(Styles.Text.h6.size)px; color: #\(Styles.Colors.Gray.medium);}
     dl dt{margin-top: \(Styles.Sizes.HTML.spacing)px; font-style: italic; font-weight: \(Styles.Sizes.HTML.boldWeight);}
     dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
     pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px;}
-    sub{font-size: \(Styles.Sizes.Text.secondary)px;}
-    sub a{font-size: \(Styles.Sizes.Text.secondary)px;}
+    sub{font-size: \(Styles.Text.secondary.size)px;}
+    sub a{font-size: \(Styles.Text.secondary.size)px;}
     table{border-spacing: 0; border-collapse: collapse;}
     th, td{border: 1px solid #\(Styles.Colors.Gray.border); padding: 6px 13px;}
     th{font-weight: \(Styles.Sizes.HTML.boldWeight); text-align: center;}
@@ -77,9 +77,16 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
         var tapAction = function(e) {
             document.location = "\(ImgScheme)://" + encodeURIComponent(e.target.src);
         };
-        var imgs = document.getElementsByTagName('img')
+        function removeRootPath(img) {
+            var src = img.getAttribute('src');
+            if(src.length > 1 && src.indexOf('/') === 0) {
+                img.src = src.substring(1, src.length);
+            }
+        }
+        var imgs = document.getElementsByTagName('img');
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('click', tapAction);
+            removeRootPath(imgs[i]);
         }
         function onElementHeightChange(elm, callback) {
             var lastHeight = elm.\(IssueCommentHtmlCell.JavaScriptHeight), newHeight;

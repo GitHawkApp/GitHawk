@@ -15,6 +15,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     enum Identifier {
         case number(Int)
         case hash(String)
+        case release(String)
     }
 
     // combining possible issue and PR states
@@ -31,6 +32,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     let title: NSAttributedStringSizing
     let type: NotificationType
     let date: Date
+    let agoString: String
     let read: Bool
     let owner: String
     let repo: String
@@ -60,6 +62,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         self.identifier = identifier
         self.state = state
         self.commentCount = commentCount
+        self.agoString = date.agoString
     }
 
     convenience init(
@@ -74,7 +77,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         containerWidth: CGFloat
         ) {
         let attributes = [
-            NSAttributedStringKey.font: Styles.Fonts.body,
+            NSAttributedStringKey.font: Styles.Text.body.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
         ]
         let title = NSAttributedStringSizing(
@@ -135,7 +138,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         guard let object = object as? NotificationViewModel else { return false }
         return read == object.read
             && type == object.type
-            && date == object.date
+            && agoString == object.agoString
             && repo == object.repo
             && owner == object.owner
             && state == object.state

@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import MessageViewController
+import GitHubAPI
 
 protocol EditCommentViewControllerDelegate: class {
     func didEditComment(viewController: EditCommentViewController, markdown: String)
@@ -68,7 +69,6 @@ MessageTextViewListener {
         )
 
         textView.githawkConfigure(inset: true)
-        textView.keyboardType = .twitter
         view.addSubview(textView)
         textView.snp.makeConstraints { make in
             make.edges.equalTo(view)
@@ -160,17 +160,18 @@ MessageTextViewListener {
         textView.isEditable = false
         textView.resignFirstResponder()
         let markdown = textView.text ?? ""
-        client.editComment(
+
+        client.client.send(V3EditCommentRequest(
             owner: issueModel.owner,
             repo: issueModel.repo,
             issueNumber: issueModel.number,
             commentID: commentID,
             body: markdown,
-            isRoot: isRoot
-        ) { [weak self] (result) in
+            isRoot: isRoot)
+        ) { [weak self] result in
             switch result {
             case .success: self?.didSave(markdown: markdown)
-            case .error: self?.error()
+            case .failure: self?.error()
             }
         }
     }
@@ -191,6 +192,7 @@ MessageTextViewListener {
         navigationItem.rightBarButtonItem?.isEnabled = !textView.text.isEmpty
     }
 
+    func willChangeRange(textView: MessageTextView, to range: NSRange) {}
     func didChangeSelection(textView: MessageTextView) {}
 
 }

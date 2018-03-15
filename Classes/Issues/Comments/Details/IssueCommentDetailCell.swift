@@ -32,9 +32,8 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
-        if #available(iOS 11, *) {
-            imageView.accessibilityIgnoresInvertColors = true
-        }
+        imageView.accessibilityIgnoresInvertColors = true
+        
         imageView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(IssueCommentDetailCell.onTapAvatar))
@@ -46,7 +45,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
-        loginLabel.font = Styles.Fonts.title
+        loginLabel.font = Styles.Text.title.preferredFont
         loginLabel.textColor = Styles.Colors.Gray.dark.color
         loginLabel.isUserInteractionEnabled = true
         loginLabel.addGestureRecognizer(UITapGestureRecognizer(
@@ -59,7 +58,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
         }
 
-        dateLabel.font = Styles.Fonts.secondary
+        dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
@@ -81,7 +80,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             make.right.equalTo(-Styles.Sizes.commentGutter)
         }
 
-        editedLabel.font = Styles.Fonts.secondary
+        editedLabel.font = Styles.Text.secondary.preferredFont
         editedLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(editedLabel)
         editedLabel.snp.makeConstraints { make in

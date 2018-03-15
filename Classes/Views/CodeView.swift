@@ -15,7 +15,7 @@ final class CodeView: UITextView {
 
         backgroundColor = .clear
 
-        font = Styles.Fonts.code
+        font = Styles.Text.code.preferredFont
         isEditable = false
         contentInset = .zero
         textContainerInset = UIEdgeInsets(
@@ -31,23 +31,15 @@ final class CodeView: UITextView {
     }
 
     // MARK: Public API
-
-    func set(code: String) {
-        set(attributedCode: NSAttributedString(
-            string: code,
-            attributes: [
-                // match Highlightr size
-                .font: UIFont(name: "Courier", size: 14)!,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-            ]))
-    }
-
-    func set(code: String, language: String?) {
+    func set(code: String, language: String? = nil) {
         if let language = language,
             let highlighted = GithubHighlighting.highlight(code, as: language) {
             set(attributedCode: highlighted)
         } else {
-            set(code: code)
+            // Automatic language detection
+            if let highlighted = GithubHighlighting.highlight(code) {
+                set(attributedCode: highlighted)
+            }
         }
     }
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,11 +20,11 @@
             <objects>
                 <viewController id="bA6-il-lQA" customClass="LoginSplashViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hgy-EE-Whp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="joJ-g2-qXR">
-                                <rect key="frame" x="15" y="582" width="345" height="55"/>
+                                <rect key="frame" x="15" y="395" width="290" height="55"/>
                                 <color key="backgroundColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="UN6-og-Emz"/>
@@ -39,7 +38,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="ai9-fN-d9O">
-                                <rect key="frame" x="100.5" y="191.5" width="174" height="174"/>
+                                <rect key="frame" x="73" y="98" width="174" height="174"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="174" id="42V-gr-pfO">
                                         <variation key="heightClass=compact" constant="140"/>
@@ -50,22 +49,25 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to GitHawk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfb-Yp-akO">
-                                <rect key="frame" x="50" y="381.5" width="275.5" height="38.5"/>
+                                <rect key="frame" x="22" y="288" width="276" height="38.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An open source app for open source projects." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6P-rW-9YX">
-                                <rect key="frame" x="32" y="451.5" width="311" height="41"/>
+                                <rect key="frame" x="32" y="340" width="256" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="Aeq-jM-Nwc"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="aQ2-N2-0DI">
-                                <rect key="frame" x="30" y="599" width="20" height="20"/>
+                                <rect key="frame" x="30" y="412" width="20" height="20"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5X-Ud-TSJ">
-                                <rect key="frame" x="255" y="28" width="104" height="30"/>
+                                <rect key="frame" x="200" y="28" width="104" height="30"/>
                                 <state key="normal" title="Personal Token"/>
                                 <connections>
                                     <action selector="onPersonalAccessTokenButton:" destination="bA6-il-lQA" eventType="touchUpInside" id="Gh6-L3-I1u"/>
@@ -88,7 +90,7 @@
                             <constraint firstItem="wI4-ER-h6s" firstAttribute="trailing" secondItem="N6P-rW-9YX" secondAttribute="trailing" constant="32" id="Mz7-1t-b2h"/>
                             <constraint firstItem="N6P-rW-9YX" firstAttribute="leading" secondItem="wI4-ER-h6s" secondAttribute="leading" constant="32" id="Qmk-hr-wAd"/>
                             <constraint firstItem="Cfb-Yp-akO" firstAttribute="centerX" secondItem="wI4-ER-h6s" secondAttribute="centerX" id="So4-Be-Mn4"/>
-                            <constraint firstItem="N6P-rW-9YX" firstAttribute="top" secondItem="Cfb-Yp-akO" secondAttribute="bottom" constant="32" id="T1X-l4-dG1">
+                            <constraint firstItem="N6P-rW-9YX" firstAttribute="top" secondItem="Cfb-Yp-akO" secondAttribute="bottom" constant="13.5" id="T1X-l4-dG1">
                                 <variation key="heightClass=compact" constant="16"/>
                             </constraint>
                             <constraint firstItem="wI4-ER-h6s" firstAttribute="trailing" secondItem="joJ-g2-qXR" secondAttribute="trailing" constant="15" id="c3F-OZ-fRS"/>
