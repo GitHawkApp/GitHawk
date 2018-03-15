@@ -323,7 +323,6 @@ IssueManagingNavSectionControllerDelegate {
             guard let strongSelf = self else { return }
             switch resultType {
             case .success(let result):
-                //strongSelf.targetBranchText(with: result.base.ref)
                 strongSelf.targetBranch = result.base.ref
                 break
                 
