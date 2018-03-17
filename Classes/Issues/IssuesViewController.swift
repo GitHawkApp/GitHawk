@@ -32,7 +32,6 @@ IssueManagingNavSectionControllerDelegate {
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
-    private var targetBranch: String?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -314,23 +313,6 @@ IssueManagingNavSectionControllerDelegate {
                 strongSelf.updateAndScrollIfNeeded()
             }
         }
-        
-        client.fetchBranches(
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number
-        ) { [weak self] resultType in
-            guard let strongSelf = self else { return }
-            switch resultType {
-            case .success(let result):
-                strongSelf.targetBranch = result.base.ref
-                break
-                
-            case .error(_):
-                break
-            }
-            
-        }
     }
 
     func updateAndScrollIfNeeded(dismissRefresh: Bool = true) {
@@ -402,8 +384,8 @@ IssueManagingNavSectionControllerDelegate {
         let titleTrailingMetadata = metadata.count > 0 && result?.pullRequest == false
         objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: titleTrailingMetadata))
         
-        if let targetBranch = targetBranch {
-            objects.append(IssueTargetBranchModel(branch: targetBranch, width: view.bounds.width, trailingMetadata: metadata.count > 0))
+        if let targetBranch = current.targetBranch {
+            objects.append(targetBranch)
         }
         
         objects += metadata

@@ -22,6 +22,7 @@ struct IssueResult: Cachable {
     let rootComment: IssueCommentModel?
     let reviewers: IssueAssigneesModel?
     let milestone: Milestone?
+    let targetBranch: IssueTargetBranchModel?
     // end optionals
     let timelinePages: [IssueTimelinePage]
     let viewerCanUpdate: Bool
@@ -89,6 +90,7 @@ struct IssueResult: Cachable {
             rootComment: self.rootComment,
             reviewers: self.reviewers,
             milestone: self.milestone,
+            targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
             viewerCanUpdate: viewerCanUpdate ?? self.viewerCanUpdate,
             hasIssuesEnabled: hasIssuesEnabled ?? self.hasIssuesEnabled,
@@ -113,6 +115,7 @@ struct IssueResult: Cachable {
             rootComment: self.rootComment,
             reviewers: self.reviewers,
             milestone: milestone,
+            targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
             viewerCanUpdate: self.viewerCanUpdate,
             hasIssuesEnabled: self.hasIssuesEnabled,
@@ -137,6 +140,7 @@ struct IssueResult: Cachable {
             rootComment: self.rootComment,
             reviewers: reviewers,
             milestone: self.milestone,
+            targetBranch: self.targetBranch,
             timelinePages: timelinePages ?? self.timelinePages,
             viewerCanUpdate: self.viewerCanUpdate,
             hasIssuesEnabled: self.hasIssuesEnabled,

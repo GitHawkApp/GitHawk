@@ -34,6 +34,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
     var merged: Bool {
         return false
     }
+    
+    var targetBranch: String? {
+        return nil
+    }
 
     var assigneeFields: AssigneeFields {
         return fragments.assigneeFields

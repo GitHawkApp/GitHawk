@@ -12,11 +12,9 @@ import IGListKit
 final class IssueTargetBranchModel: ListDiffable {
     
     let targetBranchText: NSAttributedStringSizing
-    let trailingMetadata: Bool
 
     
-    init(branch: String, width: CGFloat, trailingMetadata: Bool) {
-        self.trailingMetadata = trailingMetadata
+    init(branch: String, width: CGFloat) {
         
         let branchTitleAttributes: [NSAttributedStringKey: Any] = [
             .font: Styles.Text.secondaryCode.preferredFont,
@@ -29,7 +27,6 @@ final class IssueTargetBranchModel: ListDiffable {
         let branchAttributedTitle = NSAttributedString(string: branch, attributes: branchTitleAttributes)
         
         titleAttributedText.append(branchAttributedTitle)
-        
         self.targetBranchText = NSAttributedStringSizing(containerWidth: width, attributedText: titleAttributedText, inset: IssueTargetBranchCell.inset, backgroundColor: Styles.Colors.Gray.lighter.color)
     }
     
@@ -42,7 +39,6 @@ final class IssueTargetBranchModel: ListDiffable {
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueTargetBranchModel else { return false }
-        return trailingMetadata == object.trailingMetadata
-            && targetBranchText.isEqual(toDiffableObject: object)
+        return targetBranchText.isEqual(toDiffableObject: object)
     }
 }

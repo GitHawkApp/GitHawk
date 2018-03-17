@@ -116,6 +116,16 @@ extension GithubClient {
                     } else {
                         milestoneModel = nil
                     }
+                    
+                    let targetBranchModel: IssueTargetBranchModel?
+                    if let baseBranchRef = issueType.targetBranch {
+                        targetBranchModel = IssueTargetBranchModel(
+                            branch: baseBranchRef,
+                            width: width
+                        )
+                    } else {
+                        targetBranchModel = nil
+                    }
 
                     let canAdmin = repository.viewerCanAdminister
 
@@ -129,6 +139,7 @@ extension GithubClient {
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
+                        targetBranch: targetBranchModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository.hasIssuesEnabled,
@@ -488,17 +499,33 @@ extension GithubClient {
         owner: String,
         repo: String,
         number: Int,
-        completion: @escaping (Result<V3PullRequest>) -> Void
+        completion: @escaping (String) -> Void
         ) {
         
-        client.send(V3PullRequestRequest(owner: owner, repo: repo, number: number)) { result in
+        let query = PullRequestTargetBranchQuery(
+            owner: owner,
+            name: repo,
+            number: number
+        )
+        
+        client.query(query, result: { $0.repository?.pullRequest?.baseRefName }) { result in
             switch result {
-            case .success(let response):
-                completion(.success(response.data))
-            case .failure(let error):
-                completion(.error(error))
+            case .success(let baseRefName):
+                completion(baseRefName)
+                
+            case .failure(_):
+                break
             }
         }
+
+//        client.send(V3PullRequestRequest(owner: owner, repo: repo, number: number)) { result in
+//            switch result {
+//            case .success(let response):
+//                completion(.success(response.data))
+//            case .failure(let error):
+//                completion(.error(error))
+//            }
+//        }
         
     }
     

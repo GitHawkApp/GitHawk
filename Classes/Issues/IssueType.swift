@@ -35,6 +35,7 @@ protocol IssueType {
     var assigneeFields: AssigneeFields { get }
     var milestoneFields: MilestoneFields? { get }
     var merged: Bool { get }
+    var targetBranch: String? { get }
     var locked: Bool { get }
     var headPaging: HeadPaging { get }
     var viewerCanUpdate: Bool { get }
