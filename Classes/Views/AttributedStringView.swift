@@ -99,20 +99,22 @@ final class AttributedStringView: UIView {
     // MARK: Private API
 
     @objc func onTap(recognizer: UITapGestureRecognizer) {
-        guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
-        if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
+        guard let detected = DetectMarkdownAttribute(attributes: text?.attributes(point: recognizer.location(in: self)))
+            else { return }
+        switch detected {
+        case .url(let url):
             delegate?.didTapURL(view: self, url: url)
-        } else if let usernameString = attributes[MarkdownAttribute.username] as? String {
-            delegate?.didTapUsername(view: self, username: usernameString)
-        } else if let emailString = attributes[MarkdownAttribute.email] as? String {
-            delegate?.didTapEmail(view: self, email: emailString)
-        } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
+        case .username(let username):
+            delegate?.didTapUsername(view: self, username: username)
+        case .email(let email):
+            delegate?.didTapEmail(view: self, email: email)
+        case .issue(let issue):
             extrasDelegate?.didTapIssue(view: self, issue: issue)
-        } else if let label = attributes[MarkdownAttribute.label] as? LabelDetails {
+        case .label(let label):
             delegate?.didTapLabel(view: self, label: label)
-        } else if let commit = attributes[MarkdownAttribute.commit] as? CommitDetails {
+        case .commit(let commit):
             delegate?.didTapCommit(view: self, commit: commit)
-        } else if let checkbox = attributes[MarkdownAttribute.checkbox] as? MarkdownCheckboxModel {
+        case .checkbox(let checkbox):
             extrasDelegate?.didTapCheckbox(view: self, checkbox: checkbox)
         }
     }

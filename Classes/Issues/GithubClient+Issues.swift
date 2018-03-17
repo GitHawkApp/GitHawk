@@ -54,6 +54,7 @@ extension GithubClient {
         )
 
         let cache = self.cache
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         client.query(query, result: { $0.repository }) { result in
             switch result {
@@ -82,7 +83,12 @@ extension GithubClient {
                         isRoot: true
                     )
 
-                    let timeline = issueType.timelineViewModels(owner: owner, repo: repo, width: width)
+                    let timeline = issueType.timelineViewModels(
+                        owner: owner,
+                        repo: repo,
+                        contentSizeCategory: contentSizeCategory,
+                        width: width
+                    )
 
                     // append the issue author for autocomplete
                     var mentionedUsers = timeline.mentionedUsers

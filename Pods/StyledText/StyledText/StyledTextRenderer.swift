@@ -6,7 +6,7 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public final class StyledTextRenderer {
 
@@ -20,15 +20,18 @@ public final class StyledTextRenderer {
 
     private var map = [UIContentSizeCategory: NSTextStorage]()
     private var lock = os_unfair_lock_s()
+    private var contentSizeCategory: UIContentSizeCategory
 
     public init(
         string: StyledTextString,
+        contentSizeCategory: UIContentSizeCategory,
         inset: UIEdgeInsets = .zero,
         backgroundColor: UIColor? = nil,
         layoutManager: NSLayoutManager = NSLayoutManager(),
         scale: CGFloat = StyledTextScreenScale
         ) {
         self.string = string
+        self.contentSizeCategory = contentSizeCategory
         self.inset = inset
         self.backgroundColor = backgroundColor
         self.scale = scale
@@ -47,7 +50,7 @@ public final class StyledTextRenderer {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private func storage(contentSizeCategory: UIContentSizeCategory) -> NSTextStorage {
+    private var storage: NSTextStorage {
         if let storage = map[contentSizeCategory] {
             return storage
         }
@@ -75,31 +78,27 @@ public final class StyledTextRenderer {
         return size
     }
 
-    public func size(
-        contentSizeCategory: UIContentSizeCategory = .large,
-        width: CGFloat
-        ) -> CGSize {
+    public func size(width: CGFloat) -> CGSize {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
-        let attributedText = storage(contentSizeCategory: contentSizeCategory)
-        return _size(StyledTextRenderCacheKey(width: width, attributedText: attributedText))
+        return _size(StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor))
     }
 
-    static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
+    public func viewSize(width: CGFloat) -> CGSize {
+        return size(width: width).resized(inset: inset)
+    }
+
+    private static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
         maxSize: 1024 * 1024 * 20, // 20mb
         compaction: .default,
         clearOnWarning: true
     )
 
-    public func render(
-        contentSizeCategory: UIContentSizeCategory = .large,
-        width: CGFloat
-        ) -> (image: CGImage?, size: CGSize) {
+    public func render(width: CGFloat) -> (image: CGImage?, size: CGSize) {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
 
-        let attributedText = storage(contentSizeCategory: contentSizeCategory)
-        let key = StyledTextRenderCacheKey(width: width, attributedText: attributedText)
+        let key = StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor)
         let size = _size(key)
         let cache = StyledTextRenderer.globalBitmapCache
         if let cached = cache[key] {
@@ -138,12 +137,11 @@ public final class StyledTextRenderer {
 
     public func warm(
         _ option: WarmOption = .size,
-        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) -> StyledTextRenderer {
         switch option {
-        case .size: let _ = size(contentSizeCategory: contentSizeCategory, width: width)
-        case .bitmap: let _ = render(contentSizeCategory: contentSizeCategory, width: width)
+        case .size: let _ = size(width: width)
+        case .bitmap: let _ = render(width: width)
         }
         return self
     }
