@@ -255,6 +255,7 @@
 		299F63DA205DD86E0015D901 /* StyledTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */; };
 		299F63DE205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63DD205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift */; };
 		299F63E0205DDF6B0015D901 /* UIViewController+Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */; };
+		299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63E1205DE1470015D901 /* UIView+DateDetails.swift */; };
 		29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */; };
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
@@ -687,6 +688,7 @@
 		299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextViewCell.swift; sourceTree = "<group>"; };
 		299F63DD205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+AttributedStringViewDelegate.swift"; sourceTree = "<group>"; };
 		299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Routing.swift"; sourceTree = "<group>"; };
+		299F63E1205DE1470015D901 /* UIView+DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DateDetails.swift"; sourceTree = "<group>"; };
 		29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitCell.swift; sourceTree = "<group>"; };
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1517,6 +1519,7 @@
 				29AF1E831F8AAB4A0008A0EF /* UITextView+GitHawk.swift */,
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
+				299F63E1205DE1470015D901 /* UIView+DateDetails.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2418,6 +2421,7 @@
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
+				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,

@@ -59,16 +59,4 @@ class StyledTextViewCell: UICollectionViewCell, StyledTextViewDelegate {
         }
     }
 
-    @objc func showDetailsInMenu(details: String, point: CGPoint) {
-        becomeFirstResponder()
-        let menu = UIMenuController.shared
-        menu.menuItems = [
-            UIMenuItem(title: details, action: #selector(StyledTextViewCell.empty))
-        ]
-        menu.setTargetRect(CGRect(origin: point, size: CGSize(width: 1, height: 1)), in: self)
-        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    @objc func empty() {}
-
 }
