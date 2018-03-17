@@ -76,7 +76,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
         case .success, .expected:
             iconName = "check-small"
             iconColor = Styles.Colors.Green.medium.color
-        case .error, .failure:
+        case .error, .failure, .__unknown:
             iconName = "x-small"
             iconColor = Styles.Colors.Red.medium.color
         case .pending:

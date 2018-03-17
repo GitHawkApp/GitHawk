@@ -15,7 +15,7 @@ extension ReactionContent {
         case .heart: return "❤️"
         case .hooray: return "🎉"
         case .laugh: return "😄"
-        case .thumbsUp: return "👍"
+        case .thumbsUp, .__unknown: return "👍"
         case .thumbsDown: return "👎"
         }
     }

@@ -5,9 +5,7 @@ use_frameworks!
 inhibit_all_warnings!
 
 # normal pods
-#pod 'Alamofire', '~> 4.4.0'
 pod 'AlamofireNetworkActivityIndicator', '~> 2.1'
-#pod 'Apollo', '~> 0.7.0-alpha.5'
 pod 'HTMLString', '~> 4.0.1'
 pod 'NYTPhotoViewer', '~> 1.1.0'
 pod 'SDWebImage/GIF', '~> 4.0.0'

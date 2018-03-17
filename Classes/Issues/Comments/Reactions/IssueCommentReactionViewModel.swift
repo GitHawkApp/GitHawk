@@ -9,6 +9,12 @@
 import Foundation
 import IGListKit
 
+extension ReactionContent: Hashable {
+    public var hashValue: Int {
+        return rawValue.hashValue
+    }
+}
+
 final class IssueCommentReactionViewModel: ListDiffable {
 
     let models: [ReactionViewModel]

@@ -9,5 +9,5 @@ Pod::Spec.new do |spec|
   spec.source_files = 'GitHubAPI/*.swift'
   spec.platform     = :ios, '10.0'
   spec.dependency 'Alamofire', '~> 4.4.0'
-  spec.dependency 'Apollo', '~> 0.7.0-alpha.5'
+  spec.dependency 'Apollo', '~> 0.8.0'
 end

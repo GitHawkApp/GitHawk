@@ -3,88 +3,280 @@
 import Apollo
 
 /// Emojis that can be attached to Issues, Pull Requests and Comments.
-public enum ReactionContent: String {
+public enum ReactionContent: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// Represents the 👍 emoji.
-  case thumbsUp = "THUMBS_UP"
+  case thumbsUp
   /// Represents the 👎 emoji.
-  case thumbsDown = "THUMBS_DOWN"
+  case thumbsDown
   /// Represents the 😄 emoji.
-  case laugh = "LAUGH"
+  case laugh
   /// Represents the 🎉 emoji.
-  case hooray = "HOORAY"
+  case hooray
   /// Represents the 😕 emoji.
-  case confused = "CONFUSED"
+  case confused
   /// Represents the ❤️ emoji.
-  case heart = "HEART"
-}
+  case heart
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension ReactionContent: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "THUMBS_UP": self = .thumbsUp
+      case "THUMBS_DOWN": self = .thumbsDown
+      case "LAUGH": self = .laugh
+      case "HOORAY": self = .hooray
+      case "CONFUSED": self = .confused
+      case "HEART": self = .heart
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .thumbsUp: return "THUMBS_UP"
+      case .thumbsDown: return "THUMBS_DOWN"
+      case .laugh: return "LAUGH"
+      case .hooray: return "HOORAY"
+      case .confused: return "CONFUSED"
+      case .heart: return "HEART"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: ReactionContent, rhs: ReactionContent) -> Bool {
+    switch (lhs, rhs) {
+      case (.thumbsUp, .thumbsUp): return true
+      case (.thumbsDown, .thumbsDown): return true
+      case (.laugh, .laugh): return true
+      case (.hooray, .hooray): return true
+      case (.confused, .confused): return true
+      case (.heart, .heart): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 /// The possible commit status states.
-public enum StatusState: String {
+public enum StatusState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// Status is expected.
-  case expected = "EXPECTED"
+  case expected
   /// Status is errored.
-  case error = "ERROR"
+  case error
   /// Status is failing.
-  case failure = "FAILURE"
+  case failure
   /// Status is pending.
-  case pending = "PENDING"
+  case pending
   /// Status is successful.
-  case success = "SUCCESS"
-}
+  case success
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension StatusState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "EXPECTED": self = .expected
+      case "ERROR": self = .error
+      case "FAILURE": self = .failure
+      case "PENDING": self = .pending
+      case "SUCCESS": self = .success
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .expected: return "EXPECTED"
+      case .error: return "ERROR"
+      case .failure: return "FAILURE"
+      case .pending: return "PENDING"
+      case .success: return "SUCCESS"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: StatusState, rhs: StatusState) -> Bool {
+    switch (lhs, rhs) {
+      case (.expected, .expected): return true
+      case (.error, .error): return true
+      case (.failure, .failure): return true
+      case (.pending, .pending): return true
+      case (.success, .success): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 /// The possible states of a pull request review.
-public enum PullRequestReviewState: String {
+public enum PullRequestReviewState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// A review that has not yet been submitted.
-  case pending = "PENDING"
+  case pending
   /// An informational review.
-  case commented = "COMMENTED"
+  case commented
   /// A review allowing the pull request to merge.
-  case approved = "APPROVED"
+  case approved
   /// A review blocking the pull request from merging.
-  case changesRequested = "CHANGES_REQUESTED"
+  case changesRequested
   /// A review that has been dismissed.
-  case dismissed = "DISMISSED"
-}
+  case dismissed
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension PullRequestReviewState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "PENDING": self = .pending
+      case "COMMENTED": self = .commented
+      case "APPROVED": self = .approved
+      case "CHANGES_REQUESTED": self = .changesRequested
+      case "DISMISSED": self = .dismissed
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .pending: return "PENDING"
+      case .commented: return "COMMENTED"
+      case .approved: return "APPROVED"
+      case .changesRequested: return "CHANGES_REQUESTED"
+      case .dismissed: return "DISMISSED"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: PullRequestReviewState, rhs: PullRequestReviewState) -> Bool {
+    switch (lhs, rhs) {
+      case (.pending, .pending): return true
+      case (.commented, .commented): return true
+      case (.approved, .approved): return true
+      case (.changesRequested, .changesRequested): return true
+      case (.dismissed, .dismissed): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 /// Whether or not a PullRequest can be merged.
-public enum MergeableState: String {
+public enum MergeableState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// The pull request can be merged.
-  case mergeable = "MERGEABLE"
+  case mergeable
   /// The pull request cannot be merged due to merge conflicts.
-  case conflicting = "CONFLICTING"
+  case conflicting
   /// The mergeability of the pull request is still being calculated.
-  case unknown = "UNKNOWN"
-}
+  case unknown
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension MergeableState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "MERGEABLE": self = .mergeable
+      case "CONFLICTING": self = .conflicting
+      case "UNKNOWN": self = .unknown
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .mergeable: return "MERGEABLE"
+      case .conflicting: return "CONFLICTING"
+      case .unknown: return "UNKNOWN"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: MergeableState, rhs: MergeableState) -> Bool {
+    switch (lhs, rhs) {
+      case (.mergeable, .mergeable): return true
+      case (.conflicting, .conflicting): return true
+      case (.unknown, .unknown): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 /// The possible states of an issue.
-public enum IssueState: String {
+public enum IssueState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// An issue that is still open
-  case `open` = "OPEN"
+  case `open`
   /// An issue that has been closed
-  case closed = "CLOSED"
-}
+  case closed
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension IssueState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "OPEN": self = .open
+      case "CLOSED": self = .closed
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .open: return "OPEN"
+      case .closed: return "CLOSED"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: IssueState, rhs: IssueState) -> Bool {
+    switch (lhs, rhs) {
+      case (.open, .open): return true
+      case (.closed, .closed): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 /// The possible states of a pull request.
-public enum PullRequestState: String {
+public enum PullRequestState: RawRepresentable, Equatable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
   /// A pull request that is still open.
-  case `open` = "OPEN"
+  case `open`
   /// A pull request that has been closed without being merged.
-  case closed = "CLOSED"
+  case closed
   /// A pull request that has been closed by being merged.
-  case merged = "MERGED"
-}
+  case merged
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
 
-extension PullRequestState: Apollo.JSONDecodable, Apollo.JSONEncodable {}
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "OPEN": self = .open
+      case "CLOSED": self = .closed
+      case "MERGED": self = .merged
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .open: return "OPEN"
+      case .closed: return "CLOSED"
+      case .merged: return "MERGED"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: PullRequestState, rhs: PullRequestState) -> Bool {
+    switch (lhs, rhs) {
+      case (.open, .open): return true
+      case (.closed, .closed): return true
+      case (.merged, .merged): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+}
 
 public final class AddCommentMutation: GraphQLMutation {
   public static let operationString =
@@ -118,7 +310,7 @@ public final class AddCommentMutation: GraphQLMutation {
     }
 
     public init(addComment: AddComment? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "addComment": addComment.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "addComment": addComment.flatMap { (value: AddComment) -> Snapshot in value.snapshot }])
     }
 
     /// Adds a comment to an Issue or Pull Request.
@@ -183,7 +375,7 @@ public final class AddCommentMutation: GraphQLMutation {
         }
 
         public init(node: Node? = nil) {
-          self.init(snapshot: ["__typename": "IssueCommentEdge", "node": node.flatMap { $0.snapshot }])
+          self.init(snapshot: ["__typename": "IssueCommentEdge", "node": node.flatMap { (value: Node) -> Snapshot in value.snapshot }])
         }
 
         public var __typename: String {
@@ -235,7 +427,7 @@ public final class AddCommentMutation: GraphQLMutation {
           }
 
           public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool, viewerCanDelete: Bool) {
-            self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
+            self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
           }
 
           public var __typename: String {
@@ -270,10 +462,10 @@ public final class AddCommentMutation: GraphQLMutation {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+              snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
             }
           }
 
@@ -490,7 +682,7 @@ public final class AddCommentMutation: GraphQLMutation {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -505,10 +697,10 @@ public final class AddCommentMutation: GraphQLMutation {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                 }
                 set {
-                  snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                  snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                 }
               }
 
@@ -702,7 +894,7 @@ public final class AddReactionMutation: GraphQLMutation {
     }
 
     public init(addReaction: AddReaction? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "addReaction": addReaction.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "addReaction": addReaction.flatMap { (value: AddReaction) -> Snapshot in value.snapshot }])
     }
 
     /// Adds a reaction to a subject.
@@ -769,23 +961,23 @@ public final class AddReactionMutation: GraphQLMutation {
         }
 
         public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public var __typename: String {
@@ -810,10 +1002,10 @@ public final class AddReactionMutation: GraphQLMutation {
         /// A list of reactions grouped by content left on the subject.
         public var reactionGroups: [ReactionGroup]? {
           get {
-            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+            snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
           }
         }
 
@@ -914,7 +1106,7 @@ public final class AddReactionMutation: GraphQLMutation {
             }
 
             public init(nodes: [Node?]? = nil, totalCount: Int) {
-              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
             }
 
             public var __typename: String {
@@ -929,10 +1121,10 @@ public final class AddReactionMutation: GraphQLMutation {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -1028,7 +1220,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -1061,7 +1253,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
       }
 
       public init(name: String, hasIssuesEnabled: Bool, viewerCanAdminister: Bool, mentionableUsers: MentionableUser, defaultBranchRef: DefaultBranchRef? = nil, issueOrPullRequest: IssueOrPullRequest? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "name": name, "hasIssuesEnabled": hasIssuesEnabled, "viewerCanAdminister": viewerCanAdminister, "mentionableUsers": mentionableUsers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { $0.snapshot }, "issueOrPullRequest": issueOrPullRequest.flatMap { $0.snapshot }])
+        self.init(snapshot: ["__typename": "Repository", "name": name, "hasIssuesEnabled": hasIssuesEnabled, "viewerCanAdminister": viewerCanAdminister, "mentionableUsers": mentionableUsers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }, "issueOrPullRequest": issueOrPullRequest.flatMap { (value: IssueOrPullRequest) -> Snapshot in value.snapshot }])
       }
 
       public var __typename: String {
@@ -1148,7 +1340,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil) {
-          self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+          self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -1163,10 +1355,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
           }
         }
 
@@ -1277,11 +1469,11 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         }
 
         public static func makeIssue(timeline: AsIssue.Timeline, milestone: AsIssue.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsIssue.ReactionGroup]? = nil, author: AsIssue.Author? = nil, editor: AsIssue.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsIssue.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsIssue.Assignee, number: Int, title: String) -> IssueOrPullRequest {
-          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
+          return IssueOrPullRequest(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: AsIssue.Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsIssue.ReactionGroup]) -> [Snapshot] in value.map { (value: AsIssue.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsIssue.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsIssue.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: AsIssue.Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
         }
 
         public static func makePullRequest(timeline: AsPullRequest.Timeline, reviewRequests: AsPullRequest.ReviewRequest? = nil, commits: AsPullRequest.Commit, milestone: AsPullRequest.Milestone? = nil, viewerCanReact: Bool, reactionGroups: [AsPullRequest.ReactionGroup]? = nil, author: AsPullRequest.Author? = nil, editor: AsPullRequest.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: AsPullRequest.Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: AsPullRequest.Assignee, number: Int, title: String, merged: Bool, changedFiles: Int, additions: Int, deletions: Int, mergeable: MergeableState) -> IssueOrPullRequest {
-          return IssueOrPullRequest(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { $0.snapshot }, "commits": commits.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged, "changedFiles": changedFiles, "additions": additions, "deletions": deletions, "mergeable": mergeable])
+          return IssueOrPullRequest(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { (value: AsPullRequest.ReviewRequest) -> Snapshot in value.snapshot }, "commits": commits.snapshot, "milestone": milestone.flatMap { (value: AsPullRequest.Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsPullRequest.ReactionGroup]) -> [Snapshot] in value.map { (value: AsPullRequest.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsPullRequest.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsPullRequest.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: AsPullRequest.Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged, "changedFiles": changedFiles, "additions": additions, "deletions": deletions, "mergeable": mergeable])
         }
 
         public var __typename: String {
@@ -1344,7 +1536,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           }
 
           public init(timeline: Timeline, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String) {
-            self.init(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
+            self.init(snapshot: ["__typename": "Issue", "timeline": timeline.snapshot, "milestone": milestone.flatMap { (value: Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title])
           }
 
           public var __typename: String {
@@ -1389,10 +1581,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+              snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
             }
           }
 
@@ -1637,7 +1829,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(pageInfo: PageInfo, nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "IssueTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "IssueTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -1662,10 +1854,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -1768,63 +1960,63 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
-                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { (value: AsCommit.Author) -> Snapshot in value.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
               }
 
               public static func makeIssueComment(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, author: AsIssueComment.Author? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool, viewerCanDelete: Bool) -> Node {
-                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
+                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsIssueComment.ReactionGroup]) -> [Snapshot] in value.map { (value: AsIssueComment.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsIssueComment.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsIssueComment.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
               }
 
               public static func makeLabeledEvent(id: GraphQLID, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { (value: AsLabeledEvent.Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
               }
 
               public static func makeUnlabeledEvent(id: GraphQLID, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { (value: AsUnlabeledEvent.Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
               }
 
               public static func makeClosedEvent(id: GraphQLID, closedCommit: AsClosedEvent.ClosedCommit? = nil, actor: AsClosedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { (value: AsClosedEvent.ClosedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: AsClosedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeReopenedEvent(id: GraphQLID, actor: AsReopenedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { (value: AsReopenedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeRenamedTitleEvent(id: GraphQLID, actor: AsRenamedTitleEvent.Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { (value: AsRenamedTitleEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
               }
 
               public static func makeLockedEvent(id: GraphQLID, actor: AsLockedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { (value: AsLockedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeUnlockedEvent(id: GraphQLID, actor: AsUnlockedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { (value: AsUnlockedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeCrossReferencedEvent(id: GraphQLID, actor: AsCrossReferencedEvent.Actor? = nil, createdAt: String, source: AsCrossReferencedEvent.Source) -> Node {
-                return Node(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "source": source.snapshot])
+                return Node(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { (value: AsCrossReferencedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "source": source.snapshot])
               }
 
               public static func makeReferencedEvent(createdAt: String, id: GraphQLID, refCommit: AsReferencedEvent.RefCommit? = nil, actor: AsReferencedEvent.Actor? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
+                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { (value: AsReferencedEvent.RefCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: AsReferencedEvent.Actor) -> Snapshot in value.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
               }
 
               public static func makeAssignedEvent(id: GraphQLID, createdAt: String, actor: AsAssignedEvent.Actor? = nil, user: AsAssignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsAssignedEvent.Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: AsAssignedEvent.User) -> Snapshot in value.snapshot }])
               }
 
               public static func makeUnassignedEvent(id: GraphQLID, createdAt: String, actor: AsUnassignedEvent.Actor? = nil, user: AsUnassignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsUnassignedEvent.Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: AsUnassignedEvent.User) -> Snapshot in value.snapshot }])
               }
 
               public static func makeMilestonedEvent(id: GraphQLID, createdAt: String, actor: AsMilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsMilestonedEvent.Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public static func makeDemilestonedEvent(id: GraphQLID, createdAt: String, actor: AsDemilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsDemilestonedEvent.Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public var __typename: String {
@@ -1866,7 +2058,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, oid: String, messageHeadline: String) {
-                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
                 }
 
                 public var __typename: String {
@@ -1955,7 +2147,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(user: User? = nil) {
-                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { $0.snapshot }])
+                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                   }
 
                   public var __typename: String {
@@ -2069,7 +2261,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool, viewerCanDelete: Bool) {
-                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
+                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
                 }
 
                 public var __typename: String {
@@ -2104,10 +2296,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// A list of reactions grouped by content left on the subject.
                 public var reactionGroups: [ReactionGroup]? {
                   get {
-                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
                   }
                   set {
-                    snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+                    snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
                   }
                 }
 
@@ -2324,7 +2516,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
 
                     public init(nodes: [Node?]? = nil, totalCount: Int) {
-                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
                     }
 
                     public var __typename: String {
@@ -2339,10 +2531,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// A list of nodes.
                     public var nodes: [Node?]? {
                       get {
-                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                       }
                       set {
-                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                        snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                       }
                     }
 
@@ -2530,7 +2722,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
-                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -2730,7 +2922,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
-                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -2930,7 +3122,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, closedCommit: ClosedCommit? = nil, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { (value: ClosedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3118,7 +3310,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3265,7 +3457,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) {
-                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
                 }
 
                 public var __typename: String {
@@ -3427,7 +3619,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3567,7 +3759,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -3708,7 +3900,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, source: Source) {
-                  self.init(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "source": source.snapshot])
+                  self.init(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "source": source.snapshot])
                 }
 
                 public var __typename: String {
@@ -4254,7 +4446,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(createdAt: String, id: GraphQLID, refCommit: RefCommit? = nil, actor: Actor? = nil, commitRepository: CommitRepository, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
+                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "refCommit": refCommit.flatMap { (value: RefCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -4766,7 +4958,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -4955,7 +5147,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -5144,7 +5336,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -5295,7 +5487,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -5685,7 +5877,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -5700,10 +5892,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                 }
                 set {
-                  snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                  snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                 }
               }
 
@@ -5875,7 +6067,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -5890,10 +6082,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -5962,7 +6154,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -5977,10 +6169,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -6093,7 +6285,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           }
 
           public init(timeline: Timeline, reviewRequests: ReviewRequest? = nil, commits: Commit, milestone: Milestone? = nil, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, locked: Bool, closed: Bool, labels: Label? = nil, viewerCanUpdate: Bool, id: GraphQLID, assignees: Assignee, number: Int, title: String, merged: Bool, changedFiles: Int, additions: Int, deletions: Int, mergeable: MergeableState) {
-            self.init(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { $0.snapshot }, "commits": commits.snapshot, "milestone": milestone.flatMap { $0.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { $0.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged, "changedFiles": changedFiles, "additions": additions, "deletions": deletions, "mergeable": mergeable])
+            self.init(snapshot: ["__typename": "PullRequest", "timeline": timeline.snapshot, "reviewRequests": reviewRequests.flatMap { (value: ReviewRequest) -> Snapshot in value.snapshot }, "commits": commits.snapshot, "milestone": milestone.flatMap { (value: Milestone) -> Snapshot in value.snapshot }, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "locked": locked, "closed": closed, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "viewerCanUpdate": viewerCanUpdate, "id": id, "assignees": assignees.snapshot, "number": number, "title": title, "merged": merged, "changedFiles": changedFiles, "additions": additions, "deletions": deletions, "mergeable": mergeable])
           }
 
           public var __typename: String {
@@ -6158,10 +6350,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
           /// A list of reactions grouped by content left on the subject.
           public var reactionGroups: [ReactionGroup]? {
             get {
-              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+              return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+              snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
             }
           }
 
@@ -6456,7 +6648,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(pageInfo: PageInfo, nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "PullRequestTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "PullRequestTimelineConnection", "pageInfo": pageInfo.snapshot, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -6481,10 +6673,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -6619,43 +6811,43 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public static func makeCommit(id: GraphQLID, author: AsCommit.Author? = nil, oid: String, messageHeadline: String) -> Node {
-                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+                return Node(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { (value: AsCommit.Author) -> Snapshot in value.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
               }
 
               public static func makeIssueComment(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [AsIssueComment.ReactionGroup]? = nil, author: AsIssueComment.Author? = nil, editor: AsIssueComment.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool, viewerCanDelete: Bool) -> Node {
-                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
+                return Node(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [AsIssueComment.ReactionGroup]) -> [Snapshot] in value.map { (value: AsIssueComment.ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: AsIssueComment.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsIssueComment.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
               }
 
               public static func makeLabeledEvent(id: GraphQLID, actor: AsLabeledEvent.Actor? = nil, label: AsLabeledEvent.Label, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { (value: AsLabeledEvent.Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
               }
 
               public static func makeUnlabeledEvent(id: GraphQLID, actor: AsUnlabeledEvent.Actor? = nil, label: AsUnlabeledEvent.Label, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { (value: AsUnlabeledEvent.Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
               }
 
               public static func makeClosedEvent(id: GraphQLID, closedCommit: AsClosedEvent.ClosedCommit? = nil, actor: AsClosedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { (value: AsClosedEvent.ClosedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: AsClosedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeReopenedEvent(id: GraphQLID, actor: AsReopenedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { (value: AsReopenedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeRenamedTitleEvent(id: GraphQLID, actor: AsRenamedTitleEvent.Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                return Node(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { (value: AsRenamedTitleEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
               }
 
               public static func makeLockedEvent(id: GraphQLID, actor: AsLockedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { (value: AsLockedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeUnlockedEvent(id: GraphQLID, actor: AsUnlockedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { (value: AsUnlockedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makeMergedEvent(id: GraphQLID, mergedCommit: AsMergedEvent.MergedCommit? = nil, actor: AsMergedEvent.Actor? = nil, createdAt: String) -> Node {
-                return Node(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                return Node(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { (value: AsMergedEvent.MergedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: AsMergedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
               }
 
               public static func makePullRequestReviewThread(comments: AsPullRequestReviewThread.Comment) -> Node {
@@ -6663,39 +6855,39 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public static func makePullRequestReview(id: GraphQLID, author: AsPullRequestReview.Author? = nil, editor: AsPullRequestReview.Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, state: PullRequestReviewState, submittedAt: String? = nil, comments: AsPullRequestReview.Comment) -> Node {
-                return Node(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt, "comments": comments.snapshot])
+                return Node(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { (value: AsPullRequestReview.Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: AsPullRequestReview.Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt, "comments": comments.snapshot])
               }
 
               public static func makeCrossReferencedEvent(id: GraphQLID, actor: AsCrossReferencedEvent.Actor? = nil, createdAt: String, source: AsCrossReferencedEvent.Source) -> Node {
-                return Node(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "source": source.snapshot])
+                return Node(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { (value: AsCrossReferencedEvent.Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "source": source.snapshot])
               }
 
               public static func makeReferencedEvent(createdAt: String, id: GraphQLID, actor: AsReferencedEvent.Actor? = nil, commitRepository: AsReferencedEvent.CommitRepository, subject: AsReferencedEvent.Subject) -> Node {
-                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
+                return Node(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { (value: AsReferencedEvent.Actor) -> Snapshot in value.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
               }
 
               public static func makeAssignedEvent(id: GraphQLID, createdAt: String, actor: AsAssignedEvent.Actor? = nil, user: AsAssignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsAssignedEvent.Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: AsAssignedEvent.User) -> Snapshot in value.snapshot }])
               }
 
               public static func makeUnassignedEvent(id: GraphQLID, createdAt: String, actor: AsUnassignedEvent.Actor? = nil, user: AsUnassignedEvent.User? = nil) -> Node {
-                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsUnassignedEvent.Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: AsUnassignedEvent.User) -> Snapshot in value.snapshot }])
               }
 
               public static func makeReviewRequestedEvent(id: GraphQLID, createdAt: String, actor: AsReviewRequestedEvent.Actor? = nil, requestedReviewer: AsReviewRequestedEvent.RequestedReviewer? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "requestedReviewer": requestedReviewer.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsReviewRequestedEvent.Actor) -> Snapshot in value.snapshot }, "requestedReviewer": requestedReviewer.flatMap { (value: AsReviewRequestedEvent.RequestedReviewer) -> Snapshot in value.snapshot }])
               }
 
               public static func makeReviewRequestRemovedEvent(id: GraphQLID, createdAt: String, actor: AsReviewRequestRemovedEvent.Actor? = nil, requestedReviewer: AsReviewRequestRemovedEvent.RequestedReviewer? = nil) -> Node {
-                return Node(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "requestedReviewer": requestedReviewer.flatMap { $0.snapshot }])
+                return Node(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsReviewRequestRemovedEvent.Actor) -> Snapshot in value.snapshot }, "requestedReviewer": requestedReviewer.flatMap { (value: AsReviewRequestRemovedEvent.RequestedReviewer) -> Snapshot in value.snapshot }])
               }
 
               public static func makeMilestonedEvent(id: GraphQLID, createdAt: String, actor: AsMilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                return Node(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsMilestonedEvent.Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public static func makeDemilestonedEvent(id: GraphQLID, createdAt: String, actor: AsDemilestonedEvent.Actor? = nil, milestoneTitle: String) -> Node {
-                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                return Node(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: AsDemilestonedEvent.Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
               }
 
               public var __typename: String {
@@ -6737,7 +6929,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, oid: String, messageHeadline: String) {
-                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { $0.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
+                  self.init(snapshot: ["__typename": "Commit", "id": id, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "oid": oid, "messageHeadline": messageHeadline])
                 }
 
                 public var __typename: String {
@@ -6826,7 +7018,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(user: User? = nil) {
-                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { $0.snapshot }])
+                    self.init(snapshot: ["__typename": "GitActor", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                   }
 
                   public var __typename: String {
@@ -6940,7 +7132,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, viewerCanUpdate: Bool, viewerCanDelete: Bool) {
-                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
+                  self.init(snapshot: ["__typename": "IssueComment", "id": id, "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "viewerCanUpdate": viewerCanUpdate, "viewerCanDelete": viewerCanDelete])
                 }
 
                 public var __typename: String {
@@ -6975,10 +7167,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 /// A list of reactions grouped by content left on the subject.
                 public var reactionGroups: [ReactionGroup]? {
                   get {
-                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                    return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
                   }
                   set {
-                    snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+                    snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
                   }
                 }
 
@@ -7195,7 +7387,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
 
                     public init(nodes: [Node?]? = nil, totalCount: Int) {
-                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                      self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
                     }
 
                     public var __typename: String {
@@ -7210,10 +7402,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// A list of nodes.
                     public var nodes: [Node?]? {
                       get {
-                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                        return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                       }
                       set {
-                        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                        snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                       }
                     }
 
@@ -7401,7 +7593,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
-                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "LabeledEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7601,7 +7793,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, label: Label, createdAt: String) {
-                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "label": label.snapshot, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "UnlabeledEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "label": label.snapshot, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7801,7 +7993,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, closedCommit: ClosedCommit? = nil, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "ClosedEvent", "id": id, "closedCommit": closedCommit.flatMap { (value: ClosedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -7989,7 +8181,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "ReopenedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8136,7 +8328,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, currentTitle: String, previousTitle: String) {
-                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
+                  self.init(snapshot: ["__typename": "RenamedTitleEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "currentTitle": currentTitle, "previousTitle": previousTitle])
                 }
 
                 public var __typename: String {
@@ -8298,7 +8490,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "LockedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8438,7 +8630,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "UnlockedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8579,7 +8771,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, mergedCommit: MergedCommit? = nil, actor: Actor? = nil, createdAt: String) {
-                  self.init(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { $0.snapshot }, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt])
+                  self.init(snapshot: ["__typename": "MergedEvent", "id": id, "mergedCommit": mergedCommit.flatMap { (value: MergedCommit) -> Snapshot in value.snapshot }, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt])
                 }
 
                 public var __typename: String {
@@ -8801,7 +8993,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(nodes: [Node?]? = nil) {
-                    self.init(snapshot: ["__typename": "PullRequestReviewCommentConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+                    self.init(snapshot: ["__typename": "PullRequestReviewCommentConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
                   }
 
                   public var __typename: String {
@@ -8816,10 +9008,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   /// A list of nodes.
                   public var nodes: [Node?]? {
                     get {
-                      return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                      return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                     }
                     set {
-                      snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                      snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                     }
                   }
 
@@ -8851,7 +9043,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
 
                     public init(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil, id: GraphQLID, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, path: String, diffHunk: String) {
-                      self.init(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }, "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "path": path, "diffHunk": diffHunk])
+                      self.init(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, "id": id, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "path": path, "diffHunk": diffHunk])
                     }
 
                     public var __typename: String {
@@ -8876,10 +9068,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     /// A list of reactions grouped by content left on the subject.
                     public var reactionGroups: [ReactionGroup]? {
                       get {
-                        return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+                        return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
                       }
                       set {
-                        snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+                        snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
                       }
                     }
 
@@ -9088,7 +9280,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         }
 
                         public init(nodes: [Node?]? = nil, totalCount: Int) {
-                          self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                          self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
                         }
 
                         public var __typename: String {
@@ -9103,10 +9295,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                         /// A list of nodes.
                         public var nodes: [Node?]? {
                           get {
-                            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                           }
                           set {
-                            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                           }
                         }
 
@@ -9304,7 +9496,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool, state: PullRequestReviewState, submittedAt: String? = nil, comments: Comment) {
-                  self.init(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt, "comments": comments.snapshot])
+                  self.init(snapshot: ["__typename": "PullRequestReview", "id": id, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor, "state": state, "submittedAt": submittedAt, "comments": comments.snapshot])
                 }
 
                 public var __typename: String {
@@ -9621,7 +9813,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, actor: Actor? = nil, createdAt: String, source: Source) {
-                  self.init(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { $0.snapshot }, "createdAt": createdAt, "source": source.snapshot])
+                  self.init(snapshot: ["__typename": "CrossReferencedEvent", "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "createdAt": createdAt, "source": source.snapshot])
                 }
 
                 public var __typename: String {
@@ -10166,7 +10358,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(createdAt: String, id: GraphQLID, actor: Actor? = nil, commitRepository: CommitRepository, subject: Subject) {
-                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { $0.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
+                  self.init(snapshot: ["__typename": "ReferencedEvent", "createdAt": createdAt, "id": id, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "commitRepository": commitRepository.snapshot, "subject": subject.snapshot])
                 }
 
                 public var __typename: String {
@@ -10630,7 +10822,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "AssignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -10819,7 +11011,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, user: User? = nil) {
-                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "user": user.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "UnassignedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -11008,7 +11200,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, requestedReviewer: RequestedReviewer? = nil) {
-                  self.init(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "requestedReviewer": requestedReviewer.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "ReviewRequestedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "requestedReviewer": requestedReviewer.flatMap { (value: RequestedReviewer) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -11244,7 +11436,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, requestedReviewer: RequestedReviewer? = nil) {
-                  self.init(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "requestedReviewer": requestedReviewer.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "ReviewRequestRemovedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "requestedReviewer": requestedReviewer.flatMap { (value: RequestedReviewer) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -11480,7 +11672,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "MilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -11631,7 +11823,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, createdAt: String, actor: Actor? = nil, milestoneTitle: String) {
-                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { $0.snapshot }, "milestoneTitle": milestoneTitle])
+                  self.init(snapshot: ["__typename": "DemilestonedEvent", "id": id, "createdAt": createdAt, "actor": actor.flatMap { (value: Actor) -> Snapshot in value.snapshot }, "milestoneTitle": milestoneTitle])
                 }
 
                 public var __typename: String {
@@ -11769,7 +11961,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "ReviewRequestConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "ReviewRequestConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -11784,10 +11976,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -11806,7 +11998,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public init(requestedReviewer: RequestedReviewer? = nil) {
-                self.init(snapshot: ["__typename": "ReviewRequest", "requestedReviewer": requestedReviewer.flatMap { $0.snapshot }])
+                self.init(snapshot: ["__typename": "ReviewRequest", "requestedReviewer": requestedReviewer.flatMap { (value: RequestedReviewer) -> Snapshot in value.snapshot }])
               }
 
               public var __typename: String {
@@ -11941,7 +12133,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "PullRequestCommitConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "PullRequestCommitConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -11956,10 +12148,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -12017,7 +12209,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 public init(id: GraphQLID, status: Status? = nil) {
-                  self.init(snapshot: ["__typename": "Commit", "id": id, "status": status.flatMap { $0.snapshot }])
+                  self.init(snapshot: ["__typename": "Commit", "id": id, "status": status.flatMap { (value: Status) -> Snapshot in value.snapshot }])
                 }
 
                 public var __typename: String {
@@ -12086,7 +12278,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
 
                   public init(contexts: [Context], state: StatusState) {
-                    self.init(snapshot: ["__typename": "Status", "contexts": contexts.map { $0.snapshot }, "state": state])
+                    self.init(snapshot: ["__typename": "Status", "contexts": contexts.map { (value: Context) -> Snapshot in value.snapshot }, "state": state])
                   }
 
                   public var __typename: String {
@@ -12101,10 +12293,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   /// The individual status contexts for this commit.
                   public var contexts: [Context] {
                     get {
-                      return (snapshot["contexts"] as! [Snapshot]).map { Context(snapshot: $0) }
+                      return (snapshot["contexts"] as! [Snapshot]).map { (value: Snapshot) -> Context in Context(snapshot: value) }
                     }
                     set {
-                      snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "contexts")
+                      snapshot.updateValue(newValue.map { (value: Context) -> Snapshot in value.snapshot }, forKey: "contexts")
                     }
                   }
 
@@ -12137,7 +12329,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                     }
 
                     public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil) {
-                      self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { $0.snapshot }, "description": description])
+                      self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description])
                     }
 
                     public var __typename: String {
@@ -12527,7 +12719,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               }
 
               public init(nodes: [Node?]? = nil, totalCount: Int) {
-                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+                self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
               }
 
               public var __typename: String {
@@ -12542,10 +12734,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
               /// A list of nodes.
               public var nodes: [Node?]? {
                 get {
-                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                  return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
                 }
                 set {
-                  snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                  snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
                 }
               }
 
@@ -12717,7 +12909,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -12732,10 +12924,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -12804,7 +12996,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -12819,10 +13011,10 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -12913,7 +13105,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
     }
 
     public init(removeReaction: RemoveReaction? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "removeReaction": removeReaction.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "removeReaction": removeReaction.flatMap { (value: RemoveReaction) -> Snapshot in value.snapshot }])
     }
 
     /// Removes a reaction from a subject.
@@ -12980,23 +13172,23 @@ public final class RemoveReactionMutation: GraphQLMutation {
         }
 
         public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> Subject {
-          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+          return Subject(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
         }
 
         public var __typename: String {
@@ -13021,10 +13213,10 @@ public final class RemoveReactionMutation: GraphQLMutation {
         /// A list of reactions grouped by content left on the subject.
         public var reactionGroups: [ReactionGroup]? {
           get {
-            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+            return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+            snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
           }
         }
 
@@ -13125,7 +13317,7 @@ public final class RemoveReactionMutation: GraphQLMutation {
             }
 
             public init(nodes: [Node?]? = nil, totalCount: Int) {
-              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+              self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
             }
 
             public var __typename: String {
@@ -13140,10 +13332,10 @@ public final class RemoveReactionMutation: GraphQLMutation {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -13233,7 +13425,7 @@ public final class RepoFileQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -13261,7 +13453,7 @@ public final class RepoFileQuery: GraphQLQuery {
       }
 
       public init(object: Object? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "object": object.flatMap { $0.snapshot }])
+        self.init(snapshot: ["__typename": "Repository", "object": object.flatMap { (value: Object) -> Snapshot in value.snapshot }])
       }
 
       public var __typename: String {
@@ -13411,7 +13603,7 @@ public final class RepoFilesQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -13439,7 +13631,7 @@ public final class RepoFilesQuery: GraphQLQuery {
       }
 
       public init(object: Object? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "object": object.flatMap { $0.snapshot }])
+        self.init(snapshot: ["__typename": "Repository", "object": object.flatMap { (value: Object) -> Snapshot in value.snapshot }])
       }
 
       public var __typename: String {
@@ -13492,7 +13684,7 @@ public final class RepoFilesQuery: GraphQLQuery {
         }
 
         public static func makeTree(entries: [AsTree.Entry]? = nil) -> Object {
-          return Object(snapshot: ["__typename": "Tree", "entries": entries.flatMap { $0.map { $0.snapshot } }])
+          return Object(snapshot: ["__typename": "Tree", "entries": entries.flatMap { (value: [AsTree.Entry]) -> [Snapshot] in value.map { (value: AsTree.Entry) -> Snapshot in value.snapshot } }])
         }
 
         public var __typename: String {
@@ -13530,7 +13722,7 @@ public final class RepoFilesQuery: GraphQLQuery {
           }
 
           public init(entries: [Entry]? = nil) {
-            self.init(snapshot: ["__typename": "Tree", "entries": entries.flatMap { $0.map { $0.snapshot } }])
+            self.init(snapshot: ["__typename": "Tree", "entries": entries.flatMap { (value: [Entry]) -> [Snapshot] in value.map { (value: Entry) -> Snapshot in value.snapshot } }])
           }
 
           public var __typename: String {
@@ -13545,10 +13737,10 @@ public final class RepoFilesQuery: GraphQLQuery {
           /// A list of tree entries.
           public var entries: [Entry]? {
             get {
-              return (snapshot["entries"] as? [Snapshot]).flatMap { $0.map { Entry(snapshot: $0) } }
+              return (snapshot["entries"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [Entry] in value.map { (value: Snapshot) -> Entry in Entry(snapshot: value) } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "entries")
+              snapshot.updateValue(newValue.flatMap { (value: [Entry]) -> [Snapshot] in value.map { (value: Entry) -> Snapshot in value.snapshot } }, forKey: "entries")
             }
           }
 
@@ -13642,7 +13834,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -13708,7 +13900,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
-          self.init(snapshot: ["__typename": "IssueConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot])
+          self.init(snapshot: ["__typename": "IssueConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
         }
 
         public var __typename: String {
@@ -13723,10 +13915,10 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
           }
         }
 
@@ -13764,7 +13956,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
           }
 
           public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, state: IssueState) {
-            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "labels": labels.flatMap { $0.snapshot }, "title": title, "number": number, "state": state])
+            self.init(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -13947,7 +14139,7 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -13962,10 +14154,10 @@ public final class RepoIssuePagesQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -14109,7 +14301,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -14175,7 +14367,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
-          self.init(snapshot: ["__typename": "PullRequestConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot])
+          self.init(snapshot: ["__typename": "PullRequestConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
         }
 
         public var __typename: String {
@@ -14190,10 +14382,10 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
           }
         }
 
@@ -14231,7 +14423,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
           }
 
           public init(createdAt: String, author: Author? = nil, id: GraphQLID, labels: Label? = nil, title: String, number: Int, state: PullRequestState) {
-            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }, "id": id, "labels": labels.flatMap { $0.snapshot }, "title": title, "number": number, "state": state])
+            self.init(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "id": id, "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }, "title": title, "number": number, "state": state])
           }
 
           public var __typename: String {
@@ -14414,7 +14606,7 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
             }
 
             public init(nodes: [Node?]? = nil) {
-              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+              self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
             }
 
             public var __typename: String {
@@ -14429,10 +14621,10 @@ public final class RepoPullRequestPagesQuery: GraphQLQuery {
             /// A list of nodes.
             public var nodes: [Node?]? {
               get {
-                return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+                return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
               }
               set {
-                snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+                snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
               }
             }
 
@@ -14570,7 +14762,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
     }
 
     public init(repository: Repository? = nil) {
-      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
     }
 
     /// Lookup a given repository by the owner and repository name.
@@ -14598,7 +14790,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
       }
 
       public init(labels: Label? = nil) {
-        self.init(snapshot: ["__typename": "Repository", "labels": labels.flatMap { $0.snapshot }])
+        self.init(snapshot: ["__typename": "Repository", "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }])
       }
 
       public var __typename: String {
@@ -14635,7 +14827,7 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
         }
 
         public init(nodes: [Node?]? = nil) {
-          self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+          self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -14650,10 +14842,10 @@ public final class RepositoryLabelsQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? {
           get {
-            return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
           }
         }
 
@@ -14770,7 +14962,7 @@ public final class SearchReposQuery: GraphQLQuery {
       }
 
       public init(nodes: [Node?]? = nil, pageInfo: PageInfo, repositoryCount: Int) {
-        self.init(snapshot: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "pageInfo": pageInfo.snapshot, "repositoryCount": repositoryCount])
+        self.init(snapshot: ["__typename": "SearchResultItemConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot, "repositoryCount": repositoryCount])
       }
 
       public var __typename: String {
@@ -14785,10 +14977,10 @@ public final class SearchReposQuery: GraphQLQuery {
       /// A list of nodes.
       public var nodes: [Node?]? {
         get {
-          return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+          return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
         }
         set {
-          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+          snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
         }
       }
 
@@ -14847,7 +15039,7 @@ public final class SearchReposQuery: GraphQLQuery {
         }
 
         public static func makeRepository(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: AsRepository.Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: AsRepository.PrimaryLanguage? = nil, stargazers: AsRepository.Stargazer, defaultBranchRef: AsRepository.DefaultBranchRef? = nil) -> Node {
-          return Node(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { $0.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { $0.snapshot }])
+          return Node(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: AsRepository.PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: AsRepository.DefaultBranchRef) -> Snapshot in value.snapshot }])
         }
 
         public var __typename: String {
@@ -14893,7 +15085,7 @@ public final class SearchReposQuery: GraphQLQuery {
           }
 
           public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer, defaultBranchRef: DefaultBranchRef? = nil) {
-            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { $0.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { $0.snapshot }])
+            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }])
           }
 
           public var __typename: String {
@@ -15234,23 +15426,23 @@ public struct ReactionFields: GraphQLFragment {
   }
 
   public static func makeIssue(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+    return ReactionFields(snapshot: ["__typename": "Issue", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
   }
 
   public static func makeCommitComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+    return ReactionFields(snapshot: ["__typename": "CommitComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
   }
 
   public static func makePullRequest(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+    return ReactionFields(snapshot: ["__typename": "PullRequest", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
   }
 
   public static func makeIssueComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+    return ReactionFields(snapshot: ["__typename": "IssueComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
   }
 
   public static func makePullRequestReviewComment(viewerCanReact: Bool, reactionGroups: [ReactionGroup]? = nil) -> ReactionFields {
-    return ReactionFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { $0.map { $0.snapshot } }])
+    return ReactionFields(snapshot: ["__typename": "PullRequestReviewComment", "viewerCanReact": viewerCanReact, "reactionGroups": reactionGroups.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }])
   }
 
   public var __typename: String {
@@ -15275,10 +15467,10 @@ public struct ReactionFields: GraphQLFragment {
   /// A list of reactions grouped by content left on the subject.
   public var reactionGroups: [ReactionGroup]? {
     get {
-      return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { $0.map { ReactionGroup(snapshot: $0) } }
+      return (snapshot["reactionGroups"] as? [Snapshot]).flatMap { (value: [Snapshot]) -> [ReactionGroup] in value.map { (value: Snapshot) -> ReactionGroup in ReactionGroup(snapshot: value) } }
     }
     set {
-      snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "reactionGroups")
+      snapshot.updateValue(newValue.flatMap { (value: [ReactionGroup]) -> [Snapshot] in value.map { (value: ReactionGroup) -> Snapshot in value.snapshot } }, forKey: "reactionGroups")
     }
   }
 
@@ -15357,7 +15549,7 @@ public struct ReactionFields: GraphQLFragment {
       }
 
       public init(nodes: [Node?]? = nil, totalCount: Int) {
-        self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, "totalCount": totalCount])
+        self.init(snapshot: ["__typename": "ReactingUserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "totalCount": totalCount])
       }
 
       public var __typename: String {
@@ -15372,10 +15564,10 @@ public struct ReactionFields: GraphQLFragment {
       /// A list of nodes.
       public var nodes: [Node?]? {
         get {
-          return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+          return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
         }
         set {
-          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+          snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
         }
       }
 
@@ -15453,31 +15645,31 @@ public struct CommentFields: GraphQLFragment {
   }
 
   public static func makeIssue(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "Issue", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "Issue", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makeCommitComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "CommitComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "CommitComment", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makePullRequest(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequest", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "PullRequest", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makeIssueComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "IssueComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "IssueComment", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makePullRequestReview(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequestReview", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "PullRequestReview", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makePullRequestReviewComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "PullRequestReviewComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "PullRequestReviewComment", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public static func makeGistComment(author: Author? = nil, editor: Editor? = nil, lastEditedAt: String? = nil, body: String, createdAt: String, viewerDidAuthor: Bool) -> CommentFields {
-    return CommentFields(snapshot: ["__typename": "GistComment", "author": author.flatMap { $0.snapshot }, "editor": editor.flatMap { $0.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
+    return CommentFields(snapshot: ["__typename": "GistComment", "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }, "editor": editor.flatMap { (value: Editor) -> Snapshot in value.snapshot }, "lastEditedAt": lastEditedAt, "body": body, "createdAt": createdAt, "viewerDidAuthor": viewerDidAuthor])
   }
 
   public var __typename: String {
@@ -15765,11 +15957,11 @@ public struct LabelableFields: GraphQLFragment {
   }
 
   public static func makeIssue(labels: Label? = nil) -> LabelableFields {
-    return LabelableFields(snapshot: ["__typename": "Issue", "labels": labels.flatMap { $0.snapshot }])
+    return LabelableFields(snapshot: ["__typename": "Issue", "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }])
   }
 
   public static func makePullRequest(labels: Label? = nil) -> LabelableFields {
-    return LabelableFields(snapshot: ["__typename": "PullRequest", "labels": labels.flatMap { $0.snapshot }])
+    return LabelableFields(snapshot: ["__typename": "PullRequest", "labels": labels.flatMap { (value: Label) -> Snapshot in value.snapshot }])
   }
 
   public var __typename: String {
@@ -15806,7 +15998,7 @@ public struct LabelableFields: GraphQLFragment {
     }
 
     public init(nodes: [Node?]? = nil) {
-      self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+      self.init(snapshot: ["__typename": "LabelConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
     }
 
     public var __typename: String {
@@ -15821,10 +16013,10 @@ public struct LabelableFields: GraphQLFragment {
     /// A list of nodes.
     public var nodes: [Node?]? {
       get {
-        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+        return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
       }
       set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+        snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
       }
     }
 
@@ -16503,7 +16695,7 @@ public struct AssigneeFields: GraphQLFragment {
     }
 
     public init(nodes: [Node?]? = nil) {
-      self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+      self.init(snapshot: ["__typename": "UserConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }])
     }
 
     public var __typename: String {
@@ -16518,10 +16710,10 @@ public struct AssigneeFields: GraphQLFragment {
     /// A list of nodes.
     public var nodes: [Node?]? {
       get {
-        return (snapshot["nodes"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Node(snapshot: $0) } } }
+        return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
       }
       set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "nodes")
+        snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
       }
     }
 
@@ -16819,31 +17011,31 @@ public struct RepoEventFields: GraphQLFragment {
   }
 
   public static func makeIssue(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "Issue", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makeCommitComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "CommitComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "CommitComment", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makePullRequest(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "PullRequest", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makeIssueComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "IssueComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "IssueComment", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makePullRequestReview(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequestReview", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "PullRequestReview", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makePullRequestReviewComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "PullRequestReviewComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "PullRequestReviewComment", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public static func makeGistComment(createdAt: String, author: Author? = nil) -> RepoEventFields {
-    return RepoEventFields(snapshot: ["__typename": "GistComment", "createdAt": createdAt, "author": author.flatMap { $0.snapshot }])
+    return RepoEventFields(snapshot: ["__typename": "GistComment", "createdAt": createdAt, "author": author.flatMap { (value: Author) -> Snapshot in value.snapshot }])
   }
 
   public var __typename: String {
@@ -16941,7 +17133,7 @@ public struct CommitContext: GraphQLFragment {
   }
 
   public init(id: GraphQLID, status: Status? = nil) {
-    self.init(snapshot: ["__typename": "Commit", "id": id, "status": status.flatMap { $0.snapshot }])
+    self.init(snapshot: ["__typename": "Commit", "id": id, "status": status.flatMap { (value: Status) -> Snapshot in value.snapshot }])
   }
 
   public var __typename: String {
@@ -16988,7 +17180,7 @@ public struct CommitContext: GraphQLFragment {
     }
 
     public init(contexts: [Context], state: StatusState) {
-      self.init(snapshot: ["__typename": "Status", "contexts": contexts.map { $0.snapshot }, "state": state])
+      self.init(snapshot: ["__typename": "Status", "contexts": contexts.map { (value: Context) -> Snapshot in value.snapshot }, "state": state])
     }
 
     public var __typename: String {
@@ -17003,10 +17195,10 @@ public struct CommitContext: GraphQLFragment {
     /// The individual status contexts for this commit.
     public var contexts: [Context] {
       get {
-        return (snapshot["contexts"] as! [Snapshot]).map { Context(snapshot: $0) }
+        return (snapshot["contexts"] as! [Snapshot]).map { (value: Snapshot) -> Context in Context(snapshot: value) }
       }
       set {
-        snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "contexts")
+        snapshot.updateValue(newValue.map { (value: Context) -> Snapshot in value.snapshot }, forKey: "contexts")
       }
     }
 
@@ -17039,7 +17231,7 @@ public struct CommitContext: GraphQLFragment {
       }
 
       public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil) {
-        self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { $0.snapshot }, "description": description])
+        self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description])
       }
 
       public var __typename: String {

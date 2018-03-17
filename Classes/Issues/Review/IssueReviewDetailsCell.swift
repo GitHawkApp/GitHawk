@@ -76,7 +76,7 @@ final class IssueReviewDetailsCell: IssueCommentBaseCell, ListBindable {
         let iconTintColor: UIColor
         let iconName: String
         switch viewModel.state {
-        case .commented:
+        case .commented, .__unknown:
             action = NSLocalizedString("commented", comment: "")
             iconBackgroundColor = Styles.Colors.Gray.lighter.color
             iconTintColor = Styles.Colors.Gray.medium.color

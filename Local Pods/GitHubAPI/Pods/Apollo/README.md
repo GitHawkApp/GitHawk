@@ -14,7 +14,7 @@ This combination of models with value semantics, one way data flow, and automati
 
 ## Documentation
 
-Documentation can be found [here](http://dev.apollodata.com/ios/).
+[Read the full docs at apollographql.com/docs/ios/](https://www.apollographql.com/docs/ios/)
 
 ## Installation
 
@@ -26,18 +26,18 @@ Install `apollo-codegen` using `npm`:
 npm install -g apollo-codegen
 ```
 
-### Cocoapods
+### CocoaPods
 
 Include the following in your `Podfile`:
 
 ```ruby
-pod 'Apollo', '~> 0.6.0'
+pod 'Apollo', '~> 0.7.0'
 ```
 
 The core `Apollo` framework comes with an in-memory cache. You can include an experimental SQLite-based persistent cache by adding the following:
 
 ```ruby
-pod 'Apollo/SQLite', '~> 0.6.0'
+pod 'Apollo/SQLite', '~> 0.7.0'
 ```
 
 ### Carthage
@@ -45,7 +45,7 @@ pod 'Apollo/SQLite', '~> 0.6.0'
 Include the following in your `Cartfile`:
 
 ```
-github "apollographql/apollo-ios" "0.6.0"
+github "apollographql/apollo-ios" "0.7.0"
 ```
 
 Unfortunately Carthage doesn't support resolving prelease versions, so you'll have to update this for new betas.
@@ -56,7 +56,7 @@ Because Carthage doesn't allow specifying individual targets, this will build bo
 
 [![Build status](https://travis-ci.org/apollographql/apollo-ios.svg?branch=master)](https://travis-ci.org/apollographql/apollo-ios)
 
-This project is being developed using Xcode 8 and Swift 3.
+This project is being developed using Xcode 9 and Swift 4.
 
 If you open `Apollo.xcodeproj`, you should be able to run the tests of the Apollo target.
 
