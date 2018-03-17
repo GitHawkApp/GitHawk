@@ -38,6 +38,7 @@ extension ContextMenu {
         public let overlayColor: UIColor
 
         /// A flag indicating if device gyro effects should be applied.
+        /// If the user has enabled Reduce Motion in Settings, this will be ignored.
         public let motionEffect: Bool
 
         public init(

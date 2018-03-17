@@ -19,9 +19,14 @@ class ContextMenuDismissing: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: .from) else { return }
 
+        let delegate = item.delegate
+        let viewController = item.viewController.viewController
+        let animated = transitionContext.isAnimated
+        delegate?.contextMenuWillDismiss(viewController: viewController, animated: animated)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             fromViewController.view.alpha = 0
         }) { _ in
+            delegate?.contextMenuDidDismiss(viewController: viewController, animated: animated)
             transitionContext.completeTransition(true)
         }
     }

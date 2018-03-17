@@ -15,7 +15,7 @@ class ReactionTests: XCTestCase {
 
     private static func createReactionViewModel(users _users: [String]) -> ReactionViewModel {
         let count = _users.count
-        let users: [String] // the logic below mimicks the users.count capping at 3: https://github.com/rnystrom/GitHawk/issues/541#issuecomment-336378078
+        let users: [String] // the logic below mimicks the users.count capping at 3: https://github.com/GitHawkApp/GitHawk/issues/541#issuecomment-336378078
         if _users.count > 3 {
             users = Array(_users.prefix(3))
         } else {

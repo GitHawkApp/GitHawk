@@ -4,13 +4,13 @@
   "license": {
     "type": "MIT"
   },
-  "homepage": "https://github.com/rnystrom/githawk",
+  "homepage": "https://github.com/GitHawkApp/githawk",
   "authors": {
     "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
   },
   "summary": ".",
   "source": {
-    "git": "https://github.com/rnystrom/githawk/githawk.git",
+    "git": "https://github.com/GitHawkApp/githawk/githawk.git",
     "tag": "0.1.0"
   },
   "source_files": "GitHubSession/*.swift",
