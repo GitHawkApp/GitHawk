@@ -63,13 +63,7 @@
                             <outlet property="delegate" destination="dwv-IG-ztB" id="0Jn-bD-MUZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Milestones" id="lcH-p7-yKl">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="9Bh-2X-HJh">
-                            <connections>
-                                <action selector="onDone:" destination="dwv-IG-ztB" id="ajG-Wx-YS5"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Milestones" id="lcH-p7-yKl"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcg-qO-yPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

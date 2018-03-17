@@ -8,16 +8,11 @@
 
 import UIKit
 
-protocol LabelsViewControllerDelegate: class {
-    func didDismiss(controller: LabelsViewController, selectedLabels: [RepositoryLabel])
-}
-
 final class LabelsViewController: UITableViewController {
 
+    private var selectedLabels = Set<RepositoryLabel>()
     private let minContentHeight: CGFloat = 200
-    private weak var delegate: LabelsViewControllerDelegate?
     private var labels = [RepositoryLabel]()
-    private var selectedLabels = Set<String>()
     private var client: GithubClient!
     private var request: RepositoryLabelsQuery!
     private let feedRefresh = FeedRefresh()
@@ -69,17 +64,6 @@ final class LabelsViewController: UITableViewController {
         tableView.backgroundView?.isHidden = labels.count > 0
     }
 
-    @IBAction func onDone() {
-        var selected = [RepositoryLabel]()
-        for label in labels {
-            if selectedLabels.contains(label.name) {
-                selected.append(label)
-            }
-        }
-        delegate?.didDismiss(controller: self, selectedLabels: selected)
-        dismiss(animated: trueUnlessReduceMotionEnabled)
-    }
-
     // MARK: UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +74,7 @@ final class LabelsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? LabelTableCell
             else { fatalError("Wrong cell type") }
         let label = labels[indexPath.row]
-        cell.configure(label: label.name, color: label.color.color, selected: selectedLabels.contains(label.name))
+        cell.configure(label: label.name, color: label.color.color, selected: selectedLabels.contains(label))
         return cell
     }
 
@@ -98,11 +82,11 @@ final class LabelsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
-        let name = labels[indexPath.row].name
-        if selectedLabels.contains(name) {
-            selectedLabels.remove(name)
+        let label = labels[indexPath.row]
+        if selectedLabels.contains(label) {
+            selectedLabels.remove(label)
         } else {
-            selectedLabels.insert(name)
+            selectedLabels.insert(label)
         }
         tableView.reloadData()
     }
@@ -113,17 +97,15 @@ final class LabelsViewController: UITableViewController {
         selected: [RepositoryLabel],
         client: GithubClient,
         owner: String,
-        repo: String,
-        delegate: LabelsViewControllerDelegate
+        repo: String
         ) {
-        var set = Set<String>()
-        for l in selected {
-            set.insert(l.name)
-        }
-        self.selectedLabels = set
+        self.selectedLabels = Set(selected)
         self.client = client
         self.request = RepositoryLabelsQuery(owner: owner, repo: repo)
-        self.delegate = delegate
+    }
+
+    var selected: [RepositoryLabel] {
+        return Array(selectedLabels)
     }
 
 }

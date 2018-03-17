@@ -14,9 +14,7 @@ import ContextMenu
 final class IssueManagingSectionController: ListBindingSectionController<IssueManagingModel>,
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate,
-LabelsViewControllerDelegate,
-MilestonesViewControllerDelegate,
-PeopleViewControllerDelegate {
+ContextMenuDelegate {
 
     private enum Action {
         static let labels = IssueManagingActionModel(
@@ -90,8 +88,7 @@ PeopleViewControllerDelegate {
             selected: issueResult?.labels.labels ?? [],
             client: client,
             owner: model.owner,
-            repo: model.repo,
-            delegate: self
+            repo: model.repo
         )
         return controller
     }
@@ -103,22 +100,24 @@ PeopleViewControllerDelegate {
             client: client,
             owner: model.owner,
             repo: model.repo,
-            selected: issueResult?.milestone,
-            delegate: self
+            selected: issueResult?.milestone
         )
         return controller
     }
 
     func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
-
         let selections: [String]
         switch type {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-        return PeopleViewController(selections: selections, type: type,
-                                    client: client, delegate: self,
-                                    owner: model.owner, repo: model.repo)
+        return PeopleViewController(
+            selections: selections,
+            type: type,
+            client: client,
+            owner: model.owner,
+            repo: model.repo
+        )
     }
 
     func present(controller: UIViewController, from cell: UICollectionViewCell) {
@@ -126,7 +125,8 @@ PeopleViewControllerDelegate {
         ContextMenu.shared.show(
             sourceViewController: viewController,
             viewController: controller,
-            sourceView: cell
+            sourceView: cell,
+            delegate: self
         )
     }
 
@@ -257,45 +257,41 @@ PeopleViewControllerDelegate {
 
     // MARK: LabelsViewControllerDelegate
 
-    func didDismiss(controller: LabelsViewController, selectedLabels: [RepositoryLabel]) {
+    func didDismiss(controller: LabelsViewController) {
         guard let previous = issueResult else { return }
         client.mutateLabels(
             previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            labels: selectedLabels
+            labels: controller.selected
         )
     }
 
     // MARK: MilestonesViewControllerDelegate
 
-    func didDismiss(controller: MilestonesViewController, selected: Milestone?) {
+    func didDismiss(controller: MilestonesViewController) {
         guard let previous = issueResult else { return }
         client.setMilestone(
             previous: previous,
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            milestone: selected
+            milestone: controller.selected
         )
     }
 
     // MARK: PeopleViewControllerDelegate
 
-    func didDismiss(
-        controller: PeopleViewController,
-        type: PeopleViewController.PeopleType,
-        selections: [V3User]
-        ) {
+    func didDismiss(controller: PeopleViewController) {
         guard let previous = issueResult else { return }
         var assignees = [IssueAssigneeViewModel]()
-        for user in selections {
+        for user in controller.selectedUsers {
             assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl))
         }
 
         let mutationType: V3AddPeopleRequest.PeopleType
-        switch type {
+        switch controller.type {
         case .assignee: mutationType = .assignees
         case .reviewer: mutationType = .reviewers
         }
@@ -309,5 +305,19 @@ PeopleViewControllerDelegate {
             people: assignees
         )
     }
+
+    // MARK: ContextMenuDelegate
+
+    func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
+        if let labels = viewController as? LabelsViewController {
+            didDismiss(controller: labels)
+        } else if let milestones = viewController as? MilestonesViewController {
+            didDismiss(controller: milestones)
+        } else if let people = viewController as? PeopleViewController {
+            didDismiss(controller: people)
+        }
+    }
+
+    func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }
