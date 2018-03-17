@@ -17,6 +17,8 @@ public enum Font: Hashable, Equatable {
         case weighted(UIFont.Weight)
         case monospaced(UIFont.Weight)
 
+        // MARK: Hashable
+
         public var hashValue: Int {
             switch self {
             case .default: return 0
@@ -26,6 +28,8 @@ public enum Font: Hashable, Equatable {
             case .monospaced(let weight): return weight.hashValue
             }
         }
+
+        // MARK: Equatable
 
         public static func ==(lhs: SystemFont, rhs: SystemFont) -> Bool {
             return lhs.hashValue == rhs.hashValue
@@ -37,6 +41,8 @@ public enum Font: Hashable, Equatable {
     case descriptor(UIFontDescriptor)
     case system(SystemFont)
 
+    // MARK: Hashable
+
     public var hashValue: Int {
         switch self {
         case .name(let name): return name.hashValue
@@ -44,6 +50,8 @@ public enum Font: Hashable, Equatable {
         case .system(let system): return system.hashValue
         }
     }
+
+    // MARK: Equatable
 
     public static func ==(lhs: Font, rhs: Font) -> Bool {
         return lhs.hashValue == rhs.hashValue

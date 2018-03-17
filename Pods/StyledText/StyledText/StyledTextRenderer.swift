@@ -15,20 +15,20 @@ public final class StyledTextRenderer {
     
     public let scale: CGFloat
     public let inset: UIEdgeInsets
-    public let builder: StyledTextBuilder
+    public let string: StyledTextString
     public let backgroundColor: UIColor?
 
     private var map = [UIContentSizeCategory: NSTextStorage]()
     private var lock = os_unfair_lock_s()
 
     public init(
-        builder: StyledTextBuilder,
+        string: StyledTextString,
         inset: UIEdgeInsets = .zero,
         backgroundColor: UIColor? = nil,
         layoutManager: NSLayoutManager = NSLayoutManager(),
         scale: CGFloat = StyledTextScreenScale
         ) {
-        self.builder = builder.copy
+        self.string = string
         self.inset = inset
         self.backgroundColor = backgroundColor
         self.scale = scale
@@ -51,7 +51,7 @@ public final class StyledTextRenderer {
         if let storage = map[contentSizeCategory] {
             return storage
         }
-        let storage = NSTextStorage(attributedString: builder.render(contentSizeCategory: contentSizeCategory))
+        let storage = NSTextStorage(attributedString: string.render(contentSizeCategory: contentSizeCategory))
         storage.addLayoutManager(layoutManager)
         map[contentSizeCategory] = storage
         return storage

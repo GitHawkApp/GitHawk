@@ -27,12 +27,16 @@ public struct StyledText: Hashable, Equatable {
         return NSAttributedString(string: text, attributes: attributes)
     }
 
+    // MARK: Hashable
+
     public var hashValue: Int {
         return text
             .combineHash(with: style)
     }
 
-    public static func == (lhs: StyledText, rhs: StyledText) -> Bool {
+    // MARK: Equatable
+
+    public static func ==(lhs: StyledText, rhs: StyledText) -> Bool {
         return lhs.text == rhs.text
             && lhs.style == rhs.style
     }
