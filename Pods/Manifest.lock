@@ -155,7 +155,7 @@ CHECKOUT OPTIONS:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
     :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :commit: 8a541f65c31a50728a9348850d9a47b146d4555f
+    :commit: 7f5a187ac75e5a66587ea3999e8459d895f12d80
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:

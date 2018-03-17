@@ -91,12 +91,9 @@ open class StyledTextView: UIView {
 
     open func reposition(width: CGFloat) {
         guard let renderer = self.renderer else { return }
-        let result = renderer.render(
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
-            width: width
-        )
+        let result = renderer.render(width: width)
         layer.contents = result.image
-        frame = UIEdgeInsetsInsetRect(CGRect(origin: .zero, size: result.size), renderer.inset)
+        frame = CGRect(origin: CGPoint(x: renderer.inset.left, y: renderer.inset.top), size: result.size)
     }
 
 }

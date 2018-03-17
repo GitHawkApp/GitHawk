@@ -8,11 +8,12 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 class RepositoryIssueSummaryModel: ListDiffable {
 
     let id: String
-    let title: NSAttributedStringSizing
+    let title: StyledTextRenderer
     let number: Int
     let created: Date
     let author: String
@@ -25,7 +26,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
 
     init(
         id: String,
-        title: NSAttributedStringSizing,
+        title: StyledTextRenderer,
         number: Int,
         created: Date,
         author: String,
@@ -59,7 +60,7 @@ class RepositoryIssueSummaryModel: ListDiffable {
             && status == object.status
             && author == object.author
             && created == object.created
-            && title.attributedText.string == object.title.attributedText.string
+            && title.string == object.title.string
             && labelSummary == object.labelSummary
     }
 }
