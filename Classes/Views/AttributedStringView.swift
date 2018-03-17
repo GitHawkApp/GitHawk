@@ -9,22 +9,12 @@
 import UIKit
 
 protocol AttributedStringViewDelegate: class {
-    func didTapURL(view: AttributedStringView, url: URL)
-    func didTapUsername(view: AttributedStringView, username: String)
-    func didTapEmail(view: AttributedStringView, email: String)
-    func didTapCommit(view: AttributedStringView, commit: CommitDetails)
-    func didTapLabel(view: AttributedStringView, label: LabelDetails)
-}
-
-protocol AttributedStringViewExtrasDelegate: class {
-    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel)
-    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel)
+    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute)
 }
 
 final class AttributedStringView: UIView {
 
     weak var delegate: AttributedStringViewDelegate?
-    weak var extrasDelegate: AttributedStringViewExtrasDelegate?
 
     private var text: NSAttributedStringSizing?
     private var tapGesture: UITapGestureRecognizer?
@@ -101,22 +91,7 @@ final class AttributedStringView: UIView {
     @objc func onTap(recognizer: UITapGestureRecognizer) {
         guard let detected = DetectMarkdownAttribute(attributes: text?.attributes(point: recognizer.location(in: self)))
             else { return }
-        switch detected {
-        case .url(let url):
-            delegate?.didTapURL(view: self, url: url)
-        case .username(let username):
-            delegate?.didTapUsername(view: self, username: username)
-        case .email(let email):
-            delegate?.didTapEmail(view: self, email: email)
-        case .issue(let issue):
-            extrasDelegate?.didTapIssue(view: self, issue: issue)
-        case .label(let label):
-            delegate?.didTapLabel(view: self, label: label)
-        case .commit(let commit):
-            delegate?.didTapCommit(view: self, commit: commit)
-        case .checkbox(let checkbox):
-            extrasDelegate?.didTapCheckbox(view: self, checkbox: checkbox)
-        }
+        delegate?.didTap(view: self, attribute: detected)
     }
 
     @objc func onLong(recognizer: UILongPressGestureRecognizer) {

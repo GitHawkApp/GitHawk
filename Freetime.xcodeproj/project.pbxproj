@@ -62,7 +62,6 @@
 		292CD3D01F0DBB5C00D3D57B /* WebviewCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */; };
 		292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */; };
 		292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */; };
-		292CD3D61F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D51F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift */; };
 		292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */; };
 		292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */; };
 		292EB08F1F1FF5EC0046865D /* IssueMilestoneEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */; };
@@ -253,6 +252,9 @@
 		299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 299E86481EFD9DBB00E5FE70 /* FlexController.m */; };
 		299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */; };
 		299F63D4205DA24A0015D901 /* MarkdownAttributeHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63D3205DA24A0015D901 /* MarkdownAttributeHandling.swift */; };
+		299F63DA205DD86E0015D901 /* StyledTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */; };
+		299F63DC205DDB4D0015D901 /* UIViewController+Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63DB205DDB4D0015D901 /* UIViewController+Routing.swift */; };
+		299F63DE205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63DD205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift */; };
 		29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */; };
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
@@ -489,7 +491,6 @@
 		292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewCellHeightCache.swift; sourceTree = "<group>"; };
 		292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Safari.swift"; sourceTree = "<group>"; };
 		292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewHandler.swift; sourceTree = "<group>"; };
-		292CD3D51F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AttributedStringViewDelegate.swift"; sourceTree = "<group>"; };
 		292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IssueCommentHtmlCellNavigationDelegate.swift"; sourceTree = "<group>"; };
 		292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventModel.swift; sourceTree = "<group>"; };
 		292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventCell.swift; sourceTree = "<group>"; };
@@ -683,6 +684,9 @@
 		299E86481EFD9DBB00E5FE70 /* FlexController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlexController.m; sourceTree = "<group>"; };
 		299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+AccessToken.swift"; sourceTree = "<group>"; };
 		299F63D3205DA24A0015D901 /* MarkdownAttributeHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownAttributeHandling.swift; sourceTree = "<group>"; };
+		299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextViewCell.swift; sourceTree = "<group>"; };
+		299F63DB205DDB4D0015D901 /* UIViewController+Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Routing.swift"; sourceTree = "<group>"; };
+		299F63DD205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+AttributedStringViewDelegate.swift"; sourceTree = "<group>"; };
 		29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitCell.swift; sourceTree = "<group>"; };
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1440,22 +1444,23 @@
 				29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */,
 				29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */,
 				29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */,
+				65A315282044369D0074E3B6 /* TabBarController.swift */,
 				294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */,
 				294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */,
 				29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */,
+				D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */,
 				297AE8691EC0D5C200B44A1F /* UIViewController+Alerts.swift */,
-				292CD3D51F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift */,
+				299F63DD205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift */,
 				29AF1E851F8AADD00008A0EF /* UIViewController+CancelAction.swift */,
 				29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */,
+				29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */,
 				292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
+				29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */,
+				299F63DB205DDB4D0015D901 /* UIViewController+Routing.swift */,
 				292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */,
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
 				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
-				D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */,
-				29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */,
-				29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */,
-				65A315282044369D0074E3B6 /* TabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1496,6 +1501,7 @@
 				2971722C1F069E96005E43AC /* SpinnerCell.swift */,
 				29A08FC01F12F08100C5368E /* String+HashDisplay.swift */,
 				291929621F3FF0DA0012067B /* StyledTableCell.swift */,
+				299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
 				D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */,
@@ -2290,6 +2296,7 @@
 				299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */,
 				2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
+				299F63DC205DDB4D0015D901 /* UIViewController+Routing.swift in Sources */,
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
 				29316DB51ECC7DEB007CAE3F /* ButtonCell.swift in Sources */,
 				295F52AD1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift in Sources */,
@@ -2515,6 +2522,7 @@
 				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */,
+				299F63DE205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift in Sources */,
 				29136BDB200A626D007317BE /* FixedRefreshControl.swift in Sources */,
 				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
@@ -2631,7 +2639,6 @@
 				292FF8B21F302FE7009E63F7 /* UITextView+SelectedRange.swift in Sources */,
 				298BA08F1EC90FEE00B01946 /* UIView+BottomBorder.swift in Sources */,
 				297AE87F1EC0D5C200B44A1F /* UIViewController+Alerts.swift in Sources */,
-				292CD3D61F0DC4DA00D3D57B /* UIViewController+AttributedStringViewDelegate.swift in Sources */,
 				D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */,
 				29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
@@ -2643,6 +2650,7 @@
 				2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
+				299F63DA205DD86E0015D901 /* StyledTextViewCell.swift in Sources */,
 				292CD3D01F0DBB5C00D3D57B /* WebviewCellHeightCache.swift in Sources */,
 				29EE443F1F19B2D300B05ED3 /* WriteButton.swift in Sources */,
 			);
