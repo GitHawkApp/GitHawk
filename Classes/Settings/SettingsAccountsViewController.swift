@@ -118,4 +118,5 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
 
     func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
     func didLogout(manager: GitHubSessionManager) {}
+
 }
