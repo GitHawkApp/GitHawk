@@ -34,8 +34,6 @@ open class StyledTextView: UIView {
 
     private func commonInit() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
-        isOpaque = true
 
         layer.contentsGravity = kCAGravityTopLeft
 

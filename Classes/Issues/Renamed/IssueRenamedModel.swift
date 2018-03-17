@@ -8,19 +8,20 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueRenamedModel: ListDiffable {
 
     let id: String
     let actor: String
     let date: Date
-    let titleChangeString: NSAttributedStringSizing
+    let titleChangeString: StyledTextRenderer
 
     init(
         id: String,
         actor: String,
         date: Date,
-        titleChangeString: NSAttributedStringSizing
+        titleChangeString: StyledTextRenderer
         ) {
         self.id = id
         self.actor = actor

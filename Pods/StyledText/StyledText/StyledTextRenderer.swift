@@ -81,7 +81,7 @@ public final class StyledTextRenderer {
     public func size(width: CGFloat) -> CGSize {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
-        return _size(StyledTextRenderCacheKey(width: width, attributedText: storage))
+        return _size(StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor))
     }
 
     public func viewSize(width: CGFloat) -> CGSize {
@@ -98,7 +98,7 @@ public final class StyledTextRenderer {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
 
-        let key = StyledTextRenderCacheKey(width: width, attributedText: storage)
+        let key = StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor)
         let size = _size(key)
         let cache = StyledTextRenderer.globalBitmapCache
         if let cached = cache[key] {
