@@ -494,39 +494,4 @@ extension GithubClient {
             }
         }
     }
-
-    func fetchBranches(
-        owner: String,
-        repo: String,
-        number: Int,
-        completion: @escaping (String) -> Void
-        ) {
-        
-        let query = PullRequestTargetBranchQuery(
-            owner: owner,
-            name: repo,
-            number: number
-        )
-        
-        client.query(query, result: { $0.repository?.pullRequest?.baseRefName }) { result in
-            switch result {
-            case .success(let baseRefName):
-                completion(baseRefName)
-                
-            case .failure(_):
-                break
-            }
-        }
-
-//        client.send(V3PullRequestRequest(owner: owner, repo: repo, number: number)) { result in
-//            switch result {
-//            case .success(let response):
-//                completion(.success(response.data))
-//            case .failure(let error):
-//                completion(.error(error))
-//            }
-//        }
-        
-    }
-    
 }
