@@ -123,6 +123,10 @@ MarkdownStyledTextViewDelegate {
         })
     }
 
+    func replyAction() -> UIAlertAction? {
+        return UIAlertAction(title: NSLocalizedString("Reply", comment: ""), style: .default)
+    }
+
     private func clearCollapseCells() {
         // clear any collapse state before updating so we don't have a dangling overlay
         for cell in collectionContext?.visibleCells(for: self) ?? [] {
@@ -419,6 +423,7 @@ MarkdownStyledTextViewDelegate {
         alert.addActions([
             shareAction(sender: sender),
             editAction(),
+            replyAction(),
             deleteAction(),
             AlertAction.cancel()
         ])
