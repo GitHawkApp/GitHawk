@@ -129,7 +129,7 @@ extension GithubClient {
                         id: issueType.id,
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
-                        title: titleStringSizing(title: issueType.title, width: width),
+                        title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory, width: width),
                         labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
