@@ -31,6 +31,7 @@ final class IssuesViewController:
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
+    private var focusedCommentModel: IssueCommentModel?
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -551,9 +552,12 @@ final class IssuesViewController:
 
     // MARK: IssueCommentSectionControllerDelegate
 
-    func didSelectReply(sectionController: IssueCommentSectionController) {
+    func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
+        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+
+        focusedCommentModel = commentModel
     }
 
 }

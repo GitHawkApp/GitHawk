@@ -13,7 +13,7 @@ import GitHubAPI
 import MessageViewController
 
 protocol IssueCommentSectionControllerDelegate: class {
-    func didSelectReply(sectionController: IssueCommentSectionController)
+    func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel)
 }
 
 final class IssueCommentSectionController:
@@ -140,8 +140,14 @@ final class IssueCommentSectionController:
             title: NSLocalizedString("Reply", comment: ""),
             style: .default,
             handler: { [weak self] _ in
-                guard let strongSelf = self else { return }
-                strongSelf.issueCommentDelegate.didSelectReply(sectionController: strongSelf)
+                guard let strongSelf = self,
+                let commentModel = strongSelf.object
+                else { return }
+
+                strongSelf.issueCommentDelegate.didSelectReply(
+                    to: strongSelf,
+                    commentModel: commentModel
+                )
             }
         )
     }
