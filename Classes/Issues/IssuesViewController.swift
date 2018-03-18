@@ -14,14 +14,16 @@ import SnapKit
 import FlatCache
 import MessageViewController
 
-final class IssuesViewController: MessageViewController,
+final class IssuesViewController:
+    MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-IssueManagingNavSectionControllerDelegate {
+    IssueManagingNavSectionControllerDelegate,
+    IssueCommentSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -426,11 +428,12 @@ IssueManagingNavSectionControllerDelegate {
 
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(
-            model: model,
-            client: client,
-            autocomplete: autocompleteController.autocomplete.copy
+        case is IssueCommentModel:
+            return IssueCommentSectionController(
+                model: model,
+                client: client,
+                autocomplete: autocompleteController.autocomplete.copy,
+                issueCommentDelegate: self
             )
         case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
@@ -544,6 +547,13 @@ IssueManagingNavSectionControllerDelegate {
 
     func didSelect(managingNavController: IssueManagingNavSectionController) {
         feed.collectionView.scrollToBottom(animated: true)
+    }
+
+    // MARK: IssueCommentSectionControllerDelegate
+
+    func didSelectReply(sectionController: IssueCommentSectionController) {
+        setMessageView(hidden: false, animated: true)
+        messageView.textView.becomeFirstResponder()
     }
 
 }
