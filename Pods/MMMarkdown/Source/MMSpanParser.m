@@ -113,7 +113,7 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
 
 #pragma mark - Private Methods
 
-- (NSArray *)_parseWithScanner:(MMScanner *)scanner untilTestPasses:(BOOL (^)())test
+- (NSArray *)_parseWithScanner:(MMScanner *)scanner untilTestPasses:(BOOL (^)(void))test
 {
     NSMutableArray *result = [NSMutableArray array];
     
@@ -491,11 +491,13 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     element.type  = MMElementTypeLink;
     element.range = range;
     element.href  = [scanner.string substringWithRange:range];
-    
-    MMElement *text = [MMElement new];
-    text.type  = MMElementTypeNone;
-    text.range = range;
-    [element addChild:text];
+
+    if (![self updateElementIfGitHubShorthandLink:element]) {
+        MMElement *text = [MMElement new];
+        text.type  = MMElementTypeNone;
+        text.range = range;
+        [element addChild:text];
+    }
     
     return element;
 }
@@ -516,13 +518,40 @@ static NSString * const ESCAPABLE_CHARS = @"\\`*_{}[]()#+-.!>";
     element.type     = MMElementTypeLink;
     element.range    = range;
     element.href     = [@"http://" stringByAppendingString:link];
-    
-    MMElement *text = [MMElement new];
-    text.type  = MMElementTypeNone;
-    text.range = range;
-    [element addChild:text];
+
+    if (![self updateElementIfGitHubShorthandLink:element]) {
+        MMElement *text = [MMElement new];
+        text.type  = MMElementTypeNone;
+        text.range = range;
+        [element addChild:text];
+    }
     
     return element;
+}
+
+- (BOOL)updateElementIfGitHubShorthandLink:(MMElement *)element {
+    if (element.type != MMElementTypeLink) {
+        return NO;
+    }
+
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [NSRegularExpression regularExpressionWithPattern:@"https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)" options:0 error:nil];
+    });
+
+    NSString *href = element.href;
+    NSTextCheckingResult *match = [regex firstMatchInString:href options:0 range:NSMakeRange(0, href.length)];
+    if (match.numberOfRanges != 4) {
+        return NO;
+    }
+
+    element.type = MMElementTypeShortenedLink;
+    element.owner = [href substringWithRange:[match rangeAtIndex:1]];
+    element.repository = [href substringWithRange:[match rangeAtIndex:2]];
+    element.number = [[href substringWithRange:[match rangeAtIndex:3]] integerValue];
+
+    return YES;
 }
 
 - (MMElement *)_parseStrikethroughWithScanner:(MMScanner *)scanner

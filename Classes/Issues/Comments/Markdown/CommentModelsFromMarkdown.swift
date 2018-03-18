@@ -270,6 +270,14 @@ func travelAST(
         if substring != newlineString || listLevel == 0 {
             attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
         }
+    } else if element.type == .shortenedLink, let owner = element.owner, let repo = element.repository {
+        let text: String
+        if owner == options.owner && repo == options.repo {
+            text = "#\(element.number)"
+        } else {
+            text = "\(owner)/\(repo)#\(element.number)"
+        }
+        attributedString.append(NSAttributedString(string: text, attributes: pushedAttributes))
     } else if element.type == .checkbox {
         let appendDisabled = viewerCanUpdate ? "" : "-disabled"
         if let image = UIImage(named: (element.checked ? "checked" : "unchecked") + appendDisabled) {
@@ -347,53 +355,6 @@ func travelAST(
     }
 }
 
-private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
-func shortenGitHubLinks(attributedString: NSAttributedString,
-                        options: GitHubMarkdownOptions) -> NSAttributedString {
-
-    guard options.flavors.contains(.issueShorthand) else { return attributedString }
-
-    let string = attributedString.string
-    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = issueURLRegex.matches(in: string, options: [], range: string.nsrange)
-
-    for match in matches.reversed() {
-        let ownerRange = match.range(at: 1)
-        let repoRange = match.range(at: 2)
-        let numberRange = match.range(at: 3)
-
-        guard let ownerSubstring = string.substring(with: ownerRange),
-              let repoSubstring = string.substring(with: repoRange),
-              let numberSubstring = string.substring(with: numberRange) else { continue }
-
-        var attributes = attributedString.attributes(at: match.range.location, effectiveRange: nil)
-
-        // manually disable link shortening for some text (namely code)
-        guard attributes[MarkdownAttribute.linkShorteningDisabled] == nil else { continue }
-
-        attributes[.foregroundColor] = Styles.Colors.Blue.medium.color
-        attributes[MarkdownAttribute.issue] = IssueDetailsModel(
-            owner: ownerSubstring,
-            repo: repoSubstring,
-            number: (numberSubstring as NSString).integerValue
-        )
-        attributes[MarkdownAttribute.url] = nil
-
-        var shortenedText: String
-
-        if ownerSubstring == options.owner && repoSubstring == options.repo {
-            shortenedText = "#\(numberSubstring)"
-        } else {
-            shortenedText = "\(ownerSubstring)/\(repoSubstring)#\(numberSubstring)"
-        }
-
-        let linkAttributedString = NSAttributedString(string: shortenedText, attributes: attributes)
-        mutableAttributedString.replaceCharacters(in: match.range, with: linkAttributedString)
-    }
-
-    return mutableAttributedString
-}
-
 func createTextModelUpdatingGitHubFeatures(
     attributedString: NSAttributedString,
     width: CGFloat,
@@ -401,12 +362,9 @@ func createTextModelUpdatingGitHubFeatures(
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
     ) -> NSAttributedStringSizing {
-
-    let shorten = shortenGitHubLinks(attributedString: attributedString, options: options)
-
     return NSAttributedStringSizing(
         containerWidth: width,
-        attributedText: shorten,
+        attributedText: attributedString,
         inset: inset
     )
 }

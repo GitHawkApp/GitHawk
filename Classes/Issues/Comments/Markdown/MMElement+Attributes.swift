@@ -42,7 +42,7 @@ func PushAttributes(
         if current[MarkdownAttribute.url] == nil {
             newAttributes[.foregroundColor] = Styles.Colors.Gray.dark.color
         }
-    case .link:
+    case .link, .shortenedLink:
         newAttributes = [
         .foregroundColor: Styles.Colors.Blue.medium.color,
         MarkdownAttribute.url: element.href ?? ""
