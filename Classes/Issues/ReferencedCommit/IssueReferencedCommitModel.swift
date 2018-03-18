@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueReferencedCommitModel: ListDiffable {
 
@@ -17,7 +18,7 @@ final class IssueReferencedCommitModel: ListDiffable {
     let hash: String
     let actor: String
     let date: Date
-    let attributedText: NSAttributedStringSizing
+    let string: StyledTextRenderer
 
     init(
         id: String,
@@ -26,6 +27,7 @@ final class IssueReferencedCommitModel: ListDiffable {
         hash: String,
         actor: String,
         date: Date,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) {
         self.id = id
@@ -35,41 +37,31 @@ final class IssueReferencedCommitModel: ListDiffable {
         self.actor = actor
         self.date = date
 
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(NSAttributedString(
-            string: actor,
-            attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                MarkdownAttribute.username: actor
-            ]
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
-        attributedText.append(NSAttributedString(
-            string: NSLocalizedString(" referenced ", comment: ""),
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-            ]
-        ))
-        attributedText.append(NSAttributedString(
-            string: hash.hashDisplay,
-            attributes: [
-                .font: Styles.Text.code.preferredFont.addingTraits(traits: .traitBold),
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                MarkdownAttribute.commit: CommitDetails(owner: owner, repo: repo, hash: hash)
-            ]
-        ))
-        attributedText.append(NSAttributedString(
-            string: " \(date.agoString)",
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
-            ]
-        ))
-        self.attributedText = NSAttributedStringSizing(
-            containerWidth: width,
-            attributedText: attributedText,
+            .save()
+            .add(styledText: StyledText(text: actor, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: actor,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            ))
+            .restore()
+            .add(text: NSLocalizedString(" referenced ", comment: ""))
+            .save()
+            .add(styledText: StyledText(
+                text: hash.hashDisplay,
+                style: Styles.Text.codeBold.with(attributes: [
+                    .foregroundColor: Styles.Colors.Gray.dark.color,
+                    MarkdownAttribute.commit: CommitDetails(owner: owner, repo: repo, hash: hash)
+                    ])
+            ))
+            .restore()
+            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+
+        self.string = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: UIEdgeInsets(
                 top: Styles.Sizes.inlineSpacing,
                 left: Styles.Sizes.eventGutter,
@@ -91,3 +83,4 @@ final class IssueReferencedCommitModel: ListDiffable {
     }
 
 }
+

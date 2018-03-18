@@ -216,6 +216,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         hash: commitRef.oid,
                         actor: referenced.actor?.login ?? Constants.Strings.unknown,
                         date: date,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
