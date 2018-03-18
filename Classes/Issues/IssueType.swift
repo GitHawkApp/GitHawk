@@ -47,6 +47,7 @@ protocol IssueType {
     func timelineViewModels(
         owner: String,
         repo: String,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser])
 

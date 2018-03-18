@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import StyledText
 
 final class BookmarkCell: SwipeSelectableCell {
 
@@ -19,7 +20,7 @@ final class BookmarkCell: SwipeSelectableCell {
     )
 
     private let imageView = UIImageView()
-    private let textView = AttributedStringView()
+    private let textView = StyledTextView()
     private let detailLabel = UILabel()
 
     override init(frame: CGRect) {
@@ -74,7 +75,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     func configure(viewModel: BookmarkViewModel, height: CGFloat) {
         imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
-        textView.configureAndSizeToFit(text: viewModel.text, width: contentView.bounds.width)
+        textView.configure(renderer: viewModel.text, width: contentView.bounds.width)
 
         // set "Owner/Repo #123" on the detail label if issue/PR, otherwise clear and collapse it
         switch viewModel.bookmark.type {

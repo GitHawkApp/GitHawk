@@ -10,24 +10,6 @@ import UIKit
 import IGListKit
 import StyledText
 
-extension CGSize {
-
-    func snapped(scale: CGFloat) -> CGSize {
-        var size = self
-        size.width = ceil(size.width * scale) / scale
-        size.height = ceil(size.height * scale) / scale
-        return size
-    }
-
-    func resized(inset: UIEdgeInsets) -> CGSize {
-        var size = self
-        size.width += inset.left + inset.right
-        size.height += inset.top + inset.bottom
-        return size
-    }
-
-}
-
 final class NSAttributedStringSizing: NSObject, ListDiffable {
 
     private let textContainer: NSTextContainer

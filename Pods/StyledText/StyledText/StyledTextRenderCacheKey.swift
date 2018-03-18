@@ -12,6 +12,7 @@ internal struct StyledTextRenderCacheKey: Hashable, Equatable {
 
     let width: CGFloat
     let attributedText: NSAttributedString
+    let backgroundColor: UIColor?
 
     // MARK: Hashable
 
@@ -25,6 +26,7 @@ internal struct StyledTextRenderCacheKey: Hashable, Equatable {
     public static func ==(lhs: StyledTextRenderCacheKey, rhs: StyledTextRenderCacheKey) -> Bool {
         return lhs.width == rhs.width
             && lhs.attributedText == rhs.attributedText
+            && lhs.backgroundColor == rhs.backgroundColor
     }
 
 }

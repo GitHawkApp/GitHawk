@@ -155,14 +155,18 @@ TabNavRootViewControllerType {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let width = view.bounds.width
         var bookmarks: [ListDiffable]
         switch state {
         case .idle:
-            bookmarks = bookmarkStore.values.flatMap { BookmarkViewModel(bookmark: $0, width: view.bounds.width) }
+            bookmarks = bookmarkStore.values.flatMap {
+                BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
+            }
         case .filtering(let term):
             bookmarks = filtered(array: bookmarkStore.values, query: term)
-                .flatMap { bookmark in
-                    BookmarkViewModel(bookmark: bookmark, width: view.bounds.width)
+                .flatMap {
+                    BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
             }
         }
 
