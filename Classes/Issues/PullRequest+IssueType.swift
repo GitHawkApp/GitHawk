@@ -127,6 +127,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .removed,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -141,6 +142,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .added,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)

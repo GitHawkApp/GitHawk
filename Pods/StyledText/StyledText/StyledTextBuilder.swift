@@ -93,7 +93,13 @@ public final class StyledTextBuilder: Hashable, Equatable {
         return add(
             styledText: StyledText(
                 text: text,
-                style: nextStyle
+                style: TextStyle(
+                    font: tip.style.font,
+                    size: tip.style.size,
+                    attributes: nextAttributes,
+                    minSize: tip.style.minSize,
+                    maxSize: tip.style.maxSize
+                )
             )
         )
     }
@@ -129,4 +135,3 @@ public final class StyledTextBuilder: Hashable, Equatable {
     }
 
 }
-

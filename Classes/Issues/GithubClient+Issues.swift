@@ -316,6 +316,7 @@ extension GithubClient {
         ) {
         guard let actor = userSession?.username else { return }
 
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
         let oldLabelNames = Set<String>(previous.labels.labels.map { $0.name })
         let newLabelNames = Set<String>(labels.map { $0.name })
 
@@ -331,6 +332,7 @@ extension GithubClient {
                     type: .added,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0
                 ))
             }
@@ -346,6 +348,7 @@ extension GithubClient {
                     type: .removed,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0
                 ))
             }
