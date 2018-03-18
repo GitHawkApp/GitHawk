@@ -52,7 +52,6 @@ final class IssueLabeledModel: ListDiffable {
         }
 
         let builder = StyledTextBuilder(styledText: StyledText(
-            text: "",
             style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
             .save()

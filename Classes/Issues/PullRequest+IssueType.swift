@@ -373,6 +373,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: milestone.milestoneTitle,
                     date: date,
                     type: .milestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -384,6 +385,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: demilestone.milestoneTitle,
                     date: date,
                     type: .demilestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
