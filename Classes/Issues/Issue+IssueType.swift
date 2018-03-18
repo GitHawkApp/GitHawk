@@ -183,6 +183,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -197,6 +198,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -230,6 +232,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -244,6 +247,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)

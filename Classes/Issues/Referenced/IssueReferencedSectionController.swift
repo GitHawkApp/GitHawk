@@ -24,7 +24,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
             else { fatalError("Missing context") }
         return CGSize(
             width: width,
-            height: object.attributedText.textViewSize(width).height
+            height: object.string.viewSize(width: width).height
         )
     }
 

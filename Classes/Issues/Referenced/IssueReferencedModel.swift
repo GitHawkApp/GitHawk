@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueReferencedModel: ListDiffable {
 
@@ -26,7 +27,7 @@ final class IssueReferencedModel: ListDiffable {
     let date: Date
     let title: String
     let actor: String
-    let attributedText: NSAttributedStringSizing
+    let string: StyledTextRenderer
 
     init(
         id: String,
@@ -38,6 +39,7 @@ final class IssueReferencedModel: ListDiffable {
         date: Date,
         title: String,
         actor: String,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) {
         self.id = id
@@ -50,48 +52,29 @@ final class IssueReferencedModel: ListDiffable {
         self.title = title
         self.actor = actor
 
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(NSAttributedString(
-            string: actor,
-            attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.username: actor
-            ]
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
-        attributedText.append(NSAttributedString(
-            string: NSLocalizedString(" referenced ", comment: ""),
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                ]
-        ))
-        attributedText.append(NSAttributedString(
-            string: date.agoString,
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
-            ]
-        ))
-        attributedText.append(NSAttributedString(string: "\n"))
-        attributedText.append(NSAttributedString(
-            string: title,
-            attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-            ]
-        ))
-        attributedText.append(NSAttributedString(
-            string: " #\(number)",
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-            ]
-        ))
-        self.attributedText = NSAttributedStringSizing(
-            containerWidth: width,
-            attributedText: attributedText,
+            .save()
+            .add(styledText: StyledText(text: actor, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: actor,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            ))
+            .restore()
+            .add(text: NSLocalizedString(" referenced ", comment: ""))
+            .save()
+            .add(text: date.agoString, attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .restore()
+            .add(text: "\n")
+            .save()
+            .add(styledText: StyledText(text: title, style: Styles.Text.secondaryBold))
+            .restore()
+            .add(text: " #\(number)")
+
+        self.string = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: IssueReferencedCell.inset,
             backgroundColor: Styles.Colors.background
         )
