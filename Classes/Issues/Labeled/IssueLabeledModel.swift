@@ -79,7 +79,7 @@ final class IssueLabeledModel: ListDiffable {
             inset: IssueLabeledCell.insets,
             backgroundColor: Styles.Colors.Gray.lighter.color,
             layoutManager: LabelLayoutManager()
-        )
+        ).warm(width: width)
     }
 
     // MARK: ListDiffable

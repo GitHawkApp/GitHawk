@@ -77,7 +77,7 @@ final class IssueReferencedModel: ListDiffable {
             contentSizeCategory: contentSizeCategory,
             inset: IssueReferencedCell.inset,
             backgroundColor: Styles.Colors.background
-        )
+        ).warm(width: width)
     }
 
     // MARK: ListDiffable
