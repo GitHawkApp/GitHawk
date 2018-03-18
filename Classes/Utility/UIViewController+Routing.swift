@@ -10,6 +10,7 @@ import UIKit
 
 extension UIViewController {
 
+    @discardableResult
     func handle(attribute: DetectedMarkdownAttribute) -> Bool {
         switch attribute {
         case .url(let url): presentSafari(url: url)

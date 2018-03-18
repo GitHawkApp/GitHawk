@@ -21,6 +21,8 @@ class StyledTextViewCell: UICollectionViewCell, StyledTextViewDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        textView.delegate = self
+        textView.gesturableAttributes = MarkdownAttribute.all
         contentView.addSubview(textView)
         isAccessibilityElement = true
     }
@@ -38,6 +40,10 @@ class StyledTextViewCell: UICollectionViewCell, StyledTextViewDelegate {
     override var accessibilityLabel: String? {
         get { return AccessibilityHelper.generatedLabel(forCell: self)}
         set {}
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
     // MARK: Public API
