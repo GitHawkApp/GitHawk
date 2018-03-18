@@ -406,6 +406,7 @@ extension GithubClient {
         var newEvents = [IssueRequestModel]()
         var added = [String]()
         var removed = [String]()
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         for old in oldAssigness {
             if !newAssignees.contains(old) {
@@ -416,6 +417,7 @@ extension GithubClient {
                     user: old,
                     date: Date(),
                     event: removedType,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0 // will be inflated when asked
                 ))
             }
@@ -429,6 +431,7 @@ extension GithubClient {
                     user: new,
                     date: Date(),
                     event: addedType,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0 // will be inflated when asked
                 ))
             }
