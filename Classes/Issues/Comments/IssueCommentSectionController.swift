@@ -10,7 +10,6 @@ import UIKit
 import IGListKit
 import TUSafariActivity
 import GitHubAPI
-import MessageViewController
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didSelectReply(
