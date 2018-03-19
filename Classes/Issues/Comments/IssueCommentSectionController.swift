@@ -13,7 +13,10 @@ import GitHubAPI
 import MessageViewController
 
 protocol IssueCommentSectionControllerDelegate: class {
-    func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel)
+    func didSelectReply(
+        to sectionController: IssueCommentSectionController,
+        commentModel: IssueCommentModel
+    )
 }
 
 final class IssueCommentSectionController:

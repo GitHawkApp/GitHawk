@@ -555,9 +555,22 @@ final class IssuesViewController:
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
-        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+        messageView.text = ">"
+            + getCommentUntilNewLine(from: commentModel.rawMarkdown)
+            + "\n\n"
+            + "@"
+            + commentModel.details.login
 
+        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
         focusedCommentModel = commentModel
+    }
+
+    private func getCommentUntilNewLine(from string: String) -> String {
+        let substring = string.components(separatedBy: .newlines)[0]
+        if string == substring {
+            return string
+        }
+        return substring + " ..."
     }
 
 }
