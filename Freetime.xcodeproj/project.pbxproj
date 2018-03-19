@@ -309,7 +309,6 @@
 		29CC294D1FF839CF006B6DE7 /* IssueCommentBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC294C1FF839CF006B6DE7 /* IssueCommentBaseCell.swift */; };
 		29CC294F1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CC294E1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift */; };
 		29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */; };
-		29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
 		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
 		29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */; };
@@ -746,7 +745,6 @@
 		29CC294C1FF839CF006B6DE7 /* IssueCommentBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentBaseCell.swift; sourceTree = "<group>"; };
 		29CC294E1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCommentEmptyCell.swift; sourceTree = "<group>"; };
 		29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GithubDate.swift"; sourceTree = "<group>"; };
-		29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Trim.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
 		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
 		29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEmptyMessageClient.swift; sourceTree = "<group>"; };
@@ -1250,7 +1248,6 @@
 				29921BCF1EF6261C00C1E848 /* MMElement+CodeBlock.swift */,
 				29921BCD1EF624F500C1E848 /* MMElement+Image.swift */,
 				297406A01F0EE51E003A6BFB /* MMElement+Table.swift */,
-				29CD71161EF22F4200616E85 /* NSAttributedString+Trim.swift */,
 				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
 			);
@@ -2524,7 +2521,6 @@
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
-				29CD71171EF22F4200616E85 /* NSAttributedString+Trim.swift in Sources */,
 				298BA08D1EC90A9000B01946 /* NSAttributedStringSizing.swift in Sources */,
 				29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */,
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,

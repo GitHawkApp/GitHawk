@@ -332,8 +332,27 @@ func createTextModelUpdatingGitHubFeatures(
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
     ) -> StyledTextRenderer {
+
+    let trimmedString: StyledTextString
+    if let first = string.styledTexts.first {
+        switch first.storage {
+        case .text(let text):
+            if let range = text.rangeOfCharacter(from: CharacterSet.whitespacesAndNewlines), range.lowerBound == text.startIndex {
+                let trim = text[range.upperBound..<text.endIndex]
+                trimmedString = StyledTextString(
+                    styledTexts: [StyledText(storage: .text(String(trim)), style: first.style)] + string.styledTexts[1...]
+                )
+            } else {
+                trimmedString = string
+            }
+        case .attributedText: trimmedString = string
+        }
+    } else {
+        trimmedString = string
+    }
+
     return StyledTextRenderer(
-        string: string,
+        string: trimmedString,
         contentSizeCategory: options.contentSizeCategory,
         inset: inset,
         backgroundColor: .white

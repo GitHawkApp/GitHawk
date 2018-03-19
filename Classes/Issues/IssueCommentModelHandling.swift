@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StyledText
 
 func BodyHeightForComment(
     viewModel: Any,
@@ -16,6 +17,8 @@ func BodyHeightForComment(
     ) -> CGFloat {
     if let viewModel = viewModel as? NSAttributedStringSizing {
         return viewModel.textViewSize(width).height
+    } else if let viewModel = viewModel as? StyledTextRenderer {
+        return viewModel.viewSize(width: width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
         let inset = IssueCommentCodeBlockCell.scrollViewInset
         return viewModel.contentSize.height + inset.top + inset.bottom
@@ -45,6 +48,7 @@ func CellTypeForComment(viewModel: Any) -> AnyClass {
     case is IssueCommentHtmlModel: return IssueCommentHtmlCell.self
     case is IssueCommentHrModel: return IssueCommentHrCell.self
     case is NSAttributedStringSizing: return IssueCommentTextCell.self
+    case is StyledTextRenderer: return IssueCommentTextCell.self
     case is IssueCommentTableModel: return IssueCommentTableCell.self
     default: fatalError("Unhandled model: \(viewModel)")
     }
@@ -68,7 +72,7 @@ func ExtraCommentCellConfigure(
         cell.navigationDelegate = htmlNavigationDelegate
         cell.imageDelegate = htmlImageDelegate
     } else if let cell = cell as? IssueCommentTextCell {
-        cell.textView.delegate = attributedDelegate
+        cell.textView.tapDelegate = markdownDelegate
     } else if let cell = cell as? IssueCommentQuoteCell {
         cell.delegate = markdownDelegate
     } else if let cell = cell as? IssueCommentTableCell {

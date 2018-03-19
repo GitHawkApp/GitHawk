@@ -20,7 +20,7 @@ pod 'Firebase/Database'
 
 # prerelease pods
 pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
-pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
+#pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
 pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
 pod 'MMMarkdown', :git => 'https://github.com/GitHawkApp/MMMarkdown.git', :branch => 'master'
 pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'
@@ -34,6 +34,7 @@ pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']
 pod 'SwipeCellKit', :path => 'Local Pods/SwipeCellKit'
 pod 'GitHubAPI', :path => 'Local Pods/GitHubAPI'
 pod 'GitHubSession', :path => 'Local Pods/GitHubSession'
+pod 'StyledText', :path => '/Users/rnystrom/Development/iOS/StyledText'
 
 target 'Freetime' do
 
