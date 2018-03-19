@@ -9,19 +9,12 @@
 import UIKit
 import StyledText
 
-protocol StyledTextViewCellDelegate: class {
-    func didTap(cell: StyledTextViewCell, attribute: DetectedMarkdownAttribute)
-}
+class StyledTextViewCell: UICollectionViewCell {
 
-class StyledTextViewCell: UICollectionViewCell, StyledTextViewDelegate {
-
-    weak var delegate: StyledTextViewCellDelegate?
-
-    private let textView = StyledTextView()
+    private let textView = MarkdownStyledTextView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        textView.delegate = self
         textView.gesturableAttributes = MarkdownAttribute.all
         contentView.addSubview(textView)
         isAccessibilityElement = true
@@ -46,23 +39,15 @@ class StyledTextViewCell: UICollectionViewCell, StyledTextViewDelegate {
         return true
     }
 
+    var delegate: MarkdownStyledTextViewDelegate? {
+        get { return textView.tapDelegate }
+        set { textView.tapDelegate = newValue }
+    }
+
     // MARK: Public API
 
     final func set(renderer: StyledTextRenderer) {
         textView.configure(renderer: renderer, width: contentView.bounds.width)
-    }
-
-    // MARK: StyledTextViewDelegate
-
-    func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint) {
-        guard let detected = DetectMarkdownAttribute(attributes: attributes) else { return }
-        delegate?.didTap(cell: self, attribute: detected)
-    }
-
-    func didLongPress(view: StyledTextView, attributes: [NSAttributedStringKey: Any], point: CGPoint) {
-        if let details = attributes[MarkdownAttribute.details] as? String {
-            showDetailsInMenu(details: details, point: point)
-        }
     }
 
 }

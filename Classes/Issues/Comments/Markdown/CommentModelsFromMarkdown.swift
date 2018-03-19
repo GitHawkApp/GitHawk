@@ -165,7 +165,7 @@ func createModel(
     case .image:
         return CreateImageModel(element: element)
     case .table:
-        return CreateTable(element: element, markdown: markdown)
+        return CreateTable(element: element, markdown: markdown, contentSizeCategory: options.contentSizeCategory)
     case .HTML:
         guard let html = markdown.substring(with: element.range)?.trimmingCharacters(in: .whitespacesAndNewlines),
             !html.isEmpty
