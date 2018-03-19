@@ -28,6 +28,7 @@ extension GithubClient {
         completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
@@ -89,6 +90,7 @@ extension GithubClient {
                                 repo: repo,
                                 model: comment,
                                 viewer: viewerUsername,
+                                contentSizeCategory: contentSizeCategory,
                                 width: width
                             ))
                         }
@@ -114,6 +116,7 @@ extension GithubClient {
         completion: @escaping (Result<IssueCommentModel>) -> ()
         ) {
         let viewer = userSession?.username
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         client.send(V3SendPullRequestCommentRequest(
             owner: owner,
@@ -130,6 +133,7 @@ extension GithubClient {
                         repo: repo,
                         model: model,
                         viewer: viewer,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     completion(.success(comment))
@@ -168,6 +172,7 @@ private func createReviewComment(
     repo: String,
     model: GithubClient.ReviewComment,
     viewer: String?,
+    contentSizeCategory: UIContentSizeCategory,
     width: CGFloat
     ) -> IssueCommentModel {
     let details = IssueCommentDetailsViewModel(
@@ -180,8 +185,8 @@ private func createReviewComment(
     )
 
     let reactions = IssueCommentReactionViewModel(models: [])
-    let options = commentModelOptions(owner: owner, repo: repo)
-    let bodies = CreateCommentModels(markdown: model.body, width: width, options: options)
+    let options = commentModelOptions(owner: owner, repo: repo, contentSizeCategory: contentSizeCategory, width: width)
+    let bodies = CreateCommentModels(markdown: model.body, options: options)
 
     return IssueCommentModel(
         id: "\(model.id)",

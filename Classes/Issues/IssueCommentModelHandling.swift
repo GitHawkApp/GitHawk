@@ -22,7 +22,7 @@ func BodyHeightForComment(
     } else if let viewModel = viewModel as? IssueCommentImageModel {
         return imageCache?.height(model: viewModel, width: width) ?? 200
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
-        return viewModel.quote.textViewSize(width).height
+        return viewModel.string.viewSize(width: width).height
     } else if viewModel is IssueCommentHrModel {
         return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
     } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {

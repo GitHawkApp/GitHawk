@@ -10,6 +10,7 @@ import UIKit
 import IGListKit
 import MMMarkdown
 import HTMLString
+import StyledText
 
 private let newlineString = "\n"
 
@@ -26,6 +27,8 @@ struct GitHubMarkdownOptions {
     let owner: String
     let repo: String
     let flavors: [GitHubFlavors]
+    let width: CGFloat
+    let contentSizeCategory: UIContentSizeCategory
 }
 
 func createCommentAST(markdown: String, owner: String, repository: String) -> MMDocument? {
@@ -39,26 +42,19 @@ func createCommentAST(markdown: String, owner: String, repository: String) -> MM
     return document
 }
 
-func emptyDescriptionModel(width: CGFloat) -> ListDiffable {
-    let attributes = [
-        .font: Styles.Text.body.preferredFont.addingTraits(traits: .traitItalic),
-        .foregroundColor: Styles.Colors.Gray.medium.color,
-        NSAttributedStringKey.backgroundColor: UIColor.white
-    ]
-    let text = NSAttributedString(
-        string: NSLocalizedString("No description provided.", comment: ""),
-        attributes: attributes
-    )
-    return NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: text,
+func emptyDescriptionModel(options: GitHubMarkdownOptions) -> ListDiffable {
+    let builder = StyledTextBuilder(styledText: StyledText(
+        style: Styles.Text.body
+    )).add(text: NSLocalizedString("No description provided.", comment: ""), traits: .traitItalic)
+    return StyledTextRenderer(
+        string: builder.build(),
+        contentSizeCategory: options.contentSizeCategory,
         inset: IssueCommentTextCell.inset
     )
 }
 
 func CreateCommentModels(
     markdown: String,
-    width: CGFloat,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool = false
     ) -> [ListDiffable] {
@@ -70,30 +66,25 @@ func CreateCommentModels(
         markdown: replaceHTMLentities,
         owner: options.owner,
         repository: options.repo
-        ) else { return [emptyDescriptionModel(width: width)] }
+        ) else { return [emptyDescriptionModel(options: options)] }
 
     var results = [ListDiffable]()
-
-    let baseAttributes: [NSAttributedStringKey: Any] = [
-        .font: Styles.Text.body.preferredFont,
+    let builder = StyledTextBuilder(styledText: StyledText(style: Styles.Text.body.with(attributes: [
         .foregroundColor: Styles.Colors.Gray.dark.color,
         .paragraphStyle: {
             let para = NSMutableParagraphStyle()
             para.paragraphSpacingBefore = 12
             return para
         }(),
-        NSAttributedStringKey.backgroundColor: UIColor.white
-    ]
-
-    let seedString = NSMutableAttributedString()
+        .backgroundColor: UIColor.white
+        ])
+    ))
     
     for element in document.elements {
         travelAST(
             markdown: document.markdown,
             element: element,
-            attributedString: seedString,
-            attributeStack: baseAttributes,
-            width: width,
+            builder: builder,
             listLevel: 0,
             quoteLevel: 0,
             options: options,
@@ -104,8 +95,7 @@ func CreateCommentModels(
 
     // add any remaining text
     if let text = createTextModel(
-        attributedString: seedString,
-        width: width,
+        string: builder.build(),
         options: options,
         viewerCanUpdate: viewerCanUpdate
         ) {
@@ -116,18 +106,14 @@ func CreateCommentModels(
 }
 
 func createTextModel(
-    attributedString: NSAttributedString,
-    width: CGFloat,
+    string: StyledTextString,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
-    ) -> NSAttributedStringSizing? {
-    // remove head/tail whitespace and newline from text blocks
-    let trimmedString = attributedString
-        .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
-    guard trimmedString.length > 0 else { return nil }
+    ) -> StyledTextRenderer? {
+    // TODO: trim whitespace/newlines
+    guard !string.allText.isEmpty else { return nil }
     return createTextModelUpdatingGitHubFeatures(
-        attributedString: trimmedString,
-        width: width,
+        string: string,
         inset: IssueCommentTextCell.inset,
         options: options,
         viewerCanUpdate: viewerCanUpdate
@@ -136,22 +122,18 @@ func createTextModel(
 
 func createQuoteModel(
     level: Int,
-    attributedString: NSAttributedString,
-    width: CGFloat,
+    string: StyledTextString,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
     ) -> IssueCommentQuoteModel {
-    // remove head/tail whitespace and newline from text blocks
-    let trimmedString = attributedString
-        .attributedStringByTrimmingCharacterSet(charSet: .whitespacesAndNewlines)
+    // TODO: trim whitespace/newlines
     let text = createTextModelUpdatingGitHubFeatures(
-        attributedString: trimmedString,
-        width: width,
+        string: string,
         inset: IssueCommentQuoteCell.inset(quoteLevel: level),
         options: options,
         viewerCanUpdate: viewerCanUpdate
     )
-    return IssueCommentQuoteModel(level: level, quote: text)
+    return IssueCommentQuoteModel(level: level, string: text)
 }
 
 func substringOrNewline(text: String, range: NSRange) -> String {
@@ -213,50 +195,44 @@ func isList(type: MMElementType) -> Bool {
 func travelAST(
     markdown: String,
     element: MMElement,
-    attributedString: NSMutableAttributedString,
-    attributeStack: [NSAttributedStringKey: Any],
-    width: CGFloat,
+    builder: StyledTextBuilder,
     listLevel: Int,
     quoteLevel: Int,
     options: GitHubMarkdownOptions,
     results: inout [ListDiffable],
     viewerCanUpdate: Bool
     ) {
-    let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
+    builder.save()
+    defer { builder.restore() }
 
+    let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
     let isQuote = element.type == .blockquote
     let nextQuoteLevel = quoteLevel + (isQuote ? 1 : 0)
 
     // push more text attributes on the stack the deeper we go
-    let pushedAttributes = PushAttributes(
-        element: element,
-        current: attributeStack,
-        listLevel: nextListLevel
-    )
+    PushAttributes(element: element, builder: builder, listLevel: nextListLevel)
 
     if needsNewline(element: element) {
-        attributedString.append(NSAttributedString(string: newlineString, attributes: pushedAttributes))
+        builder.add(text: newlineString)
     }
 
     // if entering a block quote, finish up any string that was building
-    if isQuote && attributedString.length > 0 {
+    if isQuote && builder.count > 0 {
         if quoteLevel > 0 {
             results.append(createQuoteModel(
                 level: quoteLevel,
-                attributedString: attributedString,
-                width: width,
+                string: builder.build(),
                 options: options,
                 viewerCanUpdate: viewerCanUpdate
             ))
         } else if let text = createTextModel(
-            attributedString: attributedString,
-            width: width,
+            string: builder.build(),
             options: options,
             viewerCanUpdate: viewerCanUpdate
             ) {
             results.append(text)
         }
-        attributedString.removeAll()
+        builder.clearText()
     }
 
     if element.type == .none
@@ -268,7 +244,7 @@ func travelAST(
 
         // hack: dont allow newlines within lists
         if substring != newlineString || listLevel == 0 {
-            attributedString.append(NSAttributedString(string: substring, attributes: pushedAttributes))
+            builder.add(text: substring)
         }
     } else if element.type == .shortenedLink, let owner = element.owner, let repo = element.repository {
         let text: String
@@ -277,7 +253,7 @@ func travelAST(
         } else {
             text = "\(owner)/\(repo)#\(element.number)"
         }
-        attributedString.append(NSAttributedString(string: text, attributes: pushedAttributes))
+        builder.add(text: text)
     } else if element.type == .checkbox {
         let appendDisabled = viewerCanUpdate ? "" : "-disabled"
         if let image = UIImage(named: (element.checked ? "checked" : "unchecked") + appendDisabled) {
@@ -292,8 +268,7 @@ func travelAST(
                     value: MarkdownCheckboxModel(checked: element.checked, originalMarkdownRange: element.range),
                     range: attachmentString.string.nsrange
                 )
-                attributedString.append(attachmentString)
-                attributedString.append(NSAttributedString(string: " ", attributes: pushedAttributes))
+                builder.add(attributedText: attachmentString).add(text: " ")
             }
         }
     } else if element.type == .listItem {
@@ -308,7 +283,7 @@ func travelAST(
         } else {
             modifier = ""
         }
-        attributedString.append(NSAttributedString(string: modifier, attributes: pushedAttributes))
+        builder.add(text: modifier)
     }
 
     let model = createModel(markdown: markdown, element: element, options: options)
@@ -316,23 +291,20 @@ func travelAST(
     // if a model exists, push a new model with the current text stack _before_ the model. remember to drain the text
     if let model = model {
         if let text = createTextModel(
-            attributedString: attributedString,
-            width: width,
+            string: builder.build(),
             options: options,
             viewerCanUpdate: viewerCanUpdate
             ) {
             results.append(text)
         }
         results.append(model)
-        attributedString.removeAll()
+        builder.clearText()
     } else {
         for child in element.children {
             travelAST(
                 markdown: markdown,
                 element: child,
-                attributedString: attributedString,
-                attributeStack: pushedAttributes,
-                width: width,
+                builder: builder,
                 listLevel: nextListLevel,
                 quoteLevel: nextQuoteLevel,
                 options: options,
@@ -343,28 +315,27 @@ func travelAST(
     }
 
     // cap the child before exiting
-    if isQuote && attributedString.length > 0 {
+    if isQuote && builder.count > 0 {
         results.append(createQuoteModel(
             level: nextQuoteLevel,
-            attributedString: attributedString,
-            width: width,
+            string: builder.build(),
             options: options,
             viewerCanUpdate: viewerCanUpdate
         ))
-        attributedString.removeAll()
+        builder.clearText()
     }
 }
 
 func createTextModelUpdatingGitHubFeatures(
-    attributedString: NSAttributedString,
-    width: CGFloat,
+    string: StyledTextString,
     inset: UIEdgeInsets,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
-    ) -> NSAttributedStringSizing {
-    return NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: attributedString,
-        inset: inset
-    )
+    ) -> StyledTextRenderer {
+    return StyledTextRenderer(
+        string: string,
+        contentSizeCategory: options.contentSizeCategory,
+        inset: inset,
+        backgroundColor: .white
+        ).warm(width: options.width)
 }

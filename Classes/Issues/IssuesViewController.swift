@@ -488,6 +488,7 @@ IssueManagingNavSectionControllerDelegate {
                 id: id,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
+                contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
                 width: view.bounds.width,
                 owner: model.owner,
                 repo: model.repo,

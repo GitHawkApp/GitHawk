@@ -74,6 +74,7 @@ extension GithubClient {
                         id: issueType.id,
                         commentFields: issueType.commentFields,
                         reactionFields: issueType.reactionFields,
+                        contentSizeCategory: contentSizeCategory,
                         width: width,
                         owner: owner,
                         repo: repo,

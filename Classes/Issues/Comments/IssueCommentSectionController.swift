@@ -166,8 +166,13 @@ IssueCommentDoubleTapDelegate {
 
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
-        let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
+        let options = commentModelOptions(
+            owner: model.owner,
+            repo: model.repo,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+            width: width
+        )
+        let bodyModels = CreateCommentModels(markdown: markdown, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()

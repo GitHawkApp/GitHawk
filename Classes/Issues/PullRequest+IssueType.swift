@@ -101,6 +101,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo,
@@ -208,6 +209,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 results.append(hunk)
                 results += commentModels(
                     thread: thread,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo
@@ -221,10 +223,15 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     date: date
                 )
 
-                let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+                let options = GitHubMarkdownOptions(
+                    owner: owner,
+                    repo: repo,
+                    flavors: [.issueShorthand, .usernames],
+                    width: width,
+                    contentSizeCategory: contentSizeCategory
+                )
                 let bodies = CreateCommentModels(
                     markdown: review.fragments.commentFields.body,
-                    width: width,
                     options: options,
                     viewerCanUpdate: viewerCanUpdate
                 )
@@ -424,6 +431,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
     private func commentModels(
         thread: Timeline.Node.AsPullRequestReviewThread,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat,
         owner: String,
         repo: String
@@ -442,6 +450,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 id: fragments.nodeFields.id,
                 commentFields: fragments.commentFields,
                 reactionFields: fragments.reactionFields,
+                contentSizeCategory: contentSizeCategory,
                 width: width,
                 owner: owner,
                 repo: repo,

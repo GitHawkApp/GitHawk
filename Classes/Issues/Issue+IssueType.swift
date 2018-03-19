@@ -77,6 +77,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo,

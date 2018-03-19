@@ -17,6 +17,14 @@ public final class StyledTextBuilder: Hashable, Equatable {
         self.init(styledTexts: [styledText])
     }
 
+    public convenience init(text: String) {
+        self.init(styledText: StyledText(storage: .text(text)))
+    }
+
+    public convenience init(attributedText: NSAttributedString) {
+        self.init(styledText: StyledText(storage: .attributedText(attributedText)))
+    }
+
     public init(styledTexts: [StyledText]) {
         self.styledTexts = styledTexts
         self.savedStyle = nil
@@ -26,15 +34,8 @@ public final class StyledTextBuilder: Hashable, Equatable {
         return styledTexts.last?.style.attributes
     }
 
-    @discardableResult
-    public func add(styledTexts: [StyledText]) -> StyledTextBuilder {
-        self.styledTexts += styledTexts
-        return self
-    }
-
-    @discardableResult
-    public func add(styledText: StyledText) -> StyledTextBuilder {
-        return add(styledTexts: [styledText])
+    public var count: Int {
+        return styledTexts.count
     }
 
     @discardableResult
@@ -51,13 +52,42 @@ public final class StyledTextBuilder: Hashable, Equatable {
     }
 
     @discardableResult
+    public func add(styledTexts: [StyledText]) -> StyledTextBuilder {
+        self.styledTexts += styledTexts
+        return self
+    }
+
+    @discardableResult
+    public func add(styledText: StyledText) -> StyledTextBuilder {
+        return add(styledTexts: [styledText])
+    }
+
+    @discardableResult
     public func add(style: TextStyle) -> StyledTextBuilder {
-        return add(styledText: StyledText(text: "", style: style))
+        return add(styledText: StyledText(style: style))
     }
 
     @discardableResult
     public func add(
-        text: String = "",
+        text: String,
+        traits: UIFontDescriptorSymbolicTraits? = nil,
+        attributes: [NSAttributedStringKey: Any]? = nil
+        ) -> StyledTextBuilder {
+        return add(storage: .text(text), traits: traits, attributes: attributes)
+    }
+
+    @discardableResult
+    public func add(
+        attributedText: NSAttributedString,
+        traits: UIFontDescriptorSymbolicTraits? = nil,
+        attributes: [NSAttributedStringKey: Any]? = nil
+        ) -> StyledTextBuilder {
+        return add(storage: .attributedText(attributedText), traits: traits, attributes: attributes)
+    }
+
+    @discardableResult
+    public func add(
+        storage: StyledText.Storage = .text(""),
         traits: UIFontDescriptorSymbolicTraits? = nil,
         attributes: [NSAttributedStringKey: Any]? = nil
         ) -> StyledTextBuilder {
@@ -96,14 +126,14 @@ public final class StyledTextBuilder: Hashable, Equatable {
             )
         }
 
-        return add(styledText: StyledText(text: text,style: nextStyle))
+        return add(styledText: StyledText(storage: storage, style: nextStyle))
     }
 
     @discardableResult
     public func clearText() -> StyledTextBuilder {
         guard let tipStyle = styledTexts.last?.style else { return self }
         styledTexts.removeAll()
-        return add(styledText: StyledText(text: "", style: tipStyle))
+        return add(styledText: StyledText(style: tipStyle))
     }
 
     public func build() -> StyledTextString {

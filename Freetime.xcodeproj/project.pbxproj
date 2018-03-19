@@ -256,6 +256,7 @@
 		299F63E0205DDF6B0015D901 /* UIViewController+Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */; };
 		299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63E1205DE1470015D901 /* UIView+DateDetails.swift */; };
 		299F63E4205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63E3205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift */; };
+		299F63E8205F09900015D901 /* StyledTextRenderer+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F63E7205F09900015D901 /* StyledTextRenderer+ListDiffable.swift */; };
 		29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */; };
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
@@ -689,6 +690,7 @@
 		299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Routing.swift"; sourceTree = "<group>"; };
 		299F63E1205DE1470015D901 /* UIView+DateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DateDetails.swift"; sourceTree = "<group>"; };
 		299F63E3205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+StyledTextViewCellDelegate.swift"; sourceTree = "<group>"; };
+		299F63E7205F09900015D901 /* StyledTextRenderer+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyledTextRenderer+ListDiffable.swift"; sourceTree = "<group>"; };
 		29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitCell.swift; sourceTree = "<group>"; };
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1502,6 +1504,7 @@
 				2971722C1F069E96005E43AC /* SpinnerCell.swift */,
 				29A08FC01F12F08100C5368E /* String+HashDisplay.swift */,
 				291929621F3FF0DA0012067B /* StyledTableCell.swift */,
+				299F63E7205F09900015D901 /* StyledTextRenderer+ListDiffable.swift */,
 				299F63D9205DD86E0015D901 /* StyledTextViewCell.swift */,
 				29C9FDE01EC667AE00EE3A52 /* Styles.swift */,
 				29AF1E891F8AB1C30008A0EF /* TextActionsController.swift */,
@@ -2599,6 +2602,7 @@
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
+				299F63E8205F09900015D901 /* StyledTextRenderer+ListDiffable.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
 				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
 				29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */,
