@@ -195,7 +195,7 @@ final class ToastManager {
 
         private var timer: Timer?
 
-        init?(config: ToastViewConfiguration, in baseView: UIView) {
+        init(config: ToastViewConfiguration, in baseView: UIView) {
             configuration = config
 
             view = ToastView(configuration: config)
@@ -297,8 +297,10 @@ final class ToastManager {
         toast?.dismiss()
 
         toast = Toast(config: config, in: baseView)
-        toast?.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(ToastManager.onPan(gesture:))))
-        toast?.startTimer()
+        guard let toast = toast else { return }
+        toast.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onPan(gesture:))))
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, toast.configuration.text)
+        toast.startTimer()
     }
 
     // MARK: Private API
