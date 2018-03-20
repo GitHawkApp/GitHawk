@@ -122,7 +122,10 @@ IssueManagingNavSectionControllerDelegate {
         navigationTitle.configure(
             title: "#\(model.number)",
             subtitle: "\(model.owner)/\(model.repo)",
-            accessibilityLabel: labelString
+            accessibilityLabel: labelString,
+            accessibilityHint: NSLocalizedString(
+                "Gives the option to view the repository's overview or owner",
+                comment: "The hint for tapping the navigationBar's repository information.")
         )
         navigationItem.titleView = navigationTitle
 
@@ -184,10 +187,8 @@ IssueManagingNavSectionControllerDelegate {
     }
 
     override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        }
+        super.viewSafeAreaInsetsDidChange()
+        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
     }
 
     // MARK: Private API
@@ -267,7 +268,12 @@ IssueManagingNavSectionControllerDelegate {
             ) { [weak self] (result) in
                 switch result {
                 case .success(let permission):
-                    self?.viewerIsCollaborator = permission.canManage
+                    let collab: Bool
+                    switch permission {
+                    case .admin, .write: collab = true
+                    case .read, .none: collab = false
+                    }
+                    self?.viewerIsCollaborator = collab
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:

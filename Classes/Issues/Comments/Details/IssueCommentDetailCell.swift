@@ -32,9 +32,8 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
-        if #available(iOS 11, *) {
-            imageView.accessibilityIgnoresInvertColors = true
-        }
+        imageView.accessibilityIgnoresInvertColors = true
+        
         imageView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(IssueCommentDetailCell.onTapAvatar))

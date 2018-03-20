@@ -25,6 +25,11 @@ extension UIViewController {
         presentSafari(url: url)
     }
 
+    func presentRelease(owner: String, repo: String, release: String) {
+        guard let url = URL(string: "https://github.com/\(owner)/\(repo)/releases/tag/\(release)") else { return }
+        presentSafari(url: url)
+    }
+
     func presentLabels(owner: String, repo: String, label: String) {
         guard let url = URL(string: "https://github.com/\(owner)/\(repo)/labels/\(label)") else { return }
         presentSafari(url: url)

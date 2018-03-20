@@ -36,9 +36,11 @@ final class MergeButton: UIView {
         layer.cornerRadius = Styles.Sizes.avatarCornerRadius
 
         let image = UIImage(named: "chevron-down")?.withRenderingMode(.alwaysTemplate)
-        let optionButtonWidth = (image?.size.width ?? 0) + 2*Styles.Sizes.gutter
+        let optionButtonWidth = (image?.size.width ?? 0) + (2 * Styles.Sizes.gutter)
         optionIconView.contentMode = .center
         optionIconView.image = image
+        optionIconView.isAccessibilityElement = true
+        optionIconView.accessibilityTraits = UIAccessibilityTraitButton
         optionIconView.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
             make.width.equalTo(optionButtonWidth)
@@ -94,6 +96,10 @@ final class MergeButton: UIView {
         } else {
             activityView.stopAnimating()
         }
+
+        let mergeButtonElement = mergeElement(withAccessibilityLabel: title)
+        accessibilityElements = [mergeButtonElement, optionIconView]
+        optionIconView.accessibilityLabel = NSLocalizedString("More merging options", comment: "More options button for merging")
     }
 
     // MARK: Overrides
@@ -118,6 +124,20 @@ final class MergeButton: UIView {
     }
 
     // MARK: Private API
+
+    private func mergeElement(withAccessibilityLabel accessibilityLabel: String) -> UIAccessibilityElement {
+        let element = UIAccessibilityElement(accessibilityContainer: self)
+        element.accessibilityLabel = accessibilityLabel
+        element.accessibilityFrameInContainerSpace = CGRect(
+            origin: bounds.origin,
+            size: CGSize(
+                width: bounds.size.width - optionIconView.bounds.size.width,
+                height: bounds.size.height
+            )
+        )
+        element.accessibilityTraits |= UIAccessibilityTraitButton
+        return element
+    }
 
     func highlight(_ highlight: Bool) {
         guard isUserInteractionEnabled else { return }

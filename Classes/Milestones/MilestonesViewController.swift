@@ -8,19 +8,15 @@
 
 import UIKit
 
-protocol MilestonesViewControllerDelegate: class {
-    func didDismiss(controller: MilestonesViewController, selected: Milestone?)
-}
-
 final class MilestonesViewController: UITableViewController {
 
-    private weak var delegate: MilestonesViewControllerDelegate?
-    private var selected: Milestone?
+    public private(set) var selected: Milestone?
+
     private var owner: String!
     private var repo: String!
-    private var milestones = [Milestone]()
     private var client: GithubClient!
     private let feedRefresh = FeedRefresh()
+    private var milestones = [Milestone]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +27,12 @@ final class MilestonesViewController: UITableViewController {
         tableView.backgroundView = emptyView
 
         tableView.refreshControl = feedRefresh.refreshControl
-        feedRefresh.refreshControl.addTarget(self, action: #selector(LabelsViewController.onRefresh), for: .valueChanged)
+        feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
         feedRefresh.beginRefreshing()
         fetch()
+
+        preferredContentSize = CGSize(width: 200, height: 240)
     }
 
     // MARK: Public API
@@ -43,22 +41,15 @@ final class MilestonesViewController: UITableViewController {
         client: GithubClient,
         owner: String,
         repo: String,
-        selected: Milestone?,
-        delegate: MilestonesViewControllerDelegate
+        selected: Milestone?
         ) {
         self.client = client
         self.owner = owner
         self.repo = repo
         self.selected = selected
-        self.delegate = delegate
     }
 
     // MARK: Private API
-
-    @IBAction func onDone(_ sender: Any) {
-        delegate?.didDismiss(controller: self, selected: selected)
-        dismiss(animated: trueUnlessReduceMotionEnabled)
-    }
 
     @objc func onRefresh() {
         fetch()

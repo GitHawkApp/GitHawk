@@ -133,6 +133,14 @@ extension TextStyle {
         return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
     }
 
+    func with(attributes: [NSAttributedStringKey: Any]) -> TextStyle {
+        var newAttributes = self.attributes
+        for (key, value) in attributes {
+            newAttributes[key] = value
+        }
+        return TextStyle(font: font, size: size, attributes: newAttributes, minSize: minSize, maxSize: maxSize)
+    }
+
     func with(foreground: UIColor? = nil, background: UIColor? = nil) -> TextStyle {
         var attributes = self.attributes
         attributes[.foregroundColor] = foreground ?? attributes[.foregroundColor]

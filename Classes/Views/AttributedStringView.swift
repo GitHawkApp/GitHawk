@@ -9,22 +9,12 @@
 import UIKit
 
 protocol AttributedStringViewDelegate: class {
-    func didTapURL(view: AttributedStringView, url: URL)
-    func didTapUsername(view: AttributedStringView, username: String)
-    func didTapEmail(view: AttributedStringView, email: String)
-    func didTapCommit(view: AttributedStringView, commit: CommitDetails)
-    func didTapLabel(view: AttributedStringView, label: LabelDetails)
-}
-
-protocol AttributedStringViewExtrasDelegate: class {
-    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel)
-    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel)
+    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute)
 }
 
 final class AttributedStringView: UIView {
 
     weak var delegate: AttributedStringViewDelegate?
-    weak var extrasDelegate: AttributedStringViewExtrasDelegate?
 
     private var text: NSAttributedStringSizing?
     private var tapGesture: UITapGestureRecognizer?
@@ -99,22 +89,9 @@ final class AttributedStringView: UIView {
     // MARK: Private API
 
     @objc func onTap(recognizer: UITapGestureRecognizer) {
-        guard let attributes = text?.attributes(point: recognizer.location(in: self)) else { return }
-        if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
-            delegate?.didTapURL(view: self, url: url)
-        } else if let usernameString = attributes[MarkdownAttribute.username] as? String {
-            delegate?.didTapUsername(view: self, username: usernameString)
-        } else if let emailString = attributes[MarkdownAttribute.email] as? String {
-            delegate?.didTapEmail(view: self, email: emailString)
-        } else if let issue = attributes[MarkdownAttribute.issue] as? IssueDetailsModel {
-            extrasDelegate?.didTapIssue(view: self, issue: issue)
-        } else if let label = attributes[MarkdownAttribute.label] as? LabelDetails {
-            delegate?.didTapLabel(view: self, label: label)
-        } else if let commit = attributes[MarkdownAttribute.commit] as? CommitDetails {
-            delegate?.didTapCommit(view: self, commit: commit)
-        } else if let checkbox = attributes[MarkdownAttribute.checkbox] as? MarkdownCheckboxModel {
-            extrasDelegate?.didTapCheckbox(view: self, checkbox: checkbox)
-        }
+        guard let detected = DetectMarkdownAttribute(attributes: text?.attributes(point: recognizer.location(in: self)))
+            else { return }
+        delegate?.didTap(view: self, attribute: detected)
     }
 
     @objc func onLong(recognizer: UILongPressGestureRecognizer) {
@@ -126,17 +103,5 @@ final class AttributedStringView: UIView {
             showDetailsInMenu(details: details, point: point)
         }
     }
-
-    @objc func showDetailsInMenu(details: String, point: CGPoint) {
-        becomeFirstResponder()
-        let menu = UIMenuController.shared
-        menu.menuItems = [
-            UIMenuItem(title: details, action: #selector(AttributedStringView.empty))
-        ]
-        menu.setTargetRect(CGRect(origin: point, size: CGSize(width: 1, height: 1)), in: self)
-        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    @objc func empty() {}
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "MessageViewController",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": {
     "type": "MIT"
   },
@@ -11,7 +11,7 @@
   "summary": "Replacement for SlackTextViewController.",
   "source": {
     "git": "https://github.com/GitHawkApp/MessageViewController.git",
-    "tag": "0.1.1"
+    "tag": "0.2.0"
   },
   "source_files": "MessageViewController/*.swift",
   "platforms": {

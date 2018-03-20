@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import Alamofire
+import GitHubAPI
+import GitHubSession
 
-final class RootNavigationManager: GithubSessionListener {
+final class RootNavigationManager: GitHubSessionListener {
 
-    private let sessionManager: GithubSessionManager
+    private let sessionManager: GitHubSessionManager
     private let splitDelegate = SplitViewControllerDelegate()
     private let tabDelegate = TabBarControllerDelegate()
 
@@ -24,7 +25,7 @@ final class RootNavigationManager: GithubSessionListener {
     private var lastClient: GithubClient?
 
     init(
-        sessionManager: GithubSessionManager,
+        sessionManager: GitHubSessionManager,
         rootViewController: UISplitViewController
         ) {
         self.sessionManager = sessionManager
@@ -55,10 +56,10 @@ final class RootNavigationManager: GithubSessionListener {
         }
     }
 
-    public func resetRootViewController(userSession: GithubUserSession?) {
+    public func resetRootViewController(userSession: GitHubUserSession?) {
         guard let userSession = userSession else { return }
 
-        let client = newGithubClient(sessionManager: sessionManager, userSession: userSession)
+        let client = newGithubClient(userSession: userSession)
         lastClient = client
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
@@ -89,9 +90,15 @@ final class RootNavigationManager: GithubSessionListener {
         return tabBarController?.selectedViewController
     }
 
-    // MARK: GithubSessionListener
+    @discardableResult
+    public func selectViewController(atTab tab: TabBarController.Tab) -> UIViewController? {
+        tabBarController?.showTab(tab)
+        return tabBarController?.selectedViewController
+    }
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
+    // MARK: GitHubSessionListener
+
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         resetRootViewController(userSession: userSession)
 
         if dismiss {
@@ -99,7 +106,7 @@ final class RootNavigationManager: GithubSessionListener {
         }
     }
 
-    func didLogout(manager: GithubSessionManager) {
+    func didLogout(manager: GitHubSessionManager) {
         settingsRootViewController = nil
 
         for vc in tabBarController?.viewControllers ?? [] {
@@ -112,27 +119,27 @@ final class RootNavigationManager: GithubSessionListener {
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
-    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
 
     // MARK: Private API
 
     private func fetchUsernameForMigrationIfNecessary(
         client: GithubClient,
-        userSession: GithubUserSession,
-        sessionManager: GithubSessionManager
+        userSession: GitHubUserSession,
+        sessionManager: GitHubSessionManager
         ) {
         // only required when there is no username
         guard userSession.username == nil else { return }
 
-        client.verifyPersonalAccessToken(token: userSession.token) { result in
+        client.client.send(V3VerifyPersonalAccessTokenRequest(token: userSession.token)) { result in
             switch result {
             case .success(let user):
-                userSession.username = user.username
+                userSession.username = user.data.login
 
                 // user session ref is same session that manager should be using
                 // update w/ mutated session
                 sessionManager.save()
-            default: break
+            case .failure: break
             }
         }
     }
@@ -141,8 +148,8 @@ final class RootNavigationManager: GithubSessionListener {
         return rootViewController?.viewControllers.last as? UINavigationController
     }
 
-    private var tabBarController: UITabBarController? {
-        return rootViewController?.viewControllers.first as? UITabBarController
+    private var tabBarController: TabBarController? {
+        return rootViewController?.viewControllers.first as? TabBarController
     }
 
     private func newLoginViewController() -> UIViewController {
@@ -150,7 +157,10 @@ final class RootNavigationManager: GithubSessionListener {
             name: "OauthLogin",
             bundle: Bundle(for: AppDelegate.self))
             .instantiateInitialViewController() as! LoginSplashViewController
-        controller.client = newGithubClient(sessionManager: sessionManager)
+        controller.config(
+            client: newGithubClient().client,
+            sessionManager: sessionManager
+        )
         return controller
     }
 

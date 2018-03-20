@@ -22,10 +22,6 @@ public final class StyledTextBuilder: Hashable, Equatable {
         self.savedStyle = nil
     }
 
-    public var allText: String {
-        return styledTexts.reduce("", { $0 + $1.text })
-    }
-
     public var tipAttributes: [NSAttributedStringKey: Any]? {
         return styledTexts.last?.style.attributes
     }
@@ -97,16 +93,29 @@ public final class StyledTextBuilder: Hashable, Equatable {
         return add(
             styledText: StyledText(
                 text: text,
-                style: nextStyle
+                style: TextStyle(
+                    font: tip.style.font,
+                    size: tip.style.size,
+                    attributes: nextAttributes,
+                    minSize: tip.style.minSize,
+                    maxSize: tip.style.maxSize
+                )
             )
         )
     }
 
-    public func render(contentSizeCategory: UIContentSizeCategory) -> NSAttributedString {
-        let result = NSMutableAttributedString()
-        styledTexts.forEach { result.append($0.render(contentSizeCategory: contentSizeCategory)) }
-        return result
+    @discardableResult
+    public func clearText() -> StyledTextBuilder {
+        guard let tipStyle = styledTexts.last?.style else { return self }
+        styledTexts.removeAll()
+        return add(styledText: StyledText(text: "", style: tipStyle))
     }
+
+    public func build() -> StyledTextString {
+        return StyledTextString(styledTexts: styledTexts)
+    }
+
+    // MARK: Hashable
 
     public var hashValue: Int {
         guard let seed: Int = styledTexts.first?.hashValue else { return 0 }
@@ -118,22 +127,11 @@ public final class StyledTextBuilder: Hashable, Equatable {
         }
     }
 
-    public static func == (lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
+    // MARK: Equatable
+
+    public static func ==(lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
+        if lhs === rhs { return true }
         return lhs.styledTexts == rhs.styledTexts
     }
 
-    public var copy: StyledTextBuilder {
-        let copy = StyledTextBuilder(styledTexts: styledTexts)
-        copy.savedStyle = savedStyle
-        return copy
-    }
-
-    @discardableResult
-    public func clearText() -> StyledTextBuilder {
-        guard let tipStyle = styledTexts.last?.style else { return self }
-        styledTexts.removeAll()
-        return add(styledText: StyledText(text: "", style: tipStyle))
-    }
-
 }
-

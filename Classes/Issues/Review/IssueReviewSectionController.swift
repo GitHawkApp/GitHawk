@@ -12,7 +12,7 @@ import IGListKit
 final class IssueReviewSectionController: ListBindingSectionController<IssueReviewModel>,
     ListBindingSectionControllerDataSource,
 IssueReviewDetailsCellDelegate,
-AttributedStringViewExtrasDelegate,
+AttributedStringViewDelegate,
 IssueReviewViewCommentsCellDelegate {
 
     private lazy var webviewCache: WebviewCellHeightCache = {
@@ -113,8 +113,7 @@ IssueReviewViewCommentsCellDelegate {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
-            attributedDelegate: viewController,
-            extrasAttributedDelegate: self,
+            attributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -134,13 +133,15 @@ IssueReviewViewCommentsCellDelegate {
 
     // MARK: AttributedStringViewIssueDelegate
 
-    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
-        let controller = IssuesViewController(client: client, model: issue)
-        viewController?.show(controller, sender: nil)
-    }
-
-    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
-        
+    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute) {
+        if viewController?.handle(attribute: attribute) == true {
+            return
+        }
+        switch attribute {
+        case .issue(let issue):
+            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+        default: break
+        }
     }
 
     // MARK: IssueReviewViewCommentsCellDelegate

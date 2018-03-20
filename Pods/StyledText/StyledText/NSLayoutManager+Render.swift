@@ -25,14 +25,17 @@ internal extension NSLayoutManager {
         textContainer.size = size
 
         UIGraphicsBeginImageContextWithOptions(size, backgroundColor != nil, scale)
-        backgroundColor?.setFill()
-        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
+        defer { UIGraphicsEndImageContext() }
+
+        if let backgroundColor = backgroundColor {
+            backgroundColor.setFill()
+            UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
+        }
+
         let range = glyphRange(for: textContainer)
         drawBackground(forGlyphRange: range, at: .zero)
         drawGlyphs(forGlyphRange: range, at: .zero)
-        let contents = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
-        UIGraphicsEndImageContext()
-        return contents
+        return UIGraphicsGetImageFromCurrentImageContext()?.cgImage
     }
 
 }

@@ -11,11 +11,24 @@ import IGListKit
 
 final class IssueMergeSummaryModel: ListDiffable {
 
-    enum State: Int {
+    enum State: Int, CustomStringConvertible {
         case success
         case pending
         case failure
         case warning
+
+        var description: String {
+            switch self {
+            case .success:
+                return NSLocalizedString("success", comment: "The merge status' success state")
+            case .pending:
+                return NSLocalizedString("pending", comment: "The merge status' pending state")
+            case .failure:
+                return NSLocalizedString("failure", comment: "The merge status' failure state")
+            case .warning:
+                return NSLocalizedString("warning", comment: "The merge status' warning state")
+            }
+        }
     }
 
     let title: String

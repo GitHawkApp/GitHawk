@@ -9,13 +9,14 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
+import GitHubAPI
 
 final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
 IssueCommentReactionCellDelegate,
-AttributedStringViewExtrasDelegate,
+AttributedStringViewDelegate,
 EditCommentViewControllerDelegate,
 IssueCommentDoubleTapDelegate {
 
@@ -181,15 +182,46 @@ IssueCommentDoubleTapDelegate {
         hasBeenDeleted = true
         update(animated: trueUnlessReduceMotionEnabled)
 
-        // Actually delete the comment now
-        client.deleteComment(owner: model.owner, repo: model.repo, commentID: number) { [weak self] result in
+        client.client.send(V3DeleteCommentRequest(
+            owner: model.owner,
+            repo: model.repo,
+            commentID: "\(number)")
+        ) { [weak self] result in
             switch result {
-            case .error:
+            case .failure:
                 self?.hasBeenDeleted = false
                 self?.update(animated: trueUnlessReduceMotionEnabled)
 
                 ToastManager.showGenericError()
             case .success: break // Don't need to handle success since updated optimistically
+            }
+        }
+    }
+
+    func didTapCheckbox(checkbox: MarkdownCheckboxModel) {
+        guard object?.viewerCanUpdate == true,
+            let commentID = object?.number,
+            let isRoot = object?.isRoot,
+            let originalMarkdown = currentMarkdown
+            else { return }
+
+        let invertedToken = checkbox.checked ? "[ ]" : "[x]"
+        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        edit(markdown: edited)
+
+        client.client.send(V3EditCommentRequest(
+            owner: model.owner,
+            repo: model.repo,
+            issueNumber: model.number,
+            commentID: commentID,
+            body: edited,
+            isRoot: isRoot)
+        ) { [weak self] result in
+            switch result {
+            case .success: break
+            case .failure:
+                self?.edit(markdown: originalMarkdown)
+                ToastManager.showGenericError()
             }
         }
     }
@@ -311,8 +343,7 @@ IssueCommentDoubleTapDelegate {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
-            attributedDelegate: viewController,
-            extrasAttributedDelegate: self,
+            attributedDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -415,36 +446,16 @@ IssueCommentDoubleTapDelegate {
 
     // MARK: AttributedStringViewExtrasDelegate
 
-    func didTapIssue(view: AttributedStringView, issue: IssueDetailsModel) {
-        let controller = IssuesViewController(client: client, model: issue)
-        viewController?.show(controller, sender: nil)
-    }
-
-    func didTapCheckbox(view: AttributedStringView, checkbox: MarkdownCheckboxModel) {
-        guard object?.viewerCanUpdate == true,
-            let commentID = object?.number,
-            let isRoot = object?.isRoot,
-            let originalMarkdown = currentMarkdown
-            else { return }
-
-        let invertedToken = checkbox.checked ? "[ ]" : "[x]"
-        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
-        edit(markdown: edited)
-
-        client.editComment(
-            owner: model.owner,
-            repo: model.repo,
-            issueNumber: model.number,
-            commentID: commentID,
-            body: edited,
-            isRoot: isRoot
-        ) { [weak self] (result) in
-            switch result {
-            case .success: break;
-            case .error:
-                self?.edit(markdown: originalMarkdown)
-                ToastManager.showGenericError()
-            }
+    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute) {
+        if viewController?.handle(attribute: attribute) == true {
+            return
+        }
+        switch attribute {
+        case .issue(let issue):
+            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+        case .checkbox(let checkbox):
+            didTapCheckbox(checkbox: checkbox)
+        default: break
         }
     }
 

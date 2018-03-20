@@ -1,0 +1,20 @@
+{
+  "name": "GitHubSession",
+  "version": "0.1.0",
+  "license": {
+    "type": "MIT"
+  },
+  "homepage": "https://github.com/GitHawkApp/githawk",
+  "authors": {
+    "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
+  },
+  "summary": ".",
+  "source": {
+    "git": "https://github.com/GitHawkApp/githawk/githawk.git",
+    "tag": "0.1.0"
+  },
+  "source_files": "GitHubSession/*.swift",
+  "platforms": {
+    "ios": "11.0"
+  }
+}

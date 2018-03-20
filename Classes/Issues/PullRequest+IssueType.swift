@@ -86,6 +86,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     func timelineViewModels(
         owner: String,
         repo: String,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
@@ -126,6 +127,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .removed,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -140,6 +142,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .added,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -308,6 +311,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let text = IssueRenamedString(
                     previous: rename.previousTitle,
                     current: rename.currentTitle,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 let model = IssueRenamedModel(

@@ -7,35 +7,31 @@
 //
 
 import Foundation
+import GitHubSession
 
 struct ShortcutHandler {
 
-    static private let searchViewControllerIndex = 1
-    static private let bookmarksViewControllerIndex = 2
-
-    private enum Items: String {
+    enum Items: String {
         case search
         case bookmarks
         case switchAccount
     }
 
-    static func configure(application: UIApplication, sessionManager: GithubSessionManager) {
+    static func configure(application: UIApplication, sessionManager: GitHubSessionManager) {
         application.shortcutItems = generateItems(sessionManager: sessionManager)
     }
 
-    static func handle(shortcutItem item: UIApplicationShortcutItem,
-                       sessionManager: GithubSessionManager,
-                       navigationManager: RootNavigationManager) -> Bool {
-        guard let itemType = Items(rawValue: item.type) else { return false }
-        switch itemType {
-        case .search:
-            navigationManager.selectViewController(atIndex: searchViewControllerIndex)
+    static func handle(
+        route: Route,
+        sessionManager: GitHubSessionManager,
+        navigationManager: RootNavigationManager
+        ) -> Bool {
+        switch route {
+        case .tab(let tab):
+            navigationManager.selectViewController(atTab: tab)
             return true
-        case .bookmarks:
-            navigationManager.selectViewController(atIndex: bookmarksViewControllerIndex)
-            return true
-        case .switchAccount:
-            if let index = item.userInfo?["sessionIndex"] as? Int {
+        case .switchAccount(let sessionIndex):
+            if let index = sessionIndex {
                 let session = sessionManager.userSessions[index]
                 sessionManager.focus(session, dismiss: false)
             }
@@ -43,7 +39,7 @@ struct ShortcutHandler {
         }
     }
 
-    private static func generateItems(sessionManager: GithubSessionManager) -> [UIApplicationShortcutItem] {
+    private static func generateItems(sessionManager: GitHubSessionManager) -> [UIApplicationShortcutItem] {
         var items: [UIApplicationShortcutItem] = []
 
         // Search
@@ -57,21 +53,23 @@ struct ShortcutHandler {
         // Bookmarks
         let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmark")
         let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
-                                                   localizedTitle: Constants.Strings.bookmarks,
-                                                   localizedSubtitle: nil,
-                                                   icon: bookmarkIcon)
+                                                     localizedTitle: Constants.Strings.bookmarks,
+                                                     localizedSubtitle: nil,
+                                                     icon: bookmarkIcon)
         items.append(bookmarkItem)
-        
+
         // Switchuser
-        if sessionManager.userSessions.count >= 2 {
+        if sessionManager.userSessions.count > 1 {
             let userSession = sessionManager.userSessions[1]
             if let username = userSession.username {
                 let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-                let userItem = UIApplicationShortcutItem(type: Items.switchAccount.rawValue,
-                                                         localizedTitle: NSLocalizedString("Switch Account", comment: ""),
-                                                         localizedSubtitle: username,
-                                                         icon: userIcon,
-                                                         userInfo: ["sessionIndex": 1])
+                let userItem = UIApplicationShortcutItem(
+                    type: Items.switchAccount.rawValue,
+                    localizedTitle: NSLocalizedString("Switch Account", comment: ""),
+                    localizedSubtitle: username,
+                    icon: userIcon,
+                    userInfo: ["sessionIndex": 1]
+                )
                 items.append(userItem)
             }
         }

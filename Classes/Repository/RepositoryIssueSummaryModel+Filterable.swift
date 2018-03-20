@@ -18,7 +18,7 @@ extension RepositoryIssueSummaryModel: Filterable {
 
         let lowerQuery = query.lowercased()
 
-        if title.attributedText.string.lowercased().contains(lowerQuery) { return true }
+        if title.string.allText.lowercased().contains(lowerQuery) { return true }
         if author.lowercased().contains(lowerQuery) { return true }
 
         return false

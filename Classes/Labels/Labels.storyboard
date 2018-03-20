@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,6 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ZbV-t2-OLe">
                             <rect key="frame" x="0.0" y="72" width="375" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -53,13 +53,7 @@
                             <outlet property="delegate" destination="i6k-yB-d8o" id="5JQ-ro-yaz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Labels" id="aTv-cp-0zu">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="VEL-fa-t0u">
-                            <connections>
-                                <action selector="onDone" destination="i6k-yB-d8o" id="EoD-LI-SRg"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Labels" id="aTv-cp-0zu"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMU-3e-31L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

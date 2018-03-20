@@ -86,10 +86,9 @@ PullRequestReviewReplySectionControllerDelegate {
     }
 
     override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-            feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        }
+        super.viewSafeAreaInsetsDidChange()
+        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        
     }
 
     // MARK: FeedDelegate
@@ -118,7 +117,7 @@ PullRequestReviewReplySectionControllerDelegate {
         ) { [weak self] (result) in
             switch result {
             case .error: ToastManager.showGenericError()
-            case .success(let models, _):
+            case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
             }

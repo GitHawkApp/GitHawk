@@ -7,21 +7,27 @@
 //
 
 import UIKit
+import GitHubAPI
+import GitHubSession
 
-final class SettingsAccountsViewController: UITableViewController, GithubSessionListener {
+final class SettingsAccountsViewController: UITableViewController, GitHubSessionListener {
 
-    var client: GithubClient!
-    var sessionManager: GithubSessionManager! {
-        didSet {
-            sessionManager.addListener(listener: self)
-            updateUserSessions()
-        }
-    }
-    private var userSessions = [GithubUserSession]()
+    private var client: Client!
+    private var sessionManager: GitHubSessionManager!
+    private var userSessions = [GitHubUserSession]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = NSLocalizedString("Accounts", comment: "")
+    }
+
+    // MARK: Public API
+
+    func config(client: Client, sessionManager: GitHubSessionManager) {
+        self.client = client
+        self.sessionManager = sessionManager
+        sessionManager.addListener(listener: self)
+        updateUserSessions()
     }
 
     // MARK: Private API
@@ -42,20 +48,18 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
                 alert?.actions.forEach { $0.isEnabled = false }
 
                 let token = alert?.textFields?.first?.text ?? ""
-                self?.client.verifyPersonalAccessToken(token: token) { result in
-                    self?.handle(result: result, authMethod: .pat)
+                self?.client.send(V3VerifyPersonalAccessTokenRequest(token: token)) { result in
+                    switch result {
+                    case .failure:
+                        self?.handleError()
+                    case .success(let user):
+                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                    }
                 }
             })
         ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
-    private func handle(result: Result<GithubClient.AccessTokenUser>, authMethod: GithubUserSession.AuthMethod) {
-        switch result {
-        case .error: handleError()
-        case .success(let user): finishLogin(token: user.token, authMethod: authMethod, username: user.username)
-        }
     }
 
     private func handleError() {
@@ -68,9 +72,9 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func finishLogin(token: String, authMethod: GithubUserSession.AuthMethod, username: String) {
+    private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
         sessionManager.focus(
-            GithubUserSession(token: token, authMethod: authMethod, username: username),
+            GitHubUserSession(token: token, authMethod: authMethod, username: username),
             dismiss: false
         )
     }
@@ -105,14 +109,14 @@ final class SettingsAccountsViewController: UITableViewController, GithubSession
         sessionManager.focus(selectedSession, dismiss: false)
     }
 
-    // MARK: GithubSessionListener
+    // MARK: GitHubSessionListener
 
-    func didFocus(manager: GithubSessionManager, userSession: GithubUserSession, dismiss: Bool) {
+    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         updateUserSessions()
         tableView.reloadData()
     }
 
-    func didReceiveRedirect(manager: GithubSessionManager, code: String) {}
-    func didLogout(manager: GithubSessionManager) {}
+    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
+    func didLogout(manager: GitHubSessionManager) {}
 
 }

@@ -2,9 +2,10 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireNetworkActivityIndicator (2.1.0):
     - Alamofire (~> 4.1)
-  - Apollo (0.7.0):
-    - Apollo/Core (= 0.7.0)
-  - Apollo/Core (0.7.0)
+  - Apollo (0.8.0):
+    - Apollo/Core (= 0.8.0)
+  - Apollo/Core (0.8.0)
+  - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
@@ -35,18 +36,22 @@ PODS:
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
+  - GitHubAPI (0.1.0):
+    - Alamofire (~> 4.4.0)
+    - Apollo (~> 0.8.0)
+  - GitHubSession (0.1.0)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/NSData+zlib (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
-  - IGListKit (3.1.1):
-    - IGListKit/Default (= 3.1.1)
   - IGListKit/Default (3.1.1):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.1.1)
+  - IGListKit/Swift (3.1.1):
+    - IGListKit/Default
   - leveldb-library (1.20)
-  - MessageViewController (0.1.1)
+  - MessageViewController (0.2.0)
   - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -76,9 +81,8 @@ PODS:
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.4.0)
   - AlamofireNetworkActivityIndicator (~> 2.1)
-  - Apollo (~> 0.7.0-alpha.5)
+  - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - Fabric
   - FBSnapshotTestCase
@@ -86,9 +90,11 @@ DEPENDENCIES:
   - Firebase/Database
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
+  - GitHubAPI (from `Local Pods/GitHubAPI`)
+  - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
-  - IGListKit (from `https://github.com/Instagram/IGListKit.git`, branch `master`)
+  - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
@@ -101,14 +107,21 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  ContextMenu:
+    :branch: master
+    :git: https://github.com/GitHawkApp/ContextMenu.git
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
+  GitHubAPI:
+    :path: Local Pods/GitHubAPI
+  GitHubSession:
+    :path: Local Pods/GitHubSession
   Highlightr:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :branch: master
+    :branch: swift
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :branch: master
@@ -123,6 +136,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  ContextMenu:
+    :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
+    :git: https://github.com/GitHawkApp/ContextMenu.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
     :git: https://github.com/GitHawkApp/FlatCache.git
@@ -130,22 +146,23 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 17c4d0211906510a0116e5296c1a35e134e5873c
+    :commit: 9e7974d472b61837b69bcc38da150e72d42ca75e
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: a5ed07191245fbabe86648dc6e9863d210a8d49f
+    :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
     :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
     :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
     :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :commit: c58b4b5132fe1c47a8826e22c103ab35503851be
+    :commit: dbd498a2f452622b72820f20153f74b786acb19d
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
-  Apollo: d6649ac06168660e70c6226c4eadfc0770791ba5
+  Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
+  ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
@@ -157,12 +174,14 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  GitHubAPI: f251aefb91a951512010969347bc6bd7bb21807c
+  GitHubSession: 2bf423872d89755b872ec6cbad4c53c9835beb4f
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
-  IGListKit: cb97f405ae43e59fe1da74271e19427ec20d3c07
+  IGListKit: 2f46c3390be7e0fd70b401abb34b3737d4730c19
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: ee8b83e59faf8ed6368dcf39b2a48118134c3ce2
+  MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
@@ -170,12 +189,12 @@ SPEC CHECKSUMS:
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  StyledText: d7bbd77b11888e2bee8ddceb05cc578ab7d6d148
+  StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 2a5c54767eabaf0ab1cc660a65301991cacc1648
+PODFILE CHECKSUM: e8bee44b67fc0aec656e210349d9dba94c80aeca
 
 COCOAPODS: 1.4.0

@@ -18,8 +18,12 @@ extension GithubClient {
         completion: @escaping (Result<[RepositoryFile]>) -> Void
         ) {
         let query = RepoFilesQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
-        fetch(query: query) { (result, error) in
-            if let models = result?.data?.repository?.object?.asTree?.entries {
+
+        client.query(query, result: { $0.repository?.object?.asTree?.entries }) { result in
+            switch result {
+            case .failure(let error):
+                completion(.error(error))
+            case .success(let models):
                 // trees A-Z first, then blobs A-Z
                 var trees = [RepositoryFile]()
                 var blobs = [RepositoryFile]()
@@ -38,8 +42,6 @@ extension GithubClient {
                 trees.sort { $0.name < $1.name }
                 blobs.sort { $0.name < $1.name }
                 completion(.success(trees + blobs))
-            } else {
-                completion(.error(nil))
             }
         }
     }
@@ -59,15 +61,16 @@ extension GithubClient {
         completion: @escaping (FileResult) -> Void
         ) {
         let query = RepoFileQuery(owner: owner, name: repo, branchAndPath: "\(branch):\(path)")
-        fetch(query: query) { (result, error) in
-            if let blob = result?.data?.repository?.object?.asBlob {
+        client.query(query, result: { $0.repository?.object?.asBlob }) { result in
+            switch result {
+            case .failure(let error):
+                completion(.error(error))
+            case .success(let blob):
                 if let text = blob.text, !text.isEmpty {
                     completion(.success(text))
                 } else {
                     completion(.nonUTF8)
                 }
-            } else {
-                completion(.error(error))
             }
         }
     }

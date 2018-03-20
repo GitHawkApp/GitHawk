@@ -8,6 +8,8 @@
 
 import UIKit
 import UserNotifications
+import GitHubAPI
+import GitHubSession
 
 final class BadgeNotifications {
 
@@ -66,23 +68,20 @@ final class BadgeNotifications {
     }
 
     static func fetch(application: UIApplication = UIApplication.shared, handler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let manager = GithubSessionManager()
+        let manager = GitHubSessionManager()
         guard let session = manager.focusedUserSession,
             isEnabled
             else { return }
 
-        let client = newGithubClient(sessionManager: manager, userSession: session)
-        client.request(GithubClient.Request(
-            path: "notifications",
-            method: .get,
-            parameters: ["all": "false"],
-            completion: { (response, _) in
-                if let notes = response.value as? [ [String: Any] ] {
-                    handler(update(application: application, count: notes.count) ? .newData : .noData)
-                } else {
-                    handler(.failed)
-                }
-        }))
+        let client = newGithubClient(userSession: session)
+        client.client.send(V3NotificationRequest(all: false)) { result in
+            switch result {
+            case .success(let response):
+                handler(update(application: application, count: response.data.count) ? .newData : .noData)
+            case .failure:
+                handler(.failed)
+            }
+        }
     }
 
     @discardableResult

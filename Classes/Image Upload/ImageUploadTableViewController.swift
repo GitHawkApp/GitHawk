@@ -18,7 +18,6 @@ class ImageUploadTableViewController: UITableViewController {
 
     @IBOutlet private var previewImageView: UIImageView! {
         didSet {
-            guard #available(iOS 11, *) else { return }
             previewImageView.accessibilityIgnoresInvertColors = true
         }
     }

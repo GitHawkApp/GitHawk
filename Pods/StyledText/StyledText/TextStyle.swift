@@ -58,12 +58,16 @@ public struct TextStyle: Hashable, Equatable {
         }
     }
 
+    // MARK: Hashable
+
     internal let _hashValue: Int
     public var hashValue: Int {
         return _hashValue
     }
 
-    public static func == (lhs: TextStyle, rhs: TextStyle) -> Bool {
+    // MARK: Equatable
+
+    public static func ==(lhs: TextStyle, rhs: TextStyle) -> Bool {
         return lhs.size == rhs.size
             && lhs.minSize == rhs.minSize
             && rhs.maxSize == rhs.maxSize
