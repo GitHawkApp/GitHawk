@@ -17,7 +17,7 @@ public struct V3SendPullRequestCommentResponse: EntityResponse {
     public typealias OutputType = [String: Any]
 
     public init(input: Data, response: HTTPURLResponse?) throws {
-        guard let responseData = try JSONSerialization.jsonObject(with: input, options: []) as? [String: Any],
+        guard let responseData = try JSONSerialization.jsonObject(with: input) as? [String: Any],
             let id = responseData["id"] as? Int else {
                 throw ResponseError.parsing("PR comment reply json mismatch")
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let linkRegex = try! NSRegularExpression(pattern: "rel=\\\"?([^\\\"]+)\\\"?", options: [])
+private let linkRegex = try! NSRegularExpression(pattern: "rel=\\\"?([^\\\"]+)\\\"?")
 
 internal extension String {
 
@@ -39,7 +39,6 @@ internal extension String {
 
             guard let match = linkRegex.firstMatch(
                 in: l as String,
-                options: [],
                 range: NSRange(location: 0, length: l.length)
                 ) else { continue }
             let substring = l.substring(with: match.range(at: 1))

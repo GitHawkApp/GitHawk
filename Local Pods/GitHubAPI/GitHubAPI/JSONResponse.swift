@@ -16,7 +16,7 @@ public struct JSONResponse<T>: EntityResponse {
     public typealias OutputType = T
 
     public init(input: Data, response: HTTPURLResponse?) throws {
-        guard let responseData = try JSONSerialization.jsonObject(with: input, options: []) as? T else {
+        guard let responseData = try JSONSerialization.jsonObject(with: input) as? T else {
                 throw ResponseError.parsing("Mismatched root JSON object")
         }
         self.data = responseData
