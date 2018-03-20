@@ -136,6 +136,7 @@ IssueCommentDoubleTapDelegate {
         guard collapsed, !menuVisible else { return false }
         collapsed = false
         clearCollapseCells()
+        collectionContext?.invalidateLayout(for: self, completion: nil)
         update(animated: trueUnlessReduceMotionEnabled)
         return true
     }
@@ -421,9 +422,6 @@ IssueCommentDoubleTapDelegate {
 
     func didHideMenu(cell: IssueCommentReactionCell) {
         menuVisible = false
-        collectionContext?.performBatch(animated: false, updates: { (updates) in
-            updates.reload(self)
-        }, completion: nil)
     }
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
