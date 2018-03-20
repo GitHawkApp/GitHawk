@@ -100,7 +100,7 @@ final class IssueReactionCell: UICollectionViewCell {
         })
 
         countLabel.alpha = 0
-        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, animations: {
             self.countLabel.alpha = 1
         })
     }
@@ -112,7 +112,7 @@ final class IssueReactionCell: UICollectionViewCell {
         countLabel.alpha = 1
         emojiLabel.transform = .identity
         emojiLabel.alpha = 1
-        UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, animations: {
             self.countLabel.alpha = 0
             self.emojiLabel.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
             self.emojiLabel.alpha = 0

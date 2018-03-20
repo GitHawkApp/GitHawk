@@ -9,7 +9,7 @@
 import Foundation
 
 func replaceGithubEmojiRegex(string: String) -> String {
-    let matches = GithubEmojiRegex.matches(in: string, options: [], range: string.nsrange)
+    let matches = GithubEmojiRegex.matches(in: string, range: string.nsrange)
     var replacedString = string
     for match in matches.reversed() {
         guard let substr = string.substring(with: match.range),
@@ -23,7 +23,7 @@ func replaceGithubEmojiRegex(string: String) -> String {
 
 private let GithubEmojiRegex: NSRegularExpression = {
     let pattern = "(" + GithubEmojis.alias.map({ $0.key }).joined(separator: "|") + ")"
-    return try! NSRegularExpression(pattern: pattern, options: [])
+    return try! NSRegularExpression(pattern: pattern)
 }()
 
 struct GitHubEmoji {

@@ -347,7 +347,7 @@ func travelAST(
     }
 }
 
-private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
+private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)")
 func shortenGitHubLinks(attributedString: NSAttributedString,
                         options: GitHubMarkdownOptions) -> NSAttributedString {
 
@@ -355,7 +355,7 @@ func shortenGitHubLinks(attributedString: NSAttributedString,
 
     let string = attributedString.string
     let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    let matches = issueURLRegex.matches(in: string, options: [], range: string.nsrange)
+    let matches = issueURLRegex.matches(in: string, range: string.nsrange)
 
     for match in matches.reversed() {
         let ownerRange = match.range(at: 1)
