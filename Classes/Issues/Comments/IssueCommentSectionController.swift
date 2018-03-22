@@ -136,6 +136,7 @@ IssueCommentDoubleTapDelegate {
         guard collapsed, !menuVisible else { return false }
         collapsed = false
         clearCollapseCells()
+        collectionContext?.invalidateLayout(for: self, completion: nil)
         update(animated: trueUnlessReduceMotionEnabled)
         return true
     }
