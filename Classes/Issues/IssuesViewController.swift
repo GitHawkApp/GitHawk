@@ -31,7 +31,6 @@ final class IssuesViewController:
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
-    private var focusedCommentModel: IssueCommentModel?
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -555,14 +554,10 @@ final class IssuesViewController:
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
-        messageView.text = ">"
-            + getCommentUntilNewLine(from: commentModel.rawMarkdown)
-            + "\n\n"
-            + "@"
-            + commentModel.details.login
+        let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
+        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
 
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
-        focusedCommentModel = commentModel
     }
 
     private func getCommentUntilNewLine(from string: String) -> String {

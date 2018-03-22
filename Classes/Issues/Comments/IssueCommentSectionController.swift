@@ -28,7 +28,7 @@ final class IssueCommentSectionController:
     EditCommentViewControllerDelegate,
     IssueCommentDoubleTapDelegate {
 
-    var issueCommentDelegate: IssueCommentSectionControllerDelegate!
+    private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -146,7 +146,7 @@ final class IssueCommentSectionController:
                 let commentModel = strongSelf.object
                 else { return }
 
-                strongSelf.issueCommentDelegate.didSelectReply(
+                strongSelf.issueCommentDelegate?.didSelectReply(
                     to: strongSelf,
                     commentModel: commentModel
                 )
