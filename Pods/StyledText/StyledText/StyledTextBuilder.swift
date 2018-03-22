@@ -87,21 +87,16 @@ public final class StyledTextBuilder: Hashable, Equatable {
                 maxSize: tip.style.maxSize
             )
         } else {
-            nextStyle = tip.style
+            nextStyle = TextStyle(
+                font: tip.style.font,
+                size: tip.style.size,
+                attributes: nextAttributes,
+                minSize: tip.style.minSize,
+                maxSize: tip.style.maxSize
+            )
         }
 
-        return add(
-            styledText: StyledText(
-                text: text,
-                style: TextStyle(
-                    font: tip.style.font,
-                    size: tip.style.size,
-                    attributes: nextAttributes,
-                    minSize: tip.style.minSize,
-                    maxSize: tip.style.maxSize
-                )
-            )
-        )
+        return add(styledText: StyledText(text: text,style: nextStyle))
     }
 
     @discardableResult

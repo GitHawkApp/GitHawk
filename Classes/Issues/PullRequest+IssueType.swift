@@ -252,6 +252,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -266,6 +267,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -286,6 +288,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -302,6 +305,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -329,6 +333,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: assigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .assigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -340,6 +345,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: unassigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .unassigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -351,6 +357,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: reviewRequested.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequested,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -362,6 +369,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: reviewRequestRemoved.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequestRemoved,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -373,6 +381,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: milestone.milestoneTitle,
                     date: date,
                     type: .milestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -384,6 +393,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: demilestone.milestoneTitle,
                     date: date,
                     type: .demilestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)

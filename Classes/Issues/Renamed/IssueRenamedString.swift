@@ -15,7 +15,7 @@ func IssueRenamedString(
     contentSizeCategory: UIContentSizeCategory,
     width: CGFloat
     ) -> StyledTextRenderer {
-    let string = StyledTextBuilder(styledText: StyledText(
+    let builder = StyledTextBuilder(styledText: StyledText(
         text: previous,
         style: Styles.Text.secondaryBold.with(foreground: Styles.Colors.Gray.dark.color)
     ))
@@ -23,10 +23,9 @@ func IssueRenamedString(
         .add(styledText: StyledText(text: NSLocalizedString(" to ", comment: ""), style: Styles.Text.secondary))
         .restore()
         .add(text: current)
-        .build()
     return StyledTextRenderer(
-        string: string,
+        string: builder.build(),
         contentSizeCategory: contentSizeCategory,
         inset: IssueRenamedCell.titleInset
-    )
+    ).warm(width: width)
 }

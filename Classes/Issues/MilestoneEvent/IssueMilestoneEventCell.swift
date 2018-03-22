@@ -9,12 +9,12 @@
 import Foundation
 import SnapKit
 
-final class IssueMilestoneEventCell: AttributedStringCell {
+final class IssueMilestoneEventCell: StyledTextViewCell {
 
     // MARK: Public API
 
     func configure(_ model: IssueMilestoneEventModel) {
-        set(attributedText: model.attributedText)
+        set(renderer: model.string)
     }
 
 }

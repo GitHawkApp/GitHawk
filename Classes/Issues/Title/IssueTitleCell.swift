@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueTitleCell: AttributedStringCell {
+final class IssueTitleCell: StyledTextViewCell {
 
     static let inset = UIEdgeInsets.zero
 

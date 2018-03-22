@@ -8,17 +8,19 @@
 
 import UIKit
 import IGListKit
+import StyledText
 
-func titleStringSizing(title: String, width: CGFloat) -> NSAttributedStringSizing {
-    let attributedString = NSAttributedString(
-        string: title,
-        attributes: [
-            .font: Styles.Text.headline.preferredFont,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ])
-    return NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: attributedString,
+func titleStringSizing(
+    title: String,
+    contentSizeCategory: UIContentSizeCategory,
+    width: CGFloat
+    ) -> StyledTextRenderer {
+    let builder = StyledTextBuilder(styledText: StyledText(
+        text: title, style: Styles.Text.headline.with(foreground: Styles.Colors.Gray.dark.color)
+    ))
+    return StyledTextRenderer(
+        string: builder.build(),
+        contentSizeCategory: contentSizeCategory,
         inset: IssueTitleCell.inset,
         backgroundColor: Styles.Colors.background
     )
