@@ -203,7 +203,9 @@ func travelAST(
     viewerCanUpdate: Bool
     ) {
     builder.save()
-    defer { builder.restore() }
+    defer {
+        builder.restore()
+    }
 
     let nextListLevel = listLevel + (isList(type: element.type) ? 1 : 0)
     let isQuote = element.type == .blockquote

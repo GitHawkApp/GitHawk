@@ -11,7 +11,7 @@ import Foundation
 public final class StyledTextBuilder: Hashable, Equatable {
 
     internal var styledTexts: [StyledText]
-    internal var savedStyle: TextStyle? = nil
+    internal var savedStyles = [TextStyle]()
 
     public convenience init(styledText: StyledText) {
         self.init(styledTexts: [styledText])
@@ -27,7 +27,6 @@ public final class StyledTextBuilder: Hashable, Equatable {
 
     public init(styledTexts: [StyledText]) {
         self.styledTexts = styledTexts
-        self.savedStyle = nil
     }
 
     public var tipAttributes: [NSAttributedStringKey: Any]? {
@@ -40,15 +39,17 @@ public final class StyledTextBuilder: Hashable, Equatable {
 
     @discardableResult
     public func save() -> StyledTextBuilder {
-        savedStyle = styledTexts.last?.style
+        if let last = styledTexts.last?.style {
+            savedStyles.append(last)
+        }
         return self
     }
 
     @discardableResult
     public func restore() -> StyledTextBuilder {
-        guard let savedStyle = self.savedStyle else { return self }
-        self.savedStyle = nil
-        return add(styledText: StyledText(style: savedStyle))
+        guard let last = savedStyles.last else { return self }
+        savedStyles.removeLast()
+        return add(styledText: StyledText(style: last))
     }
 
     @discardableResult
@@ -136,8 +137,8 @@ public final class StyledTextBuilder: Hashable, Equatable {
         return add(styledText: StyledText(style: tipStyle))
     }
 
-    public func build() -> StyledTextString {
-        return StyledTextString(styledTexts: styledTexts)
+    public func build(renderMode: StyledTextString.RenderMode = .trimWhitespaceAndNewlines) -> StyledTextString {
+        return StyledTextString(styledTexts: styledTexts, renderMode: renderMode)
     }
 
     // MARK: Hashable

@@ -100,7 +100,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
-  - StyledText (from `/Users/rnystrom/Development/iOS/StyledText`)
+  - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
   - Tabman (~> 1.1)
@@ -130,7 +130,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :path: /Users/rnystrom/Development/iOS/StyledText
+    :branch: master
+    :git: https://github.com/GitHawkApp/StyledText.git
   SwipeCellKit:
     :path: Local Pods/SwipeCellKit
 
@@ -153,6 +154,9 @@ CHECKOUT OPTIONS:
   MMMarkdown:
     :commit: c919c3ba5e2590620b736da3202e9e38f099ef3b
     :git: https://github.com/GitHawkApp/MMMarkdown.git
+  StyledText:
+    :commit: 34aed34f5bbc0e2d436766132c41b1c878a2d147
+    :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -185,12 +189,12 @@ SPEC CHECKSUMS:
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  StyledText: 996e2781d1a0332cccbed262da6d4977e421616a
+  StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: a729e724a03a3be1c82dc74e0fd64c01cb13833b
+PODFILE CHECKSUM: e8bee44b67fc0aec656e210349d9dba94c80aeca
 
 COCOAPODS: 1.4.0
