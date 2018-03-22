@@ -46,7 +46,7 @@ FlatCacheListener {
 
         switch inboxType {
         case .all:
-            title = NSLocalizedString("Archived", comment: "")
+            title = NSLocalizedString("All", comment: "")
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
         case .repo(let repo):
@@ -86,7 +86,7 @@ FlatCacheListener {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         alert.add(action: UIAlertAction(
-            title: NSLocalizedString("View Archived", comment: ""),
+            title: NSLocalizedString("View All", comment: ""),
             style: .default,
             handler: { [weak self] _ in
                 self?.onViewAll()
