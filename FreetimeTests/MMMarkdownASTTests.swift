@@ -28,14 +28,14 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_creatingTestMarkdownWorks() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: testMarkdown, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: testMarkdown, options: options)
         XCTAssertTrue(result.count > 0)
     }
 
     func test_plainText() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: "foo", width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: "foo", options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -43,8 +43,8 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_paragraphWithBold() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: "foo **bar**", width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: "foo **bar**", options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -52,8 +52,8 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_paragraphWithItalics() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: "foo _bar_", width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: "foo _bar_", options: options)
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! NSAttributedStringSizing
@@ -67,8 +67,8 @@ final class MMMarkdownASTTests: XCTestCase {
             "    - 2.1",
             "- 1.3"
             ].joined(separator: "\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: md, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: md, options: options)
 
         // MMMarkdown puts an extra "\n" after **bold** as an entity type. TODO
         let text = result.first as! NSAttributedStringSizing
@@ -77,16 +77,16 @@ final class MMMarkdownASTTests: XCTestCase {
 
     func test_listWithNewlinesBetween() {
         let markdown = "1. line 1\n\n2. line 2"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: markdown, options: options)
         let text = result.first as! NSAttributedStringSizing
         XCTAssertEqual(text.attributedText.string, "1. line 1\n2. line 2")
     }
 
     func test_usernames() {
         let markdown = "@user not @user\n@user user@gmail.com and @user"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.usernames])
-        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.usernames], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: markdown, options: options)
         XCTAssertEqual(result.count, 1)
         let text = result.first as! NSAttributedStringSizing
         XCTAssertNotNil(text.attributedText.attributes(at: 0, effectiveRange: nil)[MarkdownAttribute.username])
@@ -101,8 +101,8 @@ final class MMMarkdownASTTests: XCTestCase {
 
     func test_shortlinks() {
         let markdown = "#123 test #123 #abc abc#123 and foo/bar#456 end"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand])
-        let result = CreateCommentModels(markdown: markdown, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand], width: 0, contentSizeCategory: .large)
+        let result = CreateCommentModels(markdown: markdown, options: options)
         XCTAssertEqual(result.count, 1)
         let text = result.first as! NSAttributedStringSizing
         XCTAssertNotNil(text.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
@@ -127,11 +127,11 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_shortenLinks() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand])
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand], width: 0, contentSizeCategory: .large)
 
         // Test Same Repository
         let testOne = "https://github.com/owner/repo/issues/123"
-        let resultOne = CreateCommentModels(markdown: testOne, width: 300, options: options)
+        let resultOne = CreateCommentModels(markdown: testOne, options: options)
         let textOne = resultOne.first as! NSAttributedStringSizing
         XCTAssertEqual(textOne.attributedText.string, "#123")
         XCTAssertNotNil(textOne.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
@@ -143,7 +143,7 @@ final class MMMarkdownASTTests: XCTestCase {
 
         // Test Cross Repository
         let testTwo = "https://github.com/differentOwner/differentRepo/issues/321"
-        let resultTwo = CreateCommentModels(markdown: testTwo, width: 300, options: options)
+        let resultTwo = CreateCommentModels(markdown: testTwo, options: options)
         let textTwo = resultTwo.first as! NSAttributedStringSizing
         XCTAssertEqual(textTwo.attributedText.string, "differentOwner/differentRepo#321")
         XCTAssertNotNil(textTwo.attributedText.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
