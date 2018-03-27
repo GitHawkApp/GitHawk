@@ -114,7 +114,7 @@ FlatCacheListener {
     func pushRepoNotifications(owner: String, repo: String) {
         let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
         let controller = NotificationsViewController(client: client, inboxType: .repo(model))
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func onViewAll() {
