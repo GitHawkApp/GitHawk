@@ -37,7 +37,7 @@ func CreateViewModels(
 
     for notification in v3notifications {
         guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
-            let identifier = notification.subject.url.absoluteString.notificationIdentifier
+            let identifier = notification.subject.url?.absoluteString.notificationIdentifier
             else { continue }
 
         let model = NotificationViewModel(
