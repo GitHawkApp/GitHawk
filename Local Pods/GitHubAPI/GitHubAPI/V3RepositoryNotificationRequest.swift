@@ -13,7 +13,21 @@ public struct V3RepositoryNotificationRequest: V3Request {
     public var pathComponents: [String] {
         return ["repos", owner, repo, "notifications"]
     }
+    public var parameters: [String : Any]? {
+        return [
+            "all": all ? "true" : "false",
+            "participating": "false",
+            "per_page": "50"
+        ]
+    }
 
+    public let all: Bool
     public let owner: String
     public let repo: String
+
+    public init(all: Bool = true, owner: String, repo: String) {
+        self.all = all
+        self.owner = owner
+        self.repo = repo
+    }
 }
