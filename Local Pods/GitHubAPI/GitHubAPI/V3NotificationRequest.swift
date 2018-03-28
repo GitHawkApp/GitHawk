@@ -13,7 +13,7 @@ public struct V3NotificationRequest: V3Request {
     public let pathComponents: [String] = ["notifications"]
     public var parameters: [String : Any]? {
         return [
-            "all": all ? "true" : "false",
+            "all": all.description,
             "participating": "false",
             "page": page,
             "per_page": "50"

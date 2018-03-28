@@ -15,7 +15,7 @@ public struct V3RepositoryNotificationRequest: V3Request {
     }
     public var parameters: [String : Any]? {
         return [
-            "all": all ? "true" : "false",
+            "all": all.description,
             "participating": "false",
             "per_page": "50"
         ]
