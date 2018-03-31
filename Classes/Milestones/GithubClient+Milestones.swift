@@ -74,6 +74,7 @@ extension GithubClient {
             milestone: eventTitle,
             date: Date(),
             type: type,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
             width: 0 // pay perf cost when asked
         )
 
@@ -100,19 +101,6 @@ extension GithubClient {
                 ToastManager.showGenericError()
             }
         }
-
-        // https://developer.github.com/v3/issues/#edit-an-issue
-//        request(Request(
-//            path: "repos/\(owner)/\(repo)/issues/\(number)",
-//            method: .patch,
-//            parameters: [ "milestone": milestone?.number ?? NSNull() ],
-//            completion: { (response, _) in
-//                // rewind to a previous object if response isn't a success
-//                if response.response?.statusCode != 200 {
-//                    cache.set(value: previous)
-//                    ToastManager.showGenericError()
-//                }
-//        }))
     }
 
 }

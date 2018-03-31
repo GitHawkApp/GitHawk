@@ -77,6 +77,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo,
@@ -183,6 +184,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -197,6 +199,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -214,6 +217,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         hash: commitRef.oid,
                         actor: referenced.actor?.login ?? Constants.Strings.unknown,
                         date: date,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -230,6 +234,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -244,6 +249,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -271,6 +277,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     user: assigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .assigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -282,6 +289,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     user: unassigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .unassigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -293,6 +301,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     milestone: milestone.milestoneTitle,
                     date: date,
                     type: .milestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -304,6 +313,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     milestone: demilestone.milestoneTitle,
                     date: date,
                     type: .demilestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)

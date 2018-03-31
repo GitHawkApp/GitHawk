@@ -9,23 +9,18 @@
 import Foundation
 
 // https://stackoverflow.com/a/38738940/940936
-extension NSAttributedString {
+internal extension NSAttributedString {
 
-    public func attributedStringByTrimmingCharacterSet(charSet: CharacterSet) -> NSAttributedString {
+    func attributedStringByTrimmingCharacterSet(charSet: CharacterSet) -> NSAttributedString {
         let modifiedString = NSMutableAttributedString(attributedString: self)
-        modifiedString.trimCharactersInSet(charSet: charSet)
-        return NSAttributedString(attributedString: modifiedString)
+        return modifiedString.trimCharactersInSet(charSet: charSet)
     }
 
 }
 
-extension NSMutableAttributedString {
+internal extension NSMutableAttributedString {
 
-    public func removeAll() {
-        deleteCharacters(in: string.nsrange)
-    }
-
-    public func trimCharactersInSet(charSet: CharacterSet) {
+    func trimCharactersInSet(charSet: CharacterSet) -> NSMutableAttributedString {
         var range = (string as NSString).rangeOfCharacter(from: charSet)
 
         // Trim leading characters from character set.
@@ -40,6 +35,8 @@ extension NSMutableAttributedString {
             replaceCharacters(in: range, with: "")
             range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
         }
+
+        return self
     }
 
 }

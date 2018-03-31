@@ -18,7 +18,8 @@ final class IssueCommentSectionController: ListBindingSectionController<IssueCom
 IssueCommentReactionCellDelegate,
 AttributedStringViewDelegate,
 EditCommentViewControllerDelegate,
-IssueCommentDoubleTapDelegate {
+IssueCommentDoubleTapDelegate,
+MarkdownStyledTextViewDelegate {
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -167,12 +168,30 @@ IssueCommentDoubleTapDelegate {
 
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
-        let options = commentModelOptions(owner: model.owner, repo: model.repo)
-        let bodyModels = CreateCommentModels(markdown: markdown, width: width, options: options, viewerCanUpdate: true)
+        let options = commentModelOptions(
+            owner: model.owner,
+            repo: model.repo,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+            width: width
+        )
+        let bodyModels = CreateCommentModels(markdown: markdown, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()
         update(animated: trueUnlessReduceMotionEnabled)
+    }
+
+    func didTap(attribute: DetectedMarkdownAttribute) {
+        if viewController?.handle(attribute: attribute) == true {
+            return
+        }
+        switch attribute {
+        case .issue(let issue):
+            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
+        case .checkbox(let checkbox):
+            didTapCheckbox(checkbox: checkbox)
+        default: break
+        }
     }
 
     /// Deletes the comment and optimistically removes it from the feed
@@ -345,6 +364,7 @@ IssueCommentDoubleTapDelegate {
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
             attributedDelegate: self,
+            markdownDelegate: self,
             imageHeightDelegate: imageCache
         )
 
@@ -445,16 +465,13 @@ IssueCommentDoubleTapDelegate {
     // MARK: AttributedStringViewExtrasDelegate
 
     func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute) {
-        if viewController?.handle(attribute: attribute) == true {
-            return
-        }
-        switch attribute {
-        case .issue(let issue):
-            viewController?.show(IssuesViewController(client: client, model: issue), sender: nil)
-        case .checkbox(let checkbox):
-            didTapCheckbox(checkbox: checkbox)
-        default: break
-        }
+        didTap(attribute: attribute)
+    }
+
+    // MARK: MarkdownStyledTextViewDelegate
+
+    func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
+        didTap(attribute: attribute)
     }
 
     // MARK: EditCommentViewControllerDelegate
