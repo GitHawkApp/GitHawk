@@ -41,7 +41,7 @@ func PushAttributes(
             MarkdownAttribute.linkShorteningDisabled: true,
             .foregroundColor: color as Any
             ])
-    case .link, .shortenedLink:
+    case .link:
         builder.add(attributes: [
             .foregroundColor: Styles.Colors.Blue.medium.color,
             MarkdownAttribute.url: element.href ?? ""
@@ -75,7 +75,7 @@ func PushAttributes(
         if let username = element.username {
             builder.add(traits: .traitBold, attributes: [MarkdownAttribute.username: username])
         }
-    case .shorthandIssues:
+    case .shorthandIssues, .shortenedLink:
         if let repo = element.repository, let owner = element.owner {
             builder.add(attributes: [
                 .foregroundColor: Styles.Colors.Blue.medium.color,

@@ -110,8 +110,6 @@ func createTextModel(
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
     ) -> StyledTextRenderer? {
-    // TODO: trim whitespace/newlines
-    guard !string.allText.isEmpty else { return nil }
     return createTextModelUpdatingGitHubFeatures(
         string: string,
         inset: IssueCommentTextCell.inset,
@@ -125,14 +123,13 @@ func createQuoteModel(
     string: StyledTextString,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
-    ) -> IssueCommentQuoteModel {
-    // TODO: trim whitespace/newlines
-    let text = createTextModelUpdatingGitHubFeatures(
+    ) -> IssueCommentQuoteModel? {
+    guard let text = createTextModelUpdatingGitHubFeatures(
         string: string,
         inset: IssueCommentQuoteCell.inset(quoteLevel: level),
         options: options,
         viewerCanUpdate: viewerCanUpdate
-    )
+        ) else { return nil }
     return IssueCommentQuoteModel(level: level, string: text)
 }
 
@@ -221,12 +218,14 @@ func travelAST(
     // if entering a block quote, finish up any string that was building
     if isQuote && builder.count > 0 {
         if quoteLevel > 0 {
-            results.append(createQuoteModel(
+            if let quote = createQuoteModel(
                 level: quoteLevel,
                 string: builder.build(),
                 options: options,
                 viewerCanUpdate: viewerCanUpdate
-            ))
+                ) {
+                results.append(quote)
+            }
         } else if let text = createTextModel(
             string: builder.build(),
             options: options,
@@ -318,13 +317,15 @@ func travelAST(
 
     // cap the child before exiting
     if isQuote && builder.count > 0 {
-        results.append(createQuoteModel(
+        if let quote = createQuoteModel(
             level: nextQuoteLevel,
             string: builder.build(),
             options: options,
             viewerCanUpdate: viewerCanUpdate
-        ))
-        builder.clearText()
+            ) {
+            results.append(quote)
+            builder.clearText()
+        }
     }
 }
 
@@ -333,28 +334,10 @@ func createTextModelUpdatingGitHubFeatures(
     inset: UIEdgeInsets,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool
-    ) -> StyledTextRenderer {
-
-    let trimmedString: StyledTextString
-    if let first = string.styledTexts.first {
-        switch first.storage {
-        case .text(let text):
-            if let range = text.rangeOfCharacter(from: CharacterSet.whitespacesAndNewlines), range.lowerBound == text.startIndex {
-                let trim = text[range.upperBound..<text.endIndex]
-                trimmedString = StyledTextString(
-                    styledTexts: [StyledText(storage: .text(String(trim)), style: first.style)] + string.styledTexts[1...]
-                )
-            } else {
-                trimmedString = string
-            }
-        case .attributedText: trimmedString = string
-        }
-    } else {
-        trimmedString = string
-    }
-
+    ) -> StyledTextRenderer? {
+    guard !string.allText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
     return StyledTextRenderer(
-        string: trimmedString,
+        string: string,
         contentSizeCategory: options.contentSizeCategory,
         inset: inset,
         backgroundColor: .white
