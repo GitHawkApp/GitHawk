@@ -89,7 +89,7 @@ final class NotificationClient {
         ) {
 
         let content = "state comments{totalCount}"
-        let notificationQueries: String = notifications.flatMap {
+        let notificationQueries: String = notifications.compactMap {
             guard let alias = $0.stateAlias else { return nil }
             return """
             \(alias.key): repository(owner: "\($0.owner)", name: "\($0.repo)") { issueOrPullRequest(number: \(alias.number)) { ...on Issue {\(content)} ...on PullRequest {\(content)} } }
