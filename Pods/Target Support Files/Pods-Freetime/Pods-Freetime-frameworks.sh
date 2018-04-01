@@ -158,6 +158,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
@@ -185,6 +186,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
@@ -213,6 +215,7 @@ if [[ "$CONFIGURATION" == "TestFlight" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
