@@ -107,6 +107,7 @@ NewIssueTableViewControllerDelegate {
             deselectRow()
             onReportBug()
         } else if cell === viewSourceCell {
+            deselectRow()
             onViewSource()
         } else if cell === signOutCell {
             deselectRow()
@@ -157,9 +158,19 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onViewSource() {
-        guard let url = URL(string: Constants.URLs.repository)
-            else { fatalError("Should always create GitHub URL") }
-		presentSafari(url: url)
+        guard let client = client else {
+            ToastManager.showGenericError()
+            return
+        }
+
+        let repo = RepositoryDetails(
+            owner: "GitHawkApp",
+            name: "GitHawk",
+            defaultBranch: "master",
+            hasIssuesEnabled: true
+        )
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        navigationController?.showDetailViewController(repoViewController, sender: self)
     }
 
     func onSignOut() {
