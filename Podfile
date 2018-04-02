@@ -16,7 +16,10 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'Tabman', '~> 1.1'
 pod 'Firebase/Core'
-pod 'Firebase/Database' 
+pod 'Firebase/Database'
+
+# fork
+pod 'Apollo', :git => 'https://github.com/orta/apollo-ios.git', :branch => 'support_local'
 
 # prerelease pods
 pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'

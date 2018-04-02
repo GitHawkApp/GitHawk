@@ -82,6 +82,7 @@ PODS:
 
 DEPENDENCIES:
   - AlamofireNetworkActivityIndicator (~> 2.1)
+  - Apollo (from `https://github.com/orta/apollo-ios.git`, branch `support_local`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - Fabric
@@ -107,6 +108,9 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  Apollo:
+    :branch: support_local
+    :git: https://github.com/orta/apollo-ios.git
   ContextMenu:
     :branch: master
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -136,6 +140,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  Apollo:
+    :commit: 74acf4b116b585fecafb68c8ad60d3d897e96481
+    :git: https://github.com/orta/apollo-ios.git
   ContextMenu:
     :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -161,7 +168,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
-  Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
+  Apollo: 222a3bee521f814317f55fc68c94cbf59c75479d
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
@@ -195,6 +202,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: e8bee44b67fc0aec656e210349d9dba94c80aeca
+PODFILE CHECKSUM: 6e26ed6df15d767a1bbc55e12021bec352e87579
 
 COCOAPODS: 1.4.0
