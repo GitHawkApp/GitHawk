@@ -6,5 +6,223 @@
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import StyledText
+import cmark_gfm_swift
+import IGListKit
+import HTMLString
+
+private struct CMarkOptions {
+    let owner: String
+    let repo: String
+    let branch: String?
+    let width: CGFloat
+    let viewerCanUpdate: Bool
+    let contentSizeCategory: UIContentSizeCategory
+}
+
+private extension TextElement {
+    @discardableResult
+    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
+        builder.save()
+        defer { builder.restore() }
+
+        switch self {
+        case .text(let text):
+            // TODO scan for auto short links and issues
+            // convert into links
+            builder.add(text: text)
+        case .softBreak, .lineBreak:
+            builder.add(text: "\n")
+        case .code(let text):
+            builder.add(styledText: StyledText(text: text, style: Styles.Text.code))
+        case .emphasis(let children):
+            builder.add(traits: .traitItalic)
+            children.build(builder, options: options)
+        case .strong(let children):
+            builder.add(traits: .traitBold)
+            children.build(builder, options: options)
+        case .strikethrough(let children):
+            builder.add(attributes: [
+                .strikethroughStyle: NSUnderlineStyle.styleSingle.rawValue,
+                .strikethroughColor: builder.tipAttributes?[.foregroundColor] ?? Styles.Colors.Gray.dark.color
+                ])
+            children.build(builder, options: options)
+        case .link(let children, _, let url):
+            builder.add(attributes: [
+                .foregroundColor: Styles.Colors.Blue.medium.color,
+                MarkdownAttribute.url: url ?? ""
+                ])
+            // TODO this is where we'd convert shorthand URLs and stuff
+            // but need to squish all children then search
+            children.build(builder, options: options)
+        case .mention(let login):
+            builder.add(text: login, traits: .traitBold, attributes: [MarkdownAttribute.username: login])
+        case .checkbox(let checked, let originalRange):
+            builder.addCheckbox(checked: checked, range: originalRange, viewerCanUpdate: options.viewerCanUpdate)
+        }
+        return builder
+    }
+}
+
+private extension Sequence where Iterator.Element == TextElement {
+    @discardableResult
+    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
+        forEach { $0.build(builder, options: options) }
+        return builder
+    }
+}
+
+private extension ListElement {
+    @discardableResult
+    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
+        switch self {
+        case .text(let text):
+            text.build(builder, options: options)
+        case .list(let children, let type, let level):
+            children.build(builder, options: options, type: type, level: level)
+        }
+        return builder
+    }
+}
+
+private extension Sequence where Iterator.Element == [ListElement] {
+    @discardableResult
+    func build(
+        _ builder: StyledTextBuilder,
+        options: CMarkOptions,
+        type: ListType,
+        level: Int
+        ) -> StyledTextBuilder {
+        builder.save()
+        defer { builder.restore() }
+
+        // TODO indent paragraph based on level
+        for (i, c) in enumerated() {
+            let tick: String
+            switch type {
+            case .ordered:
+                tick = "\(i + 1)."
+            case .unordered:
+                tick = level % 2 == 0
+                    ? Constants.Strings.bulletHollow
+                    : Constants.Strings.bullet
+            }
+            builder.add(text: "\(tick) ")
+            c.forEach {
+                $0.build(builder, options: options)
+                // TODO newline?
+            }
+        }
+        return builder
+    }
+}
+
+private extension Element {
+    func model(_ options: CMarkOptions) -> ListDiffable? {
+        switch self {
+        case .text(let items):
+            return StyledTextRenderer(
+                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTextCell.inset,
+                backgroundColor: .white
+            ).warm(width: options.width)
+        case .quote(let items, let level):
+            let string = StyledTextRenderer(
+                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentQuoteCell.inset(quoteLevel: level),
+                backgroundColor: .white
+                ).warm(width: options.width)
+            return IssueCommentQuoteModel(level: level, string: string)
+        case .image(let title, let url):
+            return CreateImageModel(href: url, title: title)
+        case .html(let text):
+            // TODO strip html comments
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { return nil }
+            let baseURL: URL?
+            if let branch = options.branch {
+                baseURL = URL(string: "https://github.com/\(options.owner)/\(options.repo)/raw/\(branch)/")
+            } else {
+                baseURL = nil
+            }
+            return IssueCommentHtmlModel(html: trimmed, baseURL: baseURL)
+        case .hr:
+            return IssueCommentHrModel()
+        case .codeBlock(let text, let language):
+            // TODO build and attempt to highlight code
+            guard let highlighted = GithubHighlighting.highlight(text, as: language) else { return nil }
+            var inset = IssueCommentCodeBlockCell.textViewInset
+            inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
+            inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
+
+            // TODO use builder later
+//            let builder = StyledTextBuilder.markdownBase()
+//                .add(attributedText: highlighted)
+
+            let stringSizing = NSAttributedStringSizing(
+                containerWidth: 0,
+                attributedText: highlighted,
+                inset: inset,
+                backgroundColor: Styles.Colors.Gray.lighter.color
+            )
+            return IssueCommentCodeBlockModel(
+                code: stringSizing,
+                language: language
+            )
+        case .heading(let text, let level):
+            let builder = StyledTextBuilder.markdownBase()
+            let style: TextStyle
+            switch level {
+            case 1: style = Styles.Text.h1
+            case 2: style = Styles.Text.h2
+            case 3: style = Styles.Text.h3
+            case 4: style = Styles.Text.h4
+            case 5: style = Styles.Text.h5
+            default: style = Styles.Text.h6.with(foreground: Styles.Colors.Gray.medium.color)
+            }
+            return StyledTextRenderer(
+                string: text.build(builder, options: options).build(),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTextCell.inset,
+                backgroundColor: .white
+                ).warm(width: options.width)
+        case .list(let items, let type):
+            let builder = items.build(StyledTextBuilder.markdownBase(), options: options, type: type, level: 0)
+            return StyledTextRenderer(
+                string: builder.build(),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTextCell.inset,
+                backgroundColor: .white
+                ).warm(width: options.width)
+        case .table(let rows):
+            // TODO bucket + size like we do w/ elements
+            return nil
+        }
+    }
+}
+
+func MarkdownModels(
+    _ markdown: String,
+    owner: String,
+    repo: String,
+    width: CGFloat,
+    viewerCanUpdate: Bool,
+    contentSizeCategory: UIContentSizeCategory
+    ) -> [ListDiffable] {
+    // TODO make String extension to replace emoji
+    let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
+    let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
+    guard let node = Node(markdown: replaceHTMLentities) else { return [] }
+    let options = CMarkOptions(
+        owner: owner,
+        repo: repo,
+        branch: nil, // TODO pass in branch
+        width: width,
+        viewerCanUpdate: viewerCanUpdate,
+        contentSizeCategory: contentSizeCategory
+    )
+    return node.flatElements.flatMap { $0.model(options) }
+}

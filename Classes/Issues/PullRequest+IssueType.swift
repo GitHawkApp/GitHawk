@@ -226,7 +226,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let options = GitHubMarkdownOptions(
                     owner: owner,
                     repo: repo,
-                    flavors: [.issueShorthand, .usernames],
+                    flavors: [],
                     width: width,
                     contentSizeCategory: contentSizeCategory
                 )

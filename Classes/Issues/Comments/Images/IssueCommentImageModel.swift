@@ -12,15 +12,17 @@ import IGListKit
 final class IssueCommentImageModel: ListDiffable {
 
     let url: URL
+    let title: String?
 
-    init(url: URL) {
+    init(url: URL, title: String?) {
         self.url = url
+        self.title = title
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return url as NSObjectProtocol
+        return "\(url.absoluteString)\(title ?? "")" as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {

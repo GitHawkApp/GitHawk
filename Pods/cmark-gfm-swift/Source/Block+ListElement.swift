@@ -8,7 +8,7 @@
 import Foundation
 
 extension Block {
-    var listElement: ListElement? {
+    func listElement(_ level: Int) -> ListElement? {
         switch self {
         case .paragraph(let text):
             return .text(text: text.textElements)
@@ -19,12 +19,15 @@ extension Block {
         case .codeBlock(let text, _):
             return .text(text: [.code(text: text)])
         case .list(let items, let type):
-            return .list(children: items.flatMap { $0.listElements }, type: type)
+            let deeper = level + 1
+            return .list(children: items.flatMap { $0.listElements(deeper) }, type: type, level: deeper)
         default: return nil
         }
     }
 }
 
 extension Sequence where Iterator.Element == Block {
-    var listElements: [ListElement] { return flatMap { $0.listElement } }
+    func listElements(_ level: Int) -> [ListElement] {
+        return flatMap { $0.listElement(level) }
+    }
 }

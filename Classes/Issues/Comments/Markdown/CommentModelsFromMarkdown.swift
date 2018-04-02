@@ -17,8 +17,8 @@ private let newlineString = "\n"
 struct GitHubFlavors: OptionSet {
     let rawValue: Int
 
-    static let usernames = GitHubFlavors(rawValue: 1)
-    static let issueShorthand = GitHubFlavors(rawValue: 2)
+//    static let usernames = GitHubFlavors(rawValue: 1)
+//    static let issueShorthand = GitHubFlavors(rawValue: 2)
     static let baseURL = GitHubFlavors(rawValue: 3)
 
 }
@@ -59,6 +59,9 @@ func CreateCommentModels(
     viewerCanUpdate: Bool = false
     ) -> [ListDiffable] {
 
+    // TODO remove after testing
+    return MarkdownModels(markdown, owner: options.owner, repo: options.repo, width: options.width, viewerCanUpdate: viewerCanUpdate, contentSizeCategory: options.contentSizeCategory)
+
     let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
@@ -69,16 +72,7 @@ func CreateCommentModels(
         ) else { return [emptyDescriptionModel(options: options)] }
 
     var results = [ListDiffable]()
-    let builder = StyledTextBuilder(styledText: StyledText(style: Styles.Text.body.with(attributes: [
-        .foregroundColor: Styles.Colors.Gray.dark.color,
-        .paragraphStyle: {
-            let para = NSMutableParagraphStyle()
-            para.paragraphSpacingBefore = 12
-            return para
-        }(),
-        .backgroundColor: UIColor.white
-        ])
-    ))
+    let builder = StyledTextBuilder.markdownBase()
     
     for element in document.elements {
         travelAST(
@@ -160,7 +154,7 @@ func createModel(
     case .codeBlock:
         return CreateCodeBlock(element: element, markdown: markdown)
     case .image:
-        return CreateImageModel(element: element)
+        return CreateImageModel(href: element.href)
     case .table:
         return CreateTable(element: element, markdown: markdown, contentSizeCategory: options.contentSizeCategory)
     case .HTML:
@@ -256,22 +250,11 @@ func travelAST(
         }
         builder.add(text: text)
     } else if element.type == .checkbox {
-        let appendDisabled = viewerCanUpdate ? "" : "-disabled"
-        if let image = UIImage(named: (element.checked ? "checked" : "unchecked") + appendDisabled) {
-            let attachment = NSTextAttachment()
-            attachment.image = image
-            // nudge bounds to align better with baseline text
-            attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height)
-
-            if let attachmentString = NSAttributedString(attachment: attachment).mutableCopy() as? NSMutableAttributedString {
-                attachmentString.addAttribute(
-                    MarkdownAttribute.checkbox,
-                    value: MarkdownCheckboxModel(checked: element.checked, originalMarkdownRange: element.range),
-                    range: attachmentString.string.nsrange
-                )
-                builder.add(attributedText: attachmentString).add(text: " ")
-            }
-        }
+        builder.addCheckbox(
+            checked: element.checked,
+            range: element.range,
+            viewerCanUpdate: viewerCanUpdate
+        )
     } else if element.type == .listItem {
         // append list styles at the beginning of each list item
         let isInsideBulletedList = element.parent?.type == .bulletedList
