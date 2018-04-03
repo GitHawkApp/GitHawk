@@ -120,5 +120,23 @@ class GitHubAPITests: XCTestCase {
         }
         wait(for: [expectation], timeout: 15)
     }
+
+    func test_invitationJSON() {
+        let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "invitation_notification", withExtension: "json")!)
+        let result = processResponse(request: V3NotificationRequest(), input: data)
+        switch result {
+        case .failure: XCTFail()
+        case .success(let response):
+            XCTAssertEqual(response.data.count, 1)
+
+            let first = response.data.first!
+            XCTAssertEqual(first.id, "317864347")
+            XCTAssertEqual(first.reason, .subscribed)
+            XCTAssertEqual(first.repository.name, "Attributed")
+            XCTAssertEqual(first.repository.owner.login, "Nirma")
+            let repo = "\(first.repository.owner.login)/\(first.repository.name)"
+            XCTAssertEqual(first.subject.title, "Invitation to join \(repo) from \(first.repository.owner.login)")
+        }
+    }
     
 }

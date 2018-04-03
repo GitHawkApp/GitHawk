@@ -8,28 +8,28 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueTitleModel: ListDiffable {
 
-    let attributedString: NSAttributedStringSizing
+    let string: StyledTextRenderer
     let trailingMetadata: Bool
 
-    init(attributedString: NSAttributedStringSizing, trailingMetadata: Bool) {
-        self.attributedString = attributedString
+    init(string: StyledTextRenderer, trailingMetadata: Bool) {
+        self.string = string
         self.trailingMetadata = trailingMetadata
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return attributedString.diffIdentifier()
+        return string.string.hashValue as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? IssueTitleModel else { return false }
         return trailingMetadata == object.trailingMetadata
-            && attributedString.isEqual(toDiffableObject: object)
     }
 
 }

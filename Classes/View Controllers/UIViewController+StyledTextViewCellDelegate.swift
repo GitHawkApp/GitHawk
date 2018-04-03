@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension UIViewController: StyledTextViewCellDelegate {
+extension UIViewController: MarkdownStyledTextViewDelegate {
 
-    func didTap(cell: StyledTextViewCell, attribute: DetectedMarkdownAttribute) {
+    func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
         handle(attribute: attribute)
     }
 

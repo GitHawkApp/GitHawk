@@ -9,12 +9,12 @@
 import UIKit
 import SnapKit
 
-final class IssueRequestCell: AttributedStringCell {
+final class IssueRequestCell: StyledTextViewCell {
 
     // MARK: Public API
 
     func configure(_ model: IssueRequestModel) {
-        set(attributedText: model.attributedText)
+        set(renderer: model.string)
     }
 
 }

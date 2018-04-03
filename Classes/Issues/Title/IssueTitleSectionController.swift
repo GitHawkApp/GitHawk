@@ -28,14 +28,14 @@ final class IssueTitleSectionController: ListSectionController {
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: self.object?.attributedString.textViewSize(width).height ?? 0)
+        return CGSize(width: width, height: self.object?.string.viewSize(width: width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: IssueTitleCell.self, for: self, at: index) as? IssueTitleCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
-        cell.set(attributedText: object.attributedString)
+        cell.set(renderer: object.string)
         return cell
     }
 
