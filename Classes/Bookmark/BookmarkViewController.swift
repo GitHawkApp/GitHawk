@@ -10,15 +10,18 @@ import UIKit
 import IGListKit
 import Apollo
 
-class BookmarkViewController: UIViewController,
-    ListAdapterDataSource,
-    PrimaryViewController,
-    UISearchBarDelegate,
-BookmarkHeaderSectionControllerDelegate,
-StoreListener,
-BookmarkSectionControllerDelegate,
-InitialEmptyViewDelegate,
-TabNavRootViewControllerType {
+class BookmarkViewController: UIViewController, PrimaryViewController {
+
+    // MARK: Public
+
+    var bookmarkStore: BookmarkStore
+    var state: State = .idle
+    enum State {
+        case idle
+        case filtering(String)
+    }
+
+    // MARK: Private
 
     private let client: GithubClient
     private let headerKey = "com.freetime.BookmarkViewController.bookmark-header-key" as ListDiffable
@@ -26,21 +29,14 @@ TabNavRootViewControllerType {
     private let searchBar = UISearchBar()
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(), viewController: self) }()
     private let collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
+        let view = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: ListCollectionViewLayout.basic())
         view.alwaysBounceVertical = true
         view.backgroundColor = Styles.Colors.background
         return view
     }()
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
-
-    var bookmarkStore: BookmarkStore
-
-    enum State {
-        case idle
-        case filtering(String)
-    }
-
-    var state: State = .idle
 
     // MARK: Initialization
 
@@ -104,7 +100,7 @@ TabNavRootViewControllerType {
         adapter.performUpdates(animated: animated)
     }
 
-    func filter(term: String?) {
+    private func filter(term: String?) {
         defer {
             update(animated: true)
         }
@@ -116,43 +112,11 @@ TabNavRootViewControllerType {
 
         state = .filtering(term)
     }
+}
 
-    // MARK: BookmarkSectionControllerDelegate
+// MARK: ListAdapterDataSource
 
-    func didSelect(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
-        let bookmark = viewModel.bookmark
-        let destinationViewController: UIViewController
-
-        switch bookmark.type {
-        case .repo:
-            let repo = RepositoryDetails(
-                owner: bookmark.owner,
-                name: bookmark.name,
-                defaultBranch: bookmark.defaultBranch,
-                hasIssuesEnabled: bookmark.hasIssueEnabled
-            )
-            destinationViewController = RepositoryViewController(client: client, repo: repo)
-
-        case .issue, .pullRequest:
-            let issueModel = IssueDetailsModel(
-                owner: bookmark.owner,
-                repo: bookmark.name,
-                number: bookmark.number
-            )
-            destinationViewController = IssuesViewController(client: client, model: issueModel)
-        default:
-            return
-        }
-        let navigation = UINavigationController(rootViewController: destinationViewController)
-        showDetailViewController(navigation, sender: nil)
-    }
-
-    func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
-        bookmarkStore.remove(viewModel.bookmark)
-        update(animated: true)
-    }
-
-    // MARK: ListAdapterDataSource
+extension BookmarkViewController: ListAdapterDataSource {
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
@@ -200,8 +164,11 @@ TabNavRootViewControllerType {
         view.delegate = self
         return view
     }
+}
 
-    // MARK: UISearchBarDelegate
+// MARK: UISearchBarDelegate
+
+extension BookmarkViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filter(term: searchBar.text)
@@ -224,8 +191,11 @@ TabNavRootViewControllerType {
 
         update(animated: true)
     }
+}
 
-    // MARK: BookmarkHeaderSectionControllerDelegate
+// MARK: BookmarkHeaderSectionControllerDelegate
+
+extension BookmarkViewController: BookmarkHeaderSectionControllerDelegate {
 
     func didTapClear(sectionController: BookmarkHeaderSectionController) {
         let alert = UIAlertController.configured(
@@ -240,20 +210,72 @@ TabNavRootViewControllerType {
                 self?.update(animated: false)
             },
             AlertAction.cancel()
-        ])
+            ])
 
         present(alert, animated: true)
     }
+}
 
-    // MARK: InitialEmptyViewDelegate
+// MARK: BookmarkSectionControllerDelegate
 
+extension BookmarkViewController: BookmarkSectionControllerDelegate {
+    func didSelect(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        let bookmark = viewModel.bookmark
+        let destinationViewController: UIViewController
+
+        switch bookmark.type {
+        case .repo:
+            let repo = RepositoryDetails(
+                owner: bookmark.owner,
+                name: bookmark.name,
+                defaultBranch: bookmark.defaultBranch,
+                hasIssuesEnabled: bookmark.hasIssueEnabled
+            )
+            destinationViewController = RepositoryViewController(client: client, repo: repo)
+
+        case .issue, .pullRequest:
+            let issueModel = IssueDetailsModel(
+                owner: bookmark.owner,
+                repo: bookmark.name,
+                number: bookmark.number
+            )
+            destinationViewController = IssuesViewController(client: client, model: issueModel)
+        default:
+            return
+        }
+        let navigation = UINavigationController(rootViewController: destinationViewController)
+        showDetailViewController(navigation, sender: nil)
+    }
+
+    func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        bookmarkStore.remove(viewModel.bookmark)
+        update(animated: true)
+    }
+
+}
+
+// MARK: StoreListener
+
+extension BookmarkViewController: StoreListener {
+    func didUpdateStore() {
+        update(animated: true)
+    }
+
+}
+
+ // MARK: InitialEmptyViewDelegate
+
+extension BookmarkViewController: InitialEmptyViewDelegate {
     func didTap(emptyView: InitialEmptyView) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
 
-    // MARK: TabNavRootViewControllerType
+}
 
+ // MARK: TabNavRootViewControllerType
+
+extension BookmarkViewController: TabNavRootViewControllerType {
     func didSingleTapTab() {
         collectionView.scrollToTop(animated: true)
     }
@@ -262,10 +284,5 @@ TabNavRootViewControllerType {
         searchBar.becomeFirstResponder()
     }
 
-    // MARK: StoreListener
-
-    func didUpdateStore() {
-        update(animated: true)
-    }
-
 }
+
