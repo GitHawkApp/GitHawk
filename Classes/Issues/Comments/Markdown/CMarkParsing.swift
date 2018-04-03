@@ -86,7 +86,7 @@ private extension ListElement {
     }
 }
 
-private extension Sequence where Iterator.Element == [ListElement] {
+private extension Array where Iterator.Element == [ListElement] {
     @discardableResult
     func build(
         _ builder: StyledTextBuilder,
@@ -97,21 +97,36 @@ private extension Sequence where Iterator.Element == [ListElement] {
         builder.save()
         defer { builder.restore() }
 
-        // TODO indent paragraph based on level
+        let paragraphStyle = ((builder.tipAttributes?[.paragraphStyle] as? NSParagraphStyle)?.mutableCopy() as? NSMutableParagraphStyle)
+            ?? NSMutableParagraphStyle()
+        paragraphStyle.firstLineHeadIndent = CGFloat(level) * 18
+
         for (i, c) in enumerated() {
+            // tighten spacing for the list after the first paragraph
+            if i > 0 || level > 0 {
+                paragraphStyle.paragraphSpacingBefore = 2
+            }
+
             let tick: String
             switch type {
             case .ordered:
                 tick = "\(i + 1)."
             case .unordered:
                 tick = level % 2 == 0
-                    ? Constants.Strings.bulletHollow
-                    : Constants.Strings.bullet
+                    ? Constants.Strings.bullet
+                    : Constants.Strings.bulletHollow
             }
-            builder.add(text: "\(tick) ")
-            c.forEach {
-                $0.build(builder, options: options)
-                // TODO newline?
+            builder.add(text: "\(tick) ", attributes: [.paragraphStyle: paragraphStyle])
+            for (ci, cc) in c.enumerated() {
+                cc.build(builder, options: options)
+                // never append whitespace on the last child element
+                if ci != c.count - 1 {
+                    builder.add(text: "\n")
+                }
+            }
+            // never append whitespace on the last element
+            if i != count - 1 {
+                builder.add(text: "\n")
             }
         }
         return builder
@@ -123,14 +138,16 @@ private extension Element {
         switch self {
         case .text(let items):
             return StyledTextRenderer(
-                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(),
+                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white
             ).warm(width: options.width)
         case .quote(let items, let level):
+            let builder = StyledTextBuilder.markdownBase()
+                .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
             let string = StyledTextRenderer(
-                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(),
+                string: items.build(builder, options: options).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentQuoteCell.inset(quoteLevel: level),
                 backgroundColor: .white
@@ -153,7 +170,10 @@ private extension Element {
             return IssueCommentHrModel()
         case .codeBlock(let text, let language):
             // TODO build and attempt to highlight code
-            guard let highlighted = GithubHighlighting.highlight(text, as: language) else { return nil }
+            guard let highlighted = GithubHighlighting.highlight(
+                text.trimmingCharacters(in: .whitespacesAndNewlines),
+                as: language
+                ) else { return nil }
             var inset = IssueCommentCodeBlockCell.textViewInset
             inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
             inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
@@ -183,8 +203,9 @@ private extension Element {
             case 5: style = Styles.Text.h5
             default: style = Styles.Text.h6.with(foreground: Styles.Colors.Gray.medium.color)
             }
+            builder.add(style: style)
             return StyledTextRenderer(
-                string: text.build(builder, options: options).build(),
+                string: text.build(builder, options: options).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white
@@ -192,7 +213,7 @@ private extension Element {
         case .list(let items, let type):
             let builder = items.build(StyledTextBuilder.markdownBase(), options: options, type: type, level: 0)
             return StyledTextRenderer(
-                string: builder.build(),
+                string: builder.build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white
