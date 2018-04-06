@@ -9,13 +9,14 @@
 import Foundation
 import IGListKit
 import FlatCache
+import StyledText
 
 struct IssueResult: Cachable {
 
     let id: String
     let pullRequest: Bool
     let status: IssueStatusModel
-    let title: NSAttributedStringSizing
+    let title: StyledTextRenderer
     let labels: IssueLabelsModel
     let assignee: IssueAssigneesModel
     // optional models
@@ -69,7 +70,7 @@ struct IssueResult: Cachable {
         id: String? = nil,
         pullRequest: Bool? = nil,
         status: IssueStatusModel? = nil,
-        title: NSAttributedStringSizing? = nil,
+        title: StyledTextRenderer? = nil,
         labels: IssueLabelsModel? = nil,
         assignee: IssueAssigneesModel? = nil,
         timelinePages: [IssueTimelinePage]? = nil,

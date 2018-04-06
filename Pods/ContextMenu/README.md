@@ -13,6 +13,10 @@ Just add `ContextMenu` to your Podfile and `pod install`. Done!
 ```ruby
 pod 'ContextMenu'
 ```
+For Carthage, just add `GitHawkApp/ContextMenu` to your Cartfile and `carthage bootstrap`.
+```ogdl
+github "GitHawkApp/ContextMenu"
+```
 
 ## Usage
 

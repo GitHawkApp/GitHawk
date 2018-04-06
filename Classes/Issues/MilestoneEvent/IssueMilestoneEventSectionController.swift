@@ -17,7 +17,7 @@ final class IssueMilestoneEventSectionController: ListGenericSectionController<I
             else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,
-            height: object.attributedText.textViewSize(width).height
+            height: object.string.viewSize(width: width).height
         )
     }
 

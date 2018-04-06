@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import StyledText
 @testable import Freetime
 
 class IssueTests: XCTestCase {
@@ -32,12 +33,12 @@ class IssueTests: XCTestCase {
             "![alt text](https://apple.com)",
             "then some more text"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 3)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is the first line\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthen some more text")
     }
 
     func test_whenImageAtTheBeginning() {
@@ -46,11 +47,11 @@ class IssueTests: XCTestCase {
             "this is the first line",
             "then some more text"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[1] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
+        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "\nthis is the first line\nthen some more text")
     }
 
     func test_whenImageAtTheEnd() {
@@ -59,10 +60,10 @@ class IssueTests: XCTestCase {
             "then some more text",
             "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 2)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line\nthen some more text")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is the first line\nthen some more text\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
 
@@ -70,8 +71,8 @@ class IssueTests: XCTestCase {
         let body = [
             "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 1)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
@@ -84,14 +85,14 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 5)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is the first line\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthen some more text\n")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
-        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "\nfoo bar baz")
     }
 
     func test_whenCodeBlock_withLanguage_withSurroundedByText() {
@@ -102,13 +103,13 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 3)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "swift")
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "this is the end")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthis is the end")
     }
 
     func test_whenCodeBlock_withoutLanguage_withSurroundedByText() {
@@ -119,13 +120,13 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 3)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is some text")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
         XCTAssertNil((models[1] as! IssueCommentCodeBlockModel).language)
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "this is the end")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthis is the end")
     }
 
     func test_whenImageEmbeddedInCode() {
@@ -138,20 +139,20 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 5)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "this is the first line")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nthis is the first line")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "lang")
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "then some more text")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nthen some more text\n")
         XCTAssertEqual((models[3] as! IssueCommentImageModel).url.absoluteString, "https://google.com")
-        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "foo bar baz")
+        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "\nfoo bar baz")
     }
 
     func test_whenCodePartOfParagraph() {
         let body = "text with ````` inline with ````` more"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 1)
     }
 
@@ -164,14 +165,14 @@ class IssueTests: XCTestCase {
             "> quote three",
             "\nline three"
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 5)
-        XCTAssertEqual((models[0] as! NSAttributedStringSizing).attributedText.string, "line one")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "\nline one")
         XCTAssertTrue(models[1] is IssueCommentQuoteModel)
-        XCTAssertEqual((models[2] as! NSAttributedStringSizing).attributedText.string, "line two")
+        XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "\nline two")
         XCTAssertTrue(models[3] is IssueCommentQuoteModel)
-        XCTAssertEqual((models[4] as! NSAttributedStringSizing).attributedText.string, "line three")
+        XCTAssertEqual((models[4] as! StyledTextRenderer).string.allText, "\nline three")
     }
 
     func test_whenCheckmarks() {
@@ -179,11 +180,11 @@ class IssueTests: XCTestCase {
             "- [ ] foo",
             "- [x] bar",
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [])
-        let models = CreateCommentModels(markdown: body, width: 300, options: options)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
+        let models = CreateCommentModels(markdown: body, options: options)
         XCTAssertEqual(models.count, 1)
 
-        let attrText = (models[0] as! NSAttributedStringSizing).attributedText
+        let attrText = (models[0] as! StyledTextRenderer).string.render(contentSizeCategory: .large)
         XCTAssertNotNil(attrText.attributes(at: 2, effectiveRange: nil)[.attachment])
         XCTAssertNotNil(attrText.attributes(at: 10, effectiveRange: nil)[.attachment])
     }

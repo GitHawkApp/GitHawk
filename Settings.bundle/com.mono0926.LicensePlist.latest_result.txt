@@ -7,11 +7,6 @@ body: Copyright (c) 2016 A…
 name: Apollo, nameSpecified: 
 body: The MIT License (MIT…
 
-name: AutoInsetter, nameSpecified: 
-body: MIT License
-
-Copyrig…
-
 name: ContextMenu, nameSpecified: 
 body: The MIT License
 
@@ -79,6 +74,9 @@ name: Pageboy, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: PureLayout, nameSpecified: 
+body: This code is distrib…
 
 name: SDWebImage, nameSpecified: 
 body: Copyright (c) 2016 O…
@@ -121,11 +119,6 @@ body: Copyright (c) 2016 A…
 name: Apollo, nameSpecified: 
 body: The MIT License (MIT…
 
-name: AutoInsetter, nameSpecified: 
-body: MIT License
-
-Copyrig…
-
 name: ContextMenu, nameSpecified: 
 body: The MIT License
 
@@ -193,6 +186,9 @@ name: Pageboy, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: PureLayout, nameSpecified: 
+body: This code is distrib…
 
 name: SDWebImage, nameSpecified: 
 body: Copyright (c) 2016 O…

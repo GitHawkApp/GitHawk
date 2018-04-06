@@ -6,44 +6,36 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import IGListKit
+import StyledText
 
 final class BookmarkViewModel: ListDiffable {
 
     let bookmark: Bookmark
-    let text: NSAttributedStringSizing
+    let text: StyledTextRenderer
 
     private let _diffIdentifier: NSObjectProtocol
 
-    init(bookmark: Bookmark, width: CGFloat) {
+    init(bookmark: Bookmark, contentSizeCategory: UIContentSizeCategory, width: CGFloat) {
         self.bookmark = bookmark
 
-        let attributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Text.body.preferredFont,
-            .foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-
-        let attributedText: NSAttributedString
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
+        ))
         switch bookmark.type {
         case .issue, .pullRequest:
-            attributedText = NSAttributedString(string: bookmark.title, attributes: attributes)
+            builder.add(text: bookmark.title)
         case .commit, .repo:
-            let mAttributedText = NSMutableAttributedString(string: "\(bookmark.owner)/", attributes: attributes)
-            mAttributedText.append(NSAttributedString(string: bookmark.name, attributes: [
-                .font: Styles.Text.bodyBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.dark.color
-                ]
-            ))
-            attributedText = mAttributedText
+            builder.add(text: "\(bookmark.owner)/")
+                .add(text: bookmark.name, traits: .traitBold)
         case .release:
-            // TODO does this even exist?
-            attributedText = NSAttributedString(string: bookmark.title, attributes: attributes)
+            builder.add(text: bookmark.title)
         }
 
-        text = NSAttributedStringSizing(
-            containerWidth: width,
-            attributedText: attributedText,
+        text = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: BookmarkCell.titleInset
         )
         _diffIdentifier = "#\(bookmark.number)\(bookmark.name)\(bookmark.owner)\(bookmark.title)" as NSObjectProtocol

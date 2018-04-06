@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface MMParser : NSObject
 
-- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(NSString *)owner repository:(NSString *)repository;
+- (id)initWithExtensions:(MMMarkdownExtensions)extensions owner:(nullable NSString *)owner repository:(nullable NSString *)repository;
 
 - (MMDocument *)parseMarkdown:(NSString *)markdown error:(NSError * __autoreleasing * _Nullable)error;
 

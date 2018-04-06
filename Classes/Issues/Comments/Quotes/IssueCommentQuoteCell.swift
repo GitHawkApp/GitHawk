@@ -8,6 +8,11 @@
 
 import UIKit
 import IGListKit
+import StyledText
+
+protocol IssueCommentQuoteCellDelegate: class {
+    func didTap(cell: IssueCommentQuoteCell, attribute: DetectedMarkdownAttribute)
+}
 
 final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
 
@@ -21,12 +26,11 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
         )
     }
 
-    let textView = AttributedStringView()
+    private let textView = MarkdownStyledTextView()
     private var borders = [UIView]()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         contentView.addSubview(textView)
     }
 
@@ -47,6 +51,11 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
         }
     }
 
+    var delegate: MarkdownStyledTextViewDelegate? {
+        get { return textView.tapDelegate }
+        set { textView.tapDelegate = newValue }
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -63,9 +72,7 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
             contentView.addSubview(border)
             borders.append(border)
         }
-
-        textView.configureAndSizeToFit(text: viewModel.quote, width: contentView.bounds.width)
-
+        textView.configure(renderer: viewModel.string, width: contentView.bounds.width)
         setNeedsLayout()
     }
 

@@ -25,7 +25,7 @@ extension RepoIssuePagesQuery.Data.Repository.Issue.Node: RepositoryIssueSummary
     var status: IssueStatus {
         switch state {
         case .closed: return .closed
-        case .open: return .open
+        case .open, .__unknown: return .open
         }
     }
 
@@ -48,8 +48,8 @@ extension RepoPullRequestPagesQuery.Data.Repository.PullRequest.Node: Repository
     var status: IssueStatus {
         switch state {
         case .closed: return .closed
-        case .open: return .open
         case .merged: return .merged
+        case .open, .__unknown: return .open
         }
     }
 

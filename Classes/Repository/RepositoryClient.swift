@@ -6,7 +6,9 @@
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.
 //
 
+import UIKit
 import Apollo
+import StyledText
 
 protocol RepositoryQuery {
     // generated queries should share the same init
@@ -44,21 +46,26 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 
 }
 
-func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFloat) -> RepositoryIssueSummaryModel? {
+func createSummaryModel(
+    _ node: RepositoryIssueSummaryType,
+    contentSizeCategory: UIContentSizeCategory,
+    containerWidth: CGFloat
+    ) -> RepositoryIssueSummaryModel? {
     guard let date = node.repoEventFields.createdAt.githubDate else { return nil }
 
-    let attributes = [
-        NSAttributedStringKey.font: Styles.Text.body.preferredFont,
-        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-    ]
-    let title = NSAttributedStringSizing(
-        containerWidth: containerWidth,
-        attributedText: NSAttributedString(string: node.title, attributes: attributes),
+    let title = StyledTextBuilder(styledText: StyledText(
+        text: node.title,
+        style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
+    )).build()
+    let string = StyledTextRenderer(
+        string: title,
+        contentSizeCategory: contentSizeCategory,
         inset: RepositorySummaryCell.titleInset
-    )
+    ).warm(width: containerWidth)
+
     return RepositoryIssueSummaryModel(
         id: node.id,
-        title: title,
+        title: string,
         number: node.number,
         created: date,
         author: node.repoEventFields.author?.login ?? Constants.Strings.unknown,
@@ -71,11 +78,12 @@ func createSummaryModel(_ node: RepositoryIssueSummaryType, containerWidth: CGFl
 func createSummaryModel(
     query: RepositoryQuery,
     data: GraphQLSelectionSet,
+    contentSizeCategory: UIContentSizeCategory,
     containerWidth: CGFloat
     ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
     let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).flatMap { (node: RepositoryIssueSummaryType) in
-        return createSummaryModel(node, containerWidth: containerWidth)
+        return createSummaryModel(node, contentSizeCategory: contentSizeCategory, containerWidth: containerWidth)
     }
     return (models, nextPage)
 }
@@ -103,6 +111,7 @@ final class RepositoryClient {
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> Void
     ) where T: RepositoryQuery {
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
         githubClient.client.query(query, result: { $0 }) { result in
             switch result {
             case .failure:
@@ -114,6 +123,7 @@ final class RepositoryClient {
                     let summary = createSummaryModel(
                         query: query,
                         data: data,
+                        contentSizeCategory: contentSizeCategory,
                         containerWidth: containerWidth
                     )
                     DispatchQueue.main.async {

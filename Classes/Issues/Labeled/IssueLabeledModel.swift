@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueLabeledModel: ListDiffable {
 
@@ -22,7 +23,7 @@ final class IssueLabeledModel: ListDiffable {
     let color: String
     let date: Date
     let type: EventType
-    let attributedString: NSAttributedStringSizing
+    let string: StyledTextRenderer
 
     init(
         id: String,
@@ -33,6 +34,7 @@ final class IssueLabeledModel: ListDiffable {
         type: EventType,
         repoOwner: String,
         repoName: String,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat
         ) {
         self.id = id
@@ -41,57 +43,43 @@ final class IssueLabeledModel: ListDiffable {
         self.color = color
         self.date = date
         self.type = type
-        
-        let attributedString = NSMutableAttributedString(
-            string: actor,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Text.secondaryBold.preferredFont,
-                MarkdownAttribute.username: actor
-            ]
-        )
 
+        let labelColor = color.color
         let actionString: String
         switch type {
         case .added: actionString = NSLocalizedString(" added  ", comment: "")
         case .removed: actionString = NSLocalizedString(" removed  ", comment: "")
         }
-        attributedString.append(NSAttributedString(
-            string: actionString,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                .font: Styles.Text.secondary.preferredFont
-            ]
-        ))
 
-        let labelColor = color.color
-        attributedString.append(NSAttributedString(
-            string: title,
-            attributes: [
-                .font: Styles.Text.smallTitle.preferredFont,
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
+        ))
+            .save()
+            .add(styledText: StyledText(text: actor, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: actor,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            ))
+            .restore()
+            .add(text: actionString)
+            .save()
+            .add(styledText: StyledText(text: title, style: Styles.Text.smallTitle.with(attributes: [
                 .backgroundColor: labelColor,
                 .foregroundColor: labelColor.textOverlayColor ?? .black,
                 .baselineOffset: 1, // offset for better rounded background colors
                 MarkdownAttribute.label: LabelDetails(owner: repoOwner, repo: repoName, label: title)
-            ]
-        ))
+                ]
+            )))
+            .restore()
+            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
-        attributedString.append(NSAttributedString(
-            string: "  \(date.agoString)",
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
-            ]
-        ))
-
-        self.attributedString = NSAttributedStringSizing(
-            containerWidth: width,
-            attributedText: attributedString,
+        self.string = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: IssueLabeledCell.insets,
-            backgroundColor: Styles.Colors.Gray.lighter.color
-        )
-        
+            backgroundColor: Styles.Colors.Gray.lighter.color,
+            layoutManager: LabelLayoutManager()
+        ).warm(width: width)
     }
 
     // MARK: ListDiffable

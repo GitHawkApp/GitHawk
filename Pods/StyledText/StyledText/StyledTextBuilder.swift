@@ -11,23 +11,45 @@ import Foundation
 public final class StyledTextBuilder: Hashable, Equatable {
 
     internal var styledTexts: [StyledText]
-    internal var savedStyle: TextStyle? = nil
+    internal var savedStyles = [TextStyle]()
 
     public convenience init(styledText: StyledText) {
         self.init(styledTexts: [styledText])
     }
 
-    public init(styledTexts: [StyledText]) {
-        self.styledTexts = styledTexts
-        self.savedStyle = nil
+    public convenience init(text: String) {
+        self.init(styledText: StyledText(storage: .text(text)))
     }
 
-    public var allText: String {
-        return styledTexts.reduce("", { $0 + $1.text })
+    public convenience init(attributedText: NSAttributedString) {
+        self.init(styledText: StyledText(storage: .attributedText(attributedText)))
+    }
+
+    public init(styledTexts: [StyledText]) {
+        self.styledTexts = styledTexts
     }
 
     public var tipAttributes: [NSAttributedStringKey: Any]? {
         return styledTexts.last?.style.attributes
+    }
+
+    public var count: Int {
+        return styledTexts.count
+    }
+
+    @discardableResult
+    public func save() -> StyledTextBuilder {
+        if let last = styledTexts.last?.style {
+            savedStyles.append(last)
+        }
+        return self
+    }
+
+    @discardableResult
+    public func restore() -> StyledTextBuilder {
+        guard let last = savedStyles.last else { return self }
+        savedStyles.removeLast()
+        return add(styledText: StyledText(style: last))
     }
 
     @discardableResult
@@ -42,26 +64,31 @@ public final class StyledTextBuilder: Hashable, Equatable {
     }
 
     @discardableResult
-    public func save() -> StyledTextBuilder {
-        savedStyle = styledTexts.last?.style
-        return self
-    }
-
-    @discardableResult
-    public func restore() -> StyledTextBuilder {
-        guard let savedStyle = self.savedStyle else { return self }
-        self.savedStyle = nil
-        return add(styledText: StyledText(style: savedStyle))
-    }
-
-    @discardableResult
     public func add(style: TextStyle) -> StyledTextBuilder {
-        return add(styledText: StyledText(text: "", style: style))
+        return add(styledText: StyledText(style: style))
     }
 
     @discardableResult
     public func add(
-        text: String = "",
+        text: String,
+        traits: UIFontDescriptorSymbolicTraits? = nil,
+        attributes: [NSAttributedStringKey: Any]? = nil
+        ) -> StyledTextBuilder {
+        return add(storage: .text(text), traits: traits, attributes: attributes)
+    }
+
+    @discardableResult
+    public func add(
+        attributedText: NSAttributedString,
+        traits: UIFontDescriptorSymbolicTraits? = nil,
+        attributes: [NSAttributedStringKey: Any]? = nil
+        ) -> StyledTextBuilder {
+        return add(storage: .attributedText(attributedText), traits: traits, attributes: attributes)
+    }
+
+    @discardableResult
+    public func add(
+        storage: StyledText.Storage = .text(""),
         traits: UIFontDescriptorSymbolicTraits? = nil,
         attributes: [NSAttributedStringKey: Any]? = nil
         ) -> StyledTextBuilder {
@@ -91,22 +118,30 @@ public final class StyledTextBuilder: Hashable, Equatable {
                 maxSize: tip.style.maxSize
             )
         } else {
-            nextStyle = tip.style
+            nextStyle = TextStyle(
+                font: tip.style.font,
+                size: tip.style.size,
+                attributes: nextAttributes,
+                minSize: tip.style.minSize,
+                maxSize: tip.style.maxSize
+            )
         }
 
-        return add(
-            styledText: StyledText(
-                text: text,
-                style: nextStyle
-            )
-        )
+        return add(styledText: StyledText(storage: storage, style: nextStyle))
     }
 
-    public func render(contentSizeCategory: UIContentSizeCategory) -> NSAttributedString {
-        let result = NSMutableAttributedString()
-        styledTexts.forEach { result.append($0.render(contentSizeCategory: contentSizeCategory)) }
-        return result
+    @discardableResult
+    public func clearText() -> StyledTextBuilder {
+        guard let tipStyle = styledTexts.last?.style else { return self }
+        styledTexts.removeAll()
+        return add(styledText: StyledText(style: tipStyle))
     }
+
+    public func build(renderMode: StyledTextString.RenderMode = .trimWhitespaceAndNewlines) -> StyledTextString {
+        return StyledTextString(styledTexts: styledTexts, renderMode: renderMode)
+    }
+
+    // MARK: Hashable
 
     public var hashValue: Int {
         guard let seed: Int = styledTexts.first?.hashValue else { return 0 }
@@ -118,22 +153,11 @@ public final class StyledTextBuilder: Hashable, Equatable {
         }
     }
 
-    public static func == (lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
+    // MARK: Equatable
+
+    public static func ==(lhs: StyledTextBuilder, rhs: StyledTextBuilder) -> Bool {
+        if lhs === rhs { return true }
         return lhs.styledTexts == rhs.styledTexts
     }
 
-    public var copy: StyledTextBuilder {
-        let copy = StyledTextBuilder(styledTexts: styledTexts)
-        copy.savedStyle = savedStyle
-        return copy
-    }
-
-    @discardableResult
-    public func clearText() -> StyledTextBuilder {
-        guard let tipStyle = styledTexts.last?.style else { return self }
-        styledTexts.removeAll()
-        return add(styledText: StyledText(text: "", style: tipStyle))
-    }
-
 }
-

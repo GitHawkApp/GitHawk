@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import StyledText
 
 final class RepositorySummaryCell: SelectableCell {
 
@@ -19,7 +20,7 @@ final class RepositorySummaryCell: SelectableCell {
     )
 
     private let reasonImageView = UIImageView()
-    private let titleView = AttributedStringView()
+    private let titleView = StyledTextView()
     private let detailsStackView = UIStackView()
     private let secondaryLabel = UILabel()
     private let labelListView = LabelListView()
@@ -92,7 +93,7 @@ final class RepositorySummaryCell: SelectableCell {
     // MARK: Public API
 
     func configure(_ model: RepositoryIssueSummaryModel) {
-        titleView.configureAndSizeToFit(text: model.title, width: contentView.bounds.width)
+        titleView.configure(renderer: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
         secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString, model.author])

@@ -10,14 +10,6 @@ import UIKit
 import IGListKit
 import GitHubAPI
 
-protocol PeopleViewControllerDelegate: class {
-    func didDismiss(
-        controller: PeopleViewController,
-        type: PeopleViewController.PeopleType,
-        selections: [V3User]
-    )
-}
-
 final class PeopleViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
 PeopleSectionControllerDelegate {
@@ -27,26 +19,25 @@ PeopleSectionControllerDelegate {
         case reviewer
     }
 
+    public let type: PeopleType
+
+    private var selections = Set<String>()
     private let selectionLimit = 10
-    private weak var delegate: PeopleViewControllerDelegate?
     private var owner: String!
     private var repo: String!
     private var client: GithubClient!
     private var users = [V3User]()
-    private var type: PeopleType!
-    private var selections = Set<String>()
 
-    init(selections: [String],
-         type: PeopleType,
-         client: GithubClient,
-         delegate: PeopleViewControllerDelegate,
-         owner: String,
-         repo: String
+    init(
+        selections: [String],
+        type: PeopleType,
+        client: GithubClient,
+        owner: String,
+        repo: String
         ) {
         self.selections = Set<String>(selections)
         self.type = type
         self.client = client
-        self.delegate = delegate
         self.owner = owner
         self.repo = repo
 
@@ -58,11 +49,6 @@ PeopleSectionControllerDelegate {
         }
 
         updateSelectionCount()
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done",
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(onDone(_:)))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,17 +61,13 @@ PeopleSectionControllerDelegate {
         preferredContentSize = CGSize(width: 280, height: 240)
     }
 
-    // MARK: Private API
+    // MARK: Public API
 
-    func updateSelectionCount() {
-        let label = UILabel()
-        label.font = Styles.Text.body.preferredFont
-        label.backgroundColor = .clear
-        label.textColor = Styles.Colors.Gray.light.color
-        label.text = "\(selections.count)/\(selectionLimit)"
-        label.sizeToFit()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
+    var selectedUsers: [V3User] {
+        return users.filter { self.selections.contains($0.login) }
     }
+
+    // MARK: Override
 
     override func fetch(page: NSNumber?) {
         client.client.send(
@@ -112,10 +94,16 @@ PeopleSectionControllerDelegate {
         }
     }
 
-    @IBAction func onDone(_ sender: Any) {
-        let selections = users.filter { self.selections.contains($0.login) }
-        delegate?.didDismiss(controller: self, type: type, selections: selections)
-        dismiss(animated: trueUnlessReduceMotionEnabled)
+    // MARK: Private API
+
+    func updateSelectionCount() {
+        let label = UILabel()
+        label.font = Styles.Text.body.preferredFont
+        label.backgroundColor = .clear
+        label.textColor = Styles.Colors.Gray.light.color
+        label.text = "\(selections.count)/\(selectionLimit)"
+        label.sizeToFit()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
     // MARK: BaseListViewControllerDataSource

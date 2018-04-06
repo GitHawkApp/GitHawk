@@ -7,23 +7,25 @@
 //
 
 import UIKit
+import StyledText
 
-func IssueRenamedString(previous: String, current: String, width: CGFloat) -> NSAttributedStringSizing {
-    let titleAttributes = [
-        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color,
-        NSAttributedStringKey.font: Styles.Text.secondaryBold.preferredFont
-    ]
-    let dividerAttributes = [
-        NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.medium.color,
-        NSAttributedStringKey.font: Styles.Text.secondary.preferredFont
-    ]
-    let text = NSMutableAttributedString(string: previous, attributes: titleAttributes)
-    text.append(NSAttributedString(string: NSLocalizedString(" to ", comment: ""), attributes: dividerAttributes))
-    text.append(NSAttributedString(string: current, attributes: titleAttributes))
-        return NSAttributedStringSizing(
-        containerWidth: width,
-        attributedText: text,
-        inset: IssueRenamedCell.titleInset,
-        backgroundColor: Styles.Colors.background
-    )
+func IssueRenamedString(
+    previous: String,
+    current: String,
+    contentSizeCategory: UIContentSizeCategory,
+    width: CGFloat
+    ) -> StyledTextRenderer {
+    let builder = StyledTextBuilder(styledText: StyledText(
+        text: previous,
+        style: Styles.Text.secondaryBold.with(foreground: Styles.Colors.Gray.dark.color)
+    ))
+        .save()
+        .add(styledText: StyledText(text: NSLocalizedString(" to ", comment: ""), style: Styles.Text.secondary))
+        .restore()
+        .add(text: current)
+    return StyledTextRenderer(
+        string: builder.build(),
+        contentSizeCategory: contentSizeCategory,
+        inset: IssueRenamedCell.titleInset
+    ).warm(width: width)
 }

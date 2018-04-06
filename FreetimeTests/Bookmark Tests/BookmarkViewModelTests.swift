@@ -22,18 +22,14 @@ class BookmarkViewModelTests: XCTestCase {
         super.setUp()
 
         issue = Bookmark(type: .issue, name: "IGListKit on Bookmarks", owner: "rizwankce", title: "Bookmarks view controller not using IGLK")
-        issueModel = BookmarkViewModel(bookmark: issue, width: 0)
+        issueModel = BookmarkViewModel(bookmark: issue, contentSizeCategory: .large, width: 0)
 
         other = Bookmark(type: .commit, name: "Implemented Bookmark ViewModel", owner: "heshamsalman")
-        otherModel = BookmarkViewModel(bookmark: other, width: 0)
+        otherModel = BookmarkViewModel(bookmark: other, contentSizeCategory: .large, width: 0)
     }
 
     func test_bookmarkText_other() {
-        let string = NSMutableAttributedString(attributedString: RepositoryAttributedString(owner: other.owner, name: other.name))
-        let expected = NSAttributedStringSizing(containerWidth: 0, attributedText: string, inset: BookmarkCell.titleInset)
-        let actual = otherModel.text
-
-        XCTAssertEqual(expected.attributedText, actual.attributedText)
+        XCTAssertEqual("\(other.owner)/\(other.name)", otherModel.text.string.allText)
     }
 
 }

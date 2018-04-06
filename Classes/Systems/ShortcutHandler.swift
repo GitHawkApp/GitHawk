@@ -57,17 +57,19 @@ struct ShortcutHandler {
                                                      localizedSubtitle: nil,
                                                      icon: bookmarkIcon)
         items.append(bookmarkItem)
-        
+
         // Switchuser
-        if sessionManager.userSessions.count >= 2 {
+        if sessionManager.userSessions.count > 1 {
             let userSession = sessionManager.userSessions[1]
             if let username = userSession.username {
                 let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-                let userItem = UIApplicationShortcutItem(type: Items.switchAccount.rawValue,
-                                                         localizedTitle: NSLocalizedString("Switch Account", comment: ""),
-                                                         localizedSubtitle: username,
-                                                         icon: userIcon,
-                                                         userInfo: ["sessionIndex": 1])
+                let userItem = UIApplicationShortcutItem(
+                    type: Items.switchAccount.rawValue,
+                    localizedTitle: NSLocalizedString("Switch Account", comment: ""),
+                    localizedSubtitle: username,
+                    icon: userIcon,
+                    userInfo: ["sessionIndex": 1]
+                )
                 items.append(userItem)
             }
         }

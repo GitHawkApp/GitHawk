@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import StyledText
 
 final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
@@ -18,13 +19,11 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
         right: Styles.Sizes.commentGutter
     )
 
-    let textView = AttributedStringView()
+    let textView = MarkdownStyledTextView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         isAccessibilityElement = true
-
         contentView.addSubview(textView)
     }
 
@@ -40,17 +39,15 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
     // MARK: Accessibility
 
     override var accessibilityLabel: String? {
-        get {
-            return AccessibilityHelper.generatedLabel(forCell: self)
-        }
+        get { return AccessibilityHelper.generatedLabel(forCell: self) }
         set { }
     }
 
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
-        textView.configureAndSizeToFit(text: viewModel, width: contentView.bounds.width)
+        guard let viewModel = viewModel as? StyledTextRenderer else { return }
+        textView.configure(renderer: viewModel, width: contentView.bounds.width)
     }
 
 }

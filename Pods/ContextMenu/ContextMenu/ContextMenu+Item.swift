@@ -16,15 +16,18 @@ extension ContextMenu {
         let viewController: ClippedContainerViewController
 
         weak var sourceView: UIView?
+        weak var delegate: ContextMenuDelegate?
 
         init(
             viewController: UIViewController,
             options: Options,
-            sourceView: UIView?
+            sourceView: UIView?,
+            delegate: ContextMenuDelegate?
             ) {
             self.viewController = ClippedContainerViewController(options: options, viewController: viewController)
             self.options = options
             self.sourceView = sourceView
+            self.delegate = delegate
         }
     }
 

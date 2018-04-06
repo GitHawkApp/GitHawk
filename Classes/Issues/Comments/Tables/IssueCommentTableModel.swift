@@ -8,15 +8,16 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueCommentTableModel: NSObject, ListDiffable {
 
     final class Row {
-        let text: NSAttributedStringSizing
+        let string: StyledTextRenderer
         let fill: Bool
 
-        init(text: NSAttributedStringSizing, fill: Bool) {
-            self.text = text
+        init(string: StyledTextRenderer, fill: Bool) {
+            self.string = string
             self.fill = fill
         }
 

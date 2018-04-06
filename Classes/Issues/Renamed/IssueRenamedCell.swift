@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import StyledText
 
 protocol IssueRenamedCellDelegate: class {
     func didTapActor(cell: IssueRenamedCell)
@@ -26,7 +27,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     private let actorLabel = UIButton()
     private let dateLabel = ShowMoreDetailsLabel()
-    private let titleView = AttributedStringView()
+    private let titleView = StyledTextView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,7 +87,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
         dateLabel.setText(date: model.date)
 
-        titleView.configureAndSizeToFit(text: model.titleChangeString, width: contentView.bounds.width)
+        titleView.configure(renderer: model.titleChangeString, width: contentView.bounds.width)
     }
 
 }

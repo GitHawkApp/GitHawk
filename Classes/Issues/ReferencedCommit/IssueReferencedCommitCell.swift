@@ -9,12 +9,12 @@
 import UIKit
 import SnapKit
 
-final class IssueReferencedCommitCell: AttributedStringCell {
+final class IssueReferencedCommitCell: StyledTextViewCell {
 
     // MARK: Public API
 
     func configure(_ model: IssueReferencedCommitModel) {
-        set(attributedText: model.attributedText)
+        set(renderer: model.string)
     }
 
 }
