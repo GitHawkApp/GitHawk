@@ -5,6 +5,7 @@ PODS:
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
+  - AutoInsetter (1.2.3)
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
@@ -65,8 +66,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.2.0)
-  - PureLayout (3.0.2)
+  - Pageboy (2.5.0)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
@@ -75,9 +75,9 @@ PODS:
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.2.0):
-    - Pageboy (~> 2.2.0)
-    - PureLayout (~> 3.0)
+  - Tabman (1.8.0):
+    - AutoInsetter (~> 1.2.0)
+    - Pageboy (~> 2.5.0)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
@@ -103,7 +103,7 @@ DEPENDENCIES:
   - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
-  - Tabman (~> 1.1)
+  - Tabman (~> 1.7)
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
@@ -162,6 +162,7 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
+  AutoInsetter: 1a8f8ad5e7da8e993970b3809cfb8e8e330f4db1
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
@@ -185,16 +186,15 @@ SPEC CHECKSUMS:
   MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
-  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Pageboy: 00985df8245ab2d4b4ef6959a0722d64b09aafee
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
+  Tabman: d4d30ea7e6dfdc6aa15518287e3e283290345940
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: e8bee44b67fc0aec656e210349d9dba94c80aeca
+PODFILE CHECKSUM: d3a1012e4f0a06ac01cc7eaf881b0d8ddda35f8b
 
 COCOAPODS: 1.4.0

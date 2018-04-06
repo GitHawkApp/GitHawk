@@ -56,7 +56,7 @@ public final class AutoInsetter {
                 
                 scrollView.contentInset = requiredContentInset
                 scrollView.scrollIndicatorInsets = requiredContentInset
-                
+                                
                 // only update contentOffset if the top contentInset has updated.
                 if isTopInsetChanged {
                     var contentOffset = scrollView.contentOffset
@@ -98,10 +98,6 @@ private extension AutoInsetter {
     func calculateActualRequiredContentInset(for scrollView: UIScrollView,
                                              from requiredInsetSpec: AutoInsetSpec,
                                              in viewController: UIViewController) -> UIEdgeInsets {
-        guard let superview = scrollView.superview else {
-            return scrollView.contentInset
-        }
-        
         viewController.view.layoutIfNeeded()
         
         let requiredContentInset = requiredInsetSpec.allRequiredInsets
@@ -112,9 +108,11 @@ private extension AutoInsetter {
         
         if isEmbeddedViewController(viewController) { // Embedded VC is always full canvas
             proposedContentInset = requiredContentInset
-        } else {
             
-            let relativeFrame = viewController.view.convert(scrollView.frame, from: superview)
+        } else { // Standard View controller
+            
+            let relativeSuperview = viewController.view
+            let relativeFrame = viewController.view.convert(scrollView.frame, from: relativeSuperview)
             let relativeTopInset = max(requiredContentInset.top - relativeFrame.minY, 0.0)
             let bottomInsetMinY = viewController.view.bounds.height - requiredContentInset.bottom
             let relativeBottomInset = fabs(min(bottomInsetMinY - relativeFrame.maxY, 0.0))

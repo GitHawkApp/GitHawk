@@ -24,11 +24,13 @@ internal extension UIViewController {
         var scrollViews = [UIScrollView]()
         
         for subview in view.subviews {
+            // if current view is scroll view add it and ignore the subviews
+            // - as it can be assumed they will be insetted correctly within the parent scroll view.
             if let scrollView = subview as? UIScrollView {
                 scrollViews.append(scrollView)
+            } else {
+                scrollViews.append(contentsOf: self.scrollViews(in: subview))
             }
-            
-            scrollViews.append(contentsOf: self.scrollViews(in: subview))
         }
         return scrollViews
     }

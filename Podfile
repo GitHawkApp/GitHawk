@@ -14,7 +14,7 @@ pod 'TUSafariActivity', '~> 1.0.0'
 pod 'SwiftLint'
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'Tabman', '~> 1.1'
+pod 'Tabman', '~> 1.7'
 pod 'Firebase/Core'
 pod 'Firebase/Database' 
 

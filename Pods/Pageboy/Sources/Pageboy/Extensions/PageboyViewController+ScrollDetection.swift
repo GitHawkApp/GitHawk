@@ -265,13 +265,11 @@ private extension PageboyViewController {
     ///   - scrollView: The scroll view that is being scrolled.
     /// - Returns: Whether a page transition has been detected.
     private func detectCurrentPageIndexIfNeeded(pagePosition: CGFloat, scrollView: UIScrollView) -> Bool {
-        guard let currentIndex = self.currentIndex else {
-            return false
-        }
-        guard scrollView.isDecelerating == false else {
+        guard var currentIndex = self.currentIndex else {
             return false
         }
         
+        // Handle scenario where user continues to pan past a single page range.
         let isPagingForward = pagePosition > self.previousPagePosition ?? 0.0
         if scrollView.isTracking {
             if isPagingForward && pagePosition >= CGFloat(currentIndex + 1) {
@@ -285,6 +283,13 @@ private extension PageboyViewController {
         
         let isOnPage = pagePosition.truncatingRemainder(dividingBy: 1) == 0
         if isOnPage {
+            
+            // Special case where scroll view might be decelerating but on a new index,
+            // and UIPageViewController didFinishAnimating is not called
+            if scrollView.isDecelerating {
+                currentIndex = Int(pagePosition)
+            }
+            
             guard currentIndex != self.currentIndex else {
                 return false
             }
