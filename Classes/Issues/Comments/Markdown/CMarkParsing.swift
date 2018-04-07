@@ -35,7 +35,10 @@ private extension TextElement {
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
         case .code(let text):
-            builder.add(styledText: StyledText(text: text, style: Styles.Text.code))
+            builder.add(styledText: StyledText(
+                text: text,
+                style: Styles.Text.code.with(background: Styles.Colors.Gray.medium.color)
+            ))
         case .emphasis(let children):
             builder.add(traits: .traitItalic)
             children.build(builder, options: options)
@@ -158,15 +161,22 @@ private extension Array where Iterator.Element == [ListElement] {
 
 private extension TableRow {
     func build(options: CMarkOptions, greyBackground: Bool) -> [StyledTextRenderer] {
+        let backgroundColor: UIColor = greyBackground ? Styles.Colors.Gray.lighter.color : .white
         let builders: [StyledTextBuilder]
         switch self {
         case .header(let cells):
             builders = cells.map {
-                $0.build(StyledTextBuilder.markdownBase().add(traits: .traitBold), options: options)
+                $0.build(
+                    StyledTextBuilder.markdownBase().add(traits: .traitBold),
+                    options: options
+                )
             }
         case .row(let cells):
             builders = cells.map {
-                $0.build(StyledTextBuilder.markdownBase(), options: options)
+                $0.build(
+                    StyledTextBuilder.markdownBase().add(attributes: [.backgroundColor: backgroundColor]),
+                    options: options
+                )
             }
         }
         // don't warm, sized when building IssueCommentTableModel
@@ -175,7 +185,7 @@ private extension TableRow {
                 string: $0.build(),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTableCollectionCell.inset,
-                backgroundColor: greyBackground ? Styles.Colors.Gray.lighter.color : .white
+                backgroundColor: backgroundColor
             )
         }
     }
@@ -185,10 +195,9 @@ private extension Array where Iterator.Element == TableRow {
     func build(options: CMarkOptions) -> [(cells: [StyledTextRenderer], fill: Bool)] {
         var rowIndex = 0
         return map {
-            let row = $0
-            defer { if case .row = row { rowIndex += 1} }
-            let fill = rowIndex > 0 && rowIndex % 2 == 0
-            return (row.build(options: options, greyBackground: fill), fill)
+            let fill = rowIndex % 2 == 1
+            if case .row = $0 { rowIndex += 1}
+            return ($0.build(options: options, greyBackground: fill), fill)
         }
     }
 }
