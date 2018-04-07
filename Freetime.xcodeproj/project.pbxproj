@@ -115,6 +115,7 @@
 		2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931EA461EF7734B00AEE0FF /* String+NSRange.swift */; };
 		29351E9C2079106300FF8C17 /* String+GitHubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */; };
 		29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */; };
+		29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9F2079246400FF8C17 /* CodeBlockModel.swift */; };
 		293971891F904C82002FAC4B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293971881F904C82002FAC4B /* Toast.swift */; };
 		2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */; };
 		293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
@@ -550,6 +551,7 @@
 		2931EA461EF7734B00AEE0FF /* String+NSRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GitHubEmoji.swift"; sourceTree = "<group>"; };
 		29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueCommentTableModel+Models.swift"; sourceTree = "<group>"; };
+		29351E9F2079246400FF8C17 /* CodeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockModel.swift; sourceTree = "<group>"; };
 		293971881F904C82002FAC4B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+GitHawk.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
@@ -1249,6 +1251,7 @@
 			isa = PBXGroup;
 			children = (
 				29BE40D22070786400A79C86 /* CMarkParsing.swift */,
+				29351E9F2079246400FF8C17 /* CodeBlockModel.swift */,
 				295F52AC1EF1BE83000B53CF /* CommentModelsFromMarkdown.swift */,
 				29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */,
 				29DA1E8B1F5F8CC40050C64B /* MarkdownAttribute.swift */,
@@ -2677,6 +2680,7 @@
 				7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */,
 				4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */,
 				2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
+				29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */,
 				290744BE1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift in Sources */,
 				290744BC1F268D8300FD9E48 /* UserAutocomplete.swift in Sources */,
 				299F63DA205DD86E0015D901 /* StyledTextViewCell.swift in Sources */,
