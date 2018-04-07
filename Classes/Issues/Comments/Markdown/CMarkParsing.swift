@@ -40,10 +40,10 @@ private extension TextElement {
 
         switch self {
         case .text(let text):
-            // TODO scan for auto short links and issues
-            // convert into links
+            // if inside a link, attempt to shorten it if its an owner+repo+issue link
             if context.inLink, let shortlink = text.shortlinkInfo {
                 let linkText: String
+                // if the owner/repo match, just use "#123" shorthand
                 if shortlink.owner.lowercased() == options.owner.lowercased(),
                     shortlink.repo.lowercased() == options.repo.lowercased() {
                     linkText = "#\(shortlink.number)"
@@ -52,7 +52,27 @@ private extension TextElement {
                 }
                 builder.add(text: linkText)
             } else {
-                builder.add(text: text)
+                // automatically convert all owner?+repo?+number into a link
+                if let shortlink = text.detectShortlink {
+                    let linkText: String
+                    // if detected an owner/repo, use the full shorthand
+                    // otherwise assume its linking to the same owner/repo as the issue
+                    if let owner = shortlink.owner, let repo = shortlink.repo {
+                        linkText = "\(owner)/\(repo)#\(shortlink.number)"
+                    } else {
+                        linkText = "#\(shortlink.number)"
+                    }
+                    builder.add(text: linkText, attributes: [
+                        .foregroundColor: Styles.Colors.Blue.medium.color,
+                        MarkdownAttribute.issue: IssueDetailsModel(
+                            owner: shortlink.owner ?? options.owner,
+                            repo: shortlink.repo ?? options.repo,
+                            number: shortlink.number
+                        )
+                        ])
+                } else {
+                    builder.add(text: text)
+                }
             }
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
@@ -245,7 +265,7 @@ private extension Element {
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white
-            ).warm(width: options.width)
+                ).warm(width: options.width)
         case .quote(let items, let level):
             let builder = StyledTextBuilder.markdownBase()
                 .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
@@ -335,3 +355,4 @@ func MarkdownModels(
     )
     return node.flatElements.flatMap { $0.model(options) }
 }
+
