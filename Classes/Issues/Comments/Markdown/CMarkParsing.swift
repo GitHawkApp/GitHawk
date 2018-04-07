@@ -37,7 +37,7 @@ private extension TextElement {
         case .code(let text):
             builder.add(styledText: StyledText(
                 text: text,
-                style: Styles.Text.code.with(background: Styles.Colors.Gray.medium.color)
+                style: Styles.Text.code.with(background: Styles.Colors.Gray.lighter.color)
             ))
         case .emphasis(let children):
             builder.add(traits: .traitItalic)
@@ -238,11 +238,21 @@ private extension Element {
         case .hr:
             return IssueCommentHrModel()
         case .codeBlock(let text, let language):
-            // TODO build and attempt to highlight code
-            guard let highlighted = GithubHighlighting.highlight(
-                text.trimmingCharacters(in: .whitespacesAndNewlines),
-                as: language
-                ) else { return nil }
+            let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let attributedString: NSAttributedString
+            if let language = language, !language.isEmpty,
+                let highlighted = GithubHighlighting.highlight(trimmedText, as: language) {
+                attributedString = highlighted
+            } else {
+                attributedString = NSAttributedString(
+                    string: trimmedText,
+                    attributes: [
+                        .foregroundColor: Styles.Colors.Gray.dark.color,
+                        .font: Styles.Text.code.preferredFont
+                    ]
+                )
+            }
+
             var inset = IssueCommentCodeBlockCell.textViewInset
             inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
             inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
@@ -253,7 +263,7 @@ private extension Element {
 
             let stringSizing = NSAttributedStringSizing(
                 containerWidth: 0,
-                attributedText: highlighted,
+                attributedText: attributedString,
                 inset: inset,
                 backgroundColor: Styles.Colors.Gray.lighter.color
             )

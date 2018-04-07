@@ -17,7 +17,9 @@ enum GithubHighlighting {
         return h
     }()
 
-    static func highlight(_ code: String, as language: String?) -> NSAttributedString? {
+    static func highlight(_ code: String, as language: String) -> NSAttributedString? {
+        // Highlightr will return nil if given an empty language string
+        let fixedLanguage = language.isEmpty ? nil : language
         return shared?.highlight(code, as: language, fastRender: true)
     }
     
