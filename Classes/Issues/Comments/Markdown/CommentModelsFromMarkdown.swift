@@ -62,7 +62,7 @@ func CreateCommentModels(
     // TODO remove after testing
     return MarkdownModels(markdown, owner: options.owner, repo: options.repo, width: options.width, viewerCanUpdate: viewerCanUpdate, contentSizeCategory: options.contentSizeCategory)
 
-    let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
+    let emojiMarkdown = markdown.replacingGithubEmojiRegex
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
     guard let document = createCommentAST(

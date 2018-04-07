@@ -11,13 +11,6 @@ import MMMarkdown
 import HTMLString
 import StyledText
 
-private typealias Row = IssueCommentTableModel.Row
-private class TableBucket {
-    var rows = [Row]()
-    var maxWidth: CGFloat = 0
-    var maxHeight: CGFloat = 0
-}
-
 private func buildAttributedString(
     markdown: String,
     element: MMElement,
@@ -77,6 +70,8 @@ private func rowModels(
     return results
 }
 
+
+
 func CreateTable(
     element: MMElement,
     markdown: String,
@@ -106,29 +101,13 @@ func CreateTable(
             contentSizeCategory: contentSizeCategory
         )
 
-        var maxHeight: CGFloat = 0
-
-        // prepopulate the buckets in case this is the first pass
-        while buckets.count < models.count {
-            buckets.append(TableBucket())
-        }
-
-        // move text models from a row collection and place into column
-        for (i, model) in models.enumerated() {
-            let bucket = buckets[i]
-            bucket.rows.append(Row(string: model, fill: fill))
-
-            // adjust the max width of each column using whatever is the largest so all cells are the same width
-            let size = model.viewSize(width: 0)
-            bucket.maxWidth = max(bucket.maxWidth, size.width)
-            maxHeight = max(maxHeight, size.height)
-        }
-
-        rowHeights.append(ceil(maxHeight))
+        fillBuckets(
+            rows: models,
+            buckets: &buckets,
+            rowHeights: &rowHeights,
+            fill: fill
+        )
     }
 
-    return IssueCommentTableModel(
-        columns: buckets.map { IssueCommentTableModel.Column(width: $0.maxWidth, rows: $0.rows) },
-        rowHeights: rowHeights
-    )
+    return IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights)
 }

@@ -86,6 +86,29 @@ private extension ListElement {
     }
 }
 
+private extension Array {
+    func forEach(_ body: (Element) -> Void, joined: (Element) -> Void) {
+        for (i, e) in enumerated() {
+            body(e)
+            if i != count - 1 {
+                joined(e)
+            }
+        }
+    }
+}
+
+private extension Array where Iterator.Element == TextLine {
+    @discardableResult
+    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
+        forEach({ el in
+            el.build(builder, options: options)
+        }, joined: { _ in
+            builder.add(text: "\n")
+        })
+        return builder
+    }
+}
+
 private extension Array where Iterator.Element == [ListElement] {
     @discardableResult
     func build(
@@ -117,19 +140,56 @@ private extension Array where Iterator.Element == [ListElement] {
                     : Constants.Strings.bulletHollow
             }
             builder.add(text: "\(tick) ", attributes: [.paragraphStyle: paragraphStyle])
-            for (ci, cc) in c.enumerated() {
+
+            c.forEach({ cc in
                 cc.build(builder, options: options)
-                // never append whitespace on the last child element
-                if ci != c.count - 1 {
-                    builder.add(text: "\n")
-                }
-            }
+            }, joined: { _ in
+                builder.add(text: "\n")
+            })
+
             // never append whitespace on the last element
             if i != count - 1 {
                 builder.add(text: "\n")
             }
         }
         return builder
+    }
+}
+
+private extension TableRow {
+    func build(options: CMarkOptions, greyBackground: Bool) -> [StyledTextRenderer] {
+        let builders: [StyledTextBuilder]
+        switch self {
+        case .header(let cells):
+            builders = cells.map {
+                $0.build(StyledTextBuilder.markdownBase().add(traits: .traitBold), options: options)
+            }
+        case .row(let cells):
+            builders = cells.map {
+                $0.build(StyledTextBuilder.markdownBase(), options: options)
+            }
+        }
+        // don't warm, sized when building IssueCommentTableModel
+        return builders.map {
+            StyledTextRenderer(
+                string: $0.build(),
+                contentSizeCategory: options.contentSizeCategory,
+                inset: IssueCommentTableCollectionCell.inset,
+                backgroundColor: greyBackground ? Styles.Colors.Gray.lighter.color : .white
+            )
+        }
+    }
+}
+
+private extension Array where Iterator.Element == TableRow {
+    func build(options: CMarkOptions) -> [(cells: [StyledTextRenderer], fill: Bool)] {
+        var rowIndex = 0
+        return map {
+            let row = $0
+            defer { if case .row = row { rowIndex += 1} }
+            let fill = rowIndex > 0 && rowIndex % 2 == 0
+            return (row.build(options: options, greyBackground: fill), fill)
+        }
     }
 }
 
@@ -219,8 +279,15 @@ private extension Element {
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .table(let rows):
-            // TODO bucket + size like we do w/ elements
-            return nil
+            var buckets = [TableBucket]()
+            var rowHeights = [CGFloat]()
+
+            let results = rows.build(options: options)
+            results.forEach {
+                fillBuckets(rows: $0.cells, buckets: &buckets, rowHeights: &rowHeights, fill: $0.fill)
+            }
+
+            return IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights)
         }
     }
 }
@@ -233,10 +300,10 @@ func MarkdownModels(
     viewerCanUpdate: Bool,
     contentSizeCategory: UIContentSizeCategory
     ) -> [ListDiffable] {
-    // TODO make String extension to replace emoji
-    let emojiMarkdown = replaceGithubEmojiRegex(string: markdown)
-    let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
-    guard let node = Node(markdown: replaceHTMLentities) else { return [] }
+    let cleaned = markdown
+        .replacingGithubEmojiRegex
+        .removingHTMLEntities
+    guard let node = Node(markdown: cleaned) else { return [] }
     let options = CMarkOptions(
         owner: owner,
         repo: repo,
