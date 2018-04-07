@@ -32,7 +32,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/cmark-gfm-swift</string>
 			<key>Title</key>
-			<string>cmark-gfm-swift</string>
+			<string>cmark-gfm-swift (0.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

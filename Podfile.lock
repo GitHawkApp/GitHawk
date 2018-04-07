@@ -142,7 +142,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   cmark-gfm-swift:
-    :commit: e608e6372e80da71ad6558df8d40882b6bc7f0ab
+    :commit: 7f604e31125983861076b9904fb3251d2fe41c47
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
