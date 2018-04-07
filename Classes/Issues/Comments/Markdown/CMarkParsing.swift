@@ -52,27 +52,7 @@ private extension TextElement {
                 }
                 builder.add(text: linkText)
             } else {
-                // automatically convert all owner?+repo?+number into a link
-                if let shortlink = text.detectShortlink {
-                    let linkText: String
-                    // if detected an owner/repo, use the full shorthand
-                    // otherwise assume its linking to the same owner/repo as the issue
-                    if let owner = shortlink.owner, let repo = shortlink.repo {
-                        linkText = "\(owner)/\(repo)#\(shortlink.number)"
-                    } else {
-                        linkText = "#\(shortlink.number)"
-                    }
-                    builder.add(text: linkText, attributes: [
-                        .foregroundColor: Styles.Colors.Blue.medium.color,
-                        MarkdownAttribute.issue: IssueDetailsModel(
-                            owner: shortlink.owner ?? options.owner,
-                            repo: shortlink.repo ?? options.repo,
-                            number: shortlink.number
-                        )
-                        ])
-                } else {
-                    builder.add(text: text)
-                }
+                text.detectAndHandleShortlink(owner: options.owner, repo: options.repo, builder: builder)
             }
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
