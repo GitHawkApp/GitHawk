@@ -21,9 +21,20 @@ private struct CMarkOptions {
     let contentSizeCategory: UIContentSizeCategory
 }
 
+private struct CMarkContext {
+    let inLink: Bool
+    init(inLink: Bool = false) {
+        self.inLink = inLink
+    }
+}
+
 private extension TextElement {
     @discardableResult
-    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
+    func build(
+        _ builder: StyledTextBuilder,
+        options: CMarkOptions,
+        context: CMarkContext
+        ) -> StyledTextBuilder {
         builder.save()
         defer { builder.restore() }
 
@@ -31,7 +42,18 @@ private extension TextElement {
         case .text(let text):
             // TODO scan for auto short links and issues
             // convert into links
-            builder.add(text: text)
+            if context.inLink, let shortlink = text.shortlinkInfo {
+                let linkText: String
+                if shortlink.owner.lowercased() == options.owner.lowercased(),
+                    shortlink.repo.lowercased() == options.repo.lowercased() {
+                    linkText = "#\(shortlink.number)"
+                } else {
+                    linkText = "\(shortlink.owner)/\(shortlink.repo)#\(shortlink.number)"
+                }
+                builder.add(text: linkText)
+            } else {
+                builder.add(text: text)
+            }
         case .softBreak, .lineBreak:
             builder.add(text: "\n")
         case .code(let text):
@@ -41,24 +63,29 @@ private extension TextElement {
             ))
         case .emphasis(let children):
             builder.add(traits: .traitItalic)
-            children.build(builder, options: options)
+            children.build(builder, options: options, context: context)
         case .strong(let children):
             builder.add(traits: .traitBold)
-            children.build(builder, options: options)
+            children.build(builder, options: options, context: context)
         case .strikethrough(let children):
             builder.add(attributes: [
                 .strikethroughStyle: NSUnderlineStyle.styleSingle.rawValue,
                 .strikethroughColor: builder.tipAttributes?[.foregroundColor] ?? Styles.Colors.Gray.dark.color
                 ])
-            children.build(builder, options: options)
+            children.build(builder, options: options, context: context)
         case .link(let children, _, let url):
-            builder.add(attributes: [
-                .foregroundColor: Styles.Colors.Blue.medium.color,
-                MarkdownAttribute.url: url ?? ""
-                ])
-            // TODO this is where we'd convert shorthand URLs and stuff
-            // but need to squish all children then search
-            children.build(builder, options: options)
+            var attributes: [NSAttributedStringKey: Any] = [.foregroundColor: Styles.Colors.Blue.medium.color]
+            if let shortlink = url?.shortlinkInfo {
+                attributes[MarkdownAttribute.issue] = IssueDetailsModel(
+                    owner: shortlink.owner,
+                    repo: shortlink.repo,
+                    number: shortlink.number
+                )
+            } else {
+                attributes[MarkdownAttribute.url] = url ?? ""
+            }
+            builder.add(attributes: attributes)
+            children.build(builder, options: options, context: CMarkContext(inLink: true))
         case .mention(let login):
             builder.add(text: "@\(login)", traits: .traitBold, attributes: [MarkdownAttribute.username: login])
         case .checkbox(let checked, let originalRange):
@@ -70,8 +97,12 @@ private extension TextElement {
 
 private extension Sequence where Iterator.Element == TextElement {
     @discardableResult
-    func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
-        forEach { $0.build(builder, options: options) }
+    func build(
+        _ builder: StyledTextBuilder,
+        options: CMarkOptions,
+        context: CMarkContext
+        ) -> StyledTextBuilder {
+        forEach { $0.build(builder, options: options, context: context) }
         return builder
     }
 }
@@ -81,7 +112,7 @@ private extension ListElement {
     func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
         switch self {
         case .text(let text):
-            text.build(builder, options: options)
+            text.build(builder, options: options, context: CMarkContext())
         case .list(let children, let type, let level):
             children.build(builder, options: options, type: type, level: level)
         }
@@ -104,7 +135,7 @@ private extension Array where Iterator.Element == TextLine {
     @discardableResult
     func build(_ builder: StyledTextBuilder, options: CMarkOptions) -> StyledTextBuilder {
         forEach({ el in
-            el.build(builder, options: options)
+            el.build(builder, options: options, context: CMarkContext())
         }, joined: { _ in
             builder.add(text: "\n")
         })
@@ -168,14 +199,16 @@ private extension TableRow {
             builders = cells.map {
                 $0.build(
                     StyledTextBuilder.markdownBase().add(traits: .traitBold),
-                    options: options
+                    options: options,
+                    context: CMarkContext()
                 )
             }
         case .row(let cells):
             builders = cells.map {
                 $0.build(
                     StyledTextBuilder.markdownBase().add(attributes: [.backgroundColor: backgroundColor]),
-                    options: options
+                    options: options,
+                    context: CMarkContext()
                 )
             }
         }
@@ -207,7 +240,8 @@ private extension Element {
         switch self {
         case .text(let items):
             return StyledTextRenderer(
-                string: items.build(StyledTextBuilder.markdownBase(), options: options).build(renderMode: .preserve),
+                string: items.build(StyledTextBuilder.markdownBase(), options: options, context: CMarkContext())
+                    .build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white
@@ -216,7 +250,7 @@ private extension Element {
             let builder = StyledTextBuilder.markdownBase()
                 .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
             let string = StyledTextRenderer(
-                string: items.build(builder, options: options).build(renderMode: .preserve),
+                string: items.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentQuoteCell.inset(quoteLevel: level),
                 backgroundColor: .white
@@ -252,7 +286,7 @@ private extension Element {
             }
             builder.add(style: style)
             return StyledTextRenderer(
-                string: text.build(builder, options: options).build(renderMode: .preserve),
+                string: text.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
                 inset: IssueCommentTextCell.inset,
                 backgroundColor: .white

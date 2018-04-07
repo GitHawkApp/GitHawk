@@ -116,6 +116,7 @@
 		29351E9C2079106300FF8C17 /* String+GitHubEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */; };
 		29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */; };
 		29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351E9F2079246400FF8C17 /* CodeBlockModel.swift */; };
+		29351EA22079663800FF8C17 /* String+Shortlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA12079663800FF8C17 /* String+Shortlink.swift */; };
 		293971891F904C82002FAC4B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293971881F904C82002FAC4B /* Toast.swift */; };
 		2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */; };
 		293A45751F296B7E00DD1006 /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297AE84C1EC0D58A00B44A1F /* DateDisplayTests.swift */; };
@@ -552,6 +553,7 @@
 		29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GitHubEmoji.swift"; sourceTree = "<group>"; };
 		29351E9D207917ED00FF8C17 /* IssueCommentTableModel+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueCommentTableModel+Models.swift"; sourceTree = "<group>"; };
 		29351E9F2079246400FF8C17 /* CodeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockModel.swift; sourceTree = "<group>"; };
+		29351EA12079663800FF8C17 /* String+Shortlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Shortlink.swift"; sourceTree = "<group>"; };
 		293971881F904C82002FAC4B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+GitHawk.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
@@ -1262,6 +1264,7 @@
 				297406A01F0EE51E003A6BFB /* MMElement+Table.swift */,
 				29351E9B2079106300FF8C17 /* String+GitHubEmoji.swift */,
 				2931EA461EF7734B00AEE0FF /* String+NSRange.swift */,
+				29351EA12079663800FF8C17 /* String+Shortlink.swift */,
 				2965F36F2071508C003CC92F /* StyledTextBuilder+Checkbox.swift */,
 				2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
@@ -2549,6 +2552,7 @@
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
+				29351EA22079663800FF8C17 /* String+Shortlink.swift in Sources */,
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */,
 				299F63DE205DDCF40015D901 /* UIViewController+AttributedStringViewDelegate.swift in Sources */,
