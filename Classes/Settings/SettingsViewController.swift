@@ -91,26 +91,20 @@ NewIssueTableViewControllerDelegate {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        func deselectRow() { tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled) }
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
-            deselectRow()
             onReviewAccess()
         } else if cell === accountsCell {
-            deselectRow()
             onAccounts()
         } else if cell === githubStatusCell {
-            deselectRow()
             onGitHubStatus()
         } else if cell === reportBugCell {
-            deselectRow()
             onReportBug()
         } else if cell === viewSourceCell {
-            deselectRow()
             onViewSource()
         } else if cell === signOutCell {
-            deselectRow()
             onSignOut()
         }
     }
