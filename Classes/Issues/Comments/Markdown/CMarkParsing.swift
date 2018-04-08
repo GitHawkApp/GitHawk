@@ -323,7 +323,9 @@ func MarkdownModels(
     ) -> [ListDiffable] {
     let cleaned = markdown
         .replacingGithubEmojiRegex
+        .strippingHTMLComments
         .removingHTMLEntities
+        .trimmingCharacters(in: .whitespacesAndNewlines)
     guard let node = Node(markdown: cleaned) else { return [] }
     let options = CMarkOptions(
         owner: owner,

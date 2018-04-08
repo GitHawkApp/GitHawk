@@ -8,10 +8,10 @@
 
 import Foundation
 
-private let issueURLRegex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
+private let regex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 extension String {
     var shortlinkInfo: (owner: String, repo: String, number: Int)? {
-        guard let match = issueURLRegex.firstMatch(in: self, options: [], range: nsrange),
+        guard let match = regex.firstMatch(in: self, options: [], range: nsrange),
             match.numberOfRanges > 3,
             let ownerSubstring = substring(with: match.range(at: 1)),
             let repoSubstring = substring(with: match.range(at: 2)),

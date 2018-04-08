@@ -15,10 +15,10 @@ extension NSRange {
     }
 }
 
-private let issueShorthandRegex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
+private let regex = try! NSRegularExpression(pattern: "(^|\\s)((\\w+)/(\\w+))?#([0-9]+)", options: [])
 extension String {
     func detectAndHandleShortlink(owner: String, repo: String, builder: StyledTextBuilder) {
-        let matches = issueShorthandRegex.matches(in: self, options: [], range: nsrange)
+        let matches = regex.matches(in: self, options: [], range: nsrange)
         guard matches.count > 0 else {
             builder.add(text: self)
             return

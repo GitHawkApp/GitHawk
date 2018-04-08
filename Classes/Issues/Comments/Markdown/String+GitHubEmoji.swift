@@ -8,14 +8,14 @@
 
 import Foundation
 
-private let GithubEmojiRegex: NSRegularExpression = {
+private let regex: NSRegularExpression = {
     let pattern = "(" + GithubEmojis.alias.map({ $0.key }).joined(separator: "|") + ")"
     return try! NSRegularExpression(pattern: pattern, options: [])
 }()
 
 extension String {
     var replacingGithubEmojiRegex: String {
-        let matches = GithubEmojiRegex.matches(in: self, options: [], range: nsrange)
+        let matches = regex.matches(in: self, options: [], range: nsrange)
         var replacedString = self
         for match in matches.reversed() {
             guard let substr = substring(with: match.range),
