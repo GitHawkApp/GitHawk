@@ -29,6 +29,12 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
+
+        addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(onTapCell)))
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
@@ -36,7 +42,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         
         imageView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
-            action: #selector(IssueCommentDetailCell.onTapAvatar))
+            action: #selector(onTapAvatar))
         )
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
@@ -48,9 +54,10 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         loginLabel.font = Styles.Text.title.preferredFont
         loginLabel.textColor = Styles.Colors.Gray.dark.color
         loginLabel.isUserInteractionEnabled = true
+        loginLabel.isAccessibilityElement = false
         loginLabel.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
-            action: #selector(IssueCommentDetailCell.onTapLoginLabel))
+            action: #selector(onTapLoginLabel))
         )
         contentView.addSubview(loginLabel)
         loginLabel.snp.makeConstraints { make in
@@ -60,6 +67,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
         dateLabel.font = Styles.Text.secondary.preferredFont
         dateLabel.textColor = Styles.Colors.Gray.light.color
+        dateLabel.isAccessibilityElement = false
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.left.equalTo(loginLabel)
@@ -71,7 +79,9 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         moreButton.contentHorizontalAlignment = .right
         moreButton.imageView?.contentMode = .center
         moreButton.tintColor = Styles.Colors.Gray.light.color
-        moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(onMore(sender:)), for: .touchUpInside)
+        print(moreButton.isAccessibilityElement)
+        moreButton.isAccessibilityElement = true
         moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
@@ -82,6 +92,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
 
         editedLabel.font = Styles.Text.secondary.preferredFont
         editedLabel.textColor = Styles.Colors.Gray.light.color
+        editedLabel.isAccessibilityElement = false
         contentView.addSubview(editedLabel)
         editedLabel.snp.makeConstraints { make in
             make.left.equalTo(dateLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
@@ -113,6 +124,15 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         delegate?.didTapProfile(cell: self)
     }
 
+    @objc func onTapCell() {
+        // Only enable the tap of the cell in VoiceOver;
+        // otherwise the avatar and label work as advertised.
+        // It seems like we need to add a recognizer to the cell
+        // to enable an action while using VoiceOver.
+        guard UIAccessibilityIsVoiceOverRunning() else { return }
+        delegate?.didTapProfile(cell: self)
+    }
+
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
@@ -126,19 +146,25 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         dateLabel.setText(date: viewModel.date)
         loginLabel.text = viewModel.login
 
+        let editedString: String
+
         if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
             editedLabel.isHidden = false
 
             let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
             let editedByOwner = NSLocalizedString("Edited", comment: "")
             let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
-            editedLabel.text = "\(Constants.Strings.bullet) \(String(format: format, editedLogin))"
+            editedString = String(format: format, editedLogin)
+            editedLabel.text = "\(Constants.Strings.bullet) \(editedString)"
 
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
             editedLabel.detailText = String(format: detailFormat, arguments: [editedLogin, editedDate.agoString])
         } else {
             editedLabel.isHidden = true
+            editedString = ""
         }
+
+        accessibilityLabel = NSLocalizedString("\(viewModel.login) commented \(viewModel.date.agoString). \(editedString)", comment: "")
     }
 
 }
