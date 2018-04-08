@@ -28,7 +28,7 @@ final class IssueTargetBranchSectionController: ListSectionController {
         guard let object = self.object,
             let cell = collectionContext?.dequeueReusableCell(of: IssueTargetBranchCell.self, for: self, at: index) as? IssueTargetBranchCell
             else { fatalError("Collection context must be set, missing object, or cell incorrect type") }
-        cell.set(attributedText: object.targetBranchText)
+        cell.set(renderer: object.targetBranchText)
         return cell
     }
 }

@@ -8,21 +8,22 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueCommentQuoteModel: NSObject, ListDiffable {
 
     let level: Int
-    let quote: NSAttributedStringSizing
+    let string: StyledTextRenderer
 
-    init(level: Int, quote: NSAttributedStringSizing) {
+    init(level: Int, string: StyledTextRenderer) {
         self.level = level
-        self.quote = quote
+        self.string = string
     }
 
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return quote.attributedText.string as NSObjectProtocol
+        return string.string.hashValue as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {

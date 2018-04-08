@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class IssueReferencedCell: AttributedStringCell {
+final class IssueReferencedCell: StyledTextViewCell {
 
     static let inset = UIEdgeInsets(
         top: Styles.Sizes.inlineSpacing,
@@ -40,7 +40,7 @@ final class IssueReferencedCell: AttributedStringCell {
     // MARK: Public API
 
     func configure(_ model: IssueReferencedModel) {
-        set(attributedText: model.attributedText)
+        set(renderer: model.string)
 
         let buttonState: UIButton.State
         switch model.state {

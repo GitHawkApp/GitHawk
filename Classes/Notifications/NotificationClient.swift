@@ -59,13 +59,25 @@ final class NotificationClient {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
-            switch result {
-            case .success(let response):
-                let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
-                self.fetchStates(for: viewModels, page: response.next, completion: completion)
-            case .failure(let error):
-                completion(.error(error))
+        if let repo = repo {
+            githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
+                switch result {
+                case .success(let response):
+                    let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                    self.fetchStates(for: viewModels, page: response.next, completion: completion)
+                case .failure(let error):
+                    completion(.error(error))
+                }
+            }
+        } else {
+            githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
+                switch result {
+                case .success(let response):
+                    let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                    self.fetchStates(for: viewModels, page: response.next, completion: completion)
+                case .failure(let error):
+                    completion(.error(error))
+                }
             }
         }
     }
@@ -77,7 +89,7 @@ final class NotificationClient {
         ) {
 
         let content = "state comments{totalCount}"
-        let notificationQueries: String = notifications.flatMap {
+        let notificationQueries: String = notifications.compactMap {
             guard let alias = $0.stateAlias else { return nil }
             return """
             \(alias.key): repository(owner: "\($0.owner)", name: "\($0.repo)") { issueOrPullRequest(number: \(alias.number)) { ...on Issue {\(content)} ...on PullRequest {\(content)} } }

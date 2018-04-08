@@ -141,7 +141,7 @@ SearchResultSectionControllerDelegate {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         switch state {
         case .idle:
-            var recents: [ListDiffable] = recentStore.values.flatMap { SearchRecentViewModel(query: $0) }
+            var recents: [ListDiffable] = recentStore.values.compactMap { SearchRecentViewModel(query: $0) }
             if recents.count > 0 {
                 recents.insert(recentHeaderKey, at: 0)
             }

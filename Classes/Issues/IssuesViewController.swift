@@ -55,7 +55,7 @@ IssueManagingNavSectionControllerDelegate {
                     name: self.model.repo,
                     owner: self.model.owner,
                     number: self.model.number,
-                    title: result.title.attributedText.string,
+                    title: result.title.string.allText,
                     defaultBranch: result.defaultBranch
                 )
                 self.bookmarkNavController = BookmarkNavigationController(store: client.bookmarksStore, model: bookmark)
@@ -217,7 +217,7 @@ IssueManagingNavSectionControllerDelegate {
             name: model.repo,
             owner: model.owner,
             number: model.number,
-            title: result.title.attributedText.string,
+            title: result.title.string.allText,
             defaultBranch: result.defaultBranch
         )
     }
@@ -382,12 +382,12 @@ IssueManagingNavSectionControllerDelegate {
         // END metadata collection
         
         let titleTrailingMetadata = metadata.count > 0 && result?.pullRequest == false
-        objects.append(IssueTitleModel(attributedString: current.title, trailingMetadata: titleTrailingMetadata))
+        objects.append(IssueTitleModel(string: current.title, trailingMetadata: metadata.count > 0))
         
         if let targetBranch = current.targetBranch {
             objects.append(targetBranch)
         }
-        
+
         objects += metadata
 
         if let rootComment = current.rootComment {
@@ -495,6 +495,7 @@ IssueManagingNavSectionControllerDelegate {
                 id: id,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
+                contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
                 width: view.bounds.width,
                 owner: model.owner,
                 repo: model.repo,

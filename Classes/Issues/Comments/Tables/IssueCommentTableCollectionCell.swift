@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StyledText
 
 final class IssueCommentTableCollectionCell: UICollectionViewCell {
 
@@ -17,7 +18,7 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell {
         right: Styles.Sizes.columnSpacing
     )
 
-    let textView = AttributedStringView()
+    let textView = MarkdownStyledTextView()
 
     var bottomBorder: UIView?
     var rightBorder: UIView?
@@ -38,8 +39,8 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(_ model: NSAttributedStringSizing) {
-        textView.configureAndSizeToFit(text: model, width: 0)
+    func configure(_ model: StyledTextRenderer) {
+        textView.configure(renderer: model, width: 0)
     }
 
     func setRightBorder(visible: Bool) {

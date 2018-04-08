@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import StyledText
 
 final class IssueRequestModel: ListDiffable {
 
@@ -23,24 +24,22 @@ final class IssueRequestModel: ListDiffable {
     let user: String
     let date: Date
     let event: Event
-    let attributedText: NSAttributedStringSizing
+    let string: StyledTextRenderer
 
-    init(id: String, actor: String, user: String, date: Date, event: Event, width: CGFloat) {
+    init(
+        id: String,
+        actor: String,
+        user: String,
+        date: Date,
+        event: Event,
+        contentSizeCategory: UIContentSizeCategory,
+        width: CGFloat
+        ) {
         self.id = id
         self.actor = actor
         self.user = user
         self.date = date
         self.event = event
-
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(NSAttributedString(
-            string: actor,
-            attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                MarkdownAttribute.username: actor
-            ]
-        ))
 
         let phrase: String
         switch event {
@@ -49,32 +48,26 @@ final class IssueRequestModel: ListDiffable {
         case .reviewRequested: phrase = NSLocalizedString(" requested", comment: "")
         case .reviewRequestRemoved: phrase = NSLocalizedString(" removed", comment: "")
         }
-        attributedText.append(NSAttributedString(
-            string: phrase,
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color
-            ]
+
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
         ))
-        attributedText.append(NSAttributedString(
-            string: " \(user)",
-            attributes: [
-                .font: Styles.Text.secondaryBold.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                MarkdownAttribute.username: user
-            ]
-        ))
-        attributedText.append(NSAttributedString(
-            string: " \(date.agoString)",
-            attributes: [
-                .font: Styles.Text.secondary.preferredFont,
-                .foregroundColor: Styles.Colors.Gray.medium.color,
-                MarkdownAttribute.details: DateDetailsFormatter().string(from: date)
-            ]
-        ))
-        self.attributedText = NSAttributedStringSizing(
-            containerWidth: width,
-            attributedText: attributedText,
+            .save()
+            .add(styledText: StyledText(text: actor, style: Styles.Text.secondaryBold.with(attributes: [
+                MarkdownAttribute.username: actor,
+                .foregroundColor: Styles.Colors.Gray.dark.color
+                ])
+            ))
+            .restore()
+            .add(text: phrase)
+            .save()
+            .add(styledText: StyledText(text: " \(user)", style: Styles.Text.secondaryBold))
+            .restore()
+            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+
+        self.string = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: UIEdgeInsets(
                 top: Styles.Sizes.inlineSpacing,
                 left: Styles.Sizes.eventGutter,
@@ -82,7 +75,7 @@ final class IssueRequestModel: ListDiffable {
                 right: Styles.Sizes.eventGutter
             ),
             backgroundColor: Styles.Colors.background
-        )
+        ).warm(width: width)
     }
 
     // MARK: ListDiffable

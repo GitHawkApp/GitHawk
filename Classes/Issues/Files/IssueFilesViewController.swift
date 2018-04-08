@@ -23,9 +23,9 @@ ListSingleSectionControllerDelegate {
         self.model = model
         self.client = client
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load changes.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load changes.", comment: "")
         )
+        self.dataSource = self
         let titleFormat = NSLocalizedString("Files (%d)", comment: "")
         title = String(format: titleFormat, fileCount)
     }

@@ -28,7 +28,7 @@ enum AccessibilityHelper {
 
 private extension AccessibilityHelper {
     static func generatedLabel(forContentViewContainer cell: ContentViewContaining) -> String {
-        let labels = cell.contentView.subviews.flatMap { $0.accessibilityLabel }
+        let labels = cell.contentView.subviews.compactMap { $0.accessibilityLabel }
         if labels.count == 1, let label = labels.first {
             return label
         } else {

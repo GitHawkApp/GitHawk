@@ -70,6 +70,7 @@ enum Styles {
         static let headline = TextStyle(font: .system(.bold), size: 18)
         static let smallTitle = TextStyle(font: .system(.bold), size: 12)
         static let code = TextStyle(font: .name("Courier"), size: 16)
+        static let codeBold = TextStyle(font: .name("Courier-Bold"), size: 16)
         static let secondaryCode = TextStyle(font: .name("Courier"), size: 13)
 
         static let h1 = TextStyle(font: .system(.bold), size: 24)
@@ -131,6 +132,14 @@ extension TextStyle {
 
     var preferredFont: UIFont {
         return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+    }
+
+    func with(attributes: [NSAttributedStringKey: Any]) -> TextStyle {
+        var newAttributes = self.attributes
+        for (key, value) in attributes {
+            newAttributes[key] = value
+        }
+        return TextStyle(font: font, size: size, attributes: newAttributes, minSize: minSize, maxSize: maxSize)
     }
 
     func with(foreground: UIColor? = nil, background: UIColor? = nil) -> TextStyle {

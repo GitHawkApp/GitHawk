@@ -94,7 +94,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         width: CGFloat
         ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
-        let cleanNodes = nodes.flatMap { $0 }
+        let cleanNodes = nodes.compactMap { $0 }
 
         var results = [ListDiffable]()
         var mentionedUsers = [AutocompleteUser]()
@@ -105,6 +105,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo,
@@ -131,6 +132,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .removed,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -145,6 +147,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     type: .added,
                     repoOwner: owner,
                     repoName: repo,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -210,6 +213,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 results.append(hunk)
                 results += commentModels(
                     thread: thread,
+                    contentSizeCategory: contentSizeCategory,
                     width: width,
                     owner: owner,
                     repo: repo
@@ -223,10 +227,15 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     date: date
                 )
 
-                let options = GitHubMarkdownOptions(owner: owner, repo: repo, flavors: [.issueShorthand, .usernames])
+                let options = GitHubMarkdownOptions(
+                    owner: owner,
+                    repo: repo,
+                    flavors: [],
+                    width: width,
+                    contentSizeCategory: contentSizeCategory
+                )
                 let bodies = CreateCommentModels(
                     markdown: review.fragments.commentFields.body,
-                    width: width,
                     options: options,
                     viewerCanUpdate: viewerCanUpdate
                 )
@@ -254,6 +263,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -268,6 +278,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -288,6 +299,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: issueReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -304,6 +316,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                         date: date,
                         title: prReference.title,
                         actor: actor,
+                        contentSizeCategory: contentSizeCategory,
                         width: width
                     )
                     results.append(model)
@@ -331,6 +344,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: assigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .assigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -342,6 +356,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: unassigned.user?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .unassigned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -353,6 +368,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: reviewRequested.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequested,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -364,6 +380,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     user: reviewRequestRemoved.requestedReviewer?.asUser?.login ?? Constants.Strings.unknown,
                     date: date,
                     event: .reviewRequestRemoved,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -375,6 +392,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: milestone.milestoneTitle,
                     date: date,
                     type: .milestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -386,6 +404,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     milestone: demilestone.milestoneTitle,
                     date: date,
                     type: .demilestoned,
+                    contentSizeCategory: contentSizeCategory,
                     width: width
                 )
                 results.append(model)
@@ -416,6 +435,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
     private func commentModels(
         thread: Timeline.Node.AsPullRequestReviewThread,
+        contentSizeCategory: UIContentSizeCategory,
         width: CGFloat,
         owner: String,
         repo: String
@@ -434,6 +454,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 id: fragments.nodeFields.id,
                 commentFields: fragments.commentFields,
                 reactionFields: fragments.reactionFields,
+                contentSizeCategory: contentSizeCategory,
                 width: width,
                 owner: owner,
                 repo: repo,

@@ -21,7 +21,6 @@ final class BookmarkViewModel: ListDiffable {
         self.bookmark = bookmark
 
         let builder = StyledTextBuilder(styledText: StyledText(
-            text: "",
             style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
         ))
         switch bookmark.type {

@@ -31,9 +31,10 @@ SearchBarSectionControllerDelegate {
         self.type = type
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: "")
         )
+        
+        self.dataSource = self
 
         switch type {
         case .issues: title = NSLocalizedString("Issues", comment: "")

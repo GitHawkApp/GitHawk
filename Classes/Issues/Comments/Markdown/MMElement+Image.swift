@@ -10,13 +10,13 @@ import Foundation
 import MMMarkdown
 import IGListKit
 
-func CreateImageModel(element: MMElement) -> ListDiffable? {
-    guard let href = element.href, let url = URL(string: href) else { return nil }
+func CreateImageModel(href: String?, title: String? = nil) -> ListDiffable? {
+    guard let href = href, let url = URL(string: href) else { return nil }
     if url.pathExtension.lowercased() == "svg" {
         // hack to workaround the SDWebImage not supporting svg images
         // just render it in a webview
         return IssueCommentHtmlModel(html: "<img src=\(href) />")
     } else {
-        return IssueCommentImageModel(url: url)
+        return IssueCommentImageModel(url: url, title: title)
     }
 }

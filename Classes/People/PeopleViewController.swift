@@ -41,7 +41,9 @@ PeopleSectionControllerDelegate {
         self.owner = owner
         self.repo = repo
 
-        super.init(emptyErrorMessage: "Cannot load users.", dataSource: self)
+        super.init(emptyErrorMessage: "Cannot load users.")
+
+        self.dataSource = self
 
         switch type {
         case .assignee: title = NSLocalizedString("Assignees", comment: "")

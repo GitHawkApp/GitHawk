@@ -21,9 +21,9 @@ BaseListViewControllerDataSource {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
+        self.dataSource = self
         title = NSLocalizedString("Overview", comment: "")
     }
 
@@ -40,15 +40,20 @@ BaseListViewControllerDataSource {
 
     override func fetch(page: NSString?) {
         let repo = self.repo
-        let width = view.bounds.width
+        let options = GitHubMarkdownOptions(
+            owner: repo.owner,
+            repo: repo.name,
+            flavors: [.baseURL],
+            width: view.bounds.width,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+        )
 
         client.githubClient.client
             .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name)) { [weak self] result in
             switch result {
             case .success(let response):
                 DispatchQueue.global().async {
-                    let options = GitHubMarkdownOptions(owner: repo.owner, repo: repo.name, flavors: [.baseURL])
-                    let models = CreateCommentModels(markdown: response.data.content, width: width, options: options)
+                    let models = CreateCommentModels(markdown: response.data.content, options: options)
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model

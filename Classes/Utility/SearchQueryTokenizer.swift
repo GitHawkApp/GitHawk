@@ -25,7 +25,7 @@ func tokenizeSearchQuery(_ query: String) -> SearchQueryParseResults {
     let chunks = query.components(separatedBy: " ")
 
     var leftover: String = query
-    let tokens: [Token] = chunks.flatMap { chunk -> Token? in
+    let tokens: [Token] = chunks.compactMap { chunk -> Token? in
         let chunk = chunk.trimmingCharacters(in: .whitespacesAndNewlines)
         let valueChunks = chunk.components(separatedBy: ":")
         guard !valueChunks.isEmpty else { return nil }

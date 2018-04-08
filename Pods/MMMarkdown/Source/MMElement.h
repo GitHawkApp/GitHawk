@@ -57,6 +57,7 @@ typedef NS_ENUM(NSInteger, MMElementType)
     MMElementTypeUsername,
     MMElementTypeCheckbox,
     MMElementTypeShorthandIssues,
+    MMElementTypeShortenedLink,
 };
 
 typedef NS_ENUM(NSInteger, MMTableCellAlignment)

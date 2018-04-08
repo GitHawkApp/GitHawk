@@ -20,7 +20,7 @@ final class IssueTargetBranchModel: ListDiffable {
             .font: Styles.Text.secondaryCode.preferredFont,
         ]
         let titleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Text.secondaryBold.preferredFont
+            .font: Styles.Text.secondary.preferredFont
         ]
         
         let titleAttributedText = NSMutableAttributedString(string: "Target branch: ", attributes: titleAttributes)
