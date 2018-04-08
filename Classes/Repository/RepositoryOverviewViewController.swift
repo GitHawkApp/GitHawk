@@ -21,9 +21,9 @@ BaseListViewControllerDataSource {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
+        self.dataSource = self
         title = NSLocalizedString("Overview", comment: "")
     }
 

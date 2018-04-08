@@ -31,9 +31,10 @@ ListSingleSectionControllerDelegate {
         self.path = path
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load directory.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load directory.", comment: "")
         )
+
+        self.dataSource = self
 
         // set on init in case used by Tabman
         self.title = NSLocalizedString("Code", comment: "")

@@ -56,7 +56,7 @@ let GithubEmojis: EmojiStore = {
         let json = try? JSONSerialization.jsonObject(with: data, options: .init(rawValue: 0)),
         let dict = json as? [[String: Any]] else { return ([:], [:]) }
 
-    let emojis = dict.flatMap { GitHubEmoji(dict: $0) }
+    let emojis = dict.compactMap { GitHubEmoji(dict: $0) }
 
     var aliasMap = [String: GitHubEmoji]()
     var searchMap = [String: [GitHubEmoji]]()
