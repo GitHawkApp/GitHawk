@@ -8,24 +8,6 @@
 
 import Foundation
 
-func replaceGithubEmojiRegex(string: String) -> String {
-    let matches = GithubEmojiRegex.matches(in: string, options: [], range: string.nsrange)
-    var replacedString = string
-    for match in matches.reversed() {
-        guard let substr = string.substring(with: match.range),
-            let range = string.range(from: match.range),
-            let emoji = GithubEmojis.alias[substr]
-            else { continue }
-        replacedString = replacedString.replacingCharacters(in: range, with: emoji.emoji)
-    }
-    return replacedString
-}
-
-private let GithubEmojiRegex: NSRegularExpression = {
-    let pattern = "(" + GithubEmojis.alias.map({ $0.key }).joined(separator: "|") + ")"
-    return try! NSRegularExpression(pattern: pattern, options: [])
-}()
-
 struct GitHubEmoji {
     let emoji: String
     let name: String

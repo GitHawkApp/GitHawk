@@ -57,7 +57,7 @@ func commentModelOptions(
     return GitHubMarkdownOptions(
         owner: owner,
         repo: repo,
-        flavors: [.issueShorthand, .usernames],
+        flavors: [],
         width: width,
         contentSizeCategory: contentSizeCategory
     )
