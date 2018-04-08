@@ -8,26 +8,34 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueTargetBranchModel: ListDiffable {
     
-    let targetBranchText: NSAttributedStringSizing
+    let targetBranchText: StyledTextRenderer
 
     
     init(branch: String, width: CGFloat) {
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)
+        ))
+        .save()
+        .add(styledText: StyledText(
+            text: "Target branch: ")
+        )
+        .save()
+        .add(styledText: StyledText(
+            text: branch,
+            style: Styles.Text.secondaryCode.with(foreground: Styles.Colors.Gray.dark.color)
+        ))
+        .save()
         
-        let branchTitleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Text.secondaryCode.preferredFont,
-        ]
-        let titleAttributes: [NSAttributedStringKey: Any] = [
-            .font: Styles.Text.secondary.preferredFont
-        ]
-        
-        let titleAttributedText = NSMutableAttributedString(string: "Target branch: ", attributes: titleAttributes)
-        let branchAttributedTitle = NSAttributedString(string: branch, attributes: branchTitleAttributes)
-        
-        titleAttributedText.append(branchAttributedTitle)
-        self.targetBranchText = NSAttributedStringSizing(containerWidth: width, attributedText: titleAttributedText, inset: IssueTargetBranchCell.inset, backgroundColor: Styles.Colors.Gray.lighter.color)
+        self.targetBranchText = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: .small,
+            inset: .zero,
+            backgroundColor: Styles.Colors.background
+        ).warm(width: width)
     }
     
     // MARK: ListDiffable

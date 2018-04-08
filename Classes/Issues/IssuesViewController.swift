@@ -381,7 +381,6 @@ IssueManagingNavSectionControllerDelegate {
         }
         // END metadata collection
         
-        let titleTrailingMetadata = metadata.count > 0 && result?.pullRequest == false
         objects.append(IssueTitleModel(string: current.title, trailingMetadata: metadata.count > 0))
         
         if let targetBranch = current.targetBranch {
