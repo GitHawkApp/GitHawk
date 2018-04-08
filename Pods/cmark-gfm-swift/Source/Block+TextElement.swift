@@ -17,5 +17,5 @@ extension Block {
 }
 
 extension Sequence where Iterator.Element == Block {
-    var textElements: [[TextElement]] { return flatMap { $0.textElements } }
+    var textElements: [[TextElement]] { return compactMap { $0.textElements } }
 }

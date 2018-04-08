@@ -20,7 +20,7 @@ extension Block {
             return .text(text: [.code(text: text)])
         case .list(let items, let type):
             let deeper = level + 1
-            return .list(children: items.flatMap { $0.listElements(deeper) }, type: type, level: deeper)
+            return .list(children: items.compactMap { $0.listElements(deeper) }, type: type, level: deeper)
         default: return nil
         }
     }
@@ -28,6 +28,6 @@ extension Block {
 
 extension Sequence where Iterator.Element == Block {
     func listElements(_ level: Int) -> [ListElement] {
-        return flatMap { $0.listElement(level) }
+        return compactMap { $0.listElement(level) }
     }
 }

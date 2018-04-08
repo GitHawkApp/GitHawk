@@ -16,8 +16,8 @@ extension Block {
     }
     var tableRow: TableRow? {
         switch self {
-        case .tableRow(let items): return .row(cells: items.flatMap { $0.tableCell })
-        case .tableHeader(let items): return .header(cells: items.flatMap { $0.tableCell })
+        case .tableRow(let items): return .row(cells: items.compactMap { $0.tableCell })
+        case .tableHeader(let items): return .header(cells: items.compactMap { $0.tableCell })
         default: return nil
         }
     }
