@@ -123,6 +123,16 @@ extension GithubClient {
                     } else {
                         milestoneModel = nil
                     }
+                    
+                    let targetBranchModel: IssueTargetBranchModel?
+                    if let baseBranchRef = issueType.targetBranch {
+                        targetBranchModel = IssueTargetBranchModel(
+                            branch: baseBranchRef,
+                            width: width
+                        )
+                    } else {
+                        targetBranchModel = nil
+                    }
 
                     let canAdmin = repository.viewerCanAdminister
 
@@ -136,6 +146,7 @@ extension GithubClient {
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
+                        targetBranch: targetBranchModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository.hasIssuesEnabled,
@@ -496,5 +507,4 @@ extension GithubClient {
             }
         }
     }
-
 }

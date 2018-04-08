@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0F9440FD32236514CD7215E9 /* Pods_Freetime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF622FFD773FDA73297C0D0 /* Pods_Freetime.framework */; };
+		15245487205DC016005810A6 /* IssueTargetBranchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245484205DC016005810A6 /* IssueTargetBranchModel.swift */; };
+		15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245485205DC016005810A6 /* IssueBranchesSectionController.swift */; };
+		15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245486205DC016005810A6 /* IssueTargetBranchCell.swift */; };
 		1F9D00FA2051089C00DF5FF6 /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */; };
 		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
 		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
@@ -446,6 +449,9 @@
 
 /* Begin PBXFileReference section */
 		07C7DC5A7A907BE73BCA95AC /* Pods-FreetimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		15245484205DC016005810A6 /* IssueTargetBranchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchModel.swift; path = Classes/Issues/Branches/IssueTargetBranchModel.swift; sourceTree = SOURCE_ROOT; };
+		15245485205DC016005810A6 /* IssueBranchesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueBranchesSectionController.swift; path = Classes/Issues/Branches/IssueBranchesSectionController.swift; sourceTree = SOURCE_ROOT; };
+		15245486205DC016005810A6 /* IssueTargetBranchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchCell.swift; path = Classes/Issues/Branches/IssueTargetBranchCell.swift; sourceTree = SOURCE_ROOT; };
 		1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
 		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
 		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
@@ -905,6 +911,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15245483205DC004005810A6 /* Branches */ = {
+			isa = PBXGroup;
+			children = (
+				15245485205DC016005810A6 /* IssueBranchesSectionController.swift */,
+				15245486205DC016005810A6 /* IssueTargetBranchCell.swift */,
+				15245484205DC016005810A6 /* IssueTargetBranchModel.swift */,
+			);
+			name = Branches;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		290744B01F250A1D00FD9E48 /* Autocomplete */ = {
 			isa = PBXGroup;
 			children = (
@@ -1002,6 +1019,7 @@
 		292FCAC71EDFCC510026635E /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				15245483205DC004005810A6 /* Branches */,
 				290744A81F24D2DA00FD9E48 /* AddCommentClient.swift */,
 				297403CF1F184F8400ABA95A /* Assignees */,
 				292FCAC81EDFCC510026635E /* Comments */,
@@ -2357,6 +2375,7 @@
 				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,
+				15245487205DC016005810A6 /* IssueTargetBranchModel.swift in Sources */,
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				299F63E4205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift in Sources */,
 				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
@@ -2651,11 +2670,13 @@
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
+				15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
+				15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
 				65A3152B2044376D0074E3B6 /* Route.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,

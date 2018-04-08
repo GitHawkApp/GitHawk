@@ -76,7 +76,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     var headPaging: HeadPaging {
         return timeline.pageInfo.fragments.headPaging
     }
-
+    
+    var targetBranch: String? {
+        return baseRefName
+    }
+    
     var fileChanges: FileChanges? {
         return FileChanges(additions: additions, deletions: deletions, changedFiles: changedFiles)
     }
