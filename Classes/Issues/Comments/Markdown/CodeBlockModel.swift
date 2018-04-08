@@ -11,7 +11,9 @@ import Foundation
 func CodeBlockElement(text: String, language: String?) -> IssueCommentCodeBlockModel {
     let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
     let attributedString: NSAttributedString
-    if let language = language, !language.isEmpty,
+
+    let fixedLanguage = language?.isEmpty == true ? nil : language
+    if let language = fixedLanguage,
         let highlighted = GithubHighlighting.highlight(trimmedText, as: language) {
         attributedString = highlighted
     } else {
@@ -40,6 +42,6 @@ func CodeBlockElement(text: String, language: String?) -> IssueCommentCodeBlockM
     )
     return IssueCommentCodeBlockModel(
         code: stringSizing,
-        language: language
+        language: fixedLanguage
     )
 }
