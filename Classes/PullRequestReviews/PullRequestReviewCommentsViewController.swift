@@ -13,7 +13,7 @@ import MessageViewController
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
-PullRequestReviewReplySectionControllerDelegate {
+    PullRequestReviewReplySectionControllerDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -78,6 +78,11 @@ PullRequestReviewReplySectionControllerDelegate {
 
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
         messageView.add(contentView: actions)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        feed.viewDidAppear(animated)
     }
 
     override func viewWillLayoutSubviews() {
