@@ -99,7 +99,7 @@ extension Inline {
         guard let type = InlineType(rawValue: node.typeString) else {
             return nil
         }
-        let inlineChildren = { node.children.flatMap(Inline.init) }
+        let inlineChildren = { node.children.compactMap(Inline.init) }
         switch type {
         case .text:
             self = .text(text: node.literal!)
@@ -136,8 +136,8 @@ extension Block {
         guard let type = BlockType(rawValue: node.typeString) else {
             return nil
         }
-        let parseInlineChildren = { node.children.flatMap(Inline.init) }
-        let parseBlockChildren = { node.children.flatMap(Block.init) }
+        let parseInlineChildren = { node.children.compactMap(Inline.init) }
+        let parseBlockChildren = { node.children.compactMap(Block.init) }
         switch type {
         case .paragraph:
             self = .paragraph(text: parseInlineChildren())
@@ -145,7 +145,7 @@ extension Block {
             self = .blockQuote(items: parseBlockChildren())
         case .list:
             let type: ListType = node.listType == CMARK_BULLET_LIST ? .unordered : .ordered
-            self = .list(items: node.children.flatMap { $0.listItem }, type: type)
+            self = .list(items: node.children.compactMap { $0.listItem }, type: type)
         case .code_block:
             self = .codeBlock(text: node.literal!, language: node.fenceInfo)
         case .html_block:
@@ -172,7 +172,7 @@ extension Node {
     var listItem: [Block]? {
         switch type {
         case CMARK_NODE_ITEM:
-            return children.flatMap(Block.init)
+            return children.compactMap(Block.init)
         default:
             return nil
         }
@@ -212,12 +212,12 @@ extension Node {
     /// The abstract syntax tree representation of a Markdown document.
     /// - returns: an array of block-level elements.
     public var elements: [Block] {
-        return children.flatMap(Block.init)
+        return children.compactMap(Block.init)
     }
 }
 
 func tableOfContents(document: String) -> [Block] {
-    let blocks = Node(markdown: document)?.children.flatMap(Block.init) ?? []
+    let blocks = Node(markdown: document)?.children.compactMap(Block.init) ?? []
     return blocks.filter {
         switch $0 {
         case .heading(_, let level) where level < 3: return true

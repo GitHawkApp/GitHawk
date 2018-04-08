@@ -259,7 +259,6 @@ private extension Element {
         case .image(let title, let url):
             return CreateImageModel(href: url, title: title)
         case .html(let text):
-            // TODO strip html comments
             let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !trimmed.isEmpty else { return nil }
             let baseURL: URL?
