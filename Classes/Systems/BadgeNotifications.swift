@@ -67,17 +67,19 @@ final class BadgeNotifications {
         }
     }
 
-    static func fetch(application: UIApplication = UIApplication.shared, handler: @escaping (UIBackgroundFetchResult) -> Void) {
+    private var backgroundClient: GithubClient? = nil
+    func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
         let manager = GitHubSessionManager()
         guard let session = manager.focusedUserSession,
-            isEnabled
+            BadgeNotifications.isEnabled
             else { return }
 
-        let client = newGithubClient(userSession: session)
-        client.client.send(V3NotificationRequest(all: false)) { result in
+        backgroundClient = newGithubClient(userSession: session)
+        backgroundClient?.client.send(V3NotificationRequest(all: false)) { result in
             switch result {
             case .success(let response):
-                handler(update(application: application, count: response.data.count) ? .newData : .noData)
+                let changes = BadgeNotifications.update(application: application, count: response.data.count)
+                handler(changes ? .newData : .noData)
             case .failure:
                 handler(.failed)
             }

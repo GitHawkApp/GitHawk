@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showingLogin = false
     private let flexController = FlexController()
     private let sessionManager = GitHubSessionManager()
+    private var badgeNotifications: BadgeNotifications? = nil
 
     private lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
@@ -96,7 +97,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        BadgeNotifications.fetch(application: application, handler: completionHandler)
+        badgeNotifications = BadgeNotifications()
+        badgeNotifications?.fetch(application: application, handler: completionHandler)
     }
 
 }
