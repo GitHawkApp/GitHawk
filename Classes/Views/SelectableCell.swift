@@ -20,7 +20,7 @@ extension UIView {
     }
 
     func prepareOverlayForReuse() {
-        layer.zPosition = 10000
+        layer.zPosition = 10_000
     }
 
     func layoutOverlay() {

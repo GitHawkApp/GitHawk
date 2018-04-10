@@ -106,8 +106,8 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         backgroundHighlightView.alpha = expanded ? 1 : 0
         // nudging the angles let's us control the animation direction
         chevron.transform = expanded
-            ? CGAffineTransform(rotationAngle: CGFloat.pi + 0.00001)
-            : CGAffineTransform(rotationAngle: -0.00001)
+            ? CGAffineTransform(rotationAngle: CGFloat.pi + 0.00_001)
+            : CGAffineTransform(rotationAngle: -0.00_001)
     }
 
     // MARK: ListBindable
