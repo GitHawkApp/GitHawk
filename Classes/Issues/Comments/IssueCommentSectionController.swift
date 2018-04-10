@@ -26,6 +26,7 @@ final class IssueCommentSectionController:
     IssueCommentReactionCellDelegate,
     AttributedStringViewDelegate,
     EditCommentViewControllerDelegate,
+    MarkdownStyledTextViewDelegate,
     IssueCommentDoubleTapDelegate {
 
     private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
