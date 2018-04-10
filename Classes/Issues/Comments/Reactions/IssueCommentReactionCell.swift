@@ -69,13 +69,13 @@ UICollectionViewDelegateFlowLayout {
         nc.addObserver(
             self,
             selector: #selector(onMenuControllerWillShow(notification:)),
-            name: NSNotification.Name.UIMenuControllerWillShowMenu,
+            name: .UIMenuControllerWillShowMenu,
             object: nil
         )
         nc.addObserver(
             self,
             selector: #selector(onMenuControllerDidHide(notification:)),
-            name: NSNotification.Name.UIMenuControllerDidHideMenu,
+            name: .UIMenuControllerDidHideMenu,
             object: nil
         )
     }

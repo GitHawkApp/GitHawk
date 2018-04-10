@@ -95,7 +95,6 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
             delay: 0,
             usingSpringWithDamping: 0.6,
             initialSpringVelocity: 0,
-            options: [],
             animations: {
                 self.expand(expanded: expanded)
         })

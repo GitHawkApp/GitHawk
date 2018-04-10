@@ -25,14 +25,14 @@ final class ForegroundHandler {
         let center = NotificationCenter.default
         center.addObserver(
             self,
-            selector: #selector(ForegroundHandler.didBecomeActive),
-            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            selector: #selector(didBecomeActive),
+            name: .UIApplicationDidBecomeActive,
             object: nil
         )
         center.addObserver(
             self,
-            selector: #selector(ForegroundHandler.willResignActive),
-            name: NSNotification.Name.UIApplicationWillResignActive,
+            selector: #selector(willResignActive),
+            name: .UIApplicationWillResignActive,
             object: nil
         )
     }

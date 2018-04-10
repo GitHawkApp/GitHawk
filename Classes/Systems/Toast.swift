@@ -30,7 +30,7 @@ private final class ToastView: UIView {
 
     private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let label = UILabel()
-    private let button = UIButton(type: UIButtonType.infoLight)
+    private let button = UIButton(type: .infoLight)
     private let hintView = UIView()
 
     // MARK: Public API
@@ -110,7 +110,6 @@ private final class ToastView: UIView {
             let labelWidth = configuration.maxWidth - configuration.buttonLeftMargin - configuration.insets.left - configuration.insets.right
             addConstraints(NSLayoutConstraint.constraints(
                 withVisualFormat: "H:|-\(configuration.insets.left)-[label(<=\(labelWidth))]-\(configuration.buttonLeftMargin)-[button]-\(configuration.insets.right)-|",
-                options: [],
                 metrics: nil,
                 views: subviews
             ))
@@ -118,7 +117,6 @@ private final class ToastView: UIView {
             let labelWidth = configuration.maxWidth - configuration.insets.left - configuration.insets.right
             addConstraints(NSLayoutConstraint.constraints(
                 withVisualFormat: "H:|-\(configuration.insets.left)-[label(<=\(labelWidth))]-\(configuration.insets.right)-|",
-                options: [],
                 metrics: nil,
                 views: subviews
             ))
@@ -126,19 +124,16 @@ private final class ToastView: UIView {
 
         addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|-\(configuration.insets.top)-[label]-\(configuration.hintTopMargin)-[hintView(\(configuration.hintSize.height))]-\(configuration.insets.bottom)-|",
-            options: [],
             metrics: nil,
             views: subviews
         ))
         addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[contentView]|",
-            options: [],
             metrics: nil,
             views: subviews
         ))
         addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[contentView]|",
-            options: [],
             metrics: nil,
             views: subviews
         ))
@@ -278,7 +273,7 @@ final class ToastManager {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(ToastManager.onOrientation(notification:)),
-            name: NSNotification.Name.UIDeviceOrientationDidChange,
+            name: .UIDeviceOrientationDidChange,
             object: nil
         )
     }
