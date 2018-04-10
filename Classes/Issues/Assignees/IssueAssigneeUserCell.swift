@@ -11,7 +11,7 @@ import IGListKit
 import SnapKit
 import SDWebImage
 
-final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
+final class IssueAssigneeUserCell: UICollectionViewCell {
 
     private let imageView = UIImageView()
     private let label = UILabel()
@@ -52,11 +52,16 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         layoutContentViewForSafeAreaInsets()
     }
 
-    // MARK: ListBindable
+}
+
+ // MARK: ListBindable
+
+extension IssueAssigneeUserCell: ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueAssigneeViewModel else { return }
         imageView.sd_setImage(with: viewModel.avatarURL)
         label.text = viewModel.login
     }
+
 }

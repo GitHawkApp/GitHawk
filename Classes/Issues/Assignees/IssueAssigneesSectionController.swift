@@ -9,9 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueAssigneesSectionController: ListBindingSectionController<IssueAssigneesModel>,
-ListBindingSectionControllerDataSource,
-ListBindingSectionControllerSelectionDelegate {
+final class IssueAssigneesSectionController: ListBindingSectionController<IssueAssigneesModel> {
 
     var expanded = false
 
@@ -23,9 +21,11 @@ ListBindingSectionControllerSelectionDelegate {
         minimumLineSpacing = spacing
         inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
+}
 
-    // MARK: ListBindingSectionControllerDataSource
+// MARK: ListBindingSectionControllerDataSource
 
+extension IssueAssigneesSectionController: ListBindingSectionControllerDataSource {
     func sectionController(
         _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
@@ -86,9 +86,11 @@ ListBindingSectionControllerSelectionDelegate {
             else { fatalError("Cell not bindable") }
         return cell
     }
+}
 
-    // MARK: ListBindingSectionControllerSelectionDelegate
+// MARK: ListBindingSectionControllerSelectionDelegate
 
+extension IssueAssigneesSectionController: ListBindingSectionControllerSelectionDelegate {
     func sectionController(
         _ sectionController: ListBindingSectionController<ListDiffable>,
         didSelectItemAt index: Int,
@@ -101,5 +103,4 @@ ListBindingSectionControllerSelectionDelegate {
             viewController?.presentProfile(login: viewModel.login)
         }
     }
-
 }
