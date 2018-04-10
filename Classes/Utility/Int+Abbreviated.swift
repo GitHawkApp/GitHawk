@@ -12,12 +12,12 @@ extension Int {
 
     var abbreviated: String {
         // less than 1000, no abbreviation
-        if self < 1000 {
+        if self < 1_000 {
             return "\(self)"
         }
 
         // less than 1 million, abbreviate to thousands
-        if self < 1000000 {
+        if self < 1_000_000 {
             var n = Double(self);
             n = Double( floor(n/100)/10 )
             return "\(n.description)k"
@@ -25,7 +25,7 @@ extension Int {
 
         // more than 1 million, abbreviate to millions
         var n = Double(self)
-        n = Double( floor(n/100000)/10 )
+        n = Double( floor(n/100_000)/10 )
         return "\(n.description)m"
     }
 
