@@ -380,8 +380,13 @@ IssueManagingNavSectionControllerDelegate {
             metadata.append(IssueFileChangesModel(changes: changes))
         }
         // END metadata collection
-
+        
         objects.append(IssueTitleModel(string: current.title, trailingMetadata: metadata.count > 0))
+        
+        if let targetBranch = current.targetBranch {
+            objects.append(targetBranch)
+        }
+
         objects += metadata
 
         if let rootComment = current.rootComment {
@@ -421,6 +426,7 @@ IssueManagingNavSectionControllerDelegate {
 
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
+        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: model,
             client: client,

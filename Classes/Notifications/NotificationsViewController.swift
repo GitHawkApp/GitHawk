@@ -38,10 +38,9 @@ FlatCacheListener {
         self.inboxType = inboxType
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: "")
         )
-
+        self.dataSource = self
         self.foreground.delegate = self
 
         switch inboxType {

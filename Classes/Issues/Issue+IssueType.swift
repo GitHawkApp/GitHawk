@@ -34,6 +34,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
     var merged: Bool {
         return false
     }
+    
+    var targetBranch: String? {
+        return nil
+    }
 
     var assigneeFields: AssigneeFields {
         return fragments.assigneeFields
@@ -66,7 +70,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         width: CGFloat
         ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
-        let cleanNodes = nodes.flatMap { $0 }
+        let cleanNodes = nodes.compactMap { $0 }
 
         var results = [ListDiffable]()
         var mentionedUsers = [AutocompleteUser]()

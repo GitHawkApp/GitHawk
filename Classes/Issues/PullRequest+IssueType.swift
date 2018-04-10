@@ -76,7 +76,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     var headPaging: HeadPaging {
         return timeline.pageInfo.fragments.headPaging
     }
-
+    
+    var targetBranch: String? {
+        return baseRefName
+    }
+    
     var fileChanges: FileChanges? {
         return FileChanges(additions: additions, deletions: deletions, changedFiles: changedFiles)
     }
@@ -90,7 +94,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         width: CGFloat
         ) -> (models: [ListDiffable], mentionedUsers: [AutocompleteUser]) {
         guard let nodes = timeline.nodes else { return ([], []) }
-        let cleanNodes = nodes.flatMap { $0 }
+        let cleanNodes = nodes.compactMap { $0 }
 
         var results = [ListDiffable]()
         var mentionedUsers = [AutocompleteUser]()
@@ -226,7 +230,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let options = GitHubMarkdownOptions(
                     owner: owner,
                     repo: repo,
-                    flavors: [.issueShorthand, .usernames],
+                    flavors: [],
                     width: width,
                     contentSizeCategory: contentSizeCategory
                 )

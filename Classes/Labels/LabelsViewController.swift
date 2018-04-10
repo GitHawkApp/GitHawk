@@ -47,7 +47,7 @@ final class LabelsViewController: UITableViewController {
             self?.feedRefresh.endRefreshing()
             switch result {
             case .success(let nodes):
-                self?.update(labels: nodes.flatMap {
+                self?.update(labels: nodes.compactMap {
                     guard let node = $0 else { return nil }
                     return RepositoryLabel(color: node.color, name: node.name)
                 })

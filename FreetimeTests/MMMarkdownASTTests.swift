@@ -40,7 +40,7 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! StyledTextRenderer
-        XCTAssertEqual(text.string.allText, "\nfoo")
+        XCTAssertEqual(text.string.allText, "foo")
     }
 
     func test_paragraphWithBold() {
@@ -49,7 +49,7 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! StyledTextRenderer
-        XCTAssertEqual(text.string.allText, "\nfoo bar")
+        XCTAssertEqual(text.string.allText, "foo bar")
     }
 
     func test_paragraphWithItalics() {
@@ -58,7 +58,7 @@ final class MMMarkdownASTTests: XCTestCase {
         XCTAssertEqual(result.count, 1)
 
         let text = result.first as! StyledTextRenderer
-        XCTAssertEqual(text.string.allText, "\nfoo bar")
+        XCTAssertEqual(text.string.allText, "foo bar")
     }
 
     func test_listWithNewlinesBetween() {
@@ -66,12 +66,12 @@ final class MMMarkdownASTTests: XCTestCase {
         let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
         let result = CreateCommentModels(markdown: markdown, options: options)
         let text = result.first as! StyledTextRenderer
-        XCTAssertEqual(text.string.allText, "\n1. line 1\n2. line 2")
+        XCTAssertEqual(text.string.allText, "1. line 1\n2. line 2")
     }
 
     func test_usernames() {
         let markdown = "@user not @user\n@user user@gmail.com and @user"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.usernames], width: 0, contentSizeCategory: .large)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
         let result = CreateCommentModels(markdown: markdown, options: options)
         XCTAssertEqual(result.count, 1)
         let text = (result.first as! StyledTextRenderer).string.render(contentSizeCategory: .large)
@@ -87,7 +87,7 @@ final class MMMarkdownASTTests: XCTestCase {
 
     func test_shortlinks() {
         let markdown = "#123 test #123 #abc abc#123 and foo/bar#456 end"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand], width: 0, contentSizeCategory: .large)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
         let result = CreateCommentModels(markdown: markdown, options: options)
         XCTAssertEqual(result.count, 1)
         let text = (result.first as! StyledTextRenderer).string.render(contentSizeCategory: .large)
@@ -113,13 +113,13 @@ final class MMMarkdownASTTests: XCTestCase {
     }
 
     func test_shortenLinks() {
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [.issueShorthand], width: 0, contentSizeCategory: .large)
+        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
 
         // Test Same Repository
         let testOne = "https://github.com/owner/repo/issues/123"
         let resultOne = CreateCommentModels(markdown: testOne, options: options)
         let textOne = resultOne.first as! StyledTextRenderer
-        XCTAssertEqual(textOne.string.allText, "\n#123")
+        XCTAssertEqual(textOne.string.allText, "#123")
         let attrOne = textOne.string.render(contentSizeCategory: .large)
         XCTAssertNotNil(attrOne.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])
 
@@ -132,7 +132,7 @@ final class MMMarkdownASTTests: XCTestCase {
         let testTwo = "https://github.com/differentOwner/differentRepo/issues/321"
         let resultTwo = CreateCommentModels(markdown: testTwo, options: options)
         let textTwo = resultTwo.first as! StyledTextRenderer
-        XCTAssertEqual(textTwo.string.allText, "\ndifferentOwner/differentRepo#321")
+        XCTAssertEqual(textTwo.string.allText, "differentOwner/differentRepo#321")
 
         let attrTwo = textTwo.string.render(contentSizeCategory: .large)
         XCTAssertNotNil(attrTwo.attributes(at: 1, effectiveRange: nil)[MarkdownAttribute.issue])

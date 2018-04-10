@@ -41,7 +41,7 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
         let options = GitHubMarkdownOptions(
             owner: owner,
             repo: repo,
-            flavors: [.issueShorthand, .usernames],
+            flavors: [],
             width: view.bounds.width,
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         )
