@@ -11,15 +11,24 @@ import IGListKit
 import TUSafariActivity
 import GitHubAPI
 
-final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
+protocol IssueCommentSectionControllerDelegate: class {
+    func didSelectReply(
+        to sectionController: IssueCommentSectionController,
+        commentModel: IssueCommentModel
+    )
+}
+
+final class IssueCommentSectionController:
+    ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate,
-AttributedStringViewDelegate,
-EditCommentViewControllerDelegate,
-IssueCommentDoubleTapDelegate,
-MarkdownStyledTextViewDelegate {
+    IssueCommentReactionCellDelegate,
+    AttributedStringViewDelegate,
+    EditCommentViewControllerDelegate,
+    IssueCommentDoubleTapDelegate {
+
+    private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -53,13 +62,18 @@ MarkdownStyledTextViewDelegate {
     private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
-    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
+    init(model: IssueDetailsModel,
+         client: GithubClient,
+         autocomplete: IssueCommentAutocomplete,
+         issueCommentDelegate: IssueCommentSectionControllerDelegate? = nil
+        ) {
         self.model = model
         self.client = client
         self.autocomplete = autocomplete
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
+        self.issueCommentDelegate = issueCommentDelegate
     }
 
     override func didUpdate(to object: Any) {
@@ -121,6 +135,23 @@ MarkdownStyledTextViewDelegate {
             nav.modalPresentationStyle = .formSheet
             self?.viewController?.present(nav, animated: trueUnlessReduceMotionEnabled)
         })
+    }
+
+    func replyAction() -> UIAlertAction? {
+        return UIAlertAction(
+            title: NSLocalizedString("Reply", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                guard let strongSelf = self,
+                let commentModel = strongSelf.object
+                else { return }
+
+                strongSelf.issueCommentDelegate?.didSelectReply(
+                    to: strongSelf,
+                    commentModel: commentModel
+                )
+            }
+        )
     }
 
     private func clearCollapseCells() {
@@ -419,6 +450,7 @@ MarkdownStyledTextViewDelegate {
         alert.addActions([
             shareAction(sender: sender),
             editAction(),
+            replyAction(),
             deleteAction(),
             AlertAction.cancel()
         ])
