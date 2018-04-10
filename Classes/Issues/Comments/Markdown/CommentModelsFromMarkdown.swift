@@ -58,10 +58,6 @@ func CreateCommentModels(
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool = false
     ) -> [ListDiffable] {
-
-    // TODO remove after testing
-    return MarkdownModels(markdown, owner: options.owner, repo: options.repo, width: options.width, viewerCanUpdate: viewerCanUpdate, contentSizeCategory: options.contentSizeCategory)
-
     let emojiMarkdown = markdown.replacingGithubEmojiRegex
     let replaceHTMLentities = emojiMarkdown.removingHTMLEntities
 
