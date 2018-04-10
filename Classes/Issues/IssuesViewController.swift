@@ -14,16 +14,14 @@ import SnapKit
 import FlatCache
 import MessageViewController
 
-final class IssuesViewController:
-    MessageViewController,
+final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    IssueManagingNavSectionControllerDelegate,
-    IssueCommentSectionControllerDelegate {
+IssueManagingNavSectionControllerDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -428,12 +426,11 @@ final class IssuesViewController:
 
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueCommentModel:
-            return IssueCommentSectionController(
-                model: model,
-                client: client,
-                autocomplete: autocompleteController.autocomplete.copy,
-                issueCommentDelegate: self
+        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
+        case is IssueCommentModel: return IssueCommentSectionController(
+            model: model,
+            client: client,
+            autocomplete: autocompleteController.autocomplete.copy
             )
         case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
         case is IssueStatusModel: return IssueStatusSectionController()
@@ -547,25 +544,6 @@ final class IssuesViewController:
 
     func didSelect(managingNavController: IssueManagingNavSectionController) {
         feed.collectionView.scrollToBottom(animated: true)
-    }
-
-    // MARK: IssueCommentSectionControllerDelegate
-
-    func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
-        setMessageView(hidden: false, animated: true)
-        messageView.textView.becomeFirstResponder()
-        let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
-
-        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
-    }
-
-    private func getCommentUntilNewLine(from string: String) -> String {
-        let substring = string.components(separatedBy: .newlines)[0]
-        if string == substring {
-            return string
-        }
-        return substring + " ..."
     }
 
 }
