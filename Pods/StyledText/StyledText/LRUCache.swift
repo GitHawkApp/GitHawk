@@ -70,8 +70,8 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         if clearOnWarning {
             NotificationCenter.default.addObserver(
                 self,
-                selector: #selector(LRUCache.clear),
-                name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+                selector: #selector(clear),
+                name: .UIApplicationDidReceiveMemoryWarning,
                 object: nil
             )
         }

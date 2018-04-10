@@ -5,6 +5,7 @@ PODS:
   - Apollo (0.8.0):
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
+  - cmark-gfm-swift (0.1.0)
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
@@ -82,6 +83,7 @@ PODS:
 
 DEPENDENCIES:
   - AlamofireNetworkActivityIndicator (~> 2.1)
+  - cmark-gfm-swift (from `https://github.com/GitHawkApp/cmark-gfm-swift.git`, branch `master`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - Fabric
@@ -107,6 +109,9 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  cmark-gfm-swift:
+    :branch: master
+    :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :branch: master
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -136,6 +141,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  cmark-gfm-swift:
+    :commit: 307b5303a716ee3642f301891943f036537df1b1
+    :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -152,16 +160,17 @@ CHECKOUT OPTIONS:
     :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
     :git: https://github.com/GitHawkApp/MessageViewController.git
   MMMarkdown:
-    :commit: 97d03799f2b2745c903b6063d65adeec8f4f710d
+    :commit: c919c3ba5e2590620b736da3202e9e38f099ef3b
     :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
-    :commit: dbd498a2f452622b72820f20153f74b786acb19d
+    :commit: c9c58444decbbe2fac29b8af5741c8ea3a48887e
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
+  cmark-gfm-swift: 8f7ffcd7d4ef6c0eeae5515c724fcde620e1028e
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
@@ -195,6 +204,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: e8bee44b67fc0aec656e210349d9dba94c80aeca
+PODFILE CHECKSUM: 060fbdc6fe808267bede94df2e880b3a50a2b98b
 
 COCOAPODS: 1.4.0

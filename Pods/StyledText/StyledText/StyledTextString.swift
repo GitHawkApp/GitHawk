@@ -10,10 +10,18 @@ import Foundation
 
 public final class StyledTextString: Hashable, Equatable {
 
-    public let styledTexts: [StyledText]
+    public enum RenderMode {
+        case trimWhitespaceAndNewlines
+        case trimWhitespace
+        case preserve
+    }
 
-    init(styledTexts: [StyledText]) {
+    public let styledTexts: [StyledText]
+    public let renderMode: RenderMode
+
+    public init(styledTexts: [StyledText], renderMode: RenderMode = .trimWhitespaceAndNewlines) {
         self.styledTexts = styledTexts
+        self.renderMode = renderMode
         _hashValue = styledTexts.reduce(0) {
             $0 == 0 ? $1.hashValue : $0 ^ $1.hashValue
         }
@@ -26,7 +34,11 @@ public final class StyledTextString: Hashable, Equatable {
     public func render(contentSizeCategory: UIContentSizeCategory) -> NSAttributedString {
         let result = NSMutableAttributedString()
         styledTexts.forEach { result.append($0.render(contentSizeCategory: contentSizeCategory)) }
-        return result
+        switch renderMode {
+        case .trimWhitespaceAndNewlines: return result.trimCharactersInSet(charSet: CharacterSet.whitespacesAndNewlines)
+        case .trimWhitespace: return result.trimCharactersInSet(charSet: CharacterSet.whitespaces)
+        case .preserve: return result
+        }
     }
 
     // MARK: Hashable

@@ -20,7 +20,7 @@ extension RepoIssuePagesQuery: RepositoryQuery {
 
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let issues = data as? Data else { return [] }
-        return issues.repository?.issues.nodes?.flatMap { $0 } ?? []
+        return issues.repository?.issues.nodes?.compactMap { $0 } ?? []
     }
 
     func nextPageToken(from data: GraphQLSelectionSet) -> String? {
@@ -35,7 +35,7 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return [] }
-        return prs.repository?.pullRequests.nodes?.flatMap { $0 } ?? []
+        return prs.repository?.pullRequests.nodes?.compactMap { $0 } ?? []
     }
 
     func nextPageToken(from data: GraphQLSelectionSet) -> String? {
@@ -57,9 +57,15 @@ func createSummaryModel(
         text: node.title,
         style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
     )).build()
+    let string = StyledTextRenderer(
+        string: title,
+        contentSizeCategory: contentSizeCategory,
+        inset: RepositorySummaryCell.titleInset
+    ).warm(width: containerWidth)
+
     return RepositoryIssueSummaryModel(
         id: node.id,
-        title: StyledTextRenderer(string: title, contentSizeCategory: contentSizeCategory, inset: RepositorySummaryCell.titleInset),
+        title: string,
         number: node.number,
         created: date,
         author: node.repoEventFields.author?.login ?? Constants.Strings.unknown,

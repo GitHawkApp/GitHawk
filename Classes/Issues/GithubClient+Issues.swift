@@ -74,6 +74,7 @@ extension GithubClient {
                         id: issueType.id,
                         commentFields: issueType.commentFields,
                         reactionFields: issueType.reactionFields,
+                        contentSizeCategory: contentSizeCategory,
                         width: width,
                         owner: owner,
                         repo: repo,
@@ -122,6 +123,16 @@ extension GithubClient {
                     } else {
                         milestoneModel = nil
                     }
+                    
+                    let targetBranchModel: IssueTargetBranchModel?
+                    if let baseBranchRef = issueType.targetBranch {
+                        targetBranchModel = IssueTargetBranchModel(
+                            branch: baseBranchRef,
+                            width: width
+                        )
+                    } else {
+                        targetBranchModel = nil
+                    }
 
                     let canAdmin = repository.viewerCanAdminister
 
@@ -129,12 +140,13 @@ extension GithubClient {
                         id: issueType.id,
                         pullRequest: issueType.pullRequest,
                         status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
-                        title: titleStringSizing(title: issueType.title, width: width),
+                        title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory, width: width),
                         labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
                         milestone: milestoneModel,
+                        targetBranch: targetBranchModel,
                         timelinePages: [newPage] + (prependResult?.timelinePages ?? []),
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         hasIssuesEnabled: repository.hasIssuesEnabled,
@@ -406,6 +418,7 @@ extension GithubClient {
         var newEvents = [IssueRequestModel]()
         var added = [String]()
         var removed = [String]()
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         for old in oldAssigness {
             if !newAssignees.contains(old) {
@@ -416,6 +429,7 @@ extension GithubClient {
                     user: old,
                     date: Date(),
                     event: removedType,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0 // will be inflated when asked
                 ))
             }
@@ -429,6 +443,7 @@ extension GithubClient {
                     user: new,
                     date: Date(),
                     event: addedType,
+                    contentSizeCategory: contentSizeCategory,
                     width: 0 // will be inflated when asked
                 ))
             }
@@ -492,5 +507,4 @@ extension GithubClient {
             }
         }
     }
-
 }

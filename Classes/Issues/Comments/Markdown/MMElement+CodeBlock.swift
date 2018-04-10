@@ -16,33 +16,5 @@ func CreateCodeBlock(element: MMElement, markdown: String) -> IssueCommentCodeBl
         guard $1.type == .none || $1.type == .entity else { return $0 }
         return $0 + substringOrNewline(text: markdown, range: $1.range)
         }.trimmingCharacters(in: .whitespacesAndNewlines)
-
-    var inset = IssueCommentCodeBlockCell.textViewInset
-    inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
-    inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
-
-    let attributedString: NSAttributedString
-    if let language = element.language,
-        let highlighted = GithubHighlighting.highlight(text, as: language) {
-        attributedString = highlighted
-    } else {
-        attributedString = NSAttributedString(
-            string: text,
-            attributes: [
-                .foregroundColor: Styles.Colors.Gray.dark.color,
-                .font: Styles.Text.code.preferredFont
-            ]
-        )
-    }
-
-    let stringSizing = NSAttributedStringSizing(
-        containerWidth: 0,
-        attributedText: attributedString,
-        inset: inset,
-        backgroundColor: Styles.Colors.Gray.lighter.color
-    )
-    return IssueCommentCodeBlockModel(
-        code: stringSizing,
-        language: element.language
-    )
+    return CodeBlockElement(text: text, language: element.language)
 }

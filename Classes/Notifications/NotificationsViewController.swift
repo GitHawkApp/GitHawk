@@ -38,15 +38,14 @@ FlatCacheListener {
         self.inboxType = inboxType
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: "")
         )
-
+        self.dataSource = self
         self.foreground.delegate = self
 
         switch inboxType {
         case .all:
-            title = NSLocalizedString("Archived", comment: "")
+            title = NSLocalizedString("All", comment: "")
         case .unread:
             title = NSLocalizedString("Inbox", comment: "")
         case .repo(let repo):
@@ -86,7 +85,7 @@ FlatCacheListener {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
 
         alert.add(action: UIAlertAction(
-            title: NSLocalizedString("View Archived", comment: ""),
+            title: NSLocalizedString("View All", comment: ""),
             style: .default,
             handler: { [weak self] _ in
                 self?.onViewAll()
@@ -114,7 +113,7 @@ FlatCacheListener {
     func pushRepoNotifications(owner: String, repo: String) {
         let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
         let controller = NotificationsViewController(client: client, inboxType: .repo(model))
-        navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func onViewAll() {

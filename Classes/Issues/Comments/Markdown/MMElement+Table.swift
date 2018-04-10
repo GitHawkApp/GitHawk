@@ -9,37 +9,27 @@
 import UIKit
 import MMMarkdown
 import HTMLString
-
-private typealias Row = IssueCommentTableModel.Row
-private class TableBucket {
-    var rows = [Row]()
-    var maxWidth: CGFloat = 0
-    var maxHeight: CGFloat = 0
-}
+import StyledText
 
 private func buildAttributedString(
     markdown: String,
     element: MMElement,
-    attributes: [NSAttributedStringKey: Any],
-    attributedString: NSMutableAttributedString
+    builder: StyledTextBuilder
     ) {
     switch element.type {
     case .none, .entity:
         if let substr = markdown.substring(with: element.range) {
-            attributedString.append(NSAttributedString(string: substr.removingHTMLEntities, attributes: attributes))
+            builder.add(text: substr.removingHTMLEntities)
         }
     default:
-        let childAttributes = PushAttributes(
-            element: element,
-            current: attributes,
-            listLevel: 0
-        )
+        builder.save()
+        defer { builder.restore() }
+        PushAttributes(element: element, builder: builder, listLevel: 0)
         for child in element.children {
             buildAttributedString(
                 markdown: markdown,
                 element: child,
-                attributes: childAttributes,
-                attributedString: attributedString
+                builder: builder
             )
         }
     }
@@ -48,88 +38,76 @@ private func buildAttributedString(
 private func rowModels(
     markdown: String,
     element: MMElement,
-    attributes: [NSAttributedStringKey: Any],
-    fill: Bool
-    ) -> [NSAttributedStringSizing] {
+    isHeader: Bool,
+    fill: Bool,
+    contentSizeCategory: UIContentSizeCategory
+    ) -> [StyledTextRenderer] {
 
-    var results = [NSAttributedStringSizing]()
+    var results = [StyledTextRenderer]()
+    let backgroundColor = fill ? Styles.Colors.Gray.lighter.color : .white
+    let style = isHeader ? Styles.Text.bodyBold : Styles.Text.body
 
     for child in element.children {
         guard child.type == .tableRowCell || child.type == .tableHeaderCell else { continue }
 
-        let attributedString = NSMutableAttributedString()
+        let builder = StyledTextBuilder(styledText: StyledText(
+            style: style.with(foreground: Styles.Colors.Gray.dark.color, background: backgroundColor)
+        ))
         buildAttributedString(
             markdown: markdown,
             element: child,
-            attributes: attributes,
-            attributedString: attributedString
+            builder: builder
         )
 
-        results.append(NSAttributedStringSizing(
-            containerWidth: 0,
-            attributedText: attributedString,
+        results.append(StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: IssueCommentTableCollectionCell.inset,
-            backgroundColor: fill ? Styles.Colors.Gray.lighter.color : .white
+            backgroundColor: backgroundColor
         ))
     }
 
     return results
 }
 
-func CreateTable(element: MMElement, markdown: String) -> IssueCommentTableModel {
+
+
+func CreateTable(
+    element: MMElement,
+    markdown: String,
+    contentSizeCategory: UIContentSizeCategory
+    ) -> IssueCommentTableModel {
     guard element.type == .table else { fatalError("Calling table on non table element") }
 
     var buckets = [TableBucket]()
 
     // track the tallest row while building each column
     var rowHeights = [CGFloat]()
-
-    var baseAttributes: [NSAttributedStringKey: Any] = [
-        .foregroundColor: Styles.Colors.Gray.dark.color,
-        .backgroundColor: UIColor.white
-        ]
-
     var rowCount = 0
 
     for row in element.children {
         switch row.type {
-        case .tableHeader:
-            baseAttributes[NSAttributedStringKey.font] = Styles.Text.bodyBold.preferredFont
         case .tableRow:
             rowCount += 1
-            baseAttributes[NSAttributedStringKey.font] = Styles.Text.body.preferredFont
         default: continue
         }
 
         let fill = rowCount > 0 && rowCount % 2 == 0
+        let models = rowModels(
+            markdown: markdown,
+            element: row,
+            isHeader: row.type == .tableHeader,
+            fill: fill,
+            contentSizeCategory: contentSizeCategory
+        )
 
-        baseAttributes[NSAttributedStringKey.backgroundColor] = fill ? Styles.Colors.Gray.lighter.color : .white
-
-        let models = rowModels(markdown: markdown, element: row, attributes: baseAttributes, fill: fill)
-
-        var maxHeight: CGFloat = 0
-
-        // prepopulate the buckets in case this is the first pass
-        while buckets.count < models.count {
-            buckets.append(TableBucket())
-        }
-
-        // move text models from a row collection and place into column
-        for (i, model) in models.enumerated() {
-            let bucket = buckets[i]
-            bucket.rows.append(Row(text: model, fill: fill))
-
-            // adjust the max width of each column using whatever is the largest so all cells are the same width
-            let size = model.textViewSize(0)
-            bucket.maxWidth = max(bucket.maxWidth, size.width)
-            maxHeight = max(maxHeight, size.height)
-        }
-
-        rowHeights.append(ceil(maxHeight))
+        fillBuckets(
+            rows: models,
+            buckets: &buckets,
+            rowHeights: &rowHeights,
+            fill: fill
+        )
     }
 
-    return IssueCommentTableModel(
-        columns: buckets.map { IssueCommentTableModel.Column(width: $0.maxWidth, rows: $0.rows) },
-        rowHeights: rowHeights
-    )
+    return IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights)
 }

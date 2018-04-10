@@ -21,7 +21,7 @@ UICollectionViewDelegateFlowLayout {
         right: Styles.Sizes.rowSpacing / 2
     )
 
-    weak var delegate: AttributedStringViewDelegate?
+    weak var delegate: MarkdownStyledTextViewDelegate?
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -85,8 +85,8 @@ UICollectionViewDelegateFlowLayout {
         let column = columns[indexPath.section]
         let rows = column.rows
         let row = rows[indexPath.item]
-        cell.configure(row.text)
-        cell.textView.delegate = delegate
+        cell.configure(row.string)
+        cell.textView.tapDelegate = delegate
         cell.contentView.backgroundColor = row.fill ? Styles.Colors.Gray.lighter.color : .white
         cell.setRightBorder(visible: columns.last === column)
         cell.setBottomBorder(visible: rows.last === row)

@@ -16,10 +16,11 @@ public struct V3NotificationSubject: Codable {
         case commit = "Commit"
         case repo = "Repository"
         case release = "Release"
+        case invitation = "RepositoryInvitation"
     }
 
     public let title: String
     public let type: SubjectType
-    public let url: URL
+    public let url: URL?
 
 }

@@ -104,6 +104,9 @@ body: MIT License
 
 Copyrig…
 
+name: cmark-gfm-swift, nameSpecified: 
+body: Copyright (c) 2018 R…
+
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
 
@@ -215,6 +218,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: cmark-gfm-swift, nameSpecified: 
+body: Copyright (c) 2018 R…
 
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
