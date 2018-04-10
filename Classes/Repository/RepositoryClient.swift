@@ -82,7 +82,7 @@ func createSummaryModel(
     containerWidth: CGFloat
     ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
-    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).flatMap { (node: RepositoryIssueSummaryType) in
+    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).compactMap { (node: RepositoryIssueSummaryType) in
         return createSummaryModel(node, contentSizeCategory: contentSizeCategory, containerWidth: containerWidth)
     }
     return (models, nextPage)

@@ -334,6 +334,6 @@ func MarkdownModels(
         viewerCanUpdate: viewerCanUpdate,
         contentSizeCategory: contentSizeCategory
     )
-    return node.flatElements.flatMap { $0.model(options) }
+    return node.flatElements.compactMap { $0.model(options) }
 }
 
