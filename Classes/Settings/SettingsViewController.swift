@@ -138,7 +138,7 @@ NewIssueTableViewControllerDelegate {
         guard let client = client,
             let viewController = NewIssueTableViewController.create(
                 client: client,
-                owner: "rnystrom",
+                owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
             ) else {
