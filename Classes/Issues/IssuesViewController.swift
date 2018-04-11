@@ -457,6 +457,7 @@ final class IssuesViewController:
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
         case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
         case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
+        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
         default: fatalError("Unhandled object: \(object)")
         }
     }
