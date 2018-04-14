@@ -48,6 +48,7 @@ struct cmark_parser {
   cmark_llist *syntax_extensions;
   cmark_llist *inline_syntax_extensions;
   cmark_ispunct_func backslash_ispunct;
+  bufsize_t line_offset;
 };
 
 #ifdef __cplusplus

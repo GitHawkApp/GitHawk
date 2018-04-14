@@ -126,6 +126,8 @@ static void cmark_parser_reset(cmark_parser *parser) {
   parser->syntax_extensions = saved_exts;
   parser->inline_syntax_extensions = saved_inline_exts;
   parser->options = saved_options;
+
+  parser->line_offset = 0;
 }
 
 cmark_parser *cmark_parser_new_with_mem(int options, cmark_mem *mem) {
@@ -378,6 +380,8 @@ static cmark_node *add_child(cmark_parser *parser, cmark_node *parent,
   cmark_node *child =
       make_block(parser->mem, block_type, parser->line_number, start_column);
   child->parent = parent;
+
+  child->origin_offset = parser->line_offset + parser->offset;
 
   if (parent->last_child) {
     parent->last_child->next = child;
@@ -673,6 +677,7 @@ static void S_parser_feed(cmark_parser *parser, const unsigned char *buffer,
   if (parser->last_buffer_ended_with_cr && *buffer == '\n') {
     // skip NL if last buffer ended with CR ; see #117
     buffer++;
+    parser->line_offset++;
   }
   parser->last_buffer_ended_with_cr = false;
   while (buffer < end) {
@@ -713,19 +718,24 @@ static void S_parser_feed(cmark_parser *parser, const unsigned char *buffer,
     }
 
     buffer += chunk_len;
+    parser->line_offset += chunk_len;
     if (buffer < end) {
       if (*buffer == '\0') {
         // skip over NULL
         buffer++;
+        parser->line_offset++;
       } else {
         // skip over line ending characters
         if (*buffer == '\r') {
           buffer++;
+          parser->line_offset++;
           if (buffer == end)
             parser->last_buffer_ended_with_cr = true;
         }
-        if (buffer < end && *buffer == '\n')
+        if (buffer < end && *buffer == '\n') {
           buffer++;
+          parser->line_offset++;
+        }
       }
     }
   }
@@ -1367,8 +1377,9 @@ static void S_process_line(cmark_parser *parser, const unsigned char *buffer,
   bytes = parser->curline.size;
 
   // ensure line ends with a newline:
-  if (bytes == 0 || !S_is_line_end_char(parser->curline.ptr[bytes - 1]))
+  if (bytes == 0 || !S_is_line_end_char(parser->curline.ptr[bytes - 1])) {
     cmark_strbuf_putc(&parser->curline, '\n');
+  }
 
   parser->offset = 0;
   parser->column = 0;
@@ -1411,6 +1422,7 @@ finished:
       input.data[parser->last_line_length - 1] == '\r')
     parser->last_line_length -= 1;
 
+//  parser->line_offset += input.len;
   cmark_strbuf_clear(&parser->curline);
 }
 
@@ -1423,6 +1435,7 @@ cmark_node *cmark_parser_finish(cmark_parser *parser) {
     return NULL;
 
   if (parser->linebuf.size) {
+    parser->line_offset -= parser->linebuf.size;
     S_process_line(parser, parser->linebuf.ptr, parser->linebuf.size);
     cmark_strbuf_clear(&parser->linebuf);
   }
