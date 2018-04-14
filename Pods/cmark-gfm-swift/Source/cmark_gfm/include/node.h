@@ -69,6 +69,7 @@ struct cmark_node {
   int end_line;
   int end_column;
   int internal_offset;
+  bufsize_t origin_offset;
   uint16_t type;
   uint16_t flags;
 

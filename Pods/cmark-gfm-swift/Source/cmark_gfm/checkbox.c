@@ -68,7 +68,7 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     checkbox_data *checkbox;
     node->as.opaque = checkbox = parser->mem->calloc(1, sizeof(checkbox_data));
     checkbox->checked = character != ' ';
-    checkbox->location = cmark_parser_get_offset(parser);
+    checkbox->location = parent->origin_offset - leftBracket;
     checkbox->length = len;
 
     cmark_inline_parser_set_offset(inline_parser, leftBracket + len);
