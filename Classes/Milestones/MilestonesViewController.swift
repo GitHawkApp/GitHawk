@@ -21,15 +21,11 @@ final class MilestonesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let emptyView = EmptyView()
-        emptyView.label.text = NSLocalizedString("No open milestones", comment: "")
-        emptyView.isHidden = true
-        tableView.backgroundView = emptyView
+        tableView.backgroundView = EmptyLoadingView()
 
         tableView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        feedRefresh.beginRefreshing()
         fetch()
 
         preferredContentSize = CGSize(width: 200, height: 240)
@@ -64,8 +60,15 @@ final class MilestonesViewController: UITableViewController {
             case .error:
                 ToastManager.showGenericError()
             }
-            self?.tableView.backgroundView?.isHidden = (self?.milestones.count ?? 0) > 0
             self?.feedRefresh.endRefreshing()
+
+            if self?.milestones.count == 0 {
+                let emptyView = EmptyView()
+                emptyView.label.text = NSLocalizedString("No labels found", comment: "")
+                self?.tableView.backgroundView = emptyView
+            } else {
+                self?.tableView.backgroundView?.removeFromSuperview()
+            }
         }
     }
 

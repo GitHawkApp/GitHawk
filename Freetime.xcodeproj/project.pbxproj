@@ -160,6 +160,7 @@
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
 		294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */; };
 		2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */; };
+		2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */; };
 		2957777B200129EB00DDD785 /* Int+Abbreviated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2957777A200129EB00DDD785 /* Int+Abbreviated.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
 		295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */; };
@@ -591,6 +592,7 @@
 		294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToTop.swift"; sourceTree = "<group>"; };
 		294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellHeightCache.swift; sourceTree = "<group>"; };
 		2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSplitViewController.swift; sourceTree = "<group>"; };
+		2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLoadingView.swift; sourceTree = "<group>"; };
 		2957777A200129EB00DDD785 /* Int+Abbreviated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Abbreviated.swift"; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
 		295840661EE89FE4007723C6 /* IssueStatusEventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventCell.swift; sourceTree = "<group>"; };
@@ -1508,6 +1510,7 @@
 				29A4768D1ED07A23005D0953 /* DateDetailsFormatter.swift */,
 				291929601F3FD2960012067B /* DiffString.swift */,
 				D8C2AEF41F9AA94600A95945 /* DotListView.swift */,
+				2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */,
 				29C167681ECA016500439D62 /* EmptyView.swift */,
 				291929541F3FAADF0012067B /* FeedRefresh.swift */,
 				29136BDA200A626D007317BE /* FixedRefreshControl.swift */,
@@ -1520,6 +1523,7 @@
 				D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */,
 				D8BAD0631FDF221900C41071 /* LabelListView.swift */,
 				299F63D3205DA24A0015D901 /* MarkdownAttributeHandling.swift */,
+				299F63E920603FB80015D901 /* MarkdownStyledTextView.swift */,
 				297A6CE52027880C0027E03B /* MessageView+Styles.swift */,
 				29136BE0200A7D3D007317BE /* NavigationTitleDropdownView.swift */,
 				2963A9331EE2118E0066509C /* ResponderButton.swift */,
@@ -1549,7 +1553,6 @@
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				299F63E1205DE1470015D901 /* UIView+DateDetails.swift */,
-				299F63E920603FB80015D901 /* MarkdownStyledTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2657,6 +2660,7 @@
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
 				65A3152B2044376D0074E3B6 /* Route.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
+				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,
 				29A08FC11F12F08100C5368E /* String+HashDisplay.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,
 				2931EA471EF7734B00AEE0FF /* String+NSRange.swift in Sources */,
