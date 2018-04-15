@@ -333,10 +333,7 @@ FlatCacheListener {
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
-        switch update {
-        case .item: self.update(animated: trueUnlessReduceMotionEnabled)
-        case .list: break
-        }
+        self.update(animated: trueUnlessReduceMotionEnabled)
     }
 
 }
