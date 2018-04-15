@@ -48,13 +48,23 @@ BaseListViewControllerDataSource {
             switch result {
             case .success(let response):
                 DispatchQueue.global().async {
+                    let branch: String
+                    if let items = URLComponents(url: response.data.url, resolvingAgainstBaseURL: false)?.queryItems,
+                        let index = items.index(where: { $0.name == "ref" }),
+                        let value = items[index].value {
+                        branch = value
+                    } else {
+                        branch = "master"
+                    }
+
                     let models = MarkdownModels(
                         response.data.content,
                         owner: repo.owner,
                         repo: repo.name,
                         width: width,
                         viewerCanUpdate: false,
-                        contentSizeCategory: contentSizeCategory
+                        contentSizeCategory: contentSizeCategory,
+                        branch: branch
                     )
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
