@@ -33,8 +33,14 @@ class IssueTests: XCTestCase {
             "![alt text](https://apple.com)",
             "then some more text"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -47,8 +53,14 @@ class IssueTests: XCTestCase {
             "this is the first line",
             "then some more text"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
         XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "\nthis is the first line\nthen some more text")
@@ -60,8 +72,14 @@ class IssueTests: XCTestCase {
             "then some more text",
             "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 2)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\nthen some more text\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -71,8 +89,14 @@ class IssueTests: XCTestCase {
         let body = [
             "![alt text](https://apple.com)"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 1)
         XCTAssertEqual((models[0] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
     }
@@ -85,8 +109,14 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line\n")
         XCTAssertEqual((models[1] as! IssueCommentImageModel).url.absoluteString, "https://apple.com")
@@ -103,8 +133,14 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
@@ -120,8 +156,14 @@ class IssueTests: XCTestCase {
             "```",
             "this is the end"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is some text")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
@@ -139,8 +181,14 @@ class IssueTests: XCTestCase {
             "![alt text](https://google.com)",
             "foo bar baz"
             ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is the first line")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "lang")
@@ -151,8 +199,14 @@ class IssueTests: XCTestCase {
 
     func test_whenCodePartOfParagraph() {
         let body = "text with ````` inline with ````` more"
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 1)
     }
 
@@ -165,8 +219,14 @@ class IssueTests: XCTestCase {
             "> quote three",
             "\nline three"
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 5)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "line one")
         XCTAssertTrue(models[1] is IssueCommentQuoteModel)
@@ -180,8 +240,14 @@ class IssueTests: XCTestCase {
             "- [ ] foo",
             "- [x] bar",
         ].joined(separator: "\r\n")
-        let options = GitHubMarkdownOptions(owner: "owner", repo: "repo", flavors: [], width: 0, contentSizeCategory: .large)
-        let models = CreateCommentModels(markdown: body, options: options)
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
         XCTAssertEqual(models.count, 1)
 
         let attrText = (models[0] as! StyledTextRenderer).string.render(contentSizeCategory: .large)
