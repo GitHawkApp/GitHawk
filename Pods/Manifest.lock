@@ -53,7 +53,6 @@ PODS:
     - IGListKit/Default
   - leveldb-library (1.20)
   - MessageViewController (0.2.0)
-  - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -98,7 +97,6 @@ DEPENDENCIES:
   - HTMLString (~> 4.0.1)
   - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
-  - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
@@ -131,9 +129,6 @@ EXTERNAL SOURCES:
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
-  MMMarkdown:
-    :branch: master
-    :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
     :branch: master
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -159,9 +154,6 @@ CHECKOUT OPTIONS:
   MessageViewController:
     :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
     :git: https://github.com/GitHawkApp/MessageViewController.git
-  MMMarkdown:
-    :commit: c919c3ba5e2590620b736da3202e9e38f099ef3b
-    :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
     :commit: c9c58444decbbe2fac29b8af5741c8ea3a48887e
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -191,7 +183,6 @@ SPEC CHECKSUMS:
   IGListKit: 2f46c3390be7e0fd70b401abb34b3737d4730c19
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
-  MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b
@@ -204,6 +195,6 @@ SPEC CHECKSUMS:
   Tabman: 5951d9c5bc4e438e1c82b7e59e5cdc9f505c1431
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 060fbdc6fe808267bede94df2e880b3a50a2b98b
+PODFILE CHECKSUM: a4744e35eb3f81072084583c99a0f407b7b17281
 
 COCOAPODS: 1.4.0

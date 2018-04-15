@@ -38,14 +38,14 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let options = GitHubMarkdownOptions(
+        let viewModels = MarkdownModels(
+            markdown,
             owner: owner,
             repo: repo,
-            flavors: [],
             width: view.bounds.width,
+            viewerCanUpdate: false,
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         )
-        let viewModels = CreateCommentModels(markdown: markdown, options: options)
         model = IssuePreviewModel(models: viewModels)
 
         view.addSubview(collectionView)

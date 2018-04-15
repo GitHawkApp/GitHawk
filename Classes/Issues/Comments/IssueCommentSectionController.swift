@@ -200,13 +200,14 @@ final class IssueCommentSectionController:
 
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
-        let options = commentModelOptions(
+        let bodyModels = MarkdownModels(
+            markdown,
             owner: model.owner,
             repo: model.repo,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
-            width: width
+            width: width,
+            viewerCanUpdate: true,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         )
-        let bodyModels = CreateCommentModels(markdown: markdown, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()

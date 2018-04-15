@@ -227,17 +227,13 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     date: date
                 )
 
-                let options = GitHubMarkdownOptions(
+                let bodies = MarkdownModels(
+                    review.fragments.commentFields.body,
                     owner: owner,
                     repo: repo,
-                    flavors: [],
                     width: width,
+                    viewerCanUpdate: viewerCanUpdate,
                     contentSizeCategory: contentSizeCategory
-                )
-                let bodies = CreateCommentModels(
-                    markdown: review.fragments.commentFields.body,
-                    options: options,
-                    viewerCanUpdate: viewerCanUpdate
                 )
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,

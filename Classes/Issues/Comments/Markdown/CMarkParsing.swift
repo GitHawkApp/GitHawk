@@ -256,8 +256,15 @@ private extension Element {
                 backgroundColor: .white
                 ).warm(width: options.width)
             return IssueCommentQuoteModel(level: level, string: string)
-        case .image(let title, let url):
-            return CreateImageModel(href: url, title: title)
+        case .image(let title, let href):
+            guard let url = URL(string: href) else { return nil }
+            if url.pathExtension.lowercased() == "svg" {
+                // hack to workaround the SDWebImage not supporting svg images
+                // just render it in a webview
+                return IssueCommentHtmlModel(html: "<img src=\(href) />")
+            } else {
+                return IssueCommentImageModel(url: url, title: title)
+            }
         case .html(let text):
             let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !trimmed.isEmpty else { return nil }
@@ -318,7 +325,8 @@ func MarkdownModels(
     repo: String,
     width: CGFloat,
     viewerCanUpdate: Bool,
-    contentSizeCategory: UIContentSizeCategory
+    contentSizeCategory: UIContentSizeCategory,
+    branch: String = "master"
     ) -> [ListDiffable] {
     let cleaned = markdown
         .replacingGithubEmojiRegex
@@ -329,7 +337,7 @@ func MarkdownModels(
     let options = CMarkOptions(
         owner: owner,
         repo: repo,
-        branch: nil, // TODO pass in branch
+        branch: branch,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
         contentSizeCategory: contentSizeCategory

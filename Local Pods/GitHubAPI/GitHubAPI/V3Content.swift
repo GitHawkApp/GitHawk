@@ -14,6 +14,7 @@ public enum V3ContentError: Error {
 
 public struct V3Content: Codable {
     public let content: String
+    public let url: URL
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -24,5 +25,6 @@ public struct V3Content: Codable {
                 throw V3ContentError.badData
         }
         self.content = str
+        self.url = try container.decode(URL.self, forKey: .url)
     }
 }
