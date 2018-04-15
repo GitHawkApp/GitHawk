@@ -312,6 +312,20 @@ private extension Element {
     }
 }
 
+private func emptyDescription(options: CMarkOptions) -> ListDiffable {
+    let builder = StyledTextBuilder.markdownBase()
+        .add(
+            text: NSLocalizedString("No description provided.", comment: ""),
+            traits: .traitItalic,
+            attributes: [.foregroundColor: Styles.Colors.Gray.medium.color]
+    )
+    return StyledTextRenderer(
+        string: builder.build(),
+        contentSizeCategory: options.contentSizeCategory,
+        inset: IssueCommentTextCell.inset
+    ).warm(width: options.width)
+}
+
 func MarkdownModels(
     _ markdown: String,
     owner: String,
@@ -334,6 +348,11 @@ func MarkdownModels(
         viewerCanUpdate: viewerCanUpdate,
         contentSizeCategory: contentSizeCategory
     )
-    return node.flatElements.compactMap { $0.model(options) }
+    let models = node.flatElements.compactMap { $0.model(options) }
+    if models.count == 0 {
+        return [emptyDescription(options: options)]
+    } else {
+        return models
+    }
 }
 
