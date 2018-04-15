@@ -200,17 +200,11 @@ final class IssueCommentSectionController:
 
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
-        let options = commentModelOptions(
-            owner: model.owner,
-            repo: model.repo,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
-            width: width
-        )
         let bodyModels = MarkdownModels(
             markdown,
             owner: model.owner,
             repo: model.repo,
-            width: options.width,
+            width: width,
             viewerCanUpdate: true,
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         )

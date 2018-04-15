@@ -256,8 +256,15 @@ private extension Element {
                 backgroundColor: .white
                 ).warm(width: options.width)
             return IssueCommentQuoteModel(level: level, string: string)
-        case .image(let title, let url):
-            return CreateImageModel(href: url, title: title)
+        case .image(let title, let href):
+            guard let url = URL(string: href) else { return nil }
+            if url.pathExtension.lowercased() == "svg" {
+                // hack to workaround the SDWebImage not supporting svg images
+                // just render it in a webview
+                return IssueCommentHtmlModel(html: "<img src=\(href) />")
+            } else {
+                return IssueCommentImageModel(url: url, title: title)
+            }
         case .html(let text):
             let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !trimmed.isEmpty else { return nil }

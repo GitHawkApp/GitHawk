@@ -48,21 +48,6 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
     return IssueCommentReactionViewModel(models: models)
 }
 
-func commentModelOptions(
-    owner: String,
-    repo: String,
-    contentSizeCategory: UIContentSizeCategory,
-    width: CGFloat
-    ) -> GitHubMarkdownOptions {
-    return GitHubMarkdownOptions(
-        owner: owner,
-        repo: repo,
-        flavors: [],
-        width: width,
-        contentSizeCategory: contentSizeCategory
-    )
-}
-
 func createCommentModel(
     id: String,
     commentFields: CommentFields,
