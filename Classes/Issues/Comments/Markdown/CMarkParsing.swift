@@ -318,7 +318,8 @@ func MarkdownModels(
     repo: String,
     width: CGFloat,
     viewerCanUpdate: Bool,
-    contentSizeCategory: UIContentSizeCategory
+    contentSizeCategory: UIContentSizeCategory,
+    branch: String = "master"
     ) -> [ListDiffable] {
     let cleaned = markdown
         .replacingGithubEmojiRegex
@@ -329,7 +330,7 @@ func MarkdownModels(
     let options = CMarkOptions(
         owner: owner,
         repo: repo,
-        branch: nil, // TODO pass in branch
+        branch: branch,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
         contentSizeCategory: contentSizeCategory

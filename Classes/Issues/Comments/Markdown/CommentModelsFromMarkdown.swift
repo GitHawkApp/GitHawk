@@ -53,7 +53,7 @@ func emptyDescriptionModel(options: GitHubMarkdownOptions) -> ListDiffable {
     )
 }
 
-func CreateCommentModels(
+func DISABLED_CreateCommentModels(
     markdown: String,
     options: GitHubMarkdownOptions,
     viewerCanUpdate: Bool = false

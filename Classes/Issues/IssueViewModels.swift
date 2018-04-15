@@ -90,11 +90,13 @@ func createCommentModel(
         editedAt: commentFields.lastEditedAt?.githubDate
     )
 
-    let options = commentModelOptions(owner: owner, repo: repo, contentSizeCategory: contentSizeCategory, width: width)
-    let bodies = CreateCommentModels(
-        markdown: commentFields.body,
-        options: options,
-        viewerCanUpdate: viewerCanUpdate
+    let bodies = MarkdownModels(
+        commentFields.body,
+        owner: owner,
+        repo: repo,
+        width: width,
+        viewerCanUpdate: viewerCanUpdate,
+        contentSizeCategory: contentSizeCategory
     )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)

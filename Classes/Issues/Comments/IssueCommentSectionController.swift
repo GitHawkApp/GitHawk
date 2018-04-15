@@ -206,7 +206,14 @@ final class IssueCommentSectionController:
             contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
             width: width
         )
-        let bodyModels = CreateCommentModels(markdown: markdown, options: options, viewerCanUpdate: true)
+        let bodyModels = MarkdownModels(
+            markdown,
+            owner: model.owner,
+            repo: model.repo,
+            width: options.width,
+            viewerCanUpdate: true,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+        )
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()
