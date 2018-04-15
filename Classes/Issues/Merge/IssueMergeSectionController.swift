@@ -159,7 +159,7 @@ MergeButtonDelegate {
 
     func didSelectOptions(button: MergeButton) {
         let alert = UIAlertController.configured(
-            title: NSLocalizedString("Select merge type", comment: ""),
+            title: NSLocalizedString("Change merge type", comment: ""),
             preferredStyle: .actionSheet
         )
         alert.popoverPresentationController?.sourceView = button.optionIconView
