@@ -59,9 +59,6 @@ body: BSD License
 
 For `IG…
 
-name: MMMarkdown, nameSpecified: 
-body: **Copyright (c) 2012…
-
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -173,9 +170,6 @@ name: IGListKit, nameSpecified:
 body: BSD License
 
 For `IG…
-
-name: MMMarkdown, nameSpecified: 
-body: **Copyright (c) 2012…
 
 name: MessageViewController, nameSpecified: 
 body: The MIT License
