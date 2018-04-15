@@ -87,6 +87,10 @@ final class NotificationClient {
         page: Int?,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
+        guard notifications.count > 0 else {
+            completion(.success((notifications, page)))
+            return
+        }
 
         let content = "state comments{totalCount}"
         let notificationQueries: String = notifications.compactMap {
