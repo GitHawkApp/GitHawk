@@ -62,12 +62,12 @@ final class MilestonesViewController: UITableViewController {
             }
             self?.feedRefresh.endRefreshing()
 
+            self?.tableView.backgroundView?.removeFromSuperview()
+            self?.tableView.backgroundView = nil
             if self?.milestones.count == 0 {
                 let emptyView = EmptyView()
                 emptyView.label.text = NSLocalizedString("No labels found", comment: "")
                 self?.tableView.backgroundView = emptyView
-            } else {
-                self?.tableView.backgroundView?.removeFromSuperview()
             }
         }
     }

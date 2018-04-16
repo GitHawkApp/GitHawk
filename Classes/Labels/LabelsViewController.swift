@@ -58,12 +58,12 @@ final class LabelsViewController: UITableViewController {
         tableView.reloadData()
         tableView.layoutIfNeeded()
 
+        tableView.backgroundView?.removeFromSuperview()
+        tableView.backgroundView = nil
         if labels.count == 0 {
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("No labels found", comment: "")
             tableView.backgroundView = emptyView
-        } else {
-            tableView.backgroundView?.removeFromSuperview()
         }
     }
 
