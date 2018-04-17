@@ -46,6 +46,21 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 
 }
 
+extension RepoSearchPagesQuery: RepositoryQuery {
+
+    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
+        guard let results = data as? RepoSearchPagesQuery.Data else { return [] }
+        return results.search.nodes?.compactMap { $0?.asIssue ?? $0?.asPullRequest } ?? []
+    }
+
+    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
+        guard let results = data as? RepoSearchPagesQuery.Data,
+            results.search.pageInfo.hasNextPage else { return nil }
+        return results.search.pageInfo.endCursor
+    }
+
+}
+
 func createSummaryModel(
     _ node: RepositoryIssueSummaryType,
     contentSizeCategory: UIContentSizeCategory,
@@ -156,6 +171,19 @@ final class RepositoryClient {
         ) {
         loadPage(
             query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 30),
+            containerWidth: containerWidth,
+            completion: completion
+        )
+    }
+
+    func searchIssues(
+        query: String,
+        nextPage: String? = nil,
+        containerWidth: CGFloat,
+        completion: @escaping (Result<RepositoryPayload>) -> Void
+        ) {
+        loadPage(
+            query: RepoSearchPagesQuery(query: query, page_size: 30),
             containerWidth: containerWidth,
             completion: completion
         )
