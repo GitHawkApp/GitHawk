@@ -169,7 +169,6 @@ final class IssuesViewController:
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        feed.viewDidAppear(animated)
         let informator = HandoffInformator(
             activityName: "viewIssue",
             activityTitle: "\(model.owner)/\(model.repo)#\(model.number)",

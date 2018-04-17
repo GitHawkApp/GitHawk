@@ -80,11 +80,6 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         messageView.add(contentView: actions)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        feed.viewDidAppear(animated)
-    }
-
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
@@ -188,8 +183,10 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Error loading review comments.", comment: "")
             return emptyView
-        case .loading, .loadingNext:
+        case .loadingNext:
             return nil
+        case .loading:
+            return EmptyLoadingView()
         }
     }
 
