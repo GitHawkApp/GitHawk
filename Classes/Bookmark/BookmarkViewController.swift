@@ -160,12 +160,12 @@ TabNavRootViewControllerType {
         var bookmarks: [ListDiffable]
         switch state {
         case .idle:
-            bookmarks = bookmarkStore.values.flatMap {
+            bookmarks = bookmarkStore.values.compactMap {
                 BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
             }
         case .filtering(let term):
             bookmarks = filtered(array: bookmarkStore.values, query: term)
-                .flatMap {
+                .compactMap {
                     BookmarkViewModel(bookmark: $0, contentSizeCategory: contentSizeCategory, width: width)
             }
         }

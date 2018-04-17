@@ -13,7 +13,7 @@ import MessageViewController
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
-PullRequestReviewReplySectionControllerDelegate {
+    PullRequestReviewReplySectionControllerDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -183,8 +183,10 @@ PullRequestReviewReplySectionControllerDelegate {
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Error loading review comments.", comment: "")
             return emptyView
-        case .loading, .loadingNext:
+        case .loadingNext:
             return nil
+        case .loading:
+            return EmptyLoadingView()
         }
     }
 

@@ -6,6 +6,7 @@ PODS:
     - Apollo/Core (= 0.8.0)
   - Apollo/Core (0.8.0)
   - AutoInsetter (1.2.3)
+  - cmark-gfm-swift (0.1.0)
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
@@ -53,7 +54,6 @@ PODS:
     - IGListKit/Default
   - leveldb-library (1.20)
   - MessageViewController (0.2.0)
-  - MMMarkdown (0.5.5)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -75,13 +75,14 @@ PODS:
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.8.0):
+  - Tabman (1.8.1):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
   - AlamofireNetworkActivityIndicator (~> 2.1)
+  - cmark-gfm-swift (from `https://github.com/GitHawkApp/cmark-gfm-swift.git`, branch `master`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
   - Fabric
@@ -96,7 +97,6 @@ DEPENDENCIES:
   - HTMLString (~> 4.0.1)
   - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
-  - MMMarkdown (from `https://github.com/GitHawkApp/MMMarkdown.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
@@ -107,6 +107,9 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 EXTERNAL SOURCES:
+  cmark-gfm-swift:
+    :branch: master
+    :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :branch: master
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -126,9 +129,6 @@ EXTERNAL SOURCES:
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
-  MMMarkdown:
-    :branch: master
-    :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
     :branch: master
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -136,6 +136,9 @@ EXTERNAL SOURCES:
     :path: Local Pods/SwipeCellKit
 
 CHECKOUT OPTIONS:
+  cmark-gfm-swift:
+    :commit: 26723dcb56b0322a18a01a6e1b8a76f63c0c85e9
+    :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
     :git: https://github.com/GitHawkApp/ContextMenu.git
@@ -151,9 +154,6 @@ CHECKOUT OPTIONS:
   MessageViewController:
     :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
     :git: https://github.com/GitHawkApp/MessageViewController.git
-  MMMarkdown:
-    :commit: c919c3ba5e2590620b736da3202e9e38f099ef3b
-    :git: https://github.com/GitHawkApp/MMMarkdown.git
   StyledText:
     :commit: c9c58444decbbe2fac29b8af5741c8ea3a48887e
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -163,6 +163,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 4716f6554bdfb9c7cf13b1e0e3af21163129690a
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
   AutoInsetter: 1a8f8ad5e7da8e993970b3809cfb8e8e330f4db1
+  cmark-gfm-swift: 8f7ffcd7d4ef6c0eeae5515c724fcde620e1028e
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
@@ -183,7 +184,6 @@ SPEC CHECKSUMS:
   IGListKit: 2f46c3390be7e0fd70b401abb34b3737d4730c19
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
-  MMMarkdown: 4cf421144508b319a3c7ba6efaa0dcee8e86d9fd
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: 00985df8245ab2d4b4ef6959a0722d64b09aafee
@@ -192,9 +192,9 @@ SPEC CHECKSUMS:
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: d4d30ea7e6dfdc6aa15518287e3e283290345940
+  Tabman: 1713c723cd939aad1467fa61168484ad60e748f0
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: d3a1012e4f0a06ac01cc7eaf881b0d8ddda35f8b
+PODFILE CHECKSUM: e0420c472bf3ab55792584694867bacd0500ef32
 
 COCOAPODS: 1.4.0

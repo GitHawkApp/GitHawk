@@ -29,6 +29,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
     private weak var delegate: FeedDelegate?
     private let feedRefresh = FeedRefresh()
     private let managesLayout: Bool
+    private let loadingView = EmptyLoadingView()
 
     init(
         viewController: UIViewController,
@@ -58,6 +59,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
         feedRefresh.beginRefreshing()
     }
 
+    func showEmptyLoadingView() {
+        loadingView.isHidden = false
+    }
+
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }
 
@@ -70,20 +75,14 @@ final class Feed: NSObject, UIScrollViewDelegate {
         if collectionView.superview == nil {
             view.addSubview(collectionView)
         }
-    }
 
-    func viewDidAppear(_ animated: Bool) {
-        // put in a small delay to let container finish laying out
-        // prevents a bug from double-insetting the refresh control
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            if self.status == .loading {
-                self.feedRefresh.beginRefreshing()
-            }
-        })
+        view.addSubview(loadingView)
     }
 
     func viewWillLayoutSubviews(view: UIView) {
         let bounds = view.bounds
+
+        loadingView.frame = bounds
 
         let changed = bounds != collectionView.frame
         if managesLayout && changed {
@@ -96,6 +95,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
     func finishLoading(dismissRefresh: Bool, animated: Bool = true, completion: (() -> Void)? = nil) {
         status = .idle
+        loadingView.isHidden = true
 
         adapter.performUpdates(animated: animated) { _ in
             if dismissRefresh {

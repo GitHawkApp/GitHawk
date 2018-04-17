@@ -38,10 +38,9 @@ FlatCacheListener {
         self.inboxType = inboxType
 
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: "")
         )
-
+        self.dataSource = self
         self.foreground.delegate = self
 
         switch inboxType {
@@ -334,10 +333,7 @@ FlatCacheListener {
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
-        switch update {
-        case .item: self.update(animated: trueUnlessReduceMotionEnabled)
-        case .list: break
-        }
+        self.update(animated: trueUnlessReduceMotionEnabled)
     }
 
 }

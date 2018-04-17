@@ -35,7 +35,7 @@ LoadMoreSectionControllerDelegate {
 
     // required on init
     private let emptyErrorMessage: String
-    private weak var dataSource: BaseListViewControllerDataSource?
+    public weak var dataSource: BaseListViewControllerDataSource?
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: PagingType?
@@ -43,12 +43,8 @@ LoadMoreSectionControllerDelegate {
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
     private var filterQuery: String?
 
-    init(
-        emptyErrorMessage: String,
-        dataSource: BaseListViewControllerDataSource
-        ) {
+    init(emptyErrorMessage: String) {
         self.emptyErrorMessage = emptyErrorMessage
-        self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -65,11 +61,6 @@ LoadMoreSectionControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rz_smoothlyDeselectRows(collectionView: feed.collectionView)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        feed.viewDidAppear(animated)
     }
 
     override func viewWillLayoutSubviews() {

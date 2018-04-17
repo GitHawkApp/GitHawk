@@ -20,7 +20,7 @@ extension RepoIssuePagesQuery: RepositoryQuery {
 
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let issues = data as? Data else { return [] }
-        return issues.repository?.issues.nodes?.flatMap { $0 } ?? []
+        return issues.repository?.issues.nodes?.compactMap { $0 } ?? []
     }
 
     func nextPageToken(from data: GraphQLSelectionSet) -> String? {
@@ -35,13 +35,28 @@ extension RepoPullRequestPagesQuery: RepositoryQuery {
 
     func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return [] }
-        return prs.repository?.pullRequests.nodes?.flatMap { $0 } ?? []
+        return prs.repository?.pullRequests.nodes?.compactMap { $0 } ?? []
     }
 
     func nextPageToken(from data: GraphQLSelectionSet) -> String? {
         guard let prs = data as? RepoPullRequestPagesQuery.Data else { return nil }
         guard let pageInfo = prs.repository?.pullRequests.pageInfo, pageInfo.hasNextPage else { return nil }
         return pageInfo.endCursor
+    }
+
+}
+
+extension RepoSearchPagesQuery: RepositoryQuery {
+
+    func summaryTypes(from data: GraphQLSelectionSet) -> [RepositoryIssueSummaryType] {
+        guard let results = data as? RepoSearchPagesQuery.Data else { return [] }
+        return results.search.nodes?.compactMap { $0?.asIssue ?? $0?.asPullRequest } ?? []
+    }
+
+    func nextPageToken(from data: GraphQLSelectionSet) -> String? {
+        guard let results = data as? RepoSearchPagesQuery.Data,
+            results.search.pageInfo.hasNextPage else { return nil }
+        return results.search.pageInfo.endCursor
     }
 
 }
@@ -82,7 +97,7 @@ func createSummaryModel(
     containerWidth: CGFloat
     ) -> (models: [RepositoryIssueSummaryModel], nextPage: String?) {
     let nextPage = query.nextPageToken(from: data)
-    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).flatMap { (node: RepositoryIssueSummaryType) in
+    let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).compactMap { (node: RepositoryIssueSummaryType) in
         return createSummaryModel(node, contentSizeCategory: contentSizeCategory, containerWidth: containerWidth)
     }
     return (models, nextPage)
@@ -156,6 +171,19 @@ final class RepositoryClient {
         ) {
         loadPage(
             query: RepoPullRequestPagesQuery(owner: owner, name: name, after: nextPage, page_size: 30),
+            containerWidth: containerWidth,
+            completion: completion
+        )
+    }
+
+    func searchIssues(
+        query: String,
+        nextPage: String? = nil,
+        containerWidth: CGFloat,
+        completion: @escaping (Result<RepositoryPayload>) -> Void
+        ) {
+        loadPage(
+            query: RepoSearchPagesQuery(query: query, page_size: 30),
             containerWidth: containerWidth,
             completion: completion
         )

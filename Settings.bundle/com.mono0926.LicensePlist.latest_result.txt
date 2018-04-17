@@ -64,9 +64,6 @@ body: BSD License
 
 For `IG…
 
-name: MMMarkdown, nameSpecified: 
-body: **Copyright (c) 2012…
-
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -105,6 +102,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: cmark-gfm-swift, nameSpecified: 
+body: Copyright (c) 2018 R…
 
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…
@@ -178,9 +178,6 @@ body: BSD License
 
 For `IG…
 
-name: MMMarkdown, nameSpecified: 
-body: **Copyright (c) 2012…
-
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -219,6 +216,9 @@ name: Tabman, nameSpecified:
 body: MIT License
 
 Copyrig…
+
+name: cmark-gfm-swift, nameSpecified: 
+body: Copyright (c) 2018 R…
 
 name: leveldb-library, nameSpecified: 
 body: Copyright (c) 2011 T…

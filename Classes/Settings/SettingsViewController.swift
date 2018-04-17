@@ -91,25 +91,20 @@ NewIssueTableViewControllerDelegate {
     // MARK: UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        func deselectRow() { tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled) }
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
         let cell = tableView.cellForRow(at: indexPath)
 
         if cell === reviewAccessCell {
-            deselectRow()
             onReviewAccess()
         } else if cell === accountsCell {
-            deselectRow()
             onAccounts()
         } else if cell === githubStatusCell {
-            deselectRow()
             onGitHubStatus()
         } else if cell === reportBugCell {
-            deselectRow()
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
         } else if cell === signOutCell {
-            deselectRow()
             onSignOut()
         }
     }
@@ -143,7 +138,7 @@ NewIssueTableViewControllerDelegate {
         guard let client = client,
             let viewController = NewIssueTableViewController.create(
                 client: client,
-                owner: "rnystrom",
+                owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
             ) else {
@@ -157,9 +152,19 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onViewSource() {
-        guard let url = URL(string: Constants.URLs.repository)
-            else { fatalError("Should always create GitHub URL") }
-		presentSafari(url: url)
+        guard let client = client else {
+            ToastManager.showGenericError()
+            return
+        }
+
+        let repo = RepositoryDetails(
+            owner: "GitHawkApp",
+            name: "GitHawk",
+            defaultBranch: "master",
+            hasIssuesEnabled: true
+        )
+        let repoViewController = RepositoryViewController(client: client, repo: repo)
+        navigationController?.showDetailViewController(repoViewController, sender: self)
     }
 
     func onSignOut() {

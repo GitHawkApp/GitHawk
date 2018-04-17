@@ -48,21 +48,6 @@ func createIssueReactions(reactions: ReactionFields) -> IssueCommentReactionView
     return IssueCommentReactionViewModel(models: models)
 }
 
-func commentModelOptions(
-    owner: String,
-    repo: String,
-    contentSizeCategory: UIContentSizeCategory,
-    width: CGFloat
-    ) -> GitHubMarkdownOptions {
-    return GitHubMarkdownOptions(
-        owner: owner,
-        repo: repo,
-        flavors: [.issueShorthand, .usernames],
-        width: width,
-        contentSizeCategory: contentSizeCategory
-    )
-}
-
 func createCommentModel(
     id: String,
     commentFields: CommentFields,
@@ -90,11 +75,13 @@ func createCommentModel(
         editedAt: commentFields.lastEditedAt?.githubDate
     )
 
-    let options = commentModelOptions(owner: owner, repo: repo, contentSizeCategory: contentSizeCategory, width: width)
-    let bodies = CreateCommentModels(
-        markdown: commentFields.body,
-        options: options,
-        viewerCanUpdate: viewerCanUpdate
+    let bodies = MarkdownModels(
+        commentFields.body,
+        owner: owner,
+        repo: repo,
+        width: width,
+        viewerCanUpdate: viewerCanUpdate,
+        contentSizeCategory: contentSizeCategory
     )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)

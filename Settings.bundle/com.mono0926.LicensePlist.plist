@@ -38,6 +38,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/cmark-gfm-swift</string>
+			<key>Title</key>
+			<string>cmark-gfm-swift (0.1.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/ContextMenu</string>
 			<key>Title</key>
 			<string>ContextMenu (0.1.0)</string>
@@ -177,14 +185,6 @@
 			<string>com.mono0926.LicensePlist/MessageViewController</string>
 			<key>Title</key>
 			<string>MessageViewController (0.2.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/MMMarkdown</string>
-			<key>Title</key>
-			<string>MMMarkdown (0.5.5)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

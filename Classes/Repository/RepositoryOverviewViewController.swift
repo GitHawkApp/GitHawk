@@ -21,9 +21,9 @@ BaseListViewControllerDataSource {
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
         super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: ""),
-            dataSource: self
+            emptyErrorMessage: NSLocalizedString("Cannot load README.", comment: "")
         )
+        self.dataSource = self
         title = NSLocalizedString("Overview", comment: "")
     }
 
@@ -40,20 +40,32 @@ BaseListViewControllerDataSource {
 
     override func fetch(page: NSString?) {
         let repo = self.repo
-        let options = GitHubMarkdownOptions(
-            owner: repo.owner,
-            repo: repo.name,
-            flavors: [.baseURL],
-            width: view.bounds.width,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
-        )
+        let width = view.bounds.width
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         client.githubClient.client
             .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name)) { [weak self] result in
             switch result {
             case .success(let response):
                 DispatchQueue.global().async {
-                    let models = CreateCommentModels(markdown: response.data.content, options: options)
+                    let branch: String
+                    if let items = URLComponents(url: response.data.url, resolvingAgainstBaseURL: false)?.queryItems,
+                        let index = items.index(where: { $0.name == "ref" }),
+                        let value = items[index].value {
+                        branch = value
+                    } else {
+                        branch = "master"
+                    }
+
+                    let models = MarkdownModels(
+                        response.data.content,
+                        owner: repo.owner,
+                        repo: repo.name,
+                        width: width,
+                        viewerCanUpdate: false,
+                        contentSizeCategory: contentSizeCategory,
+                        branch: branch
+                    )
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model

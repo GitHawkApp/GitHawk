@@ -11,15 +11,25 @@ import IGListKit
 import TUSafariActivity
 import GitHubAPI
 
-final class IssueCommentSectionController: ListBindingSectionController<IssueCommentModel>,
+protocol IssueCommentSectionControllerDelegate: class {
+    func didSelectReply(
+        to sectionController: IssueCommentSectionController,
+        commentModel: IssueCommentModel
+    )
+}
+
+final class IssueCommentSectionController:
+    ListBindingSectionController<IssueCommentModel>,
     ListBindingSectionControllerDataSource,
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
-IssueCommentReactionCellDelegate,
-AttributedStringViewDelegate,
-EditCommentViewControllerDelegate,
-IssueCommentDoubleTapDelegate,
-MarkdownStyledTextViewDelegate {
+    IssueCommentReactionCellDelegate,
+    AttributedStringViewDelegate,
+    EditCommentViewControllerDelegate,
+    MarkdownStyledTextViewDelegate,
+    IssueCommentDoubleTapDelegate {
+
+    private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
     private var collapsed = true
     private let generator = UIImpactFeedbackGenerator()
@@ -53,13 +63,18 @@ MarkdownStyledTextViewDelegate {
     private let headModel = "headModel" as ListDiffable
     private let tailModel = "tailModel" as ListDiffable
 
-    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
+    init(model: IssueDetailsModel,
+         client: GithubClient,
+         autocomplete: IssueCommentAutocomplete,
+         issueCommentDelegate: IssueCommentSectionControllerDelegate? = nil
+        ) {
         self.model = model
         self.client = client
         self.autocomplete = autocomplete
         super.init()
         self.dataSource = self
         self.selectionDelegate = self
+        self.issueCommentDelegate = issueCommentDelegate
     }
 
     override func didUpdate(to object: Any) {
@@ -123,6 +138,23 @@ MarkdownStyledTextViewDelegate {
         })
     }
 
+    func replyAction() -> UIAlertAction? {
+        return UIAlertAction(
+            title: NSLocalizedString("Reply", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                guard let strongSelf = self,
+                let commentModel = strongSelf.object
+                else { return }
+
+                strongSelf.issueCommentDelegate?.didSelectReply(
+                    to: strongSelf,
+                    commentModel: commentModel
+                )
+            }
+        )
+    }
+
     private func clearCollapseCells() {
         // clear any collapse state before updating so we don't have a dangling overlay
         for cell in collectionContext?.visibleCells(for: self) ?? [] {
@@ -168,13 +200,14 @@ MarkdownStyledTextViewDelegate {
 
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
-        let options = commentModelOptions(
+        let bodyModels = MarkdownModels(
+            markdown,
             owner: model.owner,
             repo: model.repo,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
-            width: width
+            width: width,
+            viewerCanUpdate: true,
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
         )
-        let bodyModels = CreateCommentModels(markdown: markdown, options: options, viewerCanUpdate: true)
         bodyEdits = (markdown, bodyModels)
         collapsed = false
         clearCollapseCells()
@@ -419,6 +452,7 @@ MarkdownStyledTextViewDelegate {
         alert.addActions([
             shareAction(sender: sender),
             editAction(),
+            replyAction(),
             deleteAction(),
             AlertAction.cancel()
         ])

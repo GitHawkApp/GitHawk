@@ -185,8 +185,14 @@ private func createReviewComment(
     )
 
     let reactions = IssueCommentReactionViewModel(models: [])
-    let options = commentModelOptions(owner: owner, repo: repo, contentSizeCategory: contentSizeCategory, width: width)
-    let bodies = CreateCommentModels(markdown: model.body, options: options)
+    let bodies = MarkdownModels(
+        model.body,
+        owner: owner,
+        repo: repo,
+        width: width,
+        viewerCanUpdate: false,
+        contentSizeCategory: contentSizeCategory
+    )
 
     return IssueCommentModel(
         id: "\(model.id)",
