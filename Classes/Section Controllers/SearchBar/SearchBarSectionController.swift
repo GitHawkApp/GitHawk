@@ -15,13 +15,15 @@ protocol SearchBarSectionControllerDelegate: class {
 
 final class SearchBarSectionController: ListSectionController, SearchBarCellDelegate {
 
+    public private(set) var query: String
+
     private weak var delegate: SearchBarSectionControllerDelegate?
     private let placeholder: String
-    private var query = ""
 
-    init(placeholder: String, delegate: SearchBarSectionControllerDelegate) {
+    init(placeholder: String, delegate: SearchBarSectionControllerDelegate, query: String = "") {
         self.delegate = delegate
         self.placeholder = placeholder
+        self.query = query
         super.init()
     }
 

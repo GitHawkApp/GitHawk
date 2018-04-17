@@ -1,3 +1,30 @@
+query RepoSearchPages($query: String!, $page_size: Int!) {
+  search(query: $query, type: ISSUE, first: $page_size) {
+    nodes {
+      ... on Issue {
+        ...repoEventFields
+        ...nodeFields
+        ...labelableFields
+        title
+        number
+        issueState: state
+      }
+      ... on PullRequest {
+        ...repoEventFields
+        ...nodeFields
+        ...labelableFields
+        title
+        number
+        pullRequestState: state
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+
 query RepoIssuePages($owner: String!, $name: String!, $after: String, $page_size: Int!) {
   repository(owner: $owner, name: $name) {
     issues(first: $page_size, orderBy: {field: CREATED_AT, direction: DESC}, states: [OPEN, CLOSED], after: $after) {
