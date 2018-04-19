@@ -75,7 +75,7 @@ PODS:
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
-  - Tabman (1.8.1):
+  - Tabman (1.8.2):
     - AutoInsetter (~> 1.2.0)
     - Pageboy (~> 2.5.0)
   - TUSafariActivity (1.0.4)
@@ -192,7 +192,7 @@ SPEC CHECKSUMS:
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
-  Tabman: 1713c723cd939aad1467fa61168484ad60e748f0
+  Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
 PODFILE CHECKSUM: e0420c472bf3ab55792584694867bacd0500ef32
