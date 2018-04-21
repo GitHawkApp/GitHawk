@@ -18,41 +18,49 @@ ContextMenuDelegate {
 
     private enum Action {
         static let labels = IssueManagingActionModel(
+            key: "tag",
             label: NSLocalizedString("Labels", comment: ""),
             imageName: "tag",
             color: "3f88f7".color
         )
         static let milestone = IssueManagingActionModel(
+            key: "milestone",
             label: NSLocalizedString("Milestone", comment: ""),
             imageName: "milestone",
             color: "6847ba".color
         )
         static let assignees = IssueManagingActionModel(
+            key: "person",
             label: NSLocalizedString("Assignees", comment: ""),
             imageName: "person",
             color: "e77230".color
         )
         static let reviewers = IssueManagingActionModel(
+            key: "reviewer",
             label: NSLocalizedString("Reviewers", comment: ""),
             imageName: "reviewer",
             color: "50a451".color
         )
         static let lock = IssueManagingActionModel(
+            key: "lock", // share key so lock/unlock just updates cell
             label: NSLocalizedString("Lock", comment: ""),
             imageName: "lock",
             color: Styles.Colors.Gray.dark.color
         )
         static let unlock = IssueManagingActionModel(
+            key: "lock", // share key so lock/unlock just updates cell
             label: NSLocalizedString("Unlock", comment: ""),
             imageName: "key",
             color: Styles.Colors.Gray.dark.color
         )
         static let reopen = IssueManagingActionModel(
+            key: "open", // share key so open/close just updates cell
             label: Constants.Strings.reopen,
             imageName: "sync",
             color: Styles.Colors.Green.medium.color
         )
         static let close = IssueManagingActionModel(
+            key: "open", // share key so open/close just updates cell
             label: Constants.Strings.close,
             imageName: "x",
             color: Styles.Colors.Red.medium.color

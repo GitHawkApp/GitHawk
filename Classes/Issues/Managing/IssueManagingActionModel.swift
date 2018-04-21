@@ -11,11 +11,13 @@ import IGListKit
 
 final class IssueManagingActionModel: ListDiffable {
 
+    let key: String
     let label: String
     let imageName: String
     let color: UIColor
 
-    init(label: String, imageName: String, color: UIColor) {
+    init(key: String, label: String, imageName: String, color: UIColor) {
+        self.key = key
         self.label = label
         self.imageName = imageName
         self.color = color
@@ -24,12 +26,15 @@ final class IssueManagingActionModel: ListDiffable {
     // MARK: ListDiffable
 
     func diffIdentifier() -> NSObjectProtocol {
-        return label as NSObjectProtocol
+        return key as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        // keep it simple
-        return true
+        if self === object { return true }
+        guard let object = object as? IssueManagingActionModel else { return false }
+        return object.label == label
+        && object.imageName == imageName
+        // skip color, for some reason its a pricy comparison
     }
 
 }
