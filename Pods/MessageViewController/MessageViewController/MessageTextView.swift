@@ -87,8 +87,8 @@ open class MessageTextView: UITextView, UITextViewDelegate {
 
         let placeholderSize = placeholderLabel.bounds.size
         placeholderLabel.frame = CGRect(
-            x: bounds.minX,
-            y: bounds.minY,
+            x: textContainerInset.left,
+            y: textContainerInset.top,
             width: placeholderSize.width,
             height: placeholderSize.height
         )

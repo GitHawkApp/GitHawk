@@ -52,7 +52,7 @@ PODS:
   - IGListKit/Swift (3.3.0):
     - IGListKit/Default
   - leveldb-library (1.20)
-  - MessageViewController (0.2.0)
+  - MessageViewController (0.2.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 894737d8eaa4eb3d357156d0e7e99bcb1099b61a
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
+    :commit: b3d2c67ab6c5f8e2cf990b8c09983645b9496079
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
     :commit: c9c58444decbbe2fac29b8af5741c8ea3a48887e
@@ -182,7 +182,7 @@ SPEC CHECKSUMS:
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
+  MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: 50db8fffaa6d4d004249b7b6b19e33464dd7505b

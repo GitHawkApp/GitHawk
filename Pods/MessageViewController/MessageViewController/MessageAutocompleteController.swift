@@ -73,7 +73,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         notificationCenter.addObserver(
             self,
             selector: #selector(keyboardWillChangeFrame(notification:)),
-            name: NSNotification.Name.UIKeyboardWillChangeFrame,
+            name: .UIKeyboardWillChangeFrame,
             object: nil
         )
     }
@@ -256,6 +256,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
                     let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
                     textView.selectedRange = NSRange(location: range.location, length: 0)
+                    self.textView.textViewDidChange(textView)
                     self.preserveTypingAttributes(for: textView)
                 })
             }
