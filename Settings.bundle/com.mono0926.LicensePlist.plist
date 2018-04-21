@@ -160,7 +160,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/IGListKit</string>
 			<key>Title</key>
-			<string>IGListKit (3.1.1)</string>
+			<string>IGListKit (3.3.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -176,7 +176,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/MessageViewController</string>
 			<key>Title</key>
-			<string>MessageViewController (0.2.0)</string>
+			<string>MessageViewController (0.2.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

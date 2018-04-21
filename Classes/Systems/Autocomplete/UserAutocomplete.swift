@@ -65,7 +65,6 @@ final class UserAutocomplete: AutocompleteType {
 
     var highlightAttributes: [NSAttributedStringKey : Any]? {
         return [
-            .font: Styles.Text.body.preferredFont,
             .foregroundColor: Styles.Colors.Blue.medium.color,
             .backgroundColor: Styles.Colors.Blue.medium.color.withAlphaComponent(0.1),
         ]

@@ -30,7 +30,7 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
 @implementation IGListBatchUpdateData
 
 // Converts all section moves that have index path operations into a section delete + insert.
-+ (void)cleanIndexPathsWithMap:(const std::unordered_map<NSInteger, IGListMoveIndex*> &)map
++ (void)_cleanIndexPathsWithMap:(const std::unordered_map<NSInteger, IGListMoveIndex*> &)map
                          moves:(NSMutableSet<IGListMoveIndex *> *)moves
                     indexPaths:(NSMutableArray<NSIndexPath *> *)indexPaths
                        deletes:(NSMutableIndexSet *)deletes
@@ -95,10 +95,10 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
         NSMutableArray<NSIndexPath *> *mDeleteIndexPaths = [[[NSSet setWithArray:deleteIndexPaths] allObjects] mutableCopy];
 
         // avoids a bug where a cell is animated twice and one of the snapshot cells is never removed from the hierarchy
-        [IGListBatchUpdateData cleanIndexPathsWithMap:fromMap moves:mMoveSections indexPaths:mDeleteIndexPaths deletes:mDeleteSections inserts:mInsertSections];
+        [IGListBatchUpdateData _cleanIndexPathsWithMap:fromMap moves:mMoveSections indexPaths:mDeleteIndexPaths deletes:mDeleteSections inserts:mInsertSections];
 
         // prevents a bug where UICollectionView corrupts the heap memory when inserting into a section that is moved
-        [IGListBatchUpdateData cleanIndexPathsWithMap:toMap moves:mMoveSections indexPaths:mInsertIndexPaths deletes:mDeleteSections inserts:mInsertSections];
+        [IGListBatchUpdateData _cleanIndexPathsWithMap:toMap moves:mMoveSections indexPaths:mInsertIndexPaths deletes:mDeleteSections inserts:mInsertSections];
 
         for (IGListMoveIndexPath *move in moveIndexPaths) {
             // if the section w/ an index path move is deleted, just drop the move
@@ -128,9 +128,9 @@ static void convertMoveToDeleteAndInsert(NSMutableSet<IGListMoveIndex *> *moves,
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p; deleteSections: %zi; insertSections: %zi; moveSections: %zi; deleteIndexPaths: %zi; insertIndexPaths: %zi;>",
-            NSStringFromClass(self.class), self, self.deleteSections.count, self.insertSections.count, self.moveSections.count,
-            self.deleteIndexPaths.count, self.insertIndexPaths.count];
+    return [NSString stringWithFormat:@"<%@ %p; deleteSections: %lu; insertSections: %lu; moveSections: %lu; deleteIndexPaths: %lu; insertIndexPaths: %lu;>",
+            NSStringFromClass(self.class), self, (unsigned long)self.deleteSections.count, (unsigned long)self.insertSections.count, (unsigned long)self.moveSections.count,
+            (unsigned long)self.deleteIndexPaths.count, (unsigned long)self.insertIndexPaths.count];
 }
 
 @end
