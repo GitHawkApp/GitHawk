@@ -176,7 +176,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/MessageViewController</string>
 			<key>Title</key>
-			<string>MessageViewController (0.2.0)</string>
+			<string>MessageViewController (0.2.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

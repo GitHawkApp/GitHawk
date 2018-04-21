@@ -24,10 +24,21 @@ open class MessageTextView: UITextView, UITextViewDelegate {
         set {}
     }
 
+    open var defaultFont: UIFont? = UIFont.preferredFont(forTextStyle: .body)
+
+    open var defaultTextColor: UIColor? = .black
+
     open override var font: UIFont? {
         didSet {
+            defaultFont = font
             placeholderLabel.font = font
             placeholderLayoutDidChange()
+        }
+    }
+
+    open override var textColor: UIColor? {
+        didSet {
+            defaultTextColor = textColor
         }
     }
 

@@ -13,12 +13,11 @@ public final class MessageView: UIView, MessageTextViewListener {
     public let textView = MessageTextView()
 
     internal weak var delegate: MessageViewDelegate?
-    internal let leftButton = UIButton()
-    internal let rightButton = UIButton()
+    internal let leftButton = ExpandedHitTestButton()
+    internal let rightButton = ExpandedHitTestButton()
     internal let UITextViewContentSizeKeyPath = #keyPath(UITextView.contentSize)
     internal let topBorderLayer = CALayer()
     internal var contentView: UIView?
-    internal var leftButtonAction: Selector?
     internal var rightButtonAction: Selector?
     internal var leftButtonInset: CGFloat = 0
     internal var rightButtonInset: CGFloat = 0
@@ -111,7 +110,7 @@ public final class MessageView: UIView, MessageTextViewListener {
         }
     }
 
-    public var inset: UIEdgeInsets {
+    public var textViewInset: UIEdgeInsets {
         set {
             textView.textContainerInset = newValue
             setNeedsLayout()
@@ -206,7 +205,6 @@ public final class MessageView: UIView, MessageTextViewListener {
         switch position {
         case .left:
             button = leftButton
-            leftButtonAction = action
         case .right:
             button = rightButton
             rightButtonAction = action
@@ -242,6 +240,12 @@ public final class MessageView: UIView, MessageTextViewListener {
         buttonLayoutDidChange(button: button)
     }
 
+    public var bottomInset: CGFloat = 0 {
+        didSet {
+            delegate?.wantsLayout(messageView: self)
+        }
+    }
+
     // MARK: Overrides
 
     public override func layoutSubviews() {
@@ -270,36 +274,36 @@ public final class MessageView: UIView, MessageTextViewListener {
 
         // adjust by bottom offset so content is flush w/ text view
         let leftButtonFrame = CGRect(
-            x: safeBounds.minX + inset.left,
-            y: textViewMaxY - leftButtonSize.height + leftButton.bottomHeightOffset - inset.bottom,
+            x: safeBounds.minX + leftButtonInset,
+            y: textViewMaxY - leftButtonSize.height + leftButton.bottomHeightOffset - textViewInset.bottom,
             width: leftButtonSize.width,
             height: leftButtonSize.height
         )
         leftButton.frame = showLeftButton ? leftButtonFrame : .zero
 
+        let leftButtonMaxX = (showLeftButton ? leftButtonFrame.maxX : 0)
         let textViewFrame = CGRect(
-            x: leftButtonFrame.maxX + leftButtonInset,
+            x: (showLeftButton ? leftButtonMaxX + leftButtonInset : 0),
             y: textViewY,
-            width: safeBounds.width - leftButtonFrame.maxX - rightButtonSize.width - rightButtonInset - inset.right,
+            width: safeBounds.width - leftButtonMaxX - rightButtonSize.width - rightButtonInset,
             height: textViewHeight
         )
         textView.frame = textViewFrame
 
         // adjust by bottom offset so content is flush w/ text view
         let rightButtonFrame = CGRect(
-            x: textViewFrame.maxX + rightButtonInset,
-            y: textViewMaxY - rightButtonSize.height + rightButton.bottomHeightOffset - inset.bottom,
+            x: textViewFrame.maxX,
+            y: textViewMaxY - rightButtonSize.height + rightButton.bottomHeightOffset - textViewInset.bottom,
             width: rightButtonSize.width,
             height: rightButtonSize.height
         )
         rightButton.frame = rightButtonFrame
 
-        let contentY = textViewFrame.maxY + inset.bottom
         contentView?.frame = CGRect(
             x: safeBounds.minX,
-            y: contentY,
+            y: textViewFrame.maxY,
             width: safeBounds.width,
-            height: bounds.height - contentY - util_safeAreaInsets.bottom
+            height: contentView?.frame.height ?? 0
         )
     }
 
@@ -316,7 +320,9 @@ public final class MessageView: UIView, MessageTextViewListener {
     // MARK: Private API
     
     internal var height: CGFloat {
-        return textViewHeight + (contentView?.bounds.height ?? 0)
+        return textViewHeight
+            + (contentView?.bounds.height ?? 0)
+            + bottomInset
     }
     
     internal var maxLineHeight: CGFloat {
