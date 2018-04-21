@@ -63,7 +63,7 @@ extension String {
         }
 
         // add remaining rightmost text
-        if let right = substring(with: NSRange(location: currentRight, length: utf8.count - currentRight)) {
+        if let right = substring(with: NSRange(location: currentRight, length: utf16.count - currentRight)) {
             builder.add(text: right)
         }
     }
