@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="i6k-yB-d8o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="i6k-yB-d8o">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,14 +32,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6I8-5k-y6W">
-                                            <rect key="frame" x="16" y="4.5" width="90" height="33"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <rect key="frame" x="16" y="7" width="72" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                             <state key="normal" title="label-name"/>
                                         </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="6I8-5k-y6W" firstAttribute="centerY" secondItem="JgS-eS-vpS" secondAttribute="centerY" id="M8R-jF-F8T"/>
                                         <constraint firstItem="6I8-5k-y6W" firstAttribute="leading" secondItem="JgS-eS-vpS" secondAttribute="leading" constant="16" id="Ogm-Lo-xHa"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6I8-5k-y6W" secondAttribute="trailing" id="SX9-E6-6va"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="tintColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
