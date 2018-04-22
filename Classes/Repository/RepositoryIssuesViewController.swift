@@ -24,7 +24,7 @@ SearchBarSectionControllerDelegate {
     private let type: RepositoryIssuesType
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
-    private var previousSearchString = "is:open"
+    private var previousSearchString = "is:open "
 
     init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
         self.repo = repo
@@ -81,9 +81,8 @@ SearchBarSectionControllerDelegate {
     // MARK: SearchBarSectionControllerDelegate
 
     func didChangeSelection(sectionController: SearchBarSectionController, query: String) {
-        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard previousSearchString != trimmed else { return }
-        previousSearchString = trimmed
+        guard previousSearchString != query else { return }
+        previousSearchString = query
         debouncer.action = { [weak self] in self?.fetch(page: nil) }
     }
 
