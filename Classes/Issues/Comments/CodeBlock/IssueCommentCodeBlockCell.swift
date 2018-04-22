@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import StyledText
 
 final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
 
@@ -24,7 +25,7 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
         right: Styles.Sizes.commentGutter
     )
 
-    let textView = AttributedStringView()
+    let textView = StyledTextView()
     let scrollView = UIScrollView()
 
     override init(frame: CGRect) {
@@ -67,7 +68,7 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
         let contentSize = viewModel.contentSize
         scrollView.contentSize = contentSize
 
-        textView.configureAndSizeToFit(text: viewModel.code, width: 0)
+        textView.configure(renderer: viewModel.code, width: 0)
     }
 
 }
