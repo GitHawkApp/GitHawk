@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class RepositoryLabel: ListDiffable, Hashable, Equatable {
+final class RepositoryLabel: ListDiffable, Hashable, Equatable, ListSwiftIdentifiable, ListSwiftEquatable {
 
     let color: String
     let name: String
@@ -44,6 +44,19 @@ final class RepositoryLabel: ListDiffable, Hashable, Equatable {
         if lhs === rhs { return true }
         return lhs.color == rhs.color
         && lhs.name == rhs.name
+    }
+
+    // MARK: ListSwiftIdentifiable
+
+    var identifier: String {
+        return name
+    }
+
+    // MARK: ListSwiftEquatable
+
+    func isEqual(to object: ListSwiftDiffable) -> Bool {
+        guard let object = object as? RepositoryLabel else { return false }
+        return self == object
     }
 
 }

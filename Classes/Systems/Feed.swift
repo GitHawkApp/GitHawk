@@ -22,7 +22,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
         case loadingNext
     }
 
-    let adapter: ListAdapter
+    let swiftAdapter: ListSwiftAdapter
     let collectionView: UICollectionView
 
     public private(set) var status: Status = .idle
@@ -37,7 +37,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
         collectionView: UICollectionView? = nil,
         managesLayout: Bool = true
         ) {
-        self.adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: viewController)
+        self.swiftAdapter = ListSwiftAdapter(viewController: viewController)
         self.delegate = delegate
         self.managesLayout = managesLayout
         self.collectionView = collectionView
@@ -53,6 +53,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
     }
 
     // MARK: Public API
+
+    var adapter: ListAdapter {
+        return swiftAdapter.listAdapter
+    }
 
     func refreshHead() {
         refresh()

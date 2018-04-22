@@ -90,15 +90,22 @@ ContextMenuDelegate {
     }
 
     func newLabelsController() -> UIViewController {
-        guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
-            else { fatalError("Missing labels view controller") }
-        controller.configure(
+//        guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
+//            else { fatalError("Missing labels view controller") }
+//        controller.configure(
+//            selected: issueResult?.labels.labels ?? [],
+//            client: client,
+//            owner: model.owner,
+//            repo: model.repo
+//        )
+//        return controller
+
+        return LabelsViewController2(
             selected: issueResult?.labels.labels ?? [],
             client: client,
             owner: model.owner,
             repo: model.repo
         )
-        return controller
     }
 
     func newMilestonesController() -> UIViewController {
