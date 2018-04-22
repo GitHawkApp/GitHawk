@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import StyledText
 
-func CodeBlockElement(text: String, language: String?) -> IssueCommentCodeBlockModel {
+func CodeBlockElement(
+    text: String,
+    language: String?,
+    contentSizeCategory: UIContentSizeCategory
+    ) -> IssueCommentCodeBlockModel {
     let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
     let attributedString: NSAttributedString
 
@@ -30,18 +35,17 @@ func CodeBlockElement(text: String, language: String?) -> IssueCommentCodeBlockM
     inset.left += IssueCommentCodeBlockCell.scrollViewInset.left
     inset.right += IssueCommentCodeBlockCell.scrollViewInset.right
 
-    // TODO use builder later
-    //            let builder = StyledTextBuilder.markdownBase()
-    //                .add(attributedText: highlighted)
-
-    let stringSizing = NSAttributedStringSizing(
-        containerWidth: 0,
-        attributedText: attributedString,
+    let backgroundColor = Styles.Colors.Gray.lighter.color
+    let builder = StyledTextBuilder(attributedText: attributedString)
+        .add(attributes: [.backgroundColor: backgroundColor])
+    let string = StyledTextRenderer(
+        string: builder.build(),
+        contentSizeCategory: contentSizeCategory,
         inset: inset,
-        backgroundColor: Styles.Colors.Gray.lighter.color
+        backgroundColor: backgroundColor
     )
     return IssueCommentCodeBlockModel(
-        code: stringSizing,
+        code: string,
         language: fixedLanguage
     )
 }
