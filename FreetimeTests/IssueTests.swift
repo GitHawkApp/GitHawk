@@ -143,7 +143,7 @@ class IssueTests: XCTestCase {
         )
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is some text")
-        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.string.allText, "let a = 5")
         XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).language, "swift")
         XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "this is the end")
     }
@@ -166,7 +166,7 @@ class IssueTests: XCTestCase {
         )
         XCTAssertEqual(models.count, 3)
         XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "this is some text")
-        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.attributedText.string, "let a = 5")
+        XCTAssertEqual((models[1] as! IssueCommentCodeBlockModel).code.string.allText, "let a = 5")
         XCTAssertNil((models[1] as! IssueCommentCodeBlockModel).language)
         XCTAssertEqual((models[2] as! StyledTextRenderer).string.allText, "this is the end")
     }
