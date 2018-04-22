@@ -71,7 +71,7 @@ final class IssueLabeledModel: ListDiffable {
                 ]
             )))
             .restore()
-            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .add(text: "  \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
         self.string = StyledTextRenderer(
             string: builder.build(),
