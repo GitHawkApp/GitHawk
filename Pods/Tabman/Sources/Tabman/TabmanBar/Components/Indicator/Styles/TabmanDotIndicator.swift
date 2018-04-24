@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 08/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 
 internal class TabmanDotIndicator: TabmanIndicator {
     
@@ -39,10 +38,10 @@ internal class TabmanDotIndicator: TabmanIndicator {
     public override func constructIndicator() {
         
         self.addSubview(dotView)
-        dotView.autoSetDimension(.height, toSize: self.intrinsicContentSize.height)
-        dotView.autoSetDimension(.width, toSize: self.intrinsicContentSize.height)
-        dotView.autoAlignAxis(toSuperviewAxis: .vertical)
-        dotView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 2.0)
+        dotView.set(.height, to: intrinsicContentSize.height)
+        dotView.set(.width, to: intrinsicContentSize.height)
+        dotView.alignToSuperviewAxis(.vertical)
+        dotView.pinToSuperviewEdge(.bottom, inset: 2.0)
         dotView.backgroundColor = self.tintColor
     }
     

@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 03/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -109,7 +109,7 @@ open class TabmanIndicator: UIView, TabmanIndicatorLifecycle {
     ///
     /// - Returns: The item transition type.
     internal func itemTransitionType() -> TabmanItemTransition.Type? {
-        return nil
+        return TabmanItemColorCrossfadeTransition.self
     }
 }
 

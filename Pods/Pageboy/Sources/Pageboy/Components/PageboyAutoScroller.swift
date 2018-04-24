@@ -3,7 +3,7 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 08/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ internal protocol PageboyAutoScrollerHandler: class {
 }
 
 /// Delegate protocol for observing auto scroll events.
-public protocol PageboyAutoScrollerDelegate {
+public protocol PageboyAutoScrollerDelegate: class {
     
     /// The auto scroller will begin a scroll animation on the page view controller.
     ///
@@ -35,7 +35,6 @@ public protocol PageboyAutoScrollerDelegate {
 /// Object that provides auto scrolling framework to PageboyViewController
 public class PageboyAutoScroller: Any {
     
-    
     // MARK: Types
     
     /// Duration spent on each page.
@@ -48,7 +47,6 @@ public class PageboyAutoScroller: Any {
         case long
         case custom(duration: TimeInterval)
     }
-
     
     // MARK: Properties
     
@@ -75,8 +73,7 @@ public class PageboyAutoScroller: Any {
     public var animateScroll: Bool = true
     
     /// The object that acts as a delegate to the auto scroller.
-    public var delegate: PageboyAutoScrollerDelegate?
-    
+    public weak var delegate: PageboyAutoScrollerDelegate?
 
     // MARK: State
     

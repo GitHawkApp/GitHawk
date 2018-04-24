@@ -3,7 +3,7 @@
 //  Pageboy
 //
 //  Created by Merrick Sapsford on 18/07/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ internal class IndexedMap<T> {
     typealias Index = Int
     typealias ObjectFindOperation = (T) -> Bool
     
-    private(set) var objects: [Index : T] = [:]
+    private(set) var objects: [Index: T] = [:]
     
     func set(object: T, for index: Index) {
         self.objects[index] = object

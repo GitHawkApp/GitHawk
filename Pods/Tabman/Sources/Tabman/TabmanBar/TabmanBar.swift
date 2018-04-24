@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 17/02/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 import Pageboy
 
 public protocol TabmanBarDelegate: class {
@@ -91,9 +90,9 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     }
     
     /// Background view of the bar.
-    public private(set) var backgroundView: BackgroundView = BackgroundView(forAutoLayout: ())
+    public private(set) var backgroundView: BackgroundView = BackgroundView()
     /// The content view for the bar.
-    public private(set) var contentView = UIView(forAutoLayout: ())
+    public private(set) var contentView = UIView()
     /// The bottom separator view for the bar.
     internal private(set) var bottomSeparator = SeparatorView()
     
@@ -153,21 +152,15 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     private func initTabBar(coder aDecoder: NSCoder?) {
         
         self.addSubview(backgroundView)
-        backgroundView.autoPinEdgesToSuperviewEdges()
+        backgroundView.pinToSuperviewEdges()
         
         bottomSeparator.addAsSubview(to: self)
         
         self.addSubview(contentView)
         if #available(iOS 11, *) {
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                contentView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-                contentView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-                contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-                contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-                ])
+            contentView.pinToSafeArea(layoutGuide: safeAreaLayoutGuide)
         } else {
-            contentView.autoPinEdgesToSuperviewEdges()
+            contentView.pinToSuperviewEdges()
         }
         
         self.indicator = self.create(indicatorForStyle: self.defaultIndicatorStyle())
@@ -298,9 +291,10 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
         }
         self.height = height
         
-        let bottomSeparatorColor = appearance.style.bottomSeparatorColor ?? defaultAppearance.style.bottomSeparatorColor!
+        let bottomSeparatorColor = appearance.bottomSeparator.color ?? defaultAppearance.bottomSeparator.color!
         self.bottomSeparator.color = bottomSeparatorColor
-        let bottomSeparatorEdgeInsets = appearance.layout.bottomSeparatorEdgeInsets ?? defaultAppearance.layout.bottomSeparatorEdgeInsets!
+        self.bottomSeparator.height = (appearance.bottomSeparator.height ?? defaultAppearance.bottomSeparator.height!).rawValue
+        let bottomSeparatorEdgeInsets = appearance.bottomSeparator.edgeInsets ?? defaultAppearance.bottomSeparator.edgeInsets!
         self.bottomSeparator.edgeInsets = bottomSeparatorEdgeInsets
         
         self.update(forAppearance: appearance,
@@ -338,7 +332,7 @@ open class TabmanBar: UIView, TabmanBarLifecycle {
     ///
     /// - Parameter index: The index of the selected item.
     open func itemSelected(at index: Int) {
-        responder?.bar(self, didSelectItemAt: index)
+        responder?.bar(self, didSelectItemAt: index, completion: nil)
     }
 }
 
