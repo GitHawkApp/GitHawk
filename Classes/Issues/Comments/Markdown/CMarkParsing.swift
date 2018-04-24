@@ -278,7 +278,7 @@ private extension Element {
         case .hr:
             return IssueCommentHrModel()
         case .codeBlock(let text, let language):
-            return CodeBlockElement(text: text, language: language)
+            return CodeBlockElement(text: text, language: language, contentSizeCategory: options.contentSizeCategory)
         case .heading(let text, let level):
             let builder = StyledTextBuilder.markdownBase()
             let style: TextStyle

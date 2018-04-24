@@ -47,13 +47,13 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
-  - IGListKit/Default (3.1.1):
+  - IGListKit/Default (3.3.0):
     - IGListKit/Diffing
-  - IGListKit/Diffing (3.1.1)
-  - IGListKit/Swift (3.1.1):
+  - IGListKit/Diffing (3.3.0)
+  - IGListKit/Swift (3.3.0):
     - IGListKit/Default
   - leveldb-library (1.20)
-  - MessageViewController (0.2.0)
+  - MessageViewController (0.2.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -149,13 +149,13 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 9e7974d472b61837b69bcc38da150e72d42ca75e
+    :commit: 894737d8eaa4eb3d357156d0e7e99bcb1099b61a
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: e985c533f3dcefcd98dc836c65e141afca2fe23c
+    :commit: 4fb166245f72e5d47b6c0f3e67351e9a9802ec63
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
-    :commit: c9c58444decbbe2fac29b8af5741c8ea3a48887e
+    :commit: 10f7905686dc259953602368586ff707a2a43cf7
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
@@ -181,9 +181,9 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
-  IGListKit: 2f46c3390be7e0fd70b401abb34b3737d4730c19
+  IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MessageViewController: a9119bb49a4f6eeeb69ec3c4ab5f1dd7a2ddec02
+  MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: 00985df8245ab2d4b4ef6959a0722d64b09aafee

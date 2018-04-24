@@ -8,14 +8,15 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
 
-    let code: NSAttributedStringSizing
+    let code: StyledTextRenderer
     let language: String?
 
     init(
-        code: NSAttributedStringSizing,
+        code: StyledTextRenderer,
         language: String?
         ) {
         self.code = code
@@ -25,7 +26,7 @@ final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
     // MARK: Public API
 
     var contentSize: CGSize {
-        return code.textViewSize(0)
+        return code.viewSize(width: 0)
     }
 
     // MARK: ListDiffable

@@ -32,11 +32,8 @@ final class IssueMergeModel: ListDiffable {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? IssueMergeModel else { return false }
-        return state == object.state
-        // taking a shortcut instead of O(n) equality check. id should be enough
-        && contexts.count == object.contexts.count
+        // used in binding SC
+        return true
     }
 
 }
