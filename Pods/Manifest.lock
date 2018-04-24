@@ -66,7 +66,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.8)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.1.0)
-  - Pageboy (2.5.0)
+  - Pageboy (2.5.1)
   - SDWebImage/Core (4.0.0)
   - SDWebImage/GIF (4.0.0):
     - FLAnimatedImage (~> 1.0)
@@ -186,7 +186,7 @@ SPEC CHECKSUMS:
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
-  Pageboy: 00985df8245ab2d4b4ef6959a0722d64b09aafee
+  Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b

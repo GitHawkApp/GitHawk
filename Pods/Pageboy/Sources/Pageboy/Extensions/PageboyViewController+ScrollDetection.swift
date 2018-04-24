@@ -290,10 +290,7 @@ private extension PageboyViewController {
                 currentIndex = Int(pagePosition)
             }
             
-            guard currentIndex != self.currentIndex else {
-                return false
-            }
-            self.currentIndex = currentIndex
+            return updateCurrentPageIndexIfNeeded(currentIndex)
         }
         
         return false
@@ -302,12 +299,15 @@ private extension PageboyViewController {
     /// Safely update the current page index.
     ///
     /// - Parameter index: the proposed index.
-    private func updateCurrentPageIndexIfNeeded(_ index: Int) {
+    /// - Returns: Whether the page index was updated.
+    @discardableResult
+    private func updateCurrentPageIndexIfNeeded(_ index: Int) -> Bool {
         guard self.currentIndex != index, index >= 0 &&
             index < self.viewControllerCount ?? 0 else {
-                return
+                return false
         }
         self.currentIndex = index
+        return true
     }
     
     /// Calculate the expected index diff for a page scroll.
