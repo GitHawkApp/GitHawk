@@ -3,11 +3,10 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 22/02/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
-import PureLayout
 import Pageboy
 
 /// A simple bar containing only a line indicator.
@@ -44,7 +43,9 @@ internal class TabmanLineBar: TabmanBar {
         
         indicator.tintColor = self.appearance.indicator.color
         contentView.addSubview(indicator)
-        self.indicatorLeftMargin = indicator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .right)[1]
-        self.indicatorWidth = indicator.autoSetDimension(.width, toSize: 0.0)
+        self.indicatorLeftMargin = indicator.pinToSuperviewEdge(.left)
+        indicator.pinToSuperviewEdge(.top)
+        indicator.pinToSuperviewEdge(.bottom)
+        self.indicatorWidth = indicator.set(.width, to: 0.0)
     }
 }

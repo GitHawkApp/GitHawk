@@ -1,0 +1,6 @@
+framework module AutoInsetter {
+  umbrella header "AutoInsetter-umbrella.h"
+
+  export *
+  module * { export * }
+}
