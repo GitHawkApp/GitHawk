@@ -1,0 +1,6 @@
+framework module Pods_FreetimeWatch_Extension {
+  umbrella header "Pods-FreetimeWatch Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}
