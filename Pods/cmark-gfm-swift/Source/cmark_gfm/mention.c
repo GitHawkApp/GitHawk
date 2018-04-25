@@ -50,6 +50,25 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     return node;
 }
 
+static void html_render(cmark_syntax_extension *extension,
+                        cmark_html_renderer *renderer, cmark_node *node,
+                        cmark_event_type ev_type, int options) {
+    const char *login = cmark_node_get_mention_login(node);
+    if (login == NULL) {
+        return;
+    }
+    if (ev_type != CMARK_EVENT_ENTER) {
+        return;
+    }
+
+    cmark_strbuf *html = renderer->html;
+    cmark_strbuf_puts(html, "<a href=\"https://github.com/");
+    cmark_strbuf_puts(html, login);
+    cmark_strbuf_puts(html, "\">@");
+    cmark_strbuf_puts(html, login);
+    cmark_strbuf_puts(html, "</a>");
+}
+
 static const char *get_type_string(cmark_syntax_extension *extension,
                                    cmark_node *node) {
     return node->type == CMARK_NODE_MENTION ? "mention" : "<unknown>";
@@ -76,6 +95,7 @@ cmark_syntax_extension *create_mention_extension(void) {
     cmark_syntax_extension_set_get_type_string_func(self, get_type_string);
     cmark_syntax_extension_set_can_contain_func(self, can_contain);
     cmark_syntax_extension_set_opaque_free_func(self, opaque_free);
+    cmark_syntax_extension_set_html_render_func(self, html_render);
 
     CMARK_NODE_MENTION = cmark_syntax_extension_add_node(1);
 
