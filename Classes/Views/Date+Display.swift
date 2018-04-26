@@ -23,7 +23,7 @@ extension Date {
     private var ago: Ago {
         let seconds = timeIntervalSinceNow
         if seconds > 0 {
-            return Ago.future(Int(seconds))
+            return .future(Int(seconds))
         } else {
             // negative and casted so other values are implied
             let minute: TimeInterval = -60
@@ -34,17 +34,17 @@ extension Date {
 
             switch seconds {
             case minute+1 ... 0:
-                return Ago.seconds(Int(seconds))
+                return .seconds(Int(seconds))
             case hour+1 ..< minute+1:
-                return Ago.minutes(Int(round(seconds / minute)))
+                return .minutes(Int(round(seconds / minute)))
             case day+1 ..< hour+1:
-                return Ago.hours(Int(round(seconds / hour)))
+                return .hours(Int(round(seconds / hour)))
             case month+1 ..< day+1:
-                return Ago.days(Int(round(seconds / day)))
+                return .days(Int(round(seconds / day)))
             case year+1 ..< month+1:
-                return Ago.months(Int(round(seconds / month)))
+                return .months(Int(round(seconds / month)))
             default:
-                return Ago.years(Int(round(seconds / year)))
+                return .years(Int(round(seconds / year)))
             }
         }
     }

@@ -12,7 +12,7 @@ protocol BookmarkHeaderSectionControllerDelegate: class {
     func didTapClear(sectionController: BookmarkHeaderSectionController)
 }
 
-final class BookmarkHeaderSectionController: ListSectionController, ClearAllHeaderCellDelegate {
+final class BookmarkHeaderSectionController: ListSectionController {
 
     weak var delegate: BookmarkHeaderSectionControllerDelegate?
 
@@ -35,8 +35,11 @@ final class BookmarkHeaderSectionController: ListSectionController, ClearAllHead
         return cell
     }
 
-    // MARK: ClearAllHeaderCellDelegate
+}
 
+// MARK: ClearAllHeaderCellDelegate
+
+extension BookmarkHeaderSectionController: ClearAllHeaderCellDelegate {
     func didSelectClear(cell: ClearAllHeaderCell) {
         delegate?.didTapClear(sectionController: self)
     }

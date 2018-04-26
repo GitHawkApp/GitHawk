@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewDataSource, ListBindable {
+final class IssueAssigneeSummaryCell: UICollectionViewCell {
 
     static let reuse = "cell"
 
@@ -62,18 +62,12 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
         collectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
     }
 
-    // MARK: ListBindable
+}
 
-    func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? IssueAssigneeSummaryModel else { return }
-        label.text = viewModel.title
-        urls = viewModel.expanded ? [] : viewModel.urls
-        collectionView.reloadData()
-        setNeedsLayout()
-    }
+ // MARK: UICollectionViewDataSource
 
-    // MARK: UICollectionViewDataSource
-
+extension IssueAssigneeSummaryCell: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return urls.count
     }
@@ -83,6 +77,20 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
             else { fatalError("Wrong cell type") }
         cell.configure(urls[indexPath.item])
         return cell
+    }
+
+}
+
+// MARK: ListBindable
+
+extension IssueAssigneeSummaryCell: ListBindable {
+
+    func bindViewModel(_ viewModel: Any) {
+        guard let viewModel = viewModel as? IssueAssigneeSummaryModel else { return }
+        label.text = viewModel.title
+        urls = viewModel.expanded ? [] : viewModel.urls
+        collectionView.reloadData()
+        setNeedsLayout()
     }
 
 }
