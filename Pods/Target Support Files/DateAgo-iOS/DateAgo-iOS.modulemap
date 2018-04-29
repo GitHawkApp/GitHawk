@@ -1,0 +1,6 @@
+framework module DateAgo {
+  umbrella header "DateAgo-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

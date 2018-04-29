@@ -10,6 +10,7 @@ PODS:
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
+  - DateAgo (0.1.0)
   - Fabric (1.7.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
@@ -72,6 +73,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - SnapKit (4.0.0)
+  - StringHelpers (0.1.0)
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
@@ -85,6 +87,7 @@ DEPENDENCIES:
   - cmark-gfm-swift (from `https://github.com/GitHawkApp/cmark-gfm-swift.git`, branch `master`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
+  - DateAgo (from `Local Pods/DateAgo`)
   - Fabric
   - FBSnapshotTestCase
   - Firebase/Core
@@ -100,6 +103,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
+  - StringHelpers (from `Local Pods/StringHelpers`)
   - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
@@ -113,6 +117,8 @@ EXTERNAL SOURCES:
   ContextMenu:
     :branch: master
     :git: https://github.com/GitHawkApp/ContextMenu.git
+  DateAgo:
+    :path: Local Pods/DateAgo
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
@@ -129,6 +135,8 @@ EXTERNAL SOURCES:
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
+  StringHelpers:
+    :path: Local Pods/StringHelpers
   StyledText:
     :branch: master
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -166,6 +174,7 @@ SPEC CHECKSUMS:
   cmark-gfm-swift: 8f7ffcd7d4ef6c0eeae5515c724fcde620e1028e
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  DateAgo: c678b6435627f2b267980bc6f0a9969389686691
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
@@ -189,12 +198,13 @@ SPEC CHECKSUMS:
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 53955f58848e544549039faf2ba2fbe9f0c942d8
+PODFILE CHECKSUM: 0883a4fc29f4717acdde3419929842d158366a0f
 
 COCOAPODS: 1.4.0

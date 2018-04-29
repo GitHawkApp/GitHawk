@@ -9,6 +9,7 @@
 import Foundation
 import IGListKit
 import FlatCache
+import DateAgo
 
 final class NotificationViewModel: ListDiffable, Cachable {
 
@@ -62,7 +63,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
         self.identifier = identifier
         self.state = state
         self.commentCount = commentCount
-        self.agoString = date.agoString
+        self.agoString = date.agoString(.long)
     }
 
     convenience init(

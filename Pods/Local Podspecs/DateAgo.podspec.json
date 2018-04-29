@@ -1,0 +1,26 @@
+{
+  "name": "DateAgo",
+  "version": "0.1.0",
+  "license": {
+    "type": "MIT"
+  },
+  "homepage": "https://github.com/GitHawkApp/githawk",
+  "authors": {
+    "Ryan Nystrom": "rnystrom@whoisryannystrom.com"
+  },
+  "summary": ".",
+  "source": {
+    "git": "https://github.com/GitHawkApp/githawk/githawk.git",
+    "tag": "#{s.version}"
+  },
+  "source_files": "DateAgo/*.swift",
+  "resource_bundles": {
+    "Resources": [
+      "DateAgo/Localizable.stringsdict"
+    ]
+  },
+  "platforms": {
+    "ios": "11.0",
+    "watchos": "3.0"
+  }
+}

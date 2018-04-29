@@ -1,15 +1,16 @@
 //
 //  String+NSRange.swift
-//  Freetime
+//  StringHelpers
 //
-//  Created by Ryan Nystrom on 5/24/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 4/29/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
 
 // http://nshipster.com/nsregularexpression/
-extension String {
+public extension String {
+
     /// An `NSRange` that represents the full range of the string.
     var nsrange: NSRange {
         return NSRange(location: 0, length: utf16.count)
@@ -27,4 +28,5 @@ extension String {
     func range(from nsrange: NSRange) -> Range<Index>? {
         return Range(nsrange, in: self)
     }
+
 }

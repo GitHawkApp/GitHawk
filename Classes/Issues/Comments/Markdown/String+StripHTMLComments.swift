@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StringHelpers
 
 private let regex = try! NSRegularExpression(pattern: "<!--((.|\n|\r)*?)-->", options: [])
 extension String {

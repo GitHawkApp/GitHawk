@@ -1,14 +1,14 @@
 //
 //  String+HashDisplay.swift
-//  Freetime
+//  StringHelpers
 //
-//  Created by Ryan Nystrom on 7/9/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 4/29/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
 
-extension String {
+public extension String {
 
     var hashDisplay: String {
         // trim to first <7 characters

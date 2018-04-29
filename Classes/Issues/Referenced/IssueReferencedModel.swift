@@ -9,6 +9,7 @@
 import Foundation
 import IGListKit
 import StyledText
+import DateAgo
 
 final class IssueReferencedModel: ListDiffable {
 
@@ -64,7 +65,7 @@ final class IssueReferencedModel: ListDiffable {
             .restore()
             .add(text: NSLocalizedString(" referenced ", comment: ""))
             .save()
-            .add(text: date.agoString, attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .add(text: date.agoString(.long), attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
             .restore()
             .add(text: "\n")
             .save()

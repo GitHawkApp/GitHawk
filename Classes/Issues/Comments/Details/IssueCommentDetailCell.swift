@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 import SDWebImage
+import DateAgo
 
 protocol IssueCommentDetailCellDelegate: class {
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView)
@@ -135,7 +136,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             editedLabel.text = "\(Constants.Strings.bullet) \(String(format: format, editedLogin))"
 
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
-            editedLabel.detailText = String(format: detailFormat, arguments: [editedLogin, editedDate.agoString])
+            editedLabel.detailText = String(format: detailFormat, arguments: [editedLogin, editedDate.agoString(.long)])
         } else {
             editedLabel.isHidden = true
         }

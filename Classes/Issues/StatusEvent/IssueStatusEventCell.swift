@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import StringHelpers
 
 protocol IssueStatusEventCellDelegate: class {
     func didTapActor(cell: IssueStatusEventCell)

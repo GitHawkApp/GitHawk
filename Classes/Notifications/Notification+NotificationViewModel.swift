@@ -10,26 +10,6 @@ import UIKit
 
 import GitHubAPI
 
-extension String {
-
-    var notificationIdentifier: NotificationViewModel.Identifier? {
-        let split = components(separatedBy: "/")
-        guard split.count > 2,
-            let identifier = split.last
-            else { return nil }
-        let type = split[split.count - 2]
-        switch type {
-        case "commits":
-            return .hash(identifier)
-        case "releases":
-            return .release(identifier)
-        default:
-            return .number((identifier as NSString).integerValue)
-        }
-    }
-
-}
-
 func CreateViewModels(
     containerWidth: CGFloat,
     v3notifications: [V3Notification]) -> [NotificationViewModel] {
@@ -37,8 +17,15 @@ func CreateViewModels(
 
     for notification in v3notifications {
         guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
-            let identifier = notification.subject.url?.absoluteString.notificationIdentifier
+            let identifier = notification.subject.identifier
             else { continue }
+
+        let modelIdentifier: NotificationViewModel.Identifier
+        switch identifier {
+        case .hash(let h): modelIdentifier = .hash(h)
+        case .number(let n): modelIdentifier = .number(n)
+        case .release(let r): modelIdentifier = .release(r)
+        }
 
         let model = NotificationViewModel(
             id: notification.id,
@@ -48,7 +35,7 @@ func CreateViewModels(
             read: !notification.unread,
             owner: notification.repository.owner.login,
             repo: notification.repository.name,
-            identifier: identifier,
+            identifier: modelIdentifier,
             containerWidth: containerWidth
         )
         viewModels.append(model)

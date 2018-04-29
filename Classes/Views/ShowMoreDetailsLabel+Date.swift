@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import DateAgo
 
 extension ShowMoreDetailsLabel {
 
     func setText(date: Date) {
-        text = date.agoString
+        text = date.agoString(.long)
         detailText = DateDetailsFormatter().string(from: date)
     }
 

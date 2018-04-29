@@ -10,36 +10,19 @@ import Foundation
 import Alamofire
 import Apollo
 import GitHubSession
+import GitHubAPI
 
 func newGithubClient(
     userSession: GitHubUserSession? = nil
     ) -> GithubClient {
-    var additionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
-
-    // for apollo + github gql endpoint
-    // http://dev.apollodata.com/ios/initialization.html
-    if let token = userSession?.token, let authMethod = userSession?.authMethod {
-        let header = authMethod == .oauth ? "Bearer \(token)" : "token \(token)"
-        additionalHeaders["Authorization"] = header
-    }
-
-    let config = URLSessionConfiguration.default
-    config.httpAdditionalHeaders = additionalHeaders
-    config.timeoutIntervalForRequest = 15
-
-    // disable URL caching for the v3 API
-    config.requestCachePolicy = .reloadIgnoringLocalCacheData
-    config.urlCache = nil
-
-    let networker = Alamofire.SessionManager(configuration: config)
-
-    let gqlURL = URL(string: "https://api.github.com/graphql")!
-    let transport = HTTPNetworkTransport(url: gqlURL, configuration: config)
-    let apollo = ApolloClient(networkTransport: transport)
-
+    let networkingConfigs = userSession?.networkingConfigs
+    let config = ConfiguredNetworkers(
+        token: networkingConfigs?.token,
+        useOauth: networkingConfigs?.useOauth
+    )
     return GithubClient(
-        apollo: apollo,
-        networker: networker,
+        apollo: config.apollo,
+        networker: config.alamofire,
         userSession: userSession
     )
 }

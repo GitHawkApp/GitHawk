@@ -6,6 +6,8 @@ inhibit_all_warnings!
 def session_pods
   pod 'GitHubAPI', :path => 'Local Pods/GitHubAPI'
   pod 'GitHubSession', :path => 'Local Pods/GitHubSession'
+  pod 'DateAgo', :path => 'Local Pods/DateAgo'
+  pod 'StringHelpers', :path => 'Local Pods/StringHelpers'
 end
 
 def testing_pods

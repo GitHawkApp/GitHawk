@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StringHelpers
 
 private let regex = try! NSRegularExpression(pattern: "https?:\\/\\/.*github.com\\/(\\w*)\\/([^/]*?)\\/issues\\/([0-9]+)", options: [])
 extension String {

@@ -1,0 +1,6 @@
+framework module StringHelpers {
+  umbrella header "StringHelpers-watchOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
