@@ -6,7 +6,8 @@
 //
 //
 
-import Foundation
+import UIKit
+import AutoInsetter
 
 public extension TabmanBar {
     
@@ -50,5 +51,27 @@ public extension TabmanBar {
             return Insets()
         }
         
+    }
+}
+
+extension TabmanBar.Insets: AutoInsetSpec {
+    
+    public var additionalRequiredInsets: UIEdgeInsets {
+        return barInsets
+    }
+    
+    public var allRequiredInsets: UIEdgeInsets {
+        return all
+    }
+}
+
+public extension UIViewController {
+    
+    /// The required insets for the TabmanBar in a parent TabmanViewController.
+    public var parentTabmanBarInsets: TabmanBar.Insets? {
+        guard let tabmanViewController = parentPageboyViewController as? TabmanViewController else {
+            return nil
+        }
+        return tabmanViewController.bar.requiredInsets
     }
 }

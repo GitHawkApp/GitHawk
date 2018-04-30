@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 14/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import UIKit
@@ -37,31 +37,50 @@ internal class TabmanButtonBar: TabmanBar {
     internal var horizontalMarginConstraints = [NSLayoutConstraint]()
     internal var edgeMarginConstraints = [NSLayoutConstraint]()
     
+    private var isAnimatingFocussedButton: Bool = false
     internal var focussedButton: UIButton? {
         didSet {
             guard focussedButton !== oldValue else {
                 return
             }
             
-            focussedButton?.setTitleColor(self.selectedColor, for: .normal)
-            focussedButton?.tintColor = self.selectedColor
-            oldValue?.setTitleColor(self.color, for: .normal)
-            oldValue?.tintColor = self.color
+            let update = {
+                self.focussedButton?.setTitleColor(self.selectedColor, for: .normal)
+                self.focussedButton?.tintColor = self.selectedColor
+                self.focussedButton?.titleLabel?.font = self.selectedTextFont
+                oldValue?.setTitleColor(self.color, for: .normal)
+                oldValue?.tintColor = self.color
+                oldValue?.titleLabel?.font = self.textFont
+            }
+            
+            // If animating between buttons then dont use a transition - only for scroll events
+            if isAnimatingFocussedButton {
+                update()
+            } else {
+                guard let transitionView = focussedButton ?? oldValue else {
+                    update()
+                    return
+                }
+                UIView.transition(with: transitionView, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                    update()
+                }, completion: nil)
+            }
         }
     }
     
     public var textFont: UIFont = Appearance.defaultAppearance.text.font! {
         didSet {
-            guard textFont != oldValue else {
-                return
-            }
-            
-            self.updateButtons(update: { (button) in
+            updateButtons { (button) in
                 button.titleLabel?.font = textFont
-            })
+            }
         }
     }
-    
+    public var selectedTextFont: UIFont = Appearance.defaultAppearance.text.font! {
+        didSet {
+            focussedButton?.titleLabel?.font = selectedTextFont
+        }
+    }
+
     public var color: UIColor = Appearance.defaultAppearance.state.color!
     public var selectedColor: UIColor = Appearance.defaultAppearance.state.selectedColor!
   
@@ -156,6 +175,9 @@ internal class TabmanButtonBar: TabmanBar {
         let textFont = appearance.text.font
         self.textFont = textFont ?? defaultAppearance.text.font!
         
+        let selectedTextFont = appearance.text.selectedFont
+        self.selectedTextFont = selectedTextFont ?? self.textFont
+
         let itemVerticalPadding = appearance.layout.itemVerticalPadding
         self.itemVerticalPadding = itemVerticalPadding ?? defaultAppearance.layout.itemVerticalPadding!
         
@@ -190,7 +212,7 @@ internal class TabmanButtonBar: TabmanBar {
         var previousButton: UIButton?
         for (index, item) in items.enumerated() {
             
-            let button = UIButton(forAutoLayout: ())
+            let button = UIButton()
             view.addSubview(button)
             
             if let image = item.image, let title = item.title {
@@ -217,11 +239,9 @@ internal class TabmanButtonBar: TabmanBar {
             button.titleLabel?.font = self.textFont
             
             // layout
-            NSLayoutConstraint.autoSetPriority(UILayoutPriority(500), forConstraints: {
-                button.autoSetDimension(.height, toSize: Defaults.minimumItemHeight)
-            })
-            button.autoPinEdge(toSuperviewEdge: .top)
-            button.autoPinEdge(toSuperviewEdge: .bottom)
+            button.set(.height, to: Defaults.minimumItemHeight, priority: UILayoutPriority(500))
+            button.pinToSuperviewEdge(.top)
+            button.pinToSuperviewEdge(.bottom)
             
             let verticalPadding = self.itemVerticalPadding
             let insets = UIEdgeInsets(top: verticalPadding, left: 0.0, bottom: verticalPadding, right: 0.0)
@@ -229,22 +249,17 @@ internal class TabmanButtonBar: TabmanBar {
             
             // Add horizontal pin constraints
             // These are breakable (For equal width instances etc.)
-            NSLayoutConstraint.autoSetPriority(UILayoutPriority(500), forConstraints: {
-                if let previousButton = previousButton {
-                    self.horizontalMarginConstraints.append(button.autoPinEdge(.leading, to: .trailing, of: previousButton))
-                } else { // pin to leading
-                    self.edgeMarginConstraints.append(button.autoPinEdge(toSuperviewEdge: .leading))
-                }
-                
-                if index == items.count - 1 {
-                    self.edgeMarginConstraints.append(button.autoPinEdge(toSuperviewEdge: .trailing))
-                }
-            })
+            if let previousButton = previousButton {
+                horizontalMarginConstraints.append(button.pinEdge(.leading, to: .trailing, of: previousButton, priority: UILayoutPriority(500)))
+            } else { // pin to leading
+                self.edgeMarginConstraints.append(button.pinToSuperviewEdge(.leading, priority: UILayoutPriority(500)))
+            }
+            if index == items.count - 1 {
+                self.edgeMarginConstraints.append(button.pinToSuperviewEdge(.trailing, priority: UILayoutPriority(500)))
+            }
             
             // allow button to be compressed
-            NSLayoutConstraint.autoSetPriority(UILayoutPriority(400), forConstraints: { 
-                button.autoSetContentCompressionResistancePriority(for: .horizontal)
-            })
+            button.setContentCompressionResistance(for: .horizontal, to: UILayoutPriority(400))
             
             // Accessibility
             button.accessibilityLabel = item.accessibilityLabel
@@ -280,7 +295,10 @@ internal class TabmanButtonBar: TabmanBar {
     
     @objc internal func tabButtonPressed(_ sender: UIButton) {
         if let index = self.buttons.index(of: sender), (self.responder?.bar(self, shouldSelectItemAt: index) ?? true) {
-            self.responder?.bar(self, didSelectItemAt: index)
+            isAnimatingFocussedButton = true
+            responder?.bar(self, didSelectItemAt: index, completion: {
+                self.isAnimatingFocussedButton = false
+            })
         }
     }
     

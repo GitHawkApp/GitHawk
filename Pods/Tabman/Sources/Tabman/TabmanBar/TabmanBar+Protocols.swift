@@ -3,7 +3,7 @@
 //  Tabman
 //
 //  Created by Merrick Sapsford on 15/03/2017.
-//  Copyright © 2017 Merrick Sapsford. All rights reserved.
+//  Copyright © 2018 UI At Six. All rights reserved.
 //
 
 import Foundation
@@ -32,7 +32,10 @@ internal protocol TabmanBarResponder: class {
     /// - Parameters:
     ///   - bar: The bar.
     ///   - index: The selected index.
-    func bar(_ bar: TabmanBar, didSelectItemAt index: Int)
+    ///   - completion: Completion handler for action.
+    func bar(_ bar: TabmanBar,
+             didSelectItemAt index: Int,
+             completion: (() -> Void)?)
 }
 
 /// Lifecycle functions of TabmanBar
