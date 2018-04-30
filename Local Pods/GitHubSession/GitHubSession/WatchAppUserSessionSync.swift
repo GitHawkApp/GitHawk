@@ -40,13 +40,14 @@ public class WatchAppUserSessionSync: NSObject, WCSessionDelegate {
 
     // https://forums.developer.apple.com/thread/11658
     public func sync(userSession: GitHubUserSession) {
-        for transfer in session.outstandingUserInfoTransfers {
+        guard let session = validSession else { return }
+        for transfer in session.outstandingUserInfoTransfers ?? [] {
             if transfer.userInfo[key] != nil {
                 transfer.cancel()
             }
         }
         let data = NSKeyedArchiver.archivedData(withRootObject: userSession)
-        validSession?.transferUserInfo([key: data])
+        session.transferUserInfo([key: data])
     }
 
     // MARK: Private API
