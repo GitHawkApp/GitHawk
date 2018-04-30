@@ -8,6 +8,7 @@
 
 import Foundation
 import StyledText
+import StringHelpers
 
 extension NSRange {
     var right: Int {

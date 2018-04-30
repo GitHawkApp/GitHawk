@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import StyledText
+import DateAgo
 
 final class RepositorySummaryCell: SelectableCell {
 
@@ -96,7 +97,7 @@ final class RepositorySummaryCell: SelectableCell {
         titleView.configure(renderer: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
-        secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString, model.author])
+        secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString(.long), model.author])
 
         let imageName: String
         let tint: UIColor

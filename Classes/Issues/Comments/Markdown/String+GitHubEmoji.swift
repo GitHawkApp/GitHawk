@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StringHelpers
 
 private let regex: NSRegularExpression = {
     let pattern = "(" + GithubEmojis.alias.map({ $0.key }).joined(separator: "|") + ")"

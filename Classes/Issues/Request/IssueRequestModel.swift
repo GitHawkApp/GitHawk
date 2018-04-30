@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import StyledText
+import DateAgo
 
 final class IssueRequestModel: ListDiffable {
 
@@ -63,7 +64,7 @@ final class IssueRequestModel: ListDiffable {
             .save()
             .add(styledText: StyledText(text: " \(user)", style: Styles.Text.secondaryBold))
             .restore()
-            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .add(text: " \(date.agoString(.long))", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
         self.string = StyledTextRenderer(
             string: builder.build(),

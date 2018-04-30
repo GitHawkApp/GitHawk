@@ -7,5 +7,6 @@ Pod::Spec.new do |spec|
   spec.summary      = '.'
   spec.source       = { :git => 'https://github.com/GitHawkApp/githawk/githawk.git', :tag => spec.version.to_s }
   spec.source_files = 'GitHubSession/*.swift'
-  spec.platform     = :ios, '11.0'
+  spec.ios.deployment_target     = '11.0'
+  spec.watchos.deployment_target = '3.0'
 end

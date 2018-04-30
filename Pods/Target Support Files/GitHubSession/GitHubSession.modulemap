@@ -1,6 +1,0 @@
-framework module GitHubSession {
-  umbrella header "GitHubSession-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,0 +1,6 @@
+framework module GitHubAPI {
+  umbrella header "GitHubAPI-watchOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

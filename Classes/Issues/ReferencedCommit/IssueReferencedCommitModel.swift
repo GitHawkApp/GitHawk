@@ -9,6 +9,8 @@
 import Foundation
 import IGListKit
 import StyledText
+import DateAgo
+import StringHelpers
 
 final class IssueReferencedCommitModel: ListDiffable {
 
@@ -57,7 +59,7 @@ final class IssueReferencedCommitModel: ListDiffable {
                     ])
             ))
             .restore()
-            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .add(text: " \(date.agoString(.long))", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
         self.string = StyledTextRenderer(
             string: builder.build(),

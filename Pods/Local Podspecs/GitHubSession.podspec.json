@@ -15,6 +15,7 @@
   },
   "source_files": "GitHubSession/*.swift",
   "platforms": {
-    "ios": "11.0"
+    "ios": "11.0",
+    "watchos": "3.0"
   }
 }

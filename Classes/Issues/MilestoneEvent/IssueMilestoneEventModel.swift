@@ -9,6 +9,7 @@
 import Foundation
 import IGListKit
 import StyledText
+import DateAgo
 
 final class IssueMilestoneEventModel: ListDiffable {
 
@@ -62,7 +63,7 @@ final class IssueMilestoneEventModel: ListDiffable {
                 style: Styles.Text.secondaryBold.with(foreground: Styles.Colors.Gray.dark.color)
             ))
             .restore()
-            .add(text: " \(date.agoString)", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
+            .add(text: " \(date.agoString(.long))", attributes: [MarkdownAttribute.details: DateDetailsFormatter().string(from: date)])
 
         self.string = StyledTextRenderer(
             string: builder.build(),

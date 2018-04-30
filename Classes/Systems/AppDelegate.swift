@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showingLogin = false
     private let flexController = FlexController()
     private let sessionManager = GitHubSessionManager()
-    private var badgeNotifications: BadgeNotifications? = nil
+    private var badgeNotifications: BadgeNotifications?
+    private var watchAppSync: WatchAppUserSessionSync?
 
     private lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
@@ -33,6 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         sessionManager.addListener(listener: self)
+
+        let focusedSession = sessionManager.focusedUserSession
+        watchAppSync = WatchAppUserSessionSync(userSession: focusedSession)
+        watchAppSync?.start()
 
         // initialize a webview at the start so webview startup later on isn't so slow
         _ = UIWebView()
@@ -52,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // setup root VCs
         window?.backgroundColor = Styles.Colors.background
-        rootNavigationManager.resetRootViewController(userSession: sessionManager.focusedUserSession)
+        rootNavigationManager.resetRootViewController(userSession: focusedSession)
 
         // use Alamofire status bar network activity helper
         NetworkActivityIndicatorManager.shared.isEnabled = true
@@ -108,6 +113,7 @@ extension AppDelegate: GitHubSessionListener {
      // configure 3d touch shortcut handling
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         ShortcutHandler.configure(application: UIApplication.shared, sessionManager: sessionManager)
+        watchAppSync?.sync(userSession: userSession)
     }
 
     func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}

@@ -10,30 +10,31 @@ PODS:
   - ContextMenu (0.1.0)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
+  - DateAgo (0.1.0)
   - Fabric (1.7.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Firebase/Core (4.8.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.13)
-  - Firebase/Database (4.8.0):
+  - Firebase/Core (4.13.0):
+    - FirebaseAnalytics (= 4.2.0)
+    - FirebaseCore (= 4.0.20)
+  - Firebase/Database (4.13.0):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.3)
-  - FirebaseAnalytics (4.0.5):
+    - FirebaseDatabase (= 4.1.5)
+  - FirebaseAnalytics (4.2.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.13):
+  - FirebaseCore (4.0.20):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.3):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseDatabase (4.1.5):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.8):
+  - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
@@ -42,9 +43,9 @@ PODS:
     - Alamofire (~> 4.4.0)
     - Apollo (~> 0.8.0)
   - GitHubSession (0.1.0)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/NSData+zlib (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
   - IGListKit/Default (3.3.0):
@@ -72,6 +73,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - SnapKit (4.0.0)
+  - StringHelpers (0.1.0)
   - StyledText (0.1.0)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
@@ -85,6 +87,7 @@ DEPENDENCIES:
   - cmark-gfm-swift (from `https://github.com/GitHawkApp/cmark-gfm-swift.git`, branch `master`)
   - ContextMenu (from `https://github.com/GitHawkApp/ContextMenu.git`, branch `master`)
   - Crashlytics
+  - DateAgo (from `Local Pods/DateAgo`)
   - Fabric
   - FBSnapshotTestCase
   - Firebase/Core
@@ -100,6 +103,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
+  - StringHelpers (from `Local Pods/StringHelpers`)
   - StyledText (from `https://github.com/GitHawkApp/StyledText.git`, branch `master`)
   - SwiftLint
   - SwipeCellKit (from `Local Pods/SwipeCellKit`)
@@ -113,6 +117,8 @@ EXTERNAL SOURCES:
   ContextMenu:
     :branch: master
     :git: https://github.com/GitHawkApp/ContextMenu.git
+  DateAgo:
+    :path: Local Pods/DateAgo
   FlatCache:
     :branch: master
     :git: https://github.com/GitHawkApp/FlatCache.git
@@ -129,6 +135,8 @@ EXTERNAL SOURCES:
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
+  StringHelpers:
+    :path: Local Pods/StringHelpers
   StyledText:
     :branch: master
     :git: https://github.com/GitHawkApp/StyledText.git
@@ -166,19 +174,20 @@ SPEC CHECKSUMS:
   cmark-gfm-swift: 8f7ffcd7d4ef6c0eeae5515c724fcde620e1028e
   ContextMenu: c9a4b218acc1a5f23bd1857e65d15658582f2a33
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  DateAgo: c678b6435627f2b267980bc6f0a9969389686691
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
-  FirebaseDatabase: 7088bfc4af2cc00231bb36e1404fc2d7509eb4dc
-  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
+  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
+  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
+  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
+  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
-  GitHubAPI: f251aefb91a951512010969347bc6bd7bb21807c
-  GitHubSession: 2bf423872d89755b872ec6cbad4c53c9835beb4f
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  GitHubAPI: 44a907f9699210536d65179d3d0dc0dc70dde7a1
+  GitHubSession: 60c7bbd84fb915a0bd911a367c9661418ccfd7ae
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
@@ -189,12 +198,13 @@ SPEC CHECKSUMS:
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledText: 18cf3224f09dab0c73223effe1ee2fdedefcfb8b
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 15a6e6b04763bc5217ad9fea0fc705b36f00c448
+PODFILE CHECKSUM: 0883a4fc29f4717acdde3419929842d158366a0f
 
 COCOAPODS: 1.4.0

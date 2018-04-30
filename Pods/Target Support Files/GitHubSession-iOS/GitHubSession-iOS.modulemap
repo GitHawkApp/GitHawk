@@ -1,0 +1,6 @@
+framework module GitHubSession {
+  umbrella header "GitHubSession-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
