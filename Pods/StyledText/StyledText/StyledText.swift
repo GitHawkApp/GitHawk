@@ -67,6 +67,7 @@ public class StyledText: Hashable, Equatable {
         switch storage {
         case .text(let text): return NSAttributedString(string: text, attributes: attributes)
         case .attributedText(let text):
+            guard text.length > 0 else { return text }
             let mutable = text.mutableCopy() as? NSMutableAttributedString ?? NSMutableAttributedString()
             let range = NSRange(location: 0, length: mutable.length)
             for (k, v) in attributes {

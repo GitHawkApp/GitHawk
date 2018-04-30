@@ -137,7 +137,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   cmark-gfm-swift:
-    :commit: 26723dcb56b0322a18a01a6e1b8a76f63c0c85e9
+    :commit: 3c9a75d7346aa2cb73bdc4b4459783a8850ec144
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
     :commit: bac5362e41f9c0322f341b8cd9eb32992ea1d8fe
@@ -155,7 +155,7 @@ CHECKOUT OPTIONS:
     :commit: 4fb166245f72e5d47b6c0f3e67351e9a9802ec63
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
-    :commit: 10f7905686dc259953602368586ff707a2a43cf7
+    :commit: c287ae538f3d233e1196c9b56dd67a841f944b30
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:
