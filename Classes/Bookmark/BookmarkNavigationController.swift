@@ -22,12 +22,19 @@ final class BookmarkNavigationController {
     }
 
     // MARK: Public API
-
+    
     var navigationItem: UIBarButtonItem {
+        let item = UIBarButtonItem()
+        configureNavigationItem(item)
+        return item
+    }
+    
+    func configureNavigationItem(_ item: UIBarButtonItem) {
+        
         let accessibilityLabel: String
         let imageName: String
         let selector: Selector
-
+        
         if store.contains(model) {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
@@ -38,24 +45,34 @@ final class BookmarkNavigationController {
             selector = #selector(BookmarkNavigationController.add(sender:))
         }
         
-        let item = UIBarButtonItem(image: UIImage(named: imageName), target: self, action: selector)
         item.accessibilityLabel = accessibilityLabel
+        item.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        item.target = self
+        item.action = selector
+        item.isEnabled = true
+    }
+    
+    //for timeframe between viewDidLoad() and bookmark info is loaded 
+    static var disabledNavigationItem: UIBarButtonItem {
+        let item = UIBarButtonItem()
+        item.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
+        item.isEnabled = false
         return item
     }
-
+    
     // MARK: Private API
-
-    @objc func add(sender: UIButton) {
+    
+    @objc func add(sender: UIBarButtonItem) {
         Haptic.triggerSelection()
-        sender.addTarget(self, action: #selector(BookmarkNavigationController.remove(sender:)), for: .touchUpInside)
-        sender.setImage(UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        sender.action = #selector(BookmarkNavigationController.remove(sender:))
+        sender.image = UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate)
         store.add(model)
     }
-
-    @objc func remove(sender: UIButton) {
-        sender.addTarget(self, action: #selector(BookmarkNavigationController.add(sender:)), for: .touchUpInside)
-        sender.setImage(UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    
+    @objc func remove(sender: UIBarButtonItem) {
+        sender.action = #selector(BookmarkNavigationController.add(sender:))
+        sender.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
         store.remove(model)
     }
-
+    
 }
