@@ -61,6 +61,12 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "watch-marketing",
+      "filename" : "Icon-AppStore-1024x1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {
