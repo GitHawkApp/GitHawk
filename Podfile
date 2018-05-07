@@ -26,7 +26,8 @@ def testing_pods
   pod 'Firebase/Database' 
 
   # prerelease pods
-  pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
+  #pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'
+  pod 'IGListKit/Swift', :path => '/Users/rnystrom/Development/iOS/IGListKit'
   pod 'StyledText', :git => 'https://github.com/GitHawkApp/StyledText.git', :branch => 'master'
   pod 'Highlightr', :git => 'https://github.com/GitHawkApp/Highlightr.git', :branch => 'master'
   pod 'FlatCache', :git => 'https://github.com/GitHawkApp/FlatCache.git', :branch => 'master'

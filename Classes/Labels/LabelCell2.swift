@@ -10,9 +10,10 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class LabelCell2: SelectableCell, ListSwiftBindable {
+final class LabelCell2: SelectableCell {
 
-    private let button = UIButton()
+    public let button = UIButton()
+    public let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +22,13 @@ final class LabelCell2: SelectableCell, ListSwiftBindable {
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
+
+        contentView.addSubview(checkedImageView)
+        checkedImageView.tintColor = Styles.Colors.Blue.medium.color
+        checkedImageView.snp.makeConstraints { make in
+            make.right.equalTo(-Styles.Sizes.gutter)
+            make.centerY.equalToSuperview()
+        }
 
         contentView.addSubview(button)
         button.titleLabel?.font = Styles.Text.secondaryBold.preferredFont
@@ -37,6 +45,7 @@ final class LabelCell2: SelectableCell, ListSwiftBindable {
         )
         button.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
+            make.right.lessThanOrEqualTo(checkedImageView.snp.left)
             make.centerY.equalToSuperview()
         }
 
@@ -47,15 +56,11 @@ final class LabelCell2: SelectableCell, ListSwiftBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: ListSwiftBindable
+    // MARK: Accessibility
 
-    func bind(value: ListSwiftDiffable) {
-        guard let value = value as? RepositoryLabel else { return }
-        button.setTitle(value.name, for: .normal)
-
-        let color = value.color.color
-        button.setTitleColor(color.textOverlayColor, for: .normal)
-        button.backgroundColor = color
+    override var accessibilityLabel: String? {
+        get { return AccessibilityHelper.generatedLabel(forCell: self) }
+        set { }
     }
 
 }

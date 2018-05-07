@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import IGListKit
 
-final class LoadMoreCell: UICollectionViewCell, ListSwiftBindable {
+final class LoadMoreCell: UICollectionViewCell {
 
     private let label = UILabel()
 
@@ -51,9 +51,5 @@ final class LoadMoreCell: UICollectionViewCell, ListSwiftBindable {
             }
         }
     }
-
-    // MARK: ListSwiftBindable
-
-    func bind(value: ListSwiftDiffable) {}
     
 }

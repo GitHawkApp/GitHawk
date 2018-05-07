@@ -17,19 +17,22 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
         super.init()
     }
 
-    override func createViewModelData(value: RepositoryLabel) -> [BindingData] {
+    override func createBinders(from value: RepositoryLabel) -> [ListBinder] {
         return [
-            bindingData(value, cellType: LabelCell2.self, size: {
+            binder(value, cellType: ListCellType.class(LabelCell2.self), size: {
                 return CGSize(
-                    width: $0.collectionContext.containerSize.width,
+                    width: $0.collection.containerSize.width,
                     height: Styles.Sizes.tableCellHeight
                 )
+            }, configure: { [selected] in
+                let color = $1.value.color.color
+                $0.button.setTitleColor(color.textOverlayColor, for: .normal)
+                $0.button.backgroundColor = color
+                $0.button.setTitle($1.value.name, for: .normal)
+
+                $0.checkedImageView.isHidden = selected
             })
         ]
-    }
-
-    override func didSelectItem(at index: Int) {
-        collectionContext?.deselectItem(at: index, sectionController: self, animated: true)
     }
 
 }

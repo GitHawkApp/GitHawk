@@ -1462,17 +1462,17 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
-				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
+				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
+				2971CED22055C8F600342296 /* Freetime.entitlements */,
+				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				294EE4BA209006C0002C9CB1 /* FreetimeWatch */,
 				294EE4C9209006C2002C9CB1 /* FreetimeWatch Extension */,
-				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
-				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				292FCB2A1EE0546E0026635E /* gql */,
+				6444C838F34B9586CC4FA89B /* Pods */,
 				297AE8351EC0D58A00B44A1F /* Products */,
 				297AE86D1EC0D5C200B44A1F /* Resources */,
 				2930F2701F894AA10082BA26 /* Settings.bundle */,
-				6444C838F34B9586CC4FA89B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};

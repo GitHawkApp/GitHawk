@@ -11,11 +11,11 @@ import IGListKit
 
 final class LoadMoreSectionController2: ListSwiftSectionController<String> {
 
-    override func createViewModelData(value: String) -> [BindingData] {
+    override func createBinders(from value: String) -> [ListBinder] {
         return [
-            bindingData(value, cellType: LoadMoreCell.self, size: {
+            binder(value, cellType: .class(LoadMoreCell.self), size: {
                 return CGSize(
-                    width: $0.collectionContext.containerSize.width,
+                    width: $0.collection.containerSize.width,
                     height: Styles.Sizes.tableCellHeight
                 )
             })
