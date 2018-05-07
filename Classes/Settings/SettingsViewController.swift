@@ -1,5 +1,5 @@
 //
-//  SettingsViewController2.swift
+//  SettingsViewController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/31/17.
