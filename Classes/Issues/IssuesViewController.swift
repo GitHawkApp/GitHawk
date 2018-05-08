@@ -164,7 +164,9 @@ final class IssuesViewController:
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
         messageView.add(contentView: actions)
 
-        navigationItem.rightBarButtonItem = moreOptionsItem
+        
+        //show disabled bookmark button until issue has finished loading
+        navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -224,11 +226,9 @@ final class IssuesViewController:
     }
 
     func configureNavigationItems() {
-        var items = [moreOptionsItem]
-        if let bookmarkItem = bookmarkNavController?.navigationItem {
-            items.append(bookmarkItem)
-        }
-        navigationItem.rightBarButtonItems = items
+        guard let rightbarButtonItems = navigationItem.rightBarButtonItems else { return }
+        guard let bookmarkItem = rightbarButtonItems.last else { return }
+        bookmarkNavController?.configureNavigationItem(bookmarkItem)
     }
 
     func viewOwnerAction() -> UIAlertAction? {
