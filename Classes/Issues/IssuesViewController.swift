@@ -554,18 +554,9 @@ final class IssuesViewController:
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
-        let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
+        let quote = commentModel.rawMarkdown.substringUntilNewLine()
         messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
 
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
     }
-
-    private func getCommentUntilNewLine(from string: String) -> String {
-        let substring = string.components(separatedBy: .newlines)[0]
-        if string == substring {
-            return string
-        }
-        return substring + " ..."
-    }
-
 }

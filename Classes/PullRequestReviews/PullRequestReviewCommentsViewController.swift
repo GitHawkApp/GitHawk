@@ -13,7 +13,8 @@ import MessageViewController
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
-    PullRequestReviewReplySectionControllerDelegate {
+    PullRequestReviewReplySectionControllerDelegate,
+    IssueCommentSectionControllerDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -29,7 +30,10 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         return f
     }()
 
-    init(model: IssueDetailsModel, client: GithubClient, autocomplete: IssueCommentAutocomplete) {
+    init(model: IssueDetailsModel,
+         client: GithubClient,
+         autocomplete: IssueCommentAutocomplete
+        ) {
         self.model = model
         self.client = client
         self.autocomplete = autocomplete
@@ -164,11 +168,14 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
-        case is NSAttributedStringSizing: return IssueTitleSectionController()
-        case is IssueCommentModel: return IssueCommentSectionController(
-            model: self.model,
-            client: client,
-            autocomplete: autocomplete
+        case is NSAttributedStringSizing:
+            return IssueTitleSectionController()
+        case is IssueCommentModel:
+            return IssueCommentSectionController(
+                model: model,
+                client: client,
+                autocomplete: autocomplete,
+                issueCommentDelegate: self
             )
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         case is PullRequestReviewReplyModel: return PullRequestReviewReplySectionController(delegate: self)
@@ -200,4 +207,13 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         focusedReplyModel = reply
     }
 
+    // MARK: IssueCommentSectionControllerDelegate
+
+    func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
+        setMessageView(hidden: false, animated: true)
+        messageView.textView.becomeFirstResponder()
+        let quote = commentModel.rawMarkdown.substringUntilNewLine()
+        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
+        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+    }
 }
