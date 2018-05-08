@@ -88,6 +88,7 @@ extension GithubClient {
                             models.append(createReviewComment(
                                 owner: owner,
                                 repo: repo,
+                                prReviewReplyModel: PullRequestReviewReplyModel(replyID: id),
                                 model: comment,
                                 viewer: viewerUsername,
                                 contentSizeCategory: contentSizeCategory,
@@ -131,6 +132,7 @@ extension GithubClient {
                     let comment = createReviewComment(
                         owner: owner,
                         repo: repo,
+                        prReviewReplyModel: PullRequestReviewReplyModel(replyID: inReplyTo),
                         model: model,
                         viewer: viewer,
                         contentSizeCategory: contentSizeCategory,
@@ -170,6 +172,7 @@ private func createReviewCommentModel(id: Int, json: [String: Any]) -> GithubCli
 private func createReviewComment(
     owner: String,
     repo: String,
+    prReviewReplyModel: PullRequestReviewReplyModel? = nil,
     model: GithubClient.ReviewComment,
     viewer: String?,
     contentSizeCategory: UIContentSizeCategory,
@@ -197,6 +200,7 @@ private func createReviewComment(
     return IssueCommentModel(
         id: "\(model.id)",
         details: details,
+        prReviewReplyModel: prReviewReplyModel,
         bodyModels: bodies,
         reactions: reactions,
         collapse: nil,

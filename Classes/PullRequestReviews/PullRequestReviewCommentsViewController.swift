@@ -215,5 +215,9 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         let quote = commentModel.rawMarkdown.substringUntilNewLine()
         messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+
+        if let reply = commentModel.prReviewReplyModel {
+            focusedReplyModel = reply
+        }
     }
 }

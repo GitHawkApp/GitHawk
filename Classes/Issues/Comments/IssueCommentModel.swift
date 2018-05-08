@@ -14,6 +14,7 @@ final class IssueCommentModel: ListDiffable {
     let id: String
     let details: IssueCommentDetailsViewModel
     let bodyModels: [ListDiffable]
+    let prReviewReplyModel: PullRequestReviewReplyModel?
     let reactions: IssueCommentReactionViewModel
     let collapse: (model: AnyObject, height: CGFloat)?
     let number: Int?
@@ -33,6 +34,7 @@ final class IssueCommentModel: ListDiffable {
     init(
         id: String,
         details: IssueCommentDetailsViewModel,
+        prReviewReplyModel: PullRequestReviewReplyModel? = nil,
         bodyModels: [ListDiffable],
         reactions: IssueCommentReactionViewModel,
         collapse: (AnyObject, CGFloat)?,
@@ -46,6 +48,7 @@ final class IssueCommentModel: ListDiffable {
         ) {
         self.id = id
         self.details = details
+        self.prReviewReplyModel = prReviewReplyModel
         self.bodyModels = bodyModels
         self.reactions = reactions
         self.collapse = collapse

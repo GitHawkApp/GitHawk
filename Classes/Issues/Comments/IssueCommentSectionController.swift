@@ -441,9 +441,9 @@ final class IssueCommentSectionController:
             ToastManager.showGenericError()
             return
         }
-
+        
         let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
-
+        
         let alert = UIAlertController.configured(
             title: String(format: alertTitle, login),
             preferredStyle: .actionSheet
