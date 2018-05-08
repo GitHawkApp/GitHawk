@@ -9,43 +9,25 @@
 
 import Foundation
 
-public final class ListIdentifiableBox: ListDiffable {
-
-    public let value: ListSwiftIdentifiable
-
-    init(value: ListSwiftIdentifiable) {
-        self.value = value
-    }
-
-    public func diffIdentifier() -> NSObjectProtocol {
-        return value.identifier as NSObjectProtocol
-    }
-
-    public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        return true
-    }
-
-}
-
 /**
  Wrap a `ListSwiftDiffable` conforming value so that it conforms to `ListDiffable` and can be used with other IGListKit
  systems.
 
  @note Wrapped values can be a Swift `class` or `struct`.
  */
-public final class ListDiffableBox: ListDiffable {
+internal final class ListDiffableBox: ListDiffable {
 
     /**
      The boxed value.
      */
-    public let value: ListSwiftDiffable
+    let value: ListSwiftDiffable
 
     /**
      Initialize a new `ListDiffableBox` object.
 
      @param value The value to be boxed.
      */
-    public init(value: ListSwiftDiffable) {
+    init(value: ListSwiftDiffable) {
         self.value = value
     }
 
@@ -54,18 +36,17 @@ public final class ListDiffableBox: ListDiffable {
     /**
      :nodoc:
      */
-    public func diffIdentifier() -> NSObjectProtocol {
-        // namespace the identifier with the value type to further prevent collisions
+    func diffIdentifier() -> NSObjectProtocol {
+        // namespace the identifier with the value type to help prevent collisions
         return "\(value.self)\(value.identifier)" as NSObjectProtocol
     }
 
     /**
      :nodoc:
      */
-    public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? ListDiffableBox else { return false }
-        return value.isEqual(to: object.value)
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        // always true since objects are updated with ListSwiftSectionController which handles updates at the cell level
+        return true
     }
 
 }

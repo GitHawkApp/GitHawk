@@ -11,7 +11,7 @@ import IGListKit
 
 final class LabelsViewController2: BaseListViewController2, BaseListViewController2DataSource {
 
-    private var selectedLabels = Set<RepositoryLabel>()
+    private let selectedLabels: Set<RepositoryLabel>
     private var labels = [RepositoryLabel]()
     private let client: GithubClient
     private let request: RepositoryLabelsQuery
@@ -38,7 +38,12 @@ final class LabelsViewController2: BaseListViewController2, BaseListViewControll
     // MARK: Public API
 
     var selected: [RepositoryLabel] {
-        return Array(selectedLabels)
+        return labels.filter {
+            if let sectionController: LabelSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                return sectionController.selected
+            }
+            return false
+        }
     }
 
     // MARK: Overrides

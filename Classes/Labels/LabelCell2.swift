@@ -56,6 +56,12 @@ final class LabelCell2: SelectableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Public API
+
+    func setSelected(_ selected: Bool) {
+        checkedImageView.isHidden = !selected
+    }
+
     // MARK: Accessibility
 
     override var accessibilityLabel: String? {

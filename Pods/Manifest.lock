@@ -98,7 +98,7 @@ DEPENDENCIES:
   - GitHubSession (from `Local Pods/GitHubSession`)
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
-  - IGListKit/Swift (from `/Users/rnystrom/Development/iOS/IGListKit`)
+  - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
@@ -130,7 +130,8 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :path: /Users/rnystrom/Development/iOS/IGListKit
+    :branch: swift
+    :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
@@ -155,6 +156,9 @@ CHECKOUT OPTIONS:
   Highlightr:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
+  IGListKit:
+    :commit: 146025f79409f1acd61c58840214af884b8276b2
+    :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :commit: 4fb166245f72e5d47b6c0f3e67351e9a9802ec63
     :git: https://github.com/GitHawkApp/MessageViewController.git
@@ -186,7 +190,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
-  IGListKit: e9a633def63006395072998f4574a94bbdf86343
+  IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -201,6 +205,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 044b8714d7be40afb8670a420245a3b6df806746
+PODFILE CHECKSUM: 0883a4fc29f4717acdde3419929842d158366a0f
 
 COCOAPODS: 1.4.0
