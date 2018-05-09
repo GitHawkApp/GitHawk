@@ -30,9 +30,10 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         return f
     }()
 
-    init(model: IssueDetailsModel,
-         client: GithubClient,
-         autocomplete: IssueCommentAutocomplete
+    init(
+        model: IssueDetailsModel,
+        client: GithubClient,
+        autocomplete: IssueCommentAutocomplete
         ) {
         self.model = model
         self.client = client
@@ -210,11 +211,11 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     // MARK: IssueCommentSectionControllerDelegate
 
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
+        let quotedComment = QuotedComment(in: feed, with: commentModel)
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
-        let quote = commentModel.rawMarkdown.substringUntilNewLine()
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
-        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+        messageView.text = quotedComment.quote
+        quotedComment.scrollInto()
 
         if let reply = commentModel.prReviewReplyModel {
             focusedReplyModel = reply

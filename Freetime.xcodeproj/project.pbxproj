@@ -424,6 +424,9 @@
 		D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C2AEF41F9AA94600A95945 /* DotListView.swift */; };
 		D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */; };
 		D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */; };
+		DC163B6420A351CE0050C1D4 /* ReplyCommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC163B6320A351CE0050C1D4 /* ReplyCommentTests.swift */; };
+		DC163B6520A353160050C1D4 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC70CE9620A0DEDA004B4FC9 /* String+Substring.swift */; };
+		DC163B6720A3686C0050C1D4 /* QuotedComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC163B6620A3686C0050C1D4 /* QuotedComment.swift */; };
 		DC3238911F9B9E1A007DD924 /* SearchRecentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */; };
 		DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3238921F9BA29D007DD924 /* SearchQuery.swift */; };
 		DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */; };
@@ -436,6 +439,7 @@
 		DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC60C6DB1F99414E00241271 /* IsCancellationError.swift */; };
 		DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */; };
 		DC63393B1F9F65EE00402A8D /* RepositoryAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */; };
+		DC70CE9720A0DEDA004B4FC9 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC70CE9620A0DEDA004B4FC9 /* String+Substring.swift */; };
 		DC7857101F97F546009BADDA /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC78570F1F97F546009BADDA /* Debouncer.swift */; };
 		DCA5ED0E1FAED91F0072F074 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED0D1FAED91F0072F074 /* BookmarkViewController.swift */; };
 		DCA5ED101FAEDF290072F074 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED0F1FAEDF290072F074 /* BookmarkStore.swift */; };
@@ -936,6 +940,8 @@
 		D8C2AEF41F9AA94600A95945 /* DotListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotListView.swift; sourceTree = "<group>"; };
 		D8D876F71FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+SourceView.swift"; sourceTree = "<group>"; };
 		D8D876F91FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+TightSpacing.swift"; sourceTree = "<group>"; };
+		DC163B6320A351CE0050C1D4 /* ReplyCommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCommentTests.swift; sourceTree = "<group>"; };
+		DC163B6620A3686C0050C1D4 /* QuotedComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotedComment.swift; sourceTree = "<group>"; };
 		DC3238901F9B9E1A007DD924 /* SearchRecentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentViewModel.swift; sourceTree = "<group>"; };
 		DC3238921F9BA29D007DD924 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		DC5C02C21F9C6D0A00E80B9F /* SearchRecentStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRecentStoreTests.swift; sourceTree = "<group>"; };
@@ -948,6 +954,7 @@
 		DC60C6DB1F99414E00241271 /* IsCancellationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsCancellationError.swift; sourceTree = "<group>"; };
 		DC6339361F9F567000402A8D /* DeleteSwipeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeAction.swift; sourceTree = "<group>"; };
 		DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryAttributedString.swift; sourceTree = "<group>"; };
+		DC70CE9620A0DEDA004B4FC9 /* String+Substring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Substring.swift"; sourceTree = "<group>"; };
 		DC78570F1F97F546009BADDA /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		DCA5ED0D1FAED91F0072F074 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		DCA5ED0F1FAEDF290072F074 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
@@ -1157,6 +1164,7 @@
 				2949674A1EF9714900B1CF1A /* Hr */,
 				2949674F1EFC1E9200B1CF1A /* Html */,
 				292FCAD01EDFCC510026635E /* Images */,
+				DC163B6620A3686C0050C1D4 /* QuotedComment.swift */,
 				292FCAD31EDFCC510026635E /* IssueCollapsedBodies.swift */,
 				29CC294C1FF839CF006B6DE7 /* IssueCommentBaseCell.swift */,
 				29CC294E1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift */,
@@ -1497,6 +1505,7 @@
 				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
+				DC163B6320A351CE0050C1D4 /* ReplyCommentTests.swift */,
 			);
 			path = FreetimeTests;
 			sourceTree = "<group>";
@@ -1822,6 +1831,7 @@
 			isa = PBXGroup;
 			children = (
 				29CC292E1FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift */,
+				DC70CE9620A0DEDA004B4FC9 /* String+Substring.swift */,
 				29CC292F1FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift */,
 				29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */,
 				29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */,
@@ -2280,7 +2290,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ ! -z \"${DISABLE_APOLLO}\" ]]; then\n  echo \"Stopping Task: Remove 'DISABLE_APOLLO' env variable to continue.\"\n  exit\nfi\n\nPATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
+			shellScript = "";
 		};
 		295B51391FC2342200C3993B /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2873,6 +2883,7 @@
 				98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */,
 				1F9D00FA2051089C00DF5FF6 /* PeopleSectionController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
+				DC70CE9720A0DEDA004B4FC9 /* String+Substring.swift in Sources */,
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */,
@@ -3015,6 +3026,7 @@
 				29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */,
 				29A476A01ED0E6C6005D0953 /* UIColor+Overlay.swift in Sources */,
 				299304691FBA8A88007B9737 /* IssueManagingSectionController.swift in Sources */,
+				DC163B6720A3686C0050C1D4 /* QuotedComment.swift in Sources */,
 				98835BCE1F1965E2005BA24F /* UIDevice+Model.swift in Sources */,
 				29921BCC1EF624D400C1E848 /* UIFont+MutableTraits.swift in Sources */,
 				2963A9321EE1EBE20066509C /* UIMenuController+Reactions.swift in Sources */,
@@ -3049,6 +3061,7 @@
 				49D029001F91D90C00E39094 /* ReactionTests.swift in Sources */,
 				DC60C6CE1F98346400241271 /* MockSearchEmptyViewDelegate.swift in Sources */,
 				DC60C6CB1F98341900241271 /* SearchEmptyViewTests.swift in Sources */,
+				DC163B6520A353160050C1D4 /* String+Substring.swift in Sources */,
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
@@ -3065,6 +3078,7 @@
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				45A9D03A1F9D3D9600FD5AEF /* AttributedStringViewTests.swift in Sources */,
 				2986B35E1FD462AA00E3CFC6 /* FilePathTests.swift in Sources */,
+				DC163B6420A351CE0050C1D4 /* ReplyCommentTests.swift in Sources */,
 				293A457A1F296B7E00DD1006 /* EmojiTests.swift in Sources */,
 				DCA5ED191FAEF32F0072F074 /* BookmarkViewModelTests.swift in Sources */,
 			);

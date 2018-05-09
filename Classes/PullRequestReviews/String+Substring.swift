@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     func substringUntilNewLine() -> String {
-        let substring = self.components(separatedBy: .newlines)[0]
+        guard let substring = self.components(separatedBy: .newlines).first else { return "" }
         return self == substring ? self : substring + " ..."
     }
 }

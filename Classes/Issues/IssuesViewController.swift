@@ -552,11 +552,10 @@ final class IssuesViewController:
     // MARK: IssueCommentSectionControllerDelegate
 
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
+        let quotedComment = QuotedComment(in: feed, with: commentModel)
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
-        let quote = commentModel.rawMarkdown.substringUntilNewLine()
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
-
-        feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
+        messageView.text = quotedComment.quote
+        quotedComment.scrollInto()
     }
 }
