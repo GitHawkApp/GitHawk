@@ -55,6 +55,7 @@ extension GithubClient {
         number: Int,
         milestone: Milestone?
         ) {
+        guard milestone != previous.milestone else { return }
 
         let eventTitle: String
         let type: IssueMilestoneEventModel.MilestoneType
