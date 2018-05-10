@@ -125,7 +125,7 @@ class GitHubAPITests: XCTestCase {
         let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "invitation_notification", withExtension: "json")!)
         let result = processResponse(request: V3NotificationRequest(), input: data)
         switch result {
-        case .failure: XCTFail()
+        case .failure(let error): XCTFail(error?.localizedDescription ?? "Failed without error")
         case .success(let response):
             XCTAssertEqual(response.data.count, 1)
 
@@ -136,6 +136,23 @@ class GitHubAPITests: XCTestCase {
             XCTAssertEqual(first.repository.owner.login, "Nirma")
             let repo = "\(first.repository.owner.login)/\(first.repository.name)"
             XCTAssertEqual(first.subject.title, "Invitation to join \(repo) from \(first.repository.owner.login)")
+        }
+    }
+
+    func test_securityVulnerabilityJSON() {
+        let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "security_vulnerability", withExtension: "json")!)
+        let result = processResponse(request: V3NotificationRequest(), input: data)
+        switch result {
+        case .failure(let error): XCTFail(error?.localizedDescription ?? "Failed without error")
+        case .success(let response):
+            XCTAssertEqual(response.data.count, 1)
+
+            let first = response.data.first!
+            XCTAssertEqual(first.id, "328706116")
+            XCTAssertEqual(first.reason, .securityAlert)
+            XCTAssertEqual(first.repository.name, "eslint-docs")
+            XCTAssertEqual(first.repository.owner.login, "j-f1")
+            XCTAssertEqual(first.subject.title, "Potential security vulnerability found in the hoek dependency")
         }
     }
     

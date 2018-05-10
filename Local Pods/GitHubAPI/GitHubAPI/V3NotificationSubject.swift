@@ -17,6 +17,7 @@ public struct V3NotificationSubject: Codable {
         case repo = "Repository"
         case release = "Release"
         case invitation = "RepositoryInvitation"
+        case vulnerabilityAlert = "RepositoryVulnerabilityAlert"
     }
 
     public let title: String

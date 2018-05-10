@@ -24,13 +24,17 @@ final class BookmarkViewModel: ListDiffable {
             style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
         ))
         switch bookmark.type {
-        case .issue, .pullRequest:
+        case .securityVulnerability:
+            assertionFailure("Type \(bookmark.type) is not expected to be bookmarkable.")
+            fallthrough
+        case .issue, .pullRequest, .release:
             builder.add(text: bookmark.title)
-        case .commit, .repo:
+        case .commit:
+            assertionFailure("Type \(bookmark.type) is not expected to be bookmarkable.")
+            fallthrough
+        case .repo:
             builder.add(text: "\(bookmark.owner)/")
                 .add(text: bookmark.name, traits: .traitBold)
-        case .release:
-            builder.add(text: bookmark.title)
         }
 
         text = StyledTextRenderer(

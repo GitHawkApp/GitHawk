@@ -21,6 +21,7 @@ public struct V3Notification: Codable {
         case subscribed = "subscribed"
         case teamMention = "team_mention"
         case reviewRequested = "review_requested"
+        case securityAlert = "security_alert"
     }
 
     public let id: String
