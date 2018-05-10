@@ -254,5 +254,23 @@ class IssueTests: XCTestCase {
         XCTAssertNotNil(attrText.attributes(at: 2, effectiveRange: nil)[.attachment])
         XCTAssertNotNil(attrText.attributes(at: 11, effectiveRange: nil)[.attachment])
     }
+    
+    func test_linkContainingBrackets() {
+        
+        // Issue #120
+        // the [\\[Pitch\\] slashes at one point rendered incorrectly as \[Pitch\] instead of [Pitch]
+        
+        let body = "...adoption.\r\n\r\nSee: [\\[Pitch\\] Introducing the \"Unwrap or Die\" operator to the standard library](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20170626/037730.html)"
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
+        
+        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "See: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
+    }
 
 }
