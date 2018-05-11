@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Bookmark: Codable {
+struct Bookmark: Codable, Equatable {
     let type: NotificationType
     let name: String
     let owner: String
@@ -32,18 +32,6 @@ struct Bookmark: Codable {
         self.title = title
         self.hasIssueEnabled = hasIssueEnabled
         self.defaultBranch = defaultBranch
-    }
-}
-
-extension Bookmark: Equatable {
-    static func ==(lhs: Bookmark, rhs: Bookmark) -> Bool {
-        return lhs.type == rhs.type &&
-            lhs.name == rhs.name &&
-            lhs.owner == rhs.owner &&
-            lhs.number == rhs.number &&
-            lhs.title == rhs.title &&
-            lhs.hasIssueEnabled == rhs.hasIssueEnabled &&
-            lhs.defaultBranch == rhs.defaultBranch
     }
 }
 

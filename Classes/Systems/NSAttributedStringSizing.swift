@@ -73,11 +73,6 @@ final class NSAttributedStringSizing: NSObject, ListDiffable {
             return attributedText.combineHash(with: width)
         }
 
-        public static func == (lhs: CacheKey, rhs: CacheKey) -> Bool {
-            return lhs.width == rhs.width
-            && lhs.attributedText == rhs.attributedText
-        }
-
     }
 
     private static let globalSizeCache = LRUCache<CacheKey, CGSize>(
