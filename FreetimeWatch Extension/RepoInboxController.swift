@@ -62,37 +62,13 @@ final class RepoInboxController: WKInterfaceController {
         guard let context = self.context else { return }
 
         table.insertRows(at: IndexSet(integer: 0), withRowType: ReadAllRowController.rowControllerIdentifier)
+        let controller = table.rowController(at: 0) as? ReadAllRowController
+        controller?.setup()
 
         table.insertRows(at: IndexSet(integersIn: 1 ..< context.notifications.count + 1), withRowType: RepoInboxRowController.rowControllerIdentifier)
         for (i, n) in context.notifications.enumerated() {
             guard let row = table.rowController(at: i+1) as? RepoInboxRowController else { continue }
-            row.titleLabel.setText(n.subject.title)
-            row.dateLabel.setText(n.updatedAt.agoString(.short))
-
-            let imageName: String
-            switch n.subject.type {
-            case .commit: imageName = "git-commit"
-            case .invitation: imageName = "mail"
-            case .issue: imageName = "issue-opened"
-            case .pullRequest: imageName = "git-pull-request"
-            case .release: imageName = "tag"
-            case .repo: imageName = "repo"
-            case .vulnerabilityAlert: imageName = "alert"
-            }
-            row.typeImage.setImage(UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate))
-
-            if let identifier = n.subject.identifier {
-                let number: String
-                switch identifier {
-                case .hash(let h):
-                    number = h.hashDisplay
-                case .number(let num):
-                    number = "#\(num)"
-                case .release(let r):
-                    number = r
-                }
-                row.numberLabel.setText(number)
-            }
+            row.setup(with: n)
         }
     }
 
