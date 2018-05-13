@@ -172,16 +172,14 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         case is NSAttributedStringSizing:
             return IssueTitleSectionController()
         case is IssueCommentModel:
-            return IssueCommentSectionController(
-                model: model,
-                client: client,
-                autocomplete: autocomplete,
-                issueCommentDelegate: self
-            )
-        case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
-        case is PullRequestReviewReplyModel: return PullRequestReviewReplySectionController(delegate: self)
+            return IssueCommentSectionController(model: model, client: client, autocomplete: autocomplete, issueCommentDelegate: self)
+        case is IssueDiffHunkModel:
+            return IssueDiffHunkSectionController()
+        case is PullRequestReviewReplyModel:
+            return PullRequestReviewReplySectionController(delegate: self)
         // add case for reply model + SC. connect SC.delegate = self
-        default: fatalError("Unhandled object: \(model)")
+        default:
+            fatalError("Unhandled object: \(model)")
         }
     }
 
@@ -211,7 +209,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     // MARK: IssueCommentSectionControllerDelegate
 
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
-        let quotedComment = QuotedComment(in: feed, with: commentModel)
+        let quotedComment = QuotedComment(feed: feed, commentModel: commentModel)
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         messageView.text = quotedComment.quote

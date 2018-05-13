@@ -552,7 +552,7 @@ final class IssuesViewController:
     // MARK: IssueCommentSectionControllerDelegate
 
     func didSelectReply(to sectionController: IssueCommentSectionController, commentModel: IssueCommentModel) {
-        let quotedComment = QuotedComment(in: feed, with: commentModel)
+        let quotedComment = QuotedComment(feed: feed, commentModel: commentModel)
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         messageView.text = quotedComment.quote

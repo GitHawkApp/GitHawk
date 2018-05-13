@@ -21,7 +21,7 @@ class ReplyCommentTests: XCTestCase {
     "</pre>\n" +
     "</details>"
 
-    let anotherTexttWithLessLines = "Couldn't find an open ticket for this, close if there is though!" +
+    let anotherTextWithFewerLines = "Couldn't find an open ticket for this, close if there is though!" +
         "In conjuction with apps like working copy it would be super helpful to open merge requests!\n\n"
 
     let emptyText = ""
@@ -32,10 +32,10 @@ class ReplyCommentTests: XCTestCase {
             "Couldn't find an open ticket for this, close if there is though! ...")
 
         XCTAssertEqual(
-            anotherTexttWithLessLines.substringUntilNewLine(),
+            anotherTextWithFewerLines.substringUntilNewLine(),
             "Couldn't find an open ticket for this, close if there is though!In conjuction with apps like working copy it would be super helpful to open merge requests! ...")
 
-        XCTAssertEqual(emptyText.substringUntilNewLine(),"")
+        XCTAssertEqual(emptyText.substringUntilNewLine(), "")
     }
 
 

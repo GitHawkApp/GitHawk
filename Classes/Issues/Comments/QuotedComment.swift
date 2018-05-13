@@ -12,7 +12,7 @@ class QuotedComment {
     private let feed: Feed
     private let commentModel: IssueCommentModel
 
-    init(in feed: Feed, with commentModel: IssueCommentModel) {
+    init(feed: Feed, commentModel: IssueCommentModel) {
         self.feed = feed
         self.commentModel = commentModel
     }
