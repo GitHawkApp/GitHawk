@@ -77,6 +77,7 @@ final class RepoInboxController: WKInterfaceController {
             case .pullRequest: imageName = "git-pull-request"
             case .release: imageName = "tag"
             case .repo: imageName = "repo"
+            case .vulnerabilityAlert: imageName = "alert"
             }
             row.typeImage.setImage(UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate))
 
