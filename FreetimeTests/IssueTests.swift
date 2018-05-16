@@ -272,5 +272,27 @@ class IssueTests: XCTestCase {
         
         XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "See: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
     }
+    
+    func test_URLThatContainsIssueReferenceLinkInDescription() {
+        
+        // issue 1593: the issue reference link inside the link description was apparently the reason the link wasn't rendered correctly
+        // the url was rendered as "[apple/swift-evolution#793](github.com/apple/swift-evolution/pull/793)"
+        // instead of "apple/swift-evolution#793"
+        
+        let body = "This is the implementation for [apple/swift-evolution#793](https://github.com/apple/swift-evolution/pull/793)\r\n\r\nNote: One of the new tests fails..."
+        
+        let models = MarkdownModels(
+            body,
+            owner: "owner",
+            repo: "repo",
+            width: 0,
+            viewerCanUpdate: false,
+            contentSizeCategory: .large
+        )
+        
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "This is the implementation for apple/swift-evolution#793")
+        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "Note: One of the new tests fails...")
+        
+    }
 
 }
