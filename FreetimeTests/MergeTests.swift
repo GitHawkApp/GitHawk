@@ -45,6 +45,12 @@ class MergeTests: XCTestCase {
         XCTAssertEqual(
             MergeHelper.combinedMergeStatus(for: [.failure, .pending]).state,
             .failure)
+        XCTAssertEqual(
+            MergeHelper.combinedMergeStatus(for: [.pending, .failure]).state,
+            .failure)
+        XCTAssertEqual(
+            MergeHelper.combinedMergeStatus(for: [.failure, .pending, .success]).state,
+            .failure)
     }
 
     func test_mergeStatuses_containsFailure_andError() {
@@ -62,6 +68,12 @@ class MergeTests: XCTestCase {
             .pending)
         XCTAssertEqual(
             MergeHelper.combinedMergeStatus(for: [.pending, .success]).state,
+            .pending)
+        XCTAssertEqual(
+            MergeHelper.combinedMergeStatus(for: [.success, .pending]).state,
+            .pending)
+        XCTAssertEqual(
+            MergeHelper.combinedMergeStatus(for: [.success, .pending, .success]).state,
             .pending)
     }
 
