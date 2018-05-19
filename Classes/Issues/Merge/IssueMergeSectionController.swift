@@ -33,11 +33,15 @@ MergeButtonDelegate {
     }
 
     var preferredMergeType: IssueMergeType {
-        guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey)) else {
-            if let object = self.object, let first = object.availableTypes.first {
-                return first
-            }
+        // repo must have at least one merge method
+        guard let availableTypes = self.object?.availableTypes, availableTypes.count > 0 else {
             return .merge
+        }
+
+        // make sure serialized type exists in repo spec. repo settings can change after pref is set.
+        guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey)),
+            availableTypes.contains(type) else {
+                return availableTypes[0]
         }
         return type
     }
