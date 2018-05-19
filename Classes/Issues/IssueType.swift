@@ -36,7 +36,7 @@ protocol IssueType {
     var fileChanges: FileChanges? { get }
 
     var reviewRequestModel: IssueAssigneesModel? { get }
-    var mergeModel: IssueMergeModel? { get }
+    func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel?
 
     func timelineViewModels(
         owner: String,

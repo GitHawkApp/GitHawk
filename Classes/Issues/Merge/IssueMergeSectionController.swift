@@ -33,8 +33,12 @@ MergeButtonDelegate {
     }
 
     var preferredMergeType: IssueMergeType {
-        guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey))
-            else { return .merge }
+        guard let type = IssueMergeType(rawValue: UserDefaults.standard.integer(forKey: preferredMergeTypeKey)) else {
+            if let object = self.object, let first = object.availableTypes.first {
+                return first
+            }
+            return .merge
+        }
         return type
     }
 
@@ -158,23 +162,17 @@ MergeButtonDelegate {
     }
 
     func didSelectOptions(button: MergeButton) {
+        guard let types = self.object?.availableTypes, types.count > 0 else { return }
+
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Change merge type", comment: ""),
             preferredStyle: .actionSheet
         )
         alert.popoverPresentationController?.sourceView = button.optionIconView
 
-        for type in [IssueMergeType.merge, IssueMergeType.rebase, IssueMergeType.squash] {
-
-            let title: String
-            switch type {
-            case .merge: title = NSLocalizedString("Merge", comment: "")
-            case .rebase: title = NSLocalizedString("Rebase", comment: "")
-            case .squash: title = NSLocalizedString("Squash", comment: "")
-            }
-
+        for type in types {
             alert.add(action: AlertAction(AlertActionBuilder {
-                $0.title = title
+                $0.title = type.localized
                 $0.style = .default
             }).get { [weak self] _ in
                 self?.set(preferredMergeType: type)
@@ -183,7 +181,6 @@ MergeButtonDelegate {
         }
 
         alert.add(action: AlertAction.cancel())
-
         viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 

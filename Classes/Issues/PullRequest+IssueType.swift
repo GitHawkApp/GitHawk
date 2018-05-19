@@ -51,7 +51,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return IssueAssigneesModel(users: models, type: .reviewRequested)
     }
 
-    var mergeModel: IssueMergeModel? {
+    func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel? {
         guard let commit = commits.nodes?.first??.commit
             else { return nil }
 
@@ -70,7 +70,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             ))
         }
 
-        return IssueMergeModel(id: commit.id, state: mergeable, contexts: contexts)
+        return IssueMergeModel(
+            id: commit.id,
+            state: mergeable,
+            contexts: contexts,
+            availableTypes: availableTypes
+        )
     }
 
     var headPaging: HeadPaging {

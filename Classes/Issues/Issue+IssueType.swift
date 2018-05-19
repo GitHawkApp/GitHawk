@@ -59,7 +59,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
         return nil
     }
 
-    var mergeModel: IssueMergeModel? {
+    func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel? {
         return nil
     }
 
