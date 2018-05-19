@@ -129,10 +129,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                 results.append(model)
             } else if let closed = node.asClosedEvent,
                 let date = closed.createdAt.githubDate {
+                let closer = closed.closer
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id,
                     actor: closed.actor?.login ?? Constants.Strings.unknown,
-                    commitHash: closed.closedCommit?.oid,
+                    commitHash: closer?.asCommit?.oid ?? closer?.asPullRequest?.mergeCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: false
