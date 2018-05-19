@@ -14,15 +14,18 @@ final class IssueMergeModel: ListDiffable {
     let id: String
     let state: MergeableState
     let contexts: [IssueMergeContextModel]
+    let availableTypes: [IssueMergeType]
 
     init(
         id: String,
         state: MergeableState,
-        contexts: [IssueMergeContextModel]
+        contexts: [IssueMergeContextModel],
+        availableTypes: [IssueMergeType]
         ) {
         self.id = id
         self.state = state
         self.contexts = contexts
+        self.availableTypes = availableTypes
     }
 
     // MARK: IssueMergeModel

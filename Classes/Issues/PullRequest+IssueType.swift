@@ -51,7 +51,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         return IssueAssigneesModel(users: models, type: .reviewRequested)
     }
 
-    var mergeModel: IssueMergeModel? {
+    func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel? {
         guard let commit = commits.nodes?.first??.commit
             else { return nil }
 
@@ -70,7 +70,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             ))
         }
 
-        return IssueMergeModel(id: commit.id, state: mergeable, contexts: contexts)
+        return IssueMergeModel(
+            id: commit.id,
+            state: mergeable,
+            contexts: contexts,
+            availableTypes: availableTypes
+        )
     }
 
     var headPaging: HeadPaging {
@@ -153,10 +158,11 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 results.append(model)
             } else if let closed = node.asClosedEvent,
                 let date = closed.createdAt.githubDate {
+                let closer = closed.closer
                 let model = IssueStatusEventModel(
                     id: closed.fragments.nodeFields.id,
                     actor: closed.actor?.login ?? Constants.Strings.unknown,
-                    commitHash: closed.closedCommit?.oid,
+                    commitHash: closer?.asCommit?.oid ?? closer?.asPullRequest?.mergeCommit?.oid,
                     date: date,
                     status: .closed,
                     pullRequest: true

@@ -12,4 +12,12 @@ enum IssueMergeType: Int {
     case merge
     case rebase
     case squash
+
+    var localized: String {
+        switch self {
+        case .merge: return NSLocalizedString("Merge", comment: "")
+        case .rebase: return NSLocalizedString("Rebase", comment: "")
+        case .squash: return NSLocalizedString("Squash", comment: "")
+        }
+    }
 }

@@ -136,6 +136,17 @@ extension GithubClient {
 
                     let canAdmin = repository.viewerCanAdminister
 
+                    var availableMergeTypes = [IssueMergeType]()
+                    if repository.mergeCommitAllowed {
+                        availableMergeTypes.append(.merge)
+                    }
+                    if repository.squashMergeAllowed {
+                        availableMergeTypes.append(.squash)
+                    }
+                    if repository.rebaseMergeAllowed {
+                        availableMergeTypes.append(.rebase)
+                    }
+
                     let issueResult = IssueResult(
                         id: issueType.id,
                         pullRequest: issueType.pullRequest,
@@ -153,7 +164,7 @@ extension GithubClient {
                         viewerCanAdminister: canAdmin,
                         defaultBranch: repository.defaultBranchRef?.name ?? "master",
                         fileChanges: issueType.fileChanges,
-                        mergeModel: issueType.mergeModel
+                        mergeModel: issueType.mergeModel(availableTypes: availableMergeTypes)
                     )
 
                     DispatchQueue.main.async {
