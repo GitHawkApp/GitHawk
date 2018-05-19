@@ -499,7 +499,7 @@ public final class AddCommentMutation: GraphQLMutation {
             }
           }
 
-          /// Identifies the comment body.
+          /// The body as Markdown.
           public var body: String {
             get {
               return snapshot["body"]! as! String
@@ -2333,7 +2333,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the comment body.
+                /// The body as Markdown.
                 public var body: String {
                   get {
                     return snapshot["body"]! as! String
@@ -3145,6 +3145,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 /// Identifies the commit associated with the 'closed' event.
+                @available(*, deprecated, message: "`ClosedEvent` may be associated with other objects than a commit. Use ClosedEvent.closer instead. Removal on 2018-07-01 UTC.")
                 public var closedCommit: ClosedCommit? {
                   get {
                     return (snapshot["closedCommit"] as? Snapshot).flatMap { ClosedCommit(snapshot: $0) }
@@ -6388,7 +6389,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
             }
           }
 
-          /// Identifies the body of the pull request.
+          /// The body as Markdown.
           public var body: String {
             get {
               return snapshot["body"]! as! String
@@ -7215,7 +7216,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                   }
                 }
 
-                /// Identifies the comment body.
+                /// The body as Markdown.
                 public var body: String {
                   get {
                     return snapshot["body"]! as! String
@@ -8027,6 +8028,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                 }
 
                 /// Identifies the commit associated with the 'closed' event.
+                @available(*, deprecated, message: "`ClosedEvent` may be associated with other objects than a commit. Use ClosedEvent.closer instead. Removal on 2018-07-01 UTC.")
                 public var closedCommit: ClosedCommit? {
                   get {
                     return (snapshot["closedCommit"] as? Snapshot).flatMap { ClosedCommit(snapshot: $0) }
@@ -13903,7 +13905,7 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
       }
 
       public struct Node: GraphQLSelectionSet {
-        public static let possibleTypes = ["Issue", "PullRequest", "Repository", "User", "Organization"]
+        public static let possibleTypes = ["Issue", "PullRequest", "Repository", "User", "Organization", "MarketplaceListing"]
 
         public static let selections: [GraphQLSelection] = [
           GraphQLTypeCase(
@@ -13930,6 +13932,10 @@ public final class RepoSearchPagesQuery: GraphQLQuery {
 
         public static func makeOrganization() -> Node {
           return Node(snapshot: ["__typename": "Organization"])
+        }
+
+        public static func makeMarketplaceListing() -> Node {
+          return Node(snapshot: ["__typename": "MarketplaceListing"])
         }
 
         public static func makeIssue(createdAt: String, author: AsIssue.Author? = nil, id: GraphQLID, labels: AsIssue.Label? = nil, title: String, number: Int, issueState: IssueState) -> Node {
@@ -15791,7 +15797,7 @@ public final class SearchReposQuery: GraphQLQuery {
       }
 
       public struct Node: GraphQLSelectionSet {
-        public static let possibleTypes = ["Issue", "PullRequest", "Repository", "User", "Organization"]
+        public static let possibleTypes = ["Issue", "PullRequest", "Repository", "User", "Organization", "MarketplaceListing"]
 
         public static let selections: [GraphQLSelection] = [
           GraphQLTypeCase(
@@ -15822,6 +15828,10 @@ public final class SearchReposQuery: GraphQLQuery {
 
         public static func makeOrganization() -> Node {
           return Node(snapshot: ["__typename": "Organization"])
+        }
+
+        public static func makeMarketplaceListing() -> Node {
+          return Node(snapshot: ["__typename": "MarketplaceListing"])
         }
 
         public static func makeRepository(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: AsRepository.Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: AsRepository.PrimaryLanguage? = nil, stargazers: AsRepository.Stargazer, defaultBranchRef: AsRepository.DefaultBranchRef? = nil) -> Node {
@@ -16497,7 +16507,7 @@ public struct CommentFields: GraphQLFragment {
     }
   }
 
-  /// The comment body as Markdown.
+  /// The body as Markdown.
   public var body: String {
     get {
       return snapshot["body"]! as! String
@@ -16680,7 +16690,7 @@ public struct ClosableFields: GraphQLFragment {
   public static let fragmentString =
     "fragment closableFields on Closable {\n  __typename\n  closed\n}"
 
-  public static let possibleTypes = ["Project", "Issue", "PullRequest"]
+  public static let possibleTypes = ["Project", "Issue", "PullRequest", "Milestone"]
 
   public static let selections: [GraphQLSelection] = [
     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
@@ -16703,6 +16713,10 @@ public struct ClosableFields: GraphQLFragment {
 
   public static func makePullRequest(closed: Bool) -> ClosableFields {
     return ClosableFields(snapshot: ["__typename": "PullRequest", "closed": closed])
+  }
+
+  public static func makeMilestone(closed: Bool) -> ClosableFields {
+    return ClosableFields(snapshot: ["__typename": "Milestone", "closed": closed])
   }
 
   public var __typename: String {
@@ -16987,7 +17001,7 @@ public struct NodeFields: GraphQLFragment {
   public static let fragmentString =
     "fragment nodeFields on Node {\n  __typename\n  id\n}"
 
-  public static let possibleTypes = ["Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "Milestone", "ReviewRequest", "Team", "OrganizationInvitation", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "CrossReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "Language", "ProtectedBranch", "PushAllowance", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "PublicKey", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "BaseRefChangedEvent", "AddedToProjectEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent", "RepositoryInvitation", "Tag"]
+  public static let possibleTypes = ["License", "MarketplaceCategory", "MarketplaceListing", "Organization", "Project", "ProjectColumn", "ProjectCard", "Issue", "User", "Repository", "CommitComment", "UserContentEdit", "Reaction", "Commit", "Status", "StatusContext", "Tree", "Ref", "PullRequest", "Label", "IssueComment", "PullRequestCommit", "Milestone", "ReviewRequest", "Team", "OrganizationInvitation", "PullRequestReview", "PullRequestReviewComment", "CommitCommentThread", "PullRequestReviewThread", "ClosedEvent", "ReopenedEvent", "SubscribedEvent", "UnsubscribedEvent", "MergedEvent", "ReferencedEvent", "CrossReferencedEvent", "AssignedEvent", "UnassignedEvent", "LabeledEvent", "UnlabeledEvent", "MilestonedEvent", "DemilestonedEvent", "RenamedTitleEvent", "LockedEvent", "UnlockedEvent", "DeployedEvent", "Deployment", "DeploymentStatus", "HeadRefDeletedEvent", "HeadRefRestoredEvent", "HeadRefForcePushedEvent", "BaseRefForcePushedEvent", "ReviewRequestedEvent", "ReviewRequestRemovedEvent", "ReviewDismissedEvent", "DeployKey", "Language", "ProtectedBranch", "PushAllowance", "ReviewDismissalAllowance", "Release", "ReleaseAsset", "RepositoryTopic", "Topic", "Gist", "GistComment", "PublicKey", "OrganizationIdentityProvider", "ExternalIdentity", "Blob", "Bot", "RepositoryInvitation", "BaseRefChangedEvent", "AddedToProjectEvent", "CommentDeletedEvent", "ConvertedNoteToIssueEvent", "MentionedEvent", "MovedColumnsInProjectEvent", "RemovedFromProjectEvent", "Tag"]
 
   public static let selections: [GraphQLSelection] = [
     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
@@ -16998,6 +17012,18 @@ public struct NodeFields: GraphQLFragment {
 
   public init(snapshot: Snapshot) {
     self.snapshot = snapshot
+  }
+
+  public static func makeLicense(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "License", "id": id])
+  }
+
+  public static func makeMarketplaceCategory(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "MarketplaceCategory", "id": id])
+  }
+
+  public static func makeMarketplaceListing(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "MarketplaceListing", "id": id])
   }
 
   public static func makeOrganization(id: GraphQLID) -> NodeFields {
@@ -17030,6 +17056,10 @@ public struct NodeFields: GraphQLFragment {
 
   public static func makeCommitComment(id: GraphQLID) -> NodeFields {
     return NodeFields(snapshot: ["__typename": "CommitComment", "id": id])
+  }
+
+  public static func makeUserContentEdit(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "UserContentEdit", "id": id])
   }
 
   public static func makeReaction(id: GraphQLID) -> NodeFields {
@@ -17208,6 +17238,10 @@ public struct NodeFields: GraphQLFragment {
     return NodeFields(snapshot: ["__typename": "ReviewDismissedEvent", "id": id])
   }
 
+  public static func makeDeployKey(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "DeployKey", "id": id])
+  }
+
   public static func makeLanguage(id: GraphQLID) -> NodeFields {
     return NodeFields(snapshot: ["__typename": "Language", "id": id])
   }
@@ -17268,6 +17302,10 @@ public struct NodeFields: GraphQLFragment {
     return NodeFields(snapshot: ["__typename": "Bot", "id": id])
   }
 
+  public static func makeRepositoryInvitation(id: GraphQLID) -> NodeFields {
+    return NodeFields(snapshot: ["__typename": "RepositoryInvitation", "id": id])
+  }
+
   public static func makeBaseRefChangedEvent(id: GraphQLID) -> NodeFields {
     return NodeFields(snapshot: ["__typename": "BaseRefChangedEvent", "id": id])
   }
@@ -17294,10 +17332,6 @@ public struct NodeFields: GraphQLFragment {
 
   public static func makeRemovedFromProjectEvent(id: GraphQLID) -> NodeFields {
     return NodeFields(snapshot: ["__typename": "RemovedFromProjectEvent", "id": id])
-  }
-
-  public static func makeRepositoryInvitation(id: GraphQLID) -> NodeFields {
-    return NodeFields(snapshot: ["__typename": "RepositoryInvitation", "id": id])
   }
 
   public static func makeTag(id: GraphQLID) -> NodeFields {
@@ -17328,7 +17362,7 @@ public struct ReferencedRepositoryFields: GraphQLFragment {
   public static let fragmentString =
     "fragment referencedRepositoryFields on RepositoryInfo {\n  __typename\n  name\n  owner {\n    __typename\n    login\n  }\n}"
 
-  public static let possibleTypes = ["Repository", "RepositoryInvitationRepository"]
+  public static let possibleTypes = ["Repository"]
 
   public static let selections: [GraphQLSelection] = [
     GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
@@ -17342,12 +17376,8 @@ public struct ReferencedRepositoryFields: GraphQLFragment {
     self.snapshot = snapshot
   }
 
-  public static func makeRepository(name: String, owner: Owner) -> ReferencedRepositoryFields {
-    return ReferencedRepositoryFields(snapshot: ["__typename": "Repository", "name": name, "owner": owner.snapshot])
-  }
-
-  public static func makeRepositoryInvitationRepository(name: String, owner: Owner) -> ReferencedRepositoryFields {
-    return ReferencedRepositoryFields(snapshot: ["__typename": "RepositoryInvitationRepository", "name": name, "owner": owner.snapshot])
+  public init(name: String, owner: Owner) {
+    self.init(snapshot: ["__typename": "Repository", "name": name, "owner": owner.snapshot])
   }
 
   public var __typename: String {
