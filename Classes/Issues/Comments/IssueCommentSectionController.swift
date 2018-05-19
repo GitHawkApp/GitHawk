@@ -95,7 +95,7 @@ final class IssueCommentSectionController:
             .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
     }
 
-    func deleteAction() -> UIAlertAction? {
+    var deleteAction: UIAlertAction? {
         guard object?.viewerCanDelete == true else { return nil }
 
         return AlertAction.delete { [weak self] _ in
@@ -114,7 +114,7 @@ final class IssueCommentSectionController:
         }
     }
 
-    func editAction() -> UIAlertAction? {
+    var editAction: UIAlertAction? {
         guard object?.viewerCanUpdate == true else { return nil }
         return UIAlertAction(title: NSLocalizedString("Edit", comment: ""), style: .default, handler: { [weak self] _ in
             guard let strongSelf = self,
@@ -138,7 +138,7 @@ final class IssueCommentSectionController:
         })
     }
 
-    func replyAction() -> UIAlertAction? {
+    var replyAction: UIAlertAction? {
         return UIAlertAction(
             title: NSLocalizedString("Reply", comment: ""),
             style: .default,
@@ -150,6 +150,23 @@ final class IssueCommentSectionController:
                 strongSelf.issueCommentDelegate?.didSelectReply(
                     to: strongSelf,
                     commentModel: commentModel
+                )
+            }
+        )
+    }
+
+    var viewMarkdownAction: UIAlertAction? {
+        return UIAlertAction(
+            title: NSLocalizedString("View Markdown", comment: ""),
+            style: .default,
+            handler: { [weak self] _ in
+                guard let markdown = self?.object?.rawMarkdown else { return }
+                let nav = UINavigationController(
+                    rootViewController: ViewMarkdownViewController(markdown: markdown)
+                )
+                self?.viewController?.present(
+                    nav,
+                    animated: trueUnlessReduceMotionEnabled
                 )
             }
         )
@@ -451,9 +468,10 @@ final class IssueCommentSectionController:
         alert.popoverPresentationController?.sourceView = sender
         alert.addActions([
             shareAction(sender: sender),
-            editAction(),
-            replyAction(),
-            deleteAction(),
+            viewMarkdownAction,
+            editAction,
+            replyAction,
+            deleteAction,
             AlertAction.cancel()
         ])
         viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
