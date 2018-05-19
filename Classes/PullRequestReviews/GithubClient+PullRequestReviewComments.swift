@@ -202,9 +202,10 @@ private func createReviewComment(
         collapse: nil,
         threadState: .neck,
         rawMarkdown: model.body,
-        viewerCanUpdate: false,
+        viewerCanUpdate: true,
         viewerCanDelete: false,
         isRoot: false,
+        isInPullRequest: true,
         number: model.id,
         asReviewComment: true
     )

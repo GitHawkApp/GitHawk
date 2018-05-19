@@ -504,7 +504,8 @@ final class IssuesViewController:
                 threadState: .single,
                 viewerCanUpdate: viewerCanUpdate,
                 viewerCanDelete: viewerCanDelete,
-                isRoot: false
+                isRoot: false,
+                isInPullRequest: false
             )
             else { return }
 

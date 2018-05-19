@@ -59,7 +59,8 @@ func createCommentModel(
     threadState: IssueCommentModel.ThreadState,
     viewerCanUpdate: Bool,
     viewerCanDelete: Bool,
-    isRoot: Bool
+    isRoot: Bool,
+    isInPullRequest: Bool
     ) -> IssueCommentModel? {
     guard let author = commentFields.author,
         let date = commentFields.createdAt.githubDate,
@@ -96,6 +97,7 @@ func createCommentModel(
         viewerCanUpdate: viewerCanUpdate,
         viewerCanDelete: viewerCanDelete,
         isRoot: isRoot,
+        isInPullRequest: isInPullRequest,
         number: GraphQLIDDecode(id: id, separator: "IssueComment")
     )
 }

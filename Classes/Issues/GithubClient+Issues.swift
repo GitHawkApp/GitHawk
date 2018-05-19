@@ -81,7 +81,8 @@ extension GithubClient {
                         threadState: .single,
                         viewerCanUpdate: issueType.viewerCanUpdate,
                         viewerCanDelete: false, // Root comment can not be deleted
-                        isRoot: true
+                        isRoot: true,
+                        isInPullRequest: false
                     )
 
                     let timeline = issueType.timelineViewModels(

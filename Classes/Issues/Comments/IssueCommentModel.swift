@@ -21,6 +21,7 @@ final class IssueCommentModel: ListDiffable {
     let viewerCanUpdate: Bool
     let viewerCanDelete: Bool
     let isRoot: Bool
+    let isInPullRequest: Bool
     let asReviewComment: Bool
 
     enum ThreadState {
@@ -41,6 +42,7 @@ final class IssueCommentModel: ListDiffable {
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool,
         isRoot: Bool,
+        isInPullRequest: Bool,
         number: Int?,
         asReviewComment: Bool = false
         ) {
@@ -55,6 +57,7 @@ final class IssueCommentModel: ListDiffable {
         self.viewerCanUpdate = viewerCanUpdate
         self.viewerCanDelete = viewerCanDelete
         self.isRoot = isRoot
+        self.isInPullRequest = isInPullRequest
         self.asReviewComment = asReviewComment
     }
 

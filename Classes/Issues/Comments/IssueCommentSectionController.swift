@@ -129,6 +129,7 @@ final class IssueCommentSectionController:
                 issueModel: strongSelf.model,
                 commentID: number,
                 isRoot: object.isRoot,
+                isInPullRequest: object.isInPullRequest,
                 autocomplete: strongSelf.autocomplete
             )
             edit.delegate = self
@@ -255,6 +256,7 @@ final class IssueCommentSectionController:
         guard object?.viewerCanUpdate == true,
             let commentID = object?.number,
             let isRoot = object?.isRoot,
+            let isInPullRequest = object?.isInPullRequest,
             let originalMarkdown = currentMarkdown
             else { return }
 
@@ -268,7 +270,8 @@ final class IssueCommentSectionController:
             issueNumber: model.number,
             commentID: commentID,
             body: edited,
-            isRoot: isRoot)
+            isRoot: isRoot,
+            isInPullRequest: isInPullRequest)
         ) { [weak self] result in
             switch result {
             case .success: break

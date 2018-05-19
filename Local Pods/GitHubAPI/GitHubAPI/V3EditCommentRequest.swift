@@ -13,6 +13,8 @@ public struct V3EditCommentRequest: V3Request {
     public var pathComponents: [String] {
         if isRoot {
             return ["repos", owner, repo, "issues", "\(issueNumber)"]
+        } else if isInPullRequest {
+            return ["repos", owner, repo, "pulls", "comments", "\(commentID)"]
         } else {
             return ["repos", owner, repo, "issues", "comments", "\(commentID)"]
         }
@@ -26,13 +28,15 @@ public struct V3EditCommentRequest: V3Request {
     public let commentID: Int
     public let body: String
     public let isRoot: Bool
+    public let isInPullRequest: Bool
 
-    public init(owner: String, repo: String, issueNumber: Int, commentID: Int, body: String, isRoot: Bool) {
+    public init(owner: String, repo: String, issueNumber: Int, commentID: Int, body: String, isRoot: Bool, isInPullRequest: Bool) {
         self.owner = owner
         self.repo = repo
         self.issueNumber = issueNumber
         self.commentID = commentID
         self.body = body
         self.isRoot = isRoot
+        self.isInPullRequest = isInPullRequest
     }
 }
