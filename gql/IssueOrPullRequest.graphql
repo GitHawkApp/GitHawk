@@ -3,6 +3,9 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     name
     hasIssuesEnabled
     viewerCanAdminister
+    mergeCommitAllowed
+    rebaseMergeAllowed
+    squashMergeAllowed
     mentionableUsers(first: 20) {
       nodes {
         avatarUrl
