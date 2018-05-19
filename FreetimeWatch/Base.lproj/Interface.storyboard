@@ -23,6 +23,10 @@
                                         </items>
                                         <color key="backgroundColor" red="0.011764705882352941" green="0.40000000000000002" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                     </group>
+                                    <connections>
+                                        <outlet property="group" destination="QJe-83-yxm" id="fku-A7-qHb"/>
+                                        <outlet property="readAllLabel" destination="x13-sK-eV4" id="BuQ-g4-Ke5"/>
+                                    </connections>
                                 </tableRow>
                                 <tableRow identifier="RepoInboxRowController" selectable="NO" id="uiB-PM-KME" customClass="RepoInboxRowController" customModule="FreetimeWatch_Extension">
                                     <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="KlY-D5-9qt">
@@ -48,6 +52,7 @@
                                     </group>
                                     <connections>
                                         <outlet property="dateLabel" destination="dLc-DV-bKW" id="rCM-J0-X63"/>
+                                        <outlet property="enclosingGroup" destination="KlY-D5-9qt" id="Zdo-Dp-UNK"/>
                                         <outlet property="numberLabel" destination="0Iq-QE-kCx" id="J0q-fM-9bu"/>
                                         <outlet property="titleLabel" destination="3fI-s1-naN" id="VEm-4d-2R0"/>
                                         <outlet property="typeImage" destination="Bpc-Pj-IwA" id="U4C-RO-etR"/>

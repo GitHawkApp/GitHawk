@@ -1355,12 +1355,11 @@
 				2941E4D6209415340046932D /* InboxRowController.swift */,
 				294EE4D2209006C3002C9CB1 /* Info.plist */,
 				2949276D2094BCA8008B34EE /* LoadingRowController.swift */,
-				2949276B2094BB82008B34EE /* NSObject+RowControllerIdentifier.swift */,
 				2949276320941870008B34EE /* ReadAllRowController.swift */,
 				2941E4D4209412700046932D /* RepoInboxController.swift */,
 				2941E4D8209416510046932D /* RepoInboxRowController.swift */,
 				2949276120941865008B34EE /* SignInRowController.swift */,
-				2949276F2094C088008B34EE /* V3Repository+HashableEquatable.swift */,
+				49B64EC520A85A06000D9AA4 /* Utility */,
 			);
 			path = "FreetimeWatch Extension";
 			sourceTree = "<group>";
@@ -1877,6 +1876,15 @@
 				45A9D0391F9D3D9600FD5AEF /* AttributedStringViewTests.swift */,
 			);
 			path = "Snapshot Tests";
+			sourceTree = "<group>";
+		};
+		49B64EC520A85A06000D9AA4 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				2949276B2094BB82008B34EE /* NSObject+RowControllerIdentifier.swift */,
+				2949276F2094C088008B34EE /* V3Repository+HashableEquatable.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		6444C838F34B9586CC4FA89B /* Pods */ = {

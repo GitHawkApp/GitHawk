@@ -25,6 +25,8 @@ public extension Date {
         return Bundle(identifier: "com.whoisryannystrom.DateAgo") ?? Bundle.main
     }()
 
+    // FIXME: Add language plural rules
+    // https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPInternational/LocalizingYourApp/LocalizingYourApp.html#//apple_ref/doc/uid/10000171i-CH5-SW10
     func agoString(_ format: AgoFormat = .long) -> String {
         switch ago {
         case .future:
