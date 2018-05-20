@@ -238,7 +238,7 @@ class IssueTests: XCTestCase {
     func test_whenCheckmarks() {
         let body = [
             "- [ ] foo",
-            "- [x] bar",
+            "- [x] bar"
         ].joined(separator: "\r\n")
         let models = MarkdownModels(
             body,

@@ -67,7 +67,7 @@ final class BadgeNotifications {
         }
     }
 
-    private var backgroundClient: GithubClient? = nil
+    private var backgroundClient: GithubClient? 
     func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
         let manager = GitHubSessionManager()
         guard let session = manager.focusedUserSession,

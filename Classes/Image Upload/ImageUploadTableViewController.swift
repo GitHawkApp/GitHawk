@@ -56,7 +56,6 @@ class ImageUploadTableViewController: UITableViewController {
         // Set the preview image
         previewImageView.image = image
 
-
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
 

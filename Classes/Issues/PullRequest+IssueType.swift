@@ -46,7 +46,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 let reviewer = node.requestedReviewer?.asUser,
                 let url = URL(string: reviewer.avatarUrl)
                 else { continue }
-            models.append(IssueAssigneeViewModel(login: reviewer.login, avatarURL: url))
+
+            let issueAssigneeViewModel = IssueAssigneeViewModel(login: reviewer.login, avatarURL: url)
+            models.append(issueAssigneeViewModel)
         }
         return IssueAssigneesModel(users: models, type: .reviewRequested)
     }
@@ -60,14 +62,17 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             guard let creator = context.creator,
                 let avatarURL = URL(string: creator.avatarUrl)
                 else { continue }
-            contexts.append(IssueMergeContextModel(
+
+            let issueMergeContextModel = IssueMergeContextModel(
                 id: context.id,
                 context: context.context,
                 state: context.state,
                 login: creator.login,
                 avatarURL: avatarURL,
                 description: context.description ?? ""
-            ))
+            )
+
+            contexts.append(issueMergeContextModel)
         }
 
         return IssueMergeModel(id: commit.id, state: mergeable, contexts: contexts)
@@ -86,7 +91,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     }
 
     // FIXME: Super high cyclo complexity
-    // swiftlint:disable cyclomatic_complexity
+
     func timelineViewModels(
         owner: String,
         repo: String,
@@ -101,7 +106,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
         for node in cleanNodes {
             if let comment = node.asIssueComment {
-                if let model = createCommentModel(
+
+                let model = createCommentModel(
                     id: comment.fragments.nodeFields.id,
                     commentFields: comment.fragments.commentFields,
                     reactionFields: comment.fragments.reactionFields,
@@ -114,13 +120,17 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
                     isRoot: false,
                     isInPullRequestReview: false
-                    ) {
+                )
+
+                if let model = model {
                     results.append(model)
 
-                    mentionedUsers.append(AutocompleteUser(
+                    let autocompleteUser = AutocompleteUser(
                         avatarURL: model.details.avatarURL,
                         login: model.details.login
-                    ))
+                    )
+
+                    mentionedUsers.append(autocompleteUser)
                 }
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = unlabeled.createdAt.githubDate {
@@ -447,7 +457,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             let id = fragments.nodeFields.id
             let isTail = id == tailNodeId
 
-            if let model = createCommentModel(
+            let model = createCommentModel(
                 id: fragments.nodeFields.id,
                 commentFields: fragments.commentFields,
                 reactionFields: fragments.reactionFields,
@@ -460,11 +470,12 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 viewerCanDelete: true,
                 isRoot: false,
                 isInPullRequestReview: true
-                ) {
+            )
+
+            if let model = model {
                 results.append(model)
             }
         }
         return results
     }
-
 }

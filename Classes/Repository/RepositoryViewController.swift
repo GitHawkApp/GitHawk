@@ -19,7 +19,7 @@ NewIssueTableViewControllerDelegate {
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
-    private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var bookmarkNavController: BookmarkNavigationController?
 
     var moreOptionsItem: UIBarButtonItem {
         let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))

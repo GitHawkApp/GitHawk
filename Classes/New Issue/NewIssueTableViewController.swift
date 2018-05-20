@@ -121,7 +121,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     // MARK: Accessibility
 
     override func accessibilityPerformMagicTap() -> Bool {
-        guard let _ = titleText else { return false }
+        guard titleText != nil else { return false }
         onSend()
         return true
     }

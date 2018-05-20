@@ -57,6 +57,6 @@ final class EmojiAutocomplete: AutocompleteType {
         return results[index].emoji
     }
 
-    var highlightAttributes: [NSAttributedStringKey : Any]? { return nil }
+    var highlightAttributes: [NSAttributedStringKey: Any]? { return nil }
 
 }

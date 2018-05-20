@@ -29,7 +29,7 @@ final class IssuesViewController:
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
-    private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var bookmarkNavController: BookmarkNavigationController?
     private var autocompleteController: AutocompleteController!
 
     private var needsScrollToBottom = false
@@ -164,7 +164,6 @@ final class IssuesViewController:
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
         messageView.add(contentView: actions)
 
-        
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
     }

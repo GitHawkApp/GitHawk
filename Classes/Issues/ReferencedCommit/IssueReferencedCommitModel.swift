@@ -85,4 +85,3 @@ final class IssueReferencedCommitModel: ListDiffable {
     }
 
 }
-

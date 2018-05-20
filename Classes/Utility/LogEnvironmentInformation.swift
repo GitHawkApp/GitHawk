@@ -16,6 +16,6 @@ func LogEnvironmentInformation(application: UIApplication) {
         "voice-enabled": UIAccessibilityIsVoiceOverRunning() ? "1": "0",
         "lang": NSLocale.autoupdatingCurrent.languageCode ?? "n/a",
         "country": NSLocale.autoupdatingCurrent.regionCode ?? "n/a",
-        "rtl": application.userInterfaceLayoutDirection == .rightToLeft ? "1" : "0",
+        "rtl": application.userInterfaceLayoutDirection == .rightToLeft ? "1" : "0"
         ])
 }

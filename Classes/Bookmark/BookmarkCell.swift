@@ -84,14 +84,14 @@ final class BookmarkCell: SwipeSelectableCell {
                 string: "\(viewModel.bookmark.owner)/\(viewModel.bookmark.name)",
                 attributes: [
                     .font: Styles.Text.secondaryBold.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
+                    .foregroundColor: Styles.Colors.Gray.light.color
                     ]
             )
             detailString.append(NSAttributedString(
                 string: " #\(viewModel.bookmark.number)",
                 attributes: [
                     .font: Styles.Text.secondary.preferredFont,
-                    .foregroundColor: Styles.Colors.Gray.light.color,
+                    .foregroundColor: Styles.Colors.Gray.light.color
                 ]
             ))
             detailLabel.attributedText = detailString

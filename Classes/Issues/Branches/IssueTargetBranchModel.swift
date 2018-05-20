@@ -14,7 +14,6 @@ final class IssueTargetBranchModel: ListDiffable {
     
     let targetBranchText: StyledTextRenderer
 
-    
     init(branch: String, width: CGFloat) {
         let builder = StyledTextBuilder(styledText: StyledText(
             style: Styles.Text.secondary.with(foreground: Styles.Colors.Gray.medium.color)

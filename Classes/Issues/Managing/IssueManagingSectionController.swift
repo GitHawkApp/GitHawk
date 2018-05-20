@@ -181,7 +181,7 @@ ContextMenuDelegate {
             models += [
                 Action.labels,
                 Action.milestone,
-                Action.assignees,
+                Action.assignees
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
