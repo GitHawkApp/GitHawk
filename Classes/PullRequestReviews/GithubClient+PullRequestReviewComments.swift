@@ -194,6 +194,8 @@ private func createReviewComment(
         contentSizeCategory: contentSizeCategory
     )
 
+
+
     return IssueCommentModel(
         id: "\(model.id)",
         details: details,
@@ -203,9 +205,9 @@ private func createReviewComment(
         threadState: .neck,
         rawMarkdown: model.body,
         viewerCanUpdate: true,
-        viewerCanDelete: false,
+        viewerCanDelete: true,
         isRoot: false,
-        isInPullRequest: true,
+        isInPullRequestReview: true,
         number: model.id,
         asReviewComment: true
     )

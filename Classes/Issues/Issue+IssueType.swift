@@ -89,7 +89,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsIssue: Is
                     viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
                     viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
                     isRoot: false,
-                    isInPullRequest: false
+                    isInPullRequestReview: false
                     ) {
                     results.append(model)
 

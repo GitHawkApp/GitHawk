@@ -17,17 +17,22 @@ public struct V3DeleteCommentStatusCode: V3StatusCodeSuccess {
 public struct V3DeleteCommentRequest: V3Request {
     public typealias ResponseType = V3StatusCodeResponse<V3DeleteCommentStatusCode>
     public var pathComponents: [String] {
-        return ["repos", owner, repo, "issues", "comments", commentID]
+        if isInIssue {
+            return ["repos", owner, repo, "issues", "comments", commentID]
+        }
+        return ["repos", owner, repo, "pulls", "comments", commentID]
     }
     public var method: HTTPMethod { return .delete }
 
     public let owner: String
     public let repo: String
     public let commentID: String
+    public let isInIssue: Bool
 
-    public init(owner: String, repo: String, commentID: String) {
+    public init(owner: String, repo: String, commentID: String, isInIssue: Bool) {
         self.owner = owner
         self.repo = repo
         self.commentID = commentID
+        self.isInIssue = isInIssue
     }
 }

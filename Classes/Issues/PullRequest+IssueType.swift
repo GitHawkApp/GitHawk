@@ -113,7 +113,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     viewerCanUpdate: comment.fragments.updatableFields.viewerCanUpdate,
                     viewerCanDelete: comment.fragments.deletableFields.viewerCanDelete,
                     isRoot: false,
-                    isInPullRequest: true
+                    isInPullRequestReview: false
                     ) {
                     results.append(model)
 
@@ -443,7 +443,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
         for node in thread.comments.nodes ?? [] {
             guard let fragments = node?.fragments else { continue }
-
+            
             let id = fragments.nodeFields.id
             let isTail = id == tailNodeId
 
@@ -456,10 +456,10 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 owner: owner,
                 repo: repo,
                 threadState: isTail ? .tail : .neck,
-                viewerCanUpdate: false, // unsupported by github
-                viewerCanDelete: false,
+                viewerCanUpdate: true, // unsupported by github
+                viewerCanDelete: true,
                 isRoot: false,
-                isInPullRequest: true
+                isInPullRequestReview: true
                 ) {
                 results.append(model)
             }

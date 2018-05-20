@@ -129,7 +129,7 @@ final class IssueCommentSectionController:
                 issueModel: strongSelf.model,
                 commentID: number,
                 isRoot: object.isRoot,
-                isInPullRequest: object.isInPullRequest,
+                isInPullRequestReview: object.isInPullRequestReview,
                 autocomplete: strongSelf.autocomplete
             )
             edit.delegate = self
@@ -230,17 +230,22 @@ final class IssueCommentSectionController:
 
     /// Deletes the comment and optimistically removes it from the feed
     private func deleteComment() {
-        guard let number = object?.number else { return }
+        guard let number = object?.number,
+            object?.viewerCanDelete == true,
+            let isInPullRequestReview = object?.isInPullRequestReview
+            else { return }
 
         // Optimistically delete the comment
         hasBeenDeleted = true
         update(animated: trueUnlessReduceMotionEnabled)
 
-        client.client.send(V3DeleteCommentRequest(
+        let deleteCommentRequest = V3DeleteCommentRequest(
             owner: model.owner,
             repo: model.repo,
-            commentID: "\(number)")
-        ) { [weak self] result in
+            commentID: "\(number)",
+            isInIssue: !isInPullRequestReview)
+
+        client.client.send(deleteCommentRequest) { [weak self] result in
             switch result {
             case .failure:
                 self?.hasBeenDeleted = false
@@ -256,7 +261,7 @@ final class IssueCommentSectionController:
         guard object?.viewerCanUpdate == true,
             let commentID = object?.number,
             let isRoot = object?.isRoot,
-            let isInPullRequest = object?.isInPullRequest,
+            let isInPullRequestReview = object?.isInPullRequestReview,
             let originalMarkdown = currentMarkdown
             else { return }
 
@@ -271,7 +276,7 @@ final class IssueCommentSectionController:
             commentID: commentID,
             body: edited,
             isRoot: isRoot,
-            isInPullRequest: isInPullRequest)
+            isInPullRequestReview: isInPullRequestReview)
         ) { [weak self] result in
             switch result {
             case .success: break

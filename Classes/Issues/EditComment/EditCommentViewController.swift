@@ -27,7 +27,7 @@ MessageTextViewListener {
     private let textActionsController = TextActionsController()
     private let issueModel: IssueDetailsModel
     private let isRoot: Bool
-    private let isInPullRequest: Bool
+    private let isInPullRequestReview: Bool
     private let originalMarkdown: String
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
     private let autocompleteController: AutocompleteController
@@ -38,14 +38,14 @@ MessageTextViewListener {
         issueModel: IssueDetailsModel,
         commentID: Int,
         isRoot: Bool,
-        isInPullRequest: Bool,
+        isInPullRequestReview: Bool,
         autocomplete: IssueCommentAutocomplete
         ) {
         self.client = client
         self.issueModel = issueModel
         self.commentID = commentID
         self.isRoot = isRoot
-        self.isInPullRequest = isInPullRequest
+        self.isInPullRequestReview = isInPullRequestReview
         self.originalMarkdown = markdown
         self.autocompleteController = AutocompleteController(
             messageAutocompleteController: MessageAutocompleteController(textView: textView),
@@ -171,7 +171,7 @@ MessageTextViewListener {
             commentID: commentID,
             body: markdown,
             isRoot: isRoot,
-            isInPullRequest: isInPullRequest)
+            isInPullRequestReview: isInPullRequestReview)
         ) { [weak self] result in
             switch result {
             case .success: self?.didSave(markdown: markdown)

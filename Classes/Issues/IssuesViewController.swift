@@ -505,7 +505,7 @@ final class IssuesViewController:
                 viewerCanUpdate: viewerCanUpdate,
                 viewerCanDelete: viewerCanDelete,
                 isRoot: false,
-                isInPullRequest: false
+                isInPullRequestReview: false
             )
             else { return }
 
