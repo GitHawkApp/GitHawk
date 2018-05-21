@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import MessageViewController
+import StyledText
 
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
@@ -164,7 +165,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
-        case is NSAttributedStringSizing: return IssueTitleSectionController()
+        case is StyledTextRenderer: return IssueTitleSectionController()
         case is IssueCommentModel: return IssueCommentSectionController(
             model: self.model,
             client: client,

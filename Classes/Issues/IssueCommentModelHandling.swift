@@ -15,9 +15,7 @@ func BodyHeightForComment(
     webviewCache: WebviewCellHeightCache?,
     imageCache: ImageCellHeightCache?
     ) -> CGFloat {
-    if let viewModel = viewModel as? NSAttributedStringSizing {
-        return viewModel.textViewSize(width).height
-    } else if let viewModel = viewModel as? StyledTextRenderer {
+    if let viewModel = viewModel as? StyledTextRenderer {
         return viewModel.viewSize(width: width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
         let inset = IssueCommentCodeBlockCell.scrollViewInset
@@ -47,7 +45,6 @@ func CellTypeForComment(viewModel: Any) -> AnyClass {
     case is IssueCommentUnsupportedModel: return IssueCommentUnsupportedCell.self
     case is IssueCommentHtmlModel: return IssueCommentHtmlCell.self
     case is IssueCommentHrModel: return IssueCommentHrCell.self
-    case is NSAttributedStringSizing: return IssueCommentTextCell.self
     case is StyledTextRenderer: return IssueCommentTextCell.self
     case is IssueCommentTableModel: return IssueCommentTableCell.self
     default: fatalError("Unhandled model: \(viewModel)")
