@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import GitHubAPI
+import StyledText
 
 extension GithubClient {
 
@@ -77,9 +78,9 @@ extension GithubClient {
                         guard let thread = threads[id] else { continue }
 
                         let code = CreateDiffString(code: thread.hunk, limit: true)
-                        let text = NSAttributedStringSizing(
-                            containerWidth: 0,
-                            attributedText: code,
+                        let text = StyledTextRenderer(
+                            string: code,
+                            contentSizeCategory: contentSizeCategory,
                             inset: IssueDiffHunkPreviewCell.textViewInset
                         )
                         models.append(IssueDiffHunkModel(path: thread.path, preview: text, offset: models.count))

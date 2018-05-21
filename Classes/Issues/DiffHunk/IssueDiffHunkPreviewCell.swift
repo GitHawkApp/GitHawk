@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
 
@@ -19,7 +20,7 @@ final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
     )
 
     let scrollView = UIScrollView()
-    let textView = AttributedStringView()
+    let textView = StyledTextView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,11 +46,11 @@ final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
     // MARK: ListBindable
 
     func bindViewModel(_ viewModel: Any) {
-        guard let viewModel = viewModel as? NSAttributedStringSizing else { return }
+        guard let viewModel = viewModel as? StyledTextRenderer else { return }
 
         let width: CGFloat = 0
-        scrollView.contentSize = viewModel.textViewSize(width)
-        textView.configureAndSizeToFit(text: viewModel, width: width)
+        scrollView.contentSize = viewModel.viewSize(width: width)
+        textView.configure(renderer: viewModel, width: width)
     }
 
 }
