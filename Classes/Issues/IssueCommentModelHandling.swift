@@ -57,7 +57,6 @@ func ExtraCommentCellConfigure(
     htmlDelegate: IssueCommentHtmlCellDelegate?,
     htmlNavigationDelegate: IssueCommentHtmlCellNavigationDelegate?,
     htmlImageDelegate: IssueCommentHtmlCellImageDelegate?,
-    attributedDelegate: AttributedStringViewDelegate?,
     markdownDelegate: MarkdownStyledTextViewDelegate?,
     imageHeightDelegate: IssueCommentImageHeightCellDelegate
     ) {

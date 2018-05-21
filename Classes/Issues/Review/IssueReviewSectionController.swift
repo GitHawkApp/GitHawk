@@ -12,7 +12,6 @@ import IGListKit
 final class IssueReviewSectionController: ListBindingSectionController<IssueReviewModel>,
     ListBindingSectionControllerDataSource,
 IssueReviewDetailsCellDelegate,
-AttributedStringViewDelegate,
 IssueReviewViewCommentsCellDelegate,
 MarkdownStyledTextViewDelegate {
 
@@ -127,7 +126,6 @@ MarkdownStyledTextViewDelegate {
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
-            attributedDelegate: self,
             markdownDelegate: self,
             imageHeightDelegate: imageCache
         )
@@ -144,12 +142,6 @@ MarkdownStyledTextViewDelegate {
     func didTapActor(cell: IssueReviewDetailsCell) {
         guard let actor = object?.details.actor else { return }
         viewController?.presentProfile(login: actor)
-    }
-
-    // MARK: AttributedStringViewIssueDelegate
-
-    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute) {
-        didTap(attribute: attribute)
     }
 
     // MARK: MarkdownStyledTextViewDelegate

@@ -24,7 +24,6 @@ final class IssueCommentSectionController:
     ListBindingSectionControllerSelectionDelegate,
     IssueCommentDetailCellDelegate,
     IssueCommentReactionCellDelegate,
-    AttributedStringViewDelegate,
     EditCommentViewControllerDelegate,
     MarkdownStyledTextViewDelegate,
     IssueCommentDoubleTapDelegate {
@@ -413,7 +412,6 @@ final class IssueCommentSectionController:
             htmlDelegate: webviewCache,
             htmlNavigationDelegate: viewController,
             htmlImageDelegate: photoHandler,
-            attributedDelegate: self,
             markdownDelegate: self,
             imageHeightDelegate: imageCache
         )
@@ -512,12 +510,6 @@ final class IssueCommentSectionController:
             else { return }
 
         react(cell: cell, content: reaction, isAdd: false)
-    }
-
-    // MARK: AttributedStringViewExtrasDelegate
-
-    func didTap(view: AttributedStringView, attribute: DetectedMarkdownAttribute) {
-        didTap(attribute: attribute)
     }
 
     // MARK: MarkdownStyledTextViewDelegate
