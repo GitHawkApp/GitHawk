@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import StyledText
 
 final class NotificationCell: SwipeSelectableCell {
 
@@ -30,7 +31,7 @@ final class NotificationCell: SwipeSelectableCell {
     private let reasonImageView = UIImageView()
     private let dateLabel = ShowMoreDetailsLabel()
     private let titleLabel = UILabel()
-    private let textLabel = UILabel()
+    private let textView = StyledTextView()
     private let commentLabel = UILabel()
     private let commentImageView = UIImageView()
 
@@ -44,7 +45,7 @@ final class NotificationCell: SwipeSelectableCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(dateLabel)
         contentView.addSubview(reasonImageView)
-        contentView.addSubview(textLabel)
+        contentView.addSubview(textView)
         contentView.addSubview(commentImageView)
         contentView.addSubview(commentLabel)
 
@@ -78,11 +79,6 @@ final class NotificationCell: SwipeSelectableCell {
             make.left.equalTo(Styles.Sizes.rowSpacing)
         }
 
-        textLabel.numberOfLines = 0
-        textLabel.snp.makeConstraints { make in
-            make.top.left.right.equalTo(contentView).inset(NotificationCell.labelInset)
-        }
-
         commentImageView.tintColor = dateLabel.textColor
         commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
         commentImageView.backgroundColor = .clear
@@ -108,13 +104,14 @@ final class NotificationCell: SwipeSelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
+        textView.reposition(width: contentView.bounds.width)
     }
 
     // MARK: Public API
 
     var isRead = false {
         didSet {
-            for view in [titleLabel, textLabel, reasonImageView] {
+            for view in [titleLabel, textView, reasonImageView] {
                 view.alpha = isRead ? 0.5 : 1
             }
         }
@@ -134,7 +131,8 @@ final class NotificationCell: SwipeSelectableCell {
         }
         titleLabel.attributedText = title
 
-        textLabel.attributedText = viewModel.title.attributedText
+        textView.configure(renderer: viewModel.title, width: contentView.bounds.width)
+
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon.withRenderingMode(.alwaysTemplate)
         accessibilityLabel = AccessibilityHelper
