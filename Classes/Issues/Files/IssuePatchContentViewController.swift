@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StyledText
 
 final class IssuePatchContentViewController: UIViewController {
 
@@ -27,7 +28,10 @@ final class IssuePatchContentViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(codeView)
-        codeView.set(attributedCode: CreateDiffString(code: patch))
+        codeView.set(
+            attributedCode: CreateDiffString(code: patch)
+                .render(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        )
     }
 
     override func viewWillLayoutSubviews() {

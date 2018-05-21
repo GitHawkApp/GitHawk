@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullRequest: IssueType {
 
@@ -213,7 +214,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 )
                 results.append(model)
             } else if let thread = node.asPullRequestReviewThread,
-                let hunk = diffHunkModel(thread: thread) {
+                let hunk = diffHunkModel(thread: thread, contentSizeCategory: contentSizeCategory) {
                 // add the diff hunk FIRST then the threaded comments so that the section controllers end up stacked
                 // on top of each other
                 results.append(hunk)
@@ -428,10 +429,17 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     }
     // swiftlint:enable cyclomatic_complexity
 
-    private func diffHunkModel(thread: Timeline.Node.AsPullRequestReviewThread) -> ListDiffable? {
+    private func diffHunkModel(
+        thread: Timeline.Node.AsPullRequestReviewThread,
+        contentSizeCategory: UIContentSizeCategory
+        ) -> ListDiffable? {
         guard let node = thread.comments.nodes?.first, let firstComment = node else { return nil }
         let code = CreateDiffString(code: firstComment.diffHunk, limit: true)
-        let text = NSAttributedStringSizing(containerWidth: 0, attributedText: code, inset: IssueDiffHunkPreviewCell.textViewInset)
+        let text = StyledTextRenderer(
+            string: code,
+            contentSizeCategory: contentSizeCategory,
+            inset: IssueDiffHunkPreviewCell.textViewInset
+        )
         return IssueDiffHunkModel(path: firstComment.path, preview: text, offset: 0)
     }
 

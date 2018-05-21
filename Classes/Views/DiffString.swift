@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import StyledText
 
-func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
+func CreateDiffString(code: String, limit: Bool = false) -> StyledTextString {
     let split = code.components(separatedBy: CharacterSet.newlines)
     let count = split.count
 
@@ -20,22 +21,21 @@ func CreateDiffString(code: String, limit: Bool = false) -> NSAttributedString {
         lines = split
     }
 
-    let attributedString = NSMutableAttributedString()
+    let builder = StyledTextBuilder(styledText: StyledText(style: Styles.Text.code))
+        .add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
 
     for line in lines {
-        var attributes = [
-            NSAttributedStringKey.font: Styles.Text.code.preferredFont,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-        ]
+        defer { builder.restore() }
+        builder.save()
+
         if line.hasPrefix("+") {
-            attributes[NSAttributedStringKey.backgroundColor] = Styles.Colors.Green.light.color
+            builder.add(attributes: [.backgroundColor: Styles.Colors.Green.light.color])
         } else if line.hasPrefix("-") {
-            attributes[NSAttributedStringKey.backgroundColor] = Styles.Colors.Red.light.color
+            builder.add(attributes: [.backgroundColor: Styles.Colors.Red.light.color])
         }
 
-        let newlinedLine = line != lines.last ? line + "\n" : line
-        attributedString.append(NSAttributedString(string: newlinedLine, attributes: attributes))
+        builder.add(text: line != lines.last ? line + "\n" : line)
     }
 
-    return attributedString
+    return builder.build()
 }

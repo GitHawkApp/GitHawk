@@ -8,6 +8,7 @@
 
 import Foundation
 import IGListKit
+import StyledText
 
 final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDiffHunkModel>, ListBindingSectionControllerDataSource {
 
@@ -37,8 +38,8 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         ) -> CGSize {
         let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
         let height: CGFloat
-        if let viewModel = viewModel as? NSAttributedStringSizing {
-            height = viewModel.textViewSize(0).height
+        if let viewModel = viewModel as? StyledTextRenderer {
+            height = viewModel.viewSize(width: 0).height
         } else {
             height = Styles.Sizes.labelEventHeight
         }
@@ -55,7 +56,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         let cellClass: AnyClass
         switch viewModel {
         case is String: cellClass = IssueDiffHunkPathCell.self
-        case is NSAttributedStringSizing: cellClass = IssueDiffHunkPreviewCell.self
+        case is StyledTextRenderer: cellClass = IssueDiffHunkPreviewCell.self
         default: fatalError("Unsupported model \(viewModel)")
         }
         guard let cell = context.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
