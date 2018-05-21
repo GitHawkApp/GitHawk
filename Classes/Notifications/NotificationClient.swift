@@ -59,11 +59,16 @@ final class NotificationClient {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
+        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
         if let repo = repo {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
-                    let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                    let viewModels = CreateViewModels(
+                        containerWidth: width,
+                        contentSizeCategory: contentSizeCategory,
+                        v3notifications: response.data
+                    )
                     self.fetchStates(for: viewModels, page: response.next, completion: completion)
                 case .failure(let error):
                     completion(.error(error))
@@ -73,7 +78,11 @@ final class NotificationClient {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
                 switch result {
                 case .success(let response):
-                    let viewModels = CreateViewModels(containerWidth: width, v3notifications: response.data)
+                    let viewModels = CreateViewModels(
+                        containerWidth: width,
+                        contentSizeCategory: contentSizeCategory,
+                        v3notifications: response.data
+                    )
                     self.fetchStates(for: viewModels, page: response.next, completion: completion)
                 case .failure(let error):
                     completion(.error(error))

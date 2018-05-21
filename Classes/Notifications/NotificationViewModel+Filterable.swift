@@ -22,7 +22,7 @@ extension NotificationViewModel: Filterable {
         }
 
         let lowerQuery = query.lowercased()
-        if title.attributedText.string.lowercased().contains(lowerQuery) { return true }
+        if title.string.allText.lowercased().contains(lowerQuery) { return true }
         if owner.lowercased().contains(lowerQuery) { return true }
         if repo.lowercased().contains(lowerQuery) { return true }
 

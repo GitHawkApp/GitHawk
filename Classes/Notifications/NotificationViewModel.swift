@@ -10,6 +10,7 @@ import Foundation
 import IGListKit
 import FlatCache
 import DateAgo
+import StyledText
 
 final class NotificationViewModel: ListDiffable, Cachable {
 
@@ -30,7 +31,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
     }
 
     let id: String
-    let title: NSAttributedStringSizing
+    let title: StyledTextRenderer
     let type: NotificationType
     let date: Date
     let agoString: String
@@ -43,7 +44,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
 
     init(
     id: String,
-    title: NSAttributedStringSizing,
+    title: StyledTextRenderer,
     type: NotificationType,
     date: Date,
     read: Bool,
@@ -75,15 +76,17 @@ final class NotificationViewModel: ListDiffable, Cachable {
         owner: String,
         repo: String,
         identifier: Identifier,
-        containerWidth: CGFloat
+        containerWidth: CGFloat,
+        contentSizeCategory: UIContentSizeCategory
         ) {
-        let attributes = [
-            NSAttributedStringKey.font: Styles.Text.body.preferredFont,
-            NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color
-        ]
-        let title = NSAttributedStringSizing(
-            containerWidth: containerWidth,
-            attributedText: NSAttributedString(string: title, attributes: attributes),
+        let builder = StyledTextBuilder(styledText: StyledText(
+            text: title,
+            style: Styles.Text.body
+        ))
+            .add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
+        let title = StyledTextRenderer(
+            string: builder.build(),
+            contentSizeCategory: contentSizeCategory,
             inset: NotificationCell.labelInset
         )
         self.init(
@@ -104,7 +107,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
 
     func updated(
         id: String? = nil,
-        title: NSAttributedStringSizing? = nil,
+        title: StyledTextRenderer? = nil,
         type: NotificationType? = nil,
         date: Date? = nil,
         read: Bool? = nil,
@@ -143,7 +146,7 @@ final class NotificationViewModel: ListDiffable, Cachable {
             && repo == object.repo
             && owner == object.owner
             && state == object.state
-            && title.attributedText.string == object.title.attributedText.string
+            && title.string == object.title.string
     }
 
 }

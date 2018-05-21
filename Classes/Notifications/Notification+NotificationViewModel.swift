@@ -12,6 +12,7 @@ import GitHubAPI
 
 func CreateViewModels(
     containerWidth: CGFloat,
+    contentSizeCategory: UIContentSizeCategory,
     v3notifications: [V3Notification]) -> [NotificationViewModel] {
     var viewModels = [NotificationViewModel]()
 
@@ -36,7 +37,8 @@ func CreateViewModels(
             owner: notification.repository.owner.login,
             repo: notification.repository.name,
             identifier: modelIdentifier,
-            containerWidth: containerWidth
+            containerWidth: containerWidth,
+            contentSizeCategory: contentSizeCategory
         )
         viewModels.append(model)
     }
