@@ -18,11 +18,14 @@ public struct V3AddPeopleRequest: V3Request {
     public typealias ResponseType = V3StatusCodeResponse<V3StatusCode200or201>
     public var pathComponents: [String] {
         let last: String
+        let fourth: String
         switch type {
         case .assignees: last = "assignees"
+            fourth = "issues"
         case .reviewers: last = "requested_reviewers"
+            fourth = "pulls"
         }
-        return ["repos", owner, repo, "issues", "\(number)", last]
+        return ["repos", owner, repo, fourth, "\(number)", last]
     }
     public var parameters: [String : Any]? {
         let key: String
