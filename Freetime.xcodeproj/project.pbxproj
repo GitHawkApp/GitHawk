@@ -321,6 +321,12 @@
 		29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */; };
 		29C53FC31F12EF4000A59ED5 /* IssueReferencedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */; };
 		29C53FC41F12EF4000A59ED5 /* IssueReferencedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C53FC01F12EF4000A59ED5 /* IssueReferencedSectionController.swift */; };
+		29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */; };
+		29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */; };
+		29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AE208C02BE0075931C /* String+ListSwift.swift */; };
+		29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B0208C054D0075931C /* LabelsViewController2.swift */; };
+		29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B2208C07540075931C /* LabelCell2.swift */; };
+		29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B4208C081D0075931C /* LabelSectionController.swift */; };
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
 		29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDE01EC667AE00EE3A52 /* Styles.swift */; };
@@ -824,6 +830,12 @@
 		29C53FBE1F12EF4000A59ED5 /* IssueReferencedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCell.swift; sourceTree = "<group>"; };
 		29C53FBF1F12EF4000A59ED5 /* IssueReferencedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedModel.swift; sourceTree = "<group>"; };
 		29C53FC01F12EF4000A59ED5 /* IssueReferencedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedSectionController.swift; sourceTree = "<group>"; };
+		29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController2.swift; sourceTree = "<group>"; };
+		29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreSectionController2.swift; sourceTree = "<group>"; };
+		29C8F9AE208C02BE0075931C /* String+ListSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListSwift.swift"; sourceTree = "<group>"; };
+		29C8F9B0208C054D0075931C /* LabelsViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsViewController2.swift; sourceTree = "<group>"; };
+		29C8F9B2208C07540075931C /* LabelCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell2.swift; sourceTree = "<group>"; };
+		29C8F9B4208C081D0075931C /* LabelSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSectionController.swift; sourceTree = "<group>"; };
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		29C9FDE01EC667AE00EE3A52 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
@@ -1450,17 +1462,17 @@
 		297AE82B1EC0D58A00B44A1F = {
 			isa = PBXGroup;
 			children = (
-				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				297AE8571EC0D5C100B44A1F /* Classes */,
+				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
+				2971CED22055C8F600342296 /* Freetime.entitlements */,
+				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				294EE4BA209006C0002C9CB1 /* FreetimeWatch */,
 				294EE4C9209006C2002C9CB1 /* FreetimeWatch Extension */,
-				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
-				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				292FCB2A1EE0546E0026635E /* gql */,
+				6444C838F34B9586CC4FA89B /* Pods */,
 				297AE8351EC0D58A00B44A1F /* Products */,
 				297AE86D1EC0D5C200B44A1F /* Resources */,
 				2930F2701F894AA10082BA26 /* Settings.bundle */,
-				6444C838F34B9586CC4FA89B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1548,6 +1560,7 @@
 				2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */,
 				98003D8C1FCAD7FC00755C17 /* LabelDetails.swift */,
 				29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */,
+				29C8F9AE208C02BE0075931C /* String+ListSwift.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1606,6 +1619,7 @@
 			children = (
 				2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */,
 				29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */,
+				29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */,
 				297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */,
 				29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */,
 				29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */,
@@ -1834,6 +1848,7 @@
 			children = (
 				29DA1E7D1F5DF2960050C64B /* LoadMoreCell.swift */,
 				29DA1E7E1F5DF2960050C64B /* LoadMoreSectionController.swift */,
+				29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */,
 			);
 			path = LoadMore;
 			sourceTree = "<group>";
@@ -1841,9 +1856,12 @@
 		29EE1C131F3A2E440046A54D /* Labels */ = {
 			isa = PBXGroup;
 			children = (
+				29C8F9B2208C07540075931C /* LabelCell2.swift */,
 				29EE1C161F3A2E7A0046A54D /* Labels.storyboard */,
-				29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */,
+				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
 				29EE1C1A1F3A33000046A54D /* LabelsViewController.swift */,
+				29C8F9B0208C054D0075931C /* LabelsViewController2.swift */,
+				29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -2777,6 +2795,7 @@
 				293A45A21F29954000DD1006 /* IssueCommitModel.swift in Sources */,
 				293A45A61F29987C00DD1006 /* IssueCommitSectionController.swift in Sources */,
 				291929471F3EAB250012067B /* IssueDetailsModel.swift in Sources */,
+				29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */,
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
 				292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */,
 				DCA5ED161FAEE91F0072F074 /* BookmarkViewModel.swift in Sources */,
@@ -2786,6 +2805,7 @@
 				29CC294F1FF93AD7006B6DE7 /* IssueCommentEmptyCell.swift in Sources */,
 				292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */,
 				291929531F3F9E490012067B /* IssueFileCell.swift in Sources */,
+				29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */,
 				98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */,
 				291929511F3F76B10012067B /* IssueFilesViewController.swift in Sources */,
 				292FCB121EDFCC510026635E /* IssueLabelCell.swift in Sources */,
@@ -2866,12 +2886,14 @@
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
+				29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */,
 				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
 				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
 				29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */,
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
+				29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E801F5DF2960050C64B /* LoadMoreSectionController.swift in Sources */,
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
@@ -2957,6 +2979,7 @@
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
 				299F63D4205DA24A0015D901 /* MarkdownAttributeHandling.swift in Sources */,
+				29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
 				986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */,
@@ -3002,6 +3025,7 @@
 				2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
+				29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */,
 				15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
 				65A3152B2044376D0074E3B6 /* Route.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import IGListKit
 
 final class LoadMoreCell: UICollectionViewCell {
 

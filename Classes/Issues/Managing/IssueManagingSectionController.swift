@@ -90,15 +90,12 @@ ContextMenuDelegate {
     }
 
     func newLabelsController() -> UIViewController {
-        guard let controller = UIStoryboard(name: "Labels", bundle: nil).instantiateInitialViewController() as? LabelsViewController
-            else { fatalError("Missing labels view controller") }
-        controller.configure(
+        return LabelsViewController2(
             selected: issueResult?.labels.labels ?? [],
             client: client,
             owner: model.owner,
             repo: model.repo
         )
-        return controller
     }
 
     func newMilestonesController() -> UIViewController {
@@ -164,6 +161,17 @@ ContextMenuDelegate {
         )
 
         Haptic.triggerNotification(.success)
+    }
+
+    func didDismiss(selected labels: [RepositoryLabel]) {
+        guard let previous = issueResult else { return }
+        client.mutateLabels(
+            previous: previous,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            labels: labels
+        )
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -263,19 +271,6 @@ ContextMenuDelegate {
         }
     }
 
-    // MARK: LabelsViewControllerDelegate
-
-    func didDismiss(controller: LabelsViewController) {
-        guard let previous = issueResult else { return }
-        client.mutateLabels(
-            previous: previous,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            labels: controller.selected
-        )
-    }
-
     // MARK: MilestonesViewControllerDelegate
 
     func didDismiss(controller: MilestonesViewController) {
@@ -318,11 +313,13 @@ ContextMenuDelegate {
 
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
         if let labels = viewController as? LabelsViewController {
-            didDismiss(controller: labels)
+            didDismiss(selected: labels.selected)
         } else if let milestones = viewController as? MilestonesViewController {
             didDismiss(controller: milestones)
         } else if let people = viewController as? PeopleViewController {
             didDismiss(controller: people)
+        } else if let labels = viewController as? LabelsViewController2 {
+            didDismiss(selected: labels.selected)
         }
     }
 
