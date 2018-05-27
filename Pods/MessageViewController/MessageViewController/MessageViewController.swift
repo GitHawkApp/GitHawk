@@ -39,6 +39,7 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cache()
+        messageView.textView.resignFirstResponder()
     }
 
     // MARK: Public API

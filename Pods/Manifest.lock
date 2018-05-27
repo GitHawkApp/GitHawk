@@ -26,10 +26,10 @@ PODS:
   - FirebaseAnalytics (4.2.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseCore (4.0.20):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseDatabase (4.1.5):
     - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
@@ -44,7 +44,7 @@ PODS:
     - Apollo (~> 0.8.0)
   - GitHubSession (0.1.0)
   - GoogleToolboxForMac/Defines (2.1.4)
-  - GoogleToolboxForMac/NSData+zlib (2.1.4):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
@@ -110,6 +110,34 @@ DEPENDENCIES:
   - Tabman (~> 1.8)
   - TUSafariActivity (~> 1.0.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireNetworkActivityIndicator
+    - Apollo
+    - AutoInsetter
+    - Crashlytics
+    - Fabric
+    - FBSnapshotTestCase
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseDatabase
+    - FirebaseInstanceID
+    - FLAnimatedImage
+    - FLEX
+    - GoogleToolboxForMac
+    - HTMLString
+    - leveldb-library
+    - nanopb
+    - NYTPhotoViewer
+    - Pageboy
+    - SDWebImage
+    - SnapKit
+    - SwiftLint
+    - Tabman
+    - TUSafariActivity
+
 EXTERNAL SOURCES:
   cmark-gfm-swift:
     :branch: master
@@ -160,7 +188,7 @@ CHECKOUT OPTIONS:
     :commit: 146025f79409f1acd61c58840214af884b8276b2
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: 4fb166245f72e5d47b6c0f3e67351e9a9802ec63
+    :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
     :commit: c287ae538f3d233e1196c9b56dd67a841f944b30
@@ -207,4 +235,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0883a4fc29f4717acdde3419929842d158366a0f
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2
