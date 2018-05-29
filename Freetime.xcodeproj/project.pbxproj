@@ -2091,7 +2091,6 @@
 				294EE4B7209006BF002C9CB1 /* Resources */,
 				294EE4DD209006C3002C9CB1 /* Embed App Extensions */,
 				3AEFFF6C72A37C3F4C5C9423 /* Frameworks */,
-				E00470F7B10F3293D8FF5D13 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2112,7 +2111,6 @@
 				294EE4C2209006C2002C9CB1 /* Frameworks */,
 				294EE4C3209006C2002C9CB1 /* Resources */,
 				D97459BBC895C9C6632BE028 /* [CP] Embed Pods Frameworks */,
-				A75BD6A8A11C8C18AFC115BD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2136,7 +2134,6 @@
 				DCF1A6481F9E3E1F00A7A4A0 /* SwiftLint */,
 				295B51391FC2342200C3993B /* Run Fabric */,
 				ABA015066A84600AF351C942 /* [CP] Embed Pods Frameworks */,
-				D8AAFC738E3F77316B08C33F /* [CP] Copy Pods Resources */,
 				294EE4DF209006C3002C9CB1 /* Embed Watch Content */,
 			);
 			buildRules = (
@@ -2158,7 +2155,6 @@
 				297AE8451EC0D58A00B44A1F /* Frameworks */,
 				297AE8461EC0D58A00B44A1F /* Resources */,
 				F46376DA96978B72BF162CA2 /* [CP] Embed Pods Frameworks */,
-				C6474C70A3FFB6475F346671 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2390,21 +2386,6 @@
 			shellPath = /bin/sh;
 			shellScript = "FAILED=false\n\nif [ -z \"${BUDDYBUILD_BUILD_NUMBER}\" ]; then\n  echo \"Script is not being run on CI\"\n  exit 0\nfi\n\nif [ -z \"${GITHUB_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:14:1: warning: Missing GitHub Client ID\"\n  FAILED=true\nfi\n\nif [ -z \"${GITHUB_CLIENT_SECRET}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:15:1: warning: Missing GitHub Client Secret\"\n  FAILED=true\nfi\n\nif [ -z \"${IMGUR_CLIENT_ID}\" ]; then\n  echo \"${SRCROOT}/Classes/Systems/Secrets.swift:16:1: warning: Missing Imgur Client ID\"\n  FAILED=true\nfi\n\nsed -i \".tmp\" \"s|{GITHUBID}|${GITHUB_CLIENT_ID}|g; s|{GITHUBSECRET}|${GITHUB_CLIENT_SECRET}|g; s|{IMGURID}|${IMGUR_CLIENT_ID}|g\" \"${SRCROOT}/Classes/Systems/Secrets.swift\"\n\nif [ \"$FAILED\" = true ]; then\n  exit 1\nfi\n\necho \"All env values found!\"";
 		};
-		A75BD6A8A11C8C18AFC115BD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		ABA015066A84600AF351C942 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2477,21 +2458,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C6474C70A3FFB6475F346671 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CB9D7CC581BBD847FBB3FBDA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2508,21 +2474,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8AAFC738E3F77316B08C33F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D97459BBC895C9C6632BE028 /* [CP] Embed Pods Frameworks */ = {
@@ -2566,21 +2517,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#\"${PODS_ROOT}/SwiftLint/swiftlint\"";
-		};
-		E00470F7B10F3293D8FF5D13 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		F46376DA96978B72BF162CA2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
