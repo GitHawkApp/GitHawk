@@ -116,11 +116,12 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         insertAutocomplete(autocomplete, at: selection, for: nsrange, keepPrefix: keepPrefix)
         
         let selectedLocation = insertionRange.location + autocomplete.utf16.count + (appendSpaceOnCompletion ? 1 : 0)
+
         textView.selectedRange = NSRange(
             location: selectedLocation,
             length: 0
         )
-        
+
         preserveTypingAttributes(for: textView)
     }
 
@@ -205,6 +206,10 @@ public final class MessageAutocompleteController: MessageTextViewListener {
         if appendSpaceOnCompletion {
             newAttributedText.append(NSAttributedString(string: " ", attributes: defaultTypingTextAttributes))
         }
+
+        // set to a blank attributed string to prevent keyboard autocorrect from cloberring the insert
+        textView.attributedText = NSAttributedString()
+
         textView.attributedText = newAttributedText
     }
 

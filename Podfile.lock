@@ -188,7 +188,7 @@ CHECKOUT OPTIONS:
     :commit: 49413f2c37ffb8833d0810c7e641c85e91ffe037
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: 4fb166245f72e5d47b6c0f3e67351e9a9802ec63
+    :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
     :commit: c287ae538f3d233e1196c9b56dd67a841f944b30
