@@ -12,7 +12,7 @@ import XCTest
 
 class UrlPathComponents: XCTestCase {
     
-    func test_addReviewers() {
+    func DISABLED_test_addReviewers() {
         
         //test that add reviewers request gets a 401 unauthorized response instead of a 404
         //Issue #1829: add reviewers was receiving a 404 response
@@ -46,7 +46,7 @@ class UrlPathComponents: XCTestCase {
         }
     }
     
-    func test_addAssignees() {
+    func DISABLED_test_addAssignees() {
         
         //test that add reviewers request gets a 401 unauthorized response
         let addAssigneesRequest = V3AddPeopleRequest(owner: "GitHawkApp",
