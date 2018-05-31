@@ -34,7 +34,7 @@ func fillBuckets(
         bucket.rows.append(IssueCommentTableModel.Row(string: cell, fill: fill))
 
         // adjust the max width of each column using whatever is the largest so all cells are the same width
-        let size = cell.viewSize(width: 0)
+        let size = cell.viewSize(in: 0)
         bucket.maxWidth = max(bucket.maxWidth, size.width)
         maxHeight = max(maxHeight, size.height)
     }

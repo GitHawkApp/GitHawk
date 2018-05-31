@@ -34,7 +34,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
             return labelListViewHeight + Styles.Sizes.rowSpacing
         }()
         
-        let height = object.title.viewSize(width: width).height
+        let height = object.title.viewSize(in: width).height
             + Styles.Text.secondary.preferredFont.lineHeight
             + Styles.Sizes.rowSpacing
             + labelListViewHeightAndSpacing

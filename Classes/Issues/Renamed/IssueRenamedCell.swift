@@ -58,7 +58,7 @@ final class IssueRenamedCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-        titleView.reposition(width: contentView.bounds.width)
+        titleView.reposition(for: contentView.bounds.width)
     }
 
     // MARK: Private API
@@ -87,7 +87,7 @@ final class IssueRenamedCell: UICollectionViewCell {
 
         dateLabel.setText(date: model.date)
 
-        titleView.configure(renderer: model.titleChangeString, width: contentView.bounds.width)
+        titleView.configure(with: model.titleChangeString, width: contentView.bounds.width)
     }
 
 }

@@ -13,7 +13,7 @@ import StyledText
 final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
     static let inset = UIEdgeInsets(
-        top: 0,
+        top: 2,
         left: Styles.Sizes.commentGutter,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.commentGutter
@@ -33,7 +33,7 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        textView.reposition(width: contentView.bounds.width)
+        textView.reposition(for: contentView.bounds.width)
     }
 
     // MARK: Accessibility
@@ -47,7 +47,7 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? StyledTextRenderer else { return }
-        textView.configure(renderer: viewModel, width: contentView.bounds.width)
+        textView.configure(with: viewModel, width: contentView.bounds.width)
     }
 
 }

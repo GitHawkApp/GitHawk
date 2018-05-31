@@ -76,7 +76,7 @@ final class RepositorySummaryCell: SelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        titleView.reposition(width: contentView.bounds.width)
+        titleView.reposition(for: contentView.bounds.width)
         resizeLabelListView(labels: labelListView.labels, cacheKey: labelListView.labels.reduce("", {$0 + $1.name}))
     }
     
@@ -94,7 +94,7 @@ final class RepositorySummaryCell: SelectableCell {
     // MARK: Public API
 
     func configure(_ model: RepositoryIssueSummaryModel) {
-        titleView.configure(renderer: model.title, width: contentView.bounds.width)
+        titleView.configure(with: model.title, width: contentView.bounds.width)
 
         let format = NSLocalizedString("#%d opened %@ by %@", comment: "")
         secondaryLabel.text = String(format: format, arguments: [model.number, model.created.agoString(.long), model.author])

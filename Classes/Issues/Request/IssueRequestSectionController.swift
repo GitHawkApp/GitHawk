@@ -17,7 +17,7 @@ final class IssueRequestSectionController: ListGenericSectionController<IssueReq
         else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,
-            height: object.string.viewSize(width: width).height
+            height: object.string.viewSize(in: width).height
         )
     }
 

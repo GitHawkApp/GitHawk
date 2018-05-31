@@ -55,7 +55,7 @@ final class BookmarkCell: SwipeSelectableCell {
         layoutContentViewForSafeAreaInsets()
 
         let bounds = contentView.bounds
-        textView.reposition(width: bounds.width)
+        textView.reposition(for: bounds.width)
 
         let textViewFrame = textView.frame
 
@@ -75,7 +75,7 @@ final class BookmarkCell: SwipeSelectableCell {
 
     func configure(viewModel: BookmarkViewModel, height: CGFloat) {
         imageView.image = viewModel.bookmark.type.icon.withRenderingMode(.alwaysTemplate)
-        textView.configure(renderer: viewModel.text, width: contentView.bounds.width)
+        textView.configure(with: viewModel.text, width: contentView.bounds.width)
 
         // set "Owner/Repo #123" on the detail label if issue/PR, otherwise clear and collapse it
         switch viewModel.bookmark.type {

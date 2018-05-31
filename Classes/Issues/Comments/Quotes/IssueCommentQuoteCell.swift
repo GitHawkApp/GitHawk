@@ -40,7 +40,7 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        textView.reposition(width: contentView.bounds.width)
+        textView.reposition(for: contentView.bounds.width)
         for (i, border) in borders.enumerated() {
             border.frame = CGRect(
                 x: Styles.Sizes.commentGutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
@@ -72,7 +72,7 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
             contentView.addSubview(border)
             borders.append(border)
         }
-        textView.configure(renderer: viewModel.string, width: contentView.bounds.width)
+        textView.configure(with: viewModel.string, width: contentView.bounds.width)
         setNeedsLayout()
     }
 

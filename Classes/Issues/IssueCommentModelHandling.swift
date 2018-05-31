@@ -16,14 +16,14 @@ func BodyHeightForComment(
     imageCache: ImageCellHeightCache?
     ) -> CGFloat {
     if let viewModel = viewModel as? StyledTextRenderer {
-        return viewModel.viewSize(width: width).height
+        return viewModel.viewSize(in: width).height
     } else if let viewModel = viewModel as? IssueCommentCodeBlockModel {
         let inset = IssueCommentCodeBlockCell.scrollViewInset
         return viewModel.contentSize.height + inset.top + inset.bottom
     } else if let viewModel = viewModel as? IssueCommentImageModel {
         return imageCache?.height(model: viewModel, width: width) ?? 200
     } else if let viewModel = viewModel as? IssueCommentQuoteModel {
-        return viewModel.string.viewSize(width: width).height
+        return viewModel.string.viewSize(in: width).height
     } else if viewModel is IssueCommentHrModel {
         return 3.0 + IssueCommentHrCell.inset.top + IssueCommentHrCell.inset.bottom
     } else if let cache = webviewCache, let viewModel = viewModel as? IssueCommentHtmlModel {

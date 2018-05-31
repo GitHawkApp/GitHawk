@@ -15,7 +15,7 @@ final class IssueRenamedSectionController: ListGenericSectionController<IssueRen
         guard let width = collectionContext?.insetContainerSize.width,
             let object = self.object
             else { fatalError("Missing context") }
-        return CGSize(width: width, height: object.titleChangeString.viewSize(width: width).height)
+        return CGSize(width: width, height: object.titleChangeString.viewSize(in: width).height)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
