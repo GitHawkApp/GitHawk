@@ -191,7 +191,7 @@ CHECKOUT OPTIONS:
     :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledText:
-    :commit: c287ae538f3d233e1196c9b56dd67a841f944b30
+    :commit: 5a1597f7513610b59663b3be29d6352732968b82
     :git: https://github.com/GitHawkApp/StyledText.git
 
 SPEC CHECKSUMS:

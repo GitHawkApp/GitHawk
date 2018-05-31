@@ -10,8 +10,8 @@ import UIKit
 
 public final class StyledTextRenderer {
 
-    private let layoutManager: NSLayoutManager
-    private let textContainer: NSTextContainer
+    internal let layoutManager: NSLayoutManager
+    internal let textContainer: NSTextContainer
     
     public let scale: CGFloat
     public let inset: UIEdgeInsets
@@ -50,7 +50,7 @@ public final class StyledTextRenderer {
         layoutManager.addTextContainer(textContainer)
     }
 
-    private var storage: NSTextStorage {
+    internal var storage: NSTextStorage {
         if let storage = map[contentSizeCategory] {
             return storage
         }
@@ -78,14 +78,14 @@ public final class StyledTextRenderer {
         return size
     }
 
-    public func size(width: CGFloat) -> CGSize {
+    public func size(in width: CGFloat = .greatestFiniteMagnitude) -> CGSize {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
         return _size(StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor))
     }
 
-    public func viewSize(width: CGFloat) -> CGSize {
-        return size(width: width).resized(inset: inset)
+    public func viewSize(in width: CGFloat = .greatestFiniteMagnitude) -> CGSize {
+        return size(in: width).resized(inset: inset)
     }
 
     private static let globalBitmapCache = LRUCache<StyledTextRenderCacheKey, CGImage>(
@@ -94,7 +94,7 @@ public final class StyledTextRenderer {
         clearOnWarning: true
     )
 
-    public func render(width: CGFloat) -> (image: CGImage?, size: CGSize) {
+    public func render(for width: CGFloat) -> (image: CGImage?, size: CGSize) {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
 
@@ -115,7 +115,7 @@ public final class StyledTextRenderer {
         return (contents, size)
     }
 
-    public func attributes(at point: CGPoint) -> [NSAttributedStringKey: Any]? {
+    public func attributes(at point: CGPoint) -> (attributes: [NSAttributedStringKey: Any], index: Int)? {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
         var fractionDistance: CGFloat = 1.0
@@ -124,8 +124,10 @@ public final class StyledTextRenderer {
             in: textContainer,
             fractionOfDistanceBetweenInsertionPoints: &fractionDistance
         )
-        if index != NSNotFound, fractionDistance < 1.0 {
-            return layoutManager.textStorage?.attributes(at: index, effectiveRange: nil)
+        if index != NSNotFound,
+            fractionDistance < 1.0,
+            let attributes = layoutManager.textStorage?.attributes(at: index, effectiveRange: nil) {
+            return (attributes, index)
         }
         return nil
     }
@@ -140,8 +142,8 @@ public final class StyledTextRenderer {
         width: CGFloat
         ) -> StyledTextRenderer {
         switch option {
-        case .size: let _ = size(width: width)
-        case .bitmap: let _ = render(width: width)
+        case .size: let _ = size(in: width)
+        case .bitmap: let _ = render(for: width)
         }
         return self
     }

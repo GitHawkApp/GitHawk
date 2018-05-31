@@ -68,7 +68,7 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
         let contentSize = viewModel.contentSize
         scrollView.contentSize = contentSize
 
-        textView.configure(renderer: viewModel.code, width: 0)
+        textView.configure(with: viewModel.code, width: 0)
     }
 
 }

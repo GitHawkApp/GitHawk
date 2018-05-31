@@ -49,8 +49,8 @@ final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
         guard let viewModel = viewModel as? StyledTextRenderer else { return }
 
         let width: CGFloat = 0
-        scrollView.contentSize = viewModel.viewSize(width: width)
-        textView.configure(renderer: viewModel, width: width)
+        scrollView.contentSize = viewModel.viewSize(in: width)
+        textView.configure(with: viewModel, width: width)
     }
 
 }

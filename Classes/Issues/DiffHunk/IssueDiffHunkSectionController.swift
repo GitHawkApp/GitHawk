@@ -39,7 +39,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
         let height: CGFloat
         if let viewModel = viewModel as? StyledTextRenderer {
-            height = viewModel.viewSize(width: 0).height
+            height = viewModel.viewSize(in: 0).height
         } else {
             height = Styles.Sizes.labelEventHeight
         }

@@ -26,7 +26,7 @@ SwipeCollectionViewCellDelegate {
             else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,
-            height: max(ceil(object?.title.viewSize(width: width).height ?? 0), NotificationCell.minHeight)
+            height: max(ceil(object?.title.viewSize(in: width).height ?? 0), NotificationCell.minHeight)
         )
     }
 

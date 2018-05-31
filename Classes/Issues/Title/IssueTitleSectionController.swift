@@ -28,7 +28,7 @@ final class IssueTitleSectionController: ListSectionController {
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.insetContainerSize.width
             else { fatalError("Collection context must be set") }
-        return CGSize(width: width, height: self.object?.string.viewSize(width: width).height ?? 0)
+        return CGSize(width: width, height: self.object?.string.viewSize(in: width).height ?? 0)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

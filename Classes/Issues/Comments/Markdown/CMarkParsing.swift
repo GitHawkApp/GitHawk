@@ -74,7 +74,10 @@ private extension TextElement {
                 ])
             children.build(builder, options: options, context: context)
         case .link(let children, _, let url):
-            var attributes: [NSAttributedStringKey: Any] = [.foregroundColor: Styles.Colors.Blue.medium.color]
+            var attributes: [NSAttributedStringKey: Any] = [
+                .foregroundColor: Styles.Colors.Blue.medium.color,
+                .highlight: true
+            ]
             if let shortlink = url?.shortlinkInfo {
                 attributes[MarkdownAttribute.issue] = IssueDetailsModel(
                     owner: shortlink.owner,

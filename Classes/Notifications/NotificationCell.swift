@@ -104,7 +104,7 @@ final class NotificationCell: SwipeSelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
-        textView.reposition(width: contentView.bounds.width)
+        textView.reposition(for: contentView.bounds.width)
     }
 
     // MARK: Public API
@@ -131,7 +131,7 @@ final class NotificationCell: SwipeSelectableCell {
         }
         titleLabel.attributedText = title
 
-        textView.configure(renderer: viewModel.title, width: contentView.bounds.width)
+        textView.configure(with: viewModel.title, width: contentView.bounds.width)
 
         dateLabel.setText(date: viewModel.date)
         reasonImageView.image = viewModel.type.icon.withRenderingMode(.alwaysTemplate)

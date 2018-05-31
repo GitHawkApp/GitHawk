@@ -26,7 +26,7 @@ final class IssueCommentCodeBlockModel: NSObject, ListDiffable {
     // MARK: Public API
 
     var contentSize: CGSize {
-        return code.viewSize(width: 0)
+        return code.viewSize(in: 0)
     }
 
     // MARK: ListDiffable

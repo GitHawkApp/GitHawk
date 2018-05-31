@@ -40,7 +40,7 @@ final class IssueCommentTableCollectionCell: UICollectionViewCell {
     // MARK: Public API
 
     func configure(_ model: StyledTextRenderer) {
-        textView.configure(renderer: model, width: 0)
+        textView.configure(with: model, width: 0)
     }
 
     func setRightBorder(visible: Bool) {

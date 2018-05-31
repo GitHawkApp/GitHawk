@@ -17,7 +17,7 @@ final class IssueReferencedCommitSectionController: ListGenericSectionController
             else { fatalError("Missing context") }
         return CGSize(
             width: width,
-            height: object.string.viewSize(width: width).height
+            height: object.string.viewSize(in: width).height
         )
     }
 
