@@ -412,7 +412,7 @@ final class IssuesViewController:
         }
         
         if viewerIsCollaborator,
-            current.status.status != .merged,
+            current.status.status == .open,
             let merge = current.mergeModel {
             objects.append(merge)
         }
