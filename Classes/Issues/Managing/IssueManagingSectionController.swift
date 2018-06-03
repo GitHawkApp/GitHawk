@@ -107,13 +107,13 @@ ContextMenuDelegate {
         )
     }
 
-    func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
+    func newPeopleController(type: PeopleViewController2.PeopleType) -> UIViewController {
         let selections: [String]
         switch type {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-        return PeopleViewController(
+        return PeopleViewController2(
             selections: selections,
             type: type,
             client: client,
@@ -284,12 +284,8 @@ ContextMenuDelegate {
 
     // MARK: PeopleViewControllerDelegate
 
-    func didDismiss(controller: PeopleViewController) {
+    func didDismiss(controller: PeopleViewController2) {
         guard let previous = issueResult else { return }
-        var assignees = [IssueAssigneeViewModel]()
-        for user in controller.selectedUsers {
-            assignees.append(IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl))
-        }
 
         let mutationType: V3AddPeopleRequest.PeopleType
         switch controller.type {
@@ -303,7 +299,7 @@ ContextMenuDelegate {
             owner: model.owner,
             repo: model.repo,
             number: model.number,
-            people: assignees
+            people: controller.selected
         )
     }
 
@@ -314,7 +310,7 @@ ContextMenuDelegate {
             didDismiss(selected: labels.selected)
         } else if let milestones = viewController as? MilestonesViewController2 {
             didDismiss(controller: milestones)
-        } else if let people = viewController as? PeopleViewController {
+        } else if let people = viewController as? PeopleViewController2 {
             didDismiss(controller: people)
         } else if let labels = viewController as? LabelsViewController2 {
             didDismiss(selected: labels.selected)

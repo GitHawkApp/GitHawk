@@ -507,7 +507,7 @@ extension GithubClient {
                 number: number,
                 type: type,
                 add: false,
-                people: added)
+                people: removed)
             ) { result in
                 switch result {
                 case .success: break
