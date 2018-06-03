@@ -130,6 +130,7 @@ ContextMenuDelegate {
         ContextMenu.shared.show(
             sourceViewController: viewController,
             viewController: controller,
+            options: ContextMenu.Options(menuStyle: .minimal),
             sourceView: cell,
             delegate: self
         )
