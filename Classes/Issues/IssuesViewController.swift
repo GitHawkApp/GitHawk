@@ -161,7 +161,7 @@ final class IssuesViewController:
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
 
-        actions.frame = CGRect(x: 0, y: 0, width: 0, height: 40)
+        actions.frame = CGRect(x: 0, y: 0, width: 0, height: 32)
         messageView.add(contentView: actions)
 
         
