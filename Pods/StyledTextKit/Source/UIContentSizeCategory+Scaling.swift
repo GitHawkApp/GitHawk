@@ -1,6 +1,6 @@
 //
 //  UIContentSizeCategory+Scaling.swift
-//  StyledText
+//  StyledTextKit
 //
 //  Created by Ryan Nystrom on 12/12/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

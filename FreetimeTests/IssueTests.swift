@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import StyledText
+import StyledTextKit
 @testable import Freetime
 
 class IssueTests: XCTestCase {

@@ -8,7 +8,7 @@
 
 import Foundation
 import IGListKit
-import StyledText
+import StyledTextKit
 import DateAgo
 
 final class IssueLabeledModel: ListDiffable {

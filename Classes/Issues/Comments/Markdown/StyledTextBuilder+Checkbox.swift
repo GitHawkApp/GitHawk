@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 import StringHelpers
 
 extension StyledTextBuilder {

@@ -1,6 +1,6 @@
 //
-//  StyledTextRenderCache.swift
-//  StyledText
+//  StyledTextKitRenderCache.swift
+//  StyledTextKit
 //
 //  Created by Ryan Nystrom on 12/13/17.
 //  Copyright © 2017 Ryan Nystrom. All rights reserved.

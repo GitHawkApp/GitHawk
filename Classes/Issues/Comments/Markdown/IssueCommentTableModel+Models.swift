@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StyledText
+import StyledTextKit
 
 class TableBucket {
     var rows = [IssueCommentTableModel.Row]()

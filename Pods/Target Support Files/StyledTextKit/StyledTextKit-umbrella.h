@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double StyledTextVersionNumber;
-FOUNDATION_EXPORT const unsigned char StyledTextVersionString[];
+FOUNDATION_EXPORT double StyledTextKitVersionNumber;
+FOUNDATION_EXPORT const unsigned char StyledTextKitVersionString[];
 

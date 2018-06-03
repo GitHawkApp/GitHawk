@@ -8,7 +8,7 @@
 
 import UIKit
 import Apollo
-import StyledText
+import StyledTextKit
 
 protocol RepositoryQuery {
     // generated queries should share the same init

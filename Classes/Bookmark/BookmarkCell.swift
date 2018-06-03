@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import StyledText
+import StyledTextKit
 
 final class BookmarkCell: SwipeSelectableCell {
 

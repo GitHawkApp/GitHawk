@@ -1,6 +1,6 @@
 //
 //  Font.swift
-//  StyledText
+//  StyledTextKit
 //
 //  Created by Ryan Nystrom on 2/19/18.
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.

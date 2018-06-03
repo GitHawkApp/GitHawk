@@ -8,7 +8,7 @@
 
 import UIKit
 import IGListKit
-import StyledText
+import StyledTextKit
 import DateAgo
 
 final class IssueRequestModel: ListDiffable {

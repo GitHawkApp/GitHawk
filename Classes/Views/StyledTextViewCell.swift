@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 
 class StyledTextViewCell: UICollectionViewCell {
 

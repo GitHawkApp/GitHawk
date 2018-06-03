@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 
 func BodyHeightForComment(
     viewModel: Any,

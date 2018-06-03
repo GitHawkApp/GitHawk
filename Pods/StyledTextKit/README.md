@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="/images/styledtext.png" />
+  <img src="/images/banner.png" />
 </p>
 
-`StyledText` is a declarative building and fast rendering attributed string library. It serves as a replacement to `NSAttributedString` and `UILabel` for background-thread size and bitmap caching.
+`StyledTextKit` is a declarative building and fast rendering attributed string library. It serves as a replacement to `NSAttributedString` and `UILabel` for background-thread size and bitmap caching.
 
 ## Features
 
@@ -13,17 +13,17 @@
 
 ## Installation
 
-Just add `StyledText` to your Podfile and install. Done!
+Just add `StyledTextKit` to your Podfile and install. Done!
 
 ```ruby
-pod 'StyledText'
+pod 'StyledTextKit'
 ```
 
 ## Usage
 
 ### Building `NSAttributedString`s
 
-`StyledText` lets you build complex `NSAttributedString`s by combining:
+`StyledTextKit` lets you build complex `NSAttributedString`s by combining:
 
 - Add `NSAttributedString`s or `String`s and continue using the previous attributes, saving you from repetitive `.font` and `.foregroundColor` styling
 - Intermix complex font traits like **bold** and _italics_ to get _**bold italics**_.
@@ -96,7 +96,7 @@ func didTap(view: StyledTextView, attributes: [NSAttributedStringKey: Any], poin
 
 ## Background Rendering
 
-`StyledText` exists to do background sizing and rendering of text content so that scrolling large amounts of text is buttery smooth. The typical pipeline to do this is:
+`StyledTextKit` exists to do background sizing and rendering of text content so that scrolling large amounts of text is buttery smooth. The typical pipeline to do this is:
 
 1. Get the current width and `UIContentSizeCategory`
 2. Go to a background queue
