@@ -36,7 +36,7 @@ final class MilestoneCell2: SelectableCell {
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.right.lessThanOrEqualTo(checkedImageView.snp.left)
-            make.centerY.equalTo(contentView.snp.centerY)
+            make.bottom.equalTo(contentView.snp.centerY)
         }
 
         contentView.addSubview(detailLabel)

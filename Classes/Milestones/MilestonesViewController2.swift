@@ -39,7 +39,7 @@ MilestoneSectionControllerDelegate {
         self.repo = repo
         self.selected = selected
         super.init(emptyErrorMessage: NSLocalizedString("No milestones found.", comment: ""))
-        title = NSLocalizedString("Labels", comment: "")
+        title = NSLocalizedString("Milestones", comment: "")
         preferredContentSize = CGSize(width: 200, height: 240)
         dataSource = self
     }
