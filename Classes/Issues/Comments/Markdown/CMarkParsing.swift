@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 import cmark_gfm_swift
 import IGListKit
 import HTMLString

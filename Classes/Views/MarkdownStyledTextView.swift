@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StyledText
+import StyledTextKit
 
 protocol MarkdownStyledTextViewDelegate: class {
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute)

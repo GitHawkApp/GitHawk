@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StyledText
+import StyledTextKit
 
 func CodeBlockElement(
     text: String,

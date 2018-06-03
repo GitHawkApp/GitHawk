@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 
 func CreateDiffString(code: String, limit: Bool = false) -> StyledTextString {
     let split = code.components(separatedBy: CharacterSet.newlines)

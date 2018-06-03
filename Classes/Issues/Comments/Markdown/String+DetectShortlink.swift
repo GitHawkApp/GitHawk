@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StyledText
+import StyledTextKit
 import StringHelpers
 
 extension NSRange {

@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 import MessageViewController
-import StyledText
+import StyledTextKit
 
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,

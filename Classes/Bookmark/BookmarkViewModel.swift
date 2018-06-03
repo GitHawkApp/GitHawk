@@ -8,7 +8,7 @@
 
 import UIKit
 import IGListKit
-import StyledText
+import StyledTextKit
 
 final class BookmarkViewModel: ListDiffable {
 

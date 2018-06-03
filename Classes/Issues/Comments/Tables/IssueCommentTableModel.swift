@@ -8,7 +8,7 @@
 
 import Foundation
 import IGListKit
-import StyledText
+import StyledTextKit
 
 final class IssueCommentTableModel: NSObject, ListDiffable {
 

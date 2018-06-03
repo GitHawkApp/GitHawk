@@ -8,7 +8,7 @@
 
 import UIKit
 import IGListKit
-import StyledText
+import StyledTextKit
 
 protocol IssueCommentQuoteCellDelegate: class {
     func didTap(cell: IssueCommentQuoteCell, attribute: DetectedMarkdownAttribute)

@@ -815,7 +815,7 @@ THE SOFTWARE.
 			<key>License</key>
 			<string>MIT</string>
 			<key>Title</key>
-			<string>StyledText</string>
+			<string>StyledTextKit</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

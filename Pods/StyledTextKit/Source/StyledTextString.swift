@@ -1,12 +1,13 @@
 //
-//  StyledTextResult.swift
-//  StyledText
+//  StyledTextKitResult.swift
+//  StyledTextKit
 //
 //  Created by Ryan Nystrom on 3/17/18.
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
 public final class StyledTextString: Hashable, Equatable {
 

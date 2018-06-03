@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 import GitHubAPI
-import StyledText
+import StyledTextKit
 
 extension GithubClient {
 

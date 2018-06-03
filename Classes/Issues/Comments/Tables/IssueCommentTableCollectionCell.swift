@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import StyledText
+import StyledTextKit
 
 final class IssueCommentTableCollectionCell: UICollectionViewCell {
 

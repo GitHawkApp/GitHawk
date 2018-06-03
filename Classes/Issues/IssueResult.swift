@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 import FlatCache
-import StyledText
+import StyledTextKit
 
 struct IssueResult: Cachable {
 

@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import StyledText
+import StyledTextKit
 import DateAgo
 
 final class RepositorySummaryCell: SelectableCell {

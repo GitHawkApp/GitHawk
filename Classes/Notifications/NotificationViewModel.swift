@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 import FlatCache
 import DateAgo
-import StyledText
+import StyledTextKit
 
 final class NotificationViewModel: ListDiffable, Cachable {
 

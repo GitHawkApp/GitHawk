@@ -230,9 +230,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/StyledText</string>
+			<string>com.mono0926.LicensePlist/StyledTextKit</string>
 			<key>Title</key>
-			<string>StyledText (0.1.0)</string>
+			<string>StyledTextKit</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
