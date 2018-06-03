@@ -188,9 +188,13 @@ extension GithubClient {
             switch result {
             case .success(let data):
                 completion(createIssueReactions(reactions: data))
-            case .failure:
+            case .failure(let err):
                 completion(nil)
-                ToastManager.showGenericError()
+                if let message = err?.localizedDescription {
+                    ToastManager.showError(message: message)
+                } else {
+                    ToastManager.showGenericError()
+                }
             }
         }
 

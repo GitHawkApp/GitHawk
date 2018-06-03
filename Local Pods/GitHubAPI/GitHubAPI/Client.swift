@@ -73,7 +73,7 @@ public class Client {
             if let data = response?.data, let q = result(data) {
                 completion(.success(q))
             } else {
-                completion(.failure(error))
+                completion(.failure(error ?? response?.errors?.first))
             }
         }
     }
@@ -88,7 +88,7 @@ public class Client {
             if let data = response?.data, let q = result(data) {
                 completion(.success(q))
             } else {
-                completion(.failure(error))
+                completion(.failure(error ?? response?.errors?.first))
             }
         }
     }
