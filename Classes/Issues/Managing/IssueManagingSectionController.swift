@@ -99,15 +99,12 @@ ContextMenuDelegate {
     }
 
     func newMilestonesController() -> UIViewController {
-        guard let controller = UIStoryboard(name: "Milestones", bundle: nil).instantiateInitialViewController() as? MilestonesViewController
-            else { fatalError("Missing milestones view controller") }
-        controller.configure(
+        return MilestonesViewController2(
             client: client,
             owner: model.owner,
             repo: model.repo,
             selected: issueResult?.milestone
         )
-        return controller
     }
 
     func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
@@ -274,7 +271,7 @@ ContextMenuDelegate {
 
     // MARK: MilestonesViewControllerDelegate
 
-    func didDismiss(controller: MilestonesViewController) {
+    func didDismiss(controller: MilestonesViewController2) {
         guard let previous = issueResult else { return }
         client.setMilestone(
             previous: previous,
@@ -315,7 +312,7 @@ ContextMenuDelegate {
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
         if let labels = viewController as? LabelsViewController {
             didDismiss(selected: labels.selected)
-        } else if let milestones = viewController as? MilestonesViewController {
+        } else if let milestones = viewController as? MilestonesViewController2 {
             didDismiss(controller: milestones)
         } else if let people = viewController as? PeopleViewController {
             didDismiss(controller: people)

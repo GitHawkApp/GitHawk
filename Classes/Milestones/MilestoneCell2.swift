@@ -1,18 +1,19 @@
 //
-//  LabelCell2.swift
+//  MilestoneCell2.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 4/21/18.
+//  Created by Ryan Nystrom on 6/3/18.
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 import SnapKit
 
-final class LabelCell2: SelectableCell {
+final class MilestoneCell2: SelectableCell {
 
-    public let button = UIButton()
-    public let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
+    public let label = UILabel()
+    public let detailLabel = UILabel()
+    private let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,23 +30,22 @@ final class LabelCell2: SelectableCell {
             make.centerY.equalToSuperview()
         }
 
-        contentView.addSubview(button)
-        button.titleLabel?.font = Styles.Text.secondaryBold.preferredFont
-        button.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        button.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        button.layer.borderWidth = 1 / UIScreen.main.scale
-        button.clipsToBounds = true
-        button.isUserInteractionEnabled = false
-        button.contentEdgeInsets = UIEdgeInsets(
-            top: Styles.Sizes.inlineSpacing,
-            left: Styles.Sizes.columnSpacing,
-            bottom: Styles.Sizes.inlineSpacing,
-            right: Styles.Sizes.columnSpacing
-        )
-        button.snp.makeConstraints { make in
+        contentView.addSubview(label)
+        label.font = Styles.Text.secondaryBold.preferredFont
+        label.textColor = Styles.Colors.Gray.dark.color
+        label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.right.lessThanOrEqualTo(checkedImageView.snp.left)
-            make.centerY.equalToSuperview()
+            make.bottom.equalTo(contentView.snp.centerY)
+        }
+
+        contentView.addSubview(detailLabel)
+        detailLabel.font = Styles.Text.secondary.preferredFont
+        detailLabel.textColor = Styles.Colors.Gray.medium.color
+        detailLabel.snp.makeConstraints { make in
+            make.left.equalTo(label)
+            make.right.lessThanOrEqualTo(checkedImageView.snp.left)
+            make.top.equalTo(label.snp.bottom)
         }
 
         contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
@@ -69,3 +69,4 @@ final class LabelCell2: SelectableCell {
     }
 
 }
+

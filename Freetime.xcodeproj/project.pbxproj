@@ -237,6 +237,10 @@
 		297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
+		297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91820C4743D00B6E42C /* MilestoneCell2.swift */; };
+		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
+		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
+		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
 		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
@@ -742,6 +746,10 @@
 		297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Orientation.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
+		297EC91820C4743D00B6E42C /* MilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell2.swift; sourceTree = "<group>"; };
+		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
+		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
+		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
 		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		2980033D1F51E93500BE90F4 /* RatingSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingSectionController.swift; sourceTree = "<group>"; };
@@ -1111,8 +1119,12 @@
 				292FA33E1FBCE4D000BBB0BB /* GithubClient+Milestones.swift */,
 				292FA33C1FBCE0F000BBB0BB /* Milestone.swift */,
 				292FA3381FBCDDC000BBB0BB /* MilestoneCell.swift */,
+				297EC91820C4743D00B6E42C /* MilestoneCell2.swift */,
 				292FA3361FBCDA8800BBB0BB /* Milestones.storyboard */,
 				292FA33A1FBCDF8F00BBB0BB /* MilestonesViewController.swift */,
+				297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */,
+				297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */,
+				297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */,
 			);
 			path = Milestones;
 			sourceTree = "<group>";
@@ -2725,6 +2737,7 @@
 				DCD421C91FAFC049008CC2EC /* BookmarkHeaderSectionController.swift in Sources */,
 				29A5AF431F926C600065D529 /* Filterable.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
+				297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */,
 				293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */,
 				293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */,
 				2965F3702071508C003CC92F /* StyledTextBuilder+Checkbox.swift in Sources */,
@@ -2857,12 +2870,14 @@
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */,
+				297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */,
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,
 				294563EE1EE5012900DBCD35 /* PullRequest+IssueType.swift in Sources */,
 				298003401F51E93B00BE90F4 /* RatingCell.swift in Sources */,
 				29351EA22079663800FF8C17 /* String+Shortlink.swift in Sources */,
+				297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */,
 				2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */,
 				29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */,
 				29136BDB200A626D007317BE /* FixedRefreshControl.swift in Sources */,
@@ -2933,6 +2948,7 @@
 				298BA0981EC947F100B01946 /* SegmentedControlSectionController.swift in Sources */,
 				D8D876F81FB6083200A57E2B /* UIPopoverPresentationController+SourceView.swift in Sources */,
 				294A3D781FB29E2A000E81A4 /* UISearchBar+Keyboard.swift in Sources */,
+				297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */,
 				29351E9E207917ED00FF8C17 /* IssueCommentTableModel+Models.swift in Sources */,
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
 				29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */,
