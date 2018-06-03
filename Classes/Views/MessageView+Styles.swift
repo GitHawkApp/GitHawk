@@ -22,7 +22,7 @@ extension MessageViewController {
         messageView.textViewInset = UIEdgeInsets(
             top: Styles.Sizes.gutter,
             left: Styles.Sizes.gutter,
-            bottom: 0,
+            bottom: Styles.Sizes.gutter,
             right: Styles.Sizes.rowSpacing
         )
         messageView.setButton(inset: Styles.Sizes.gutter, position: .right)
