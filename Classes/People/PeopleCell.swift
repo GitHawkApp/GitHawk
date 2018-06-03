@@ -31,7 +31,7 @@ final class PeopleCell: SelectableCell {
             make.size.equalTo(Styles.Sizes.avatar)
         }
 
-        usernameLabel.font = Styles.Text.secondaryBold.preferredFont
+        usernameLabel.font = Styles.Text.secondary.preferredFont
         usernameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView)
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
