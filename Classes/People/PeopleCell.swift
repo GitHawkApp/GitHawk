@@ -10,14 +10,17 @@ import UIKit
 import SDWebImage
 import SnapKit
 
-final class PeopleCell: UICollectionViewCell {
+final class PeopleCell: SelectableCell {
 
-    let avatarImageView = UIImageView()
-    let usernameLabel = UILabel()
-    let checkmarkImageView = UIImageView()
+    private let avatarImageView = UIImageView()
+    private let usernameLabel = UILabel()
+    private let checkmarkImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        backgroundColor = .white
+        
         contentView.addSubview(avatarImageView)
         contentView.addSubview(usernameLabel)
         contentView.addSubview(checkmarkImageView)
@@ -28,12 +31,13 @@ final class PeopleCell: UICollectionViewCell {
             make.size.equalTo(Styles.Sizes.avatar)
         }
 
+        usernameLabel.font = Styles.Text.secondary.preferredFont
         usernameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView)
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
         }
 
-        checkmarkImageView.image = UIImage(named: "check")?.withRenderingMode(.alwaysTemplate)
+        checkmarkImageView.image = UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate)
         checkmarkImageView.tintColor = Styles.Colors.Blue.medium.color
         checkmarkImageView.contentMode = .scaleAspectFit
 

@@ -57,7 +57,10 @@ FeedDelegate {
     // MARK: Public API
 
     final func update(animated: Bool) {
-        self.feed.finishLoading(dismissRefresh: true, animated: animated)
+        self.feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled
+        )
     }
 
     final func update(
@@ -69,7 +72,11 @@ FeedDelegate {
 
         self.hasError = false
         self.page = page
-        self.feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        self.feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled,
+            completion: completion
+        )
     }
 
     final func error(
@@ -78,7 +85,11 @@ FeedDelegate {
         ) {
         assert(Thread.isMainThread)
         hasError = true
-        feed.finishLoading(dismissRefresh: true, animated: animated, completion: completion)
+        feed.finishLoading(
+            dismissRefresh: true,
+            animated: animated && trueUnlessReduceMotionEnabled,
+            completion: completion
+        )
     }
 
     // MARK: FeedDelegate

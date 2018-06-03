@@ -241,6 +241,8 @@
 		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
 		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
 		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
+		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
+		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
 		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
@@ -750,6 +752,8 @@
 		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
 		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
 		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
+		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
+		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
 		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		2980033D1F51E93500BE90F4 /* RatingSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingSectionController.swift; sourceTree = "<group>"; };
@@ -1411,8 +1415,10 @@
 			isa = PBXGroup;
 			children = (
 				295B51411FC26B8100C3993B /* PeopleCell.swift */,
+				297EC91620C3965E00B6E42C /* PeopleViewController2.swift */,
 				295B51431FC26C5400C3993B /* PeopleViewController.swift */,
 				1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */,
+				297EC91420C3953300B6E42C /* PeopleSectionController2.swift */,
 			);
 			path = People;
 			sourceTree = "<group>";
@@ -2890,6 +2896,7 @@
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
+				297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
@@ -2938,6 +2945,7 @@
 				986B87251F2B990A00AAB55C /* SearchRepoResultCell.swift in Sources */,
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
+				297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */,
