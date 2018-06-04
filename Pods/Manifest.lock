@@ -74,7 +74,7 @@ PODS:
     - SDWebImage/Core
   - SnapKit (4.0.0)
   - StringHelpers (0.1.0)
-  - StyledTextKit (0.1.0)
+  - StyledTextKit (0.1.1)
   - SwiftLint (0.24.0)
   - SwipeCellKit (1.9.0)
   - Tabman (1.8.2):
@@ -191,7 +191,7 @@ CHECKOUT OPTIONS:
     :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
   StyledTextKit:
-    :commit: 6d180f36ecf0e6e0a72fe6b50408ce86e74f7920
+    :commit: 081da7a8fdeb44c6984394eae6cc4c021b6b0e40
     :git: https://github.com/GitHawkApp/StyledTextKit.git
 
 SPEC CHECKSUMS:
@@ -227,7 +227,7 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
-  StyledTextKit: c076841ed84196bda8805b283a3129c5fc117b93
+  StyledTextKit: f7b74b87dc844d7630a92c68de0017f51ffbd065
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
