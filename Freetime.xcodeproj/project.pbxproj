@@ -237,12 +237,12 @@
 		297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
+		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
+		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
 		297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91820C4743D00B6E42C /* MilestoneCell2.swift */; };
 		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
 		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
 		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
-		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
-		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
 		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
@@ -748,12 +748,12 @@
 		297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Orientation.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
+		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
+		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
 		297EC91820C4743D00B6E42C /* MilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell2.swift; sourceTree = "<group>"; };
 		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
 		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
 		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
-		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
-		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
 		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		2980033D1F51E93500BE90F4 /* RatingSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingSectionController.swift; sourceTree = "<group>"; };
@@ -2320,7 +2320,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ ! -z \"${DISABLE_APOLLO}\" ]]; then\n  echo \"Stopping Task: Remove 'DISABLE_APOLLO' env variable to continue.\"\n  exit\nfi\n\nPATH=\"$(npm bin):$PATH\"\n\nAPOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \\\"Apollo.framework\\\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/gql\"\nTEMP_FILE=$(mktemp)\n\n[[ -f API.swift ]] || touch API.swift # ensure sure file exists\n\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output $TEMP_FILE\n\ncmp API.swift $TEMP_FILE || cp $TEMP_FILE API.swift";
+			shellScript = "";
 		};
 		295B51391FC2342200C3993B /* Run Fabric */ = {
 			isa = PBXShellScriptBuildPhase;

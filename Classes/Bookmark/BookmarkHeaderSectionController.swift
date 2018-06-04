@@ -27,9 +27,7 @@ final class BookmarkHeaderSectionController: ListSectionController, ClearAllHead
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: ClearAllHeaderCell.self, for: self, at: index) as? ClearAllHeaderCell else {
-            fatalError("Missing context or wrong cell type")
-        }
+        guard let cell = collectionContext?.dequeueReusableCell(of: ClearAllHeaderCell.self, for: self, at: index) as? ClearAllHeaderCell else { fatalError("Missing context or wrong cell type") }
         cell.delegate = self
         cell.configure(title: Constants.Strings.bookmarks.uppercased(with: Locale.current))
         return cell
