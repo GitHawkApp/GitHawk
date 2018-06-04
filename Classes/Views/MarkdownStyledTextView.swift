@@ -8,6 +8,7 @@
 
 import Foundation
 import StyledTextKit
+import TUSafariActivity
 
 protocol MarkdownStyledTextViewDelegate: class {
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute)
@@ -22,6 +23,18 @@ class MarkdownStyledTextView: StyledTextView, StyledTextViewDelegate {
         set {}
     }
 
+    // MARK: Private API
+
+    private func show(url: URL) {
+        let activityController = UIActivityViewController(
+            activityItems: [url, url.absoluteString],
+            applicationActivities: [TUSafariActivity()]
+        )
+        activityController.popoverPresentationController?.sourceView = self
+        UIApplication.shared.keyWindow?.rootViewController?
+            .present(activityController, animated: trueUnlessReduceMotionEnabled)
+    }
+
     // MARK: StyledTextViewDelegate
 
     func didTap(view: StyledTextView, attributes: [NSAttributedStringKey : Any], point: CGPoint) {
@@ -32,6 +45,9 @@ class MarkdownStyledTextView: StyledTextView, StyledTextViewDelegate {
     func didLongPress(view: StyledTextView, attributes: [NSAttributedStringKey : Any], point: CGPoint) {
         if let details = attributes[MarkdownAttribute.details] as? String {
             showDetailsInMenu(details: details, point: point)
+        }
+        if let urlString = attributes[MarkdownAttribute.url] as? String, let url = URL(string: urlString) {
+            show(url: url)
         }
     }
 

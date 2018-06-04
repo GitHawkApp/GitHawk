@@ -70,6 +70,8 @@ public final class StyledTextRenderer {
     private func _size(_ key: StyledTextRenderCacheKey) -> CGSize {
         let cache = StyledTextRenderer.globalSizeCache
         if let cached = cache[key] {
+            // always update the container to requested size
+            textContainer.size = cached
             return cached
         }
         let insetWidth = max(key.width - inset.left - inset.right, 0)

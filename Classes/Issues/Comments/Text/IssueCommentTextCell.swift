@@ -24,6 +24,7 @@ final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         isAccessibilityElement = true
+        textView.gesturableAttributes = MarkdownAttribute.all
         contentView.addSubview(textView)
     }
 

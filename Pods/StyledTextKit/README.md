@@ -31,7 +31,7 @@ pod 'StyledTextKit'
 - Call `save()` and `restore()` to push/pop style settings, letting you build complex test styles without complex code.
 
 ```swift
-StyledTextBuilder(text: "Foo ")
+let attributedString = StyledTextBuilder(text: "Foo ")
   .save()
   .add(text: "bar", traits: [.traitBold])
   .restore()
