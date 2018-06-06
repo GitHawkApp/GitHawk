@@ -62,7 +62,7 @@ final class BookmarkCell: SwipeSelectableCell {
         var origin = CGPoint.zero
         // center the textView if there is no detail text
         if detailLabel.text?.isEmpty == true {
-            origin = CGPoint(x: textViewFrame.minX, y: (bounds.height - textViewFrame.height)/2)
+            origin = CGPoint(x: textViewFrame.minX, y: (bounds.height - textViewFrame.height) / 2)
             textView.frame = CGRect(origin: origin, size: textViewFrame.size)
         } else {
             origin = CGPoint(x: textViewFrame.minX, y: textViewFrame.maxY + Styles.Sizes.rowSpacing)
