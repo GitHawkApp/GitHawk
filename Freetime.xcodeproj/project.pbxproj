@@ -458,6 +458,8 @@
 		DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */; };
 		DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */; };
 		DCD421C91FAFC049008CC2EC /* BookmarkHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */; };
+		DCDEEE3220C87C3400A6C763 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEEE3120C87C3400A6C763 /* UIView+Extensions.swift */; };
+		DCDEEE3320C87C3400A6C763 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDEEE3120C87C3400A6C763 /* UIView+Extensions.swift */; };
 		FB9E0B1189A32219A0710FA2 /* Pods_FreetimeWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */; };
 /* End PBXBuildFile section */
 
@@ -982,6 +984,7 @@
 		DCA5ED1A1FAEF78B0072F074 /* BookmarkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionController.swift; sourceTree = "<group>"; };
 		DCA5ED1C1FAEF9EE0072F074 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		DCD421C81FAFC049008CC2EC /* BookmarkHeaderSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkHeaderSectionController.swift; sourceTree = "<group>"; };
+		DCDEEE3120C87C3400A6C763 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		E5DE3DA77D75FB9DC994EFC1 /* Pods-FreetimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests.release.xcconfig"; sourceTree = "<group>"; };
 		E6EF57A6CF52B90990B21F83 /* Pods-FreetimeWatch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension.release.xcconfig"; sourceTree = "<group>"; };
 		ECF622FFD773FDA73297C0D0 /* Pods_Freetime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Freetime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1666,6 +1669,7 @@
 			isa = PBXGroup;
 			children = (
 				29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */,
+				DCDEEE3120C87C3400A6C763 /* UIView+Extensions.swift */,
 				29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */,
 				29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */,
 				29B94E661FCB2D4600715D7E /* CodeView.swift */,
@@ -2775,6 +2779,7 @@
 				29AF1E861F8AADD00008A0EF /* UIViewController+CancelAction.swift in Sources */,
 				2908C5891F6F3EB00071C39D /* IssueLocalReaction.swift in Sources */,
 				2931892B1F5397E400EF0911 /* IssueMilestoneCell.swift in Sources */,
+				DCDEEE3220C87C3400A6C763 /* UIView+Extensions.swift in Sources */,
 				292EB08F1F1FF5EC0046865D /* IssueMilestoneEventCell.swift in Sources */,
 				292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */,
 				292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */,
@@ -3054,6 +3059,7 @@
 				DC60C6D51F983DF800241271 /* IssueLabelCellTests.swift in Sources */,
 				49FE18FF204B6508001681E8 /* SequenceTests.swift in Sources */,
 				DC5C02C31F9C6D0B00E80B9F /* SearchRecentStoreTests.swift in Sources */,
+				DCDEEE3320C87C3400A6C763 /* UIView+Extensions.swift in Sources */,
 				9870B9081FC74E300009719C /* SecretsTests.swift in Sources */,
 				29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */,
 				2986B35E1FD462AA00E3CFC6 /* FilePathTests.swift in Sources */,

@@ -30,6 +30,17 @@ final class BookmarkCell: SwipeSelectableCell {
 
         contentView.clipsToBounds = true
 
+        configureImageView()
+        contentView.addSubviews([textView, detailLabel])
+
+        addBorder(.bottom, left: Styles.Sizes.gutter)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configureImageView() {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.tintColor = Styles.Colors.Blue.medium.color
@@ -39,15 +50,6 @@ final class BookmarkCell: SwipeSelectableCell {
             make.left.equalTo(Styles.Sizes.rowSpacing)
             make.size.equalTo(Styles.Sizes.icon)
         }
-
-        contentView.addSubview(textView)
-        contentView.addSubview(detailLabel)
-
-        addBorder(.bottom, left: Styles.Sizes.gutter)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {

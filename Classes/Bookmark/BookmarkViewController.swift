@@ -74,14 +74,7 @@ TabNavRootViewControllerType {
         adapter.collectionView = collectionView
         adapter.dataSource = self
 
-        searchBar.delegate = self
-        searchBar.placeholder = Constants.Strings.searchBookmarks
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
-        searchBar.backgroundColor = .clear
-        searchBar.searchBarStyle = .minimal
-        navigationItem.titleView = searchBar
-
-        searchBar.resignWhenKeyboardHides()
+        configureSearchBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -115,6 +108,17 @@ TabNavRootViewControllerType {
         }
 
         state = .filtering(term)
+    }
+
+    private func configureSearchBar() {
+        searchBar.delegate = self
+        searchBar.placeholder = Constants.Strings.searchBookmarks
+        searchBar.tintColor = Styles.Colors.Blue.medium.color
+        searchBar.backgroundColor = .clear
+        searchBar.searchBarStyle = .minimal
+        navigationItem.titleView = searchBar
+
+        searchBar.resignWhenKeyboardHides()
     }
 
     // MARK: BookmarkSectionControllerDelegate
