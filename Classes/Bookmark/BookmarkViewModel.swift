@@ -20,9 +20,9 @@ final class BookmarkViewModel: ListDiffable {
     init(bookmark: Bookmark, contentSizeCategory: UIContentSizeCategory, width: CGFloat) {
         self.bookmark = bookmark
 
-        let builder = StyledTextBuilder(styledText: StyledText(
-            style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color)
-        ))
+        let styledText = StyledText(style: Styles.Text.body.with(foreground: Styles.Colors.Gray.dark.color))
+        let builder = StyledTextBuilder(styledText: styledText)
+
         switch bookmark.type {
         case .securityVulnerability:
             assertionFailure("Type \(bookmark.type) is not expected to be bookmarkable.")

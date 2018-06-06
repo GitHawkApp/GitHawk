@@ -14,8 +14,8 @@ final class BookmarkCell: SwipeSelectableCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Text.secondary.preferredFont.lineHeight + 2*Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.icon.width + 2 * Styles.Sizes.columnSpacing,
+        bottom: Styles.Text.secondary.preferredFont.lineHeight + 2 * Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
     )
 
@@ -30,6 +30,17 @@ final class BookmarkCell: SwipeSelectableCell {
 
         contentView.clipsToBounds = true
 
+        configureImageView()
+        contentView.addSubviews([textView, detailLabel])
+
+        addBorder(.bottom, left: Styles.Sizes.gutter)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configureImageView() {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.tintColor = Styles.Colors.Blue.medium.color
@@ -39,15 +50,6 @@ final class BookmarkCell: SwipeSelectableCell {
             make.left.equalTo(Styles.Sizes.rowSpacing)
             make.size.equalTo(Styles.Sizes.icon)
         }
-
-        contentView.addSubview(textView)
-        contentView.addSubview(detailLabel)
-
-        addBorder(.bottom, left: Styles.Sizes.gutter)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {
@@ -59,17 +61,14 @@ final class BookmarkCell: SwipeSelectableCell {
 
         let textViewFrame = textView.frame
 
+        var origin = CGPoint.zero
         // center the textView if there is no detail text
         if detailLabel.text?.isEmpty == true {
-            textView.frame = CGRect(
-                origin: CGPoint(x: textViewFrame.minX, y: (bounds.height - textViewFrame.height)/2),
-                size: textViewFrame.size
-            )
+            origin = CGPoint(x: textViewFrame.minX, y: (bounds.height - textViewFrame.height) / 2)
+            textView.frame = CGRect(origin: origin, size: textViewFrame.size)
         } else {
-            detailLabel.frame = CGRect(
-                origin: CGPoint(x: textViewFrame.minX, y: textViewFrame.maxY + Styles.Sizes.rowSpacing),
-                size: detailLabel.frame.size
-            )
+            origin = CGPoint(x: textViewFrame.minX, y: textViewFrame.maxY + Styles.Sizes.rowSpacing)
+            detailLabel.frame = CGRect(origin: origin, size: detailLabel.frame.size)
         }
     }
 

@@ -39,12 +39,10 @@ extension Bookmark: Filterable {
     func match(query: String) -> Bool {
         let lowerQuery = query.lowercased()
 
-        if type.rawValue.contains(lowerQuery) { return true }
-        if String(number).contains(lowerQuery) { return true }
-        if title.lowercased().contains(lowerQuery) { return true }
-        if owner.lowercased().contains(lowerQuery) { return true }
-        if name.lowercased().contains(lowerQuery) { return true }
-
-        return false
+        return type.rawValue.contains(lowerQuery) ||
+            String(number).contains(lowerQuery) ||
+            title.lowercased().contains(lowerQuery) ||
+            owner.lowercased().contains(lowerQuery) ||
+            name.lowercased().contains(lowerQuery)
     }
 }
