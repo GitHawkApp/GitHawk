@@ -56,6 +56,28 @@ FlatCacheListener {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if NotificationClient.readOnOpen(){
+            self.readOnOpen()
+        }
+        
+    }
+    
+   private func readOnOpen(){
+        var count = 0
+        let showAll = self.showAll
+        for id in notificationIDs {
+            let readOrNot = client.notificationOpened(id: id)
+            if (showAll || !readOrNot) {
+                // count the unread notifications
+                count = count+1
+            }
+        }
+        // readOnOpen is set then update  update bar  badges
+    updateUnreadState(count: count)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +165,7 @@ FlatCacheListener {
             case .unread: break
         }
 
-        let hasUnread = count > 0 && !NotificationClient.readOnOpen()
+        let hasUnread = count > 0
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
         BadgeNotifications.update(count: count)
