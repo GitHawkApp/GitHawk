@@ -9,7 +9,13 @@
 import UIKit
 import IGListKit
 
+protocol LoadMoreSectionController2Delegate: class {
+    func didSelect(controller: LoadMoreSectionController2)
+}
+
 final class LoadMoreSectionController2: ListSwiftSectionController<String> {
+
+    weak var delegate: LoadMoreSectionController2Delegate?
 
     override func createBinders(from value: String) -> [ListBinder] {
         return [
@@ -18,6 +24,9 @@ final class LoadMoreSectionController2: ListSwiftSectionController<String> {
                     width: $0.collection.containerSize.width,
                     height: Styles.Sizes.tableCellHeight
                 )
+            }, didSelect: { [weak self] context in
+                guard let strongSelf = self else { return }
+                strongSelf.delegate?.didSelect(controller: strongSelf)
             })
         ]
     }

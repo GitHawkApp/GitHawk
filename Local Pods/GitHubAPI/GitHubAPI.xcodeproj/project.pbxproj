@@ -56,6 +56,7 @@
 		29C1A9EE204B22A200CB6995 /* GitHubAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9ED204B22A200CB6995 /* GitHubAPITests.swift */; };
 		29C1A9F0204B22A200CB6995 /* GitHubAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C1A9C8204B04E700CB6995 /* GitHubAPI.framework */; };
 		29C1A9F7204B497A00CB6995 /* V3Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1A9F6204B497A00CB6995 /* V3Request.swift */; };
+		29F3A18E20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A18D20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift */; };
 		29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABB204B545F00E5CA32 /* V3User.swift */; };
 		29F8BABE204B56BC00E5CA32 /* V3Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABD204B56BC00E5CA32 /* V3Repository.swift */; };
 		29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */; };
@@ -130,6 +131,7 @@
 		29C1A9ED204B22A200CB6995 /* GitHubAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPITests.swift; sourceTree = "<group>"; };
 		29C1A9EF204B22A200CB6995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29C1A9F6204B497A00CB6995 /* V3Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Request.swift; sourceTree = "<group>"; };
+		29F3A18D20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3SubscribeThreadRequest.swift; sourceTree = "<group>"; };
 		29F8BABB204B545F00E5CA32 /* V3User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3User.swift; sourceTree = "<group>"; };
 		29F8BABD204B56BC00E5CA32 /* V3Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Repository.swift; sourceTree = "<group>"; };
 		29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3NotificationSubject.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				290890A7204BC4B400D088BC /* GitHubAPIStatusRequest.swift */,
 				29580512204B62BE009CFD51 /* HTTPRequest.swift */,
 				29C1A9CC204B04E700CB6995 /* Info.plist */,
+				290890C1204BDE2A00D088BC /* JSONResponse.swift */,
 				2958053C204BAD77009CFD51 /* ManualGraphQLRequest.swift */,
 				29580510204B629B009CFD51 /* Processing.swift */,
 				29C1A9D3204B05AE00CB6995 /* Request.swift */,
@@ -207,6 +210,7 @@
 				290890A9204BC58A00D088BC /* V3CreateIssueRequest.swift */,
 				29580522204B713C009CFD51 /* V3DataResponse.swift */,
 				2958052C204B7AB2009CFD51 /* V3DeleteCommentRequest.swift */,
+				290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */,
 				290890B3204BCC3100D088BC /* V3File.swift */,
 				2958052E204B7B5D009CFD51 /* V3LockIssueRequest.swift */,
 				29580536204BAAE6009CFD51 /* V3MarkNotificationsRequest.swift */,
@@ -220,7 +224,6 @@
 				29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */,
 				290890BF204BDDD900D088BC /* V3PullRequestCommentsRequest.swift */,
 				290890B1204BCBD200D088BC /* V3PullRequestFilesRequest.swift */,
-				290890C1204BDE2A00D088BC /* JSONResponse.swift */,
 				29580526204B778B009CFD51 /* V3Release.swift */,
 				29580528204B77B1009CFD51 /* V3ReleaseRequest.swift */,
 				29F8BABD204B56BC00E5CA32 /* V3Repository.swift */,
@@ -228,12 +231,12 @@
 				290890A5204BC0ED00D088BC /* V3RepositoryReadmeRequest.swift */,
 				29C1A9F6204B497A00CB6995 /* V3Request.swift */,
 				290890BD204BDA8F00D088BC /* V3SendPullRequestCommentRequest.swift */,
-				290890C3204BDF9E00D088BC /* V3EditCommentRequest.swift */,
 				290890AF204BCB2100D088BC /* V3SetIssueStatusRequest.swift */,
 				290890B7204BCD2600D088BC /* V3SetMilestonesRequest.swift */,
 				2908909D204BB57700D088BC /* V3SetRepositoryLabelsRequest.swift */,
 				2958053A204BAB1A009CFD51 /* V3StatusCode205.swift */,
 				2958052A204B785F009CFD51 /* V3StatusCodeResponse.swift */,
+				29F3A18D20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift */,
 				29F8BABB204B545F00E5CA32 /* V3User.swift */,
 				290890AB204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift */,
 				29580530204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift */,
@@ -509,6 +512,7 @@
 				2958052F204B7B5D009CFD51 /* V3LockIssueRequest.swift in Sources */,
 				29580515204B62DC009CFD51 /* Response.swift in Sources */,
 				29F8BABC204B545F00E5CA32 /* V3User.swift in Sources */,
+				29F3A18E20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift in Sources */,
 				29580511204B629B009CFD51 /* Processing.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
 				290890B2204BCBD200D088BC /* V3PullRequestFilesRequest.swift in Sources */,

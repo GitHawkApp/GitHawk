@@ -11,8 +11,8 @@ import DateAgo
 
 extension ShowMoreDetailsLabel {
 
-    func setText(date: Date) {
-        text = date.agoString(.long)
+    func setText(date: Date, format: Date.AgoFormat = .long) {
+        text = date.agoString(format)
         detailText = DateDetailsFormatter().string(from: date)
     }
 

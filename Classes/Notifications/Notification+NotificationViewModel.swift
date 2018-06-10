@@ -45,3 +45,43 @@ func CreateViewModels(
 
     return viewModels
 }
+
+func CreateNotificationViewModels(
+    width: CGFloat,
+    contentSizeCategory: UIContentSizeCategory,
+    v3notifications: [V3Notification]) -> [NotificationViewModel2] {
+    var models = [NotificationViewModel2]()
+
+    for notification in v3notifications {
+        guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
+            let identifier = notification.subject.identifier
+            else { continue }
+
+        let modelIdentifier: NotificationViewModel2.Identifier
+        switch identifier {
+        case .hash(let h): modelIdentifier = .hash(h)
+        case .number(let n): modelIdentifier = .number(n)
+        case .release(let r): modelIdentifier = .release(r)
+        }
+
+        models.append(NotificationViewModel2(
+            v3id: notification.id,
+            repo: notification.repository.name,
+            owner: notification.repository.owner.login,
+            title: CreateNotification(title: notification.subject.title, width: width, contentSizeCategory: contentSizeCategory),
+            ident: modelIdentifier,
+            state: .pending, // fetched later
+            date: notification.updatedAt,
+            ago: notification.updatedAt.agoString(.short),
+            read: !notification.unread,
+            comments: 0, // fetched later
+            watching: true, // assumed based on receiving
+            type: type,
+            // TODO get from GQL notification request
+            branch: "master",
+            issuesEnabled: true
+        ))
+    }
+
+    return models
+}

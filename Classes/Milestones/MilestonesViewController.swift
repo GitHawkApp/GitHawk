@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class MilestonesViewController: BaseListViewController2,
+final class MilestonesViewController: BaseListViewController2<String>,
 BaseListViewController2DataSource,
 MilestoneSectionControllerDelegate {
 

@@ -1,19 +1,18 @@
 //
-//  NotificationClient.swift
+//  NotificationClient2.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 6/30/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 6/9/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
-
 import GitHubAPI
 
 // used to request states via graphQL
-extension NotificationViewModel {
+extension NotificationViewModel2 {
     var stateAlias: (number: Int, key: String)? {
-        switch identifier {
+        switch ident {
         case .hash, .release:
             // commits and releases don't have states, always "merged"
             return nil
@@ -24,9 +23,7 @@ extension NotificationViewModel {
     }
 }
 
-final class NotificationClient {
-
-    private var openedNotificationIDs = Set<String>()
+final class NotificationModelController {
 
     let githubClient: GithubClient
 
@@ -38,7 +35,7 @@ final class NotificationClient {
 
     static private let openOnReadKey = "com.freetime.NotificationClient.read-on-open"
 
-    static func readOnOpen() -> Bool {
+    static var readOnOpen: Bool {
         return UserDefaults.standard.bool(forKey: openOnReadKey)
     }
 
@@ -52,15 +49,17 @@ final class NotificationClient {
         all: Bool = false,
         page: Int = 1,
         width: CGFloat,
-        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
+        completion: @escaping (Result<([NotificationViewModel2], Int?)>) -> Void
         ) {
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        // TODO move handling + parsing to a single method?
         if let repo = repo {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
-                    let viewModels = CreateViewModels(
-                        containerWidth: width,
+                    // TODO move to bg thread
+                    let viewModels = CreateNotificationViewModels(
+                        width: width,
                         contentSizeCategory: contentSizeCategory,
                         v3notifications: response.data
                     )
@@ -73,8 +72,9 @@ final class NotificationClient {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
                 switch result {
                 case .success(let response):
-                    let viewModels = CreateViewModels(
-                        containerWidth: width,
+                    // TODO move to bg thread
+                    let viewModels = CreateNotificationViewModels(
+                        width: width,
                         contentSizeCategory: contentSizeCategory,
                         v3notifications: response.data
                     )
@@ -87,9 +87,9 @@ final class NotificationClient {
     }
 
     private func fetchStates(
-        for notifications: [NotificationViewModel],
+        for notifications: [NotificationViewModel2],
         page: Int?,
-        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
+        completion: @escaping (Result<([NotificationViewModel2], Int?)>) -> Void
         ) {
         guard notifications.count > 0 else {
             completion(.success((notifications, page)))
@@ -108,19 +108,22 @@ final class NotificationClient {
         let cache = githubClient.cache
 
         githubClient.client.send(ManualGraphQLRequest(query: query)) { result in
-            let processedNotifications: [NotificationViewModel]
+            let processedNotifications: [NotificationViewModel2]
             switch result {
             case .success(let json):
-                var updatedNotifications = [NotificationViewModel]()
+                var updatedNotifications = [NotificationViewModel2]()
                 for notification in notifications {
                     if let alias = notification.stateAlias,
                         let result = json.data[alias.key] as? [String: Any],
                         let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
                         let stateString = issueOrPullRequest["state"] as? String,
-                        let state = NotificationViewModel.State(rawValue: stateString),
+                        let state = NotificationViewModel2.State(rawValue: stateString),
                         let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
                         let commentCount = commentsJSON["totalCount"] as? Int {
-                        updatedNotifications.append(notification.updated(state: state, commentCount: commentCount))
+                        var newNotification = notification
+                        newNotification.state = state
+                        newNotification.comments = commentCount
+                        updatedNotifications.append(newNotification)
                     } else {
                         updatedNotifications.append(notification)
                     }
@@ -152,32 +155,37 @@ final class NotificationClient {
         }
     }
 
-    func notificationOpened(id: String) -> Bool {
-        return openedNotificationIDs.contains(id)
-    }
+    func markNotificationRead(id: String) {
+        let cache = githubClient.cache
+        guard var model = cache.get(id: id) as NotificationViewModel2?,
+            !model.read
+            else { return }
 
-    func markNotificationRead(id: String, isOpen: Bool) {
-        let oldModel = githubClient.cache.get(id: id) as NotificationViewModel?
+        model.read = true
+        cache.set(value: model)
 
-        if isOpen {
-            openedNotificationIDs.insert(id)
-        } else {
-            // optimistically set the model to read
-            // if the request fails, replace this model w/ the old one.
-            if let old = oldModel {
-                githubClient.cache.set(value: old.updated(read: true))
-            }
-        }
-
-        githubClient.client.send(V3MarkThreadsRequest(id: id)) { [weak self] result in
+        githubClient.client.send(V3MarkThreadsRequest(id: id)) { result in
             switch result {
             case .success: break
             case .failure:
-                if isOpen {
-                    self?.openedNotificationIDs.remove(id)
-                } else if let old = oldModel {
-                    self?.githubClient.cache.set(value: old)
-                }
+                model.read = false
+                cache.set(value: model)
+            }
+        }
+    }
+
+    func toggleWatch(notification: NotificationViewModel2) {
+        let cache = githubClient.cache
+
+        var model = notification
+        model.watching = !notification.watching
+        cache.set(value: model)
+
+        githubClient.client.send(V3SubscribeThreadRequest(id: model.v3id, ignore: model.watching)) { result in
+            switch result {
+            case .success: break
+            case .failure:
+                cache.set(value: notification)
             }
         }
     }

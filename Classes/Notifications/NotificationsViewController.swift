@@ -11,6 +11,19 @@ import IGListKit
 import SnapKit
 import FlatCache
 
+enum InboxType {
+    case unread
+    case repo(Repository)
+    case all
+
+    var showAll: Bool {
+        switch self {
+        case .all, .repo: return true
+        case .unread: return false
+        }
+    }
+}
+
 class NotificationsViewController: BaseListViewController<NSNumber>,
 ForegroundHandlerDelegate,
 RatingSectionControllerDelegate,
@@ -18,12 +31,6 @@ PrimaryViewController,
 TabNavRootViewControllerType,
 BaseListViewControllerDataSource,
 FlatCacheListener {
-
-    enum InboxType {
-        case unread
-        case repo(NotificationClient.NotificationRepository)
-        case all
-    }
 
     private let client: NotificationClient
     private let foreground = ForegroundHandler(threshold: 5 * 60)
@@ -111,7 +118,7 @@ FlatCacheListener {
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
-        let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
+        let model = Repository(owner: owner, name: repo)
         let controller = NotificationsViewController(client: client, inboxType: .repo(model))
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
@@ -239,19 +246,13 @@ FlatCacheListener {
         update(page: page, animated: animated)
     }
 
-    private var showAll: Bool {
-        switch inboxType {
-        case .all, .repo: return true
-        case .unread: return false
-        }
-    }
-
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
         let width = view.bounds.width
+        let showAll = inboxType.showAll
 
-        let repo: NotificationClient.NotificationRepository?
+        let repo: Repository?
         switch inboxType {
         case .repo(let r): repo = r
         case .all, .unread: repo = nil
@@ -278,7 +279,7 @@ FlatCacheListener {
     func models(listAdapter: ListAdapter) -> [ListDiffable] {
         var models = [NotificationViewModel]()
 
-        let showAll = self.showAll
+        let showAll = inboxType.showAll
         for id in notificationIDs {
             if let model = client.githubClient.cache.get(id: id) as NotificationViewModel?,
                 (showAll || !model.read) {
