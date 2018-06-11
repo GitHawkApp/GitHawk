@@ -56,6 +56,14 @@ FlatCacheListener {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if NotificationClient.readOnOpen() {
+            self.readOnOpen()
+        }
+    }
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +88,17 @@ FlatCacheListener {
     }
 
     // MARK: Private API
+    // count the unread notifications if read on open is true
+    private func readOnOpen() {
+        var count = 0
+        let showAll = self.showAll
+        for id in notificationIDs where showAll || client.notificationOpened(id: id) == false {
+            // count the unread notifications
+            count += 1
+        }
+        // readOnOpen is set then update  update bar  badges
+        updateUnreadState(count: count)
+    }
 
     @objc func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
