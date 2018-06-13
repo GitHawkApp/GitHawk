@@ -12,7 +12,7 @@ import GitHubAPI
 // used to request states via graphQL
 extension NotificationViewModel2 {
     var stateAlias: (number: Int, key: String)? {
-        switch ident {
+        switch number {
         case .hash, .release:
             // commits and releases don't have states, always "merged"
             return nil

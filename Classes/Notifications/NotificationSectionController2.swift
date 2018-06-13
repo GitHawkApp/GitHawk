@@ -74,7 +74,7 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
             modelController.markNotificationRead(id: model.id)
         }
 
-        switch model.ident {
+        switch model.number {
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):

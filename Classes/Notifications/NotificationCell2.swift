@@ -158,7 +158,7 @@ final class NotificationCell2: SelectableCell {
         ]
         let title = NSMutableAttributedString(string: "\(model.owner)/\(model.repo) ", attributes: titleAttributes)
         titleAttributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
-        switch model.ident {
+        switch model.number {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break
         }

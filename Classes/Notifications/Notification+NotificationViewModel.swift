@@ -57,11 +57,11 @@ func CreateNotificationViewModels(
             let identifier = notification.subject.identifier
             else { continue }
 
-        let modelIdentifier: NotificationViewModel2.Identifier
+        let number: NotificationViewModel2.Number
         switch identifier {
-        case .hash(let h): modelIdentifier = .hash(h)
-        case .number(let n): modelIdentifier = .number(n)
-        case .release(let r): modelIdentifier = .release(r)
+        case .hash(let h): number = .hash(h)
+        case .number(let n): number = .number(n)
+        case .release(let r): number = .release(r)
         }
 
         models.append(NotificationViewModel2(
@@ -69,7 +69,7 @@ func CreateNotificationViewModels(
             repo: notification.repository.name,
             owner: notification.repository.owner.login,
             title: CreateNotification(title: notification.subject.title, width: width, contentSizeCategory: contentSizeCategory),
-            ident: modelIdentifier,
+            number: number,
             state: .pending, // fetched later
             date: notification.updatedAt,
             ago: notification.updatedAt.agoString(.short),

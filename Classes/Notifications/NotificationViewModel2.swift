@@ -13,7 +13,7 @@ import StyledTextKit
 
 struct NotificationViewModel2: ListSwiftDiffable, Cachable {
 
-    enum Identifier {
+    enum Number {
         case number(Int)
         case hash(String)
         case release(String)
@@ -33,7 +33,7 @@ struct NotificationViewModel2: ListSwiftDiffable, Cachable {
     var repo: String
     var owner: String
     var title: StyledTextRenderer
-    var ident: Identifier
+    var number: Number
     var state: State
     var date: Date
     var ago: String // only used for diffing to capture "ago" string at model init
