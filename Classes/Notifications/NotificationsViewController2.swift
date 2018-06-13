@@ -151,7 +151,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
 
         alert.add(action: AlertAction.cancel())
         alert.popoverPresentationController?.barButtonItem = sender
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
