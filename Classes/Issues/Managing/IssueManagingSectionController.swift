@@ -306,9 +306,7 @@ ContextMenuDelegate {
     // MARK: ContextMenuDelegate
 
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
-        if let labels = viewController as? LabelsViewController {
-            didDismiss(selected: labels.selected)
-        } else if let milestones = viewController as? MilestonesViewController2 {
+        if let milestones = viewController as? MilestonesViewController2 {
             didDismiss(controller: milestones)
         } else if let people = viewController as? PeopleViewController2 {
             didDismiss(controller: people)
