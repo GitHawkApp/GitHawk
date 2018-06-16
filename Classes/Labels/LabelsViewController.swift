@@ -1,5 +1,5 @@
 //
-//  LabelsViewController2.swift
+//  LabelsViewController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 4/21/18.
@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class LabelsViewController2: BaseListViewController2, BaseListViewController2DataSource {
+final class LabelsViewController: BaseListViewController2, BaseListViewController2DataSource {
 
     private let selectedLabels: Set<RepositoryLabel>
     private var labels = [RepositoryLabel]()

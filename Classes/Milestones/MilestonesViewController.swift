@@ -1,5 +1,5 @@
 //
-//  MilestonesViewController2.swift
+//  MilestonesViewController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/3/18.
@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-final class MilestonesViewController2: BaseListViewController2,
+final class MilestonesViewController: BaseListViewController2,
 BaseListViewController2DataSource,
 MilestoneSectionControllerDelegate {
 

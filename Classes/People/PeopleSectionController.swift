@@ -1,5 +1,5 @@
 //
-//  PeopleSectionController2.swift
+//  PeopleSectionController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/2/18.
@@ -8,13 +8,13 @@
 
 import IGListKit
 
-protocol PeopleSectionController2Delegate: class {
-    func didSelect(controller: PeopleSectionController2)
+protocol PeopleSectionControllerDelegate: class {
+    func didSelect(controller: PeopleSectionController)
 }
 
-final class PeopleSectionController2: ListSwiftSectionController<IssueAssigneeViewModel> {
+final class PeopleSectionController: ListSwiftSectionController<IssueAssigneeViewModel> {
 
-    public weak var delegate: PeopleSectionController2Delegate?
+    public weak var delegate: PeopleSectionControllerDelegate?
 
     public private(set) var selected: Bool
 

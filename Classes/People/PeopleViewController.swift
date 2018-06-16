@@ -1,5 +1,5 @@
 //
-//  PeopleViewController2.swift
+//  PeopleViewController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/2/18.
@@ -10,9 +10,9 @@ import Foundation
 import IGListKit
 import GitHubAPI
 
-final class PeopleViewController2: BaseListViewController2,
+final class PeopleViewController: BaseListViewController2,
 BaseListViewController2DataSource,
-PeopleSectionController2Delegate {
+PeopleSectionControllerDelegate {
 
     enum PeopleType {
         case assignee
@@ -62,7 +62,7 @@ PeopleSectionController2Delegate {
 
     var selected: [IssueAssigneeViewModel] {
         return users.filter {
-            if let sectionController: PeopleSectionController2 = feed.swiftAdapter.sectionController(for: $0) {
+            if let sectionController: PeopleSectionController = feed.swiftAdapter.sectionController(for: $0) {
                 return sectionController.selected
             }
             return false
@@ -123,16 +123,16 @@ PeopleSectionController2Delegate {
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return users.map { [selections] user in
             return ListSwiftPair.pair(user) { [weak self] in
-                let controller = PeopleSectionController2(selected: selections.contains(user.login))
+                let controller = PeopleSectionController(selected: selections.contains(user.login))
                 controller.delegate = self
                 return controller
             }
         }
     }
 
-    // MARK: PeopleSectionController2Delegate
+    // MARK: PeopleSectionControllerDelegate
 
-    func didSelect(controller: PeopleSectionController2) {
+    func didSelect(controller: PeopleSectionController) {
         updateSelectionCount()
     }
 
