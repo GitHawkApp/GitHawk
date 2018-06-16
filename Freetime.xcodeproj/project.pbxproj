@@ -44,6 +44,11 @@
 		291929611F3FD2960012067B /* DiffString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929601F3FD2960012067B /* DiffString.swift */; };
 		291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929621F3FF0DA0012067B /* StyledTableCell.swift */; };
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
+		2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */; };
+		2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */; };
+		2924C18520D5B2D400FCFCFF /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18420D5B2D400FCFCFF /* LabelCell.swift */; };
+		2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */; };
+		2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
 		2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */; };
 		2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */; };
@@ -232,10 +237,6 @@
 		297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
-		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
-		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
-		297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91820C4743D00B6E42C /* MilestoneCell2.swift */; };
-		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
 		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
 		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
@@ -326,7 +327,6 @@
 		29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */; };
 		29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AE208C02BE0075931C /* String+ListSwift.swift */; };
 		29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B0208C054D0075931C /* LabelsViewController2.swift */; };
-		29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B2208C07540075931C /* LabelCell2.swift */; };
 		29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B4208C081D0075931C /* LabelSectionController.swift */; };
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
@@ -542,6 +542,11 @@
 		291929621F3FF0DA0012067B /* StyledTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledTableCell.swift; sourceTree = "<group>"; };
 		291929661F3FF9C50012067B /* BadgeNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNotifications.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestonesViewController.swift; sourceTree = "<group>"; };
+		2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCell.swift; sourceTree = "<group>"; };
+		2924C18420D5B2D400FCFCFF /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
+		2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
 		2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedSectionController.swift; sourceTree = "<group>"; };
@@ -735,10 +740,6 @@
 		297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Orientation.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
-		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
-		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
-		297EC91820C4743D00B6E42C /* MilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell2.swift; sourceTree = "<group>"; };
-		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
 		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
 		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
@@ -833,7 +834,6 @@
 		29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreSectionController2.swift; sourceTree = "<group>"; };
 		29C8F9AE208C02BE0075931C /* String+ListSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListSwift.swift"; sourceTree = "<group>"; };
 		29C8F9B0208C054D0075931C /* LabelsViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsViewController2.swift; sourceTree = "<group>"; };
-		29C8F9B2208C07540075931C /* LabelCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell2.swift; sourceTree = "<group>"; };
 		29C8F9B4208C081D0075931C /* LabelSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSectionController.swift; sourceTree = "<group>"; };
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
@@ -1106,9 +1106,9 @@
 			children = (
 				292FA33E1FBCE4D000BBB0BB /* GithubClient+Milestones.swift */,
 				292FA33C1FBCE0F000BBB0BB /* Milestone.swift */,
-				297EC91820C4743D00B6E42C /* MilestoneCell2.swift */,
+				2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */,
 				297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */,
-				297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */,
+				2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */,
 				297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */,
 			);
 			path = Milestones;
@@ -1396,8 +1396,8 @@
 			isa = PBXGroup;
 			children = (
 				295B51411FC26B8100C3993B /* PeopleCell.swift */,
-				297EC91620C3965E00B6E42C /* PeopleViewController2.swift */,
-				297EC91420C3953300B6E42C /* PeopleSectionController2.swift */,
+				2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */,
+				2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */,
 			);
 			path = People;
 			sourceTree = "<group>";
@@ -1853,7 +1853,7 @@
 		29EE1C131F3A2E440046A54D /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				29C8F9B2208C07540075931C /* LabelCell2.swift */,
+				2924C18420D5B2D400FCFCFF /* LabelCell.swift */,
 				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
 				29C8F9B0208C054D0075931C /* LabelsViewController2.swift */,
 			);
@@ -2699,6 +2699,7 @@
 				299997382031DEB300995FFD /* IssueMergeType.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
+				2924C18520D5B2D400FCFCFF /* LabelCell.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				292FA33D1FBCE0F000BBB0BB /* Milestone.swift in Sources */,
@@ -2717,7 +2718,6 @@
 				DCD421C91FAFC049008CC2EC /* BookmarkHeaderSectionController.swift in Sources */,
 				29A5AF431F926C600065D529 /* Filterable.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
-				297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */,
 				293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */,
 				293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */,
 				2965F3702071508C003CC92F /* StyledTextBuilder+Checkbox.swift in Sources */,
@@ -2820,7 +2820,6 @@
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
-				29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E801F5DF2960050C64B /* LoadMoreSectionController.swift in Sources */,
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
@@ -2844,10 +2843,10 @@
 				299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
+				2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */,
-				297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */,
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,
@@ -2867,12 +2866,12 @@
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
-				297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
 				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
 				D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */,
+				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
 				DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
@@ -2900,6 +2899,7 @@
 				986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */,
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
 				297A6CE4202774830027E03B /* ListAdapter+Scrolling.swift in Sources */,
+				2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */,
 				DC7857101F97F546009BADDA /* Debouncer.swift in Sources */,
 				98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */,
 				29DA1E881F5E2B8A0050C64B /* ClearAllHeaderCell.swift in Sources */,
@@ -2915,7 +2915,6 @@
 				986B87251F2B990A00AAB55C /* SearchRepoResultCell.swift in Sources */,
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
-				297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */,
@@ -2954,6 +2953,7 @@
 				2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
+				2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */,
 				29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */,
 				15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
