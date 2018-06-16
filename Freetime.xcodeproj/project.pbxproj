@@ -49,6 +49,7 @@
 		2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */; };
 		2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */; };
 		2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */; };
+		2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
 		2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */; };
 		2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */; };
@@ -326,7 +327,6 @@
 		29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */; };
 		29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */; };
 		29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AE208C02BE0075931C /* String+ListSwift.swift */; };
-		29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B0208C054D0075931C /* LabelsViewController2.swift */; };
 		29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B4208C081D0075931C /* LabelSectionController.swift */; };
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
@@ -547,6 +547,7 @@
 		2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
 		2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelMenuCell.swift; sourceTree = "<group>"; };
+		2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelsViewController.swift; sourceTree = "<group>"; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
 		2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedSectionController.swift; sourceTree = "<group>"; };
@@ -833,7 +834,6 @@
 		29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController2.swift; sourceTree = "<group>"; };
 		29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreSectionController2.swift; sourceTree = "<group>"; };
 		29C8F9AE208C02BE0075931C /* String+ListSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListSwift.swift"; sourceTree = "<group>"; };
-		29C8F9B0208C054D0075931C /* LabelsViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsViewController2.swift; sourceTree = "<group>"; };
 		29C8F9B4208C081D0075931C /* LabelSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSectionController.swift; sourceTree = "<group>"; };
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
@@ -1855,7 +1855,7 @@
 			children = (
 				2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */,
 				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
-				29C8F9B0208C054D0075931C /* LabelsViewController2.swift */,
+				2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -2728,6 +2728,7 @@
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
 				292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */,
 				DCA5ED161FAEE91F0072F074 /* BookmarkViewModel.swift in Sources */,
+				2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */,
 				29351EA420796BB800FF8C17 /* String+DetectShortlink.swift in Sources */,
 				2986B35C1FD4618900E3CFC6 /* FilePath.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
@@ -2907,7 +2908,6 @@
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
 				299F63D4205DA24A0015D901 /* MarkdownAttributeHandling.swift in Sources */,
-				29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
 				986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */,

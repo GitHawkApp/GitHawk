@@ -1,5 +1,5 @@
 //
-//  LabelCell2.swift
+//  LabelMenuCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 4/21/18.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class LabelCell2: SelectableCell {
+final class LabelMenuCell: SelectableCell {
 
     public let button = UIButton()
     public let checkedImageView = UIImageView(image: UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate))
