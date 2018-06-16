@@ -46,9 +46,9 @@
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
 		2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */; };
 		2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */; };
-		2924C18520D5B2D400FCFCFF /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18420D5B2D400FCFCFF /* LabelCell.swift */; };
 		2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */; };
 		2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */; };
+		2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
 		2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */; };
 		2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */; };
@@ -544,9 +544,9 @@
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestonesViewController.swift; sourceTree = "<group>"; };
 		2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCell.swift; sourceTree = "<group>"; };
-		2924C18420D5B2D400FCFCFF /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
 		2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelMenuCell.swift; sourceTree = "<group>"; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
 		2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedSectionController.swift; sourceTree = "<group>"; };
@@ -1853,7 +1853,7 @@
 		29EE1C131F3A2E440046A54D /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				2924C18420D5B2D400FCFCFF /* LabelCell.swift */,
+				2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */,
 				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
 				29C8F9B0208C054D0075931C /* LabelsViewController2.swift */,
 			);
@@ -2660,6 +2660,7 @@
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
+				2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,
 				299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */,
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
@@ -2699,7 +2700,6 @@
 				299997382031DEB300995FFD /* IssueMergeType.swift in Sources */,
 				2958406D1EE8EBF3007723C6 /* IssueCommentPhoto.swift in Sources */,
 				295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */,
-				2924C18520D5B2D400FCFCFF /* LabelCell.swift in Sources */,
 				295840D81EEA0686007723C6 /* IssueCommentQuoteModel.swift in Sources */,
 				292FCB071EDFCC510026635E /* IssueCommentReactionCell.swift in Sources */,
 				292FA33D1FBCE0F000BBB0BB /* Milestone.swift in Sources */,
