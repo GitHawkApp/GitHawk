@@ -9,18 +9,16 @@
 import Foundation
 import IGListKit
 
-struct MilestoneViewModel: ListSwiftIdentifiable, ListSwiftEquatable {
+struct MilestoneViewModel: ListSwiftDiffable {
     let title: String
     let due: String
     let selected: Bool
 
-    // MARK: ListSwiftIdentifiable
+    // MARK: ListSwiftDiffable
 
     var identifier: String {
         return title
     }
-
-    // MARK: ListSwiftEquatable
 
     func isEqual(to value: ListSwiftDiffable) -> Bool {
         guard let value = value as? MilestoneViewModel else { return false }
