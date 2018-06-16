@@ -11,7 +11,6 @@
 		15245487205DC016005810A6 /* IssueTargetBranchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245484205DC016005810A6 /* IssueTargetBranchModel.swift */; };
 		15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245485205DC016005810A6 /* IssueBranchesSectionController.swift */; };
 		15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245486205DC016005810A6 /* IssueTargetBranchCell.swift */; };
-		1F9D00FA2051089C00DF5FF6 /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */; };
 		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
 		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
 		2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */; };
@@ -45,6 +44,12 @@
 		291929611F3FD2960012067B /* DiffString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929601F3FD2960012067B /* DiffString.swift */; };
 		291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929621F3FF0DA0012067B /* StyledTableCell.swift */; };
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
+		2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */; };
+		2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */; };
+		2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */; };
+		2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */; };
+		2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */; };
+		2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */; };
 		2928C7881F15D7C50000D06D /* IssueRenamedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */; };
 		2928C78A1F15D7E00000D06D /* IssueRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */; };
 		2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */; };
@@ -69,9 +74,6 @@
 		292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */; };
 		292EB08F1F1FF5EC0046865D /* IssueMilestoneEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */; };
 		292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB0901F1FF72D0046865D /* IssueMilestoneEventSectionController.swift */; };
-		292FA3371FBCDA8800BBB0BB /* Milestones.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 292FA3361FBCDA8800BBB0BB /* Milestones.storyboard */; };
-		292FA3391FBCDDC000BBB0BB /* MilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FA3381FBCDDC000BBB0BB /* MilestoneCell.swift */; };
-		292FA33B1FBCDF8F00BBB0BB /* MilestonesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FA33A1FBCDF8F00BBB0BB /* MilestonesViewController.swift */; };
 		292FA33D1FBCE0F000BBB0BB /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FA33C1FBCE0F000BBB0BB /* Milestone.swift */; };
 		292FA33F1FBCE4D000BBB0BB /* GithubClient+Milestones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FA33E1FBCE4D000BBB0BB /* GithubClient+Milestones.swift */; };
 		292FCAF61EDFCC510026635E /* IssueCommentCodeBlockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */; };
@@ -188,7 +190,6 @@
 		295840DA1EEA07E4007723C6 /* IssueCommentQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */; };
 		295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */; };
 		295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295B51411FC26B8100C3993B /* PeopleCell.swift */; };
-		295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295B51431FC26C5400C3993B /* PeopleViewController.swift */; };
 		295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295B51471FC26F7F00C3993B /* UIImageView+Avatar.swift */; };
 		295C31C71F09E62600521CED /* NotificationNextPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31C61F09E62600521CED /* NotificationNextPageCell.swift */; };
 		295C31C91F09E72D00521CED /* NotificationNextPageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */; };
@@ -237,10 +238,6 @@
 		297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
-		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
-		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
-		297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91820C4743D00B6E42C /* MilestoneCell2.swift */; };
-		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
 		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
 		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
@@ -330,8 +327,6 @@
 		29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */; };
 		29C8F9AD208C02860075931C /* LoadMoreSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */; };
 		29C8F9AF208C02BE0075931C /* String+ListSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9AE208C02BE0075931C /* String+ListSwift.swift */; };
-		29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B0208C054D0075931C /* LabelsViewController2.swift */; };
-		29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B2208C07540075931C /* LabelCell2.swift */; };
 		29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C8F9B4208C081D0075931C /* LabelSectionController.swift */; };
 		29C9FDDB1EC6627200EE3A52 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */; };
 		29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */; };
@@ -365,9 +360,6 @@
 		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
 		29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */; };
 		29EE1C121F37C51D0046A54D /* IssueLabelEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */; };
-		29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29EE1C161F3A2E7A0046A54D /* Labels.storyboard */; };
-		29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */; };
-		29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C1A1F3A33000046A54D /* LabelsViewController.swift */; };
 		29EE1C1D1F3A33890046A54D /* RepositoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */; };
 		29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */; };
 		29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */; };
@@ -516,7 +508,6 @@
 		15245484205DC016005810A6 /* IssueTargetBranchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchModel.swift; path = Classes/Issues/Branches/IssueTargetBranchModel.swift; sourceTree = SOURCE_ROOT; };
 		15245485205DC016005810A6 /* IssueBranchesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueBranchesSectionController.swift; path = Classes/Issues/Branches/IssueBranchesSectionController.swift; sourceTree = SOURCE_ROOT; };
 		15245486205DC016005810A6 /* IssueTargetBranchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchCell.swift; path = Classes/Issues/Branches/IssueTargetBranchCell.swift; sourceTree = SOURCE_ROOT; };
-		1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
 		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
 		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
 		2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -551,6 +542,12 @@
 		291929621F3FF0DA0012067B /* StyledTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledTableCell.swift; sourceTree = "<group>"; };
 		291929661F3FF9C50012067B /* BadgeNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNotifications.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestonesViewController.swift; sourceTree = "<group>"; };
+		2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCell.swift; sourceTree = "<group>"; };
+		2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleSectionController.swift; sourceTree = "<group>"; };
+		2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelMenuCell.swift; sourceTree = "<group>"; };
+		2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelsViewController.swift; sourceTree = "<group>"; };
 		2928C7871F15D7C50000D06D /* IssueRenamedModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedModel.swift; sourceTree = "<group>"; };
 		2928C7891F15D7E00000D06D /* IssueRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedCell.swift; sourceTree = "<group>"; };
 		2928C78B1F15D80E0000D06D /* IssueRenamedSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueRenamedSectionController.swift; sourceTree = "<group>"; };
@@ -575,9 +572,6 @@
 		292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventModel.swift; sourceTree = "<group>"; };
 		292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventCell.swift; sourceTree = "<group>"; };
 		292EB0901F1FF72D0046865D /* IssueMilestoneEventSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventSectionController.swift; sourceTree = "<group>"; };
-		292FA3361FBCDA8800BBB0BB /* Milestones.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Milestones.storyboard; sourceTree = "<group>"; };
-		292FA3381FBCDDC000BBB0BB /* MilestoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell.swift; sourceTree = "<group>"; };
-		292FA33A1FBCDF8F00BBB0BB /* MilestonesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController.swift; sourceTree = "<group>"; };
 		292FA33C1FBCE0F000BBB0BB /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
 		292FA33E1FBCE4D000BBB0BB /* GithubClient+Milestones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GithubClient+Milestones.swift"; sourceTree = "<group>"; };
 		292FCACA1EDFCC510026635E /* IssueCommentCodeBlockCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentCodeBlockCell.swift; sourceTree = "<group>"; };
@@ -693,7 +687,6 @@
 		295840D91EEA07E4007723C6 /* IssueCommentQuoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommentQuoteCell.swift; sourceTree = "<group>"; };
 		295A77BD1F75C1CC007BC403 /* RepositoryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetails.swift; sourceTree = "<group>"; };
 		295B51411FC26B8100C3993B /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
-		295B51431FC26C5400C3993B /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		295B51471FC26F7F00C3993B /* UIImageView+Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Avatar.swift"; sourceTree = "<group>"; };
 		295C31C61F09E62600521CED /* NotificationNextPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNextPageCell.swift; sourceTree = "<group>"; };
 		295C31C81F09E72D00521CED /* NotificationNextPageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNextPageSectionController.swift; sourceTree = "<group>"; };
@@ -748,10 +741,6 @@
 		297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Orientation.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
-		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
-		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
-		297EC91820C4743D00B6E42C /* MilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell2.swift; sourceTree = "<group>"; };
-		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
 		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
 		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
@@ -845,8 +834,6 @@
 		29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController2.swift; sourceTree = "<group>"; };
 		29C8F9AC208C02860075931C /* LoadMoreSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreSectionController2.swift; sourceTree = "<group>"; };
 		29C8F9AE208C02BE0075931C /* String+ListSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListSwift.swift"; sourceTree = "<group>"; };
-		29C8F9B0208C054D0075931C /* LabelsViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsViewController2.swift; sourceTree = "<group>"; };
-		29C8F9B2208C07540075931C /* LabelCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell2.swift; sourceTree = "<group>"; };
 		29C8F9B4208C081D0075931C /* LabelSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSectionController.swift; sourceTree = "<group>"; };
 		29C9FDDA1EC6627200EE3A52 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		29C9FDDC1EC6628200EE3A52 /* NotificationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
@@ -880,9 +867,6 @@
 		29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeModel.swift; sourceTree = "<group>"; };
 		29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeSectionController.swift; sourceTree = "<group>"; };
 		29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueLabelEditCell.swift; sourceTree = "<group>"; };
-		29EE1C161F3A2E7A0046A54D /* Labels.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Labels.storyboard; sourceTree = "<group>"; };
-		29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelTableCell.swift; sourceTree = "<group>"; };
-		29EE1C1A1F3A33000046A54D /* LabelsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelsViewController.swift; sourceTree = "<group>"; };
 		29EE1C1C1F3A33890046A54D /* RepositoryLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryLabel.swift; sourceTree = "<group>"; };
 		29EE44451F19D5C100B05ED3 /* GithubClient+Issues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Issues.swift"; sourceTree = "<group>"; };
 		29EE44491F19D85800B05ED3 /* ShowErrorStatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowErrorStatusBar.swift; sourceTree = "<group>"; };
@@ -1122,12 +1106,9 @@
 			children = (
 				292FA33E1FBCE4D000BBB0BB /* GithubClient+Milestones.swift */,
 				292FA33C1FBCE0F000BBB0BB /* Milestone.swift */,
-				292FA3381FBCDDC000BBB0BB /* MilestoneCell.swift */,
-				297EC91820C4743D00B6E42C /* MilestoneCell2.swift */,
-				292FA3361FBCDA8800BBB0BB /* Milestones.storyboard */,
-				292FA33A1FBCDF8F00BBB0BB /* MilestonesViewController.swift */,
+				2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */,
 				297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */,
-				297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */,
+				2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */,
 				297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */,
 			);
 			path = Milestones;
@@ -1415,10 +1396,8 @@
 			isa = PBXGroup;
 			children = (
 				295B51411FC26B8100C3993B /* PeopleCell.swift */,
-				297EC91620C3965E00B6E42C /* PeopleViewController2.swift */,
-				295B51431FC26C5400C3993B /* PeopleViewController.swift */,
-				1F9D00F92051089C00DF5FF6 /* PeopleSectionController.swift */,
-				297EC91420C3953300B6E42C /* PeopleSectionController2.swift */,
+				2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */,
+				2924C18720D5B2F200FCFCFF /* PeopleViewController.swift */,
 			);
 			path = People;
 			sourceTree = "<group>";
@@ -1874,12 +1853,9 @@
 		29EE1C131F3A2E440046A54D /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				29C8F9B2208C07540075931C /* LabelCell2.swift */,
-				29EE1C161F3A2E7A0046A54D /* Labels.storyboard */,
+				2924C18A20D5B3A100FCFCFF /* LabelMenuCell.swift */,
 				29C8F9B4208C081D0075931C /* LabelSectionController.swift */,
-				29EE1C1A1F3A33000046A54D /* LabelsViewController.swift */,
-				29C8F9B0208C054D0075931C /* LabelsViewController2.swift */,
-				29EE1C181F3A2EDB0046A54D /* LabelTableCell.swift */,
+				2924C18C20D5B3DD00FCFCFF /* LabelsViewController.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -2283,7 +2259,6 @@
 				29416BF91F1138B700D03E1A /* OauthLogin.storyboard in Resources */,
 				297AE8821EC0D5C200B44A1F /* LaunchScreen.storyboard in Resources */,
 				292FF8AC1F2FD3EC009E63F7 /* Settings.storyboard in Resources */,
-				29EE1C171F3A2E7A0046A54D /* Labels.storyboard in Resources */,
 				2930F2711F894AA10082BA26 /* Settings.bundle in Resources */,
 				98F0A0431F27BC4B0062A2CA /* emoji.json in Resources */,
 				297AE8811EC0D5C200B44A1F /* Assets.xcassets in Resources */,
@@ -2291,7 +2266,6 @@
 				98F9F3FF1F9CCFFE005A0266 /* ImageUpload.storyboard in Resources */,
 				297AE8831EC0D5C200B44A1F /* Main.storyboard in Resources */,
 				98B5A0821F6C73D6000617D6 /* NewIssue.storyboard in Resources */,
-				292FA3371FBCDA8800BBB0BB /* Milestones.storyboard in Resources */,
 				294002411FDD9E8400950167 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2686,6 +2660,7 @@
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
+				2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */,
 				986B873C1F2CEB1500AAB55C /* GQL+RepositoryIssueSummaryType.swift in Sources */,
 				299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */,
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
@@ -2743,7 +2718,6 @@
 				DCD421C91FAFC049008CC2EC /* BookmarkHeaderSectionController.swift in Sources */,
 				29A5AF431F926C600065D529 /* Filterable.swift in Sources */,
 				293B58551EF80908001D067D /* IssueCommentUnsupportedCell.swift in Sources */,
-				297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */,
 				293B58531EF808DA001D067D /* IssueCommentUnsupportedModel.swift in Sources */,
 				293A45A41F2995CE00DD1006 /* IssueCommitCell.swift in Sources */,
 				2965F3702071508C003CC92F /* StyledTextBuilder+Checkbox.swift in Sources */,
@@ -2754,6 +2728,7 @@
 				292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */,
 				292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */,
 				DCA5ED161FAEE91F0072F074 /* BookmarkViewModel.swift in Sources */,
+				2924C18D20D5B3DD00FCFCFF /* LabelsViewController.swift in Sources */,
 				29351EA420796BB800FF8C17 /* String+DetectShortlink.swift in Sources */,
 				2986B35C1FD4618900E3CFC6 /* FilePath.swift in Sources */,
 				292CD3C31F0AF3D400D3D57B /* IssueDiffHunkPreviewCell.swift in Sources */,
@@ -2842,20 +2817,16 @@
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */,
-				29EE1C1B1F3A33000046A54D /* LabelsViewController.swift in Sources */,
 				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
-				29EE1C191F3A2EDB0046A54D /* LabelTableCell.swift in Sources */,
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
-				29C8F9B3208C07540075931C /* LabelCell2.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E801F5DF2960050C64B /* LoadMoreSectionController.swift in Sources */,
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
 				29351E9C2079106300FF8C17 /* String+GitHubEmoji.swift in Sources */,
 				98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */,
-				1F9D00FA2051089C00DF5FF6 /* PeopleSectionController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
@@ -2873,10 +2844,10 @@
 				299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */,
 				2980E0921F073E8B000E02C6 /* NotificationSectionController.swift in Sources */,
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
+				2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
 				294AF7F11FC674A400854790 /* CommitDetails.swift in Sources */,
-				297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */,
 				29C9FDDD1EC6628200EE3A52 /* NotificationViewModel.swift in Sources */,
 				29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */,
 				292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */,
@@ -2896,12 +2867,12 @@
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
-				297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
 				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
 				D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */,
+				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
 				DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
@@ -2921,7 +2892,6 @@
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
 				29316DC31ECC981D007CAE3F /* RootNavigationManager.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
-				292FA33B1FBCDF8F00BBB0BB /* MilestonesViewController.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
@@ -2930,6 +2900,7 @@
 				986B872B1F2C842000AAB55C /* SearchNoResultsSectionController.swift in Sources */,
 				29DA1E841F5E26310050C64B /* SearchRecentCell.swift in Sources */,
 				297A6CE4202774830027E03B /* ListAdapter+Scrolling.swift in Sources */,
+				2924C18920D5B2F200FCFCFF /* PeopleViewController.swift in Sources */,
 				DC7857101F97F546009BADDA /* Debouncer.swift in Sources */,
 				98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */,
 				29DA1E881F5E2B8A0050C64B /* ClearAllHeaderCell.swift in Sources */,
@@ -2937,7 +2908,6 @@
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
 				299F63D4205DA24A0015D901 /* MarkdownAttributeHandling.swift in Sources */,
-				29C8F9B1208C054D0075931C /* LabelsViewController2.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
 				986B871B1F2B87DD00AAB55C /* SearchRepoResult.swift in Sources */,
@@ -2945,7 +2915,6 @@
 				986B87251F2B990A00AAB55C /* SearchRepoResultCell.swift in Sources */,
 				986B87231F2B98AD00AAB55C /* SearchResultSectionController.swift in Sources */,
 				29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */,
-				297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */,
 				986B871D1F2B8FCD00AAB55C /* SearchViewController.swift in Sources */,
 				298BA0971EC947F100B01946 /* SegmentedControlCell.swift in Sources */,
 				297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */,
@@ -2976,7 +2945,6 @@
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
 				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
-				295B51441FC26C5400C3993B /* PeopleViewController.swift in Sources */,
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
 				15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
@@ -2985,6 +2953,7 @@
 				2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
+				2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */,
 				29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */,
 				15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
@@ -2997,7 +2966,6 @@
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
-				292FA3391FBCDDC000BBB0BB /* MilestoneCell.swift in Sources */,
 				294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */,
 				294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */,
 				754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */,

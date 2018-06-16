@@ -90,7 +90,7 @@ ContextMenuDelegate {
     }
 
     func newLabelsController() -> UIViewController {
-        return LabelsViewController2(
+        return LabelsViewController(
             selected: issueResult?.labels.labels ?? [],
             client: client,
             owner: model.owner,
@@ -99,7 +99,7 @@ ContextMenuDelegate {
     }
 
     func newMilestonesController() -> UIViewController {
-        return MilestonesViewController2(
+        return MilestonesViewController(
             client: client,
             owner: model.owner,
             repo: model.repo,
@@ -107,13 +107,13 @@ ContextMenuDelegate {
         )
     }
 
-    func newPeopleController(type: PeopleViewController2.PeopleType) -> UIViewController {
+    func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
         let selections: [String]
         switch type {
         case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
         case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
         }
-        return PeopleViewController2(
+        return PeopleViewController(
             selections: selections,
             type: type,
             client: client,
@@ -271,7 +271,7 @@ ContextMenuDelegate {
 
     // MARK: MilestonesViewControllerDelegate
 
-    func didDismiss(controller: MilestonesViewController2) {
+    func didDismiss(controller: MilestonesViewController) {
         guard let previous = issueResult else { return }
         client.setMilestone(
             previous: previous,
@@ -284,7 +284,7 @@ ContextMenuDelegate {
 
     // MARK: PeopleViewControllerDelegate
 
-    func didDismiss(controller: PeopleViewController2) {
+    func didDismiss(controller: PeopleViewController) {
         guard let previous = issueResult else { return }
 
         let mutationType: V3AddPeopleRequest.PeopleType
@@ -306,13 +306,11 @@ ContextMenuDelegate {
     // MARK: ContextMenuDelegate
 
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
-        if let labels = viewController as? LabelsViewController {
-            didDismiss(selected: labels.selected)
-        } else if let milestones = viewController as? MilestonesViewController2 {
+        if let milestones = viewController as? MilestonesViewController {
             didDismiss(controller: milestones)
-        } else if let people = viewController as? PeopleViewController2 {
+        } else if let people = viewController as? PeopleViewController {
             didDismiss(controller: people)
-        } else if let labels = viewController as? LabelsViewController2 {
+        } else if let labels = viewController as? LabelsViewController {
             didDismiss(selected: labels.selected)
         }
     }

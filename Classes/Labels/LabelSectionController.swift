@@ -21,7 +21,7 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
         return [
             binder(
                 value,
-                cellType: ListCellType.class(LabelCell2.self),
+                cellType: ListCellType.class(LabelMenuCell.self),
                 size: {
                     return CGSize(
                         width: $0.collection.containerSize.width,

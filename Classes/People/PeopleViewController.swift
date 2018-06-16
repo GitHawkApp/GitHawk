@@ -2,16 +2,16 @@
 //  PeopleViewController.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 11/19/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 6/2/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import IGListKit
 import GitHubAPI
 
-final class PeopleViewController: BaseListViewController<NSNumber>,
-BaseListViewControllerDataSource,
+final class PeopleViewController: BaseListViewController2,
+BaseListViewController2DataSource,
 PeopleSectionControllerDelegate {
 
     enum PeopleType {
@@ -21,12 +21,12 @@ PeopleSectionControllerDelegate {
 
     public let type: PeopleType
 
-    private var selections = Set<String>()
+    private let selections: Set<String>
     private let selectionLimit = 10
-    private var owner: String!
-    private var repo: String!
-    private var client: GithubClient!
-    private var users = [V3User]()
+    private var users = [IssueAssigneeViewModel]()
+    private let client: GithubClient
+    private var owner: String
+    private var repo: String
 
     init(
         selections: [String],
@@ -41,7 +41,7 @@ PeopleSectionControllerDelegate {
         self.owner = owner
         self.repo = repo
 
-        super.init(emptyErrorMessage: "Cannot load users.")
+        super.init(emptyErrorMessage: NSLocalizedString("Cannot load users.", comment: ""))
 
         self.dataSource = self
 
@@ -50,6 +50,7 @@ PeopleSectionControllerDelegate {
         case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
         }
 
+        preferredContentSize = CGSize(width: 280, height: 240)
         updateSelectionCount()
     }
 
@@ -57,42 +58,14 @@ PeopleSectionControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        feed.collectionView.backgroundColor = .white
-        preferredContentSize = CGSize(width: 280, height: 240)
-    }
-
     // MARK: Public API
 
-    var selectedUsers: [V3User] {
-        return users.filter { self.selections.contains($0.login) }
-    }
-
-    // MARK: Override
-
-    override func fetch(page: NSNumber?) {
-        client.client.send(
-            V3AssigneesRequest(
-                owner: owner,
-                repo: repo,
-                page: page?.intValue ?? 1
-            )
-        ) { [weak self] result in
-            switch result {
-            case .success(let response):
-                let sortedUsers = response.data.sorted {
-                    $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
-                }
-                if page != nil {
-                    self?.users += sortedUsers
-                } else {
-                    self?.users = sortedUsers
-                }
-                self?.update(page: response.next as NSNumber?, animated: trueUnlessReduceMotionEnabled)
-            case .failure:
-                ToastManager.showGenericError()
+    var selected: [IssueAssigneeViewModel] {
+        return users.filter {
+            if let sectionController: PeopleSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                return sectionController.selected
             }
+            return false
         }
     }
 
@@ -103,58 +76,64 @@ PeopleSectionControllerDelegate {
         label.font = Styles.Text.body.preferredFont
         label.backgroundColor = .clear
         label.textColor = Styles.Colors.Gray.light.color
-        label.text = "\(selections.count)/\(selectionLimit)"
+        label.text = "\(selected.count)/\(selectionLimit)"
         label.sizeToFit()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
     }
 
-    // MARK: BaseListViewControllerDataSource
+    // MARK: Overrides
 
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
-    }
+    override func fetch(page: String?) {
 
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        let models = users.map { user -> IssueAssigneeViewModel in
-            return IssueAssigneeViewModel(login: user.login, avatarURL: user.avatarUrl)
-        }
-        return models
-    }
-
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        guard let user = model as? IssueAssigneeViewModel else { fatalError("Incorrect model type") }
-        let isSelected = selections.contains(user.login)
-        return PeopleSectionController(isSelected: isSelected, delegate: self)
-    }
-
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
-        return ListSingleSectionController(cellClass: LabelCell.self, configureBlock: { (_, cell: UICollectionViewCell) in
-            guard let cell = cell as? LabelCell else { return }
-            cell.label.text = NSLocalizedString("No users found.", comment: "")
-        }, sizeBlock: { [weak self] (_, context: ListCollectionContext?) -> CGSize in
-            guard let context = context,
-                let strongSelf = self
-                else { return .zero }
-            return CGSize(
-                width: context.containerSize.width,
-                height: context.containerSize.height - strongSelf.view.safeAreaInsets.top - strongSelf.view.safeAreaInsets.bottom
+        client.client.send(
+            V3AssigneesRequest(
+                owner: owner,
+                repo: repo,
+                page: (page as NSString?)?.integerValue ?? 1
             )
-        })
+        ) { [weak self] result in
+            switch result {
+            case .success(let response):
+                let sortedUsers = response.data.sorted {
+                    $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
+                }
+                let users = sortedUsers.map { IssueAssigneeViewModel(login: $0.login, avatarURL: $0.avatarUrl) }
+                if page != nil {
+                    self?.users += users
+                } else {
+                    self?.users = users
+                }
+                self?.update(animated: true)
+
+                let nextPage: String?
+                if let next = response.next {
+                    nextPage = "\(next)"
+                } else {
+                    nextPage = nil
+                }
+                self?.update(page: nextPage, animated: true)
+            case .failure:
+                ToastManager.showGenericError()
+            }
+        }
+    }
+
+    // MARK: BaseListViewController2DataSource
+
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        return users.map { [selections] user in
+            return ListSwiftPair.pair(user) { [weak self] in
+                let controller = PeopleSectionController(selected: selections.contains(user.login))
+                controller.delegate = self
+                return controller
+            }
+        }
     }
 
     // MARK: PeopleSectionControllerDelegate
 
-    func shouldUpdateCellForUser(login: String) -> Bool {
-        let isSelected = selections.contains(login)
-        if isSelected {
-            selections.remove(login)
-            updateSelectionCount()
-            return true
-        } else if !isSelected && selections.count < selectionLimit {
-            selections.insert(login)
-            updateSelectionCount()
-            return true
-        }
-        return false
+    func didSelect(controller: PeopleSectionController) {
+        updateSelectionCount()
     }
+
 }
