@@ -57,13 +57,13 @@ final class NotificationModelController {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
-                    // TODO move to bg thread
-                    let viewModels = CreateNotificationViewModels(
+                    CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
                         v3notifications: response.data
-                    )
-                    self.fetchStates(for: viewModels, page: response.next, completion: completion)
+                    ) { [weak self] in
+                        self?.fetchStates(for: $0, page: response.next, completion: completion)
+                    }
                 case .failure(let error):
                     completion(.error(error))
                 }
@@ -72,13 +72,13 @@ final class NotificationModelController {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
                 switch result {
                 case .success(let response):
-                    // TODO move to bg thread
-                    let viewModels = CreateNotificationViewModels(
+                    CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
                         v3notifications: response.data
-                    )
-                    self.fetchStates(for: viewModels, page: response.next, completion: completion)
+                    ) { [weak self] in
+                        self?.fetchStates(for: $0, page: response.next, completion: completion)
+                    }
                 case .failure(let error):
                     completion(.error(error))
                 }

@@ -78,7 +78,7 @@ final class NotificationCell2: SelectableCell {
         detailsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         detailsLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(NotificationCell.labelInset.left)
+            make.left.equalTo(NotificationCell2.inset.left)
             make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
 

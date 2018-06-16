@@ -70,7 +70,7 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
     }
 
     private func showIssue(model: NotificationViewModel2) {
-        if NotificationClient.readOnOpen() {
+        if NotificationModelController.readOnOpen {
             modelController.markNotificationRead(id: model.id)
         }
 
