@@ -1,5 +1,5 @@
 //
-//  NotificationViewModel2.swift
+//  NotificationViewModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/8/18.
@@ -11,7 +11,7 @@ import IGListKit
 import FlatCache
 import StyledTextKit
 
-struct NotificationViewModel2: ListSwiftDiffable, Cachable {
+struct NotificationViewModel: ListSwiftDiffable, Cachable {
 
     enum Number {
         case number(Int)
@@ -59,7 +59,7 @@ struct NotificationViewModel2: ListSwiftDiffable, Cachable {
     // MARK: ListSwiftEquatable
 
     func isEqual(to value: ListSwiftDiffable) -> Bool {
-        guard let value = value as? NotificationViewModel2 else { return false }
+        guard let value = value as? NotificationViewModel else { return false }
         // making assumptions that given the v3id, most things don't change
         return read == value.read
             && comments == value.comments

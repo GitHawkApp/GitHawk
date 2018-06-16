@@ -19,6 +19,6 @@ func CreateNotification(title: String, width: CGFloat, contentSizeCategory: UICo
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: contentSizeCategory,
-        inset: NotificationCell2.inset
+        inset: NotificationCell.inset
     ).warm(width: width)
 }

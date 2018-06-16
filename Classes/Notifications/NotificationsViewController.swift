@@ -1,5 +1,5 @@
 //
-//  NotificationsViewController2.swift
+//  NotificationsViewController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/8/18.
@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import FlatCache
 
-final class NotificationsViewController2: BaseListViewController2<Int>,
+final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
 ForegroundHandlerDelegate, FlatCacheListener {
 
@@ -19,7 +19,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
-    private var notifications: [NotificationViewModel2] {
+    private var notifications: [NotificationViewModel] {
         return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
     }
 
@@ -55,7 +55,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
                 image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
-                action: #selector(NotificationsViewController2.onMore(sender:))
+                action: #selector(NotificationsViewController.onMore(sender:))
             )
             item.accessibilityLabel = NSLocalizedString("More options", comment: "")
             navigationItem.leftBarButtonItem = item
@@ -87,7 +87,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
         }
     }
 
-    private func handle(result: Result<([NotificationViewModel2], Int?)>, append: Bool, animated: Bool, page: Int) {
+    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
         switch result {
         case .success(let notifications, let next):
             var ids = [String]()
@@ -115,7 +115,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
 
         var unread = 0
         for id in notificationIDs {
-            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel2?,
+            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
                 !model.read
                 else { continue }
             unread += 1
@@ -140,7 +140,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
         let cache = modelController.githubClient.cache
         var repoNames = Set<String>()
         for id in notificationIDs {
-            guard let model = cache.get(id: id) as NotificationViewModel2?,
+            guard let model = cache.get(id: id) as NotificationViewModel?,
                 !repoNames.contains(model.repo)
                 else { continue }
             repoNames.insert(model.repo)
@@ -155,7 +155,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
-        let controller = NotificationsViewController2(
+        let controller = NotificationsViewController(
             modelController: modelController,
             inboxType: .repo(Repository(owner: owner, name: repo))
         )
@@ -163,7 +163,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
     }
 
     func onViewAll() {
-        let controller = NotificationsViewController2(
+        let controller = NotificationsViewController(
             modelController: modelController,
             inboxType: .all
         )
@@ -260,10 +260,10 @@ ForegroundHandlerDelegate, FlatCacheListener {
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return notificationIDs.compactMap { id in
-            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel2?
+            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
                 else { return nil }
             return ListSwiftPair.pair(model) { [modelController] in
-                NotificationSectionController2(modelController: modelController)
+                NotificationSectionController(modelController: modelController)
             }
         }
     }

@@ -1,5 +1,5 @@
 //
-//  NotificationSectionController2.swift
+//  NotificationSectionController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/8/18.
@@ -9,7 +9,7 @@
 import IGListKit
 import GitHubAPI
 
-final class NotificationSectionController2: ListSwiftSectionController<NotificationViewModel2>, NotificationCell2Delegate {
+final class NotificationSectionController: ListSwiftSectionController<NotificationViewModel>, NotificationCellDelegate {
 
     private let modelController: NotificationModelController
     private let generator = UIImpactFeedbackGenerator()
@@ -19,11 +19,11 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
         super.init()
     }
 
-    override func createBinders(from value: NotificationViewModel2) -> [ListBinder] {
+    override func createBinders(from value: NotificationViewModel) -> [ListBinder] {
         return [
             binder(
                 value,
-                cellType: ListCellType.class(NotificationCell2.self),
+                cellType: ListCellType.class(NotificationCell.self),
                 size: {
                     let width = $0.collection.containerSize.width
                     return CGSize(
@@ -40,18 +40,18 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
         ]
     }
 
-    func didTapRead(cell: NotificationCell2) {
+    func didTapRead(cell: NotificationCell) {
         guard let id = value?.id else { return }
         generator.impactOccurred()
         modelController.markNotificationRead(id: id)
     }
 
-    func didTapWatch(cell: NotificationCell2) {
+    func didTapWatch(cell: NotificationCell) {
         guard let value = self.value else { return }
         modelController.toggleWatch(notification: value)
     }
 
-    func didTapMore(cell: NotificationCell2, sender: UIView) {
+    func didTapMore(cell: NotificationCell, sender: UIView) {
         guard let value = self.value else { return }
             let alert = UIAlertController.configured(preferredStyle: .actionSheet)
             alert.addActions([
@@ -69,7 +69,7 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
             viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func showIssue(model: NotificationViewModel2) {
+    private func showIssue(model: NotificationViewModel) {
         if NotificationModelController.readOnOpen {
             modelController.markNotificationRead(id: model.id)
         }
@@ -90,7 +90,7 @@ final class NotificationSectionController2: ListSwiftSectionController<Notificat
         }
     }
 
-    private func showRelease(_ release: String, model: NotificationViewModel2) {
+    private func showRelease(_ release: String, model: NotificationViewModel) {
         modelController.githubClient.client
             .send(V3ReleaseRequest(owner: model.owner, repo: model.repo, id: release)) { [weak self] result in
                 switch result {

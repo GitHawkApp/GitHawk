@@ -10,7 +10,7 @@ import Foundation
 import GitHubAPI
 
 // used to request states via graphQL
-extension NotificationViewModel2 {
+extension NotificationViewModel {
     var stateAlias: (number: Int, key: String)? {
         switch number {
         case .hash, .release:
@@ -49,7 +49,7 @@ final class NotificationModelController {
         all: Bool = false,
         page: Int = 1,
         width: CGFloat,
-        completion: @escaping (Result<([NotificationViewModel2], Int?)>) -> Void
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
         // TODO move handling + parsing to a single method?
@@ -87,9 +87,9 @@ final class NotificationModelController {
     }
 
     private func fetchStates(
-        for notifications: [NotificationViewModel2],
+        for notifications: [NotificationViewModel],
         page: Int?,
-        completion: @escaping (Result<([NotificationViewModel2], Int?)>) -> Void
+        completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
         guard notifications.count > 0 else {
             completion(.success((notifications, page)))
@@ -108,16 +108,16 @@ final class NotificationModelController {
         let cache = githubClient.cache
 
         githubClient.client.send(ManualGraphQLRequest(query: query)) { result in
-            let processedNotifications: [NotificationViewModel2]
+            let processedNotifications: [NotificationViewModel]
             switch result {
             case .success(let json):
-                var updatedNotifications = [NotificationViewModel2]()
+                var updatedNotifications = [NotificationViewModel]()
                 for notification in notifications {
                     if let alias = notification.stateAlias,
                         let result = json.data[alias.key] as? [String: Any],
                         let issueOrPullRequest = result["issueOrPullRequest"] as? [String: Any],
                         let stateString = issueOrPullRequest["state"] as? String,
-                        let state = NotificationViewModel2.State(rawValue: stateString),
+                        let state = NotificationViewModel.State(rawValue: stateString),
                         let commentsJSON = issueOrPullRequest["comments"] as? [String: Any],
                         let commentCount = commentsJSON["totalCount"] as? Int {
                         var newNotification = notification
@@ -157,7 +157,7 @@ final class NotificationModelController {
 
     func markNotificationRead(id: String) {
         let cache = githubClient.cache
-        guard var model = cache.get(id: id) as NotificationViewModel2?,
+        guard var model = cache.get(id: id) as NotificationViewModel?,
             !model.read
             else { return }
 
@@ -174,7 +174,7 @@ final class NotificationModelController {
         }
     }
 
-    func toggleWatch(notification: NotificationViewModel2) {
+    func toggleWatch(notification: NotificationViewModel) {
         let cache = githubClient.cache
 
         var model = notification

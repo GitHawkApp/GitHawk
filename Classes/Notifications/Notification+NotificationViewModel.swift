@@ -13,24 +13,24 @@ func CreateNotificationViewModels(
     width: CGFloat,
     contentSizeCategory: UIContentSizeCategory,
     v3notifications: [V3Notification],
-    completion: @escaping ([NotificationViewModel2]) -> Void
+    completion: @escaping ([NotificationViewModel]) -> Void
     ) {
     DispatchQueue.global().async {
-        var models = [NotificationViewModel2]()
+        var models = [NotificationViewModel]()
 
         for notification in v3notifications {
             guard let type = NotificationType(rawValue: notification.subject.type.rawValue),
                 let identifier = notification.subject.identifier
                 else { continue }
 
-            let number: NotificationViewModel2.Number
+            let number: NotificationViewModel.Number
             switch identifier {
             case .hash(let h): number = .hash(h)
             case .number(let n): number = .number(n)
             case .release(let r): number = .release(r)
             }
 
-            models.append(NotificationViewModel2(
+            models.append(NotificationViewModel(
                 v3id: notification.id,
                 repo: notification.repository.name,
                 owner: notification.repository.owner.login,

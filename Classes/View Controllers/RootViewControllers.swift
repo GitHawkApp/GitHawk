@@ -31,7 +31,7 @@ func newSettingsRootViewController(
 }
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {
-    let controller = NotificationsViewController2(
+    let controller = NotificationsViewController(
         modelController: NotificationModelController(githubClient: client),
         inboxType: .unread
     )

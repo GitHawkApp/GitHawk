@@ -1,5 +1,5 @@
 //
-//  NotificationCell2.swift
+//  NotificationCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 6/8/18.
@@ -10,25 +10,25 @@ import UIKit
 import SnapKit
 import StyledTextKit
 
-protocol NotificationCell2Delegate: class {
-    func didTapRead(cell: NotificationCell2)
-    func didTapWatch(cell: NotificationCell2)
-    func didTapMore(cell: NotificationCell2, sender: UIView)
+protocol NotificationCellDelegate: class {
+    func didTapRead(cell: NotificationCell)
+    func didTapWatch(cell: NotificationCell)
+    func didTapMore(cell: NotificationCell, sender: UIView)
 }
 
-final class NotificationCell2: SelectableCell {
+final class NotificationCell: SelectableCell {
 
     public static let inset = UIEdgeInsets(
-        top: NotificationCell2.topInset + NotificationCell2.headerHeight + Styles.Sizes.rowSpacing,
+        top: NotificationCell.topInset + NotificationCell.headerHeight + Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: NotificationCell2.actionsHeight,
+        bottom: NotificationCell.actionsHeight,
         right: Styles.Sizes.gutter
     )
     public static let topInset = Styles.Sizes.rowSpacing
     public static let headerHeight = ceil(Styles.Text.secondary.preferredFont.lineHeight)
     public static let actionsHeight = Styles.Sizes.gutter + 4*Styles.Sizes.rowSpacing
 
-    private weak var delegate: NotificationCell2Delegate?
+    private weak var delegate: NotificationCellDelegate?
     private let iconImageView = UIImageView()
     private let dateLabel = ShowMoreDetailsLabel()
     private let detailsLabel = UILabel()
@@ -59,8 +59,8 @@ final class NotificationCell2: SelectableCell {
 
         let grey = Styles.Colors.Gray.light.color
         let font = Styles.Text.secondary.preferredFont
-        let inset = NotificationCell2.inset
-        let actionsHeight = NotificationCell2.actionsHeight
+        let inset = NotificationCell.inset
+        let actionsHeight = NotificationCell.actionsHeight
 
         iconImageView.snp.makeConstraints { make in
             make.top.equalTo(inset.top)
@@ -70,7 +70,7 @@ final class NotificationCell2: SelectableCell {
         dateLabel.font = font
         dateLabel.textColor = grey
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(NotificationCell2.topInset)
+            make.top.equalTo(NotificationCell.topInset)
             make.right.equalTo(-inset.right)
         }
 
@@ -78,7 +78,7 @@ final class NotificationCell2: SelectableCell {
         detailsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         detailsLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(NotificationCell2.inset.left)
+            make.left.equalTo(NotificationCell.inset.left)
             make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
 
@@ -147,7 +147,7 @@ final class NotificationCell2: SelectableCell {
         return true
     }
 
-    public func configure(with model: NotificationViewModel2, delegate: NotificationCell2Delegate?) {
+    public func configure(with model: NotificationViewModel, delegate: NotificationCellDelegate?) {
         textView.configure(with: model.title, width: contentView.bounds.width)
         dateLabel.setText(date: model.date, format: .short)
         self.delegate = delegate
