@@ -237,12 +237,12 @@
 		297B062C1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */; };
 		297DD5E11F061BBE006E7E63 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */; };
 		297DD5E31F06922A006E7E63 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DD5E21F06922A006E7E63 /* NotificationClient.swift */; };
+		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
+		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
 		297EC91920C4743D00B6E42C /* MilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91820C4743D00B6E42C /* MilestoneCell2.swift */; };
 		297EC91B20C4744800B6E42C /* MilestonesViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */; };
 		297EC91D20C4765000B6E42C /* MilestoneSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */; };
 		297EC91F20C4768600B6E42C /* MilestoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */; };
-		297EC91520C3953300B6E42C /* PeopleSectionController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91420C3953300B6E42C /* PeopleSectionController2.swift */; };
-		297EC91720C3965E00B6E42C /* PeopleViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297EC91620C3965E00B6E42C /* PeopleViewController2.swift */; };
 		297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */; };
 		2980033C1F51E82400BE90F4 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033B1F51E82400BE90F4 /* RatingController.swift */; };
 		2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980033D1F51E93500BE90F4 /* RatingSectionController.swift */; };
@@ -748,12 +748,12 @@
 		297B062B1FB92DCA0026FA23 /* UICollectionViewLayout+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Orientation.swift"; sourceTree = "<group>"; };
 		297DD5E01F061BBE006E7E63 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		297DD5E21F06922A006E7E63 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
+		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
+		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
 		297EC91820C4743D00B6E42C /* MilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneCell2.swift; sourceTree = "<group>"; };
 		297EC91A20C4744800B6E42C /* MilestonesViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesViewController2.swift; sourceTree = "<group>"; };
 		297EC91C20C4765000B6E42C /* MilestoneSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneSectionController.swift; sourceTree = "<group>"; };
 		297EC91E20C4768600B6E42C /* MilestoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewModel.swift; sourceTree = "<group>"; };
-		297EC91420C3953300B6E42C /* PeopleSectionController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSectionController2.swift; sourceTree = "<group>"; };
-		297EC91620C3965E00B6E42C /* PeopleViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController2.swift; sourceTree = "<group>"; };
 		297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountsViewController.swift; sourceTree = "<group>"; };
 		2980033B1F51E82400BE90F4 /* RatingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		2980033D1F51E93500BE90F4 /* RatingSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingSectionController.swift; sourceTree = "<group>"; };
@@ -3313,7 +3313,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.21.0;
+				GLOBAL_APP_VERSION = 1.22.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3369,7 +3369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.21.0;
+				GLOBAL_APP_VERSION = 1.22.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -3541,7 +3541,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				GLOBAL_APP_VERSION = 1.21.0;
+				GLOBAL_APP_VERSION = 1.22.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
