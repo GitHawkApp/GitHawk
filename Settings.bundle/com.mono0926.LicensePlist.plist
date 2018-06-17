@@ -232,7 +232,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/StyledTextKit</string>
 			<key>Title</key>
-			<string>StyledTextKit (0.1.0)</string>
+			<string>StyledTextKit (0.1.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

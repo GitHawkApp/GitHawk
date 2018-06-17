@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class IssueAssigneeViewModel: ListDiffable, ListSwiftIdentifiable, ListSwiftEquatable {
+final class IssueAssigneeViewModel: ListDiffable, ListSwiftDiffable {
     let login: String
     let avatarURL: URL
 
@@ -28,13 +28,11 @@ final class IssueAssigneeViewModel: ListDiffable, ListSwiftIdentifiable, ListSwi
         return true
     }
 
-    // MARK: ListSwiftIdentifiable
+    // MARK: ListSwiftDiffable
 
     var identifier: String {
         return avatarURL.absoluteString
     }
-
-    // MARK: ListSwiftEquatable
 
     func isEqual(to object: ListSwiftDiffable) -> Bool {
         return true

@@ -2,19 +2,18 @@
 //  NotificationViewModel.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/12/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 6/8/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import Foundation
 import IGListKit
 import FlatCache
-import DateAgo
 import StyledTextKit
 
-final class NotificationViewModel: ListDiffable, Cachable {
+struct NotificationViewModel: ListSwiftDiffable, Cachable {
 
-    enum Identifier {
+    enum Number {
         case number(Int)
         case hash(String)
         case release(String)
@@ -30,123 +29,44 @@ final class NotificationViewModel: ListDiffable, Cachable {
         case open = "OPEN"
     }
 
-    let id: String
-    let title: StyledTextRenderer
-    let type: NotificationType
-    let date: Date
-    let agoString: String
-    let read: Bool
-    let owner: String
-    let repo: String
-    let identifier: Identifier
-    let state: State
-    let commentCount: Int
+    var v3id: String
+    var repo: String
+    var owner: String
+    var title: StyledTextRenderer
+    var number: Number
+    var state: State
+    var date: Date
+    var ago: String // only used for diffing to capture "ago" string at model init
+    var read: Bool
+    var comments: Int
+    var watching: Bool
+    var type: NotificationType
+    var branch: String
+    var issuesEnabled: Bool
 
-    init(
-    id: String,
-    title: StyledTextRenderer,
-    type: NotificationType,
-    date: Date,
-    read: Bool,
-    owner: String,
-    repo: String,
-    identifier: Identifier,
-    state: State,
-    commentCount: Int
-        ) {
-        self.id = id
-        self.title = title
-        self.type = type
-        self.date = date
-        self.read = read
-        self.owner = owner
-        self.repo = repo
-        self.identifier = identifier
-        self.state = state
-        self.commentCount = commentCount
-        self.agoString = date.agoString(.long)
+    // MARK: Identifiable
+
+    var id: String {
+        return v3id
     }
 
-    convenience init(
-        id: String,
-        title: String,
-        type: NotificationType,
-        date: Date,
-        read: Bool,
-        owner: String,
-        repo: String,
-        identifier: Identifier,
-        containerWidth: CGFloat,
-        contentSizeCategory: UIContentSizeCategory
-        ) {
-        let builder = StyledTextBuilder(styledText: StyledText(
-            text: title,
-            style: Styles.Text.body
-        ))
-            .add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
-        let title = StyledTextRenderer(
-            string: builder.build(),
-            contentSizeCategory: contentSizeCategory,
-            inset: NotificationCell.labelInset
-        )
-        self.init(
-            id: id,
-            title: title,
-            type: type,
-            date: date,
-            read: read,
-            owner: owner,
-            repo: repo,
-            identifier: identifier,
-            state: .pending,
-            commentCount: 0
-        )
+    // MARK: ListSwiftDiffable
+
+    var identifier: String {
+        return v3id
     }
 
-    // MARK: Public API
+    // MARK: ListSwiftEquatable
 
-    func updated(
-        id: String? = nil,
-        title: StyledTextRenderer? = nil,
-        type: NotificationType? = nil,
-        date: Date? = nil,
-        read: Bool? = nil,
-        owner: String? = nil,
-        repo: String? = nil,
-        identifier: Identifier? = nil,
-        state: State? = nil,
-        commentCount: Int? = nil
-        ) -> NotificationViewModel {
-        return NotificationViewModel(
-            id: id ?? self.id,
-            title: title ?? self.title,
-            type: type ?? self.type,
-            date: date ?? self.date,
-            read: read ?? self.read,
-            owner: owner ?? self.owner,
-            repo: repo ?? self.repo,
-            identifier: identifier ?? self.identifier,
-            state: state ?? self.state,
-            commentCount: commentCount ?? self.commentCount
-        )
-    }
-
-    // MARK: ListDiffable
-
-    func diffIdentifier() -> NSObjectProtocol {
-        return id as NSObjectProtocol
-    }
-
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? NotificationViewModel else { return false }
-        return read == object.read
-            && type == object.type
-            && agoString == object.agoString
-            && repo == object.repo
-            && owner == object.owner
-            && state == object.state
-            && title.string == object.title.string
+    func isEqual(to value: ListSwiftDiffable) -> Bool {
+        guard let value = value as? NotificationViewModel else { return false }
+        // making assumptions that given the v3id, most things don't change
+        return read == value.read
+            && comments == value.comments
+            && watching == value.watching
+            && state == value.state
+            && ago == value.ago
+            && title.string == value.title.string
     }
 
 }

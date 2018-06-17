@@ -10,7 +10,7 @@ import Foundation
 import IGListKit
 import GitHubAPI
 
-final class PeopleViewController: BaseListViewController2,
+final class PeopleViewController: BaseListViewController2<String>,
 BaseListViewController2DataSource,
 PeopleSectionControllerDelegate {
 

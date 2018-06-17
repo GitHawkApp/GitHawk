@@ -1,100 +1,132 @@
 //
-//  NotificationDetailsCell.swift
+//  NotificationCell.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/12/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 6/8/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 import SnapKit
 import StyledTextKit
 
-final class NotificationCell: SwipeSelectableCell {
+protocol NotificationCellDelegate: class {
+    func didTapRead(cell: NotificationCell)
+    func didTapWatch(cell: NotificationCell)
+    func didTapMore(cell: NotificationCell, sender: UIView)
+}
 
-    static let labelInset = UIEdgeInsets(
-        top: Styles.Text.title.preferredFont.lineHeight + 2*Styles.Sizes.rowSpacing,
+final class NotificationCell: SelectableCell {
+
+    public static let inset = UIEdgeInsets(
+        top: NotificationCell.topInset + NotificationCell.headerHeight + Styles.Sizes.rowSpacing,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
-        bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.gutter + Styles.Sizes.icon.width + Styles.Sizes.columnSpacing
+        bottom: NotificationCell.actionsHeight,
+        right: Styles.Sizes.gutter
     )
+    public static let topInset = Styles.Sizes.rowSpacing
+    public static let headerHeight = ceil(Styles.Text.secondary.preferredFont.lineHeight)
+    public static let actionsHeight = Styles.Sizes.gutter + 4*Styles.Sizes.rowSpacing
 
-    static var minHeight: CGFloat {
-        // comment icon
-        return Styles.Sizes.icon.height
-            // date, comment count labels
-            + 2 * Styles.Text.secondary.preferredFont.lineHeight
-            // padding
-            + 3 * Styles.Sizes.rowSpacing
-    }
-
-    private let reasonImageView = UIImageView()
+    private weak var delegate: NotificationCellDelegate?
+    private let iconImageView = UIImageView()
     private let dateLabel = ShowMoreDetailsLabel()
-    private let titleLabel = UILabel()
+    private let detailsLabel = UILabel()
     private let textView = StyledTextView()
-    private let commentLabel = UILabel()
-    private let commentImageView = UIImageView()
+    private let stackView = UIStackView()
+    private let commentButton = UIButton()
+    private let readButton = UIButton()
+    private let watchButton = UIButton()
+    private let moreButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
 
         backgroundColor = .white
 
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(iconImageView)
+        contentView.addSubview(detailsLabel)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(reasonImageView)
         contentView.addSubview(textView)
-        contentView.addSubview(commentImageView)
-        contentView.addSubview(commentLabel)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(commentButton)
+        stackView.addArrangedSubview(watchButton)
+        stackView.addArrangedSubview(readButton)
+        stackView.addArrangedSubview(moreButton)
 
-        titleLabel.numberOfLines = 1
-        titleLabel.font = Styles.Text.title.preferredFont
-        titleLabel.textColor = Styles.Colors.Gray.light.color
-        titleLabel.lineBreakMode = .byTruncatingMiddle
-        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        titleLabel.snp.makeConstraints { make in
+        let grey = Styles.Colors.Gray.light.color
+        let font = Styles.Text.secondary.preferredFont
+        let inset = NotificationCell.inset
+        let actionsHeight = NotificationCell.actionsHeight
+
+        iconImageView.snp.makeConstraints { make in
+            make.top.equalTo(inset.top)
+            make.centerX.equalTo(inset.left / 2)
+        }
+
+        dateLabel.font = font
+        dateLabel.textColor = grey
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(NotificationCell.topInset)
+            make.right.equalTo(-inset.right)
+        }
+
+        detailsLabel.lineBreakMode = .byTruncatingMiddle
+        detailsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        detailsLabel.snp.makeConstraints { make in
             make.top.equalTo(Styles.Sizes.rowSpacing)
-            make.left.equalTo(NotificationCell.labelInset.left)
+            make.left.equalTo(NotificationCell.inset.left)
             make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
 
-        dateLabel.backgroundColor = .clear
-        dateLabel.numberOfLines = 1
-        dateLabel.font = Styles.Text.secondary.preferredFont
-        dateLabel.textColor = Styles.Colors.Gray.light.color
-        dateLabel.textAlignment = .right
-        dateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        dateLabel.snp.makeConstraints { make in
-            make.right.equalTo(-Styles.Sizes.gutter)
-            make.centerY.equalTo(titleLabel)
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.snp.makeConstraints { make in
+            make.left.equalTo(inset.left)
+            make.right.equalTo(-inset.right)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(actionsHeight)
         }
 
-        reasonImageView.backgroundColor = .clear
-        reasonImageView.contentMode = .scaleAspectFit
-        reasonImageView.snp.makeConstraints { make in
-            make.size.equalTo(Styles.Sizes.icon)
-            make.top.equalTo(NotificationCell.labelInset.top)
-            make.left.equalTo(Styles.Sizes.rowSpacing)
+        commentButton.titleLabel?.font = font
+        commentButton.isUserInteractionEnabled = false
+        commentButton.tintColor = grey
+        commentButton.setTitleColor(grey, for: .normal)
+        commentButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: -2, right: 0)
+        commentButton.titleEdgeInsets = UIEdgeInsets(top: -4, left: 2, bottom: 0, right: 0)
+        commentButton.setImage(UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        commentButton.contentHorizontalAlignment = .left
+        commentButton.snp.makeConstraints { make in
+            make.width.equalTo(actionsHeight)
         }
 
-        commentImageView.tintColor = dateLabel.textColor
-        commentImageView.image = UIImage(named: "comment-small")?.withRenderingMode(.alwaysTemplate)
-        commentImageView.backgroundColor = .clear
-        commentImageView.snp.makeConstraints { make in
-            make.right.equalTo(dateLabel)
-            make.top.equalTo(dateLabel.snp.bottom).offset(Styles.Sizes.rowSpacing)
+        watchButton.tintColor = grey
+        watchButton.addTarget(self, action: #selector(onWatch(sender:)), for: .touchUpInside)
+        watchButton.contentHorizontalAlignment = .center
+        watchButton.snp.makeConstraints { make in
+            make.width.equalTo(actionsHeight)
         }
 
-        commentLabel.font = dateLabel.font
-        commentLabel.textColor = dateLabel.textColor
-        commentLabel.snp.makeConstraints { make in
-            make.top.equalTo(commentImageView.snp.bottom)
-            make.centerX.equalTo(commentImageView)
+        readButton.tintColor = grey
+        readButton.setImage(UIImage(named: "check-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        readButton.addTarget(self, action: #selector(onRead(sender:)), for: .touchUpInside)
+        readButton.contentHorizontalAlignment = .center
+        readButton.snp.makeConstraints { make in
+            make.width.equalTo(actionsHeight)
         }
 
-        contentView.addBorder(.bottom, left: NotificationCell.labelInset.left)
+        moreButton.tintColor = grey
+        moreButton.setImage(UIImage(named: "bullets-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.addTarget(self, action: #selector(onMore(sender:)), for: .touchUpInside)
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.snp.makeConstraints { make in
+            make.width.equalTo(actionsHeight)
+        }
+
+        contentView.addBorder(.bottom, left: inset.left)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -103,55 +135,65 @@ final class NotificationCell: SwipeSelectableCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutContentViewForSafeAreaInsets()
         textView.reposition(for: contentView.bounds.width)
     }
 
-    // MARK: Public API
-
-    var isRead = false {
-        didSet {
-            for view in [titleLabel, textView, reasonImageView] {
-                view.alpha = isRead ? 0.5 : 1
-            }
-        }
+    override var accessibilityLabel: String? {
+        get { return AccessibilityHelper.generatedLabel(forCell: self)}
+        set {}
     }
 
-    func configure(_ viewModel: NotificationViewModel) {
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    public func configure(with model: NotificationViewModel, delegate: NotificationCellDelegate?) {
+        textView.configure(with: model.title, width: contentView.bounds.width)
+        dateLabel.setText(date: model.date, format: .short)
+        self.delegate = delegate
+
         var titleAttributes = [
             NSAttributedStringKey.font: Styles.Text.title.preferredFont,
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
-        let title = NSMutableAttributedString(string: "\(viewModel.owner)/\(viewModel.repo) ", attributes: titleAttributes)
-
+        let title = NSMutableAttributedString(string: "\(model.owner)/\(model.repo) ", attributes: titleAttributes)
         titleAttributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
-        switch viewModel.identifier {
+        switch model.number {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break
         }
-        titleLabel.attributedText = title
-
-        textView.configure(with: viewModel.title, width: contentView.bounds.width)
-
-        dateLabel.setText(date: viewModel.date)
-        reasonImageView.image = viewModel.type.icon.withRenderingMode(.alwaysTemplate)
-        accessibilityLabel = AccessibilityHelper
-            .generatedLabel(forCell: self)
-            .appending(".\n\(viewModel.type.localizedString)")
+        detailsLabel.attributedText = title
 
         let tintColor: UIColor
-        switch viewModel.state {
+        switch model.state {
         case .closed: tintColor = Styles.Colors.Red.medium.color
         case .merged: tintColor = Styles.Colors.purple.color
         case .open: tintColor = Styles.Colors.Green.medium.color
         case .pending: tintColor = Styles.Colors.Blue.medium.color
         }
-        reasonImageView.tintColor = tintColor
+        iconImageView.tintColor = tintColor
+        iconImageView.image = model.type.icon.withRenderingMode(.alwaysTemplate)
 
-        let commentHidden = viewModel.commentCount == 0
-        commentLabel.isHidden = commentHidden
-        commentImageView.isHidden = commentHidden
-        commentLabel.text = viewModel.commentCount.abbreviated
+        let hasComments = model.comments > 0
+        commentButton.alpha = hasComments ? 1 : 0.3
+        commentButton.setTitle(hasComments ? model.comments.abbreviated : "", for: .normal)
+
+        let watchingImageName = model.watching ? "mute" : "unmute"
+        watchButton.setImage(UIImage(named: "\(watchingImageName)-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+
+        contentView.alpha = model.read ? 0.5 : 1
+    }
+
+    @objc func onRead(sender: UIView) {
+        delegate?.didTapRead(cell: self)
+    }
+
+    @objc func onWatch(sender: UIView) {
+        delegate?.didTapWatch(cell: self)
+    }
+
+    @objc func onMore(sender: UIView) {
+        delegate?.didTapMore(cell: self, sender: sender)
     }
 
 }

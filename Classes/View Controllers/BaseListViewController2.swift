@@ -13,15 +13,16 @@ protocol BaseListViewController2DataSource: class {
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair]
 }
 
-class BaseListViewController2: UIViewController,
+class BaseListViewController2<PageType: CustomStringConvertible>: UIViewController,
 ListSwiftAdapterDataSource,
-FeedDelegate {
+FeedDelegate,
+LoadMoreSectionController2Delegate {
 
     private let emptyErrorMessage: String
     public weak var dataSource: BaseListViewController2DataSource?
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
-    private var page: String?
+    private var page: PageType?
     private var hasError = false
     private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
 
@@ -52,7 +53,7 @@ FeedDelegate {
 
     // MARK: Overridable API
 
-    func fetch(page: String?) {}
+    func fetch(page: PageType?) {}
 
     // MARK: Public API
 
@@ -64,7 +65,7 @@ FeedDelegate {
     }
 
     final func update(
-        page: String?,
+        page: PageType?,
         animated: Bool,
         completion: (() -> Void)? = nil
         ) {
@@ -117,12 +118,22 @@ FeedDelegate {
             return []
         }
 
-        if let page = self.page {
-            let pagePair = ListSwiftPair.pair(page) { LoadMoreSectionController2() }
+        if let page = self.page?.description {
+            let pagePair = ListSwiftPair.pair(page) { [weak self] in
+                let controller = LoadMoreSectionController2()
+                controller.delegate = self
+                return controller
+            }
             return models + [pagePair]
         } else {
             return models
         }
+    }
+
+    // MARK: LoadMoreSectionController2Delegate
+
+    func didSelect(controller: LoadMoreSectionController2) {
+        fetch(page: page)
     }
     
 }

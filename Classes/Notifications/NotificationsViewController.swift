@@ -2,54 +2,40 @@
 //  NotificationsViewController.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/13/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 6/8/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 import IGListKit
-import SnapKit
 import FlatCache
 
-class NotificationsViewController: BaseListViewController<NSNumber>,
-ForegroundHandlerDelegate,
-RatingSectionControllerDelegate,
-PrimaryViewController,
-TabNavRootViewControllerType,
-BaseListViewControllerDataSource,
-FlatCacheListener {
+final class NotificationsViewController: BaseListViewController2<Int>,
+BaseListViewController2DataSource,
+ForegroundHandlerDelegate, FlatCacheListener {
 
-    enum InboxType {
-        case unread
-        case repo(NotificationClient.NotificationRepository)
-        case all
-    }
-
-    private let client: NotificationClient
+    private let modelController: NotificationModelController
     private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
-    // set to nil and update to dismiss the rating control
-    private var ratingToken: RatingToken? = RatingController.inFeedToken()
+    private var notifications: [NotificationViewModel] {
+        return notificationIDs.compactMap { modelController.githubClient.cache.get(id: $0) }
+    }
 
-    init(client: NotificationClient, inboxType: InboxType) {
-        self.client = client
+    init(modelController: NotificationModelController, inboxType: InboxType) {
+        self.modelController = modelController
         self.inboxType = inboxType
 
-        super.init(
-            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: "")
-        )
+        super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
+        
         self.dataSource = self
         self.foreground.delegate = self
 
         switch inboxType {
-        case .all:
-            title = NSLocalizedString("All", comment: "")
-        case .unread:
-            title = NSLocalizedString("Inbox", comment: "")
-        case .repo(let repo):
-            title = repo.name
+        case .all: title = NSLocalizedString("All", comment: "")
+        case .unread: title = NSLocalizedString("Inbox", comment: "")
+        case .repo(let repo): title = repo.name
         }
     }
 
@@ -79,7 +65,67 @@ FlatCacheListener {
         navigationController?.tabBarItem.badgeColor = Styles.Colors.Red.medium.color
     }
 
-    // MARK: Private API
+    override func fetch(page: Int?) {
+        let width = view.bounds.width
+        let showAll = inboxType.showAll
+
+        let repo: Repository?
+        switch inboxType {
+        case .repo(let r): repo = r
+        case .all, .unread: repo = nil
+        }
+
+        if let page = page {
+            modelController.fetchNotifications(repo: repo, all: showAll, page: page, width: width) { [weak self] result in
+                self?.handle(result: result, append: true, animated: false, page: page)
+            }
+        } else {
+            let first = 1
+            modelController.fetchNotifications(repo: repo, all: showAll, page: first, width: width) { [weak self] result in
+                self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
+            }
+        }
+    }
+
+    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
+        switch result {
+        case .success(let notifications, let next):
+            var ids = [String]()
+            notifications.forEach {
+                modelController.githubClient.cache.add(listener: self, value: $0)
+                ids.append($0.id)
+            }
+            rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
+        case .error:
+            error(animated: trueUnlessReduceMotionEnabled)
+            ToastManager.showNetworkError()
+        }
+
+        // set after updating so self.models has already been changed
+        updateUnreadState()
+    }
+
+    private func updateUnreadState() {
+        // don't update tab bar and badges when not showing only new notifications
+        // prevents archives updating badge and tab #s
+        switch inboxType {
+        case .all, .repo: return
+        case .unread: break
+        }
+
+        var unread = 0
+        for id in notificationIDs {
+            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
+                !model.read
+                else { continue }
+            unread += 1
+        }
+
+        let hasUnread = unread > 0
+        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
+        navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
+        BadgeNotifications.update(count: unread)
+    }
 
     @objc func onMore(sender: UIBarButtonItem) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
@@ -91,33 +137,36 @@ FlatCacheListener {
                 self?.onViewAll()
         }))
 
-        let cache = client.githubClient.cache
+        let cache = modelController.githubClient.cache
         var repoNames = Set<String>()
         for id in notificationIDs {
-            guard let notification = cache.get(id: id) as NotificationViewModel?,
-                !repoNames.contains(notification.repo)
+            guard let model = cache.get(id: id) as NotificationViewModel?,
+                !repoNames.contains(model.repo)
                 else { continue }
-            repoNames.insert(notification.repo)
-            alert.add(action: UIAlertAction(title: notification.repo, style: .default, handler: { [weak self] _ in
-                self?.pushRepoNotifications(owner: notification.owner, repo: notification.repo)
+            repoNames.insert(model.repo)
+            alert.add(action: UIAlertAction(title: model.repo, style: .default, handler: { [weak self] _ in
+                self?.pushRepoNotifications(owner: model.owner, repo: model.repo)
             }))
         }
 
         alert.add(action: AlertAction.cancel())
-
         alert.popoverPresentationController?.barButtonItem = sender
-
-        present(alert, animated: true)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func pushRepoNotifications(owner: String, repo: String) {
-        let model = NotificationClient.NotificationRepository(owner: owner, name: repo)
-        let controller = NotificationsViewController(client: client, inboxType: .repo(model))
+        let controller = NotificationsViewController(
+            modelController: modelController,
+            inboxType: .repo(Repository(owner: owner, name: repo))
+        )
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
     func onViewAll() {
-        let controller = NotificationsViewController(client: client, inboxType: .all)
+        let controller = NotificationsViewController(
+            modelController: modelController,
+            inboxType: .all
+        )
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
 
@@ -131,50 +180,7 @@ FlatCacheListener {
         item.accessibilityLabel = NSLocalizedString("Mark notifications read", comment: "")
         navigationItem.rightBarButtonItem = item
         if updateState {
-            updateUnreadState(count: notificationIDs.count)
-        }
-    }
-
-    private func updateUnreadState(count: Int) {
-        // don't update tab bar and badges when not showing only new notifications
-        // prevents archives updating badge and tab #s
-        switch inboxType {
-            case .all, .repo: return
-            case .unread: break
-        }
-
-        let hasUnread = count > 0
-        navigationItem.rightBarButtonItem?.isEnabled = hasUnread
-        navigationController?.tabBarItem.badgeValue = hasUnread ? "\(count)" : nil
-        BadgeNotifications.update(count: count)
-    }
-
-    private func markRead() {
-        self.setRightBarItemSpinning()
-
-        let block: (Bool) -> Void = { success in
-            let generator = UINotificationFeedbackGenerator()
-            if success {
-                generator.notificationOccurred(.success)
-
-                // clear all badges
-                BadgeNotifications.update(count: 0)
-
-                // change the spinner to the mark all item
-                // don't update state here; it is managed by `fetch`
-                self.resetRightBarItem(updatingState: false)
-            } else {
-                generator.notificationOccurred(.error)
-            }
-            self.fetch(page: nil)
-
-            // "mark all" is an engaging action, system prompt on it
-            RatingController.prompt(.system)
-        }
-
-        switch inboxType {
-        case .all, .unread: client.markAllNotifications(completion: block)
-        case .repo(let repo): client.markRepoNotifications(repo: repo, completion: block)
+            updateUnreadState()
         }
     }
 
@@ -202,33 +208,44 @@ FlatCacheListener {
                     self?.markRead()
             }),
             AlertAction.cancel()
-        ])
+            ])
 
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func handle(result: Result<([NotificationViewModel], Int?)>, append: Bool, animated: Bool, page: Int) {
-        switch result {
-        case .success(let notifications, let next):
-            var ids = [String]()
-            notifications.forEach {
-                client.githubClient.cache.add(listener: self, value: $0)
-                ids.append($0.id)
+    private func markRead() {
+        self.setRightBarItemSpinning()
+
+        let block: (Bool) -> Void = { success in
+            let generator = UINotificationFeedbackGenerator()
+            if success {
+                generator.notificationOccurred(.success)
+
+                // clear all badges
+                BadgeNotifications.update(count: 0)
+
+                // change the spinner to the mark all item
+                // don't update state here; it is managed by `fetch`
+                self.resetRightBarItem(updatingState: false)
+            } else {
+                generator.notificationOccurred(.error)
             }
-            rebuildAndUpdate(ids: ids, append: append, page: next as NSNumber?, animated: animated)
-        case .error:
-            error(animated: trueUnlessReduceMotionEnabled)
-            ToastManager.showNetworkError()
+            self.fetch(page: nil)
+
+            // "mark all" is an engaging action, system prompt on it
+            RatingController.prompt(.system)
         }
 
-        // set after updating so self.models has already been changed
-        updateUnreadState(count: notificationIDs.count)
+        switch inboxType {
+        case .all, .unread: modelController.markAllNotifications(completion: block)
+        case .repo(let repo): modelController.markRepoNotifications(repo: repo, completion: block)
+        }
     }
 
     private func rebuildAndUpdate(
         ids: [String],
         append: Bool,
-        page: NSNumber?,
+        page: Int?,
         animated: Bool
         ) {
         if append {
@@ -239,74 +256,16 @@ FlatCacheListener {
         update(page: page, animated: animated)
     }
 
-    private var showAll: Bool {
-        switch inboxType {
-        case .all, .repo: return true
-        case .unread: return false
-        }
-    }
+    // MARK: BaseListViewController2DataSource
 
-    // MARK: Overrides
-
-    override func fetch(page: NSNumber?) {
-        let width = view.bounds.width
-
-        let repo: NotificationClient.NotificationRepository?
-        switch inboxType {
-        case .repo(let r): repo = r
-        case .all, .unread: repo = nil
-        }
-
-        if let page = page?.intValue {
-            client.fetchNotifications(repo: repo, all: showAll, page: page, width: width) { [weak self] result in
-                self?.handle(result: result, append: true, animated: false, page: page)
-            }
-        } else {
-            let first = 1
-            client.fetchNotifications(repo: repo, all: showAll, page: first, width: width) { [weak self] result in
-                self?.handle(result: result, append: false, animated: trueUnlessReduceMotionEnabled, page: first)
+    func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
+        return notificationIDs.compactMap { id in
+            guard let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?
+                else { return nil }
+            return ListSwiftPair.pair(model) { [modelController] in
+                NotificationSectionController(modelController: modelController)
             }
         }
-    }
-
-    // MARK: BaseListViewControllerDataSource
-
-    func headModels(listAdapter: ListAdapter) -> [ListDiffable] {
-        return []
-    }
-
-    func models(listAdapter: ListAdapter) -> [ListDiffable] {
-        var models = [NotificationViewModel]()
-
-        let showAll = self.showAll
-        for id in notificationIDs {
-            if let model = client.githubClient.cache.get(id: id) as NotificationViewModel?,
-                (showAll || !model.read) {
-                // swap the model if not read, otherwise exclude it
-                // this powers the "swipe to archive" feature deleting the cell
-                models.append(model)
-            }
-        }
-
-        // every time the list is updated, update bar items and badges
-        updateUnreadState(count: models.count)
-
-        return models
-    }
-
-    func sectionController(model: Any, listAdapter: ListAdapter) -> ListSectionController {
-        switch model {
-        case is NotificationViewModel: return NotificationSectionController(client: client)
-        case is RatingToken: return RatingSectionController(delegate: self)
-        default: fatalError("Unhandled object: \(model)")
-        }
-    }
-
-    func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
-        return NoNewNotificationSectionController(
-            topInset: 0,
-            layoutInsets: view.safeAreaInsets
-        )
     }
 
     // MARK: ForegroundHandlerDelegate
@@ -315,25 +274,11 @@ FlatCacheListener {
         feed.refreshHead()
     }
 
-    // MARK: RatingSectionControllerDelegate
-
-    func ratingNeedsDismiss(sectionController: RatingSectionController) {
-        ratingToken = nil
-        update(animated: trueUnlessReduceMotionEnabled)
-    }
-
-    // MARK: TabNavRootViewControllerType
-
-    func didSingleTapTab() {
-        feed.collectionView.scrollToTop(animated: trueUnlessReduceMotionEnabled)
-    }
-
-    func didDoubleTapTab() {}
-
     // MARK: FlatCacheListener
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
         self.update(animated: trueUnlessReduceMotionEnabled)
+        updateUnreadState()
     }
-
+    
 }

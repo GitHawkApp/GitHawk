@@ -39,7 +39,7 @@ NewIssueTableViewControllerDelegate {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
-        markReadSwitch.isOn = NotificationClient.readOnOpen()
+        markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
 
@@ -227,7 +227,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     @IBAction func onMarkRead(_ sender: Any) {
-        NotificationClient.setReadOnOpen(open: markReadSwitch.isOn)
+        NotificationModelController.setReadOnOpen(open: markReadSwitch.isOn)
     }
 
 	private func style() {

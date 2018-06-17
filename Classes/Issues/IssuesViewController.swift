@@ -231,25 +231,15 @@ final class IssuesViewController:
         bookmarkNavController?.configureNavigationItem(bookmarkItem)
     }
 
-    func viewOwnerAction() -> UIAlertAction? {
-        weak var weakSelf = self
-        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(owner: model.owner)
-    }
-
     func viewRepoAction() -> UIAlertAction? {
         guard let result = result else { return nil }
-
-        let repo = RepositoryDetails(
+        return action(
             owner: model.owner,
-            name: model.repo,
-            defaultBranch: result.defaultBranch,
-            hasIssuesEnabled: result.hasIssuesEnabled
+            repo: model.repo,
+            branch: result.defaultBranch,
+            issuesEnabled: result.hasIssuesEnabled,
+            client: client
         )
-
-        weak var weakSelf = self
-        return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-            .view(client: client, repo: repo)
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
@@ -344,7 +334,7 @@ final class IssuesViewController:
     @objc func onNavigationTitle(sender: UIView) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         alert.addActions([
-            viewOwnerAction(),
+            action(owner: model.owner),
             viewRepoAction(),
             AlertAction.cancel()
             ])

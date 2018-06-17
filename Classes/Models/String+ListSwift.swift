@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-extension String: ListSwiftIdentifiable, ListSwiftEquatable {
+extension String: ListSwiftDiffable {
 
     public var identifier: String {
         return self
