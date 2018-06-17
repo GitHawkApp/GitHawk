@@ -185,7 +185,7 @@ CHECKOUT OPTIONS:
     :commit: 4f7e90477619b8dc4b9e641efd10952c22150c5c
     :git: https://github.com/GitHawkApp/Highlightr.git
   IGListKit:
-    :commit: 134900e34e318007e3c212825c4b5946339563bb
+    :commit: 5c1c92b600f0d8094f22fff48e26ded323568194
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
     :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
