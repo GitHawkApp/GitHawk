@@ -109,12 +109,24 @@ ContextMenuDelegate {
 
     func newPeopleController(type: PeopleViewController.PeopleType) -> UIViewController {
         let selections: [String]
+        let exclusions: [String]
         switch type {
-        case .assignee: selections = issueResult?.assignee.users.map { $0.login } ?? []
-        case .reviewer: selections = issueResult?.reviewers?.users.map { $0.login } ?? []
+        case .assignee:
+            selections = issueResult?.assignee.users.map { $0.login } ?? []
+            exclusions = []
+        case .reviewer:
+            selections = issueResult?.reviewers?.users.map { $0.login } ?? []
+            if let isPullRequest = issueResult?.pullRequest,
+                let pullRequestAuthor = issueResult?.rootComment?.details.login,
+                isPullRequest {
+                exclusions = [pullRequestAuthor]
+            } else {
+                exclusions = []
+            }
         }
         return PeopleViewController(
             selections: selections,
+            exclusions: exclusions,
             type: type,
             client: client,
             owner: model.owner,
