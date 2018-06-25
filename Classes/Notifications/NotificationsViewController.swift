@@ -12,7 +12,9 @@ import FlatCache
 
 final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
-ForegroundHandlerDelegate, FlatCacheListener {
+ForegroundHandlerDelegate,
+FlatCacheListener,
+BaseListViewController2EmptyDataSource {
 
     private let modelController: NotificationModelController
     private let foreground = ForegroundHandler(threshold: 5 * 60)
@@ -30,6 +32,7 @@ ForegroundHandlerDelegate, FlatCacheListener {
         super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
         
         self.dataSource = self
+        self.emptyDataSource = self
         self.foreground.delegate = self
 
         switch inboxType {
@@ -266,6 +269,15 @@ ForegroundHandlerDelegate, FlatCacheListener {
                 NotificationSectionController(modelController: modelController)
             }
         }
+    }
+
+    // MARK: BaseListViewController2EmptyDataSource
+
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
+        let layoutInsets = view.safeAreaInsets
+        return ListSwiftPair.pair("empty-notification-value", {
+            return NoNewNotificationSectionController(layoutInsets: layoutInsets)
+        })
     }
 
     // MARK: ForegroundHandlerDelegate
