@@ -13,18 +13,23 @@ protocol BaseListViewController2DataSource: class {
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair]
 }
 
+protocol BaseListViewController2EmptyDataSource: class {
+    func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair
+}
+
 class BaseListViewController2<PageType: CustomStringConvertible>: UIViewController,
 ListSwiftAdapterDataSource,
 FeedDelegate,
 LoadMoreSectionController2Delegate {
 
     private let emptyErrorMessage: String
+
     public weak var dataSource: BaseListViewController2DataSource?
+    public weak var emptyDataSource: BaseListViewController2EmptyDataSource?
 
     public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
     private var page: PageType?
     private var hasError = false
-    private let emptyKey: ListDiffable = "emptyKey" as ListDiffable
 
     init(emptyErrorMessage: String) {
         self.emptyErrorMessage = emptyErrorMessage
@@ -116,6 +121,12 @@ LoadMoreSectionController2Delegate {
         // short-circuit to display empty-error message using the emptyView(...) API
         if hasError && hasNoObjects {
             return []
+        }
+
+        if let emptyDataSource = self.emptyDataSource,
+            hasNoObjects,
+            feed.status == .idle {
+            return [emptyDataSource.emptyModel(for: adapter)]
         }
 
         if let page = self.page?.description {

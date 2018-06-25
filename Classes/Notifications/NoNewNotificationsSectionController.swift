@@ -10,9 +10,8 @@ import UIKit
 import IGListKit
 import Crashlytics
 
-final class NoNewNotificationSectionController: ListSectionController {
+final class NoNewNotificationSectionController: ListSwiftSectionController<String> {
 
-    private let topInset: CGFloat
     private let layoutInsets: UIEdgeInsets
     private let client = NotificationEmptyMessageClient()
 
@@ -23,8 +22,7 @@ final class NoNewNotificationSectionController: ListSectionController {
     }
     private var state: State = .loading
 
-    init(topInset: CGFloat, layoutInsets: UIEdgeInsets) {
-        self.topInset = topInset
+    init(layoutInsets: UIEdgeInsets) {
         self.layoutInsets = layoutInsets
         super.init()
         client.fetch { [weak self] (result) in
@@ -32,17 +30,23 @@ final class NoNewNotificationSectionController: ListSectionController {
         }
     }
 
-    override func sizeForItem(at index: Int) -> CGSize {
-        guard let size = collectionContext?.containerSize
-            else { fatalError("Missing context") }
-        return CGSize(width: size.width, height: size.height - topInset - layoutInsets.top - layoutInsets.bottom)
-    }
-
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: NoNewNotificationsCell.self, for: self, at: index) as? NoNewNotificationsCell
-            else { fatalError("Missing context or cell is wrong type") }
-        configure(cell)
-        return cell
+    override func createBinders(from value: String) -> [ListBinder] {
+        return [
+            binder(
+                value,
+                cellType: ListCellType.class(NoNewNotificationsCell.self),
+                size: { [layoutInsets] in
+                    return CGSize(
+                        width: $0.collection.containerSize.width,
+                        height: $0.collection.containerSize.height - layoutInsets.top - layoutInsets.bottom
+                    )
+            },
+                configure: { [weak self] in
+                    // TODO accessing the value seems to be required for this to compile
+                    print($1.value)
+                    self?.configure($0)
+                })
+        ]
     }
 
     // MARK: Private API
