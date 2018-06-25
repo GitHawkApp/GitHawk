@@ -23,6 +23,7 @@ PeopleSectionControllerDelegate {
 
     private let selections: Set<String>
     private let selectionLimit = 10
+    private let exclusions: Set<String>
     private var users = [IssueAssigneeViewModel]()
     private let client: GithubClient
     private var owner: String
@@ -30,12 +31,14 @@ PeopleSectionControllerDelegate {
 
     init(
         selections: [String],
+        exclusions: [String],
         type: PeopleType,
         client: GithubClient,
         owner: String,
         repo: String
         ) {
         self.selections = Set<String>(selections)
+        self.exclusions = Set<String>(exclusions)
         self.type = type
         self.client = client
         self.owner = owner
@@ -121,13 +124,15 @@ PeopleSectionControllerDelegate {
     // MARK: BaseListViewController2DataSource
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
-        return users.map { [selections] user in
-            return ListSwiftPair.pair(user) { [weak self] in
-                let controller = PeopleSectionController(selected: selections.contains(user.login))
-                controller.delegate = self
-                return controller
+        return users
+            .filter { [exclusions] user in !exclusions.contains(user.login) }
+            .map { [selections] user in
+                return ListSwiftPair.pair(user) { [weak self] in
+                    let controller = PeopleSectionController(selected: selections.contains(user.login))
+                    controller.delegate = self
+                    return controller
+                }
             }
-        }
     }
 
     // MARK: PeopleSectionControllerDelegate
