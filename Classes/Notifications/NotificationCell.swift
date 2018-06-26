@@ -182,6 +182,31 @@ final class NotificationCell: SelectableCell {
         watchButton.setImage(UIImage(named: "\(watchingImageName)-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
 
         contentView.alpha = model.read ? 0.5 : 1
+
+        let watchAccessibilityAction = UIAccessibilityCustomAction(
+            name: model.watching ?
+                NSLocalizedString("Unwatch notification", comment: "") :
+                NSLocalizedString("Watch notification", comment: ""),
+            target: self,
+            selector: #selector(onWatch(sender:))
+        )
+        let readAccessibilityAction = UIAccessibilityCustomAction(
+            name: Constants.Strings.markRead,
+            target: self,
+            selector: #selector(onRead(sender:))
+        )
+        let moreOptionsAccessibilityAction = UIAccessibilityCustomAction(
+            name: Constants.Strings.moreOptions,
+            target: self,
+            selector: #selector(onMore(sender:))
+        )
+
+        var customActions = [watchAccessibilityAction, moreOptionsAccessibilityAction]
+
+        if model.read == false {
+            customActions.append(readAccessibilityAction)
+        }
+        accessibilityCustomActions = customActions
     }
 
     @objc func onRead(sender: UIView) {
