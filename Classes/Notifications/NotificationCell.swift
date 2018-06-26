@@ -139,7 +139,7 @@ final class NotificationCell: SelectableCell {
     }
 
     override var accessibilityLabel: String? {
-        get { return AccessibilityHelper.generatedLabel(forCell: self)}
+        get { return AccessibilityHelper.generatedLabel(forCell: self) }
         set {}
     }
 
@@ -157,7 +157,7 @@ final class NotificationCell: SelectableCell {
             NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.light.color
         ]
         let title = NSMutableAttributedString(string: "\(model.owner)/\(model.repo) ", attributes: titleAttributes)
-        titleAttributes[NSAttributedStringKey.font] = Styles.Text.secondary.preferredFont
+        titleAttributes[.font] = Styles.Text.secondary.preferredFont
         switch model.number {
         case .number(let number): title.append(NSAttributedString(string: "#\(number)", attributes: titleAttributes))
         default: break

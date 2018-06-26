@@ -23,7 +23,7 @@ NewIssueTableViewControllerDelegate {
 
     var moreOptionsItem: UIBarButtonItem {
         let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
-        rightItem.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        rightItem.accessibilityLabel = Constants.Strings.moreOptions
         return rightItem
     }
 
