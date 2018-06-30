@@ -68,9 +68,15 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        let bounds = view.bounds
-        emptyView.frame = bounds
-        codeView.frame = bounds
+        let frame: CGRect
+        if #available(iOS 11, *) {
+            frame = view.safeAreaLayoutGuide.layoutFrame
+        } else {
+            frame = view.bounds
+        }
+        
+        emptyView.frame = frame
+        codeView.frame = frame
     }
 
     // MARK: Private API
