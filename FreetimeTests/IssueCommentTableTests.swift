@@ -10,35 +10,80 @@ import StyledText
 @testable import Freetime
 
 class IssueCommentTableTests: XCTestCase {
+    var textItem: StyledTextRenderer!
+    var medTextItem: StyledTextRenderer!
+    var longerTextItem: StyledTextRenderer!
+    var tallerItem: StyledTextRenderer!
+    let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
     
-    func test_tableColumnDimensions() {
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+    override func setUp() {
+        super.setUp()
         
-        let textItem =       StyledTextRenderer(string: StyledTextString(styledTexts: [StyledText(text: "item")]),
-                                                contentSizeCategory: contentSizeCategory)
-        let medTextItem =    StyledTextRenderer(string: StyledTextString(styledTexts: [StyledText(text: "medium item")]),
-                                                contentSizeCategory: contentSizeCategory)
-        let longerTextItem = StyledTextRenderer(string: StyledTextString(styledTexts: [StyledText(text: "longer text length item")]),
-                                                contentSizeCategory:contentSizeCategory)
-        let tallerItem =     StyledTextRenderer(string: StyledTextString(styledTexts: [StyledText(text: "T")]),
-                                                contentSizeCategory: .accessibilityExtraExtraLarge)
+        textItem = StyledTextRenderer(
+            string: StyledTextString(
+                styledTexts: [StyledText(
+                    text: "item"
+                )]
+            ),
+            contentSizeCategory: contentSizeCategory
+        )
         
-        let rowOne =    [ textItem,   textItem,       textItem       ]
-        let rowTwo =    [ textItem,   medTextItem,    textItem       ]
-        let rowThree =  [ textItem,   textItem,       longerTextItem ]
-        let rowFour =   [ tallerItem, textItem,       textItem       ]
+        medTextItem = StyledTextRenderer(
+            string: StyledTextString(
+                styledTexts: [StyledText(
+                    text: "medium item"
+                )]
+            ),
+            contentSizeCategory: contentSizeCategory
+        )
+        
+        
+        longerTextItem = StyledTextRenderer(
+            string: StyledTextString(
+                styledTexts: [StyledText(
+                    text: "longer text length item"
+                )]
+            ),
+            contentSizeCategory: contentSizeCategory
+        )
+        
+        tallerItem = StyledTextRenderer(
+            string: StyledTextString(
+                styledTexts: [StyledText(
+                    text: "T"
+                )]
+            ),
+            contentSizeCategory: .accessibilityExtraExtraLarge
+        )
+    }
+    
+    func test_tableDimensions() {
+        
+        // create table rows with text elements of different sizes and test whether the
+        // model recieves appropriate height and width dimensions
+        let rowOne: [StyledTextRenderer] = [textItem, textItem, textItem]
+        let rowTwo: [StyledTextRenderer] = [textItem, medTextItem, textItem]
+        let rowThree: [StyledTextRenderer] = [textItem, textItem, longerTextItem]
+        let rowFour: [StyledTextRenderer] = [tallerItem, textItem, textItem]
         
         let rows = [rowOne, rowTwo, rowThree, rowFour]
         var buckets = [TableBucket()]
         var rowHeights = [CGFloat]()
         
-        rows.forEach({ fillBuckets(rows: $0,
-                                   buckets: &buckets,
-                                   rowHeights: &rowHeights,
-                                   fill: false)
-        })
+        rows.forEach {
+            fillBuckets(
+                rows: $0,
+                buckets: &buckets,
+                rowHeights: &rowHeights,
+                fill: false
+            )
+        }
         
-        let model = IssueCommentTableModel(buckets: buckets, rowHeights: rowHeights)
+        let model = IssueCommentTableModel(
+            buckets: buckets,
+            rowHeights: rowHeights
+        )
+        
         let columns = model.columns
         
         //widths should reflect the width of widest cell in column
@@ -51,3 +96,4 @@ class IssueCommentTableTests: XCTestCase {
         XCTAssertEqual(rowHeights[3], tallerItem.viewSize(in: 0).height)
     }
 }
+
