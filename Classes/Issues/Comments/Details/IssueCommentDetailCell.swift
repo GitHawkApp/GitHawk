@@ -73,7 +73,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         moreButton.imageView?.contentMode = .center
         moreButton.tintColor = Styles.Colors.Gray.light.color
         moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
-        moreButton.accessibilityLabel = NSLocalizedString("More options", comment: "")
+        moreButton.accessibilityLabel = Constants.Strings.moreOptions
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonMin)

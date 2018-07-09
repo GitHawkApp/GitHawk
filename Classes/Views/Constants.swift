@@ -17,6 +17,7 @@ enum Constants {
 
     enum Strings {
         static let all = NSLocalizedString("All", comment: "")
+        static let markRead = NSLocalizedString("Mark Read", comment: "")
         static let unread = NSLocalizedString("Unread", comment: "")
         static let ok = NSLocalizedString("OK", comment: "")
         static let cancel = NSLocalizedString("Cancel", comment: "")
@@ -35,6 +36,7 @@ enum Constants {
         static let newIssue = NSLocalizedString("New Issue", comment: "")
         static let bullet = "\u{2022}"
         static let bulletHollow = "\u{25E6}"
+        static let moreOptions = NSLocalizedString("More options", comment: "")
         static let search = NSLocalizedString("Search", comment: "")
         static let searchGitHub = NSLocalizedString("Search GitHub", comment: "Used as a placeholder for the searchbar when searching for repositories.")
         static let searchBookmarks = NSLocalizedString("Search Bookmarks", comment: "Used as a placeholder for the searchbar when searching within bookmarks.")

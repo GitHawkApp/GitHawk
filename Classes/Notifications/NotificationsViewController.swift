@@ -60,7 +60,7 @@ BaseListViewController2EmptyDataSource {
                 target: self,
                 action: #selector(NotificationsViewController.onMore(sender:))
             )
-            item.accessibilityLabel = NSLocalizedString("More options", comment: "")
+            item.accessibilityLabel = Constants.Strings.moreOptions
             navigationItem.leftBarButtonItem = item
         case .repo, .all: break
         }
@@ -205,7 +205,7 @@ BaseListViewController2EmptyDataSource {
 
         alert.addActions([
             UIAlertAction(
-                title: NSLocalizedString("Mark Read", comment: ""),
+                title: Constants.Strings.markRead,
                 style: .destructive,
                 handler: { [weak self] _ in
                     self?.markRead()
