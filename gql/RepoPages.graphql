@@ -1,5 +1,5 @@
-query RepoSearchPages($query: String!, $page_size: Int!) {
-  search(query: $query, type: ISSUE, first: $page_size) {
+query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {
+  search(query: $query, type: ISSUE, after: $after, first: $page_size) {
     nodes {
       ... on Issue {
         ...repoEventFields

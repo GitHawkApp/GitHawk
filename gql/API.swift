@@ -14112,27 +14112,29 @@ public final class RepoFilesQuery: GraphQLQuery {
 
 public final class RepoSearchPagesQuery: GraphQLQuery {
   public static let operationString =
-    "query RepoSearchPages($query: String!, $page_size: Int!) {\n  search(query: $query, type: ISSUE, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
+    "query RepoSearchPages($query: String!, $after: String, $page_size: Int!) {\n  search(query: $query, type: ISSUE, after: $after, first: $page_size) {\n    __typename\n    nodes {\n      __typename\n      ... on Issue {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        issueState: state\n      }\n      ... on PullRequest {\n        ...repoEventFields\n        ...nodeFields\n        ...labelableFields\n        title\n        number\n        pullRequestState: state\n      }\n    }\n    pageInfo {\n      __typename\n      hasNextPage\n      endCursor\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(RepoEventFields.fragmentString).appending(NodeFields.fragmentString).appending(LabelableFields.fragmentString) }
 
   public var query: String
+  public var after: String?
   public var page_size: Int
 
-  public init(query: String, page_size: Int) {
+  public init(query: String, after: String? = nil, page_size: Int) {
     self.query = query
+    self.after = after
     self.page_size = page_size
   }
 
   public var variables: GraphQLMap? {
-    return ["query": query, "page_size": page_size]
+    return ["query": query, "after": after, "page_size": page_size]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("search", arguments: ["query": GraphQLVariable("query"), "type": "ISSUE", "first": GraphQLVariable("page_size")], type: .nonNull(.object(Search.selections))),
+      GraphQLField("search", arguments: ["query": GraphQLVariable("query"), "type": "ISSUE", "after": GraphQLVariable("after"), "first": GraphQLVariable("page_size")], type: .nonNull(.object(Search.selections))),
     ]
 
     public var snapshot: Snapshot
