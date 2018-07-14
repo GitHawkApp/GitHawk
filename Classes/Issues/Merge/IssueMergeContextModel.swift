@@ -17,6 +17,7 @@ final class IssueMergeContextModel: ListDiffable {
     let login: String
     let avatarURL: URL
     let description: String
+    let targetURL: URL
 
     init(
         id: String,
@@ -24,7 +25,8 @@ final class IssueMergeContextModel: ListDiffable {
         state: StatusState,
         login: String,
         avatarURL: URL,
-        description: String
+        description: String,
+        targetURL: URL
         ) {
         self.id = id
         self.context = context
@@ -32,6 +34,7 @@ final class IssueMergeContextModel: ListDiffable {
         self.login = login
         self.avatarURL = avatarURL
         self.description = description
+        self.targetURL = targetURL
     }
 
     // MARK: ListDiffable
@@ -48,6 +51,7 @@ final class IssueMergeContextModel: ListDiffable {
         && login == object.login
         && avatarURL == object.avatarURL
         && description == object.description
+        && targetURL == object.targetURL
     }
 
 }

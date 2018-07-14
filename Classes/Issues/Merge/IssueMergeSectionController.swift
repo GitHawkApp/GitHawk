@@ -11,7 +11,8 @@ import IGListKit
 
 final class IssueMergeSectionController: ListBindingSectionController<IssueMergeModel>,
 ListBindingSectionControllerDataSource,
-MergeButtonDelegate {
+MergeButtonDelegate,
+ListBindingSectionControllerSelectionDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -24,6 +25,7 @@ MergeButtonDelegate {
         self.resultID = resultID
         super.init()
         dataSource = self
+        selectionDelegate = self
     }
 
     // MARK: Private API
@@ -186,6 +188,17 @@ MergeButtonDelegate {
 
         alert.add(action: AlertAction.cancel())
         viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
+
+    // MARK: ListBindingSectionControllerSelectionDelegate
+
+    func sectionController(
+        _ sectionController: ListBindingSectionController<ListDiffable>,
+        didSelectItemAt index: Int,
+        viewModel: Any
+        ) {
+        guard let viewModel = viewModel as? IssueMergeContextModel else { return }
+        viewController?.presentSafari(url: viewModel.targetURL)
     }
 
 }

@@ -104,6 +104,7 @@ fragment commitContext on Commit {
         avatarUrl
       }
       description
+      targetUrl
     }
     state
   }
