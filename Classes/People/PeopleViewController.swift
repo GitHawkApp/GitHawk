@@ -9,6 +9,7 @@
 import Foundation
 import IGListKit
 import GitHubAPI
+import Squawk
 
 final class PeopleViewController: BaseListViewController2<String>,
 BaseListViewController2DataSource,
@@ -116,7 +117,7 @@ PeopleSectionControllerDelegate {
                 }
                 self?.update(page: nextPage, animated: true)
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }

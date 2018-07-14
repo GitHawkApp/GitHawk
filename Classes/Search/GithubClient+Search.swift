@@ -8,6 +8,7 @@
 
 import Foundation
 import Apollo
+import Squawk
 
 extension GithubClient {
 
@@ -29,7 +30,7 @@ extension GithubClient {
             case .failure(let error):
                 completion(.error(error))
                 if !isCancellationError(error) {
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
             case .success(let data):
                 DispatchQueue.global().async {

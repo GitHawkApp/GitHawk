@@ -83,6 +83,11 @@ body: Copyright (c) 2016 O…
 name: SnapKit, nameSpecified: 
 body: Copyright (c) 2011-P…
 
+name: Squawk, nameSpecified: 
+body: The MIT License
+
+Cop…
+
 name: StyledTextKit, nameSpecified: 
 body: The MIT License
 
@@ -196,6 +201,11 @@ body: Copyright (c) 2016 O…
 
 name: SnapKit, nameSpecified: 
 body: Copyright (c) 2011-P…
+
+name: Squawk, nameSpecified: 
+body: The MIT License
+
+Cop…
 
 name: StyledTextKit, nameSpecified: 
 body: The MIT License

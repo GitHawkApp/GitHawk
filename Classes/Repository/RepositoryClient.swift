@@ -9,6 +9,7 @@
 import UIKit
 import Apollo
 import StyledTextKit
+import Squawk
 
 protocol RepositoryQuery {
     // generated queries should share the same init
@@ -130,7 +131,7 @@ final class RepositoryClient {
         githubClient.client.query(query, result: { $0 }) { result in
             switch result {
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 completion(.error(nil))
             case .success(let data):
                 DispatchQueue.global().async {

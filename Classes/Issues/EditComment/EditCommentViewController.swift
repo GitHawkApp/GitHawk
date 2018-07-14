@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import MessageViewController
 import GitHubAPI
+import Squawk
 
 protocol EditCommentViewControllerDelegate: class {
     func didEditComment(viewController: EditCommentViewController, markdown: String)
@@ -183,7 +184,7 @@ MessageTextViewListener {
 
     func error() {
         setRightBarItemIdle()
-        ToastManager.showGenericError()
+        Squawk.showGenericError()
     }
 
     // MARK: MessageTextViewListener

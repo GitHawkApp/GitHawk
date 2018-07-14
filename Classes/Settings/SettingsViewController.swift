@@ -10,6 +10,7 @@ import UIKit
 import SafariServices
 import GitHubAPI
 import GitHubSession
+import Squawk
 
 final class SettingsViewController: UITableViewController,
 NewIssueTableViewControllerDelegate {
@@ -142,7 +143,7 @@ NewIssueTableViewControllerDelegate {
                 repo: "GitHawk",
                 signature: .bugReport
             ) else {
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 return
         }
         viewController.delegate = self
@@ -153,7 +154,7 @@ NewIssueTableViewControllerDelegate {
 
     func onViewSource() {
         guard let client = client else {
-            ToastManager.showGenericError()
+            Squawk.showGenericError()
             return
         }
 

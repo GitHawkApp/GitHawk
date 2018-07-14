@@ -8,6 +8,7 @@
 
 import IGListKit
 import GitHubAPI
+import Squawk
 
 final class NotificationSectionController: ListSwiftSectionController<NotificationViewModel>, NotificationCellDelegate {
 
@@ -101,7 +102,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                         release: response.data.tagName
                     )
                 case .failure:
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
         }
     }

@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import GitHubAPI
+import Squawk
 
 private func uniqueAutocompleteUsers(
     left: [AutocompleteUser],
@@ -60,7 +61,7 @@ extension GithubClient {
             switch result {
             case .failure:
                 completion(.error(nil))
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             case .success(let repository):
                 let issueOrPullRequest = repository.issueOrPullRequest
                 guard let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest else {
@@ -191,9 +192,9 @@ extension GithubClient {
             case .failure(let err):
                 completion(nil)
                 if let message = err?.localizedDescription {
-                    ToastManager.showError(message: message)
+                    Squawk.showError(message: message)
                 } else {
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
             }
         }
@@ -246,7 +247,7 @@ extension GithubClient {
             case .success: break
             case .failure:
                 cache.set(value: previous)
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }
@@ -288,7 +289,7 @@ extension GithubClient {
                 completion?(.success(true))
             case .failure:
                 cache.set(value: previous)
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 completion?(.error(nil))
             }
         }
@@ -399,7 +400,7 @@ extension GithubClient {
             case .success: break
             case .failure:
                 cache.set(value: previous)
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }
@@ -497,7 +498,7 @@ extension GithubClient {
                 case .success: break
                 case .failure:
                     cache.set(value: previous)
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
             }
         }
@@ -517,7 +518,7 @@ extension GithubClient {
                 case .success: break
                 case .failure:
                     cache.set(value: previous)
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
             }
         }

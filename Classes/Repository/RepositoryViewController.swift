@@ -11,6 +11,7 @@ import Tabman
 import Pageboy
 import TUSafariActivity
 import SafariServices
+import Squawk
 
 class RepositoryViewController: TabmanViewController,
 PageboyViewControllerDataSource,
@@ -116,7 +117,7 @@ NewIssueTableViewControllerDelegate {
             repo: repo.name,
             signature: .sentWithGitHawk)
         else {
-            ToastManager.showGenericError()
+            Squawk.showGenericError()
             return nil
         }
 

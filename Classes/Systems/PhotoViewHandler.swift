@@ -9,6 +9,7 @@
 import UIKit
 import NYTPhotoViewer
 import SDWebImage
+import Squawk
 
 final class PhotoViewHandler: NSObject,
     IssueCommentImageCellDelegate,
@@ -54,7 +55,7 @@ IssueCommentHtmlCellImageDelegate {
                 let photosViewController = NYTPhotosViewController(photos: [photo])
                 self?.viewController?.present(photosViewController, animated: trueUnlessReduceMotionEnabled)
             } else {
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }

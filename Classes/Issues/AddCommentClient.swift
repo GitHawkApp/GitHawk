@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Squawk
 
 protocol AddCommentListener: class {
     func didSendComment(
@@ -64,7 +65,7 @@ final class AddCommentClient {
                 for listener in self.listeners {
                     listener.listener?.didFailSendingComment(client: self, subjectId: subjectId, body: body)
                 }
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }
