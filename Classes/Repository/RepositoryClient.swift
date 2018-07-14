@@ -183,7 +183,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> Void
         ) {
         loadPage(
-            query: RepoSearchPagesQuery(query: query, page_size: 30),
+            query: RepoSearchPagesQuery(query: query, after: nextPage, page_size: 30),
             containerWidth: containerWidth,
             completion: completion
         )

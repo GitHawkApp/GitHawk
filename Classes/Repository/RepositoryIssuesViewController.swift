@@ -62,6 +62,7 @@ SearchBarSectionControllerDelegate {
     override func fetch(page: NSString?) {
         client.searchIssues(
             query: fullQueryString,
+            nextPage: page as String?,
             containerWidth: view.bounds.width
         ) { [weak self] (result: Result<RepositoryClient.RepositoryPayload>) in
             switch result {
