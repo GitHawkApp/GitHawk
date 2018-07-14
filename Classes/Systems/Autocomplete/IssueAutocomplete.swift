@@ -8,6 +8,7 @@
 
 import Foundation
 import GitHubAPI
+import Squawk
 
 final class IssueAutocomplete: AutocompleteType {
 
@@ -59,7 +60,7 @@ final class IssueAutocomplete: AutocompleteType {
         ) { [weak self] result in
             switch result {
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 completion(false)
             case .success(let data):
                 guard let strongSelf = self else { return }
