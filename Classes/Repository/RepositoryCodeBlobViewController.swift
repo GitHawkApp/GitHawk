@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Squawk
 
 final class RepositoryCodeBlobViewController: UIViewController {
 
@@ -117,7 +118,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
                 self?.error(cannotLoad: true)
             case .error:
                 self?.error(cannotLoad: false)
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }

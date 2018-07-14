@@ -25,7 +25,7 @@ public extension Squawk {
         let buttonLeftMargin: CGFloat
         let buttonTapHandler: (() -> Void)?
 
-        init(
+        public init(
             text: String,
             backgroundColor: UIColor = UIColor(white: 0.2, alpha: 1),
             insets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 15),

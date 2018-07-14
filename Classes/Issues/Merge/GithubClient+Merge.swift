@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Squawk
 import GitHubAPI
 
 extension GithubClient {
@@ -52,7 +52,7 @@ extension GithubClient {
             case .success:
                 cache.set(value: optimisticResult)
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 error()
             }
         }

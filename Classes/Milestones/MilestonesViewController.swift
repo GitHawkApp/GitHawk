@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Squawk
 import IGListKit
 
 final class MilestonesViewController: BaseListViewController2<String>,
@@ -56,7 +57,7 @@ MilestoneSectionControllerDelegate {
             case .success(let milestones):
                 self?.milestones = milestones
             case .error:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
             self?.update(animated: true)
         }

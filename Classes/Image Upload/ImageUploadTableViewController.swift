@@ -9,6 +9,7 @@
 import UIKit
 import NYTPhotoViewer
 import MessageViewController
+import Squawk
 
 protocol ImageUploadDelegate: class {
     func imageUploaded(link: String, altText: String)
@@ -80,7 +81,7 @@ class ImageUploadTableViewController: UITableViewController {
         image.compressAndEncode { [weak self] result in
             switch result {
             case .error:
-                ToastManager.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
+                Squawk.showError(message: NSLocalizedString("Failed to encode image", comment: ""))
                 self?.navigationItem.rightBarButtonItem = nil
             case .success(let base64):
                 self?.compressionData = base64
@@ -150,7 +151,7 @@ class ImageUploadTableViewController: UITableViewController {
 
         // Should never caught in here as the button will be disabled in this situation
         guard let compressionData = compressionData else {
-            ToastManager.showGenericError()
+            Squawk.showGenericError()
             return
         }
 
@@ -161,13 +162,13 @@ class ImageUploadTableViewController: UITableViewController {
                 
                 switch error {
                 case .endpointError(let response):
-                    ToastManager.showError(message: response)
+                    Squawk.showError(message: response)
                     
                 case .rateLimitExceeded:
-                    ToastManager.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
+                    Squawk.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
                     
                 default:
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
                 
                 self?.navigationItem.rightBarButtonItem = nil
@@ -189,7 +190,7 @@ class ImageUploadTableViewController: UITableViewController {
 
                 switch result {
                 case .error:
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                     self?.setRightBarItemIdle()
 
                 case .success(let link):

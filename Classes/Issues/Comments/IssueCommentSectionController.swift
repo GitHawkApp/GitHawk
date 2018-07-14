@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import TUSafariActivity
+import Squawk
 import GitHubAPI
 
 protocol IssueCommentSectionControllerDelegate: class {
@@ -261,7 +262,7 @@ final class IssueCommentSectionController:
                 self?.hasBeenDeleted = false
                 self?.update(animated: trueUnlessReduceMotionEnabled)
 
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             case .success: break // Don't need to handle success since updated optimistically
             }
         }
@@ -290,7 +291,7 @@ final class IssueCommentSectionController:
             case .success: break
             case .failure:
                 self?.edit(markdown: originalMarkdown)
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }
@@ -453,7 +454,7 @@ final class IssueCommentSectionController:
 
     func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
         guard let login = object?.details.login else {
-            ToastManager.showGenericError()
+            Squawk.showGenericError()
             return
         }
 
@@ -477,7 +478,7 @@ final class IssueCommentSectionController:
 
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else {
-            ToastManager.showGenericError()
+            Squawk.showGenericError()
             return
         }
 

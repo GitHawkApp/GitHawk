@@ -196,7 +196,7 @@ CHECKOUT OPTIONS:
     :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
   Squawk:
-    :commit: 19bbe1d1eb29fde90db9879c2f4e7fa8e67feb6b
+    :commit: e77b43dfde569583dc31af88e7510c9c576aa0ac
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
     :commit: 081da7a8fdeb44c6984394eae6cc4c021b6b0e40
@@ -234,7 +234,7 @@ SPEC CHECKSUMS:
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Squawk: c6f5095eb1c16d65af8948db848eaa91e064a925
+  Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledTextKit: f7b74b87dc844d7630a92c68de0017f51ffbd065
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba

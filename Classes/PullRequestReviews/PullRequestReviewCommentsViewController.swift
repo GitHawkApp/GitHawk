@@ -10,6 +10,7 @@ import UIKit
 import IGListKit
 import MessageViewController
 import StyledTextKit
+import Squawk
 
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
@@ -117,7 +118,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         width: insetWidth
         ) { [weak self] (result) in
             switch result {
-            case .error: ToastManager.showGenericError()
+            case .error: Squawk.showGenericError()
             case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)

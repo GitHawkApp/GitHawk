@@ -71,6 +71,7 @@
 		292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */; };
 		292CD3D41F0DC12100D3D57B /* PhotoViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */; };
 		292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */; };
+		292D2F1720FA5CAD00099342 /* Squawk+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292D2F1620FA5CAD00099342 /* Squawk+GitHawk.swift */; };
 		292EB08D1F1FF58D0046865D /* IssueMilestoneEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */; };
 		292EB08F1F1FF5EC0046865D /* IssueMilestoneEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */; };
 		292EB0911F1FF72D0046865D /* IssueMilestoneEventSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292EB0901F1FF72D0046865D /* IssueMilestoneEventSectionController.swift */; };
@@ -123,7 +124,6 @@
 		29351EA22079663800FF8C17 /* String+Shortlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA12079663800FF8C17 /* String+Shortlink.swift */; };
 		29351EA420796BB800FF8C17 /* String+DetectShortlink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA320796BB800FF8C17 /* String+DetectShortlink.swift */; };
 		29351EA62079791800FF8C17 /* String+StripHTMLComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29351EA52079791800FF8C17 /* String+StripHTMLComments.swift */; };
-		2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */; };
 		293A45761F296B7E00DD1006 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A476B11ED24D99005D0953 /* IssueTests.swift */; };
 		293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */; };
 		293A45781F296B7E00DD1006 /* ListTestKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C295091EC7AFA500D46CD2 /* ListTestKit.swift */; };
@@ -568,6 +568,7 @@
 		292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Safari.swift"; sourceTree = "<group>"; };
 		292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewHandler.swift; sourceTree = "<group>"; };
 		292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IssueCommentHtmlCellNavigationDelegate.swift"; sourceTree = "<group>"; };
+		292D2F1620FA5CAD00099342 /* Squawk+GitHawk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Squawk+GitHawk.swift"; sourceTree = "<group>"; };
 		292EB08C1F1FF58D0046865D /* IssueMilestoneEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventModel.swift; sourceTree = "<group>"; };
 		292EB08E1F1FF5EC0046865D /* IssueMilestoneEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventCell.swift; sourceTree = "<group>"; };
 		292EB0901F1FF72D0046865D /* IssueMilestoneEventSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueMilestoneEventSectionController.swift; sourceTree = "<group>"; };
@@ -620,7 +621,6 @@
 		29351EA12079663800FF8C17 /* String+Shortlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Shortlink.swift"; sourceTree = "<group>"; };
 		29351EA320796BB800FF8C17 /* String+DetectShortlink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DetectShortlink.swift"; sourceTree = "<group>"; };
 		29351EA52079791800FF8C17 /* String+StripHTMLComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+StripHTMLComments.swift"; sourceTree = "<group>"; };
-		2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Toast+GitHawk.swift"; sourceTree = "<group>"; };
 		293A45A11F29954000DD1006 /* IssueCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitModel.swift; sourceTree = "<group>"; };
 		293A45A31F2995CE00DD1006 /* IssueCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitCell.swift; sourceTree = "<group>"; };
 		293A45A51F29987C00DD1006 /* IssueCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCommitSectionController.swift; sourceTree = "<group>"; };
@@ -1589,6 +1589,7 @@
 				29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */,
 				296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */,
 				294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */,
+				2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */,
 				297A6CE3202774830027E03B /* ListAdapter+Scrolling.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
 				2980033A1F51E82400BE90F4 /* Rating */,
@@ -1600,12 +1601,11 @@
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
 				29973E551F68BFDE0004B693 /* Signature.swift */,
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
+				292D2F1620FA5CAD00099342 /* Squawk+GitHawk.swift */,
 				29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */,
-				2939718A1F904D2A002FAC4B /* Toast+GitHawk.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */,
-				2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */,
 			);
 			path = Systems;
 			sourceTree = "<group>";
@@ -2627,7 +2627,6 @@
 				291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */,
 				29459A6F1FE61E0500034A04 /* MarkdownCheckboxModel.swift in Sources */,
 				299997302031227E00995FFD /* IssueMergeButtonModel.swift in Sources */,
-				2939718B1F904D2A002FAC4B /* Toast+GitHawk.swift in Sources */,
 				29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */,
 				299F63E0205DDF6B0015D901 /* UIViewController+Routing.swift in Sources */,
 				98835BD41F1A17EE005BA24F /* Bundle+Version.swift in Sources */,
@@ -2939,6 +2938,7 @@
 				29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */,
 				29BBD82B20CACB2F004D62FE /* NotificationCell.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
+				292D2F1720FA5CAD00099342 /* Squawk+GitHawk.swift in Sources */,
 				DC6339371F9F567000402A8D /* DeleteSwipeAction.swift in Sources */,
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,

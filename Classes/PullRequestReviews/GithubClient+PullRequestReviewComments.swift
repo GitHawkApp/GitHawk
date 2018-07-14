@@ -10,6 +10,7 @@ import UIKit
 import IGListKit
 import GitHubAPI
 import StyledTextKit
+import Squawk
 
 extension GithubClient {
 
@@ -34,7 +35,7 @@ extension GithubClient {
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
             case .failure(let error):
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 completion(.error(error))
             case .success(let response):
                 struct Thread {
@@ -139,11 +140,11 @@ extension GithubClient {
                     )
                     completion(.success(comment))
                 } else {
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                     completion(.error(nil))
                 }
             case .failure(let error):
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
                 completion(.error(error))
             }
         }

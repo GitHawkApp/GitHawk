@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import Squawk
 
 final class LabelsViewController: BaseListViewController2<String>, BaseListViewController2DataSource {
 
@@ -60,7 +61,7 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
                 }.sorted { $0.name < $1.name }
                 self?.update(animated: true)
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }

@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import FlatCache
+import Squawk
 
 final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
@@ -101,7 +102,7 @@ BaseListViewController2EmptyDataSource {
             rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
         case .error:
             error(animated: trueUnlessReduceMotionEnabled)
-            ToastManager.showNetworkError()
+            Squawk.showNetworkError()
         }
 
         // set after updating so self.models has already been changed

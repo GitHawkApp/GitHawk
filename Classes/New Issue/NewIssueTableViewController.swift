@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Squawk
 import GitHubAPI
 
 enum IssueSignatureType {
@@ -141,7 +141,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
     /// Attempts to sends the current forms information to GitHub, on success will redirect the user to the new issue
     @objc func onSend() {
         guard let titleText = titleText else {
-            ToastManager.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
+            Squawk.showError(message: NSLocalizedString("You must provide a title!", comment: "Invalid title when sending new issue"))
             return
         }
 
@@ -168,7 +168,7 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
                     delegate?.didDismissAfterCreatingIssue(model: model)
                 })
             case .failure:
-                ToastManager.showGenericError()
+                Squawk.showGenericError()
             }
         }
     }

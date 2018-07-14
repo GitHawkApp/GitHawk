@@ -13,6 +13,7 @@ import SafariServices
 import SnapKit
 import FlatCache
 import MessageViewController
+import Squawk
 
 final class IssuesViewController:
     MessageViewController,
@@ -271,7 +272,7 @@ final class IssuesViewController:
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:
-                    ToastManager.showGenericError()
+                    Squawk.showGenericError()
                 }
             }
         }

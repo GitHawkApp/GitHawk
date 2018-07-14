@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Squawk
 
 func ShowErrorStatusBar(graphQLErrors: [Error]?, networkError: Error?) {
     if networkError != nil {
-        ToastManager.showNetworkError()
+        Squawk.showNetworkError()
     } else if graphQLErrors != nil && graphQLErrors!.count > 0 {
-        ToastManager.showGenericError()
+        Squawk.showGenericError()
     }
 }

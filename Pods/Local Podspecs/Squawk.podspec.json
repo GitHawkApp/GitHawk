@@ -15,7 +15,7 @@
   },
   "source_files": "Source/*.swift",
   "platforms": {
-    "ios": "9.0"
+    "ios": "11.0"
   },
   "swift_version": "4.0"
 }
