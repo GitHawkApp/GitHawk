@@ -9,12 +9,14 @@
 import UIKit
 import SnapKit
 import SDWebImage
+import StyledTextKit
 
 final class AutocompleteCell: StyledTableCell {
 
     enum State {
         case emoji(emoji: String, term: String)
         case user(avatarURL: URL, login: String)
+        case issue(number: Int, title: String)
     }
 
     private let thumbnailImageView = UIImageView()
@@ -48,9 +50,11 @@ final class AutocompleteCell: StyledTableCell {
 
         titleLabel.font = Styles.Text.body.preferredFont
         titleLabel.textColor = Styles.Colors.Gray.dark.color
+        titleLabel.lineBreakMode = .byTruncatingTail
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.gutter + Styles.Sizes.avatar.width + Styles.Sizes.columnSpacing)
+            make.left.equalTo(Styles.Sizes.gutter)
+            make.right.lessThanOrEqualTo(-Styles.Sizes.gutter)
             make.centerY.equalTo(contentView)
         }
     }
@@ -65,24 +69,42 @@ final class AutocompleteCell: StyledTableCell {
 
         let emojiHidden: Bool
         let thumbnailHidden: Bool
-        let title: String
+
+        let builder = StyledTextBuilder(styledText: StyledText(style: Styles.Text.body))
 
         switch state {
         case .emoji(let emoji, let term):
             emojiHidden = false
             thumbnailHidden = true
             emojiLabel.text = emoji
-            title = term
+            builder.add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
+                .add(text: term)
         case .user(let avatarURL, let login):
             emojiHidden = true
             thumbnailHidden = false
             thumbnailImageView.sd_setImage(with: avatarURL)
-            title = login
+            builder.add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
+                .add(text: login)
+        case .issue(let number, let title):
+            emojiHidden = true
+            thumbnailHidden = true
+            builder.add(attributes: [.foregroundColor: Styles.Colors.Gray.light.color])
+                .add(text: "#\(number) ")
+                .add(attributes: [.foregroundColor: Styles.Colors.Gray.dark.color])
+                .add(text: title, traits: [.traitBold])
         }
 
         emojiLabel.isHidden = emojiHidden
         thumbnailImageView.isHidden = thumbnailHidden
-        titleLabel.text = title
+        titleLabel.attributedText = builder.build()
+            .render(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+
+        let left = emojiHidden && thumbnailHidden
+            ? Styles.Sizes.gutter
+            : Styles.Sizes.gutter + Styles.Sizes.avatar.width + Styles.Sizes.columnSpacing
+        titleLabel.snp.updateConstraints { make in
+            make.left.equalTo(left)
+        }
     }
 
 }

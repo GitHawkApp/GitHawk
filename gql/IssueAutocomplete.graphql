@@ -1,0 +1,14 @@
+query IssueAutocomplete($query: String!, $page_size: Int!) {
+  search(type:ISSUE, query: $query, first: $page_size) {
+    nodes {
+      ... on Issue {
+        number
+        title
+      }
+      ... on PullRequest {
+        number
+        title
+      }
+    }
+  }
+}
