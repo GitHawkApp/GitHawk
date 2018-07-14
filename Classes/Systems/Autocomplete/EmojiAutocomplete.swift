@@ -40,11 +40,13 @@ final class EmojiAutocomplete: AutocompleteType {
         }
 
         let lowerword = word.lowercased()
-        let results: [Result] = GithubEmojis.search.reduce([Result]()) {
-            if $1.key.lowercased().hasPrefix(lowerword) {
-                return $0 + $1.value.map { Result(emoji: $0.emoji, term: $0.name) }
+
+        var results = [Result]()
+        for pair in GithubEmojis.search {
+            guard results.count < 20 else { break }
+            if pair.key.lowercased().hasPrefix(lowerword) {
+                results += pair.value.map { Result(emoji: $0.emoji, term: $0.name) }
             }
-            return $0
         }
 
         self.results = results
