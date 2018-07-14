@@ -183,8 +183,10 @@ final class NotificationModelController {
 
         githubClient.client.send(V3SubscribeThreadRequest(id: model.v3id, ignore: model.watching)) { result in
             switch result {
-            case .success: break
+            case .success:
+                Haptic.triggerSelection()
             case .failure:
+                Haptic.triggerNotification(.error)
                 cache.set(value: notification)
             }
         }
