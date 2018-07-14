@@ -59,7 +59,9 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
         var contexts = [IssueMergeContextModel]()
         for context in commit.status?.contexts ?? [] {
             guard let creator = context.creator,
-                let avatarURL = URL(string: creator.avatarUrl)
+                let avatarURL = URL(string: creator.avatarUrl),
+                let targetUrlString = context.targetUrl,
+                let targetURL = URL(string: targetUrlString)
                 else { continue }
             contexts.append(IssueMergeContextModel(
                 id: context.id,
@@ -67,7 +69,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                 state: context.state,
                 login: creator.login,
                 avatarURL: avatarURL,
-                description: context.description ?? ""
+                description: context.description ?? "",
+                targetURL: targetURL
             ))
         }
 

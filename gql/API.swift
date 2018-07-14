@@ -12887,6 +12887,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       GraphQLField("state", type: .nonNull(.scalar(StatusState.self))),
                       GraphQLField("creator", type: .object(Creator.selections)),
                       GraphQLField("description", type: .scalar(String.self)),
+                      GraphQLField("targetUrl", type: .scalar(String.self)),
                     ]
 
                     public var snapshot: Snapshot
@@ -12895,8 +12896,8 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       self.snapshot = snapshot
                     }
 
-                    public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil) {
-                      self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description])
+                    public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil, targetUrl: String? = nil) {
+                      self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description, "targetUrl": targetUrl])
                     }
 
                     public var __typename: String {
@@ -12954,6 +12955,16 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
                       }
                       set {
                         snapshot.updateValue(newValue, forKey: "description")
+                      }
+                    }
+
+                    /// The URL for this status context.
+                    public var targetUrl: String? {
+                      get {
+                        return snapshot["targetUrl"] as? String
+                      }
+                      set {
+                        snapshot.updateValue(newValue, forKey: "targetUrl")
                       }
                     }
 
@@ -18488,7 +18499,7 @@ public struct RepoEventFields: GraphQLFragment {
 
 public struct CommitContext: GraphQLFragment {
   public static let fragmentString =
-    "fragment commitContext on Commit {\n  __typename\n  id\n  status {\n    __typename\n    contexts {\n      __typename\n      id\n      context\n      state\n      creator {\n        __typename\n        login\n        avatarUrl\n      }\n      description\n    }\n    state\n  }\n}"
+    "fragment commitContext on Commit {\n  __typename\n  id\n  status {\n    __typename\n    contexts {\n      __typename\n      id\n      context\n      state\n      creator {\n        __typename\n        login\n        avatarUrl\n      }\n      description\n      targetUrl\n    }\n    state\n  }\n}"
 
   public static let possibleTypes = ["Commit"]
 
@@ -18594,6 +18605,7 @@ public struct CommitContext: GraphQLFragment {
         GraphQLField("state", type: .nonNull(.scalar(StatusState.self))),
         GraphQLField("creator", type: .object(Creator.selections)),
         GraphQLField("description", type: .scalar(String.self)),
+        GraphQLField("targetUrl", type: .scalar(String.self)),
       ]
 
       public var snapshot: Snapshot
@@ -18602,8 +18614,8 @@ public struct CommitContext: GraphQLFragment {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil) {
-        self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description])
+      public init(id: GraphQLID, context: String, state: StatusState, creator: Creator? = nil, description: String? = nil, targetUrl: String? = nil) {
+        self.init(snapshot: ["__typename": "StatusContext", "id": id, "context": context, "state": state, "creator": creator.flatMap { (value: Creator) -> Snapshot in value.snapshot }, "description": description, "targetUrl": targetUrl])
       }
 
       public var __typename: String {
@@ -18661,6 +18673,16 @@ public struct CommitContext: GraphQLFragment {
         }
         set {
           snapshot.updateValue(newValue, forKey: "description")
+        }
+      }
+
+      /// The URL for this status context.
+      public var targetUrl: String? {
+        get {
+          return snapshot["targetUrl"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "targetUrl")
         }
       }
 
