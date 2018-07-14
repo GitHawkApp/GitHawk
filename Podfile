@@ -33,6 +33,7 @@ def testing_pods
   pod 'MessageViewController', :git => 'https://github.com/GitHawkApp/MessageViewController.git', :branch => 'master'
   pod 'ContextMenu', :git => 'https://github.com/GitHawkApp/ContextMenu.git', :branch => 'master'
   pod 'cmark-gfm-swift', :git => 'https://github.com/GitHawkApp/cmark-gfm-swift.git', :branch => 'master'
+  pod 'Squawk', :git => 'https://github.com/GitHawkApp/Squawk.git', :branch => 'master'
 
   # debugging pods
   pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'TestFlight']

@@ -73,6 +73,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - SnapKit (4.0.0)
+  - Squawk (0.1.0)
   - StringHelpers (0.1.0)
   - StyledTextKit (0.1.1)
   - SwiftLint (0.24.0)
@@ -103,6 +104,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
   - SnapKit (~> 4.0.0)
+  - Squawk (from `https://github.com/GitHawkApp/Squawk.git`, branch `master`)
   - StringHelpers (from `Local Pods/StringHelpers`)
   - StyledTextKit (from `https://github.com/GitHawkApp/StyledTextKit.git`, branch `master`)
   - SwiftLint
@@ -163,6 +165,9 @@ EXTERNAL SOURCES:
   MessageViewController:
     :branch: master
     :git: https://github.com/GitHawkApp/MessageViewController.git
+  Squawk:
+    :branch: master
+    :git: https://github.com/GitHawkApp/Squawk.git
   StringHelpers:
     :path: Local Pods/StringHelpers
   StyledTextKit:
@@ -190,6 +195,9 @@ CHECKOUT OPTIONS:
   MessageViewController:
     :commit: b39c89ea688b79cc8daeb29c214a925c9a1c4396
     :git: https://github.com/GitHawkApp/MessageViewController.git
+  Squawk:
+    :commit: 19bbe1d1eb29fde90db9879c2f4e7fa8e67feb6b
+    :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
     :commit: 081da7a8fdeb44c6984394eae6cc4c021b6b0e40
     :git: https://github.com/GitHawkApp/StyledTextKit.git
@@ -226,6 +234,7 @@ SPEC CHECKSUMS:
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Squawk: c6f5095eb1c16d65af8948db848eaa91e064a925
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledTextKit: f7b74b87dc844d7630a92c68de0017f51ffbd065
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
@@ -233,6 +242,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: 205c8037a613740f86b4134cb10e30477c54e3e9
+PODFILE CHECKSUM: abbecf20cfdc6b5d77e2ea4902ef4861ffd9a762
 
 COCOAPODS: 1.5.2
