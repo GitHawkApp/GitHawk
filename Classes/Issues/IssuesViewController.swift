@@ -98,7 +98,10 @@ final class IssuesViewController:
 
         self.autocompleteController = AutocompleteController(
             messageAutocompleteController: messageAutocompleteController,
-            autocomplete: IssueCommentAutocomplete(autocompletes: [EmojiAutocomplete()])
+            autocomplete: IssueCommentAutocomplete(autocompletes: [
+                EmojiAutocomplete(),
+                IssueAutocomplete(client: client.client, owner: model.owner, repo: model.repo)
+                ])
         )
 
         self.hidesBottomBarWhenPushed = true

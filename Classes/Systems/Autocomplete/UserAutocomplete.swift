@@ -42,6 +42,7 @@ final class UserAutocomplete: AutocompleteType {
         if let cached = cachedResults[word] {
             self.results = cached
             completion(cached.count > 0)
+            return
         }
 
         var results = [AutocompleteUser]()
