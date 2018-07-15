@@ -71,6 +71,8 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
         }
     }
 
+    open func didLayout() { }
+
     // MARK: Private API
 
     // keyboard management
@@ -132,6 +134,8 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
         )
 
         messageAutocompleteController.layout(in: view, bottomY: messageViewFrame.minY)
+
+        didLayout()
     }
 
     internal var fullCacheKey: String? {
