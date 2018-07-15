@@ -28,7 +28,8 @@ public final class StyledTextRenderer {
         inset: UIEdgeInsets = .zero,
         backgroundColor: UIColor? = nil,
         layoutManager: NSLayoutManager = NSLayoutManager(),
-        scale: CGFloat = StyledTextScreenScale
+        scale: CGFloat = StyledTextScreenScale,
+        maximumNumberOfLines: Int = 0
         ) {
         self.string = string
         self.contentSizeCategory = contentSizeCategory
@@ -38,7 +39,7 @@ public final class StyledTextRenderer {
 
         textContainer = NSTextContainer()
         textContainer.exclusionPaths = []
-        textContainer.maximumNumberOfLines = 0
+        textContainer.maximumNumberOfLines = maximumNumberOfLines
         textContainer.lineFragmentPadding = 0
 
         self.layoutManager = layoutManager
@@ -83,7 +84,7 @@ public final class StyledTextRenderer {
     public func size(in width: CGFloat = .greatestFiniteMagnitude) -> CGSize {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
-        return _size(StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor))
+        return _size(StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor, maximumNumberOfLines: textContainer.maximumNumberOfLines))
     }
 
     public func viewSize(in width: CGFloat = .greatestFiniteMagnitude) -> CGSize {
@@ -96,11 +97,24 @@ public final class StyledTextRenderer {
         clearOnWarning: true
     )
 
+    public func cachedRender(for width: CGFloat) -> (image: CGImage?, size: CGSize?) {
+        os_unfair_lock_lock(&lock)
+        defer { os_unfair_lock_unlock(&lock) }
+
+        let key = StyledTextRenderCacheKey(
+            width: width,
+            attributedText: storage,
+            backgroundColor: backgroundColor,
+            maximumNumberOfLines: 0
+        )
+        return (StyledTextRenderer.globalBitmapCache[key], StyledTextRenderer.globalSizeCache[key])
+    }
+
     public func render(for width: CGFloat) -> (image: CGImage?, size: CGSize) {
         os_unfair_lock_lock(&lock)
         defer { os_unfair_lock_unlock(&lock) }
 
-        let key = StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor)
+        let key = StyledTextRenderCacheKey(width: width, attributedText: storage, backgroundColor: backgroundColor, maximumNumberOfLines: textContainer.maximumNumberOfLines)
         let size = _size(key)
         let cache = StyledTextRenderer.globalBitmapCache
         if let cached = cache[key] {

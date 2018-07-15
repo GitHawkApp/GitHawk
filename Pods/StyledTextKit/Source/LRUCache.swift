@@ -21,7 +21,7 @@ public final class LRUCache<Key: Hashable & Equatable, Value: LRUCachable> {
         // mutable b/c you can change the value for an existing key
         var value: Value
         // 2-way linked list
-        var previous: Node? = nil
+        weak var previous: Node? = nil
         var next: Node? = nil
 
         init(key: Key, value: Value) {

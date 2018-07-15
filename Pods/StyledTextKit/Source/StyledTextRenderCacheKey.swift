@@ -13,6 +13,7 @@ internal struct StyledTextRenderCacheKey: Hashable, Equatable {
     let width: CGFloat
     let attributedText: NSAttributedString
     let backgroundColor: UIColor?
+    let maximumNumberOfLines: Int?
 
     // MARK: Hashable
 
@@ -27,6 +28,7 @@ internal struct StyledTextRenderCacheKey: Hashable, Equatable {
         return lhs.width == rhs.width
             && lhs.attributedText == rhs.attributedText
             && lhs.backgroundColor == rhs.backgroundColor
+            && lhs.maximumNumberOfLines == rhs.maximumNumberOfLines
     }
 
 }

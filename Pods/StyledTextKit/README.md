@@ -2,7 +2,7 @@
   <img src="/images/banner.png" />
 </p>
 
-`StyledTextKit` is a declarative building and fast rendering attributed string library. It serves as a replacement to `NSAttributedString` and `UILabel` for background-thread size and bitmap caching.
+`StyledTextKit` is a declarative attributed string library for fast rendering and easy string building. It serves as a simple replacement to `NSAttributedString` and `UILabel` for background-thread sizing and bitmap caching.
 
 ## Features
 
@@ -23,12 +23,12 @@ pod 'StyledTextKit'
 
 ### Building `NSAttributedString`s
 
-`StyledTextKit` lets you build complex `NSAttributedString`s by combining:
+`StyledTextKit` lets you build complex `NSAttributedString`s:
 
-- Add `NSAttributedString`s or `String`s and continue using the previous attributes, saving you from repetitive `.font` and `.foregroundColor` styling
+- Append `NSAttributedString`s or `String`s while re-using the string's current attributes, saving you from repetitive `.font` and `.foregroundColor` styling.
 - Intermix complex font traits like **bold** and _italics_ to get _**bold italics**_.
-- Handle dynamic text size at string render time. Let's you build the string once and re-render it on device text-size changes.
-- Call `save()` and `restore()` to push/pop style settings, letting you build complex test styles without complex code.
+- Handle dynamic text size at string render time. Lets you build the string once and re-render it on device text-size changes.
+- Call `save()` and `restore()` to push/pop style settings, letting you build complex text styles without complex code.
 
 ```swift
 let attributedString = StyledTextBuilder(text: "Foo ")
@@ -51,13 +51,13 @@ The basic steps are:
 
 ### Rendering Text Bitmaps
 
-Create a `StyledTextRenderer` for sizing and rendering text by initialize it with a `StyledTextString` and a `UIContentSizeCategory`.
+Create a `StyledTextRenderer` for sizing and rendering text by initializing it with a `StyledTextString` and a `UIContentSizeCategory`.
 
 ```swift
 let renderer = StyledTextRenderer(
-    string: string,
-    contentSizeCategory: .large
-  )
+  string: string,
+  contentSizeCategory: .large
+)
 ```
 
 Once created, you can easily get the size of the text constrained to a width:
@@ -113,8 +113,8 @@ let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
 DispatchQueue.global().async {
   let builder = StyledTextBuilder(...)
-  let renderer = StyledTextRenderer(text: builder.build(), contentSizeCategory: contentSizeCategory)
-    .warm() // warms the size cache
+  let renderer = StyledTextRenderer(string: builder.build(), contentSizeCategory: contentSizeCategory)
+    .warm(width: width) // warms the size cache
 
   DispatchQueue.main.async {
     self.textView.configure(with: renderer, width: width)
