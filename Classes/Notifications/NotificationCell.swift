@@ -181,7 +181,14 @@ final class NotificationCell: SelectableCell {
         let watchingImageName = model.watching ? "mute" : "unmute"
         watchButton.setImage(UIImage(named: "\(watchingImageName)-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
 
-        contentView.alpha = model.read ? 0.5 : 1
+        //dim all non-actionable subviews ie all subviews besides moreButton and watchButton
+        let dimIfRead: CGFloat = model.read ? 0.5 : 1
+        contentView.subviews.forEach { subview in
+            guard subview !== stackView else { return }
+            subview.alpha = dimIfRead
+        }
+        commentButton.alpha = dimIfRead
+        readButton.alpha = dimIfRead
 
         let watchAccessibilityAction = UIAccessibilityCustomAction(
             name: model.watching ?
