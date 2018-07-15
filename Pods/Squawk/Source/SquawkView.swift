@@ -35,14 +35,14 @@ internal final class SquawkView: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
 
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = configuration.textColor
         label.text = configuration.text
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         contentView.addSubview(label)
 
         if configuration.buttonVisible {
-            button.tintColor = .white
+            button.tintColor = configuration.textColor
             button.addTarget(self, action: #selector(SquawkView.onButton), for: .touchUpInside)
             button.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(button)
@@ -107,7 +107,7 @@ internal final class SquawkView: UIView {
         }
 
         addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-\(configuration.insets.top)-[label]-\(configuration.hintTopMargin)-[hintView(\(configuration.hintSize.height))]-\(configuration.insets.bottom)-|",
+            withVisualFormat: "V:|-\(configuration.insets.top)-[hintView(\(configuration.hintSize.height))]-\(configuration.hintMargin)-[label]-\(configuration.insets.bottom)-|",
             metrics: nil,
             views: subviews
         ))

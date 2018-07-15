@@ -23,7 +23,7 @@ extension Squawk {
             text: text,
             backgroundColor: UIColor.red.withAlphaComponent(0.5),
             insets: UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: Styles.Sizes.gutter, bottom: Styles.Sizes.rowSpacing, right: Styles.Sizes.gutter),
-            hintTopMargin: Styles.Sizes.rowSpacing
+            hintMargin: Styles.Sizes.rowSpacing
         )
     }
 

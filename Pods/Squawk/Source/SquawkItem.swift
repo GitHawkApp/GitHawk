@@ -26,19 +26,31 @@ internal final class SquawkItem: SquawkViewDelegate {
 
         animator = UIDynamicAnimator(referenceView: baseView)
 
-        let initAnchor = anchor(view: view, referenceView: baseView)
+        let initAnchor = anchor(view: view, referenceView: baseView, configuration: configuration)
 
         // position off screen so it snaps in. must happen before setting up spring
         view.center = initAnchor.applying(CGAffineTransform(
             translationX: 0,
-            y: baseView.bounds.height - initAnchor.y + 500
+            y: baseView.bounds.height - initAnchor.y
         ))
 
         springBehavior = UIAttachmentBehavior(item: view, attachedToAnchor: initAnchor)
         springBehavior.length = 0
-        springBehavior.damping = 0.8
-        springBehavior.frequency = 1.5
-        animator.addBehavior(springBehavior)
+        springBehavior.damping = 0.9
+        springBehavior.frequency = 2
+
+        // use UIView animations to avoid annoying oscillation from behavior
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.1,
+            options: [],
+            animations: {
+                self.view.center = initAnchor
+        }) { _ in
+            self.animator.addBehavior(self.springBehavior)
+        }
 
         view.delegate = self
     }
@@ -81,7 +93,7 @@ internal final class SquawkItem: SquawkViewDelegate {
 
         // hack to work around UI bug where behavior will permanently oscillate
         animator.removeBehavior(springBehavior)
-        springBehavior.anchorPoint = anchor(view: view, referenceView: referenceView)
+        springBehavior.anchorPoint = anchor(view: view, referenceView: referenceView, configuration: configuration)
         animator.addBehavior(springBehavior)
     }
 

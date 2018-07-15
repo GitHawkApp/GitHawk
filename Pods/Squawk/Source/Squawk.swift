@@ -26,10 +26,16 @@ public class Squawk {
     public static let shared = Squawk()
 
     public func show(
-        in view: UIView? = UIApplication.shared.keyWindow,
+        in view: UIView? = nil,
         config: Squawk.Configuration
         ) {
-        guard let baseView = view else { return }
+        let viewToUse: UIView?
+        if view == nil, let top = UIApplication.shared.keyWindow?.rootViewController?.topMostChild {
+            viewToUse = top.view
+        } else {
+            viewToUse = view
+        }
+        guard let baseView = viewToUse else { return }
 
         // get rid of any view if currently displaying
         activeItem?.dismiss()
