@@ -32,6 +32,7 @@ final class IssuesViewController:
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
+    private let manageButton = IssueManageButton()
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -167,10 +168,13 @@ final class IssuesViewController:
 
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 32)
         messageView.add(contentView: actions)
-
         
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
+
+        view.addSubview(manageButton)
+        manageButton.addTarget(self, action: #selector(onManageButton(sender:)), for: .touchUpInside)
+        manageButton.sizeToFit()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -191,6 +195,14 @@ final class IssuesViewController:
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
+
+        let manageButtonSize = manageButton.bounds.size
+        manageButton.frame = CGRect(
+            origin: CGPoint(
+                x: view.bounds.width - manageButtonSize.width - Styles.Sizes.gutter,
+                y: messageView.frame.minY - Styles.Sizes.gutter),
+            size: manageButtonSize
+        )
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -344,6 +356,10 @@ final class IssuesViewController:
             ])
         alert.popoverPresentationController?.setSourceView(sender)
         present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
+
+    @objc func onManageButton(sender: UIButton) {
+
     }
 
     // MARK: ListAdapterDataSource
