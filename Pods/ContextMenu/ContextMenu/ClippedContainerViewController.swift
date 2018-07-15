@@ -32,6 +32,7 @@ class ClippedContainerViewController: UIViewController {
         view.layer.cornerRadius = options.containerStyle.cornerRadius
         view.layer.shadowRadius = options.containerStyle.shadowRadius
         view.layer.shadowOpacity = options.containerStyle.shadowOpacity
+        view.layer.shadowOffset = options.containerStyle.shadowOffset
         view.layer.shadowColor = UIColor.black.cgColor
         view.backgroundColor = options.containerStyle.backgroundColor
 

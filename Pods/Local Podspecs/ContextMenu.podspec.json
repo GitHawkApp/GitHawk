@@ -1,6 +1,6 @@
 {
   "name": "ContextMenu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": {
     "type": "MIT"
   },
@@ -11,7 +11,7 @@
   "summary": "Context menu inspired by Things 3.",
   "source": {
     "git": "https://github.com/GitHawkApp/ContextMenu.git",
-    "tag": "0.1.0"
+    "tag": "0.2.0"
   },
   "source_files": "ContextMenu/*.swift",
   "platforms": {
