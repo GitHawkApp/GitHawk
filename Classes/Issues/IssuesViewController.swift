@@ -40,7 +40,6 @@ final class IssuesViewController:
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
-    private let manageKey = "manageKey" as ListDiffable
 
     lazy private var feed: Feed = {
         let f = Feed(viewController: self, delegate: self, managesLayout: false)
@@ -373,10 +372,6 @@ final class IssuesViewController:
         guard let current = self.result else { return [] }
 
         var objects: [ListDiffable] = [current.status]
-
-        if viewerIsCollaborator {
-            objects.append(manageKey)
-        }
 
         // BEGIN collect metadata that lives between title and root comment
         var metadata = [ListDiffable]()
