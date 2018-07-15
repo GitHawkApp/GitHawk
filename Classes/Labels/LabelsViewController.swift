@@ -27,13 +27,19 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
         self.client = client
         self.request = RepositoryLabelsQuery(owner: owner, repo: repo)
         super.init(emptyErrorMessage: NSLocalizedString("No labels found", comment: ""))
-        title = NSLocalizedString("Labels", comment: "")
-        preferredContentSize = CGSize(width: 200, height: 240)
+        preferredContentSize = Styles.Sizes.contextMenuSize
+        title = Constants.Strings.labels
+        feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
         dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
     // MARK: Public API

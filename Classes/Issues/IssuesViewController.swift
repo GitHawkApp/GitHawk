@@ -14,6 +14,8 @@ import SnapKit
 import FlatCache
 import MessageViewController
 import Squawk
+import ContextMenu
+import GitHubAPI
 
 final class IssuesViewController:
     MessageViewController,
@@ -23,7 +25,6 @@ final class IssuesViewController:
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    IssueManagingNavSectionControllerDelegate,
     IssueCommentSectionControllerDelegate {
 
     private let client: GithubClient
@@ -32,7 +33,7 @@ final class IssuesViewController:
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
-    private let manageButton = IssueManageButton()
+    private let manageController: IssueManagingContextController
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -68,6 +69,8 @@ final class IssuesViewController:
                 hidden = true
             }
             self.setMessageView(hidden: hidden, animated: trueUnlessReduceMotionEnabled)
+
+            self.manageController.resultID = resultID
         }
     }
 
@@ -95,6 +98,7 @@ final class IssuesViewController:
         self.model = model
         self.addCommentClient = AddCommentClient(client: client)
         self.needsScrollToBottom = scrollToBottom
+        self.manageController = IssueManagingContextController(model: model, client: client)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -110,6 +114,8 @@ final class IssuesViewController:
         self.addCommentClient.addListener(listener: self)
 
         cacheKey = "issue.\(model.owner).\(model.repo).\(model.number)"
+
+        manageController.viewController = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -172,9 +178,7 @@ final class IssuesViewController:
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
 
-        view.addSubview(manageButton)
-        manageButton.addTarget(self, action: #selector(onManageButton(sender:)), for: .touchUpInside)
-        manageButton.sizeToFit()
+        view.addSubview(manageController.manageButton)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -195,19 +199,21 @@ final class IssuesViewController:
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         feed.viewWillLayoutSubviews(view: view)
-
-        let manageButtonSize = manageButton.bounds.size
-        manageButton.frame = CGRect(
-            origin: CGPoint(
-                x: view.bounds.width - manageButtonSize.width - Styles.Sizes.gutter,
-                y: messageView.frame.minY - Styles.Sizes.gutter),
-            size: manageButtonSize
-        )
     }
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+    }
+
+    override func didLayout() {
+        let manageButtonSize = manageController.manageButton.bounds.size
+        manageController.manageButton.frame = CGRect(
+            origin: CGPoint(
+                x: view.bounds.width - manageButtonSize.width - Styles.Sizes.gutter - view.safeAreaInsets.right,
+                y: messageView.frame.minY - manageButtonSize.height - Styles.Sizes.gutter),
+            size: manageButtonSize
+        )
     }
 
     // MARK: Private API
@@ -281,6 +287,9 @@ final class IssuesViewController:
                     case .read, .none: collab = false
                     }
                     self?.viewerIsCollaborator = collab
+                    if collab {
+                        self?.manageController.permissions = .collaborator
+                    }
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
                 case .error:
@@ -358,10 +367,6 @@ final class IssuesViewController:
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    @objc func onManageButton(sender: UIButton) {
-
-    }
-
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
@@ -413,14 +418,6 @@ final class IssuesViewController:
         // side effect so to jump to the last element when auto scrolling
         lastTimelineElement = objects.last
 
-        if viewerIsCollaborator || current.viewerCanUpdate {
-            objects.append(IssueManagingModel(
-                objectId: current.id,
-                pullRequest: current.pullRequest,
-                role: viewerIsCollaborator ? .collaborator : .author
-            ))
-        }
-        
         if viewerIsCollaborator,
             current.status.status == .open,
             let merge = current.mergeModel {
@@ -431,10 +428,6 @@ final class IssuesViewController:
     }
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if let object = object as? ListDiffable, object === manageKey {
-            return IssueManagingNavSectionController(delegate: self)
-        }
-
         switch object {
         case is IssueTitleModel: return IssueTitleSectionController()
         case is IssueCommentModel:
@@ -464,7 +457,6 @@ final class IssuesViewController:
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
-        case is IssueManagingModel: return IssueManagingSectionController(model: model, client: client)
         case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
         case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
         default: fatalError("Unhandled object: \(object)")
@@ -551,12 +543,6 @@ final class IssuesViewController:
             updateAndScrollIfNeeded()
         case .list: break
         }
-    }
-
-    // MARK: IssueManagingNavSectionControllerDelegate
-
-    func didSelect(managingNavController: IssueManagingNavSectionController) {
-        feed.collectionView.scrollToBottom(animated: true)
     }
 
     // MARK: IssueCommentSectionControllerDelegate

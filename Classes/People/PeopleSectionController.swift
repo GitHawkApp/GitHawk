@@ -31,7 +31,7 @@ final class PeopleSectionController: ListSwiftSectionController<IssueAssigneeVie
                 size: {
                     return CGSize(
                         width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeight
+                        height: Styles.Sizes.tableCellHeightLarge
                     )
             },
                 configure: { [selected] in

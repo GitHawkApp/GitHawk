@@ -31,6 +31,31 @@ struct ContrastContextMenuItem {
 
 final class ContrastContextMenu: UITableViewController {
 
+    private class Cell: UITableViewCell {
+        static let reuseIdentifier = "cell"
+        var border: UIView? = nil
+        override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+            selectedBackgroundView = UIView()
+            selectedBackgroundView?.backgroundColor = Styles.Colors.Gray.medium.color
+            contentView.backgroundColor = nil
+            backgroundColor = nil
+
+            textLabel?.font = Styles.Text.bodyBold.preferredFont
+            textLabel?.textColor = .white
+
+            imageView?.tintColor = Styles.Colors.Blue.medium.color
+
+            border = contentView.addBorder(.top)
+            border?.backgroundColor = Styles.Colors.Gray.medium.color
+        }
+
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
     private let items: [ContrastContextMenuItem]
 
     init(items: [ContrastContextMenuItem]) {
@@ -44,13 +69,12 @@ final class ContrastContextMenu: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Styles.Colors.blueGray.color
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(Cell.self, forCellReuseIdentifier: Cell.reuseIdentifier)
         tableView.rowHeight = Styles.Sizes.tableCellHeight
-        tableView.separatorColor = Styles.Colors.Gray.medium.color
+        tableView.separatorStyle = .none
         tableView.reloadData()
         tableView.layoutIfNeeded()
-        preferredContentSize = tableView.contentSize
+        preferredContentSize = CGSize(width: 180, height: tableView.contentSize.height)
     }
 
     // MARK: UITableViewDataSource
@@ -61,25 +85,15 @@ final class ContrastContextMenu: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.selectedBackgroundView?.backgroundColor = .red
-
-        cell.textLabel?.font = Styles.Text.secondaryBold.preferredFont
-        cell.textLabel?.textColor = .white
+        let cell = tableView.dequeueReusableCell(withIdentifier: Cell.reuseIdentifier, for: indexPath)
         cell.textLabel?.text = item.title
-
         if let iconName = item.iconName {
-            cell.imageView?.tintColor = Styles.Colors.Blue.medium.color
             cell.imageView?.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
         }
 
-        cell.separatorInset = UIEdgeInsets(
-            top: 0,
-            left: item.separator ? 0 : UIScreen.main.bounds.width,
-            bottom: 0,
-            right: 0
-        )
+        if let cell = cell as? Cell {
+            cell.border?.isHidden = !item.separator
+        }
 
         return cell
     }

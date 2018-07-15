@@ -18,7 +18,8 @@ final class MilestoneCell2: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
+        backgroundColor = nil
+        contentView.backgroundColor = nil
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
@@ -31,8 +32,8 @@ final class MilestoneCell2: SelectableCell {
         }
 
         contentView.addSubview(label)
-        label.font = Styles.Text.secondaryBold.preferredFont
-        label.textColor = Styles.Colors.Gray.dark.color
+        label.font = Styles.Text.bodyBold.preferredFont
+        label.textColor = .white
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
             make.right.lessThanOrEqualTo(checkedImageView.snp.left)
@@ -41,14 +42,15 @@ final class MilestoneCell2: SelectableCell {
 
         contentView.addSubview(detailLabel)
         detailLabel.font = Styles.Text.secondary.preferredFont
-        detailLabel.textColor = Styles.Colors.Gray.medium.color
+        detailLabel.textColor = Styles.Colors.Gray.light.color
         detailLabel.snp.makeConstraints { make in
             make.left.equalTo(label)
             make.right.lessThanOrEqualTo(checkedImageView.snp.left)
             make.top.equalTo(label.snp.bottom)
         }
 
-        contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        let border = contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        border.backgroundColor = Styles.Colors.Gray.medium.color
     }
 
     required init?(coder aDecoder: NSCoder) {

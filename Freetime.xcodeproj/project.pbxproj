@@ -206,6 +206,7 @@
 		2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722C1F069E96005E43AC /* SpinnerCell.swift */; };
 		2973E80D20FBD7BF0050233F /* ContrastContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2973E80C20FBD7BF0050233F /* ContrastContextMenu.swift */; };
 		2973E80F20FBDB620050233F /* IssueManageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2973E80E20FBDB620050233F /* IssueManageButton.swift */; };
+		2973E81120FBF73D0050233F /* IssueManagingContextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2973E81020FBF73D0050233F /* IssueManagingContextController.swift */; };
 		297403D11F184F8D00ABA95A /* IssueAssigneesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297403D01F184F8D00ABA95A /* IssueAssigneesModel.swift */; };
 		297403D31F1850DC00ABA95A /* IssueAssigneeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297403D21F1850DC00ABA95A /* IssueAssigneeViewModel.swift */; };
 		297403D51F18515A00ABA95A /* IssueAssigneeSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297403D41F18515A00ABA95A /* IssueAssigneeSummaryCell.swift */; };
@@ -706,6 +707,7 @@
 		2971CED22055C8F600342296 /* Freetime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Freetime.entitlements; sourceTree = "<group>"; };
 		2973E80C20FBD7BF0050233F /* ContrastContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContrastContextMenu.swift; sourceTree = "<group>"; };
 		2973E80E20FBDB620050233F /* IssueManageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManageButton.swift; sourceTree = "<group>"; };
+		2973E81020FBF73D0050233F /* IssueManagingContextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingContextController.swift; sourceTree = "<group>"; };
 		297403D01F184F8D00ABA95A /* IssueAssigneesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueAssigneesModel.swift; sourceTree = "<group>"; };
 		297403D21F1850DC00ABA95A /* IssueAssigneeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueAssigneeViewModel.swift; sourceTree = "<group>"; };
 		297403D41F18515A00ABA95A /* IssueAssigneeSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueAssigneeSummaryCell.swift; sourceTree = "<group>"; };
@@ -1137,6 +1139,7 @@
 				290D2A411F04D3470082E6CC /* IssueStatus.swift */,
 				295C31CE1F0AA67600521CED /* IssueStatus+ButtonState.swift */,
 				292FCAE91EDFCC510026635E /* IssuesViewController.swift */,
+				2973E81020FBF73D0050233F /* IssueManagingContextController.swift */,
 				292FF8AF1F2FDC33009E63F7 /* IssueTextActionsView.swift */,
 				294563EF1EE5036A00DBCD35 /* IssueType.swift */,
 				292FCAEA1EDFCC510026635E /* IssueViewModels.swift */,
@@ -2777,6 +2780,7 @@
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
+				2973E81120FBF73D0050233F /* IssueManagingContextController.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,

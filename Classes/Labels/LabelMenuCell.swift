@@ -17,7 +17,8 @@ final class LabelMenuCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
+        backgroundColor = nil
+        contentView.backgroundColor = nil
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
@@ -30,10 +31,8 @@ final class LabelMenuCell: SelectableCell {
         }
 
         contentView.addSubview(button)
-        button.titleLabel?.font = Styles.Text.secondaryBold.preferredFont
+        button.titleLabel?.font = Styles.Text.bodyBold.preferredFont
         button.layer.cornerRadius = Styles.Sizes.avatarCornerRadius
-        button.layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        button.layer.borderWidth = 1 / UIScreen.main.scale
         button.clipsToBounds = true
         button.isUserInteractionEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(
@@ -48,7 +47,8 @@ final class LabelMenuCell: SelectableCell {
             make.centerY.equalToSuperview()
         }
 
-        contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        let border = contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        border.backgroundColor = Styles.Colors.Gray.medium.color
     }
 
     required init?(coder aDecoder: NSCoder) {

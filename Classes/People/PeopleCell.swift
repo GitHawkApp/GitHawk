@@ -19,7 +19,8 @@ final class PeopleCell: SelectableCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .white
+        backgroundColor = nil
+        contentView.backgroundColor = nil
         
         contentView.addSubview(avatarImageView)
         contentView.addSubview(usernameLabel)
@@ -31,7 +32,8 @@ final class PeopleCell: SelectableCell {
             make.size.equalTo(Styles.Sizes.avatar)
         }
 
-        usernameLabel.font = Styles.Text.secondary.preferredFont
+        usernameLabel.font = Styles.Text.bodyBold.preferredFont
+        usernameLabel.textColor = .white
         usernameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(self.contentView)
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.gutter)
@@ -47,9 +49,10 @@ final class PeopleCell: SelectableCell {
             make.size.equalTo(Styles.Sizes.icon)
         }
 
-        avatarImageView.configureForAvatar()
+        avatarImageView.configureForAvatar(border: false)
 
-        contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        let border = contentView.addBorder(.bottom, left: Styles.Sizes.gutter, right: -Styles.Sizes.gutter)
+        border.backgroundColor = Styles.Colors.Gray.medium.color
     }
 
     required init?(coder aDecoder: NSCoder) {

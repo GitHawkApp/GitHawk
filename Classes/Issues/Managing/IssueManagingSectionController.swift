@@ -74,7 +74,9 @@ ContextMenuDelegate {
     init(model: IssueDetailsModel, client: GithubClient) {
         self.model = model
         self.client = client
+
         super.init()
+
         inset = UIEdgeInsets(top: Styles.Sizes.gutter, left: 0, bottom: Styles.Sizes.gutter, right: 0)
         minimumInteritemSpacing = Styles.Sizes.rowSpacing
         minimumLineSpacing = Styles.Sizes.rowSpacing

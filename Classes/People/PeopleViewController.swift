@@ -54,12 +54,18 @@ PeopleSectionControllerDelegate {
         case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
         }
 
-        preferredContentSize = CGSize(width: 280, height: 240)
+        feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        preferredContentSize = Styles.Sizes.contextMenuSize
         updateSelectionCount()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
     // MARK: Public API
