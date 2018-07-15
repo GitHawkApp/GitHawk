@@ -53,8 +53,8 @@ final class NotificationCell: SelectableCell {
         contentView.addSubview(textView)
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(commentButton)
-        stackView.addArrangedSubview(watchButton)
         stackView.addArrangedSubview(readButton)
+        stackView.addArrangedSubview(watchButton)
         stackView.addArrangedSubview(moreButton)
 
         let grey = Styles.Colors.Gray.light.color
