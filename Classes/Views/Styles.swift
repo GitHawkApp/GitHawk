@@ -52,6 +52,7 @@ enum Styles {
             right: Styles.Sizes.commentGutter
         )
         static let maxImageHeight: CGFloat = 300
+        static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)
 
         enum HTML {
             static let boldWeight = 600
@@ -87,6 +88,7 @@ enum Styles {
         static let background = Styles.Colors.Gray.lighter.color
         static let purple = "6f42c1"
         static let blueGray = "8697af"
+        static let menuBackgroundColor = "292D35"
 
         enum Red {
             static let medium = "cb2431"

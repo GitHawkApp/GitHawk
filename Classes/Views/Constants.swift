@@ -49,5 +49,9 @@ enum Constants {
         static let bookmark = NSLocalizedString("Bookmark", comment: "")
         static let removeBookmark = NSLocalizedString("Remove Bookmark", comment: "")
         static let bookmarks = NSLocalizedString("Bookmarks", comment: "")
+        static let labels = NSLocalizedString("Labels", comment: "")
+        static let milestone = NSLocalizedString("Milestone", comment: "")
+        static let assignees = NSLocalizedString("Assignees", comment: "")
+        static let reviewers = NSLocalizedString("Reviewers", comment: "")
     }
 }

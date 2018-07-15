@@ -40,13 +40,19 @@ MilestoneSectionControllerDelegate {
         self.repo = repo
         self.selected = selected
         super.init(emptyErrorMessage: NSLocalizedString("No milestones found.", comment: ""))
-        title = NSLocalizedString("Milestones", comment: "")
-        preferredContentSize = CGSize(width: 200, height: 240)
+        title = Constants.Strings.milestone
+        preferredContentSize = Styles.Sizes.contextMenuSize
+        feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
         dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 
     // MARK: Overrides

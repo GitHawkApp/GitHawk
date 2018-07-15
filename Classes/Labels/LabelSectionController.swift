@@ -25,7 +25,7 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
                 size: {
                     return CGSize(
                         width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeight
+                        height: Styles.Sizes.tableCellHeightLarge
                     )
             },
                 configure: { [selected] in

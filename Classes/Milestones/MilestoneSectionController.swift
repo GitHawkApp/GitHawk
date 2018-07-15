@@ -24,7 +24,7 @@ final class MilestoneSectionController: ListSwiftSectionController<MilestoneView
                 size: {
                     return CGSize(
                         width: $0.collection.containerSize.width,
-                        height: Styles.Sizes.tableCellHeight
+                        height: Styles.Sizes.tableCellHeightLarge
                     )
             },
                 configure: {
@@ -34,6 +34,7 @@ final class MilestoneSectionController: ListSwiftSectionController<MilestoneView
                 },
                 didSelect: { [weak self] context in
                     guard let strongSelf = self else { return }
+                    context.deselect(animated: true)
                     strongSelf.delegate?.didSelect(value: context.value, controller: strongSelf)
             })
         ]

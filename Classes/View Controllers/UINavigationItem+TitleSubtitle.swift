@@ -69,4 +69,20 @@ extension UINavigationItem {
         }
     }
 
+    func configure(title: NSAttributedString, accessibilityLabel: String? = nil) {
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.attributedText = title
+        label.lineBreakMode = .byTruncatingHead
+        label.adjustsFontSizeToFitWidth = true
+        label.sizeToFit()
+
+        titleView = label
+        if let accessibilityLabel = accessibilityLabel { // prevent from setting to nil if we don't provide anything, use default instead
+            titleView?.accessibilityLabel = accessibilityLabel
+        }
+    }
+
 }
