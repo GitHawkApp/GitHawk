@@ -8,13 +8,20 @@
 
 import UIKit
 
-internal func anchor(view: UIView, referenceView: UIView) -> CGPoint {
-    let safeBottom: CGFloat = referenceView.safeAreaInsets.bottom
+private func snap(value: CGFloat, scale: CGFloat) -> CGFloat {
+    return (value * scale).rounded() / scale
+}
 
+internal func anchor(
+    view: UIView,
+    referenceView: UIView,
+    configuration: Squawk.Configuration
+    ) -> CGPoint {
+    let safeBottom: CGFloat = referenceView.safeAreaInsets.bottom
     let bounds = referenceView.bounds
-    let tabBarHeight: CGFloat = 49
+    let scale = UIScreen.main.scale
     return CGPoint(
-        x: bounds.width / 2,
-        y: bounds.height - tabBarHeight - safeBottom - view.bounds.height / 2 - 20
+        x: snap(value: bounds.width / 2, scale: scale),
+        y: snap(value: bounds.height - safeBottom - configuration.bottomPadding - view.bounds.height / 2, scale: scale)
     )
 }
