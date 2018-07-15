@@ -199,7 +199,7 @@ CHECKOUT OPTIONS:
     :commit: e77b43dfde569583dc31af88e7510c9c576aa0ac
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
-    :commit: 081da7a8fdeb44c6984394eae6cc4c021b6b0e40
+    :commit: 19a3b17545ca95ed863d323f448a921289cb12c0
     :git: https://github.com/GitHawkApp/StyledTextKit.git
 
 SPEC CHECKSUMS:
@@ -236,7 +236,7 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
-  StyledTextKit: f7b74b87dc844d7630a92c68de0017f51ffbd065
+  StyledTextKit: ea9a28a86955c16ea27f1a1a9278b004966f2bf6
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c

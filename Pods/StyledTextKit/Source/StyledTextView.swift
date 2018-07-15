@@ -17,12 +17,21 @@ open class StyledTextView: UIView {
 
     open weak var delegate: StyledTextViewDelegate?
     open var gesturableAttributes = Set<NSAttributedStringKey>()
+    open var drawsAsync = false
 
     private var renderer: StyledTextRenderer?
     private var tapGesture: UITapGestureRecognizer?
     private var longPressGesture: UILongPressGestureRecognizer?
     private var highlightLayer = CAShapeLayer()
 
+    open override var intrinsicContentSize: CGSize {
+        if let renderer = renderer {
+            return renderer.viewSize(in: bounds.width)
+        } else {
+            return bounds.size
+        }
+    }
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -59,7 +68,7 @@ open class StyledTextView: UIView {
         set { highlightLayer.fillColor = newValue?.cgColor }
     }
 
-    // MARK: Overries
+    // MARK: Overrides
 
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -144,13 +153,37 @@ open class StyledTextView: UIView {
 
         let range = NSRange(location: min, length: max - min)
 
+        var firstRect: CGRect = CGRect.null
+        var bodyRect: CGRect = CGRect.null
+        var lastRect: CGRect = CGRect.null
+
         let path = UIBezierPath()
+
         renderer.layoutManager.enumerateEnclosingRects(
             forGlyphRange: range,
             withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
             in: renderer.textContainer
         ) { (rect, stop) in
-            path.append(UIBezierPath(roundedRect: rect.insetBy(dx: -2, dy: -2), cornerRadius: 3))
+            if firstRect.isNull {
+                firstRect = rect
+            } else if lastRect.isNull {
+                lastRect = rect
+            } else {
+                // We have a lastRect that was previously filled, now it needs to be dumped into the body
+                bodyRect = lastRect.intersection(bodyRect)
+                // and save the current rect as the new "lastRect"
+                lastRect = rect
+            }
+        }
+
+        if !firstRect.isNull {
+            path.append(UIBezierPath(roundedRect: firstRect.insetBy(dx: -2, dy: -2), cornerRadius: 3))
+        }
+        if !bodyRect.isNull {
+            path.append(UIBezierPath(roundedRect: bodyRect.insetBy(dx: -2, dy: -2), cornerRadius: 3))
+        }
+        if !lastRect.isNull {
+            path.append(UIBezierPath(roundedRect: lastRect.insetBy(dx: -2, dy: -2), cornerRadius: 3))
         }
 
         highlightLayer.frame = bounds
@@ -160,6 +193,19 @@ open class StyledTextView: UIView {
     private func clearHighlight() {
         highlightLayer.path = nil
     }
+
+    private func setRenderResults(renderer: StyledTextRenderer, result: (CGImage?, CGSize)) {
+        layer.contents = result.0
+        frame = CGRect(origin: CGPoint(x: renderer.inset.left, y: renderer.inset.top), size: result.1)
+        invalidateIntrinsicContentSize()
+    }
+
+    static var renderQueue = DispatchQueue(
+      label: "com.whoisryannystrom.StyledText.renderQueue",
+      qos: .default, attributes: DispatchQueue.Attributes(rawValue: 0),
+      autoreleaseFrequency: .workItem, 
+      target: nil
+    )
 
     // MARK: Public API
 
@@ -171,10 +217,30 @@ open class StyledTextView: UIView {
     }
 
     open func reposition(for width: CGFloat) {
-        guard let renderer = self.renderer else { return }
-        let result = renderer.render(for: width)
-        layer.contents = result.image
-        frame = CGRect(origin: CGPoint(x: renderer.inset.left, y: renderer.inset.top), size: result.size)
-    }
+        guard let capturedRenderer = self.renderer else { return }
+        // First, we check if we can immediately apply a previously cached render result.
+        let cachedResult = capturedRenderer.cachedRender(for: width)
+        if let cachedImage = cachedResult.image, let cachedSize = cachedResult.size {
+            setRenderResults(renderer: capturedRenderer, result: (cachedImage, cachedSize))
+            return
+        }
 
+        // We have to do a full render, so if we are drawing async it's time to dispatch:
+        if drawsAsync {
+            StyledTextView.renderQueue.async {
+                // Compute the render result (sizing and rendering to an image) on a bg thread
+                let result = capturedRenderer.render(for: width)
+                DispatchQueue.main.async {
+                    // If the renderer changed, then our computed result is now invalid, so we have to throw it out.
+                    if capturedRenderer !== self.renderer { return }
+                    // If the renderer hasn't changed, we're OK to actually apply the result of our computation.
+                    self.setRenderResults(renderer: capturedRenderer, result: result)
+                }
+            }
+        } else {
+            // We're in fully-synchronous mode. Immediately compute the result and set it.
+            let result = capturedRenderer.render(for: width)
+            setRenderResults(renderer: capturedRenderer, result: result)
+        }
+    }
 }
