@@ -24,14 +24,6 @@ open class StyledTextView: UIView {
     private var longPressGesture: UILongPressGestureRecognizer?
     private var highlightLayer = CAShapeLayer()
 
-    open override var intrinsicContentSize: CGSize {
-        if let renderer = renderer {
-            return renderer.viewSize(in: bounds.width)
-        } else {
-            return bounds.size
-        }
-    }
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -197,7 +189,6 @@ open class StyledTextView: UIView {
     private func setRenderResults(renderer: StyledTextRenderer, result: (CGImage?, CGSize)) {
         layer.contents = result.0
         frame = CGRect(origin: CGPoint(x: renderer.inset.left, y: renderer.inset.top), size: result.1)
-        invalidateIntrinsicContentSize()
     }
 
     static var renderQueue = DispatchQueue(
