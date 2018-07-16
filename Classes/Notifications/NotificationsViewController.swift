@@ -113,8 +113,8 @@ BaseListViewController2EmptyDataSource {
         // don't update tab bar and badges when not showing only new notifications
         // prevents archives updating badge and tab #s
         switch inboxType {
-        case .all, .repo: return
-        case .unread: break
+        case .repo: return
+        case .all, .unread: break
         }
 
         var unread = 0
