@@ -189,6 +189,7 @@ final class NotificationCell: SelectableCell {
         }
         commentButton.alpha = dimIfRead
         readButton.alpha = dimIfRead
+        isSelected = false 
 
         let watchAccessibilityAction = UIAccessibilityCustomAction(
             name: model.watching ?
