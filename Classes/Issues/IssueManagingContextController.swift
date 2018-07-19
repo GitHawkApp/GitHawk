@@ -182,7 +182,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
                     yPadding: 4,
                     backgroundColor: Styles.Colors.menuBackgroundColor.color
                 ),
-                menuStyle: .minimal
+                menuStyle: .minimal,
+                hapticsStyle: .medium
             ),
             sourceView: sender
         )
