@@ -20,7 +20,7 @@ If you want to build GitHawk locally, run `npm install`.
 To get started, you will need to install node (`brew install node`), then run these instructions:
 
 ```sh
-git clone https://github.com/rnystrom/GitHawk.git
+git clone https://github.com/GitHawkApp/GitHawk.git
 cd GitHawk
 bundle
 bundle exec pod install
