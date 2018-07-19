@@ -11,6 +11,7 @@
 		15245487205DC016005810A6 /* IssueTargetBranchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245484205DC016005810A6 /* IssueTargetBranchModel.swift */; };
 		15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245485205DC016005810A6 /* IssueBranchesSectionController.swift */; };
 		15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245486205DC016005810A6 /* IssueTargetBranchCell.swift */; };
+		290056F3210028B20046EAE5 /* UIViewController+MenuDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */; };
 		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
 		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
 		2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */; };
@@ -510,6 +511,7 @@
 		15245484205DC016005810A6 /* IssueTargetBranchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchModel.swift; path = Classes/Issues/Branches/IssueTargetBranchModel.swift; sourceTree = SOURCE_ROOT; };
 		15245485205DC016005810A6 /* IssueBranchesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueBranchesSectionController.swift; path = Classes/Issues/Branches/IssueBranchesSectionController.swift; sourceTree = SOURCE_ROOT; };
 		15245486205DC016005810A6 /* IssueTargetBranchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchCell.swift; path = Classes/Issues/Branches/IssueTargetBranchCell.swift; sourceTree = SOURCE_ROOT; };
+		290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+MenuDone.swift"; sourceTree = "<group>"; };
 		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
 		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
 		2905AFAE1F7357FA0015AE32 /* RepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
@@ -1641,6 +1643,7 @@
 				29136BE2200AAA5A007317BE /* UIViewController+FilePathTitle.swift */,
 				292CD3D71F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift */,
 				297AE86A1EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift */,
+				290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */,
 				29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */,
 				292CD3D11F0DBEC000D3D57B /* UIViewController+Safari.swift */,
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
@@ -2840,6 +2843,7 @@
 				295B51481FC26F7F00C3993B /* UIImageView+Avatar.swift in Sources */,
 				297B062A1FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift in Sources */,
 				DCA5ED1D1FAEF9EE0072F074 /* BookmarkCell.swift in Sources */,
+				290056F3210028B20046EAE5 /* UIViewController+MenuDone.swift in Sources */,
 				29DA1E7F1F5DF2960050C64B /* LoadMoreCell.swift in Sources */,
 				29DA1E801F5DF2960050C64B /* LoadMoreSectionController.swift in Sources */,
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
