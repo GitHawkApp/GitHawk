@@ -183,9 +183,8 @@ final class NotificationCell: SelectableCell {
 
         //dim all non-actionable subviews ie all subviews besides moreButton and watchButton
         let dimIfRead: CGFloat = model.read ? 0.5 : 1
-        contentView.subviews.forEach { subview in
-            guard subview !== stackView else { return }
-            subview.alpha = dimIfRead
+        [iconImageView, detailsLabel, dateLabel, textView].forEach { view in
+            view.alpha = dimIfRead
         }
         commentButton.alpha = dimIfRead
         readButton.alpha = dimIfRead
