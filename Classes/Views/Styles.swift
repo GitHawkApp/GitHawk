@@ -48,7 +48,7 @@ enum Styles {
         static let threadInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing / 2,
             left: Styles.Sizes.commentGutter,
-            bottom: Styles.Sizes.rowSpacing,
+            bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
             right: Styles.Sizes.commentGutter
         )
         static let maxImageHeight: CGFloat = 300
