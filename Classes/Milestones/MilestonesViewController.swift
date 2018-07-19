@@ -53,6 +53,7 @@ MilestoneSectionControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        addMenuDoneButton()
     }
 
     // MARK: Overrides
