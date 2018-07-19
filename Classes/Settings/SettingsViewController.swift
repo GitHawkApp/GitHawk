@@ -24,7 +24,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var githubStatusCell: StyledTableCell!
-    @IBOutlet weak var reivewOnAppStoreCell: StyledTableCell!
+    @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
@@ -102,8 +102,8 @@ NewIssueTableViewControllerDelegate {
             onAccounts()
         } else if cell === githubStatusCell {
             onGitHubStatus()
-        }else if cell === reivewOnAppStoreCell {
-            onReivewOnAppStore()
+        } else if cell === reviewOnAppStoreCell {
+            onReviewOnAppStore()
         } else if cell === reportBugCell {
             onReportBug()
         } else if cell === viewSourceCell {
@@ -138,11 +138,11 @@ NewIssueTableViewControllerDelegate {
         presentSafari(url: url)
     }
   
-    func onReivewOnAppStore() {
+    func onReviewOnAppStore() {
       guard let url = URL(string: "itms-apps://itunes.apple.com/us/app/githawk-for-github/id1252320249")
         else { fatalError("Should always be valid app store URL") }
       if UIApplication.shared.canOpenURL(url) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url)
       }
     }
 
