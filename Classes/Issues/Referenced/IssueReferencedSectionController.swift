@@ -20,7 +20,7 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.containerSize(for: self).width,
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width,
             let object = self.object
             else { fatalError("Missing context") }
         return CGSize(

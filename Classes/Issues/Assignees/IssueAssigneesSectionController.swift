@@ -60,7 +60,7 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize(for: self).width
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width
             else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,

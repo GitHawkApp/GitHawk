@@ -216,7 +216,7 @@ final class IssueCommentSectionController:
     }
 
     func edit(markdown: String) {
-        guard let width = collectionContext?.containerSize(for: self).width else { return }
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width else { return }
         let bodyModels = MarkdownModels(
             markdown,
             owner: model.owner,
@@ -333,7 +333,7 @@ final class IssueCommentSectionController:
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Collection context must be set") }
 
-        let width = (collectionContext?.containerSize(for: self).width ?? 0)
+        let width = (collectionContext?.adjustedContainerSize(for: self).width ?? 0)
 
         let height: CGFloat
         if collapsed && (viewModel as AnyObject) === object?.collapse?.model {

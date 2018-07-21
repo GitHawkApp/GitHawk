@@ -72,7 +72,7 @@ MarkdownStyledTextViewDelegate {
         ) -> CGSize {
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
-        let width = (collectionContext?.containerSize(for: self).width ?? 0)
+        let width = (collectionContext?.adjustedContainerSize(for: self).width ?? 0)
 
         // use default if IssueReviewDetailsModel
         let height: CGFloat

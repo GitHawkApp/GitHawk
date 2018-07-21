@@ -36,7 +36,7 @@ final class IssueDiffHunkSectionController: ListBindingSectionController<IssueDi
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        let width = (collectionContext?.containerSize(for: self).width ?? 0)
+        let width = (collectionContext?.adjustedContainerSize(for: self).width ?? 0)
         let height: CGFloat
         if let viewModel = viewModel as? StyledTextRenderer {
             height = viewModel.viewSize(in: 0).height
