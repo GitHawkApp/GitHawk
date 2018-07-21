@@ -16,10 +16,11 @@ final class IssueReferencedSectionController: ListGenericSectionController<Issue
     init(client: GithubClient) {
         self.client = client
         super.init()
+        inset = Styles.Sizes.issueInset(vertical: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width,
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width,
             let object = self.object
             else { fatalError("Missing context") }
         return CGSize(

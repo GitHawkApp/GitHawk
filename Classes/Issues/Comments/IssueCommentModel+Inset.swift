@@ -17,14 +17,14 @@ extension IssueCommentModel {
         case .single:
             // title and other header objects will have bottom insetting
             if isRoot {
-                return UIEdgeInsets(top: 12, left: 0, bottom: rowSpacing, right: 0)
+                return Styles.Sizes.issueInset(top: 12, bottom: rowSpacing, sides: 0)
             } else {
-                return UIEdgeInsets(top: rowSpacing, left: 0, bottom: rowSpacing, right: 0)
+                return Styles.Sizes.issueInset(vertical: rowSpacing)
             }
         case .neck:
-            return .zero
+            return Styles.Sizes.issueInset(vertical: 0)
         case .tail:
-            return UIEdgeInsets(top: 0, left: 0, bottom: rowSpacing, right: 0)
+            return Styles.Sizes.issueInset(top: 0, bottom: rowSpacing)
         }
     }
 

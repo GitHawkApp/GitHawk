@@ -11,8 +11,13 @@ import IGListKit
 
 final class IssueReferencedCommitSectionController: ListGenericSectionController<IssueReferencedCommitModel> {
 
+    override init() {
+        super.init()
+        inset = Styles.Sizes.issueInset(vertical: 0)
+    }
+
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width,
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width,
             let object = self.object
             else { fatalError("Missing context") }
         return CGSize(

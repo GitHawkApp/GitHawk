@@ -23,6 +23,9 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     }
 
     weak var doubleTapDelegate: IssueCommentDoubleTapDelegate?
+    var isRoot: Bool = false {
+        didSet { setNeedsLayout() }
+    }
     var border: BorderType = .neck {
         didSet { setNeedsLayout() }
     }
@@ -84,55 +87,74 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
 
-        let bounds = contentView.frame
-        let inset = borderLayer.lineWidth / 2
-        let pixelSnapBounds = bounds.insetBy(dx: inset, dy: inset)
-        let cornerRadius = Styles.Sizes.cardCornerRadius
-
+        let snapInset = borderLayer.lineWidth / 2
         let borderPath = UIBezierPath()
         let fillPath: UIBezierPath
 
-        switch border {
-        case .head:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.maxY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY + cornerRadius))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: pixelSnapBounds.minY),
-                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.minY))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY + cornerRadius),
-                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.maxY))
-
-            fillPath = borderPath.copy() as! UIBezierPath
-            fillPath.close()
-        case .neck:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.maxY))
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.maxY))
+        if isRoot {
+            let snappedBounds = bounds.insetBy(dx: snapInset, dy: snapInset)
 
             fillPath = UIBezierPath(rect: bounds)
-        case .tail:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY - cornerRadius))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: pixelSnapBounds.maxY),
-                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.maxY))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY - cornerRadius),
-                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.minY))
 
-            fillPath = borderPath.copy() as! UIBezierPath
-            fillPath.close()
+            switch border {
+            case .head:
+                borderPath.move(to: CGPoint(x: snappedBounds.minX, y: snappedBounds.minY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX, y: snappedBounds.minY))
+            case .neck:
+                // no border
+                break
+            case .tail:
+                borderPath.move(to: CGPoint(x: snappedBounds.minX, y: snappedBounds.maxY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX, y: snappedBounds.maxY))
+            }
+        } else {
+            let bounds = contentView.frame
+            let snappedBounds = bounds.insetBy(dx: snapInset, dy: snapInset)
+            let cornerRadius = Styles.Sizes.cardCornerRadius
+
+            switch border {
+            case .head:
+                borderPath.move(to: CGPoint(x: snappedBounds.minX, y: bounds.maxY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.minX, y: snappedBounds.minY + cornerRadius))
+                borderPath.addQuadCurve(
+                    to: CGPoint(x: snappedBounds.minX + cornerRadius, y: snappedBounds.minY),
+                    controlPoint: CGPoint(x: snappedBounds.minX, y: snappedBounds.minY)
+                )
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX - cornerRadius, y: snappedBounds.minY))
+                borderPath.addQuadCurve(
+                    to: CGPoint(x: snappedBounds.maxX, y: snappedBounds.minY + cornerRadius),
+                    controlPoint: CGPoint(x: snappedBounds.maxX, y: snappedBounds.minY)
+                )
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX, y: bounds.maxY))
+
+                fillPath = borderPath.copy() as! UIBezierPath
+                fillPath.close()
+            case .neck:
+                borderPath.move(to: CGPoint(x: snappedBounds.minX, y: bounds.minY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.minX, y: bounds.maxY))
+                borderPath.move(to: CGPoint(x: snappedBounds.maxX, y: bounds.minY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX, y: bounds.maxY))
+
+                fillPath = UIBezierPath(rect: bounds)
+            case .tail:
+                borderPath.move(to: CGPoint(x: snappedBounds.minX, y: bounds.minY))
+                borderPath.addLine(to: CGPoint(x: snappedBounds.minX, y: snappedBounds.maxY - cornerRadius))
+                borderPath.addQuadCurve(
+                    to: CGPoint(x: snappedBounds.minX + cornerRadius, y: snappedBounds.maxY),
+                    controlPoint: CGPoint(x: snappedBounds.minX, y: snappedBounds.maxY)
+                )
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX - cornerRadius, y: snappedBounds.maxY))
+                borderPath.addQuadCurve(
+                    to: CGPoint(x: snappedBounds.maxX, y: snappedBounds.maxY - cornerRadius),
+                    controlPoint: CGPoint(x: snappedBounds.maxX, y: snappedBounds.maxY)
+                )
+                borderPath.addLine(to: CGPoint(x: snappedBounds.maxX, y: bounds.minY))
+
+                fillPath = borderPath.copy() as! UIBezierPath
+                fillPath.close()
+            }
         }
+
         borderLayer.path = borderPath.cgPath
         backgroundLayer.path = fillPath.cgPath
 

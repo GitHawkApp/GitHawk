@@ -20,10 +20,13 @@ final class IssueNeckLoadSectionController: ListSectionController {
 
     init(delegate: IssueNeckLoadSectionControllerDelegate) {
         self.delegate = delegate
+        super.init()
+        inset = Styles.Sizes.issueInset(vertical: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width
+            else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.tableCellHeight)
     }
 

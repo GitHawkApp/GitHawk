@@ -16,11 +16,12 @@ final class IssueTargetBranchSectionController: ListSectionController {
     override func didUpdate(to object: Any) {
         guard let object = object as? IssueTargetBranchModel else { return }
         self.object = object
-        inset = UIEdgeInsets.zero
+        inset = Styles.Sizes.issueInset(vertical: 0)
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width
+            else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: self.object?.targetBranchText.viewSize(in: width).height ?? 0)
     }
     

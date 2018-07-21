@@ -225,7 +225,7 @@ ContextMenuDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let containerWidth = collectionContext?.insetContainerSize.width
+        guard let containerWidth = collectionContext?.adjustedContainerSize(for: self).width
             else { fatalError("Collection context must be set") }
 
         let height = IssueManagingActionCell.height

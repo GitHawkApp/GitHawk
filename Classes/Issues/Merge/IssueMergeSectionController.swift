@@ -26,7 +26,7 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-        inset = UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: 0, bottom: 0, right: 0)
+        inset = Styles.Sizes.issueInset(top: Styles.Sizes.rowSpacing, bottom: 0)
     }
 
     // MARK: Private API
@@ -113,7 +113,7 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width
+        guard let width = collectionContext?.adjustedContainerSize(for: self).width
             else { fatalError() }
         let height: CGFloat
         switch viewModel {

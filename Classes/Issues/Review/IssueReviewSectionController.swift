@@ -36,8 +36,7 @@ MarkdownStyledTextViewDelegate {
         self.client = client
         self.autocomplete = autocomplete
         super.init()
-        let rowSpacing = Styles.Sizes.rowSpacing
-        self.inset = UIEdgeInsets(top: rowSpacing, left: 0, bottom: rowSpacing, right: 0)
+        self.inset = Styles.Sizes.issueInset()
         self.dataSource = self
     }
 
@@ -73,7 +72,7 @@ MarkdownStyledTextViewDelegate {
         ) -> CGSize {
         guard let viewModel = viewModel as? ListDiffable
             else { fatalError("Missing context") }
-        let width = (collectionContext?.insetContainerSize.width ?? 0) - inset.left - inset.right
+        let width = (collectionContext?.adjustedContainerSize(for: self).width ?? 0)
 
         // use default if IssueReviewDetailsModel
         let height: CGFloat
