@@ -16,10 +16,12 @@ final class IssueCommitSectionController: ListGenericSectionController<IssueComm
     init(issueModel: IssueDetailsModel) {
         self.issueModel = issueModel
         super.init()
+        inset = Styles.Sizes.issueInset(vertical: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
+        guard let width = collectionContext?.containerSize(for: self).width
+            else { fatalError("Collection context must be set") }
         return CGSize(width: width, height: Styles.Sizes.labelEventHeight)
     }
 

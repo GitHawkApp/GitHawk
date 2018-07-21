@@ -47,12 +47,26 @@ enum Styles {
         static let cardCornerRadius: CGFloat = 6
         static let threadInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing / 2,
-            left: Styles.Sizes.commentGutter,
+            left: 0,
             bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
-            right: Styles.Sizes.commentGutter
+            right: 0
         )
         static let maxImageHeight: CGFloat = 300
         static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)
+
+        static func issueInset(
+            vertical: CGFloat,
+            sides: CGFloat = commentGutter
+            ) -> UIEdgeInsets {
+            return UIEdgeInsets(top: vertical, left: sides, bottom: vertical, right: sides)
+        }
+        static func issueInset(
+            top: CGFloat = rowSpacing,
+            bottom: CGFloat = rowSpacing,
+            sides: CGFloat = commentGutter
+            ) -> UIEdgeInsets {
+            return UIEdgeInsets(top: top, left: sides, bottom: bottom, right: sides)
+        }
 
         enum HTML {
             static let boldWeight = 600

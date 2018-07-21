@@ -16,10 +16,12 @@ final class IssueMilestoneSectionController: ListGenericSectionController<Milest
     init(issueModel: IssueDetailsModel) {
         self.issueModel = issueModel
         super.init()
+        inset = Styles.Sizes.issueInset(vertical: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
-        guard let width = collectionContext?.insetContainerSize.width else { fatalError("Missing context") }
+        guard let width = collectionContext?.containerSize(for: self).width
+            else { fatalError("Missing context") }
         return CGSize(
             width: width,
             height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
