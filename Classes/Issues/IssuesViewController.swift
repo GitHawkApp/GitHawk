@@ -546,7 +546,7 @@ final class IssuesViewController:
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login)"
+        messageView.text = ">\(quote)\n\n@\(commentModel.details.login) "
 
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
     }
