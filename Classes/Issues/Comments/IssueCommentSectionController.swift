@@ -388,6 +388,7 @@ final class IssueCommentSectionController:
 
         // extra config outside of bind API. applies to multiple cell types.
         if let cell = cell as? IssueCommentBaseCell {
+            cell.isRoot = object?.isRoot == true
             cell.collapsed = collapsed && (viewModel as AnyObject) === object?.collapse?.model
         }
 
