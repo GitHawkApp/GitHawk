@@ -24,10 +24,16 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let editedLabel = ShowMoreDetailsLabel()
+    private let viewerBackgroundView = UIView()
     private var login = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentView.addSubview(viewerBackgroundView)
+        viewerBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
+        contentView.clipsToBounds = false
+        clipsToBounds = false
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
@@ -78,6 +84,11 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        viewerBackgroundView.frame = contentView.bounds.insetBy(dx: -6, dy: 0)
+    }
+
     // MARK: Private API
 
     @objc func onTapAvatar() {
@@ -93,9 +104,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
 
-        backgroundColor = viewModel.didAuthor
-            ? Styles.Colors.Blue.light.color
-            : .white
+        viewerBackgroundView.isHidden = !viewModel.didAuthor
 
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date, format: .short)
