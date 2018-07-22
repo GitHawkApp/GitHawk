@@ -13,14 +13,15 @@ extension StyledTextBuilder {
     static func markdownBase(isRoot: Bool) -> StyledTextBuilder {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacingBefore = 12
+        paragraphStyle.lineSpacing = 2
         let attributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.dark.color,
             .paragraphStyle: paragraphStyle,
-            .backgroundColor: UIColor.white
+            .backgroundColor: UIColor.white,
         ]
         let style = isRoot
             ? Styles.Text.rootBody
-            : Styles.Text.body
+            : Styles.Text.commentBody
         return StyledTextBuilder(styledText: StyledText(
             style: style.with(attributes: attributes)
         ))
