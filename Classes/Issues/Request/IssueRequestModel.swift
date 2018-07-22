@@ -74,8 +74,7 @@ final class IssueRequestModel: ListDiffable {
                 left: Styles.Sizes.eventGutter,
                 bottom: Styles.Sizes.inlineSpacing,
                 right: Styles.Sizes.eventGutter
-            ),
-            backgroundColor: Styles.Colors.background
+            )
         ).warm(width: width)
     }
 

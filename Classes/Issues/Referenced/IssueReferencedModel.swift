@@ -76,8 +76,7 @@ final class IssueReferencedModel: ListDiffable {
         self.string = StyledTextRenderer(
             string: builder.build(),
             contentSizeCategory: contentSizeCategory,
-            inset: IssueReferencedCell.inset,
-            backgroundColor: Styles.Colors.background
+            inset: IssueReferencedCell.inset
         ).warm(width: width)
     }
 
