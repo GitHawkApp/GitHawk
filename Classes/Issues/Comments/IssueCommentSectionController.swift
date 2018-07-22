@@ -450,30 +450,6 @@ final class IssueCommentSectionController:
 
     // MARK: IssueCommentDetailCellDelegate
 
-    func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        guard let login = object?.details.login else {
-            Squawk.showGenericError()
-            return
-        }
-
-        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
-
-        let alert = UIAlertController.configured(
-            title: String(format: alertTitle, login),
-            preferredStyle: .actionSheet
-        )
-        alert.popoverPresentationController?.sourceView = sender
-        alert.addActions([
-            shareAction(sender: sender),
-            viewMarkdownAction,
-            editAction,
-            replyAction,
-            deleteAction,
-            AlertAction.cancel()
-        ])
-        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else {
             Squawk.showGenericError()
@@ -509,6 +485,30 @@ final class IssueCommentSectionController:
             else { return }
 
         react(cell: cell, content: reaction, isAdd: false)
+    }
+
+    func didTapMore(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let login = object?.details.login else {
+            Squawk.showGenericError()
+            return
+        }
+
+        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
+
+        let alert = UIAlertController.configured(
+            title: String(format: alertTitle, login),
+            preferredStyle: .actionSheet
+        )
+        alert.popoverPresentationController?.sourceView = sender
+        alert.addActions([
+            shareAction(sender: sender),
+            viewMarkdownAction,
+            editAction,
+            replyAction,
+            deleteAction,
+            AlertAction.cancel()
+            ])
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: MarkdownStyledTextViewDelegate
