@@ -14,7 +14,7 @@ protocol IssueCommentDoubleTapDelegate: class {
 
 class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
-    static let collapseCellMinHeight: CGFloat = 30
+    static let collapseCellMinHeight: CGFloat = 45
 
     weak var doubleTapDelegate: IssueCommentDoubleTapDelegate?
     let doubleTapGesture = UITapGestureRecognizer()
@@ -35,20 +35,23 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         collapseLayer.isHidden = true
         collapseLayer.colors = [
             UIColor(white: 1, alpha: 0).cgColor,
+            UIColor(white: 1, alpha: 1).cgColor,
             UIColor(white: 1, alpha: 1).cgColor
         ]
+        collapseLayer.locations = [0, 0.5, 1]
 
         collapseButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
         collapseButton.backgroundColor = Styles.Colors.Blue.medium.color
         collapseButton.accessibilityTraits = UIAccessibilityTraitNone
         collapseButton.tintColor = .white
         collapseButton.titleLabel?.font = Styles.Text.smallTitle.preferredFont
-        collapseButton.clipsToBounds = true
         collapseButton.isHidden = true
         collapseButton.contentEdgeInsets = UIEdgeInsets(top: -2, left: 8, bottom: -2, right: 8)
         collapseButton.imageEdgeInsets = .zero
         collapseButton.sizeToFit()
         collapseButton.layer.cornerRadius = collapseButton.bounds.height / 2
+        collapseButton.layer.borderColor = UIColor(white: 1, alpha: 0.2).cgColor
+        collapseButton.layer.borderWidth = 1
         collapseButton.isUserInteractionEnabled = false // allow tap to pass through to cell
         contentView.addSubview(collapseButton)
     }
