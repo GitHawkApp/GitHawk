@@ -13,7 +13,6 @@ import SDWebImage
 import DateAgo
 
 protocol IssueCommentDetailCellDelegate: class {
-    func didTapMore(cell: IssueCommentDetailCell, sender: UIView)
     func didTapProfile(cell: IssueCommentDetailCell)
 }
 
@@ -25,7 +24,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let editedLabel = ShowMoreDetailsLabel()
-    private let moreButton = UIButton()
     private var login = ""
 
     override init(frame: CGRect) {
@@ -55,7 +53,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         )
         contentView.addSubview(loginLabel)
         loginLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(imageView.snp.centerY)
+            make.centerY.equalTo(imageView)
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
         }
 
@@ -63,21 +61,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         dateLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
-            make.left.equalTo(loginLabel)
-            make.top.equalTo(loginLabel.snp.bottom)
-        }
-
-        moreButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        moreButton.contentVerticalAlignment = .center
-        moreButton.contentHorizontalAlignment = .right
-        moreButton.imageView?.contentMode = .center
-        moreButton.tintColor = Styles.Colors.Gray.light.color
-        moreButton.addTarget(self, action: #selector(IssueCommentDetailCell.onMore(sender:)), for: .touchUpInside)
-        moreButton.accessibilityLabel = Constants.Strings.moreOptions
-        contentView.addSubview(moreButton)
-        moreButton.snp.makeConstraints { make in
-            make.size.equalTo(Styles.Sizes.buttonMin)
-            make.centerY.equalTo(imageView)
+            make.centerY.equalTo(loginLabel)
             make.right.equalToSuperview()
         }
 
@@ -95,10 +79,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     }
 
     // MARK: Private API
-
-    @objc func onMore(sender: UIButton) {
-        delegate?.didTapMore(cell: self, sender: sender)
-    }
 
     @objc func onTapAvatar() {
         delegate?.didTapProfile(cell: self)
@@ -118,7 +98,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             : .white
 
         imageView.sd_setImage(with: viewModel.avatarURL)
-        dateLabel.setText(date: viewModel.date)
+        dateLabel.setText(date: viewModel.date, format: .short)
         loginLabel.text = viewModel.login
 
         if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
