@@ -33,8 +33,6 @@ final class PullRequestReviewReplyCell: IssueCommentBaseCell {
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-
-        border = .tail
     }
 
     required init?(coder aDecoder: NSCoder) {

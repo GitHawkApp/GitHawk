@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
 
     private let imageView = UIImageView()
     private let label = UILabel()

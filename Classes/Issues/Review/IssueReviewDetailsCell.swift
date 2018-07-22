@@ -50,8 +50,6 @@ final class IssueReviewDetailsCell: IssueCommentBaseCell, ListBindable {
             make.centerY.equalTo(actorButton)
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.columnSpacing/2)
         }
-
-        border = .head
     }
 
     required init?(coder aDecoder: NSCoder) {

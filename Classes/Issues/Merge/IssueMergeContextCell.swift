@@ -11,7 +11,7 @@ import IGListKit
 import SnapKit
 import SDWebImage
 
-final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeContextCell: CardCollectionViewCell, ListBindable {
 
     private let avatarView = UIImageView()
     private let iconView = UIImageView()

@@ -26,7 +26,6 @@ final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
         super.init(frame: frame)
         contentView.addSubview(scrollView)
         scrollView.addSubview(textView)
-        border = .head
     }
 
     required init?(coder aDecoder: NSCoder) {

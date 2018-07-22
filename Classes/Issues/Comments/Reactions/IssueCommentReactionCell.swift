@@ -93,10 +93,6 @@ UICollectionViewDelegateFlowLayout {
         queuedOperation = (content, operation)
     }
 
-    func configure(borderVisible: Bool) {
-        border = borderVisible ? .tail : .neck
-    }
-
     // MARK: Private API
 
     func cell(for content: ReactionContent) -> IssueReactionCell? {

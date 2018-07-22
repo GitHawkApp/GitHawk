@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeButtonCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeButtonCell: CardCollectionViewCell, ListBindable {
 
     var delegate: MergeButtonDelegate? {
         get { return mergeButton.delegate }

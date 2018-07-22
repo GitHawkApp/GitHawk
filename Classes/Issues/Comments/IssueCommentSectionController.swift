@@ -394,11 +394,8 @@ final class IssueCommentSectionController:
 
         // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
-            cell.setBorderVisible(object?.threadState == .single)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
-            let threadState = object?.threadState
-            cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
         

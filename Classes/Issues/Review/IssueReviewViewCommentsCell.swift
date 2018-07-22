@@ -14,7 +14,7 @@ protocol IssueReviewViewCommentsCellDelegate: class {
     func didTapViewComments(cell: IssueReviewViewCommentsCell)
 }
 
-final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
+final class IssueReviewViewCommentsCell: CardCollectionViewCell, ListBindable {
 
     weak var delegate: IssueReviewViewCommentsCellDelegate? = nil
 

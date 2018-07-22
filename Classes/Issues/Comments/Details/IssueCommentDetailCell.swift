@@ -94,12 +94,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Public API
-
-    func setBorderVisible(_ visible: Bool) {
-        border = visible ? .head : .neck
-    }
-
     // MARK: Private API
 
     @objc func onMore(sender: UIButton) {

@@ -138,7 +138,7 @@ ListBindingSectionControllerSelectionDelegate {
         guard let cell = collectionContext?.dequeueReusableCell(of: cellType, for: self, at: index) as? UICollectionViewCell & ListBindable
             else { fatalError() }
 
-        if let cell = cell as? IssueCommentBaseCell {
+        if let cell = cell as? CardCollectionViewCell {
             cell.border = index == 0 ? .head : index == self.viewModels.count - 1 ? .tail : .neck
         }
         if let cell = cell as? IssueMergeButtonCell {
