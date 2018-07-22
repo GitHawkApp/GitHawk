@@ -64,6 +64,7 @@ BaseListViewControllerDataSource {
                         width: width,
                         viewerCanUpdate: false,
                         contentSizeCategory: contentSizeCategory,
+                        isRoot: false,
                         branch: branch
                     )
                     let model = RepositoryReadmeModel(models: models)

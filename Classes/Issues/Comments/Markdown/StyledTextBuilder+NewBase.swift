@@ -10,7 +10,7 @@ import UIKit
 import StyledTextKit
 
 extension StyledTextBuilder {
-    static func markdownBase() -> StyledTextBuilder {
+    static func markdownBase(isRoot: Bool) -> StyledTextBuilder {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacingBefore = 12
         let attributes: [NSAttributedStringKey: Any] = [
@@ -18,8 +18,11 @@ extension StyledTextBuilder {
             .paragraphStyle: paragraphStyle,
             .backgroundColor: UIColor.white
         ]
+        let style = isRoot
+            ? Styles.Text.rootBody
+            : Styles.Text.body
         return StyledTextBuilder(styledText: StyledText(
-            style: Styles.Text.body.with(attributes: attributes)
+            style: style.with(attributes: attributes)
         ))
     }
 }

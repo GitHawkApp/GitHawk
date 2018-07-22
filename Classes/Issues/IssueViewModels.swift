@@ -80,7 +80,8 @@ func createCommentModel(
         repo: repo,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: isRoot
     )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)

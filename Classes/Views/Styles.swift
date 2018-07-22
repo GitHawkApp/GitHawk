@@ -62,6 +62,7 @@ enum Styles {
 
         static let body = TextStyle(size: 16)
         static let bodyBold = TextStyle(font: .system(.bold), size: 16)
+        static let rootBody = TextStyle(size: 18)
         static let secondary = TextStyle(size: 13)
         static let secondaryBold = TextStyle(font: .system(.bold), size: 13)
         static let title = TextStyle(font: .system(.bold), size: 14)

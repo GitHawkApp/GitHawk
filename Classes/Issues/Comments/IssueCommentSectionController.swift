@@ -223,7 +223,8 @@ final class IssueCommentSectionController:
             repo: model.repo,
             width: width,
             viewerCanUpdate: true,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+            isRoot: self.object?.isRoot == true
         )
         bodyEdits = (markdown, bodyModels)
         collapsed = false
