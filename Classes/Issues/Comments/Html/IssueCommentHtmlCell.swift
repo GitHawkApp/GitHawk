@@ -43,7 +43,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     // lint compiled style with http://csslint.net/
     font-family: -apple-system; font-size: \(Styles.Text.body.preferredFont.pointSize)px;
     color: #\(Styles.Colors.Gray.dark);
-    padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px 0;
+    padding: \(Styles.Sizes.columnSpacing)px 0 0;
     margin: 0;
     }
     * { font-family: -apple-system; font-size: \(Styles.Text.body.preferredFont.pointSize)px; }
@@ -60,7 +60,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     dl dd{padding: 0 \(Styles.Sizes.HTML.spacing)px;}
     blockquote{font-style: italic; color: #\(Styles.Colors.Gray.medium);}
     pre, code{background-color: #\(Styles.Colors.Gray.lighter); font-family: Courier;}
-    pre{padding: \(Styles.Sizes.columnSpacing)px \(Styles.Sizes.commentGutter)px;}
+    pre{padding: \(Styles.Sizes.columnSpacing)px 0;}
     sub{font-size: \(Styles.Text.secondary.preferredFont.pointSize)px;}
     sub a{font-size: \(Styles.Text.secondary.preferredFont.pointSize)px;}
     table{border-spacing: 0; border-collapse: collapse;}

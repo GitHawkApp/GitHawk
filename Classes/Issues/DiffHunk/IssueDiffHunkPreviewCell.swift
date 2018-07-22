@@ -14,9 +14,9 @@ final class IssueDiffHunkPreviewCell: IssueCommentBaseCell, ListBindable {
 
     static let textViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.commentGutter,
+        left: 0,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.commentGutter
+        right: 0
     )
 
     let scrollView = UIScrollView()

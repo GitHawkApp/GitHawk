@@ -32,8 +32,8 @@ final class IssueReviewDetailsCell: IssueCommentBaseCell, ListBindable {
         contentView.addSubview(icon)
         icon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
         }
 
         actorButton.addTarget(self, action: #selector(IssueReviewDetailsCell.onActorTapped), for: .touchUpInside)

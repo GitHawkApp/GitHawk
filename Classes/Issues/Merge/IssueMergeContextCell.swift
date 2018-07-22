@@ -33,7 +33,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
         avatarView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalToSuperview()
-            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.left.equalToSuperview()
         }
 
         titleLabel.font = Styles.Text.secondaryBold.preferredFont
@@ -51,7 +51,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
 
         iconView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(-Styles.Sizes.commentGutter)
+            make.right.equalToSuperview()
         }
 
         backgroundColor = Styles.Colors.Gray.lighter.color

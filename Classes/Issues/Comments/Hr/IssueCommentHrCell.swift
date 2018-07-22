@@ -14,9 +14,9 @@ final class IssueCommentHrCell: IssueCommentBaseCell, ListBindable {
 
     static let inset = UIEdgeInsets(
         top: 0,
-        left: Styles.Sizes.commentGutter,
+        left: Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.commentGutter
+        right: Styles.Sizes.columnSpacing
     )
 
     let hr = UIView()
@@ -27,7 +27,7 @@ final class IssueCommentHrCell: IssueCommentBaseCell, ListBindable {
         hr.backgroundColor = Styles.Colors.Gray.lighter.color
         contentView.addSubview(hr)
         hr.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(IssueCommentHrCell.inset)
+            make.edges.equalToSuperview().inset(IssueCommentHrCell.inset)
         }
     }
 

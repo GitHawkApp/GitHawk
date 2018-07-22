@@ -52,8 +52,8 @@ UICollectionViewDelegateFlowLayout {
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-Styles.Sizes.rowSpacing)
         }
 
         collectionView.backgroundColor = .clear
@@ -62,7 +62,7 @@ UICollectionViewDelegateFlowLayout {
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.top.bottom.right.equalTo(contentView)
+            make.top.bottom.right.equalToSuperview()
         }
 
         let nc = NotificationCenter.default

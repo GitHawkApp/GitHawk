@@ -21,8 +21,8 @@ final class IssueCommentSummaryCell: IssueCommentBaseCell, ListBindable {
         label.font = Styles.Text.body.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.centerY.equalTo(contentView)
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
 

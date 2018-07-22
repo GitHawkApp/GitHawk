@@ -13,8 +13,7 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 8 // comment gutter 2x
-        static let commentGutter: CGFloat = 8
+        static let cardGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
@@ -35,10 +34,10 @@ enum Styles {
         static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         static let textViewInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
+            top: rowSpacing,
+            left: gutter,
+            bottom: rowSpacing,
+            right: gutter
         )
         static let labelEventHeight: CGFloat = 30
         static let labelRowHeight: CGFloat = 18
@@ -46,10 +45,10 @@ enum Styles {
         static let labelTextPadding: CGFloat = 4
         static let cardCornerRadius: CGFloat = 6
         static let threadInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing / 2,
-            left: Styles.Sizes.commentGutter,
-            bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
-            right: Styles.Sizes.commentGutter
+            top: rowSpacing / 2,
+            left: gutter,
+            bottom: 2 * rowSpacing + tableCellHeight,
+            right: gutter
         )
         static let maxImageHeight: CGFloat = 300
         static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)

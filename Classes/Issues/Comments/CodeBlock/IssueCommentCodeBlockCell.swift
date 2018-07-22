@@ -20,9 +20,9 @@ final class IssueCommentCodeBlockCell: IssueCommentBaseCell, ListBindable {
     )
     static let textViewInset = UIEdgeInsets(
         top: Styles.Sizes.rowSpacing,
-        left: Styles.Sizes.commentGutter,
+        left: Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.commentGutter
+        right: Styles.Sizes.columnSpacing
     )
 
     let textView = StyledTextView()

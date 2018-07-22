@@ -42,7 +42,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.left.equalToSuperview()
             make.top.equalTo(Styles.Sizes.rowSpacing)
         }
 
@@ -78,7 +78,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         moreButton.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.buttonMin)
             make.centerY.equalTo(imageView)
-            make.right.equalTo(-Styles.Sizes.commentGutter)
+            make.right.equalToSuperview()
         }
 
         editedLabel.font = Styles.Text.secondary.preferredFont

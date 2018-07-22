@@ -13,9 +13,9 @@ final class IssueLabeledCell: StyledTextViewCell {
 
     static let insets = UIEdgeInsets(
         top: Styles.Sizes.inlineSpacing,
-        left: Styles.Sizes.eventGutter,
+        left: 0,
         bottom: Styles.Sizes.inlineSpacing,
-        right: Styles.Sizes.eventGutter
+        right: 0
     )
     
     // MARK: Public API

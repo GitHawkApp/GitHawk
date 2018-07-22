@@ -25,7 +25,7 @@ final class IssueFileCell: SelectableCell {
         contentView.addSubview(disclosure)
         disclosure.snp.makeConstraints { make in
             make.right.equalTo(-Styles.Sizes.gutter)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.size.equalTo(Styles.Sizes.icon)
         }
 

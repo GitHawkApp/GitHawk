@@ -22,19 +22,19 @@ final class IssueMilestoneCell: UICollectionViewCell {
         titleLabel.backgroundColor = .clear
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
         }
 
         progress.progressTintColor = Styles.Colors.Green.medium.color
         progress.trackTintColor = Styles.Colors.Gray.border.color
         contentView.addSubview(progress)
         progress.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.height.equalTo(6)
             // fit to gutter on all iphones, cap in landscape or ipad
             make.width.lessThanOrEqualTo(300).priority(.required)
-            make.right.equalTo(contentView)
+            make.right.equalToSuperview()
             make.left.equalTo(titleLabel.snp.right).offset(Styles.Sizes.rowSpacing)
         }
     }

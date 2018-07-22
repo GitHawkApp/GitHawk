@@ -29,8 +29,8 @@ final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
         button.titleLabel?.font = Styles.Text.body.preferredFont
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.centerY.equalTo(contentView)
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
 
         border = .tail
