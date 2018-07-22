@@ -392,7 +392,7 @@ final class IssuesViewController:
         }
         // END metadata collection
         
-        objects.append(IssueTitleModel(string: current.title, trailingMetadata: metadata.count > 0))
+        objects.append(IssueTitleModel(string: current.title))
         
         if let targetBranch = current.targetBranch {
             objects.append(targetBranch)

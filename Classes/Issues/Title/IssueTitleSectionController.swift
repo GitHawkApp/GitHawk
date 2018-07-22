@@ -16,13 +16,6 @@ final class IssueTitleSectionController: ListSectionController {
     override func didUpdate(to object: Any) {
         guard let object = object as? IssueTitleModel else { return }
         self.object = object
-        let rowSpacing = Styles.Sizes.rowSpacing
-        inset = UIEdgeInsets(
-            top: rowSpacing,
-            left: 0,
-            bottom: rowSpacing / 2 + (object.trailingMetadata ? rowSpacing : 0),
-            right: 0
-        )
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
