@@ -424,7 +424,16 @@ final class IssuesViewController:
 
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
+        // header and metadata
         case is IssueTitleModel: return IssueTitleSectionController()
+        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
+        case is IssueAssigneesModel: return IssueAssigneesSectionController()
+        case is Milestone: return IssueMilestoneSectionController(issueModel: model)
+        case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
+        case is IssueStatusModel: return IssueStatusSectionController()
+        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
+
+        // timeline
         case is IssueCommentModel:
             return IssueCommentSectionController(
                 model: model,
@@ -432,28 +441,27 @@ final class IssuesViewController:
                 autocomplete: autocompleteController.autocomplete.copy,
                 issueCommentDelegate: self
             )
-        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
-        case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
+        case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
+        case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
+        case is IssueRenamedModel: return IssueRenamedSectionController()
+        case is IssueRequestModel: return IssueRequestSectionController()
+        case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
+        case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
+
+        // controls
+        case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
+        case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
+
+        // deprecated
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
         case is IssueReviewModel: return IssueReviewSectionController(
             model: model,
             client: client,
             autocomplete: autocompleteController.autocomplete.copy
             )
-        case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
-        case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
-        case is IssueRenamedModel: return IssueRenamedSectionController()
-        case is IssueRequestModel: return IssueRequestSectionController()
-        case is IssueAssigneesModel: return IssueAssigneesSectionController()
-        case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
-        case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
-        case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
-        case is Milestone: return IssueMilestoneSectionController(issueModel: model)
-        case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
-        case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
-        case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
+
         default: fatalError("Unhandled object: \(object)")
         }
     }
