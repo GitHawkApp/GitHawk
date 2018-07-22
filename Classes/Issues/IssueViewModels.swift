@@ -21,8 +21,7 @@ func titleStringSizing(
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: contentSizeCategory,
-        inset: IssueTitleCell.inset,
-        backgroundColor: Styles.Colors.background
+        inset: IssueTitleCell.inset
     )
 }
 
