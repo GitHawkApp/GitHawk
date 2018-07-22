@@ -40,8 +40,7 @@ enum Styles {
             right: gutter
         )
         static let labelEventHeight: CGFloat = 30
-        static let labelRowHeight: CGFloat = 18
-        static let labelSpacing: CGFloat = 4
+        static let labelSpacing: CGFloat = 8
         static let labelTextPadding: CGFloat = 4
         static let cardCornerRadius: CGFloat = 6
         static let threadInset = UIEdgeInsets(

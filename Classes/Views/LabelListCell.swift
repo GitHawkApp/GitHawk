@@ -18,23 +18,20 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
         return (string as NSString).size(withAttributes: [
             .font: font
             ]).resized(inset: UIEdgeInsets(
-                top: 1,
+                top: 3,
                 left: Styles.Sizes.labelTextPadding,
-                bottom: 1,
+                bottom: 3,
                 right: Styles.Sizes.labelTextPadding)
         )
     }
     
-    let nameLabel = UILabel()
+    private let nameLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
-        
-        layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        layer.borderWidth = 1 / UIScreen.main.scale
         
         layer.cornerRadius = Styles.Sizes.labelCornerRadius
         contentView.layer.cornerRadius = Styles.Sizes.labelCornerRadius
