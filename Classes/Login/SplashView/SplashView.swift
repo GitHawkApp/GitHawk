@@ -32,8 +32,8 @@ final class SplashView: UIView {
     }
     
     func configureView() {
-        birdAnimations()
-        branchesAnimations()
+        addBirdAnimation()
+        addBranchesAnimation()
     }
     
     
@@ -53,7 +53,7 @@ final class SplashView: UIView {
         }
     }
 
-    private func birdAnimations() {
+    private func addBirdAnimation() {
         let pulseAnimation = CABasicAnimation(keyPath: "transform.scale")
         
         pulseAnimation.autoreverses = true
@@ -67,7 +67,7 @@ final class SplashView: UIView {
         birdImageView.layer.add(pulseAnimation, forKey: "scaling")
     }
     
-    private func branchesAnimations() {
+    private func addBranchesAnimation() {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         
         rotateAnimation.repeatCount = .infinity
