@@ -24,6 +24,7 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
     private var client: Client!
     private var sessionManager: GitHubSessionManager!
 
+    @IBOutlet weak var splashView: SplashView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var safariController: SFSafariViewController?
@@ -61,6 +62,12 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
         state = .idle
         sessionManager.addListener(listener: self)
         signInButton.layer.cornerRadius = Styles.Sizes.eventGutter
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupSplashView()
     }
 
     // MARK: Public API
@@ -136,6 +143,10 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
             GitHubUserSession(token: token, authMethod: authMethod, username: username),
             dismiss: true
         )
+    }
+    
+    private func setupSplashView() {
+        splashView.beginAnimations()
     }
 
     // MARK: GitHubSessionListener

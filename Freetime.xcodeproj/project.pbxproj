@@ -11,6 +11,7 @@
 		15245487205DC016005810A6 /* IssueTargetBranchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245484205DC016005810A6 /* IssueTargetBranchModel.swift */; };
 		15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245485205DC016005810A6 /* IssueBranchesSectionController.swift */; };
 		15245489205DC016005810A6 /* IssueTargetBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15245486205DC016005810A6 /* IssueTargetBranchCell.swift */; };
+		15F28F992108DBA6006421B6 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F28F982108DBA6006421B6 /* SplashView.swift */; };
 		290056F3210028B20046EAE5 /* UIViewController+MenuDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */; };
 		2905AFAB1F7357B40015AE32 /* RepositoryOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */; };
 		2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */; };
@@ -511,6 +512,7 @@
 		15245484205DC016005810A6 /* IssueTargetBranchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchModel.swift; path = Classes/Issues/Branches/IssueTargetBranchModel.swift; sourceTree = SOURCE_ROOT; };
 		15245485205DC016005810A6 /* IssueBranchesSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueBranchesSectionController.swift; path = Classes/Issues/Branches/IssueBranchesSectionController.swift; sourceTree = SOURCE_ROOT; };
 		15245486205DC016005810A6 /* IssueTargetBranchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTargetBranchCell.swift; path = Classes/Issues/Branches/IssueTargetBranchCell.swift; sourceTree = SOURCE_ROOT; };
+		15F28F982108DBA6006421B6 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		290056F2210028B20046EAE5 /* UIViewController+MenuDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+MenuDone.swift"; sourceTree = "<group>"; };
 		2905AFAA1F7357B40015AE32 /* RepositoryOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryOverviewViewController.swift; sourceTree = "<group>"; };
 		2905AFAC1F7357C50015AE32 /* RepositoryIssuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryIssuesViewController.swift; sourceTree = "<group>"; };
@@ -1023,6 +1025,14 @@
 			);
 			name = Branches;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		15F28F972108DB8C006421B6 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				15F28F982108DBA6006421B6 /* SplashView.swift */,
+			);
+			path = SplashView;
 			sourceTree = "<group>";
 		};
 		290744B01F250A1D00FD9E48 /* Autocomplete */ = {
@@ -1549,6 +1559,7 @@
 		297AE8581EC0D5C100B44A1F /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				15F28F972108DB8C006421B6 /* SplashView */,
 				299F4A88204CEDDC004BA4F0 /* Client+AccessToken.swift */,
 				29416BFA1F113D0A00D03E1A /* LoginSplashViewController.swift */,
 				29416BF81F1138B700D03E1A /* OauthLogin.storyboard */,
@@ -2671,6 +2682,7 @@
 				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
+				15F28F992108DBA6006421B6 /* SplashView.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
 				2981A8A41EFE9FC700E25EF1 /* GithubEmoji.swift in Sources */,
 				2924C18B20D5B3A100FCFCFF /* LabelMenuCell.swift in Sources */,
