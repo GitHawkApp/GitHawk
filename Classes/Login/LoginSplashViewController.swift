@@ -146,7 +146,7 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
     }
     
     private func setupSplashView() {
-        splashView.beginAnimations()
+        splashView.configureView()
     }
 
     // MARK: GitHubSessionListener

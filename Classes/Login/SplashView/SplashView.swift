@@ -11,14 +11,13 @@ import SnapKit
 
 final class SplashView: UIView {
 
+    // MARK: Private properties
+    
     private var birdImageView: UIImageView!
     private var branchesImageView: UIImageView!
     
-    convenience init() {
-        self.init(frame: .zero)
-        
-        setupView()
-    }
+    
+    // MARK: Public API
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,15 +31,25 @@ final class SplashView: UIView {
         setupView()
     }
     
+    func configureView() {
+        birdAnimations()
+        branchesAnimations()
+    }
+    
+    
+    // MARK: Private API
+    
     private func setupView() {
-        let imageView = UIImageView(image: UIImage(named: "splash"))
-        imageView.image = UIImage(named: "splash")
-        birdImageView = imageView
-        addSubview(birdImageView)
-        //        branchesImageView.image = nil // FIXME: After Photoshop installed
-        
-        birdImageView.snp.makeConstraints { make in
+        branchesImageView = UIImageView(image: UIImage(named: "splash_branches"))
+        addSubview(branchesImageView)
+        branchesImageView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalToSuperview()
+        }
+        
+        birdImageView = UIImageView(image: UIImage(named: "splash"))
+        addSubview(birdImageView)
+        birdImageView.snp.makeConstraints { make in
+            make.top.left.right.bottom.equalToSuperview().inset(30)
         }
     }
 
@@ -51,15 +60,23 @@ final class SplashView: UIView {
         pulseAnimation.repeatCount = .infinity
         pulseAnimation.fromValue = 1.0
         pulseAnimation.toValue = 0.9
-        pulseAnimation.duration = 3
+        pulseAnimation.duration = 2
         pulseAnimation.fillMode = kCAFillModeForwards
         pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
         birdImageView.layer.add(pulseAnimation, forKey: "scaling")
     }
     
-    func beginAnimations() {
-        birdAnimations()
+    private func branchesAnimations() {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        
+        rotateAnimation.repeatCount = .infinity
+        rotateAnimation.byValue = 2 * Double.pi
+        rotateAnimation.duration = 120
+        rotateAnimation.fillMode = kCAFillModeForwards
+        rotateAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        
+        branchesImageView.layer.add(rotateAnimation, forKey: "rotation")
     }
 
 }
