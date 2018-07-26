@@ -321,7 +321,8 @@ final class IssueCommentSectionController:
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details, headModel ]
+//        return [ object.details, headModel ]
+        return [ object.details ]
             + bodies
             + tail
     }

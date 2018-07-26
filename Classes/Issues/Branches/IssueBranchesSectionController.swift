@@ -16,7 +16,6 @@ final class IssueTargetBranchSectionController: ListSectionController {
     override func didUpdate(to object: Any) {
         guard let object = object as? IssueTargetBranchModel else { return }
         self.object = object
-        inset = UIEdgeInsets.zero
     }
     
     override func sizeForItem(at index: Int) -> CGSize {

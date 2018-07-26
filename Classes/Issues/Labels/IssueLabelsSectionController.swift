@@ -21,8 +21,8 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
-        let spacing = Styles.Sizes.rowSpacing / 2
-        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+//        let spacing = Styles.Sizes.rowSpacing / 2
+//        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
         dataSource = self
         selectionDelegate = self
     }

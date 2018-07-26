@@ -18,8 +18,8 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
         self.issueModel = issueModel
         self.client = client
         super.init()
-        let spacing = Styles.Sizes.rowSpacing / 2
-        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+//        let spacing = Styles.Sizes.rowSpacing / 2
+//        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {

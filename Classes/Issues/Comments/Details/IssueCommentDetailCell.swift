@@ -24,16 +24,10 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let editedLabel = ShowMoreDetailsLabel()
-    private let viewerBackgroundView = UIView()
     private var login = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        contentView.addSubview(viewerBackgroundView)
-        viewerBackgroundView.backgroundColor = Styles.Colors.Blue.light.color
-        contentView.clipsToBounds = false
-        clipsToBounds = false
 
         imageView.configureForAvatar()
         imageView.isUserInteractionEnabled = true
@@ -75,18 +69,13 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         editedLabel.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(editedLabel)
         editedLabel.snp.makeConstraints { make in
-            make.left.equalTo(dateLabel.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(dateLabel)
+            make.left.equalTo(loginLabel.snp.right).offset(Styles.Sizes.columnSpacing/2)
+            make.centerY.equalTo(loginLabel)
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        viewerBackgroundView.frame = contentView.bounds.insetBy(dx: -6, dy: 0)
     }
 
     // MARK: Private API
@@ -104,8 +93,6 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? IssueCommentDetailsViewModel else { return }
 
-        viewerBackgroundView.isHidden = !viewModel.didAuthor
-
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date, format: .short)
         loginLabel.text = viewModel.login
@@ -113,10 +100,8 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
             editedLabel.isHidden = false
 
-            let editedByNonOwner = NSLocalizedString("Edited by %@", comment: "")
-            let editedByOwner = NSLocalizedString("Edited", comment: "")
-            let format = viewModel.login != editedLogin ? editedByNonOwner : editedByOwner
-            editedLabel.text = "\(Constants.Strings.bullet) \(String(format: format, editedLogin))"
+            let edited = NSLocalizedString("edited", comment: "")
+            editedLabel.text = "\(Constants.Strings.bullet) \(edited)"
 
             let detailFormat = NSLocalizedString("%@ edited this issue %@", comment: "")
             editedLabel.detailText = String(format: detailFormat, arguments: [editedLogin, editedDate.agoString(.long)])

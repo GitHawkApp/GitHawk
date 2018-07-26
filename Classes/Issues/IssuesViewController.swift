@@ -403,13 +403,29 @@ final class IssuesViewController:
 
         if let rootComment = current.rootComment {
             objects.append(rootComment)
+            objects.append(VerticalSpacerModel(position: objects.count))
         }
 
         if current.hasPreviousPage {
             objects.append(IssueNeckLoadModel())
         }
 
-        objects += current.timelineViewModels
+        let timelineViewModels = current.timelineViewModels
+        for (i, model) in timelineViewModels.enumerated() {
+            let isComment = model is IssueCommentModel
+
+            // append a spacer if the previous timeline element wasn't a comment
+            if isComment, i > 0, !(timelineViewModels[i-1] is IssueCommentModel) {
+                objects.append(VerticalSpacerModel(position: objects.count))
+            }
+
+            objects.append(model)
+
+            // always append a spacer unless its the last item in the timeline
+            if isComment, i < timelineViewModels.count - 1 {
+                objects.append(VerticalSpacerModel(position: objects.count))
+            }
+        }
 
         // side effect so to jump to the last element when auto scrolling
         lastTimelineElement = objects.last
@@ -450,6 +466,7 @@ final class IssuesViewController:
         case is IssueRequestModel: return IssueRequestSectionController()
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
+        case is VerticalSpacerModel: return VerticalSpacerSectionController()
 
         // controls
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)

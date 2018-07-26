@@ -242,7 +242,7 @@ private extension Array where Iterator.Element == TableRow {
 }
 
 private extension Element {
-    func model(_ options: CMarkOptions) -> ListDiffable? {
+    func model(_ options: CMarkOptions, lastElement: Bool) -> ListDiffable? {
         switch self {
         case .text(let items):
             return StyledTextRenderer(
@@ -252,7 +252,7 @@ private extension Element {
                     context: CMarkContext()
                     ).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .quote(let items, let level):
@@ -303,7 +303,7 @@ private extension Element {
             return StyledTextRenderer(
                 string: text.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .list(let items, let type):
@@ -316,7 +316,7 @@ private extension Element {
             return StyledTextRenderer(
                 string: builder.build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .table(let rows):
@@ -343,7 +343,7 @@ private func emptyDescription(options: CMarkOptions) -> ListDiffable {
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: options.contentSizeCategory,
-        inset: IssueCommentTextCell.inset
+        inset: IssueCommentTextCell.inset(isLast: true)
     ).warm(width: options.width)
 }
 
@@ -372,7 +372,15 @@ func MarkdownModels(
         contentSizeCategory: contentSizeCategory,
         isRoot: isRoot
     )
-    let models = node.flatElements.compactMap { $0.model(options) }
+
+    var models = [ListDiffable]()
+    let elements = node.flatElements
+    let count = elements.count
+    for (i, el) in elements.enumerated() {
+        if let model = el.model(options, lastElement: i == count - 1) {
+            models.append(model)
+        }
+    }
     if models.count == 0 {
         return [emptyDescription(options: options)]
     } else {

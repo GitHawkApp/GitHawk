@@ -46,9 +46,8 @@ UICollectionViewDelegateFlowLayout {
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
-        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
-        addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
