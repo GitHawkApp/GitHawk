@@ -14,15 +14,10 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
     static let reuse = "cell"
     static let font = Styles.Text.smallTitle.preferredFont
 
-    static func size(_ string: String) -> CGSize {
-        return (string as NSString).size(withAttributes: [
-            .font: font
-            ]).resized(inset: UIEdgeInsets(
-                top: 3,
-                left: Styles.Sizes.labelTextPadding,
-                bottom: 3,
-                right: Styles.Sizes.labelTextPadding)
-        )
+    static func size(
+        _ string: String
+        ) -> CGSize {
+        return string.size(font: font, xPadding: Styles.Sizes.labelTextPadding, yPadding: 3)
     }
     
     private let nameLabel = UILabel()

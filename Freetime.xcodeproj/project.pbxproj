@@ -310,6 +310,9 @@
 		29AF1E8E1F8ABC900008A0EF /* RepositoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */; };
 		29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */; };
 		29B5D08B20D578DB003DFBE2 /* InboxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B5D08A20D578DB003DFBE2 /* InboxType.swift */; };
+		29B75AD9210A9A0300C28131 /* IssueLabelStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */; };
+		29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */; };
+		29B75ADD210AA14F00C28131 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B75ADC210AA14F00C28131 /* String+Size.swift */; };
 		29B94E671FCB2D4600715D7E /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E661FCB2D4600715D7E /* CodeView.swift */; };
 		29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E681FCB36A000715D7E /* File+ListDiffable.swift */; };
 		29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */; };
@@ -822,6 +825,9 @@
 		29AF1E8D1F8ABC900008A0EF /* RepositoryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFile.swift; sourceTree = "<group>"; };
 		29B0EF861F93DF6C00870291 /* RepositoryCodeBlobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCodeBlobViewController.swift; sourceTree = "<group>"; };
 		29B5D08A20D578DB003DFBE2 /* InboxType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxType.swift; sourceTree = "<group>"; };
+		29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusCell.swift; sourceTree = "<group>"; };
+		29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabelStatusModel.swift; sourceTree = "<group>"; };
+		29B75ADC210AA14F00C28131 /* String+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		29B94E661FCB2D4600715D7E /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		29B94E681FCB36A000715D7E /* File+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+ListDiffable.swift"; sourceTree = "<group>"; };
 		29B94E6C1FCB472400715D7E /* IssueFileChangesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFileChangesModel.swift; sourceTree = "<group>"; };
@@ -1278,6 +1284,8 @@
 				29EE1C111F37C51D0046A54D /* IssueLabelEditCell.swift */,
 				292FCAEF1EDFCC510026635E /* IssueLabelsModel.swift */,
 				292FCAF01EDFCC510026635E /* IssueLabelsSectionController.swift */,
+				29B75AD8210A9A0300C28131 /* IssueLabelStatusCell.swift */,
+				29B75ADA210A9B3100C28131 /* IssueLabelStatusModel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -2017,11 +2025,12 @@
 				29459A701FE7153500034A04 /* LogEnvironmentInformation.swift */,
 				DC63393A1F9F65EE00402A8D /* RepositoryAttributedString.swift */,
 				7B7BBA3D1F8B752A00D6AEDA /* SearchQueryTokenizer.swift */,
+				49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */,
 				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
+				29B75ADC210AA14F00C28131 /* String+Size.swift */,
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
-				49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */,
 				299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */,
 			);
 			path = Utility;
@@ -2806,6 +2815,7 @@
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
 				2973E81120FBF73D0050233F /* IssueManagingContextController.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
+				29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */,
 				292FF8B71F303BD9009E63F7 /* IssuePreviewViewController.swift in Sources */,
 				292FCB211EDFCF870026635E /* IssueReactionCell.swift in Sources */,
 				29C53FC21F12EF4000A59ED5 /* IssueReferencedCell.swift in Sources */,
@@ -2944,6 +2954,7 @@
 				29351EA62079791800FF8C17 /* String+StripHTMLComments.swift in Sources */,
 				29DA1E8A1F5E2DEC0050C64B /* SearchRecentHeaderSectionController.swift in Sources */,
 				29AF1E841F8AAB4A0008A0EF /* UITextView+GitHawk.swift in Sources */,
+				29B75AD9210A9A0300C28131 /* IssueLabelStatusCell.swift in Sources */,
 				299F63D4205DA24A0015D901 /* MarkdownAttributeHandling.swift in Sources */,
 				29DA1E861F5E26D30050C64B /* SearchRecentSectionController.swift in Sources */,
 				29DA1E821F5DF5CC0050C64B /* SearchRecentStore.swift in Sources */,
@@ -3003,6 +3014,7 @@
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
+				29B75ADD210AA14F00C28131 /* String+Size.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				29622B45210520E6000C428D /* CardCollectionViewCell.swift in Sources */,
 				294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */,

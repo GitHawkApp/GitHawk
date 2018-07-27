@@ -53,7 +53,7 @@ final class IssuesViewController:
             let hidden: Bool
             if let id = resultID,
                 let result = self.client.cache.get(id: id) as IssueResult? {
-                hidden = result.status.locked && !viewerIsCollaborator
+                hidden = result.labels.locked && !viewerIsCollaborator
 
                 let bookmark = Bookmark(
                     type: result.pullRequest ? .pullRequest : .issue,
@@ -372,13 +372,11 @@ final class IssuesViewController:
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         guard let current = self.result else { return [] }
 
-        var objects: [ListDiffable] = [current.status]
+        var objects = [ListDiffable]()
 
         // BEGIN collect metadata that lives between title and root comment
         var metadata = [ListDiffable]()
-        if current.labels.labels.count > 0 {
-            metadata.append(current.labels)
-        }
+        metadata.append(current.labels)
         if let milestone = current.milestone {
             metadata.append(milestone)
         }
@@ -394,12 +392,11 @@ final class IssuesViewController:
         // END metadata collection
         
         objects.append(IssueTitleModel(string: current.title))
+        objects += metadata
         
         if let targetBranch = current.targetBranch {
             objects.append(targetBranch)
         }
-
-        objects += metadata
 
         if let rootComment = current.rootComment {
             objects.append(rootComment)
@@ -431,7 +428,7 @@ final class IssuesViewController:
         lastTimelineElement = objects.last
 
         if viewerIsCollaborator,
-            current.status.status == .open,
+            current.labels.status.status == .open,
             let merge = current.mergeModel {
             objects.append(merge)
         }
@@ -447,7 +444,6 @@ final class IssuesViewController:
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
-        case is IssueStatusModel: return IssueStatusSectionController()
         case is IssueTargetBranchModel: return IssueTargetBranchSectionController()
 
         // timeline
