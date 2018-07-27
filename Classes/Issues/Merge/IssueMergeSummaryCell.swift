@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
 
     private let imageView = UIImageView()
     private let label = UILabel()
@@ -29,7 +29,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         imageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
         label.textColor = Styles.Colors.Gray.dark.color
@@ -38,7 +38,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         label.snp.makeConstraints { make in
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.centerY.equalToSuperview()
-            make.right.lessThanOrEqualToSuperview().offset(-Styles.Sizes.commentGutter)
+            make.right.lessThanOrEqualToSuperview()
         }
     }
 

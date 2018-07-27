@@ -18,9 +18,9 @@ final class IssueRenamedCell: UICollectionViewCell {
 
     static let titleInset = UIEdgeInsets(
         top: Styles.Sizes.labelEventHeight,
-        left: Styles.Sizes.eventGutter,
+        left: 0,
         bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.eventGutter
+        right: 0
     )
 
     weak var delegate: IssueRenamedCellDelegate?

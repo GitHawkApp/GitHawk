@@ -61,7 +61,7 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
         super.viewDidLoad()
         state = .idle
         sessionManager.addListener(listener: self)
-        signInButton.layer.cornerRadius = Styles.Sizes.eventGutter
+        signInButton.layer.cornerRadius = Styles.Sizes.cardCornerRadius
     }
     
     override func viewDidAppear(_ animated: Bool) {

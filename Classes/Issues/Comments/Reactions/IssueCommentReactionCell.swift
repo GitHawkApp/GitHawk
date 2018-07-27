@@ -15,6 +15,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
+    func didTapMore(cell: IssueCommentReactionCell, sender: UIView)
 }
 
 final class IssueCommentReactionCell: IssueCommentBaseCell,
@@ -27,6 +28,7 @@ UICollectionViewDelegateFlowLayout {
     public weak var delegate: IssueCommentReactionCellDelegate?
 
     private let addButton = ResponderButton()
+    private let moreButton = ResponderButton()
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -44,25 +46,43 @@ UICollectionViewDelegateFlowLayout {
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
-        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
-        addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
         addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
+        addButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-Styles.Sizes.rowSpacing)
+        }
+
+        moreButton.setImage(UIImage(named: "bullets-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.contentVerticalAlignment = .center
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.imageView?.contentMode = .center
+        moreButton.tintColor = Styles.Colors.Gray.light.color
+        moreButton.addTarget(self, action: #selector(IssueCommentReactionCell.onMore(sender:)), for: .touchUpInside)
+        moreButton.accessibilityLabel = Constants.Strings.moreOptions
+        contentView.addSubview(moreButton)
+        moreButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        moreButton.snp.makeConstraints { make in
+            make.size.equalTo(Styles.Sizes.buttonMin)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
         }
 
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.clipsToBounds = true
+        collectionView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.top.bottom.right.equalTo(contentView)
+            make.top.bottom.right.equalToSuperview()
+            make.right.equalTo(moreButton.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
 
         let nc = NotificationCenter.default
@@ -91,10 +111,6 @@ UICollectionViewDelegateFlowLayout {
         // implies that IGListBindingSectionController will do its thing, and this method is called
         // in sectionController(_, cellForViewModel:,at index:)
         queuedOperation = (content, operation)
-    }
-
-    func configure(borderVisible: Bool) {
-        border = borderVisible ? .tail : .neck
     }
 
     // MARK: Private API
@@ -186,6 +202,10 @@ UICollectionViewDelegateFlowLayout {
         guard let data = data(for: content) else { return }
         configure(cell: data.cell, model: reactions[data.path.item])
         data.cell.iterate(add: add)
+    }
+
+    @objc func onMore(sender: UIView) {
+        delegate?.didTapMore(cell: self, sender: sender)
     }
 
     // MARK: Notifications

@@ -21,8 +21,7 @@ func titleStringSizing(
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: contentSizeCategory,
-        inset: IssueTitleCell.inset,
-        backgroundColor: Styles.Colors.background
+        inset: IssueTitleCell.inset
     )
 }
 
@@ -81,7 +80,8 @@ func createCommentModel(
         repo: repo,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: isRoot
     )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)

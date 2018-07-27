@@ -193,7 +193,8 @@ private func createReviewComment(
         repo: repo,
         width: width,
         viewerCanUpdate: false,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: false
     )
 
     return IssueCommentModel(

@@ -158,14 +158,14 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             if result.pullRequest {
                 items.append(item(.reviewers))
             }
-            if result.status.locked {
+            if result.labels.locked {
                 items.append(item(.unlock))
             } else {
                 items.append(item(.lock))
             }
         }
 
-        switch result.status.status {
+        switch result.labels.status.status {
         case .closed:
             items.append(item(.reopen))
         case .open:

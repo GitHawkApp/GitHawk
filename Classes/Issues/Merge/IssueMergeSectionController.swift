@@ -26,7 +26,8 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-        inset = UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: 0, bottom: 0, right: 0)
+        let row = Styles.Sizes.rowSpacing
+        inset = UIEdgeInsets(top: row, left: 0, bottom: row, right: 0)
     }
 
     // MARK: Private API
@@ -138,7 +139,7 @@ ListBindingSectionControllerSelectionDelegate {
         guard let cell = collectionContext?.dequeueReusableCell(of: cellType, for: self, at: index) as? UICollectionViewCell & ListBindable
             else { fatalError() }
 
-        if let cell = cell as? IssueCommentBaseCell {
+        if let cell = cell as? CardCollectionViewCell {
             cell.border = index == 0 ? .head : index == self.viewModels.count - 1 ? .tail : .neck
         }
         if let cell = cell as? IssueMergeButtonCell {

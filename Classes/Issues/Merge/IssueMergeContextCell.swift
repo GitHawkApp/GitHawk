@@ -11,7 +11,7 @@ import IGListKit
 import SnapKit
 import SDWebImage
 
-final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeContextCell: CardCollectionViewCell, ListBindable {
 
     private let avatarView = UIImageView()
     private let iconView = UIImageView()
@@ -33,7 +33,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
         avatarView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalToSuperview()
-            make.left.equalTo(Styles.Sizes.commentGutter)
+            make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
         titleLabel.font = Styles.Text.secondaryBold.preferredFont
@@ -51,7 +51,7 @@ final class IssueMergeContextCell: IssueCommentBaseCell, ListBindable {
 
         iconView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(-Styles.Sizes.commentGutter)
+            make.right.equalTo(-Styles.Sizes.cardGutter)
         }
 
         backgroundColor = Styles.Colors.Gray.lighter.color

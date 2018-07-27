@@ -14,22 +14,11 @@ protocol IssueCommentDoubleTapDelegate: class {
 
 class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
-    static let collapseCellMinHeight: CGFloat = 30
-
-    enum BorderType {
-        case head
-        case neck
-        case tail
-    }
+    static let collapseCellMinHeight: CGFloat = 45
 
     weak var doubleTapDelegate: IssueCommentDoubleTapDelegate?
-    var border: BorderType = .neck {
-        didSet { setNeedsLayout() }
-    }
     let doubleTapGesture = UITapGestureRecognizer()
 
-    private let borderLayer = CAShapeLayer()
-    private let backgroundLayer = CAShapeLayer()
     private let collapseLayer = CAGradientLayer()
     private let collapseButton = UIButton()
 
@@ -43,35 +32,26 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         doubleTapGesture.delegate = self
         addGestureRecognizer(doubleTapGesture)
 
-        // insert above contentView layer
-        borderLayer.strokeColor = UIColor.red.cgColor
-        borderLayer.strokeColor = Styles.Colors.Gray.border.color.cgColor
-        borderLayer.lineWidth = 1 / UIScreen.main.scale
-        borderLayer.fillColor = nil
-        layer.addSublayer(borderLayer)
-
-        // insert as base layer
-        backgroundLayer.strokeColor = nil
-        backgroundLayer.fillColor = UIColor.white.cgColor
-        layer.insertSublayer(backgroundLayer, at: 0)
-
         collapseLayer.isHidden = true
         collapseLayer.colors = [
             UIColor(white: 1, alpha: 0).cgColor,
+            UIColor(white: 1, alpha: 1).cgColor,
             UIColor(white: 1, alpha: 1).cgColor
         ]
+        collapseLayer.locations = [0, 0.5, 1]
 
         collapseButton.setImage(UIImage(named: "bullets")?.withRenderingMode(.alwaysTemplate), for: .normal)
         collapseButton.backgroundColor = Styles.Colors.Blue.medium.color
         collapseButton.accessibilityTraits = UIAccessibilityTraitNone
         collapseButton.tintColor = .white
         collapseButton.titleLabel?.font = Styles.Text.smallTitle.preferredFont
-        collapseButton.clipsToBounds = true
         collapseButton.isHidden = true
         collapseButton.contentEdgeInsets = UIEdgeInsets(top: -2, left: 8, bottom: -2, right: 8)
         collapseButton.imageEdgeInsets = .zero
         collapseButton.sizeToFit()
         collapseButton.layer.cornerRadius = collapseButton.bounds.height / 2
+        collapseButton.layer.borderColor = UIColor(white: 1, alpha: 0.2).cgColor
+        collapseButton.layer.borderWidth = 1
         collapseButton.isUserInteractionEnabled = false // allow tap to pass through to cell
         contentView.addSubview(collapseButton)
     }
@@ -84,69 +64,16 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
 
-        let bounds = contentView.frame
-        let inset = borderLayer.lineWidth / 2
-        let pixelSnapBounds = bounds.insetBy(dx: inset, dy: inset)
-        let cornerRadius = Styles.Sizes.cardCornerRadius
-
-        let borderPath = UIBezierPath()
-        let fillPath: UIBezierPath
-
-        switch border {
-        case .head:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.maxY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY + cornerRadius))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: pixelSnapBounds.minY),
-                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.minY))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY + cornerRadius),
-                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.maxY))
-
-            fillPath = borderPath.copy() as! UIBezierPath
-            fillPath.close()
-        case .neck:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.maxY))
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.maxY))
-
-            fillPath = UIBezierPath(rect: bounds)
-        case .tail:
-            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.minY))
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY - cornerRadius))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: pixelSnapBounds.maxY),
-                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.maxY))
-            borderPath.addQuadCurve(
-                to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY - cornerRadius),
-                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY)
-            )
-            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: bounds.minY))
-
-            fillPath = borderPath.copy() as! UIBezierPath
-            fillPath.close()
-        }
-        borderLayer.path = borderPath.cgPath
-        backgroundLayer.path = fillPath.cgPath
-
-        borderLayer.frame = self.bounds
-        backgroundLayer.frame = self.bounds
+        let contentBounds = contentView.bounds
 
         if collapseLayer.isHidden == false {
             contentView.layer.addSublayer(collapseLayer)
             contentView.bringSubview(toFront: collapseButton)
 
             let collapseFrame = CGRect(
-                x: bounds.minX,
-                y: bounds.height - IssueCommentBaseCell.collapseCellMinHeight,
-                width: bounds.width,
+                x: contentBounds.minX,
+                y: contentBounds.height - IssueCommentBaseCell.collapseCellMinHeight,
+                width: contentBounds.width,
                 height: IssueCommentBaseCell.collapseCellMinHeight
             )
 
@@ -161,14 +88,6 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                 y: collapseFrame.maxY - collapseButton.bounds.height / 2
             )
         }
-    }
-
-    override var backgroundColor: UIColor? {
-        get {
-            guard let color = backgroundLayer.fillColor else { return nil }
-            return UIColor(cgColor: color)
-        }
-        set { backgroundLayer.fillColor = newValue?.cgColor}
     }
 
     override func prepareForReuse() {

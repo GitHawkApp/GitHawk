@@ -34,8 +34,8 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
         label.textColor = Styles.Colors.Gray.light.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
         }
 
         collectionView.backgroundColor = .clear
@@ -44,7 +44,7 @@ final class IssueAssigneeSummaryCell: UICollectionViewCell, UICollectionViewData
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(label.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.top.bottom.right.equalTo(contentView)
+            make.top.bottom.right.equalToSuperview()
         }
     }
 

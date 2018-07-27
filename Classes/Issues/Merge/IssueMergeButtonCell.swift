@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeButtonCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeButtonCell: CardCollectionViewCell, ListBindable {
 
     var delegate: MergeButtonDelegate? {
         get { return mergeButton.delegate }
@@ -27,9 +27,9 @@ final class IssueMergeButtonCell: IssueCommentBaseCell, ListBindable {
         mergeButton.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(
                 top: Styles.Sizes.rowSpacing/2,
-                left: Styles.Sizes.commentGutter,
+                left: Styles.Sizes.columnSpacing,
                 bottom: Styles.Sizes.rowSpacing,
-                right: Styles.Sizes.commentGutter
+                right: Styles.Sizes.columnSpacing
             ))
         }
     }

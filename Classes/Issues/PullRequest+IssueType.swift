@@ -243,7 +243,8 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
                     repo: repo,
                     width: width,
                     viewerCanUpdate: viewerCanUpdate,
-                    contentSizeCategory: contentSizeCategory
+                    contentSizeCategory: contentSizeCategory,
+                    isRoot: false
                 )
                 let model = IssueReviewModel(
                     id: review.fragments.nodeFields.id,

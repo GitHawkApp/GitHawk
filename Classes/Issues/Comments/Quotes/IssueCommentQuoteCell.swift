@@ -20,9 +20,9 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
     static func inset(quoteLevel: Int) -> UIEdgeInsets {
         return UIEdgeInsets(
             top: 0,
-            left: Styles.Sizes.commentGutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(quoteLevel),
+            left: (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(quoteLevel),
             bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.commentGutter
+            right: 0
         )
     }
 
@@ -43,7 +43,7 @@ final class IssueCommentQuoteCell: IssueCommentBaseCell, ListBindable {
         textView.reposition(for: contentView.bounds.width)
         for (i, border) in borders.enumerated() {
             border.frame = CGRect(
-                x: Styles.Sizes.commentGutter + (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
+                x: (IssueCommentQuoteCell.borderWidth + Styles.Sizes.columnSpacing) * CGFloat(i),
                 y: 0,
                 width: IssueCommentQuoteCell.borderWidth,
                 height: contentView.bounds.height - Styles.Sizes.rowSpacing

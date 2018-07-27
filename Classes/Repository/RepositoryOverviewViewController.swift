@@ -33,6 +33,7 @@ BaseListViewControllerDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        feed.collectionView.backgroundColor = .white
         makeBackBarItemEmpty()
     }
 
@@ -64,6 +65,7 @@ BaseListViewControllerDataSource {
                         width: width,
                         viewerCanUpdate: false,
                         contentSizeCategory: contentSizeCategory,
+                        isRoot: false,
                         branch: branch
                     )
                     let model = RepositoryReadmeModel(models: models)

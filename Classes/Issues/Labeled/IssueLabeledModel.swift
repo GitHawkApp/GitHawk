@@ -78,7 +78,6 @@ final class IssueLabeledModel: ListDiffable {
             string: builder.build(),
             contentSizeCategory: contentSizeCategory,
             inset: IssueLabeledCell.insets,
-            backgroundColor: Styles.Colors.Gray.lighter.color,
             layoutManager: LabelLayoutManager()
         ).warm(width: width)
     }

@@ -14,27 +14,19 @@ final class LabelListCell: UICollectionViewCell, ListBindable {
     static let reuse = "cell"
     static let font = Styles.Text.smallTitle.preferredFont
 
-    static func size(_ string: String) -> CGSize {
-        return (string as NSString).size(withAttributes: [
-            .font: font
-            ]).resized(inset: UIEdgeInsets(
-                top: 1,
-                left: Styles.Sizes.labelTextPadding,
-                bottom: 1,
-                right: Styles.Sizes.labelTextPadding)
-        )
+    static func size(
+        _ string: String
+        ) -> CGSize {
+        return string.size(font: font, xPadding: Styles.Sizes.labelTextPadding, yPadding: 3)
     }
     
-    let nameLabel = UILabel()
+    private let nameLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         isAccessibilityElement = true
         accessibilityTraits |= UIAccessibilityTraitButton
-        
-        layer.borderColor = Styles.Colors.Gray.border.color.cgColor
-        layer.borderWidth = 1 / UIScreen.main.scale
         
         layer.cornerRadius = Styles.Sizes.labelCornerRadius
         contentView.layer.cornerRadius = Styles.Sizes.labelCornerRadius
