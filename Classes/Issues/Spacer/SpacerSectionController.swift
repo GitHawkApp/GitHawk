@@ -1,5 +1,5 @@
 //
-//  VerticalSpacerSectionController.swift
+//  SpacerSectionController.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/26/18.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class VerticalSpacerSectionController: ListSectionController {
+final class SpacerSectionController: ListSectionController {
 
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(
@@ -18,7 +18,7 @@ final class VerticalSpacerSectionController: ListSectionController {
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: VerticalSpacerCell.self, for: self, at: index) else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: SpacerCell.self, for: self, at: index) else {
             fatalError()
         }
         return cell

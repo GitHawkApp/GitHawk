@@ -1,5 +1,5 @@
 //
-//  VerticalSpacerModel.swift
+//  SpacerModel.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/26/18.
@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 
-final class VerticalSpacerModel: NSObject, ListDiffable {
+final class SpacerModel: NSObject, ListDiffable {
 
     private let _diffIdentifier: String
 
@@ -25,7 +25,7 @@ final class VerticalSpacerModel: NSObject, ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        return object is VerticalSpacerModel
+        return object is SpacerModel
     }
 
 }

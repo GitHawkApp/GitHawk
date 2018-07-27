@@ -1,5 +1,5 @@
 //
-//  VerticalSpacerCell.swift
+//  SpacerCell.swift
 //  Freetime
 //
 //  Created by Ryan Nystrom on 7/26/18.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-final class VerticalSpacerCell: UICollectionViewCell {
+final class SpacerCell: UICollectionViewCell {
 
     private let spaceView = UIView()
 

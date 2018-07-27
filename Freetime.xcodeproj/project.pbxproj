@@ -45,9 +45,9 @@
 		291929611F3FD2960012067B /* DiffString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929601F3FD2960012067B /* DiffString.swift */; };
 		291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929621F3FF0DA0012067B /* StyledTableCell.swift */; };
 		291929671F3FF9C50012067B /* BadgeNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291929661F3FF9C50012067B /* BadgeNotifications.swift */; };
-		29242810210A50BE001F5980 /* VerticalSpacerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924280F210A50BE001F5980 /* VerticalSpacerModel.swift */; };
-		29242812210A5148001F5980 /* VerticalSpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242811210A5148001F5980 /* VerticalSpacerCell.swift */; };
-		29242814210A51B5001F5980 /* VerticalSpacerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242813210A51B5001F5980 /* VerticalSpacerSectionController.swift */; };
+		29242810210A50BE001F5980 /* SpacerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924280F210A50BE001F5980 /* SpacerModel.swift */; };
+		29242812210A5148001F5980 /* SpacerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242811210A5148001F5980 /* SpacerCell.swift */; };
+		29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29242813210A51B5001F5980 /* SpacerSectionController.swift */; };
 		2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */; };
 		2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */; };
 		2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2924C18620D5B2F200FCFCFF /* PeopleSectionController.swift */; };
@@ -552,9 +552,9 @@
 		291929601F3FD2960012067B /* DiffString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffString.swift; sourceTree = "<group>"; };
 		291929621F3FF0DA0012067B /* StyledTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledTableCell.swift; sourceTree = "<group>"; };
 		291929661F3FF9C50012067B /* BadgeNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNotifications.swift; sourceTree = "<group>"; };
-		2924280F210A50BE001F5980 /* VerticalSpacerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSpacerModel.swift; sourceTree = "<group>"; };
-		29242811210A5148001F5980 /* VerticalSpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSpacerCell.swift; sourceTree = "<group>"; };
-		29242813210A51B5001F5980 /* VerticalSpacerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalSpacerSectionController.swift; sourceTree = "<group>"; };
+		2924280F210A50BE001F5980 /* SpacerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerModel.swift; sourceTree = "<group>"; };
+		29242811210A5148001F5980 /* SpacerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerCell.swift; sourceTree = "<group>"; };
+		29242813210A51B5001F5980 /* SpacerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerSectionController.swift; sourceTree = "<group>"; };
 		292484B71F01CB5C0054FE20 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2924C18020D5B29800FCFCFF /* MilestonesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestonesViewController.swift; sourceTree = "<group>"; };
 		2924C18220D5B2BF00FCFCFF /* MilestoneCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCell.swift; sourceTree = "<group>"; };
@@ -1067,14 +1067,14 @@
 			path = Files;
 			sourceTree = "<group>";
 		};
-		2924280E210A50B1001F5980 /* VerticalSpacer */ = {
+		2924280E210A50B1001F5980 /* Spacer */ = {
 			isa = PBXGroup;
 			children = (
-				29242811210A5148001F5980 /* VerticalSpacerCell.swift */,
-				2924280F210A50BE001F5980 /* VerticalSpacerModel.swift */,
-				29242813210A51B5001F5980 /* VerticalSpacerSectionController.swift */,
+				29242811210A5148001F5980 /* SpacerCell.swift */,
+				2924280F210A50BE001F5980 /* SpacerModel.swift */,
+				29242813210A51B5001F5980 /* SpacerSectionController.swift */,
 			);
-			path = VerticalSpacer;
+			path = Spacer;
 			sourceTree = "<group>";
 		};
 		2928C7861F15D7A30000D06D /* Renamed */ = {
@@ -1183,11 +1183,11 @@
 				2928C7861F15D7A30000D06D /* Renamed */,
 				297A372A1F1700A30081C04E /* Request */,
 				292CD3C61F0DB31200D3D57B /* Review */,
+				2924280E210A50B1001F5980 /* Spacer */,
 				294563E41EE4EE5B00DBCD35 /* Status */,
 				295840631EE89F19007723C6 /* StatusEvent */,
 				292FCAF31EDFCC510026635E /* Title */,
 				290744BD1F268F8700FD9E48 /* UserAutocomplete+GraphQL.swift */,
-				2924280E210A50B1001F5980 /* VerticalSpacer */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -2698,7 +2698,7 @@
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
 				299F63E4205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift in Sources */,
 				29B94E6D1FCB472400715D7E /* IssueFileChangesModel.swift in Sources */,
-				29242810210A50BE001F5980 /* VerticalSpacerModel.swift in Sources */,
+				29242810210A50BE001F5980 /* SpacerModel.swift in Sources */,
 				986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */,
 				29C0E7071ECBC6C50051D756 /* GithubClient.swift in Sources */,
 				2986B35A1FD30F0B00E3CFC6 /* IssueManagingModel.swift in Sources */,
@@ -2996,7 +2996,7 @@
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
 				15245488205DC016005810A6 /* IssueBranchesSectionController.swift in Sources */,
 				2930F2731F8A27750082BA26 /* WidthCache.swift in Sources */,
-				29242814210A51B5001F5980 /* VerticalSpacerSectionController.swift in Sources */,
+				29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
 				2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */,
@@ -3036,7 +3036,7 @@
 				D8D876FA1FB6084F00A57E2B /* UIBarButtonItem+TightSpacing.swift in Sources */,
 				2977788820B0DAD500F2AFC2 /* ViewMarkdownViewController.swift in Sources */,
 				29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */,
-				29242812210A5148001F5980 /* VerticalSpacerCell.swift in Sources */,
+				29242812210A5148001F5980 /* SpacerCell.swift in Sources */,
 				292CD3D81F0DC52900D3D57B /* UIViewController+IssueCommentHtmlCellNavigationDelegate.swift in Sources */,
 				297AE8801EC0D5C200B44A1F /* UIViewController+LoadingIndicator.swift in Sources */,
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,

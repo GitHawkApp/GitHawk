@@ -406,7 +406,7 @@ final class IssuesViewController:
 
         if let rootComment = current.rootComment {
             objects.append(rootComment)
-            objects.append(VerticalSpacerModel(position: objects.count))
+            objects.append(SpacerModel(position: objects.count))
         }
 
         if current.hasPreviousPage {
@@ -420,14 +420,14 @@ final class IssuesViewController:
             // append a spacer if the previous timeline element wasn't a comment
             if needsSpacer, i > 0
                 && !(timelineViewModels[i-1].needsSpacer || timelineViewModels[i-1].needsSpacer) {
-                objects.append(VerticalSpacerModel(position: objects.count))
+                objects.append(SpacerModel(position: objects.count))
             }
 
             objects.append(model)
 
             // always append a spacer unless its the last item in the timeline
             if needsSpacer, i < timelineViewModels.count - 1 {
-                objects.append(VerticalSpacerModel(position: objects.count))
+                objects.append(SpacerModel(position: objects.count))
             }
         }
 
@@ -469,7 +469,7 @@ final class IssuesViewController:
         case is IssueRequestModel: return IssueRequestSectionController()
         case is IssueMilestoneEventModel: return IssueMilestoneEventSectionController()
         case is IssueCommitModel: return IssueCommitSectionController(issueModel: model)
-        case is VerticalSpacerModel: return VerticalSpacerSectionController()
+        case is SpacerModel: return SpacerSectionController()
 
         // controls
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)

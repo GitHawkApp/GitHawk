@@ -33,7 +33,7 @@ final class IssueMergeContextCell: CardCollectionViewCell, ListBindable {
         avatarView.snp.makeConstraints { make in
             make.size.equalTo(Styles.Sizes.icon)
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview()
+            make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
         titleLabel.font = Styles.Text.secondaryBold.preferredFont
@@ -51,7 +51,7 @@ final class IssueMergeContextCell: CardCollectionViewCell, ListBindable {
 
         iconView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview()
+            make.right.equalTo(-Styles.Sizes.cardGutter)
         }
 
         backgroundColor = Styles.Colors.Gray.lighter.color
