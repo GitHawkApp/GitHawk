@@ -33,6 +33,7 @@ BaseListViewControllerDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        feed.collectionView.backgroundColor = .white
         makeBackBarItemEmpty()
     }
 
