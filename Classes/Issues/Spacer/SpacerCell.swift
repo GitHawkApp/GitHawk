@@ -19,9 +19,9 @@ final class SpacerCell: UICollectionViewCell {
         spaceView.backgroundColor = Styles.Colors.Gray.border.color
         contentView.addSubview(spaceView)
         spaceView.snp.makeConstraints { make in
-            make.width.equalTo(2)
-            make.top.bottom.equalToSuperview()
-            make.left.equalTo(Styles.Sizes.rowSpacing)
+            make.height.equalTo(1/UIScreen.main.scale)
+            make.centerY.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
     }
 
