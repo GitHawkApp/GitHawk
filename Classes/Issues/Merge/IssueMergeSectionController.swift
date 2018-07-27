@@ -26,7 +26,8 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
-//        inset = UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: 0, bottom: 0, right: 0)
+        let row = Styles.Sizes.rowSpacing
+        inset = UIEdgeInsets(top: row, left: 0, bottom: row, right: 0)
     }
 
     // MARK: Private API
