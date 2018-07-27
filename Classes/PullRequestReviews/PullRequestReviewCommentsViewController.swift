@@ -28,6 +28,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     lazy private var feed: Feed = {
         let f = Feed(viewController: self, delegate: self, managesLayout: false)
         f.collectionView.contentInset = Styles.Sizes.threadInset
+        f.collectionView.backgroundColor = .white
         return f
     }()
 
