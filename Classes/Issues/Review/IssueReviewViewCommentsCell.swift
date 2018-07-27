@@ -14,7 +14,7 @@ protocol IssueReviewViewCommentsCellDelegate: class {
     func didTapViewComments(cell: IssueReviewViewCommentsCell)
 }
 
-final class IssueReviewViewCommentsCell: CardCollectionViewCell, ListBindable {
+final class IssueReviewViewCommentsCell: IssueCommentBaseCell, ListBindable {
 
     weak var delegate: IssueReviewViewCommentsCellDelegate? = nil
 
@@ -32,8 +32,6 @@ final class IssueReviewViewCommentsCell: CardCollectionViewCell, ListBindable {
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
         }
-
-        border = .tail
     }
 
     required init?(coder aDecoder: NSCoder) {

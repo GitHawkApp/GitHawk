@@ -29,7 +29,7 @@ final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
         imageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalToSuperview()
+            make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
         label.textColor = Styles.Colors.Gray.dark.color

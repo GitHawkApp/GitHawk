@@ -17,6 +17,12 @@ import Squawk
 import ContextMenu
 import GitHubAPI
 
+extension ListDiffable {
+    var needsSpacer: Bool {
+        return self is IssueCommentModel || self is IssueReviewModel
+    }
+}
+
 final class IssuesViewController:
     MessageViewController,
     ListAdapterDataSource,
@@ -409,17 +415,18 @@ final class IssuesViewController:
 
         let timelineViewModels = current.timelineViewModels
         for (i, model) in timelineViewModels.enumerated() {
-            let isComment = model is IssueCommentModel
+            let needsSpacer = model.needsSpacer
 
             // append a spacer if the previous timeline element wasn't a comment
-            if isComment, i > 0, !(timelineViewModels[i-1] is IssueCommentModel) {
+            if needsSpacer, i > 0
+                && !(timelineViewModels[i-1].needsSpacer || timelineViewModels[i-1].needsSpacer) {
                 objects.append(VerticalSpacerModel(position: objects.count))
             }
 
             objects.append(model)
 
             // always append a spacer unless its the last item in the timeline
-            if isComment, i < timelineViewModels.count - 1 {
+            if needsSpacer, i < timelineViewModels.count - 1 {
                 objects.append(VerticalSpacerModel(position: objects.count))
             }
         }
