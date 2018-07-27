@@ -14,7 +14,7 @@ public struct V3Milestone: Codable {
     public let createdAt: Date
     public let closedIssues: Int
     public let closedAt: Date?
-    public let description: String
+    public let description: String?
     public let dueOn: Date?
     public let id: Int
     public let number: Int
