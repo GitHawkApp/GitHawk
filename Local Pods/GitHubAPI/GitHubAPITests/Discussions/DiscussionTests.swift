@@ -19,6 +19,7 @@ class DiscussionTests: XCTestCase {
             XCTAssertEqual(response.data.count, 1)
 
             let first = response.data.first!
+            XCTAssertEqual(first.number, 1)
             XCTAssertEqual(first.author.login, "octocat")
             XCTAssertEqual(first.title, "Our first team post")
             XCTAssertEqual(first.body, "<p>Hi! This is an area for us to collaborate as a team</p>")

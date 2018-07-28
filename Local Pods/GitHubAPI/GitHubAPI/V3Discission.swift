@@ -10,6 +10,7 @@ import Foundation
 
 public struct V3Discussion: Codable {
 
+    public let number: Int
     public let author: V3User
     public let title: String
 
@@ -25,6 +26,7 @@ public struct V3Discussion: Codable {
     public let webURL: URL
 
     enum CodingKeys: String, CodingKey {
+        case number
         case author
         case title
         case body = "body_html"
