@@ -34,8 +34,12 @@ final class PeopleSectionController: ListSwiftSectionController<IssueAssigneeVie
                         height: Styles.Sizes.tableCellHeightLarge
                     )
             },
-                configure: { [selected] in
-                    $0.configure(avatarURL: $1.value.avatarURL, username: $1.value.login, showCheckmark: selected)
+                configure: { [weak self] in
+                    $0.configure(
+                        avatarURL: $1.value.avatarURL,
+                        username: $1.value.login,
+                        showCheckmark: self?.selected == true
+                    )
                 },
                 didSelect: { [weak self] context in
                     guard let strongSelf = self else { return }
