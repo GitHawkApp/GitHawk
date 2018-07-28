@@ -114,7 +114,7 @@ ListBindingSectionControllerSelectionDelegate {
             buttonEnabled = false
         case .dirty:
             title = NSLocalizedString("Merge conflicts found", comment: "")
-            state = .failure
+            state = .warning
             buttonEnabled = false
         }
         viewModels.append(IssueMergeSummaryModel(

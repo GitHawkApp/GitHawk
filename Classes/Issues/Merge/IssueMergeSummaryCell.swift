@@ -62,7 +62,10 @@ final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
         case .failure:
             imageViewBackground = Styles.Colors.Red.medium.color
             iconName = "merge-x"
-        case .warning, .pending:
+        case .pending:
+            imageViewBackground = Styles.Colors.Yellow.medium.color
+            iconName = "primitive-dot"
+        case .warning:
             imageViewBackground = Styles.Colors.Gray.medium.color
             iconName = "merge-alert"
         }
