@@ -175,6 +175,7 @@
 		294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */; };
 		294B11221F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */; };
 		294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */; };
+		294D8BC0210CB5170007F2A2 /* HittableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294D8BBF210CB5170007F2A2 /* HittableButton.swift */; };
 		294EE4BD209006C0002C9CB1 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 294EE4BB209006C0002C9CB1 /* Interface.storyboard */; };
 		294EE4BF209006C2002C9CB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 294EE4BE209006C2002C9CB1 /* Assets.xcassets */; };
 		294EE4C6209006C2002C9CB1 /* FreetimeWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 294EE4C5209006C2002C9CB1 /* FreetimeWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -680,6 +681,7 @@
 		294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerDelegate.swift; sourceTree = "<group>"; };
 		294B11211F7B0B9500E04F2D /* UIScrollView+ScrollToTop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToTop.swift"; sourceTree = "<group>"; };
 		294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellHeightCache.swift; sourceTree = "<group>"; };
+		294D8BBF210CB5170007F2A2 /* HittableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HittableButton.swift; sourceTree = "<group>"; };
 		294EE4B9209006BF002C9CB1 /* FreetimeWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreetimeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EE4BC209006C0002C9CB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		294EE4BE209006C2002C9CB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1693,6 +1695,7 @@
 			children = (
 				29AAB7161FB4A2AE001D5E6A /* BoundedImageSize.swift */,
 				29316DB41ECC7DEB007CAE3F /* ButtonCell.swift */,
+				29622B44210520E6000C428D /* CardCollectionViewCell.swift */,
 				29DA1E871F5E2B8A0050C64B /* ClearAllHeaderCell.swift */,
 				29B94E661FCB2D4600715D7E /* CodeView.swift */,
 				29C167661ECA005500439D62 /* Constants.swift */,
@@ -1705,6 +1708,7 @@
 				29136BDA200A626D007317BE /* FixedRefreshControl.swift */,
 				299E86471EFD9DBB00E5FE70 /* FlexController.h */,
 				299E86481EFD9DBB00E5FE70 /* FlexController.m */,
+				294D8BBF210CB5170007F2A2 /* HittableButton.swift */,
 				297B06291FB9239E0026FA23 /* IGListCollectionViewLayout+GitHawk.swift */,
 				299A049E1FAE1D0F003C2450 /* InitialEmptyView.swift */,
 				29AF1E871F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift */,
@@ -1741,7 +1745,6 @@
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				299F63E1205DE1470015D901 /* UIView+DateDetails.swift */,
-				29622B44210520E6000C428D /* CardCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3008,6 +3011,7 @@
 				29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
+				294D8BC0210CB5170007F2A2 /* HittableButton.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
 				2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */,
