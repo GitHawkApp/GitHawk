@@ -92,16 +92,38 @@ ListBindingSectionControllerSelectionDelegate {
 
         viewModels += object.contexts as [ListDiffable]
 
-        let mergeable = object.state == .mergeable
+        let title: String
+        let state: IssueMergeSummaryModel.State
+        let buttonEnabled: Bool
+        switch object.state {
+        case .clean, .hasHooks, .unstable:
+            title = NSLocalizedString("No conflicts with base branch", comment: "")
+            state = .success
+            buttonEnabled = true
+        case .behind:
+            title = NSLocalizedString("Head ref is out of date", comment: "")
+            state = .warning
+            buttonEnabled = false
+        case .blocked:
+            title = NSLocalizedString("Not authorized to merge", comment: "")
+            state = .failure
+            buttonEnabled = false
+        case .unknown:
+            title = NSLocalizedString("Merge status unknown", comment: "")
+            state = .pending
+            buttonEnabled = false
+        case .dirty:
+            title = NSLocalizedString("Merge conflicts found", comment: "")
+            state = .failure
+            buttonEnabled = false
+        }
         viewModels.append(IssueMergeSummaryModel(
-            title: mergeable ?
-                NSLocalizedString("No conflicts with base branch", comment: "")
-                : NSLocalizedString("Merge conflicts found", comment: ""),
-            state: mergeable ? .success : .warning
+            title: title,
+            state: state
         ))
 
         viewModels.append(IssueMergeButtonModel(
-            enabled: mergeable,
+            enabled: buttonEnabled,
             type: preferredMergeType,
             loading: loading
         ))

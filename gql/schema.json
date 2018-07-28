@@ -10121,6 +10121,22 @@
               "deprecationReason": null
             },
             {
+              "name": "canBeRebased",
+              "description": "Whether or not the pull request is rebaseable.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "changedFiles",
               "description": "The number of changed files in this pull request.",
               "args": [],
@@ -10571,6 +10587,22 @@
                 "kind": "OBJECT",
                 "name": "Commit",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "mergeStateStatus",
+              "description": "Detailed information about the current pull request merge state status.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "MergeStateStatus",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -24028,6 +24060,59 @@
             {
               "name": "UNKNOWN",
               "description": "The mergeability of the pull request is still being calculated.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "MergeStateStatus",
+          "description": "Detailed status information about a pull request merge.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "DIRTY",
+              "description": "The merge commit cannot be cleanly created.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "UNKNOWN",
+              "description": "The state cannot currently be determined.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "BLOCKED",
+              "description": "The merge is blocked.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "BEHIND",
+              "description": "The head ref is out of date.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "UNSTABLE",
+              "description": "Mergeable with non-passing commit status.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "HAS_HOOKS",
+              "description": "Mergeable with passing commit status and pre-recieve hooks.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "CLEAN",
+              "description": "Mergeable and passing commit status.",
               "isDeprecated": false,
               "deprecationReason": null
             }
