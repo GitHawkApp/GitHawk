@@ -247,6 +247,7 @@
 				290890AB204BC7D400D088BC /* V3VerifyPersonalAccessTokenRequest.swift */,
 				29580530204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift */,
 				49C4F0CB210C942C00EBA722 /* V3Discission.swift */,
+				49C4F0CD210C95DD00EBA722 /* V3DiscissionsRequest.swift */,
 			);
 			path = GitHubAPI;
 			sourceTree = "<group>";
@@ -535,6 +536,7 @@
 				29F3A18E20CD7DFC00645CB7 /* V3SubscribeThreadRequest.swift in Sources */,
 				29580511204B629B009CFD51 /* Processing.swift in Sources */,
 				29C1A9E4204B182200CB6995 /* Alamofire+GitHubAPI.swift in Sources */,
+				49C4F0CE210C95DD00EBA722 /* V3DiscissionsRequest.swift in Sources */,
 				290890B2204BCBD200D088BC /* V3PullRequestFilesRequest.swift in Sources */,
 				29580531204B7BCD009CFD51 /* V3ViewerIsCollaboratorRequest.swift in Sources */,
 				290890AA204BC58A00D088BC /* V3CreateIssueRequest.swift in Sources */,
