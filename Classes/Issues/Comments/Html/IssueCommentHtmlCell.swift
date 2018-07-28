@@ -45,6 +45,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     color: #\(Styles.Colors.Gray.dark);
     padding: \(Styles.Sizes.columnSpacing)px 0 0;
     margin: 0;
+    background-color: #ffffff;
     }
     * { font-family: -apple-system; font-size: \(Styles.Text.body.preferredFont.pointSize)px; }
     b, strong{font-weight: \(Styles.Sizes.HTML.boldWeight);}
@@ -121,7 +122,7 @@ final class IssueCommentHtmlCell: IssueCommentBaseCell, ListBindable, UIWebViewD
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        webView.backgroundColor = .clear
+        webView.backgroundColor = .white
         webView.delegate = self
         webView.scrollView.bounces = false
 
