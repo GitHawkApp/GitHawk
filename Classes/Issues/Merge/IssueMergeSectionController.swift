@@ -27,7 +27,7 @@ ListBindingSectionControllerSelectionDelegate {
         dataSource = self
         selectionDelegate = self
         let row = Styles.Sizes.rowSpacing
-        inset = UIEdgeInsets(top: row, left: 0, bottom: row, right: 0)
+        inset = UIEdgeInsets(top: 3*row, left: 0, bottom: row, right: 0)
     }
 
     // MARK: Private API
