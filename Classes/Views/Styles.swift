@@ -89,6 +89,7 @@ enum Styles {
         static let purple = "6f42c1"
         static let blueGray = "8697af"
         static let menuBackgroundColor = "292D35"
+        static let splitViewBackground = UIColor(red: 0.556863, green: 0.556863, blue: 0.576471, alpha: 1)
 
         enum Red {
             static let medium = "cb2431"

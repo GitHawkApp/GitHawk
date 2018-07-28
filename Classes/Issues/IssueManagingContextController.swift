@@ -91,33 +91,33 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
 
     func item(_ action: Action) -> ContrastContextMenuItem {
         let title: String
-        let icon: String
+        let iconName: String
 
         switch action {
         case .labels:
             title = Constants.Strings.labels
-            icon = "tag"
+            iconName = "tag"
         case .milestone:
             title = Constants.Strings.milestone
-            icon = "milestone"
+            iconName = "milestone"
         case .assignees:
             title = Constants.Strings.assignees
-            icon = "person"
+            iconName = "person"
         case .reviewers:
             title = Constants.Strings.reviewers
-            icon = "reviewer"
+            iconName = "reviewer"
         case .unlock:
             title = NSLocalizedString("Unlock", comment: "")
-            icon = "key"
+            iconName = "key"
         case .lock:
             title = NSLocalizedString("Lock", comment: "")
-            icon = "lock"
+            iconName = "lock"
         case .reopen:
             title = Constants.Strings.reopen
-            icon = "sync"
+            iconName = "sync"
         case .close:
             title = Constants.Strings.close
-            icon = "x"
+            iconName = "x"
         }
 
         let separator: Bool
@@ -126,7 +126,15 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         default: separator = false
         }
 
-        return ContrastContextMenuItem(title: title, iconName: icon, separator: separator, action: actionBlock(action))
+        let iconColor: UIColor
+        switch action {
+        case .close: iconColor = Styles.Colors.Red.medium.color
+        default: iconColor = Styles.Colors.Blue.medium.color
+        }
+
+        return ContrastContextMenuItem(title: title, iconName: iconName, iconColor: iconColor,
+                                       separator: separator, action: actionBlock(action))
+
     }
 
     func actionBlock(_ action: Action) -> (ContrastContextMenu) -> Void {

@@ -182,7 +182,6 @@
 		294EE4CB209006C2002C9CB1 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294EE4CA209006C2002C9CB1 /* InboxController.swift */; };
 		294EE4D1209006C3002C9CB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 294EE4D0209006C3002C9CB1 /* Assets.xcassets */; };
 		294EE4D5209006C3002C9CB1 /* FreetimeWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 294EE4B9209006BF002C9CB1 /* FreetimeWatch.app */; };
-		2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */; };
 		2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */; };
 		2957777B200129EB00DDD785 /* Int+Abbreviated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2957777A200129EB00DDD785 /* Int+Abbreviated.swift */; };
 		295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295840641EE89F28007723C6 /* IssueStatusEventModel.swift */; };
@@ -691,7 +690,6 @@
 		294EE4CA209006C2002C9CB1 /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxController.swift; sourceTree = "<group>"; };
 		294EE4D0209006C3002C9CB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		294EE4D2209006C3002C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSplitViewController.swift; sourceTree = "<group>"; };
 		2950AB1C2083B1E400C6F19A /* EmptyLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLoadingView.swift; sourceTree = "<group>"; };
 		2957777A200129EB00DDD785 /* Int+Abbreviated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Abbreviated.swift"; sourceTree = "<group>"; };
 		295840641EE89F28007723C6 /* IssueStatusEventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueStatusEventModel.swift; sourceTree = "<group>"; };
@@ -1663,7 +1661,6 @@
 		297AE8681EC0D5C200B44A1F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2950AB1A2082E47200C6F19A /* AppSplitViewController.swift */,
 				29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */,
 				29C8F9AA208BF64D0075931C /* BaseListViewController2.swift */,
 				2973E80C20FBD7BF0050233F /* ContrastContextMenu.swift */,
@@ -3014,7 +3011,6 @@
 				29242814210A51B5001F5980 /* SpacerSectionController.swift in Sources */,
 				2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */,
 				2999972E203120E300995FFD /* IssueMergeButtonCell.swift in Sources */,
-				2950AB1B2082E47200C6F19A /* AppSplitViewController.swift in Sources */,
 				294D8BC0210CB5170007F2A2 /* HittableButton.swift in Sources */,
 				2993046B1FBA8C04007B9737 /* IssueManagingExpansionCell.swift in Sources */,
 				29C33FDB1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift in Sources */,
