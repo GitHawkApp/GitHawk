@@ -15,7 +15,7 @@ extension IssueCommentModel {
         case .single:
             // title and other header objects will have bottom insetting
             if isRoot {
-                return UIEdgeInsets(top: Styles.Sizes.rowSpacing/2, left: 0, bottom: 0, right: 0)
+                return UIEdgeInsets(top: Styles.Sizes.rowSpacing, left: 0, bottom: 0, right: 0)
             } else {
                 return .zero
             }
