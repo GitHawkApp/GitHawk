@@ -90,43 +90,51 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func item(_ action: Action) -> ContrastContextMenuItem {
-        let title: String
-        let icon: String
-
-        switch action {
-        case .labels:
-            title = Constants.Strings.labels
-            icon = "tag"
-        case .milestone:
-            title = Constants.Strings.milestone
-            icon = "milestone"
-        case .assignees:
-            title = Constants.Strings.assignees
-            icon = "person"
-        case .reviewers:
-            title = Constants.Strings.reviewers
-            icon = "reviewer"
-        case .unlock:
-            title = NSLocalizedString("Unlock", comment: "")
-            icon = "key"
-        case .lock:
-            title = NSLocalizedString("Lock", comment: "")
-            icon = "lock"
-        case .reopen:
-            title = Constants.Strings.reopen
-            icon = "sync"
-        case .close:
-            title = Constants.Strings.close
-            icon = "x"
-        }
-
-        let separator: Bool
-        switch action {
-        case .reopen, .close: separator = true
-        default: separator = false
-        }
-
-        return ContrastContextMenuItem(title: title, iconName: icon, separator: separator, action: actionBlock(action))
+      let title: String
+      let iconName: String
+      
+      switch action {
+      case .labels:
+        title = Constants.Strings.labels
+        iconName = "tag"
+      case .milestone:
+        title = Constants.Strings.milestone
+        iconName = "milestone"
+      case .assignees:
+        title = Constants.Strings.assignees
+        iconName = "person"
+      case .reviewers:
+        title = Constants.Strings.reviewers
+        iconName = "reviewer"
+      case .unlock:
+        title = NSLocalizedString("Unlock", comment: "")
+        iconName = "key"
+      case .lock:
+        title = NSLocalizedString("Lock", comment: "")
+        iconName = "lock"
+      case .reopen:
+        title = Constants.Strings.reopen
+        iconName = "sync"
+      case .close:
+        title = Constants.Strings.close
+        iconName = "x"
+      }
+      
+      let separator: Bool
+      switch action {
+      case .reopen, .close: separator = true
+      default: separator = false
+      }
+      
+      let iconColor: UIColor
+      switch action {
+      case .close: iconColor = Styles.Colors.Red.medium.color
+      default: iconColor = Styles.Colors.Blue.medium.color
+      }
+      
+      return ContrastContextMenuItem(title: title, iconName: iconName, iconColor: iconColor,
+                                     separator: separator, action: actionBlock(action))
+      
     }
 
     func actionBlock(_ action: Action) -> (ContrastContextMenu) -> Void {
