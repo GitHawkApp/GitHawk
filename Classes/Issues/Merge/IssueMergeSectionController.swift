@@ -108,7 +108,7 @@ ListBindingSectionControllerSelectionDelegate {
             title = NSLocalizedString("Not authorized to merge", comment: "")
             state = .failure
             buttonEnabled = false
-        case .unknown:
+        case .unknown, .__unknown(_):
             title = NSLocalizedString("Merge status unknown", comment: "")
             state = .pending
             buttonEnabled = false
