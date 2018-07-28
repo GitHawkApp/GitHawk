@@ -34,10 +34,10 @@ final class NotificationCell: SelectableCell {
     private let detailsLabel = UILabel()
     private let textView = StyledTextView()
     private let stackView = UIStackView()
-    private let commentButton = UIButton()
-    private let readButton = UIButton()
-    private let watchButton = UIButton()
-    private let moreButton = UIButton()
+    private let commentButton = HittableButton()
+    private let readButton = HittableButton()
+    private let watchButton = HittableButton()
+    private let moreButton = HittableButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
