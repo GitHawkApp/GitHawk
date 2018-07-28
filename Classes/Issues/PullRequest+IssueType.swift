@@ -76,7 +76,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
 
         return IssueMergeModel(
             id: commit.id,
-            state: mergeable,
+            state: mergeStateStatus,
             contexts: contexts,
             availableTypes: availableTypes
         )

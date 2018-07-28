@@ -412,6 +412,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
         additions
         deletions
         mergeable
+        mergeStateStatus
       }
     }
   }
