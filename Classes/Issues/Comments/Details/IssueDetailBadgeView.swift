@@ -1,27 +1,27 @@
 //
-//  ShowMoreDetailsLabel.swift
+//  IssueDetailBadgeView.swift
 //  Freetime
 //
-//  Created by Ryan Nystrom on 5/13/17.
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Ryan Nystrom on 7/29/18.
+//  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 
 import UIKit
 
-final class ShowMoreDetailsLabel: UILabel {
+final class IssueDetailBadgeView: UIImageView {
 
-    var detailText: String = ""
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .zero)
+        image = UIImage(named: "githawk-badge")?.withRenderingMode(.alwaysTemplate)
+        tintColor = Styles.Colors.Blue.medium.color
 
         isUserInteractionEnabled = true
 
-        let longPress = UILongPressGestureRecognizer(
+        let tap = UITapGestureRecognizer(
             target: self,
             action: #selector(ShowMoreDetailsLabel.showMenu(recognizer:))
         )
-        addGestureRecognizer(longPress)
+        addGestureRecognizer(tap)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,15 +34,15 @@ final class ShowMoreDetailsLabel: UILabel {
 
     // MARK: Private API
 
-    @objc func showMenu(recognizer: UILongPressGestureRecognizer) {
-        guard recognizer.state == .began,
-            !detailText.isEmpty else { return }
-
+    @objc func showMenu(recognizer: UITapGestureRecognizer) {
         becomeFirstResponder()
 
         let menu = UIMenuController.shared
         menu.menuItems = [
-            UIMenuItem(title: detailText, action: #selector(ShowMoreDetailsLabel.empty))
+            UIMenuItem(
+                title: NSLocalizedString("Sent with GitHawk", comment: ""),
+                action: #selector(IssueDetailBadgeView.empty)
+            )
         ]
         menu.setTargetRect(bounds, in: self)
         menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)

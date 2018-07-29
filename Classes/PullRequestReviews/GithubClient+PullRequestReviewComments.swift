@@ -177,18 +177,21 @@ private func createReviewComment(
     contentSizeCategory: UIContentSizeCategory,
     width: CGFloat
     ) -> IssueCommentModel {
+    let checkedMarkdown = CheckIfSentWithGitHawk(markdown: model.body)
+
     let details = IssueCommentDetailsViewModel(
         date: model.created,
         login: model.author,
         avatarURL: model.authorAvatarURL,
         didAuthor: model.author == viewer,
         editedBy: nil,
-        editedAt: nil
+        editedAt: nil,
+        sentWithGitHawk: checkedMarkdown.sentWithGitHawk
     )
 
     let reactions = IssueCommentReactionViewModel(models: [])
     let bodies = MarkdownModels(
-        model.body,
+        checkedMarkdown.markdown,
         owner: owner,
         repo: repo,
         width: width,

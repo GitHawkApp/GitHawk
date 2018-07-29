@@ -24,6 +24,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
     private let loginLabel = UILabel()
     private let dateLabel = ShowMoreDetailsLabel()
     private let editedLabel = ShowMoreDetailsLabel()
+    private let badgeView = IssueDetailBadgeView()
     private var login = ""
 
     override init(frame: CGRect) {
@@ -72,6 +73,12 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
             make.left.equalTo(loginLabel.snp.right).offset(Styles.Sizes.columnSpacing/2)
             make.centerY.equalTo(loginLabel)
         }
+
+        contentView.addSubview(badgeView)
+        badgeView.snp.makeConstraints { make in
+            make.centerY.equalTo(dateLabel)
+            make.right.equalTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -96,6 +103,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         imageView.sd_setImage(with: viewModel.avatarURL)
         dateLabel.setText(date: viewModel.date, format: .short)
         loginLabel.text = viewModel.login
+        badgeView.isHidden = !viewModel.sentWithGitHawk
 
         if let editedLogin = viewModel.editedBy, let editedDate = viewModel.editedAt {
             editedLabel.isHidden = false

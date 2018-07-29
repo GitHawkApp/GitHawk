@@ -206,6 +206,8 @@
 		2965F3702071508C003CC92F /* StyledTextBuilder+Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2965F36F2071508C003CC92F /* StyledTextBuilder+Checkbox.swift */; };
 		2965F37220715161003CC92F /* StyledTextBuilder+NewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */; };
 		29693EE520FAA05F00336200 /* IssueAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29693EE420FAA05F00336200 /* IssueAutocomplete.swift */; };
+		296A4960210E7B9A00BBBF2B /* IssueDetailBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A495F210E7B9A00BBBF2B /* IssueDetailBadgeView.swift */; };
+		296A4962210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */; };
 		296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */; };
 		296B4E341F7C80B800C16887 /* GraphQLIDDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */; };
 		2971722B1F069E6B005E43AC /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */; };
@@ -715,6 +717,8 @@
 		2965F36F2071508C003CC92F /* StyledTextBuilder+Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyledTextBuilder+Checkbox.swift"; sourceTree = "<group>"; };
 		2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyledTextBuilder+NewBase.swift"; sourceTree = "<group>"; };
 		29693EE420FAA05F00336200 /* IssueAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAutocomplete.swift; sourceTree = "<group>"; };
+		296A495F210E7B9A00BBBF2B /* IssueDetailBadgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailBadgeView.swift; sourceTree = "<group>"; };
+		296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIfSentWithGitHawk.swift; sourceTree = "<group>"; };
 		296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLIDDecode.swift; sourceTree = "<group>"; };
 		296B4E331F7C80B800C16887 /* GraphQLIDDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLIDDecodeTests.swift; sourceTree = "<group>"; };
 		2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
@@ -1239,6 +1243,7 @@
 		292FCACD1EDFCC510026635E /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				296A495F210E7B9A00BBBF2B /* IssueDetailBadgeView.swift */,
 				292FCACE1EDFCC510026635E /* IssueCommentDetailCell.swift */,
 				292FCACF1EDFCC510026635E /* IssueCommentDetailsViewModel.swift */,
 			);
@@ -1464,6 +1469,7 @@
 				2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */,
 				29921BCB1EF624D400C1E848 /* UIFont+MutableTraits.swift */,
 				2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */,
+				296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -2919,6 +2925,7 @@
 				29136BDB200A626D007317BE /* FixedRefreshControl.swift in Sources */,
 				2980033E1F51E93500BE90F4 /* RatingSectionController.swift in Sources */,
 				29FF85A51EE1EA7A007B8762 /* ReactionContent+ReactionType.swift in Sources */,
+				296A4960210E7B9A00BBBF2B /* IssueDetailBadgeView.swift in Sources */,
 				292FCB1D1EDFCD3D0026635E /* ReactionViewModel.swift in Sources */,
 				29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */,
 				29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */,
@@ -3003,6 +3010,7 @@
 				DCA5ED121FAEE3AE0072F074 /* Store.swift in Sources */,
 				29973E561F68BFDE0004B693 /* Signature.swift in Sources */,
 				2971722D1F069E96005E43AC /* SpinnerCell.swift in Sources */,
+				296A4962210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift in Sources */,
 				29B94E6F1FCB743900715D7E /* RepositoryFileCell.swift in Sources */,
 				29459A711FE7153500034A04 /* LogEnvironmentInformation.swift in Sources */,
 				49AF91B4204B4B6A00DFF325 /* MergeHelper.swift in Sources */,
