@@ -16,7 +16,7 @@ protocol NotificationCellDelegate: class {
     func didTapMore(cell: NotificationCell, sender: UIView)
 }
 
-final class NotificationCell: SelectableCell {
+final class NotificationCell: SelectableCell, CAAnimationDelegate {
 
     public static let inset = UIEdgeInsets(
         top: NotificationCell.topInset + NotificationCell.headerHeight + Styles.Sizes.rowSpacing,
@@ -38,6 +38,7 @@ final class NotificationCell: SelectableCell {
     private let readButton = HittableButton()
     private let watchButton = HittableButton()
     private let moreButton = HittableButton()
+    private var readLayer = CAShapeLayer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,6 +47,7 @@ final class NotificationCell: SelectableCell {
         isAccessibilityElement = true
 
         backgroundColor = .white
+        clipsToBounds = true
 
         contentView.addSubview(iconImageView)
         contentView.addSubview(detailsLabel)
@@ -61,6 +63,15 @@ final class NotificationCell: SelectableCell {
         let font = Styles.Text.secondary.preferredFont
         let inset = NotificationCell.inset
         let actionsHeight = NotificationCell.actionsHeight
+
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.snp.makeConstraints { make in
+            make.left.equalTo(inset.left)
+            make.right.equalTo(-inset.right)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(actionsHeight)
+        }
 
         iconImageView.snp.makeConstraints { make in
             make.top.equalTo(inset.top)
@@ -80,15 +91,6 @@ final class NotificationCell: SelectableCell {
             make.top.equalTo(Styles.Sizes.rowSpacing)
             make.left.equalTo(NotificationCell.inset.left)
             make.right.lessThanOrEqualTo(dateLabel.snp.left).offset(-Styles.Sizes.columnSpacing)
-        }
-
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.snp.makeConstraints { make in
-            make.left.equalTo(inset.left)
-            make.right.equalTo(-inset.right)
-            make.bottom.equalToSuperview()
-            make.height.equalTo(actionsHeight)
         }
 
         commentButton.titleLabel?.font = font
@@ -127,6 +129,10 @@ final class NotificationCell: SelectableCell {
         }
 
         contentView.addBorder(.bottom, left: inset.left)
+
+        readLayer.fillColor = Styles.Colors.Gray.light.color.withAlphaComponent(0.08).cgColor
+        readLayer.isHidden = true
+        layer.addSublayer(readLayer)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -136,6 +142,14 @@ final class NotificationCell: SelectableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         textView.reposition(for: contentView.bounds.width)
+
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        readLayer.path = UIBezierPath(ovalIn: readButton.bounds).cgPath
+        readLayer.bounds = readButton.bounds
+        readLayer.position = convert(readButton.center, from: readButton.superview)
+        readLayer.transform = CATransform3DMakeScale(20, 20, 20)
+        CATransaction.commit()
     }
 
     override var accessibilityLabel: String? {
@@ -181,13 +195,8 @@ final class NotificationCell: SelectableCell {
         let watchingImageName = model.watching ? "mute" : "unmute"
         watchButton.setImage(UIImage(named: "\(watchingImageName)-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
 
-        //dim all non-actionable subviews ie all subviews besides moreButton and watchButton
-        let dimIfRead: CGFloat = model.read ? 0.5 : 1
-        [iconImageView, detailsLabel, dateLabel, textView].forEach { view in
-            view.alpha = dimIfRead
-        }
-        commentButton.alpha = dimIfRead
-        readButton.alpha = dimIfRead
+        dimViews(dim: model.read)
+        hideReadLayer(hide: !model.read)
 
         let watchAccessibilityAction = UIAccessibilityCustomAction(
             name: model.watching ?
@@ -225,6 +234,44 @@ final class NotificationCell: SelectableCell {
 
     @objc func onMore(sender: UIView) {
         delegate?.didTapMore(cell: self, sender: sender)
+    }
+
+    func animateRead() {
+        UIView.animate(withDuration: 0.1) {
+            self.dimViews(dim: true)
+        }
+
+        hideReadLayer(hide: false)
+
+        let scale = CABasicAnimation(keyPath: "transform.scale")
+        scale.fromValue = 1
+        scale.duration = 0.22
+        scale.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+
+        let fade = CABasicAnimation(keyPath: "opacity")
+        fade.fromValue = 0
+        fade.duration = 0.05
+        fade.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+
+        let group = CAAnimationGroup()
+        group.animations = [scale, fade]
+
+        readLayer.add(group, forKey: nil)
+    }
+
+    private func dimViews(dim: Bool) {
+        let alpha: CGFloat = dim ? 0.5 : 1
+        [iconImageView, detailsLabel, dateLabel, textView].forEach { view in
+            view.alpha = alpha
+        }
+        readButton.alpha = dim ? 0.2 : 1
+    }
+
+    private func hideReadLayer(hide: Bool) {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        readLayer.isHidden = hide
+        CATransaction.commit()
     }
 
 }
