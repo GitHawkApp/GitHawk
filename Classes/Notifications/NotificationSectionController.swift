@@ -49,6 +49,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         else {
             return
         }
+        cell.animateRead()
         generator.impactOccurred()
         modelController.markNotificationRead(id: id)
     }
