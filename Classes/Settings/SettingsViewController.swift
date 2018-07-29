@@ -139,11 +139,11 @@ NewIssueTableViewControllerDelegate {
     }
   
     func onReviewOnAppStore() {
-      guard let url = URL(string: "itms-apps://itunes.apple.com/us/app/githawk-for-github/id1252320249")
-        else { fatalError("Should always be valid app store URL") }
-      if UIApplication.shared.canOpenURL(url) {
-        UIApplication.shared.open(url)
-      }
+        guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
+            else { fatalError("Should always be valid app store URL") }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
 
     func onReportBug() {
