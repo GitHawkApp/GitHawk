@@ -65,17 +65,20 @@ func createCommentModel(
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
+    let checkedMarkdown = CheckIfSentWithGitHawk(markdown: commentFields.body)
+
     let details = IssueCommentDetailsViewModel(
         date: date,
         login: author.login,
         avatarURL: avatarURL,
         didAuthor: commentFields.viewerDidAuthor,
         editedBy: commentFields.editor?.login,
-        editedAt: commentFields.lastEditedAt?.githubDate
+        editedAt: commentFields.lastEditedAt?.githubDate,
+        sentWithGitHawk: checkedMarkdown.sentWithGitHawk
     )
 
     let bodies = MarkdownModels(
-        commentFields.body,
+        checkedMarkdown.markdown,
         owner: owner,
         repo: repo,
         width: width,
