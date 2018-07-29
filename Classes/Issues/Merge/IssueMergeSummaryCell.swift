@@ -22,13 +22,13 @@ final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
         contentView.addSubview(imageView)
         contentView.addSubview(label)
 
-        imageView.clipsToBounds = true
-        imageView.tintColor = .white
-        imageView.layer.cornerRadius = Styles.Sizes.avatar.width / 2
-        imageView.contentMode = .center
+//        imageView.clipsToBounds = true
+//        imageView.tintColor = .white
+//        imageView.layer.cornerRadius = Styles.Sizes.avatar.width / 2
+//        imageView.contentMode = .center
         imageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.size.equalTo(Styles.Sizes.avatar)
+//            make.size.equalTo(Styles.Sizes.avatar)
             make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
@@ -69,7 +69,8 @@ final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
             imageViewBackground = Styles.Colors.Gray.medium.color
             iconName = "merge-alert"
         }
-        imageView.backgroundColor = imageViewBackground
+//        imageView.backgroundColor = imageViewBackground
+        imageView.tintColor = imageViewBackground
         imageView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
         accessibilityLabel = .localizedStringWithFormat("%@. (state: %@)", viewModel.title, viewModel.state.description)
     }
