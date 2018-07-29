@@ -18,14 +18,13 @@ final class IssueViewFilesSectionController: ListGenericSectionController<IssueF
         self.issueModel = issueModel
         self.client = client
         super.init()
-        inset = UIEdgeInsets(top: 0, left: 0, bottom: Styles.Sizes.rowSpacing / 2, right: 0)
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
         guard let width = collectionContext?.insetContainerSize.width else { fatalError("Collection context must be set") }
         return CGSize(
             width: width,
-            height: Styles.Text.secondary.preferredFont.lineHeight
+            height: Styles.Text.secondary.preferredFont.lineHeight + Styles.Sizes.rowSpacing
         )
     }
 
