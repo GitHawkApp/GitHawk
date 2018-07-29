@@ -193,7 +193,7 @@ CHECKOUT OPTIONS:
     :commit: 5c1c92b600f0d8094f22fff48e26ded323568194
     :git: https://github.com/Instagram/IGListKit.git
   MessageViewController:
-    :commit: 2c550c06deae7a810da5722f311e84e40a25e69b
+    :commit: ca6935cf8fc779aedd20e46c9a8b3bb3733e0ee7
     :git: https://github.com/GitHawkApp/MessageViewController.git
   Squawk:
     :commit: 399ae714ecd69ebf60ca5f4e2ff7822e21b91586

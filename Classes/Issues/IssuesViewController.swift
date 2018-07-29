@@ -212,7 +212,7 @@ final class IssuesViewController:
         feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
     }
 
-    override func didLayout() {
+    override func didLayout() {    
         let manageButtonSize = manageController.manageButton.bounds.size
         manageController.manageButton.frame = CGRect(
             origin: CGPoint(

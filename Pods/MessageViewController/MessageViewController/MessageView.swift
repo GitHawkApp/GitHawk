@@ -119,6 +119,15 @@ public final class MessageView: UIView, MessageTextViewListener {
         get { return textView.textContainerInset }
     }
 
+    public var contentInset: UIEdgeInsets {
+        set {
+            textView.contentInset = newValue
+            setNeedsLayout()
+            delegate?.wantsLayout(messageView: self)
+        }
+        get { return textView.contentInset }
+    }
+
     /// - Parameter accessibilityLabel: A custom `accessibilityLabel` to set on the button.
     /// If none is supplied, it will default to the icon's `accessibilityLabel`.
     public func setButton(icon: UIImage?, for state: UIControlState, position: ButtonPosition, accessibilityLabel: String? = nil) {
@@ -272,10 +281,21 @@ public final class MessageView: UIView, MessageTextViewListener {
         let textViewHeight = self.textViewHeight
         let textViewMaxY = textViewY + textViewHeight
 
+        // adjust for font descender so button aligns with the text baseline
+        let descender, pointSize: CGFloat
+        if let font = textView.font {
+            descender = floor(font.descender)
+            pointSize = ceil(font.pointSize)
+        } else {
+            descender = 0
+            pointSize = 0
+        }
+        let buttonYStarter = textViewMaxY - textViewInset.bottom - (pointSize - descender)/2
+
         // adjust by bottom offset so content is flush w/ text view
         let leftButtonFrame = CGRect(
             x: safeBounds.minX + leftButtonInset,
-            y: textViewMaxY - leftButtonSize.height + leftButton.bottomHeightOffset - textViewInset.bottom,
+            y: buttonYStarter - leftButtonSize.height/2 + leftButton.bottomHeightOffset,
             width: leftButtonSize.width,
             height: leftButtonSize.height
         )
@@ -293,7 +313,7 @@ public final class MessageView: UIView, MessageTextViewListener {
         // adjust by bottom offset so content is flush w/ text view
         let rightButtonFrame = CGRect(
             x: textViewFrame.maxX,
-            y: textViewMaxY - rightButtonSize.height + rightButton.bottomHeightOffset - textViewInset.bottom,
+            y: buttonYStarter - rightButtonSize.height/2 + rightButton.bottomHeightOffset,
             width: rightButtonSize.width,
             height: rightButtonSize.height
         )
