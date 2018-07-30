@@ -62,8 +62,7 @@ extension String {
             
             //if match's trailing character is not a number, include that
             if let right = substring(with: NSRange(location: match.range.right - 1, length: 1)) {
-                let nums: Set<Character> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-                if Set(right).isSubset(of: nums) == false {
+                if Int(right) == nil {
                     builder.add(text: right)
                 }
             }
