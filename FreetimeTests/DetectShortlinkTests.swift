@@ -104,14 +104,7 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertEqual(containsLink.linkText, "#432")
         XCTAssertEqual(containsLink.issueNumber, 432)
         XCTAssertEqual(builder.allText, testString)
-        
-        testString = "#4!"
-        builder = setupBuilder(with: testString)
-        containsLink = checkForIssueLink(builder.styledTexts)!
-        XCTAssertEqual(containsLink.linkText, "#4")
-        XCTAssertEqual(containsLink.issueNumber, 4)
-        XCTAssertEqual(builder.allText, testString)
-        
+
         testString = "!#4 yada yada"
         builder = setupBuilder(with: testString)
         containsLink = checkForIssueLink(builder.styledTexts)!
@@ -134,10 +127,6 @@ class DetectShortlinkTests: XCTestCase {
         XCTAssertNil(containsLink)
         
         builder = setupBuilder(with: "f#123")
-        containsLink = checkForIssueLink(builder.styledTexts)
-        XCTAssertNil(containsLink)
-        
-        builder = setupBuilder(with: "Fixes#1234")
         containsLink = checkForIssueLink(builder.styledTexts)
         XCTAssertNil(containsLink)
     }
