@@ -77,7 +77,7 @@ final class IssueCommentDetailCell: IssueCommentBaseCell, ListBindable {
         contentView.addSubview(badgeView)
         badgeView.snp.makeConstraints { make in
             make.centerY.equalTo(dateLabel)
-            make.right.equalTo(-30)
+            make.right.equalTo(-40)
         }
     }
 
