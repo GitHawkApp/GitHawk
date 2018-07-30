@@ -28,7 +28,7 @@ UICollectionViewDelegateFlowLayout {
     public weak var delegate: IssueCommentReactionCellDelegate?
 
     private let addButton = ResponderButton()
-    private let moreButton = ResponderButton()
+    private let moreButton = HittableButton()
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
