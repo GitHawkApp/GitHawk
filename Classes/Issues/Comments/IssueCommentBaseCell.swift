@@ -27,11 +27,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
         contentView.clipsToBounds = true
 
-        doubleTapGesture.addTarget(self, action: #selector(onDoubleTap))
-        doubleTapGesture.numberOfTapsRequired = 2
-        doubleTapGesture.delegate = self
-        addGestureRecognizer(doubleTapGesture)
-
+        setUpDoubleTapIfNeeded()
         collapseLayer.isHidden = true
         collapseLayer.colors = [
             UIColor(white: 1, alpha: 0).cgColor,
@@ -96,6 +92,17 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         collapseButton.isHidden = true
     }
 
+    private func setUpDoubleTapIfNeeded()
+    {
+      // If reaction is set to none, no need for the double-tap
+      if ReactionContent.defaultReaction == .__unknown("Disabled") { return }
+      
+      doubleTapGesture.addTarget(self, action: #selector(onDoubleTap))
+      doubleTapGesture.numberOfTapsRequired = 2
+      doubleTapGesture.delegate = self
+      addGestureRecognizer(doubleTapGesture)
+    }
+  
     // MARK: Private API
 
     @objc private func onDoubleTap() {

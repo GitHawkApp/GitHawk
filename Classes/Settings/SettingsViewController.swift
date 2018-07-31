@@ -282,7 +282,8 @@ extension SettingsViewController {
       (ReactionContent.laugh.emoji, #selector(SettingsViewController.onLaugh)),
       (ReactionContent.hooray.emoji, #selector(SettingsViewController.onHooray)),
       (ReactionContent.confused.emoji, #selector(SettingsViewController.onConfused)),
-      (ReactionContent.heart.emoji, #selector(SettingsViewController.onHeart))
+      (ReactionContent.heart.emoji, #selector(SettingsViewController.onHeart)),
+      ("Disable", #selector(SettingsViewController.onDisabled))
     ]
     
     let menu = UIMenuController.shared
@@ -298,7 +299,8 @@ extension SettingsViewController {
          #selector(SettingsViewController.onLaugh),
          #selector(SettingsViewController.onHooray),
          #selector(SettingsViewController.onConfused),
-         #selector(SettingsViewController.onHeart):
+         #selector(SettingsViewController.onHeart),
+         #selector(SettingsViewController.onDisabled):
       return true
     default: return false
     }
@@ -328,9 +330,15 @@ extension SettingsViewController {
    updateDefaultReaction(.heart)
   }
   
+  @objc private func onDisabled() {
+    updateDefaultReaction(.__unknown("Disabled"))
+  }
+  
   func updateDefaultReaction(_ reaction: ReactionContent)
   {
     UserDefaults.setDefault(reaction: reaction)
-    defaultReactionLabel.text = reaction.emoji
+    defaultReactionLabel.text = reaction == .__unknown("Disabled")
+      ? "Disabled"
+      : reaction.emoji
   }
 }
