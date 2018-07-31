@@ -19,4 +19,8 @@ extension ReactionContent {
         case .thumbsDown: return "👎"
         }
     }
+  
+   static var defaultReaction: ReactionContent {
+    return UserDefaults.getDefaultReaction
+   }
 }
