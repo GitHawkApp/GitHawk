@@ -5,7 +5,6 @@
 //  Created by Ehud Adler on 7/30/18.
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
-
 extension UserDefaults {
   // Stores ReactionContent in string form but
   // accepts and returns in original form
@@ -16,10 +15,10 @@ extension UserDefaults {
   
   static var getDefaultReaction: ReactionContent
   {
-    guard let reactionRaw: ReactionContent.RawValue = standard.string(forKey: "default.reaction")
-      else { return ReactionContent.thumbsUp}
-    let reaction = ReactionContent.init(rawValue: reactionRaw)
-    return reaction ?? ReactionContent.thumbsUp
+    guard let reactionAsString = standard.string(forKey: "default.reaction")
+      else { return ReactionContent.thumbsUp }
+    let reaction = reactionAsString.reaction
+    return reaction
   }
   
 }
