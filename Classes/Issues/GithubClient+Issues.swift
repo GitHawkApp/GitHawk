@@ -55,7 +55,7 @@ extension GithubClient {
         )
 
         let cache = self.cache
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.query(query, result: { $0.repository }) { result in
             switch result {
@@ -351,7 +351,7 @@ extension GithubClient {
         ) {
         guard let actor = userSession?.username else { return }
 
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
         let oldLabelNames = Set<String>(previous.labels.labels.map { $0.name })
         let newLabelNames = Set<String>(labels.map { $0.name })
 
@@ -441,7 +441,7 @@ extension GithubClient {
         var newEvents = [IssueRequestModel]()
         var added = [String]()
         var removed = [String]()
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         for old in oldAssigness {
             if !newAssignees.contains(old) {

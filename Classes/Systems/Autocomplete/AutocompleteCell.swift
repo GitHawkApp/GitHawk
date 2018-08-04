@@ -97,7 +97,7 @@ final class AutocompleteCell: StyledTableCell {
         emojiLabel.isHidden = emojiHidden
         thumbnailImageView.isHidden = thumbnailHidden
         titleLabel.attributedText = builder.build()
-            .render(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+            .render(contentSizeCategory: UIContentSizeCategory.preferred)
 
         let left = emojiHidden && thumbnailHidden
             ? Styles.Sizes.gutter
