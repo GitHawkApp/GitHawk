@@ -27,6 +27,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
+    @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
@@ -36,14 +37,16 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var apiStatusLabel: UILabel!
     @IBOutlet weak var apiStatusView: UIView!
     @IBOutlet weak var signatureSwitch: UISwitch!
-
-    override func viewDidLoad() {
+    @IBOutlet weak var defaultReactionLabel: UILabel!
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
+        defaultReactionLabel.text = ReactionContent.defaultReaction.emoji
 
         updateBadge()
         style()
@@ -108,6 +111,8 @@ NewIssueTableViewControllerDelegate {
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
+        } else if cell === setDefaultReaction {
+            onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
         }
@@ -176,6 +181,10 @@ NewIssueTableViewControllerDelegate {
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         navigationController?.showDetailViewController(repoViewController, sender: self)
+    }
+  
+    func onSetDefaultReaction() {
+      showDefaultReactionMenu()
     }
 
     func onSignOut() {
@@ -257,4 +266,70 @@ NewIssueTableViewControllerDelegate {
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
     }
+}
+
+extension SettingsViewController {
+  // Default Reaction + MenuController
+  
+   private func showDefaultReactionMenu() {
+    
+    setDefaultReaction.becomeFirstResponder() // Required
+    
+    let actions = [
+      (ReactionContent.thumbsUp.emoji, #selector(SettingsViewController.onThumbsUp)),
+      (ReactionContent.thumbsDown.emoji, #selector(SettingsViewController.onThumbsDown)),
+      (ReactionContent.laugh.emoji, #selector(SettingsViewController.onLaugh)),
+      (ReactionContent.hooray.emoji, #selector(SettingsViewController.onHooray)),
+      (ReactionContent.confused.emoji, #selector(SettingsViewController.onConfused)),
+      (ReactionContent.heart.emoji, #selector(SettingsViewController.onHeart))
+    ]
+    
+    let menu = UIMenuController.shared
+    menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
+    menu.setTargetRect(defaultReactionLabel.frame, in: setDefaultReaction)
+    menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+  }
+  
+  override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    switch action {
+    case #selector(SettingsViewController.onThumbsUp),
+         #selector(SettingsViewController.onThumbsDown),
+         #selector(SettingsViewController.onLaugh),
+         #selector(SettingsViewController.onHooray),
+         #selector(SettingsViewController.onConfused),
+         #selector(SettingsViewController.onHeart):
+      return true
+    default: return false
+    }
+  }
+  
+  @objc private func onThumbsUp() {
+    updateDefaultReaction(.thumbsUp)
+  }
+  
+  @objc private func onThumbsDown() {
+    updateDefaultReaction(.thumbsDown)
+  }
+  
+  @objc private func onLaugh() {
+    updateDefaultReaction( .laugh)
+  }
+  
+  @objc private func onHooray() {
+    updateDefaultReaction(.hooray)
+  }
+  
+  @objc private func onConfused() {
+    updateDefaultReaction(.confused)
+  }
+  
+  @objc private func onHeart() {
+   updateDefaultReaction(.heart)
+  }
+  
+  func updateDefaultReaction(_ reaction: ReactionContent)
+  {
+    UserDefaults.setDefault(reaction: reaction)
+    defaultReactionLabel.text = reaction.emoji
+  }
 }
