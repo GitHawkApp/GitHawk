@@ -19,4 +19,22 @@ extension ReactionContent {
         case .thumbsDown: return "👎"
         }
     }
+  
+   static var defaultReaction: ReactionContent {
+    return UserDefaults.getDefaultReaction
+   }
+}
+
+extension String {
+  var reaction: ReactionContent {
+    switch self {
+    case "😕": return .confused
+    case "❤️": return .heart
+    case "🎉": return .hooray
+    case "😄": return .laugh
+    case "👍": return .thumbsUp
+    case "👎": return .thumbsDown
+    default:   return .__unknown(self)
+    }
+  }
 }
