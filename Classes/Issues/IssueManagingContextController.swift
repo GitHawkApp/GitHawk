@@ -66,16 +66,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     func updateButtonVisibility() {
-        let hidden: Bool
-        if resultID == nil {
-            hidden = true
-        } else {
-            switch permissions {
-            case .none: hidden = true
-            case .author, .collaborator: hidden = false
-            }
-        }
-        manageButton.isHidden = hidden
+        manageButton.isHidden = actions.count == 0
     }
 
     enum Action {
@@ -87,6 +78,34 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         case lock
         case reopen
         case close
+    }
+
+    var actions: [Action] {
+        guard let result = self.result else { return [] }
+
+        var actions = [Action]()
+
+        if case .collaborator = permissions {
+            actions += [ .labels, .milestone, .assignees ]
+            if result.pullRequest {
+                actions.append(.reviewers)
+            }
+            if result.labels.locked {
+                actions.append(.unlock)
+            } else {
+                actions.append(.lock)
+            }
+        }
+
+        switch result.labels.status.status {
+        case .closed:
+            actions.append(.reopen)
+        case .open:
+            actions.append(.close)
+        case .merged: break
+        }
+
+        return actions
     }
 
     func item(_ action: Action) -> ContrastContextMenuItem {
@@ -155,32 +174,9 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     @objc func onButton(sender: UIButton) {
-        guard let result = self.result,
-            let viewController = self.viewController
-            else { return }
+        guard let viewController = self.viewController else { return }
 
-        var items = [ContrastContextMenuItem]()
-
-        if case .collaborator = permissions {
-            items += [ item(.labels), item(.milestone), item(.assignees) ]
-            if result.pullRequest {
-                items.append(item(.reviewers))
-            }
-            if result.labels.locked {
-                items.append(item(.unlock))
-            } else {
-                items.append(item(.lock))
-            }
-        }
-
-        switch result.labels.status.status {
-        case .closed:
-            items.append(item(.reopen))
-        case .open:
-            items.append(item(.close))
-        case .merged: break
-        }
-
+        let items = actions.map { self.item($0) }
         ContextMenu.shared.show(
             sourceViewController: viewController,
             viewController: ContrastContextMenu(items: items),
