@@ -147,9 +147,8 @@ NewIssueTableViewControllerDelegate {
     }
 
     func onReportBug() {
-        guard let client = client,
-            let viewController = NewIssueTableViewController.create(
-                client: client,
+        guard let viewController = NewIssueTableViewController.create(
+                client: newGithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
