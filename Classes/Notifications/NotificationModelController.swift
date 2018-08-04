@@ -51,7 +51,7 @@ final class NotificationModelController {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
         // TODO move handling + parsing to a single method?
         if let repo = repo {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in

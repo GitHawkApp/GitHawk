@@ -127,7 +127,7 @@ final class RepositoryClient {
         containerWidth: CGFloat,
         completion: @escaping (Result<RepositoryPayload>) -> Void
     ) where T: RepositoryQuery {
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
         githubClient.client.query(query, result: { $0 }) { result in
             switch result {
             case .failure:

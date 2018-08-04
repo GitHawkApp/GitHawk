@@ -407,6 +407,8 @@
 		7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */; };
 		7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2239C1F91056C006CC9A2 /* File+Filename.swift */; };
 		8960A556E8729CB4031DD641 /* Pods_FreetimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516CF27F9258BBD3E034F09D /* Pods_FreetimeTests.framework */; };
+		8BBB3A9121158AED00B93335 /* UIContentSizeCategory+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB3A9021158AED00B93335 /* UIContentSizeCategory+Preferred.swift */; };
+		8BBB3A9321158B8500B93335 /* UIContentSizeCategoryChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB3A9221158B8500B93335 /* UIContentSizeCategoryChangeHandler.swift */; };
 		98003D8D1FCAD7FC00755C17 /* LabelDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98003D8C1FCAD7FC00755C17 /* LabelDetails.swift */; };
 		98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */; };
 		986B87191F2B875800AAB55C /* GithubClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B87181F2B875800AAB55C /* GithubClient+Search.swift */; };
@@ -931,6 +933,8 @@
 		7BBFEE561F8A8A0400C68E47 /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
 		7BBFEE581F8A8A0400C68E47 /* SearchBarSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarSectionController.swift; sourceTree = "<group>"; };
 		7BF2239C1F91056C006CC9A2 /* File+Filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "File+Filename.swift"; sourceTree = "<group>"; };
+		8BBB3A9021158AED00B93335 /* UIContentSizeCategory+Preferred.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+Preferred.swift"; sourceTree = "<group>"; };
+		8BBB3A9221158B8500B93335 /* UIContentSizeCategoryChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIContentSizeCategoryChangeHandler.swift; sourceTree = "<group>"; };
 		98003D8C1FCAD7FC00755C17 /* LabelDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetails.swift; sourceTree = "<group>"; };
 		98647DF21F758CCF00A4DE7A /* NewIssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewIssueTableViewController.swift; sourceTree = "<group>"; };
 		986B87181F2B875800AAB55C /* GithubClient+Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GithubClient+Search.swift"; sourceTree = "<group>"; };
@@ -1657,6 +1661,7 @@
 				2971722A1F069E6B005E43AC /* SpinnerSectionController.swift */,
 				292D2F1620FA5CAD00099342 /* Squawk+GitHawk.swift */,
 				29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */,
+				8BBB3A9221158B8500B93335 /* UIContentSizeCategoryChangeHandler.swift */,
 				292CD3CF1F0DBB5C00D3D57B /* WebviewCellHeightCache.swift */,
 				2930F2721F8A27750082BA26 /* WidthCache.swift */,
 				D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */,
@@ -2049,6 +2054,7 @@
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
 				299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */,
+				8BBB3A9021158AED00B93335 /* UIContentSizeCategory+Preferred.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3030,6 +3036,7 @@
 				2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,
+				8BBB3A9121158AED00B93335 /* UIContentSizeCategory+Preferred.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
@@ -3062,6 +3069,7 @@
 				292CD3D21F0DBEC000D3D57B /* UIViewController+Safari.swift in Sources */,
 				290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */,
 				7BBFEE591F8A8A0400C68E47 /* SearchBarCell.swift in Sources */,
+				8BBB3A9321158B8500B93335 /* UIContentSizeCategoryChangeHandler.swift in Sources */,
 				4920F1A81F72E27200131E9D /* UIViewController+UserActivity.swift in Sources */,
 				2982ED7A1F94EA8F00DBF8EB /* UICollectionViewCell+SafeAreaContentView.swift in Sources */,
 				29351EA02079246400FF8C17 /* CodeBlockModel.swift in Sources */,

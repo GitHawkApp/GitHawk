@@ -155,7 +155,7 @@ TabNavRootViewControllerType {
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
         let width = view.bounds.width
         var bookmarks: [ListDiffable]
         switch state {

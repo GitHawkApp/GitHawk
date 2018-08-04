@@ -75,7 +75,7 @@ extension GithubClient {
             milestone: eventTitle,
             date: Date(),
             type: type,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+            contentSizeCategory: UIContentSizeCategory.preferred,
             width: 0 // pay perf cost when asked
         )
 

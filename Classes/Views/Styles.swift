@@ -134,7 +134,7 @@ enum Styles {
 extension TextStyle {
 
     var preferredFont: UIFont {
-        return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        return self.font(contentSizeCategory: UIContentSizeCategory.preferred)
     }
 
     func with(attributes: [NSAttributedStringKey: Any]) -> TextStyle {
