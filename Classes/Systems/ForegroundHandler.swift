@@ -39,11 +39,11 @@ final class ForegroundHandler {
 
     // MARK: Private API
 
-    @objc func willResignActive() {
+    @objc private func willResignActive() {
         backgrounded = CACurrentMediaTime()
     }
 
-    @objc func didBecomeActive() {
+    @objc private func didBecomeActive() {
         guard let backgrounded = self.backgrounded else { return }
         self.backgrounded = nil
         if CACurrentMediaTime() - backgrounded > threshold {
