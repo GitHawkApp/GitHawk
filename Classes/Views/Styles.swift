@@ -43,12 +43,6 @@ enum Styles {
         static let labelSpacing: CGFloat = 8
         static let labelTextPadding: CGFloat = 4
         static let cardCornerRadius: CGFloat = 6
-        static let threadInset = UIEdgeInsets(
-            top: rowSpacing / 2,
-            left: gutter,
-            bottom: 2 * rowSpacing + tableCellHeight,
-            right: gutter
-        )
         static let maxImageHeight: CGFloat = 300
         static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)
 

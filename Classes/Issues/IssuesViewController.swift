@@ -40,6 +40,12 @@ final class IssuesViewController:
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
     private let manageController: IssueManagingContextController
+    private let threadInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing / 2,
+        left: Styles.Sizes.gutter,
+        bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
+        right: Styles.Sizes.gutter
+    )
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -49,7 +55,7 @@ final class IssuesViewController:
 
     lazy private var feed: Feed = {
         let f = Feed(viewController: self, delegate: self, managesLayout: false)
-        f.collectionView.contentInset = Styles.Sizes.threadInset
+        f.collectionView.contentInset = threadInset
         f.collectionView.backgroundColor = .white
         return f
     }()
@@ -209,7 +215,7 @@ final class IssuesViewController:
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
+        feed.collectionView.updateSafeInset(container: view, base: threadInset)
     }
 
     override func didLayout() {    
