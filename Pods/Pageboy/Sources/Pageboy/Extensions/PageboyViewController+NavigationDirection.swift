@@ -36,6 +36,16 @@ internal extension PageboyViewController.NavigationDirection {
     }
 }
 
+internal extension PageboyViewController.NavigationDirection {
+    
+    func layoutNormalized(isRtL: Bool) -> PageboyViewController.NavigationDirection {
+        guard isRtL else {
+            return self
+        }
+        return self == .forward ? .reverse : .forward
+    }
+}
+
 // MARK: - NavigationDirection Descriptions
 extension PageboyViewController.NavigationDirection: CustomStringConvertible {
     public var description: String {
