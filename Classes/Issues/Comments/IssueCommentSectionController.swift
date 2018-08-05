@@ -276,8 +276,13 @@ final class IssueCommentSectionController:
             let originalMarkdown = currentMarkdown
             else { return }
 
+        let range = checkbox.originalMarkdownRange
+        let originalMarkdownNSString = originalMarkdown as NSString
+        guard range.location + range.length < originalMarkdownNSString.length
+            else { return }
+
         let invertedToken = checkbox.checked ? "[ ]" : "[x]"
-        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        let edited = originalMarkdownNSString.replacingCharacters(in: range, with: invertedToken)
         edit(markdown: edited)
 
         client.client.send(V3EditCommentRequest(
