@@ -196,7 +196,7 @@ CHECKOUT OPTIONS:
     :commit: ca6935cf8fc779aedd20e46c9a8b3bb3733e0ee7
     :git: https://github.com/GitHawkApp/MessageViewController.git
   Squawk:
-    :commit: 399ae714ecd69ebf60ca5f4e2ff7822e21b91586
+    :commit: 88d671bbe86e3c18d54e094fac97df12a3054d53
     :git: https://github.com/GitHawkApp/Squawk.git
   StyledTextKit:
     :commit: d15f77a32203daafd71e14e6f5911528e932aca5

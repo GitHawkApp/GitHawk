@@ -49,6 +49,7 @@ internal final class SquawkItem: SquawkViewDelegate {
             animations: {
                 self.view.center = initAnchor
         }) { _ in
+            guard self.view.superview != nil else { return }
             self.animator.addBehavior(self.springBehavior)
         }
 
