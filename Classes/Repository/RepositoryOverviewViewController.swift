@@ -42,7 +42,7 @@ BaseListViewControllerDataSource {
     override func fetch(page: NSString?) {
         let repo = self.repo
         let width = view.bounds.width
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.githubClient.client
             .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name)) { [weak self] result in

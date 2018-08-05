@@ -523,7 +523,7 @@ final class IssuesViewController:
                 id: id,
                 commentFields: commentFields,
                 reactionFields: reactionFields,
-                contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+                contentSizeCategory: UIContentSizeCategory.preferred,
                 width: view.bounds.width,
                 owner: model.owner,
                 repo: model.repo,
