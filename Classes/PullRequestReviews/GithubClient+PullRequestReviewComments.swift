@@ -30,7 +30,7 @@ extension GithubClient {
         completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
@@ -118,7 +118,7 @@ extension GithubClient {
         completion: @escaping (Result<IssueCommentModel>) -> ()
         ) {
         let viewer = userSession?.username
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.send(V3SendPullRequestCommentRequest(
             owner: owner,
