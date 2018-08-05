@@ -46,7 +46,6 @@ NewIssueTableViewControllerDelegate {
         markReadSwitch.isOn = NotificationModelController.readOnOpen
         apiStatusView.layer.cornerRadius = 7
         signatureSwitch.isOn = Signature.enabled
-        defaultReactionLabel.text = ReactionContent.defaultReaction.emoji
 
         updateBadge()
         style()
@@ -61,6 +60,9 @@ NewIssueTableViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
+        defaultReactionLabel.text = ReactionContent.defaultReaction.emoji
+
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
 
@@ -185,7 +187,7 @@ NewIssueTableViewControllerDelegate {
     }
   
     func onSetDefaultReaction() {
-      showDefaultReactionMenu()
+      //showDefaultReactionMenu()
     }
 
     func onSignOut() {
@@ -267,70 +269,4 @@ NewIssueTableViewControllerDelegate {
         let navigation = UINavigationController(rootViewController: issuesViewController)
         showDetailViewController(navigation, sender: nil)
     }
-}
-
-extension SettingsViewController {
-  // Default Reaction + MenuController
-  
-   private func showDefaultReactionMenu() {
-    
-    setDefaultReaction.becomeFirstResponder() // Required
-    
-    let actions = [
-      (ReactionContent.thumbsUp.emoji, #selector(SettingsViewController.onThumbsUp)),
-      (ReactionContent.thumbsDown.emoji, #selector(SettingsViewController.onThumbsDown)),
-      (ReactionContent.laugh.emoji, #selector(SettingsViewController.onLaugh)),
-      (ReactionContent.hooray.emoji, #selector(SettingsViewController.onHooray)),
-      (ReactionContent.confused.emoji, #selector(SettingsViewController.onConfused)),
-      (ReactionContent.heart.emoji, #selector(SettingsViewController.onHeart))
-    ]
-    
-    let menu = UIMenuController.shared
-    menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
-    menu.setTargetRect(defaultReactionLabel.frame, in: setDefaultReaction)
-    menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
-  }
-  
-  override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-    switch action {
-    case #selector(SettingsViewController.onThumbsUp),
-         #selector(SettingsViewController.onThumbsDown),
-         #selector(SettingsViewController.onLaugh),
-         #selector(SettingsViewController.onHooray),
-         #selector(SettingsViewController.onConfused),
-         #selector(SettingsViewController.onHeart):
-      return true
-    default: return false
-    }
-  }
-  
-  @objc private func onThumbsUp() {
-    updateDefaultReaction(.thumbsUp)
-  }
-  
-  @objc private func onThumbsDown() {
-    updateDefaultReaction(.thumbsDown)
-  }
-  
-  @objc private func onLaugh() {
-    updateDefaultReaction( .laugh)
-  }
-  
-  @objc private func onHooray() {
-    updateDefaultReaction(.hooray)
-  }
-  
-  @objc private func onConfused() {
-    updateDefaultReaction(.confused)
-  }
-  
-  @objc private func onHeart() {
-   updateDefaultReaction(.heart)
-  }
-  
-  func updateDefaultReaction(_ reaction: ReactionContent)
-  {
-    UserDefaults.setDefault(reaction: reaction)
-    defaultReactionLabel.text = reaction.emoji
-  }
 }
