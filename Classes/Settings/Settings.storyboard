@@ -289,7 +289,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="👍 Reactions " footerTitle="Leave this by double tapping a comment" id="HEP-Qu-8jX">
+                            <tableViewSection headerTitle="👍 Reactions " footerTitle="Leave this when double tapping a comment" id="HEP-Qu-8jX">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="wm1-n0-0PA" detailTextLabel="UHH-lU-DUe" style="IBUITableViewCellStyleValue1" id="gjX-57-UIr" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="571" width="375" height="44"/>
@@ -384,7 +384,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
-                            <tableViewSection headerTitle="Reactions" footerTitle="Leave this by double tapping on a comment" id="kLr-tw-ovq">
+                            <tableViewSection headerTitle="Reactions" footerTitle="Leave this when double tapping on a comment" id="kLr-tw-ovq">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="upo-Hg-6yy" style="IBUITableViewCellStyleDefault" id="qc4-aU-1zn">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
