@@ -28,13 +28,13 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
                         height: Styles.Sizes.tableCellHeightLarge
                     )
             },
-                configure: { [selected] in
+                configure: { [weak self] in
                     let color = $1.value.color.color
                     $0.button.setTitleColor(color.textOverlayColor, for: .normal)
                     $0.button.backgroundColor = color
                     $0.button.setTitle($1.value.name, for: .normal)
 
-                    $0.setSelected(selected)
+                    $0.setSelected(self?.selected == true)
                 },
                 didSelect: { [weak self] context in
                     guard let strongSelf = self else { return }

@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bA6-il-lQA">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-DemiBold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Login Splash View Controller-->
         <scene sceneID="yQn-wv-qWF">
@@ -37,25 +32,25 @@
                                     <action selector="onSignInButton:" destination="bA6-il-lQA" eventType="touchUpInside" id="Sk4-NF-4Oh"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="ai9-fN-d9O">
-                                <rect key="frame" x="73" y="98" width="174" height="174"/>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ai9-fN-d9O" customClass="SplashView" customModule="Freetime" customModuleProvider="target">
+                                <rect key="frame" x="49" y="74" width="222" height="222"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="174" id="42V-gr-pfO">
+                                    <constraint firstAttribute="height" constant="222" id="42V-gr-pfO">
                                         <variation key="heightClass=compact" constant="140"/>
                                     </constraint>
-                                    <constraint firstAttribute="width" constant="174" id="tK6-2i-UMP">
+                                    <constraint firstAttribute="width" constant="222" id="tK6-2i-UMP">
                                         <variation key="heightClass=compact" constant="140"/>
                                     </constraint>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to GitHawk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfb-Yp-akO">
-                                <rect key="frame" x="22" y="288" width="276" height="38.5"/>
+                                <rect key="frame" x="22" y="312" width="276" height="38.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An open source app for open source projects." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6P-rW-9YX">
-                                <rect key="frame" x="32" y="340" width="256" height="42"/>
+                                <rect key="frame" x="32" y="364" width="256" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="Aeq-jM-Nwc"/>
                                 </constraints>
@@ -104,6 +99,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="aQ2-N2-0DI" id="aEQ-Lx-iG0"/>
                         <outlet property="signInButton" destination="joJ-g2-qXR" id="l3F-no-8AX"/>
+                        <outlet property="splashView" destination="ai9-fN-d9O" id="0Bh-h2-8Sv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HfT-GH-NEk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -111,7 +107,4 @@
             <point key="canvasLocation" x="-116" y="137.18140929535232"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="splash" width="174" height="174"/>
-    </resources>
 </document>

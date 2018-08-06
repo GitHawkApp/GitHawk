@@ -62,6 +62,7 @@
 		29F8BAC0204B577800E5CA32 /* V3NotificationSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BABF204B577800E5CA32 /* V3NotificationSubject.swift */; };
 		29F8BAC2204B57EC00E5CA32 /* V3Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */; };
 		4906A18D206ADECE0031F6F5 /* invitation_notification.json in Resources */ = {isa = PBXBuildFile; fileRef = 4906A18C206ADECE0031F6F5 /* invitation_notification.json */; };
+		492557C8210BBB45009CF825 /* no_milestone_description.json in Resources */ = {isa = PBXBuildFile; fileRef = 492557C7210BBB45009CF825 /* no_milestone_description.json */; };
 		496C9CE620965F2800F13F09 /* security_vulnerability.json in Resources */ = {isa = PBXBuildFile; fileRef = 496C9CE520965F2800F13F09 /* security_vulnerability.json */; };
 		985AD904C6ABF3E0A1F46079 /* Pods_GitHubAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB687054FAA1CE0478BE468 /* Pods_GitHubAPI.framework */; };
 		D4D67C0931ACEE218D81A041 /* Pods_GitHubAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD96096F323FEE96EB3F8D0D /* Pods_GitHubAPITests.framework */; };
@@ -138,6 +139,7 @@
 		29F8BAC1204B57EC00E5CA32 /* V3Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V3Notification.swift; sourceTree = "<group>"; };
 		33E0718D024CC4F81EBF7364 /* Pods-GitHubAPITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubAPITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubAPITests/Pods-GitHubAPITests.release.xcconfig"; sourceTree = "<group>"; };
 		4906A18C206ADECE0031F6F5 /* invitation_notification.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = invitation_notification.json; sourceTree = "<group>"; };
+		492557C7210BBB45009CF825 /* no_milestone_description.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = no_milestone_description.json; sourceTree = "<group>"; };
 		496C9CE520965F2800F13F09 /* security_vulnerability.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = security_vulnerability.json; sourceTree = "<group>"; };
 		8FAA1C36CB3C11579EF5BE54 /* Pods-GitHubAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubAPI.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubAPI/Pods-GitHubAPI.release.xcconfig"; sourceTree = "<group>"; };
 		AAB687054FAA1CE0478BE468 /* Pods_GitHubAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,6 +255,7 @@
 				2958050A204B5A68009CFD51 /* notifications.json */,
 				4906A18C206ADECE0031F6F5 /* invitation_notification.json */,
 				496C9CE520965F2800F13F09 /* security_vulnerability.json */,
+				492557C7210BBB45009CF825 /* no_milestone_description.json */,
 			);
 			path = GitHubAPITests;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				492557C8210BBB45009CF825 /* no_milestone_description.json in Resources */,
 				496C9CE620965F2800F13F09 /* security_vulnerability.json in Resources */,
 				2958050B204B5A68009CFD51 /* notifications.json in Resources */,
 				4906A18D206ADECE0031F6F5 /* invitation_notification.json in Resources */,

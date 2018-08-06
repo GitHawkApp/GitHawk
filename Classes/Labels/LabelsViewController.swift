@@ -40,6 +40,7 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        addMenuDoneButton()
     }
 
     // MARK: Public API

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d42-bu-Upj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d42-bu-Upj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +20,7 @@
                         <color key="separatorColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="jkq-3p-p02">
-                            <rect key="frame" x="0.0" y="561.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="605.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.4.0 (1207)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bb-Lj-p2k" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
@@ -260,12 +260,39 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Z8j-JQ-qiy" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="463.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z8j-JQ-qiy" id="uAb-lB-GZA">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write a Review" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guA-My-iRb" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="11" width="107" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link-external" translatesAutoresizingMaskIntoConstraints="NO" id="l9s-bQ-bad">
+                                                    <rect key="frame" x="341" y="9" width="19" height="25"/>
+                                                    <color key="tintColor" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="guA-My-iRb" firstAttribute="leading" secondItem="uAb-lB-GZA" secondAttribute="leadingMargin" id="F9S-kd-38Z"/>
+                                                <constraint firstItem="guA-My-iRb" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="Lmv-Cf-s8i"/>
+                                                <constraint firstItem="l9s-bQ-bad" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="WGF-E7-3TC"/>
+                                                <constraint firstAttribute="trailing" secondItem="l9s-bQ-bad" secondAttribute="trailing" constant="15" id="hbT-TO-kjD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="GTg-1u-cvV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ku5-ZI-OG9" style="IBUITableViewCellStyleDefault" id="Y2k-Zq-AUW" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="499.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="543.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y2k-Zq-AUW" id="XiT-sq-B22">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -302,6 +329,7 @@
                         <outlet property="openSettingsButton" destination="36B-Ge-m5V" id="tsc-wS-3vb"/>
                         <outlet property="reportBugCell" destination="WwO-m1-s3q" id="nCb-BL-DRJ"/>
                         <outlet property="reviewAccessCell" destination="TXs-sw-hO1" id="10W-u8-ofC"/>
+                        <outlet property="reviewOnAppStoreCell" destination="Z8j-JQ-qiy" id="QRZ-5e-WQi"/>
                         <outlet property="signOutCell" destination="Y2k-Zq-AUW" id="QIk-J0-zqg"/>
                         <outlet property="signatureSwitch" destination="ZWv-km-fU1" id="pf4-kH-RIp"/>
                         <outlet property="versionLabel" destination="2bb-Lj-p2k" id="qDb-KP-pnk"/>
@@ -393,4 +421,7 @@
             <point key="canvasLocation" x="57" y="-131"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="link-external" width="19" height="25"/>
+    </resources>
 </document>

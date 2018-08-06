@@ -25,7 +25,7 @@ final class IssueCommentUnsupportedCell: IssueCommentBaseCell, ListBindable {
         label.backgroundColor = .clear
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.center.equalToSuperview()
         }
     }
 

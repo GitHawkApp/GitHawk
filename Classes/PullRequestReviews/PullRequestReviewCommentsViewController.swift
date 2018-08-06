@@ -24,10 +24,17 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     private let textActionsController = TextActionsController()
     private var autocompleteController: AutocompleteController!
     private var focusedReplyModel: PullRequestReviewReplyModel?
+    private let threadInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.gutter
+    )
 
     lazy private var feed: Feed = {
         let f = Feed(viewController: self, delegate: self, managesLayout: false)
-        f.collectionView.contentInset = Styles.Sizes.threadInset
+        f.collectionView.contentInset = threadInset
+        f.collectionView.backgroundColor = .white
         return f
     }()
 
@@ -89,8 +96,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        
+        feed.collectionView.updateSafeInset(container: view, base: threadInset)
     }
 
     // MARK: FeedDelegate

@@ -43,7 +43,7 @@ func CodeBlockElement(
         contentSizeCategory: contentSizeCategory,
         inset: inset,
         backgroundColor: backgroundColor
-    )
+    ).warm(width: 0)
     return IssueCommentCodeBlockModel(
         code: string,
         language: fixedLanguage

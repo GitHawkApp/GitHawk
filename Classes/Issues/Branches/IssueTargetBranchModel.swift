@@ -32,9 +32,7 @@ final class IssueTargetBranchModel: ListDiffable {
         
         self.targetBranchText = StyledTextRenderer(
             string: builder.build(),
-            contentSizeCategory: .small,
-            inset: .zero,
-            backgroundColor: Styles.Colors.background
+            contentSizeCategory: .small
         ).warm(width: width)
     }
     

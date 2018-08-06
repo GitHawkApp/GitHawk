@@ -44,7 +44,8 @@ final class IssuePreviewViewController: UIViewController, ListAdapterDataSource 
             repo: repo,
             width: view.bounds.width,
             viewerCanUpdate: false,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+            contentSizeCategory: UIContentSizeCategory.preferred,
+            isRoot: false
         )
         model = IssuePreviewModel(models: viewModels)
 

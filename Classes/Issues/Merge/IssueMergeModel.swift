@@ -12,13 +12,13 @@ import IGListKit
 final class IssueMergeModel: ListDiffable {
 
     let id: String
-    let state: MergeableState
+    let state: MergeStateStatus
     let contexts: [IssueMergeContextModel]
     let availableTypes: [IssueMergeType]
 
     init(
         id: String,
-        state: MergeableState,
+        state: MergeStateStatus,
         contexts: [IssueMergeContextModel],
         availableTypes: [IssueMergeType]
         ) {

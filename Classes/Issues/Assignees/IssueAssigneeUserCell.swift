@@ -28,8 +28,8 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
             make.size.equalTo(Styles.Sizes.icon)
         }
 
@@ -38,7 +38,7 @@ final class IssueAssigneeUserCell: UICollectionViewCell, ListBindable {
         label.backgroundColor = .clear
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
         }
     }

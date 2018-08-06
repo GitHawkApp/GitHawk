@@ -44,8 +44,8 @@ final class IssueReactionCell: UICollectionViewCell {
         emojiLabel.font = UIFont.systemFont(ofSize: Styles.Text.body.size + 2)
         contentView.addSubview(emojiLabel)
         emojiLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView).offset(IssueReactionCell.spacing)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().offset(IssueReactionCell.spacing)
         }
 
         countLabel.textAlignment = .center

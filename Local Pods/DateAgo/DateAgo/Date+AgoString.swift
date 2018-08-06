@@ -32,7 +32,12 @@ public extension Date {
         case .future:
             return NSLocalizedString("in the future", bundle: Date.bundle, comment: "")
         case .seconds:
-            return NSLocalizedString("just now", bundle: Date.bundle, comment: "")
+            switch format {
+            case .long:
+                return NSLocalizedString("just now", bundle: Date.bundle, comment: "")
+            case .short:
+                return NSLocalizedString("now", bundle: Date.bundle, comment: "")
+            }
         case .minutes(let t):
             switch format {
             case .long:

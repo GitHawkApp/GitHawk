@@ -10,7 +10,7 @@ import UIKit
 import IGListKit
 import SnapKit
 
-final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
+final class IssueMergeSummaryCell: CardCollectionViewCell, ListBindable {
 
     private let imageView = UIImageView()
     private let label = UILabel()
@@ -22,14 +22,14 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         contentView.addSubview(imageView)
         contentView.addSubview(label)
 
-        imageView.clipsToBounds = true
-        imageView.tintColor = .white
-        imageView.layer.cornerRadius = Styles.Sizes.avatar.width / 2
-        imageView.contentMode = .center
+//        imageView.clipsToBounds = true
+//        imageView.tintColor = .white
+//        imageView.layer.cornerRadius = Styles.Sizes.avatar.width / 2
+//        imageView.contentMode = .center
         imageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.size.equalTo(Styles.Sizes.avatar)
-            make.left.equalTo(Styles.Sizes.commentGutter)
+//            make.size.equalTo(Styles.Sizes.avatar)
+            make.left.equalTo(Styles.Sizes.cardGutter)
         }
 
         label.textColor = Styles.Colors.Gray.dark.color
@@ -38,7 +38,7 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         label.snp.makeConstraints { make in
             make.left.equalTo(imageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.centerY.equalToSuperview()
-            make.right.lessThanOrEqualToSuperview().offset(-Styles.Sizes.commentGutter)
+            make.right.lessThanOrEqualToSuperview()
         }
     }
 
@@ -62,11 +62,15 @@ final class IssueMergeSummaryCell: IssueCommentBaseCell, ListBindable {
         case .failure:
             imageViewBackground = Styles.Colors.Red.medium.color
             iconName = "merge-x"
-        case .warning, .pending:
+        case .pending:
+            imageViewBackground = Styles.Colors.Yellow.medium.color
+            iconName = "primitive-dot"
+        case .warning:
             imageViewBackground = Styles.Colors.Gray.medium.color
             iconName = "merge-alert"
         }
-        imageView.backgroundColor = imageViewBackground
+//        imageView.backgroundColor = imageViewBackground
+        imageView.tintColor = imageViewBackground
         imageView.image = UIImage(named: iconName)?.withRenderingMode(.alwaysTemplate)
         accessibilityLabel = .localizedStringWithFormat("%@. (state: %@)", viewModel.title, viewModel.state.description)
     }

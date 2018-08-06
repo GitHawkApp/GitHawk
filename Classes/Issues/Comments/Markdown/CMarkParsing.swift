@@ -19,6 +19,7 @@ private struct CMarkOptions {
     let width: CGFloat
     let viewerCanUpdate: Bool
     let contentSizeCategory: UIContentSizeCategory
+    let isRoot: Bool
 }
 
 private struct CMarkContext {
@@ -201,7 +202,8 @@ private extension TableRow {
         case .header(let cells):
             builders = cells.map {
                 $0.build(
-                    StyledTextBuilder.markdownBase().add(traits: .traitBold),
+                    StyledTextBuilder.markdownBase(isRoot: options.isRoot)
+                        .add(traits: .traitBold),
                     options: options,
                     context: CMarkContext()
                 )
@@ -209,7 +211,8 @@ private extension TableRow {
         case .row(let cells):
             builders = cells.map {
                 $0.build(
-                    StyledTextBuilder.markdownBase().add(attributes: [.backgroundColor: backgroundColor]),
+                    StyledTextBuilder.markdownBase(isRoot: options.isRoot)
+                        .add(attributes: [.backgroundColor: backgroundColor]),
                     options: options,
                     context: CMarkContext()
                 )
@@ -239,18 +242,21 @@ private extension Array where Iterator.Element == TableRow {
 }
 
 private extension Element {
-    func model(_ options: CMarkOptions) -> ListDiffable? {
+    func model(_ options: CMarkOptions, lastElement: Bool) -> ListDiffable? {
         switch self {
         case .text(let items):
             return StyledTextRenderer(
-                string: items.build(StyledTextBuilder.markdownBase(), options: options, context: CMarkContext())
-                    .build(renderMode: .preserve),
+                string: items.build(
+                    StyledTextBuilder.markdownBase(isRoot: options.isRoot),
+                    options: options,
+                    context: CMarkContext()
+                    ).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .quote(let items, let level):
-            let builder = StyledTextBuilder.markdownBase()
+            let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
                 .add(attributes: [.foregroundColor: Styles.Colors.Gray.medium.color])
             let string = StyledTextRenderer(
                 string: items.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
@@ -283,7 +289,7 @@ private extension Element {
         case .codeBlock(let text, let language):
             return CodeBlockElement(text: text, language: language, contentSizeCategory: options.contentSizeCategory)
         case .heading(let text, let level):
-            let builder = StyledTextBuilder.markdownBase()
+            let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
             let style: TextStyle
             switch level {
             case 1: style = Styles.Text.h1
@@ -297,15 +303,20 @@ private extension Element {
             return StyledTextRenderer(
                 string: text.build(builder, options: options, context: CMarkContext()).build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .list(let items, let type):
-            let builder = items.build(StyledTextBuilder.markdownBase(), options: options, type: type, level: 0)
+            let builder = items.build(
+                StyledTextBuilder.markdownBase(isRoot: options.isRoot),
+                options: options,
+                type: type,
+                level: 0
+            )
             return StyledTextRenderer(
                 string: builder.build(renderMode: .preserve),
                 contentSizeCategory: options.contentSizeCategory,
-                inset: IssueCommentTextCell.inset,
+                inset: IssueCommentTextCell.inset(isLast: lastElement),
                 backgroundColor: .white
                 ).warm(width: options.width)
         case .table(let rows):
@@ -323,7 +334,7 @@ private extension Element {
 }
 
 private func emptyDescription(options: CMarkOptions) -> ListDiffable {
-    let builder = StyledTextBuilder.markdownBase()
+    let builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
         .add(
             text: NSLocalizedString("No description provided.", comment: ""),
             traits: .traitItalic,
@@ -332,7 +343,7 @@ private func emptyDescription(options: CMarkOptions) -> ListDiffable {
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: options.contentSizeCategory,
-        inset: IssueCommentTextCell.inset
+        inset: IssueCommentTextCell.inset(isLast: true)
     ).warm(width: options.width)
 }
 
@@ -343,6 +354,7 @@ func MarkdownModels(
     width: CGFloat,
     viewerCanUpdate: Bool,
     contentSizeCategory: UIContentSizeCategory,
+    isRoot: Bool,
     branch: String = "master"
     ) -> [ListDiffable] {
     let cleaned = markdown
@@ -357,9 +369,18 @@ func MarkdownModels(
         branch: branch,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: isRoot
     )
-    let models = node.flatElements.compactMap { $0.model(options) }
+
+    var models = [ListDiffable]()
+    let elements = node.flatElements
+    let count = elements.count
+    for (i, el) in elements.enumerated() {
+        if let model = el.model(options, lastElement: i == count - 1) {
+            models.append(model)
+        }
+    }
     if models.count == 0 {
         return [emptyDescription(options: options)]
     } else {

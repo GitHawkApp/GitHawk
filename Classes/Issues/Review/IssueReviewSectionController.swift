@@ -36,8 +36,6 @@ MarkdownStyledTextViewDelegate {
         self.client = client
         self.autocomplete = autocomplete
         super.init()
-        let rowSpacing = Styles.Sizes.rowSpacing
-        self.inset = UIEdgeInsets(top: rowSpacing, left: 0, bottom: rowSpacing, right: 0)
         self.dataSource = self
     }
 

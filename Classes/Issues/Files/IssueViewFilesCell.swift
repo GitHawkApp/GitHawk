@@ -20,8 +20,8 @@ final class IssueViewFilesCell: UICollectionViewCell {
 
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.left.equalTo(contentView)
-            make.centerY.equalTo(contentView)
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
 

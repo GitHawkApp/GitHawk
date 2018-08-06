@@ -23,7 +23,7 @@ final class IssueLabelEditCell: SelectableCell, ListBindable {
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalTo(Styles.Sizes.gutter)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
         }
     }
 

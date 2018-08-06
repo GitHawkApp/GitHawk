@@ -15,6 +15,7 @@ extension UIView {
         let view = UIView()
         view.backgroundColor = Styles.Colors.Gray.alphaLighter
         view.alpha = 0
+        view.isUserInteractionEnabled = false
         addSubview(view)
         return view
     }

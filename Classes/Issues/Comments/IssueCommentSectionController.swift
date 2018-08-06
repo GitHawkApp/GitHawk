@@ -223,7 +223,8 @@ final class IssueCommentSectionController:
             repo: model.repo,
             width: width,
             viewerCanUpdate: true,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+            contentSizeCategory: UIContentSizeCategory.preferred,
+            isRoot: self.object?.isRoot == true
         )
         bodyEdits = (markdown, bodyModels)
         collapsed = false
@@ -275,8 +276,13 @@ final class IssueCommentSectionController:
             let originalMarkdown = currentMarkdown
             else { return }
 
+        let range = checkbox.originalMarkdownRange
+        let originalMarkdownNSString = originalMarkdown as NSString
+        guard range.location + range.length < originalMarkdownNSString.length
+            else { return }
+
         let invertedToken = checkbox.checked ? "[ ]" : "[x]"
-        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        let edited = originalMarkdownNSString.replacingCharacters(in: range, with: invertedToken)
         edit(markdown: edited)
 
         client.client.send(V3EditCommentRequest(
@@ -320,7 +326,8 @@ final class IssueCommentSectionController:
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details, headModel ]
+//        return [ object.details, headModel ]
+        return [ object.details ]
             + bodies
             + tail
     }
@@ -393,11 +400,8 @@ final class IssueCommentSectionController:
 
         // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
-            cell.setBorderVisible(object?.threadState == .single)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
-            let threadState = object?.threadState
-            cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
         
@@ -452,30 +456,6 @@ final class IssueCommentSectionController:
 
     // MARK: IssueCommentDetailCellDelegate
 
-    func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        guard let login = object?.details.login else {
-            Squawk.showGenericError()
-            return
-        }
-
-        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
-
-        let alert = UIAlertController.configured(
-            title: String(format: alertTitle, login),
-            preferredStyle: .actionSheet
-        )
-        alert.popoverPresentationController?.sourceView = sender
-        alert.addActions([
-            shareAction(sender: sender),
-            viewMarkdownAction,
-            editAction,
-            replyAction,
-            deleteAction,
-            AlertAction.cancel()
-        ])
-        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else {
             Squawk.showGenericError()
@@ -511,6 +491,30 @@ final class IssueCommentSectionController:
             else { return }
 
         react(cell: cell, content: reaction, isAdd: false)
+    }
+
+    func didTapMore(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let login = object?.details.login else {
+            Squawk.showGenericError()
+            return
+        }
+
+        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
+
+        let alert = UIAlertController.configured(
+            title: String(format: alertTitle, login),
+            preferredStyle: .actionSheet
+        )
+        alert.popoverPresentationController?.sourceView = sender
+        alert.addActions([
+            shareAction(sender: sender),
+            viewMarkdownAction,
+            editAction,
+            replyAction,
+            deleteAction,
+            AlertAction.cancel()
+            ])
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     // MARK: MarkdownStyledTextViewDelegate

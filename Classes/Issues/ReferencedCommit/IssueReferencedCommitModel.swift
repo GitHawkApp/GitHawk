@@ -66,11 +66,10 @@ final class IssueReferencedCommitModel: ListDiffable {
             contentSizeCategory: contentSizeCategory,
             inset: UIEdgeInsets(
                 top: Styles.Sizes.inlineSpacing,
-                left: Styles.Sizes.eventGutter,
+                left: 0,
                 bottom: Styles.Sizes.inlineSpacing,
-                right: Styles.Sizes.eventGutter
-            ),
-            backgroundColor: Styles.Colors.background
+                right: 0
+            )
         ).warm(width: width)
     }
 

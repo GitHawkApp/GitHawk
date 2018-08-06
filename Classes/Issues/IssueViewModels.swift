@@ -21,8 +21,7 @@ func titleStringSizing(
     return StyledTextRenderer(
         string: builder.build(),
         contentSizeCategory: contentSizeCategory,
-        inset: IssueTitleCell.inset,
-        backgroundColor: Styles.Colors.background
+        inset: IssueTitleCell.inset
     )
 }
 
@@ -66,22 +65,26 @@ func createCommentModel(
         let avatarURL = URL(string: author.avatarUrl)
         else { return nil }
 
+    let checkedMarkdown = CheckIfSentWithGitHawk(markdown: commentFields.body)
+
     let details = IssueCommentDetailsViewModel(
         date: date,
         login: author.login,
         avatarURL: avatarURL,
         didAuthor: commentFields.viewerDidAuthor,
         editedBy: commentFields.editor?.login,
-        editedAt: commentFields.lastEditedAt?.githubDate
+        editedAt: commentFields.lastEditedAt?.githubDate,
+        sentWithGitHawk: checkedMarkdown.sentWithGitHawk
     )
 
     let bodies = MarkdownModels(
-        commentFields.body,
+        checkedMarkdown.markdown,
         owner: owner,
         repo: repo,
         width: width,
         viewerCanUpdate: viewerCanUpdate,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: isRoot
     )
     let reactions = createIssueReactions(reactions: reactionFields)
     let collapse = IssueCollapsedBodies(bodies: bodies, width: width)

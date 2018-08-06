@@ -22,6 +22,9 @@ public func ConfiguredNetworkers(
         additionalHeaders["Authorization"] = header
     }
 
+    // https://developer.github.com/v4/previews/#mergeinfopreview---more-detailed-information-about-a-pull-requests-merge-state
+    additionalHeaders["Accept"] = "application/vnd.github.merge-info-preview+json"
+
     let config = URLSessionConfiguration.default
     config.httpAdditionalHeaders = additionalHeaders
     config.timeoutIntervalForRequest = 15

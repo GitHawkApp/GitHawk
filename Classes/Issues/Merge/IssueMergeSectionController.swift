@@ -26,6 +26,8 @@ ListBindingSectionControllerSelectionDelegate {
         super.init()
         dataSource = self
         selectionDelegate = self
+        let row = Styles.Sizes.rowSpacing
+        inset = UIEdgeInsets(top: 3*row, left: 0, bottom: row, right: 0)
     }
 
     // MARK: Private API
@@ -90,16 +92,38 @@ ListBindingSectionControllerSelectionDelegate {
 
         viewModels += object.contexts as [ListDiffable]
 
-        let mergeable = object.state == .mergeable
+        let title: String
+        let state: IssueMergeSummaryModel.State
+        let buttonEnabled: Bool
+        switch object.state {
+        case .clean, .hasHooks, .unstable:
+            title = NSLocalizedString("No conflicts with base branch", comment: "")
+            state = .success
+            buttonEnabled = true
+        case .behind:
+            title = NSLocalizedString("Head ref is out of date", comment: "")
+            state = .warning
+            buttonEnabled = false
+        case .blocked:
+            title = NSLocalizedString("Not authorized to merge", comment: "")
+            state = .failure
+            buttonEnabled = false
+        case .unknown, .__unknown(_):
+            title = NSLocalizedString("Merge status unknown", comment: "")
+            state = .pending
+            buttonEnabled = false
+        case .dirty:
+            title = NSLocalizedString("Merge conflicts found", comment: "")
+            state = .warning
+            buttonEnabled = false
+        }
         viewModels.append(IssueMergeSummaryModel(
-            title: mergeable ?
-                NSLocalizedString("No conflicts with base branch", comment: "")
-                : NSLocalizedString("Merge conflicts found", comment: ""),
-            state: mergeable ? .success : .warning
+            title: title,
+            state: state
         ))
 
         viewModels.append(IssueMergeButtonModel(
-            enabled: mergeable,
+            enabled: buttonEnabled,
             type: preferredMergeType,
             loading: loading
         ))
@@ -137,7 +161,7 @@ ListBindingSectionControllerSelectionDelegate {
         guard let cell = collectionContext?.dequeueReusableCell(of: cellType, for: self, at: index) as? UICollectionViewCell & ListBindable
             else { fatalError() }
 
-        if let cell = cell as? IssueCommentBaseCell {
+        if let cell = cell as? CardCollectionViewCell {
             cell.border = index == 0 ? .head : index == self.viewModels.count - 1 ? .tail : .neck
         }
         if let cell = cell as? IssueMergeButtonCell {

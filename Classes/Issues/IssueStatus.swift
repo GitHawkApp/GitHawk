@@ -12,4 +12,12 @@ enum IssueStatus: Int {
     case closed
     case open
     case merged
+
+    var title: String {
+        switch self {
+        case .open: return Constants.Strings.open
+        case .closed: return Constants.Strings.closed
+        case .merged: return Constants.Strings.merged
+        }
+    }
 }

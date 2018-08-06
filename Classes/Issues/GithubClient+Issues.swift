@@ -55,7 +55,7 @@ extension GithubClient {
         )
 
         let cache = self.cache
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.query(query, result: { $0.repository }) { result in
             switch result {
@@ -148,12 +148,16 @@ extension GithubClient {
                         availableMergeTypes.append(.rebase)
                     }
 
+
                     let issueResult = IssueResult(
                         id: issueType.id,
                         pullRequest: issueType.pullRequest,
-                        status: IssueStatusModel(status: status, pullRequest: issueType.pullRequest, locked: issueType.locked),
                         title: titleStringSizing(title: issueType.title, contentSizeCategory: contentSizeCategory, width: width),
-                        labels: IssueLabelsModel(labels: issueType.labelableFields.issueLabelModels),
+                        labels: IssueLabelsModel(
+                            status: IssueLabelStatusModel(status: status, pullRequest: issueType.pullRequest),
+                            locked: issueType.locked,
+                            labels: issueType.labelableFields.issueLabelModels
+                        ),
                         assignee: createAssigneeModel(assigneeFields: issueType.assigneeFields),
                         rootComment: rootComment,
                         reviewers: issueType.reviewRequestModel,
@@ -217,10 +221,13 @@ extension GithubClient {
         number: Int,
         close: Bool
         ) {
-        let newStatus = IssueStatusModel(
-            status: close ? .closed : .open,
-            pullRequest: previous.status.pullRequest,
-            locked: previous.status.locked
+        let newLabels = IssueLabelsModel(
+            status: IssueLabelStatusModel(
+                status: close ? .closed : .open,
+                pullRequest: previous.labels.status.pullRequest
+            ),
+            locked: previous.labels.locked,
+            labels: previous.labels.labels
         )
         let newEvent = IssueStatusEventModel(
             id: UUID().uuidString,
@@ -231,7 +238,7 @@ extension GithubClient {
             pullRequest: previous.pullRequest
         )
         let optimisticResult = previous.updated(
-            status: newStatus,
+            labels: newLabels,
             timelinePages: previous.timelinePages(appending: [newEvent])
         )
 
@@ -260,10 +267,10 @@ extension GithubClient {
         locked: Bool,
         completion: ((Result<Bool>) -> Void)? = nil
         ) {
-        let newStatus = IssueStatusModel(
-            status: previous.status.status,
-            pullRequest: previous.status.pullRequest,
-            locked: locked
+        let newLabels = IssueLabelsModel(
+            status: previous.labels.status,
+            locked: locked,
+            labels: previous.labels.labels
         )
         let newEvent = IssueStatusEventModel(
             id: UUID().uuidString,
@@ -274,7 +281,7 @@ extension GithubClient {
             pullRequest: previous.pullRequest
         )
         let optimisticResult = previous.updated(
-            status: newStatus,
+            labels: newLabels,
             timelinePages: previous.timelinePages(appending: [newEvent])
         )
 
@@ -344,7 +351,7 @@ extension GithubClient {
         ) {
         guard let actor = userSession?.username else { return }
 
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
         let oldLabelNames = Set<String>(previous.labels.labels.map { $0.name })
         let newLabelNames = Set<String>(labels.map { $0.name })
 
@@ -383,7 +390,7 @@ extension GithubClient {
         }
 
         let optimistic = previous.updated(
-            labels: IssueLabelsModel(labels: labels),
+            labels: IssueLabelsModel(status: previous.labels.status, locked: previous.labels.locked, labels: labels),
             timelinePages: previous.timelinePages(appending: newEvents)
         )
 
@@ -434,7 +441,7 @@ extension GithubClient {
         var newEvents = [IssueRequestModel]()
         var added = [String]()
         var removed = [String]()
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         for old in oldAssigness {
             if !newAssignees.contains(old) {

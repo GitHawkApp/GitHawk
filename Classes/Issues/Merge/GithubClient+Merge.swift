@@ -20,10 +20,13 @@ extension GithubClient {
         type: IssueMergeType,
         error: @escaping () -> Void
         ) {
-        let newStatus = IssueStatusModel(
-            status: .merged,
-            pullRequest: previous.status.pullRequest,
-            locked: previous.status.locked
+        let newLabels = IssueLabelsModel(
+            status: IssueLabelStatusModel(
+                status: .merged,
+                pullRequest: previous.labels.status.pullRequest
+            ),
+            locked: previous.labels.locked,
+            labels: previous.labels.labels
         )
         let newEvent = IssueStatusEventModel(
             id: UUID().uuidString,
@@ -34,7 +37,7 @@ extension GithubClient {
             pullRequest: previous.pullRequest
         )
         let optimisticResult = previous.updated(
-            status: newStatus,
+            labels: newLabels,
             timelinePages: previous.timelinePages(appending: [newEvent])
         )
 

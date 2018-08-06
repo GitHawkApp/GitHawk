@@ -11,9 +11,17 @@ import IGListKit
 
 final class IssueLabelsModel: ListDiffable {
 
+    let status: IssueLabelStatusModel
+    let locked: Bool
     let labels: [RepositoryLabel]
 
-    init(labels: [RepositoryLabel]) {
+    init(
+        status: IssueLabelStatusModel,
+        locked: Bool,
+        labels: [RepositoryLabel]
+        ) {
+        self.status = status
+        self.locked = locked
         self.labels = labels
     }
 

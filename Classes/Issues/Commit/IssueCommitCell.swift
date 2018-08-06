@@ -31,8 +31,8 @@ final class IssueCommitCell: UICollectionViewCell {
         commitImageView.tintColor = Styles.Colors.Gray.light.color
         contentView.addSubview(commitImageView)
         commitImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.eventGutter)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
             make.size.equalTo(Styles.Sizes.icon)
         }
 
@@ -51,7 +51,7 @@ final class IssueCommitCell: UICollectionViewCell {
         
         contentView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.left.equalTo(commitImageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.size.equalTo(Styles.Sizes.icon)
         }
@@ -61,9 +61,9 @@ final class IssueCommitCell: UICollectionViewCell {
         messageLabel.textColor = Styles.Colors.Gray.medium.color
         contentView.addSubview(messageLabel)
         messageLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.left.equalTo(avatarImageView.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.right.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.eventGutter)
+            make.right.lessThanOrEqualToSuperview()
         }
 
         // always collapse and truncate
