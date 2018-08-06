@@ -159,6 +159,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             let viewController = self.viewController
             else { return }
 
+        viewController.view.endEditing(true)
         var items = [ContrastContextMenuItem]()
 
         if case .collaborator = permissions {
