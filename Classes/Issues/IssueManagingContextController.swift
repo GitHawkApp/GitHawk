@@ -176,6 +176,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     @objc func onButton(sender: UIButton) {
         guard let viewController = self.viewController else { return }
 
+        viewController.view.endEditing(true)
         let items = actions.map { self.item($0) }
         ContextMenu.shared.show(
             sourceViewController: viewController,
