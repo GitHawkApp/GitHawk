@@ -205,6 +205,7 @@
 		2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */; };
 		2965F3702071508C003CC92F /* StyledTextBuilder+Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2965F36F2071508C003CC92F /* StyledTextBuilder+Checkbox.swift */; };
 		2965F37220715161003CC92F /* StyledTextBuilder+NewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */; };
+		2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2967DC55211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift */; };
 		29693EE520FAA05F00336200 /* IssueAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29693EE420FAA05F00336200 /* IssueAutocomplete.swift */; };
 		296A4960210E7B9A00BBBF2B /* IssueDetailBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A495F210E7B9A00BBBF2B /* IssueDetailBadgeView.swift */; };
 		296A4962210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */; };
@@ -716,6 +717,7 @@
 		2963A93A1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LabelableFields+IssueLabelModel.swift"; sourceTree = "<group>"; };
 		2965F36F2071508C003CC92F /* StyledTextBuilder+Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyledTextBuilder+Checkbox.swift"; sourceTree = "<group>"; };
 		2965F37120715161003CC92F /* StyledTextBuilder+NewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StyledTextBuilder+NewBase.swift"; sourceTree = "<group>"; };
+		2967DC55211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+Preferred.swift"; sourceTree = "<group>"; };
 		29693EE420FAA05F00336200 /* IssueAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAutocomplete.swift; sourceTree = "<group>"; };
 		296A495F210E7B9A00BBBF2B /* IssueDetailBadgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailBadgeView.swift; sourceTree = "<group>"; };
 		296A4961210E7E0E00BBBF2B /* CheckIfSentWithGitHawk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIfSentWithGitHawk.swift; sourceTree = "<group>"; };
@@ -2046,6 +2048,7 @@
 				DCA5ED111FAEE3AE0072F074 /* Store.swift */,
 				29B75ADC210AA14F00C28131 /* String+Size.swift */,
 				754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */,
+				2967DC55211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift */,
 				98835BCD1F1965E2005BA24F /* UIDevice+Model.swift */,
 				98B5A0851F6D0FFE000617D6 /* UINavigationController+Replace.swift */,
 				299F63DF205DDF6B0015D901 /* UIViewController+Routing.swift */,
@@ -2746,6 +2749,7 @@
 				292FCAF71EDFCC510026635E /* IssueCommentCodeBlockModel.swift in Sources */,
 				292FCAF91EDFCC510026635E /* IssueCommentDetailCell.swift in Sources */,
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
+				2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,

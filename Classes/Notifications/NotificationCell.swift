@@ -245,7 +245,7 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
 
         let scale = CABasicAnimation(keyPath: "transform.scale")
         scale.fromValue = 1
-        scale.duration = 0.22
+        scale.duration = 0.27
         scale.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
 
         let fade = CABasicAnimation(keyPath: "opacity")

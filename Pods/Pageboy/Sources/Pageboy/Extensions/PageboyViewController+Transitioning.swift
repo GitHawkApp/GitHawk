@@ -107,7 +107,7 @@ internal extension PageboyViewController {
         /// Calculate semantic direction for RtL languages
         var semanticDirection = direction
         if view.layoutIsRightToLeft && navigationOrientation == .horizontal {
-            semanticDirection = semanticDirection == .forward ? .reverse : .forward
+            semanticDirection = direction.layoutNormalized(isRtL: view.layoutIsRightToLeft)
         }
         
         // create a transition and unpause display link

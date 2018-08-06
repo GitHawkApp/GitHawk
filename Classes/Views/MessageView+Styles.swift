@@ -17,12 +17,12 @@ extension MessageViewController {
         messageView.textView.placeholderText = NSLocalizedString("Leave a comment", comment: "")
         messageView.textView.placeholderTextColor = Styles.Colors.Gray.light.color
         messageView.setButton(icon: UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal, position: .right)
-        messageView.rightButtonTint = Styles.Colors.Green.medium.color
+        messageView.rightButtonTint = Styles.Colors.Blue.medium.color
         messageView.font = Styles.Text.body.preferredFont
         messageView.textViewInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing,
+            top: Styles.Sizes.rowSpacing*1.5,
             left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing/2,
+            bottom: Styles.Sizes.rowSpacing,
             right: Styles.Sizes.rowSpacing
         )
         messageView.setButton(inset: Styles.Sizes.gutter, position: .right)
