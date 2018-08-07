@@ -77,6 +77,8 @@ final class RootNavigationManager: GitHubSessionListener {
             newBookmarksRootViewController(client: client),
             settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
+
+        tabBarController?.selectedIndex = 0
     }
 
     public func pushLoginViewController(nav: UINavigationController) {
