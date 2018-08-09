@@ -31,7 +31,8 @@ final class IssuesViewController:
     FeedSelectionProviding,
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
-    IssueCommentSectionControllerDelegate {
+    IssueCommentSectionControllerDelegate,
+    IssueTextActionsViewSendDelegate {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -165,7 +166,7 @@ final class IssuesViewController:
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        configure(target: self, action: #selector(didPressButton(_:)))
+        configure()
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -176,10 +177,12 @@ final class IssuesViewController:
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        actions.sendDelegate = self
 
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
@@ -190,7 +193,8 @@ final class IssuesViewController:
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
 
-        view.addSubview(manageController.manageButton)
+        // insert below so button doesn't appear above autocomplete
+        view.insertSubview(manageController.manageButton, belowSubview: messageView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -229,19 +233,6 @@ final class IssuesViewController:
     }
 
     // MARK: Private API
-
-    @objc func didPressButton(_ sender: Any?) {
-        // get text before calling super b/c it will clear it
-        let text = messageView.text
-        messageView.text = ""
-
-        if let id = resultID {
-            addCommentClient.addComment(
-                subjectId: id,
-                body: text
-            )
-        }
-    }
 
     var externalURL: URL {
         return URL(string: "https://github.com/\(model.owner)/\(model.repo)/issues/\(model.number)")!
@@ -592,6 +583,21 @@ final class IssuesViewController:
             return string
         }
         return substring + " ..."
+    }
+
+    // MARK: IssueTextActionsViewSendDelegate
+
+    func didSend(for actionsView: IssueTextActionsView) {
+        // get text before calling super b/c it will clear it
+        let text = messageView.text
+        messageView.text = ""
+
+        if let id = resultID {
+            addCommentClient.addComment(
+                subjectId: id,
+                body: text
+            )
+        }
     }
 
 }

@@ -195,7 +195,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
             repo: repo,
             owner: owner,
             addBorder: true,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: false
         )
         
         textActionsController.configure(client: client, textView: bodyField, actions: actions)

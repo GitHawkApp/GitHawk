@@ -52,6 +52,10 @@ protocol IssueTextActionsViewDelegate: class {
     func didSelect(actionsView: IssueTextActionsView, operation: IssueTextActionOperation)
 }
 
+protocol IssueTextActionsViewSendDelegate: class {
+    func didSend(for actionsView: IssueTextActionsView)
+}
+
 struct IssueTextActionOperation {
 
     enum Operation {
@@ -71,6 +75,7 @@ struct IssueTextActionOperation {
 final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     weak var delegate: IssueTextActionsViewDelegate?
+    weak var sendDelegate: IssueTextActionsViewSendDelegate?
 
     private let operations: [IssueTextActionOperation]
     private let identifier = "cell"
@@ -86,18 +91,43 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
         c.showsHorizontalScrollIndicator = false
         return c
     }()
+    private let gradientWidth = Styles.Sizes.gutter
+    private let sendButtonGradientLayer = CAGradientLayer()
+    private let sendButton = UIButton()
 
-    init(operations: [IssueTextActionOperation]) {
+    public var sendButtonEnabled: Bool {
+        get { return sendButton.isEnabled }
+        set { sendButton.isEnabled = newValue }
+    }
+
+    init(operations: [IssueTextActionOperation], showSendButton: Bool) {
         self.operations = operations
 
         super.init(frame: .zero)
 
         translatesAutoresizingMaskIntoConstraints = false
 
+        collectionView.clipsToBounds = true
         collectionView.register(IssueTextActionsCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         addSubview(collectionView)
+
+        if showSendButton {
+            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: gradientWidth)
+
+            sendButtonGradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+            sendButtonGradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+            sendButtonGradientLayer.colors = [UIColor(white: 1, alpha: 0).cgColor, UIColor.white.cgColor]
+            layer.addSublayer(sendButtonGradientLayer)
+
+            let blue = Styles.Colors.Blue.medium.color
+            sendButton.tintColor = blue
+            sendButton.imageView?.tintColor = blue
+            sendButton.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
+            addSubview(sendButton)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,7 +136,31 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = bounds
+        if sendButton.superview != nil {
+            let height = bounds.height
+            let imageWidth = sendButton.image(for: .normal)?.size.width ?? 0
+            let buttonWidth = imageWidth + 2*Styles.Sizes.gutter
+            sendButton.frame = CGRect(
+                x: bounds.width - buttonWidth,
+                y: 0,
+                width: buttonWidth,
+                height: height
+            )
+            sendButtonGradientLayer.frame = CGRect(
+                x: sendButton.frame.minX - gradientWidth,
+                y: 0,
+                width: gradientWidth,
+                height: height
+            )
+            // put collection view beneath the gradient layer
+            collectionView.frame = CGRect(x: 0, y: 0, width: sendButton.frame.minX, height: height)
+        } else {
+            collectionView.frame = bounds
+        }
+    }
+
+    @objc private func onSend() {
+        sendDelegate?.didSend(for: self)
     }
 
     // MARK: UICollectionViewDataSource
