@@ -16,7 +16,8 @@ extension IssueTextActionsView {
         repo: String,
         owner: String,
         addBorder: Bool,
-        supportsImageUpload: Bool
+        supportsImageUpload: Bool,
+        showSendButton: Bool
         ) -> IssueTextActionsView {
         var operations: [IssueTextActionOperation] = [
             IssueTextActionOperation(
@@ -82,7 +83,7 @@ extension IssueTextActionsView {
                 name: NSLocalizedString("Upload Image", comment: "The name of the action to upload an image from the markdown actions bar")))
         }
 
-        let actions = IssueTextActionsView(operations: operations)
+        let actions = IssueTextActionsView(operations: operations, showSendButton: showSendButton)
         actions.backgroundColor = Styles.Colors.Gray.lighter.color
         if addBorder {
             actions.addBorder(.top)
