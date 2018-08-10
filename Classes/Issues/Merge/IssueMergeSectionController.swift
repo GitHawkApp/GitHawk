@@ -174,6 +174,9 @@ ListBindingSectionControllerSelectionDelegate {
     // MARK: MergeButtonDelegate
 
     func didSelect(button: MergeButton) {
+      
+        viewController?.view.endEditing(true)
+      
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Confirm merge", comment: ""),
             message: NSLocalizedString("Are you sure you want to merge this pull request?", comment: ""),
@@ -193,6 +196,8 @@ ListBindingSectionControllerSelectionDelegate {
 
     func didSelectOptions(button: MergeButton) {
         guard let types = self.object?.availableTypes, types.count > 0 else { return }
+
+        viewController?.view.endEditing(true)
 
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Change merge type", comment: ""),
