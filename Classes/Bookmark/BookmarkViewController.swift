@@ -99,6 +99,11 @@ TabNavRootViewControllerType {
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
+  
+    override func viewWillDisappear(_ animated: Bool) {
+      searchBar.resignFirstResponder()
+    }
+
 
     private func update(animated: Bool) {
         adapter.performUpdates(animated: animated)
@@ -148,6 +153,7 @@ TabNavRootViewControllerType {
     }
 
     func didDelete(bookmarkSectionController: BookmarkSectionController, viewModel: BookmarkViewModel) {
+        searchBar.resignFirstResponder()
         bookmarkStore.remove(viewModel.bookmark)
         update(animated: true)
     }
