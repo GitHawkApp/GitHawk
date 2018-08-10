@@ -84,20 +84,14 @@ final class MergeButton: UIView {
     func configure(title: String, enabled: Bool, loading: Bool) {
         isUserInteractionEnabled = enabled && !loading
 
-        switch (enabled, loading) {
-        case (false, false):
-            backgroundColor = Styles.Colors.Gray.light.color
-            alpha = 0.3
-            
-        case (false , true):
-            backgroundColor = Styles.Colors.Gray.light.color.withAlphaComponent(0.2)
-            alpha = 0.3
-            
-        case (true, true):
-            backgroundColor = Styles.Colors.Green.medium.color.withAlphaComponent(0.2)
-            
-        case (true, false):
-            guard gradientLayer.superlayer == nil else { break }
+        backgroundColor = (enabled
+            ? (loading ? Styles.Colors.Green.medium.color : .clear)
+            : Styles.Colors.Gray.light.color)
+            .withAlphaComponent(loading ? 0.2 : 1)
+        alpha = enabled ? 1 : 0.3
+        
+        if enabled && !loading {
+            guard gradientLayer.superlayer == nil else { return }
             gradientLayer.cornerRadius = layer.cornerRadius
             gradientLayer.colors = [
                 UIColor.fromHex("34d058").cgColor,
@@ -108,6 +102,8 @@ final class MergeButton: UIView {
             [mergeLabel, optionIconView, optionBorder, activityView].forEach {
                 bringSubview(toFront: $0)
             }
+        } else {
+            gradientLayer.removeFromSuperlayer()
         }
         
         let titleColor = enabled ? .white : Styles.Colors.Gray.dark.color
