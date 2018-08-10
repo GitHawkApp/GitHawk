@@ -27,7 +27,7 @@ final class IssueCommentSectionController:
     IssueCommentReactionCellDelegate,
     EditCommentViewControllerDelegate,
     MarkdownStyledTextViewDelegate,
-    IssueCommentDoubleTapDelegate {
+    IssueCommentGestureDelegate {
 
     private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
@@ -408,7 +408,7 @@ final class IssueCommentSectionController:
         if let object = self.object,
             !object.asReviewComment,
             let cell = cell as? IssueCommentBaseCell {
-            cell.doubleTapDelegate = self
+            cell.gestureDelegate = self
         }
 
         ExtraCommentCellConfigure(
@@ -439,7 +439,7 @@ final class IssueCommentSectionController:
         uncollapse()
     }
     
-    // MARK: IssueCommentDoubleTapDelegate
+    // MARK: IssueCommentGestureDelegate
     
     func didDoubleTap(cell: IssueCommentBaseCell) {
         let reaction = ReactionContent.thumbsUp
@@ -452,6 +452,10 @@ final class IssueCommentSectionController:
             content: reaction,
             isAdd: true
         )
+    }
+  
+    func didLongPress(cell: IssueCommentBaseCell) {
+      didTapMore(sender: cell)
     }
 
     // MARK: IssueCommentDetailCellDelegate
@@ -493,7 +497,7 @@ final class IssueCommentSectionController:
         react(cell: cell, content: reaction, isAdd: false)
     }
 
-    func didTapMore(cell: IssueCommentReactionCell, sender: UIView) {
+    func didTapMore(sender: UIView) {
         guard let login = object?.details.login else {
             Squawk.showGenericError()
             return

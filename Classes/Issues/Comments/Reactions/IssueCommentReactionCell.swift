@@ -15,7 +15,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
-    func didTapMore(cell: IssueCommentReactionCell, sender: UIView)
+    func didTapMore(sender: UIView)
 }
 
 final class IssueCommentReactionCell: IssueCommentBaseCell,
@@ -205,7 +205,7 @@ UICollectionViewDelegateFlowLayout {
     }
 
     @objc func onMore(sender: UIView) {
-        delegate?.didTapMore(cell: self, sender: sender)
+        delegate?.didTapMore(sender: sender)
     }
 
     // MARK: Notifications

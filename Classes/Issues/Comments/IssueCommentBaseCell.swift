@@ -8,16 +8,18 @@
 
 import UIKit
 
-protocol IssueCommentDoubleTapDelegate: class {
+protocol IssueCommentGestureDelegate: class {
     func didDoubleTap(cell: IssueCommentBaseCell)
+    func didLongPress(cell: IssueCommentBaseCell)
 }
 
 class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     static let collapseCellMinHeight: CGFloat = 45
 
-    weak var doubleTapDelegate: IssueCommentDoubleTapDelegate?
+    weak var gestureDelegate: IssueCommentGestureDelegate?
     let doubleTapGesture = UITapGestureRecognizer()
+    let longPressGesture = UILongPressGestureRecognizer()
 
     private let collapseLayer = CAGradientLayer()
     private let collapseButton = UIButton()
@@ -32,6 +34,7 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         doubleTapGesture.delegate = self
         addGestureRecognizer(doubleTapGesture)
 
+        setupLongPressGesture()
         collapseLayer.isHidden = true
         collapseLayer.colors = [
             UIColor(white: 1, alpha: 0).cgColor,
@@ -95,11 +98,25 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         collapseLayer.isHidden = true
         collapseButton.isHidden = true
     }
+  
+    private func setupLongPressGesture()
+    {
+      longPressGesture.addTarget(self, action: #selector(onLongPress))
+      longPressGesture.minimumPressDuration = 0.5
+      longPressGesture.delegate = self
+      addGestureRecognizer(longPressGesture)
+    }
 
     // MARK: Private API
 
     @objc private func onDoubleTap() {
-        doubleTapDelegate?.didDoubleTap(cell: self)
+        gestureDelegate?.didDoubleTap(cell: self)
+    }
+  
+    @objc private func onLongPress() {
+      if(longPressGesture.state == .began) {
+        gestureDelegate?.didLongPress(cell: self)
+      }
     }
 
     var collapsed: Bool = false {
