@@ -61,7 +61,8 @@ NewIssueTableViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
       
-        defaultReactionLabel.text = ReactionContent.defaultReaction.emoji
+        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
+            ?? NSLocalizedString("Off", comment: "")
 
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
@@ -186,7 +187,7 @@ NewIssueTableViewControllerDelegate {
     }
   
     func onSetDefaultReaction() {
-      //showDefaultReactionMenu()
+        //showDefaultReactionMenu()
     }
 
     func onSignOut() {

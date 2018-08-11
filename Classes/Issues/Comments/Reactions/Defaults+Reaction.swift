@@ -6,19 +6,31 @@
 //  Copyright © 2018 Ryan Nystrom. All rights reserved.
 //
 extension UserDefaults {
-  // Stores ReactionContent in string form but
-  // accepts and returns in original form
-  static func setDefault(reaction: ReactionContent)
-  {
-    standard.set(reaction.emoji, forKey: "default.reaction")
-  }
-  
-  static var getDefaultReaction: ReactionContent
-  {
-    guard let reactionAsString = standard.string(forKey: "default.reaction")
-      else { return ReactionContent.thumbsUp }
-    let reaction = reactionAsString.reaction
-    return reaction
-  }
-  
+
+    private static let defaultKey = "com.whoisryannystrom.freetime.default-reaction"
+    private static let disabledValue = "disabled"
+
+    // Stores ReactionContent in string form but
+    // accepts and returns in original form
+    func setDefault(reaction: ReactionContent) {
+        set(reaction.emoji, forKey: UserDefaults.defaultKey)
+    }
+
+    func disableReaction() {
+        set(UserDefaults.disabledValue, forKey: UserDefaults.defaultKey)
+    }
+
+    var defaultReaction: ReactionContent? {
+        // if value doesn't exist, first access, default to previous behavior of +1
+        guard let value = string(forKey: UserDefaults.defaultKey)
+            else { return ReactionContent.thumbsUp }
+        if value == UserDefaults.disabledValue {
+            return nil
+        } else {
+            let reaction = value.reaction
+            return reaction
+        }
+    }
+
 }
+
