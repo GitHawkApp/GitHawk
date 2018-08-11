@@ -97,7 +97,10 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
 
     public var sendButtonEnabled: Bool {
         get { return sendButton.isEnabled }
-        set { sendButton.isEnabled = newValue }
+        set {
+            sendButton.isEnabled = newValue
+            sendButton.alpha = newValue ? 1 : 0.25
+        }
     }
 
     init(operations: [IssueTextActionOperation], showSendButton: Bool) {
