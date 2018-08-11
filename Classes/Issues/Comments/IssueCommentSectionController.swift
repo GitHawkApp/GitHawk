@@ -218,7 +218,8 @@ final class IssueCommentSectionController:
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
         let bodyModels = MarkdownModels(
-            markdown,
+            // strip githawk signatures on edit
+            CheckIfSentWithGitHawk(markdown: markdown).markdown,
             owner: model.owner,
             repo: model.repo,
             width: width,
