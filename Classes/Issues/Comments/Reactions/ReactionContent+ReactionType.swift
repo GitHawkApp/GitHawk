@@ -15,26 +15,30 @@ extension ReactionContent {
         case .heart: return "❤️"
         case .hooray: return "🎉"
         case .laugh: return "😄"
-        case .__unknown("Disabled"): return "Disabled"
         case .thumbsUp, .__unknown: return "👍"
         case .thumbsDown: return "👎"
         }
     }
-  
-   static var defaultReaction: ReactionContent {
-    return UserDefaults.getDefaultReaction
-   }
+
+    static var reactionsEnabled: Bool {
+        return UserDefaults.standard.defaultReaction != nil
+    }
+
+    static var defaultReaction: ReactionContent? {
+        return UserDefaults.standard.defaultReaction
+    }
 }
 extension String {
-  var reaction: ReactionContent {
-    switch self {
-    case "😕": return .confused
-    case "❤️": return .heart
-    case "🎉": return .hooray
-    case "😄": return .laugh
-    case "👍": return .thumbsUp
-    case "👎": return .thumbsDown
-    default:   return .__unknown(self)
+    var reaction: ReactionContent? {
+        switch self {
+        case "😕": return .confused
+        case "❤️": return .heart
+        case "🎉": return .hooray
+        case "😄": return .laugh
+        case "👍": return .thumbsUp
+        case "👎": return .thumbsDown
+        default:   return nil
+        }
     }
-  }
 }
+

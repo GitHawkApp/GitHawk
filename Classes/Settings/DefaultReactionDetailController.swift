@@ -17,102 +17,99 @@ class DefaultReactionDetailController: UITableViewController {
     @IBOutlet var confusedCell: UITableViewCell!
     @IBOutlet var heartCell: UITableViewCell!
     @IBOutlet var enabledSwitch: UISwitch!
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
         checkCurrentDefault()
         tableView.reloadData()
     }
-  
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-      return enabledSwitch.isOn ? 2 : 1
+        return enabledSwitch.isOn ? 2 : 1
     }
-  
+
     private func checkCurrentDefault() {
-      switch (ReactionContent.defaultReaction)
-      {
-      case ReactionContent.thumbsUp:
-        updateCells(cell: thumbsUpCell)
-      case ReactionContent.thumbsDown:
-        updateCells(cell: thumbsDownCell)
-      case ReactionContent.laugh:
-        updateCells(cell: laughCell)
-      case ReactionContent.hooray:
-        updateCells(cell: hoorayCell)
-      case ReactionContent.confused:
-        updateCells(cell: confusedCell)
-      case ReactionContent.heart:
-        updateCells(cell: heartCell)
-      case ReactionContent.__unknown("Disabled"):
-        enabledSwitch.isOn = false
-      default:
-        updateCells(cell: thumbsUpCell)
-      }
-      
+        guard let reaction = ReactionContent.defaultReaction else {
+            enabledSwitch.isOn = false
+            return
+        }
+
+        let cell: UITableViewCell
+        switch (reaction) {
+        case .thumbsUp, .__unknown: cell = thumbsUpCell
+        case .thumbsDown: cell = thumbsDownCell
+        case .laugh: cell = laughCell
+        case .hooray: cell = hoorayCell
+        case .confused: cell = confusedCell
+        case .heart: cell = heartCell
+        }
+        updateCells(cell: cell)
     }
-  
+
     private func updateCells(cell: UITableViewCell) {
-      
-      rz_smoothlyDeselectRows(tableView: self.tableView)
+        rz_smoothlyDeselectRows(tableView: self.tableView)
 
-      // Reset all to none
-      thumbsUpCell.accessoryType = .none
-      thumbsDownCell.accessoryType = .none
-      laughCell.accessoryType = .none
-      hoorayCell.accessoryType = .none
-      confusedCell.accessoryType = .none
-      heartCell.accessoryType = .none
-      
-      // Set proper cell to check
-      cell.accessoryType = .checkmark
+        // Reset all to none
+        thumbsUpCell.accessoryType = .none
+        thumbsDownCell.accessoryType = .none
+        laughCell.accessoryType = .none
+        hoorayCell.accessoryType = .none
+        confusedCell.accessoryType = .none
+        heartCell.accessoryType = .none
 
+        // Set proper cell to check
+        cell.accessoryType = .checkmark
     }
-  
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      
-      tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
-      let cell = tableView.cellForRow(at: indexPath)
-      
-      switch cell {
-      case thumbsUpCell:
-        updateDefaultReaction(.thumbsUp)
-      case thumbsDownCell:
-        updateDefaultReaction(.thumbsDown)
-      case laughCell:
-        updateDefaultReaction(.laugh)
-      case hoorayCell:
-        updateDefaultReaction(.hooray)
-      case confusedCell:
-        updateDefaultReaction(.confused)
-      case heartCell:
-        updateDefaultReaction(.heart)
-      default:
-        break
-      }
+        tableView.deselectRow(at: indexPath, animated: trueUnlessReduceMotionEnabled)
+        let cell = tableView.cellForRow(at: indexPath)
+
+        switch cell {
+        case thumbsUpCell:
+            updateDefault(reaction: .thumbsUp)
+        case thumbsDownCell:
+            updateDefault(reaction: .thumbsDown)
+        case laughCell:
+            updateDefault(reaction: .laugh)
+        case hoorayCell:
+            updateDefault(reaction: .hooray)
+        case confusedCell:
+            updateDefault(reaction: .confused)
+        case heartCell:
+            updateDefault(reaction: .heart)
+        default:
+            break
+        }
     }
-  
+
     @IBAction func toggleDefaultReaction(_ sender: Any) {
         if(enabledSwitch.isOn) {
-          updateDefaultReaction(.thumbsUp)
+            updateDefault(reaction: .thumbsUp)
         } else {
-          updateDefaultReaction(.__unknown("Disabled"))
+            disableReaction()
         }
         updateSections()
     }
-  
-    private func updateDefaultReaction(_ reaction: ReactionContent) {
-      UserDefaults.setDefault(reaction: reaction)
-      checkCurrentDefault()
+
+    private func updateDefault(reaction: ReactionContent) {
+        UserDefaults.standard.setDefault(reaction: reaction)
+        checkCurrentDefault()
     }
-  
+
+    private func disableReaction() {
+        UserDefaults.standard.disableReaction()
+    }
+
     private func updateSections() {
-      tableView.performBatchUpdates({
-        if(enabledSwitch.isOn) {
-          self.tableView.insertSections(IndexSet(integer: 1), with: .top)
-        } else {
-          self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
-        }
-      }, completion: nil)
+        tableView.performBatchUpdates({
+            if(enabledSwitch.isOn) {
+                self.tableView.insertSections(IndexSet(integer: 1), with: .top)
+            } else {
+                self.tableView.deleteSections(IndexSet(integer: 1), with: .top)
+            }
+        }, completion: nil)
     }
 }
+
 
