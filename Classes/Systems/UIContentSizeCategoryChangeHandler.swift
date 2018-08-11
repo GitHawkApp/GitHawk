@@ -27,7 +27,8 @@ final class UIContentSizeCategoryChangeHandler {
     // MARK: Private API
 
     @objc private func contentSizeCategoryDidChange() {
-        UIContentSizeCategory.preferred = UIContentSizeCategory.preferred
+        // Force restart to avoid a mix-matched UI
+        exit(0)
     }
 
 }
