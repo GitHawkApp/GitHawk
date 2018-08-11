@@ -32,7 +32,8 @@ final class IssuesViewController:
     IssueNeckLoadSectionControllerDelegate,
     FlatCacheListener,
     IssueCommentSectionControllerDelegate,
-    IssueTextActionsViewSendDelegate {
+    IssueTextActionsViewSendDelegate,
+    MessageTextViewListener {
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -50,6 +51,7 @@ final class IssuesViewController:
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
+    private var actions: IssueTextActionsView?
 
     // must fetch collaborator info from API before showing editing controls
     private var viewerIsCollaborator = false
@@ -183,6 +185,10 @@ final class IssuesViewController:
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
         actions.sendDelegate = self
+        self.actions = actions
+
+        actions.sendButtonEnabled = !messageView.textView.text.isEmpty
+        messageView.textView.add(listener: self)
 
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
@@ -599,5 +605,14 @@ final class IssuesViewController:
             )
         }
     }
+
+    // MARK: MessageTextViewListener
+
+    func didChange(textView: MessageTextView) {
+        actions?.sendButtonEnabled = !textView.text.isEmpty
+    }
+
+    func didChangeSelection(textView: MessageTextView) {}
+    func willChangeRange(textView: MessageTextView, to range: NSRange) {}
 
 }
