@@ -53,7 +53,7 @@ final class RepositorySummaryCell: SelectableCell {
         detailsStackView.addArrangedSubview(secondaryLabel)
         detailsStackView.addArrangedSubview(labelListView)
         detailsStackView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(contentView).offset(Styles.Sizes.gutter)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.gutter)
             make.left.equalTo(reasonImageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.right.equalTo(contentView.snp.right).offset(-Styles.Sizes.columnSpacing)
         }
