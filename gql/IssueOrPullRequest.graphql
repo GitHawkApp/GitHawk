@@ -6,7 +6,7 @@ query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_s
     mergeCommitAllowed
     rebaseMergeAllowed
     squashMergeAllowed
-    mentionableUsers(first: 20) {
+    mentionableUsers(first: 50) {
       nodes {
         avatarUrl
         login
