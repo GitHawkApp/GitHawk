@@ -27,6 +27,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
+    @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
@@ -36,8 +37,9 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var apiStatusLabel: UILabel!
     @IBOutlet weak var apiStatusView: UIView!
     @IBOutlet weak var signatureSwitch: UISwitch!
-
-    override func viewDidLoad() {
+    @IBOutlet weak var defaultReactionLabel: UILabel!
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
@@ -58,6 +60,9 @@ NewIssueTableViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
+        defaultReactionLabel.text = ReactionContent.defaultReaction.emoji
+
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
 
@@ -108,6 +113,8 @@ NewIssueTableViewControllerDelegate {
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
+        } else if cell === setDefaultReaction {
+            onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
         }
@@ -176,6 +183,10 @@ NewIssueTableViewControllerDelegate {
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         navigationController?.showDetailViewController(repoViewController, sender: self)
+    }
+  
+    func onSetDefaultReaction() {
+      //showDefaultReactionMenu()
     }
 
     func onSignOut() {

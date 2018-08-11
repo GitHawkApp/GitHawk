@@ -442,7 +442,7 @@ final class IssueCommentSectionController:
     // MARK: IssueCommentDoubleTapDelegate
     
     func didDoubleTap(cell: IssueCommentBaseCell) {
-        let reaction = ReactionContent.thumbsUp
+        let reaction = ReactionContent.defaultReaction
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
             else { return }

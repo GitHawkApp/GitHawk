@@ -27,5 +27,8 @@ class StyledTableCell: UITableViewCell {
         background.backgroundColor = Styles.Colors.Gray.alphaLighter
         selectedBackgroundView = background
     }
-
+  
+   override var canBecomeFirstResponder: Bool {
+      return true
+   }
 }
