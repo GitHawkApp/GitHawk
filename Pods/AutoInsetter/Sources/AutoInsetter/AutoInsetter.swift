@@ -53,15 +53,14 @@ public final class AutoInsetter {
             if scrollView.contentInset != requiredContentInset {
                 
                 let isTopInsetChanged = requiredContentInset.top != scrollView.contentInset.top
-                let topInsetDelta = requiredContentInset.top - scrollView.contentInset.top
-
+                
                 scrollView.contentInset = requiredContentInset
                 scrollView.scrollIndicatorInsets = requiredContentInset
                                 
                 // only update contentOffset if the top contentInset has updated.
                 if isTopInsetChanged {
                     var contentOffset = scrollView.contentOffset
-                    contentOffset.y -= topInsetDelta
+                    contentOffset.y = -requiredContentInset.top
                     scrollView.contentOffset = contentOffset
                 }
             }
@@ -117,12 +116,11 @@ private extension AutoInsetter {
             let relativeTopInset = max(requiredContentInset.top - relativeFrame.minY, 0.0)
             let bottomInsetMinY = viewController.view.bounds.height - requiredContentInset.bottom
             let relativeBottomInset = fabs(min(bottomInsetMinY - relativeFrame.maxY, 0.0))
-            let originalContentInset = scrollView.contentInset
             
             proposedContentInset = UIEdgeInsets(top: relativeTopInset,
-                                                left: originalContentInset.left,
+                                                left: 0.0,
                                                 bottom: relativeBottomInset,
-                                                right: originalContentInset.right)
+                                                right: 0.0)
         }
         
         currentScrollViewInsets[scrollView] = proposedContentInset
