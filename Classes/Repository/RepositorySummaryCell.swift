@@ -14,7 +14,7 @@ import DateAgo
 final class RepositorySummaryCell: SelectableCell {
 
     static let titleInset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing,
+        top: Styles.Sizes.gutter,
         left: Styles.Sizes.icon.width + 2*Styles.Sizes.columnSpacing,
         bottom: Styles.Sizes.rowSpacing,
         right: Styles.Sizes.gutter
@@ -53,7 +53,7 @@ final class RepositorySummaryCell: SelectableCell {
         detailsStackView.addArrangedSubview(secondaryLabel)
         detailsStackView.addArrangedSubview(labelListView)
         detailsStackView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.bottom.equalTo(contentView).offset(-Styles.Sizes.gutter)
             make.left.equalTo(reasonImageView.snp.right).offset(Styles.Sizes.columnSpacing)
             make.right.equalTo(contentView.snp.right).offset(-Styles.Sizes.columnSpacing)
         }
