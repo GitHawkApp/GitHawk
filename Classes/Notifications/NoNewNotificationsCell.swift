@@ -48,7 +48,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.top.equalTo(emojiLabel.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
         }
 
-        reviewGithubAccessButton.setTitle("Review GitHub Access...", for: .normal)
+        reviewGithubAccessButton.setTitle(NSLocalizedString("Review GitHub Access", comment: ""), for: .normal)
         reviewGithubAccessButton.isAccessibilityElement = false
         reviewGithubAccessButton.titleLabel?.textAlignment = .center
         reviewGithubAccessButton.backgroundColor = .clear
