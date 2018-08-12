@@ -48,7 +48,6 @@ NewIssueTableViewControllerDelegate {
         signatureSwitch.isOn = Signature.enabled
 
         updateBadge()
-        style()
 
         NotificationCenter.default.addObserver(
             self,
@@ -252,11 +251,6 @@ NewIssueTableViewControllerDelegate {
     @IBAction func onMarkRead(_ sender: Any) {
         NotificationModelController.setReadOnOpen(open: markReadSwitch.isOn)
     }
-
-	private func style() {
-		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
-			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
-	}
 
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
