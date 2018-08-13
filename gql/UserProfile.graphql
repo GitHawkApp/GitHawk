@@ -1,0 +1,147 @@
+query User($login: String!) {
+ user(login: $login) {
+  	avatarUrl,
+  	bio,
+    bioHTML,
+  	company,
+  	companyHTML,
+  	email,
+  	location,
+  	login,
+    name,
+  	url,
+  	viewerCanFollow,
+  	viewerIsFollowing,
+
+  	pinnedRepositories(first:6) {
+    	nodes {
+        ... RepoSearchFields
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+  	}
+
+  	following(first:50) {
+    totalCount
+    	nodes {
+        ... on User {
+          avatarUrl,
+          login
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+  	}
+
+    followers(first:50) {
+    totalCount
+    	nodes {
+        ... on User {
+          avatarUrl,
+          login
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+  	}
+
+    repositories(first:0) {
+      totalCount
+    }
+
+    starredRepositories(first:0) {
+      totalCount
+    }
+  }
+}
+
+
+query LoadMoreFollowers($after:String!, $login: String!) {
+    user(login: $login) {
+      followers(first: 100, after: $after) {
+      	totalCount
+        nodes {
+          ... on User {
+            avatarUrl,
+            login
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+
+  query LoadMoreFollowing($after:String!, $login: String!) {
+    user(login: $login) {
+      following(first: 100, after: $after) {
+        totalCount
+        nodes {
+          ... on User {
+            avatarUrl,
+            login
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+
+
+query UserInfoSummary($login: String!) {
+ user(login: $login) {
+  	name,
+  	bio,
+  	company,
+  	companyHTML,
+    location
+	}
+}
+
+
+query UserStarredRepos($login: String!, $after:String) {
+ user(login: $login) {
+
+    starredRepositories(first:100, after: $after) {
+      totalCount
+      nodes {
+        ... on Repository {
+          ... RepoSearchFields
+        }
+   		}
+      pageInfo {
+        hasNextPage
+        endCursor
+        }
+    }
+    }
+}
+
+
+query UserRepos($login: String!, $after:String) {
+  user(login: $login) {
+    repositories(first:100, after: $after) {
+      totalCount
+      nodes {
+        ... on Repository {
+          ... RepoSearchFields
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

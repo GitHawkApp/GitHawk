@@ -109,3 +109,24 @@ fragment commitContext on Commit {
     state
   }
 }
+
+fragment RepoSearchFields on Repository {
+  id
+  name
+  hasIssuesEnabled
+  owner {
+    login
+  }
+  description
+  pushedAt
+  primaryLanguage {
+    name
+    color
+  }
+  stargazers {
+    totalCount
+  }
+  defaultBranchRef {
+    name
+  }
+}
