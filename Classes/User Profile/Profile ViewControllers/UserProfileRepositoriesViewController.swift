@@ -7,16 +7,14 @@
 //
 
 import UIKit
-
 import IGListKit
 import UIKit
 import Apollo
 
-
 typealias RepoContainer = SearchRepoResult
 
-private extension RepositoryFragmentType {
-    func convertToSearchRepoResult() -> SearchRepoResult {
+extension RepositoryFragmentType {
+    func searchRepoResults() -> SearchRepoResult {
         return SearchRepoResult(id: id,
                                 owner: ownerLogin,
                                 name: name,
@@ -27,7 +25,6 @@ private extension RepositoryFragmentType {
                                 defaultBranch: fragmentDefaultBranch)
     }
 }
-
 
 
 class UserProfileRepositoriesViewController: UIViewController, ListAdapterDataSource
@@ -101,7 +98,7 @@ class UserProfileRepositoriesViewController: UIViewController, ListAdapterDataSo
         case .success(let page, let results):
             self.page = page
             repositories += results.map {
-                 $0.convertToSearchRepoResult()
+                $0.searchRepoResults()
             }
         }
         adapter.reloadData()

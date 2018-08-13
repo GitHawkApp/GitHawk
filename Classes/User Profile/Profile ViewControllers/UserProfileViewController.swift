@@ -27,10 +27,13 @@ class UserProfileViewController:
         self.userLogin = userLogin
         
         self.controllers = [
-            UserProfileOverviewViewController(client: userProfileClient),
+            UserProfileOverviewViewController(client: userProfileClient,
+                                              gitHubClient: gitHubClient),
+
             UserProfileRepositoriesViewController(client: userProfileClient,
                                                   gitHubClient: gitHubClient,
                                                   tab: .userRepos),
+            
             UserProfileRepositoriesViewController(client: userProfileClient,
                                                   gitHubClient: gitHubClient,
                                                   tab: .starredRepos)
@@ -48,6 +51,13 @@ class UserProfileViewController:
         view.backgroundColor = .white 
         dataSource = self
         delegate = self
+        
+        bar.appearance = TabmanBar.Appearance({ appearance in
+            appearance.text.font = Styles.Text.button.preferredFont
+            appearance.state.color = Styles.Colors.Gray.light.color
+            appearance.state.selectedColor = Styles.Colors.Blue.medium.color
+            appearance.indicator.color = Styles.Colors.Blue.medium.color
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,12 +86,5 @@ class UserProfileViewController:
         controllers[2].title = "Starred (\(starredReposCount))"
         
         bar.items = controllers.map { Item(title: $0.title ?? "" )}
-        
-        bar.appearance = TabmanBar.Appearance({ appearance in
-            appearance.text.font = Styles.Text.button.preferredFont
-            appearance.state.color = Styles.Colors.Gray.light.color
-            appearance.state.selectedColor = Styles.Colors.Blue.medium.color
-            appearance.indicator.color = Styles.Colors.Blue.medium.color
-        })
     }
 }
