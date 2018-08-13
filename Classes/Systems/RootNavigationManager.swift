@@ -56,9 +56,8 @@ final class RootNavigationManager: GitHubSessionListener {
         }
     }
 
-    public func resetRootViewController(userSession: GitHubUserSession?) {
+    public func resetRootViewController(userSession: GitHubUserSession?, isNeedRenderInbox: Bool = true) {
         guard let userSession = userSession else { return }
-
         let client = newGithubClient(userSession: userSession)
         lastClient = client
 
@@ -78,7 +77,9 @@ final class RootNavigationManager: GitHubSessionListener {
             settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
 
-        tabBarController?.selectedIndex = 0
+        if isNeedRenderInbox {
+            tabBarController?.selectedIndex = 0
+        }
     }
 
     public func pushLoginViewController(nav: UINavigationController) {
@@ -101,7 +102,7 @@ final class RootNavigationManager: GitHubSessionListener {
     // MARK: GitHubSessionListener
 
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
-        resetRootViewController(userSession: userSession)
+        resetRootViewController(userSession: userSession, isNeedRenderInbox: dismiss)
 
         if dismiss {
             rootViewController?.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
