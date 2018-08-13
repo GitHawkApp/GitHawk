@@ -35,10 +35,17 @@ final class IssueCommentTableModel: NSObject, ListDiffable {
 
     let columns: [Column]
     let rowHeights: [CGFloat]
+    let size: CGSize
 
     init(columns: [Column], rowHeights: [CGFloat]) {
         self.columns = columns
         self.rowHeights = rowHeights
+
+        let inset = IssueCommentTableCell.inset
+        self.size = CGSize(
+            width: columns.reduce(0) { $0 + $1.width } + inset.left + inset.right,
+            height: rowHeights.reduce(0) { $0 + $1 } + inset.top + inset.bottom
+        )
     }
 
     // MARK: ListDiffable
