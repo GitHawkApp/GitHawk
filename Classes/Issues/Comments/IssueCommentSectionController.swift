@@ -11,6 +11,7 @@ import IGListKit
 import TUSafariActivity
 import Squawk
 import GitHubAPI
+import ContextMenu
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didSelectReply(
@@ -27,7 +28,8 @@ final class IssueCommentSectionController:
     IssueCommentReactionCellDelegate,
     EditCommentViewControllerDelegate,
     MarkdownStyledTextViewDelegate,
-    IssueCommentDoubleTapDelegate {
+    IssueCommentDoubleTapDelegate,
+    ContextMenuDelegate {
 
     private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
@@ -518,6 +520,24 @@ final class IssueCommentSectionController:
         viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
+    func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let viewController = self.viewController else { return }
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: ReactionsMenuViewController(),
+            options: ContextMenu.Options(
+                containerStyle: ContextMenu.ContainerStyle(
+                    xPadding: -4,
+                    yPadding: 8,
+                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                ),
+                menuStyle: .minimal
+            ),
+            sourceView: sender,
+            delegate: self
+        )
+    }
+
     // MARK: MarkdownStyledTextViewDelegate
 
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
@@ -533,6 +553,32 @@ final class IssueCommentSectionController:
 
     func didCancel(viewController: EditCommentViewController) {
         viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
+    }
+
+    // MARK: ContextMenuDelegate
+
+    func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {}
+
+    func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {
+        guard let reactionViewController = viewController as? ReactionsMenuViewController,
+            let reaction = reactionViewController.selectedReaction,
+            let reactions = reactionMutation ?? self.object?.reactions
+            else { return }
+
+        var index = -1
+        for (i, model) in viewModels.reversed().enumerated() {
+            if model is IssueCommentReactionViewModel {
+                index = viewModels.count - 1 - i
+                break
+            }
+        }
+
+        guard index >= 0 else { return }
+        react(
+            cell: collectionContext?.cellForItem(at: index, sectionController: self) as? IssueCommentReactionCell,
+            content: reaction,
+            isAdd: !reactions.viewerDidReact(reaction: reaction)
+        )
     }
 
 }

@@ -16,6 +16,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didTapMore(cell: IssueCommentReactionCell, sender: UIView)
+    func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView)
 }
 
 final class IssueCommentReactionCell: IssueCommentBaseCell,
@@ -49,7 +50,7 @@ UICollectionViewDelegateFlowLayout {
         addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton(sender:)), for: .touchUpInside)
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
         addButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         contentView.addSubview(addButton)
@@ -123,22 +124,23 @@ UICollectionViewDelegateFlowLayout {
         return collectionView.cellForItem(at: path) as? IssueReactionCell
     }
 
-    @objc private func onAddButton() {
-        addButton.becomeFirstResponder()
-
-        let actions = [
-            (ReactionContent.thumbsUp.emoji, #selector(IssueCommentReactionCell.onThumbsUp)),
-            (ReactionContent.thumbsDown.emoji, #selector(IssueCommentReactionCell.onThumbsDown)),
-            (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
-            (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
-            (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
-            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart))
-        ]
-
-        let menu = UIMenuController.shared
-        menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
-        menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
-        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+    @objc private func onAddButton(sender: UIView) {
+//        addButton.becomeFirstResponder()
+//
+//        let actions = [
+//            (ReactionContent.thumbsUp.emoji, #selector(IssueCommentReactionCell.onThumbsUp)),
+//            (ReactionContent.thumbsDown.emoji, #selector(IssueCommentReactionCell.onThumbsDown)),
+//            (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
+//            (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
+//            (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
+//            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart))
+//        ]
+//
+//        let menu = UIMenuController.shared
+//        menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
+//        menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
+//        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+        delegate?.didTapAddReaction(cell: self, sender: sender)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
