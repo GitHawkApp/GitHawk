@@ -13,19 +13,16 @@ import Pageboy
 class UserProfileViewController:
     TabmanViewController,
     PageboyViewControllerDataSource,
-    SetsTabmanTitlesDelegate
+    ConfigureRootProfileViewController
 {
+    
     private let controllers: [UIViewController]
-    private let client: UserProfileClient
-    private let userLogin: String
     
     init(gitHubClient: GithubClient,
          userLogin: String)
     {
         let userProfileClient = UserProfileClient(client: gitHubClient, userLogin: userLogin)
-        self.client = userProfileClient
-        self.userLogin = userLogin
-        
+
         self.controllers = [
             UserProfileOverviewViewController(client: userProfileClient,
                                               gitHubClient: gitHubClient),
@@ -42,7 +39,7 @@ class UserProfileViewController:
         super.init(nibName: nil, bundle: nil)
 
         if let vc = controllers[0] as? UserProfileOverviewViewController {
-            vc.setTabmanTitlesDelegate = self
+            vc.configureRootViewControllerDelegate = self
         }
     }
     
@@ -78,13 +75,21 @@ class UserProfileViewController:
         return nil
     }
     
-    // MARK: SetsTabmanTitlesDelegate
+    // MARK: ConfigureRootProfileViewControllerDelegate
     
-    func setTitles(userRepoCount: Int, starredReposCount: Int) {
+    func configureTabmanTitles(userRepoCount: Int, starredReposCount: Int) {
+    
         controllers[0].title = "Overview"
         controllers[1].title = "Repositories (\(userRepoCount))"
         controllers[2].title = "Starred (\(starredReposCount))"
         
         bar.items = controllers.map { Item(title: $0.title ?? "" )}
     }
+    
+    func configureNavbarTitle(userLogin: String, username: String?) {
+        let titlelabel = NavbarTitleLabel()
+        self.navigationItem.titleView = titlelabel
+        titlelabel.configure(title: userLogin, subtitle: username)
+    }
+    
 }

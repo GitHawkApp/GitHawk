@@ -22,6 +22,7 @@ class UserProfileModel {
     let name: String?
     let url: String
     let viewerCanFollow: Bool
+    let viewIsFollowing: Bool
     
     let repositoriesCount: Int
     let starredReposCount: Int
@@ -43,6 +44,7 @@ class UserProfileModel {
         self.name = user.name
         self.url = user.url
         self.viewerCanFollow = user.viewerCanFollow
+        self.viewIsFollowing = user.viewerIsFollowing
         
         self.followingCount = user.following.totalCount
         self.followersCount = user.followers.totalCount

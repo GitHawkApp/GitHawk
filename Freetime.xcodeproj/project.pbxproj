@@ -452,6 +452,7 @@
 		BDC1053B21212CE400DB7976 /* ProfileHeaderKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053A21212CE400DB7976 /* ProfileHeaderKey.swift */; };
 		BDC1053D21212CF200DB7976 /* ProfileHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053C21212CF200DB7976 /* ProfileHeaderSectionController.swift */; };
 		BDC1053F21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053E21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift */; };
+		BDC105442121BFEA00DB7976 /* NavbarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC105432121BFEA00DB7976 /* NavbarTitle.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -997,6 +998,7 @@
 		BDC1053A21212CE400DB7976 /* ProfileHeaderKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderKey.swift; sourceTree = "<group>"; };
 		BDC1053C21212CF200DB7976 /* ProfileHeaderSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderSectionController.swift; sourceTree = "<group>"; };
 		BDC1053E21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		BDC105432121BFEA00DB7976 /* NavbarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarTitle.swift; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -2122,6 +2124,7 @@
 		BD6C5C832120ABE300E93D31 /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
+				BDC105422121BFD300DB7976 /* Views */,
 				BDC105402121363300DB7976 /* Profile Models */,
 				BDC105412121365000DB7976 /* Profile ViewControllers */,
 				BDC1053921212CCA00DB7976 /* Section Headers */,
@@ -2161,6 +2164,14 @@
 				BD6445532120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift */,
 			);
 			path = "Profile ViewControllers";
+			sourceTree = "<group>";
+		};
+		BDC105422121BFD300DB7976 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDC105432121BFEA00DB7976 /* NavbarTitle.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -3146,6 +3157,7 @@
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				29622B45210520E6000C428D /* CardCollectionViewCell.swift in Sources */,
 				294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */,
+				BDC105442121BFEA00DB7976 /* NavbarTitle.swift in Sources */,
 				294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */,
 				754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,

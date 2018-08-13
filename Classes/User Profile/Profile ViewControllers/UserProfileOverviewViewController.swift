@@ -11,8 +11,9 @@ import Apollo
 import SnapKit
 import IGListKit
 
-protocol SetsTabmanTitlesDelegate: class {
-    func setTitles(userRepoCount: Int, starredReposCount: Int)
+protocol ConfigureRootProfileViewController: class {
+    func configureNavbarTitle(userLogin: String, username: String?)
+    func configureTabmanTitles(userRepoCount: Int, starredReposCount: Int)
 }
 
 class UserProfileOverviewViewController:
@@ -21,11 +22,10 @@ class UserProfileOverviewViewController:
     SearchResultSectionControllerDelegate
 {
     
-    
     private let client: UserProfileClient
     private let gitHubClient: GithubClient
     private var userProfileModel: UserProfileModel?
-    weak var setTabmanTitlesDelegate: SetsTabmanTitlesDelegate?
+    weak var configureRootViewControllerDelegate: ConfigureRootProfileViewController?
     
     private lazy var adapter: ListAdapter = { ListAdapter(updater: ListAdapterUpdater(),
                                                           viewController: self) }()
@@ -65,8 +65,12 @@ class UserProfileOverviewViewController:
             
         case .success(let userProfile):
             self.userProfileModel = userProfile
-            setTabmanTitlesDelegate?.setTitles(userRepoCount: userProfile.repositoriesCount,
-                                               starredReposCount: userProfile.starredReposCount)
+            
+            configureRootViewControllerDelegate?.configureNavbarTitle(userLogin: userProfile.login,
+                                                           username: userProfile.name)
+            
+            configureRootViewControllerDelegate?.configureTabmanTitles(userRepoCount: userProfile.repositoriesCount,
+                                                                       starredReposCount: userProfile.starredReposCount)
             
             adapter.reloadData()
         }
