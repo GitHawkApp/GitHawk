@@ -438,7 +438,21 @@
 		98F9F4011F9CCFFE005A0266 /* ImgurClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */; };
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
 		BD3761B0209E032500401DFB /* BookmarkNavigationItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */; };
+		BD64454C2120B31700C8C7E2 /* UserProfileReposQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD64454B2120B31700C8C7E2 /* UserProfileReposQuery.swift */; };
+		BD6445502120B78F00C8C7E2 /* GitHubClient+RepositoryFragmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD64454F2120B78F00C8C7E2 /* GitHubClient+RepositoryFragmentType.swift */; };
+		BD6445522120BB2100C8C7E2 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6445512120BB2100C8C7E2 /* UserProfileViewController.swift */; };
+		BD6445542120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6445532120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift */; };
+		BD6445562120CBC800C8C7E2 /* UserProfileOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6445552120CBC800C8C7E2 /* UserProfileOverviewViewController.swift */; };
+		BD6445582120D8FD00C8C7E2 /* UserProfileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6445572120D8FD00C8C7E2 /* UserProfileClient.swift */; };
+		BD64455E2120FA3200C8C7E2 /* UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD64455D2120FA3200C8C7E2 /* UserProfileModel.swift */; };
+		BD6445602121064000C8C7E2 /* GitHubClient+UserProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD64455F2121064000C8C7E2 /* GitHubClient+UserProfileModel.swift */; };
+		BD6C5C852120AC0700E93D31 /* GQL+RepositoryFragmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6C5C842120AC0700E93D31 /* GQL+RepositoryFragmentType.swift */; };
+		BD6C5C872120AC9A00E93D31 /* RepositoryFragmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6C5C862120AC9A00E93D31 /* RepositoryFragmentType.swift */; };
 		BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */; };
+		BDC1053B21212CE400DB7976 /* ProfileHeaderKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053A21212CE400DB7976 /* ProfileHeaderKey.swift */; };
+		BDC1053D21212CF200DB7976 /* ProfileHeaderSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053C21212CF200DB7976 /* ProfileHeaderSectionController.swift */; };
+		BDC1053F21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC1053E21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift */; };
+		BDC105442121BFEA00DB7976 /* NavbarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC105432121BFEA00DB7976 /* NavbarTitle.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -970,7 +984,21 @@
 		ACAE4A11E9671879046F0CE7 /* Pods-FreetimeWatch.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreetimeWatch.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch.testflight.xcconfig"; sourceTree = "<group>"; };
 		B3C439BE890EECD7C0C692C5 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkNavigationItemTests.swift; sourceTree = "<group>"; };
+		BD64454B2120B31700C8C7E2 /* UserProfileReposQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileReposQuery.swift; sourceTree = "<group>"; };
+		BD64454F2120B78F00C8C7E2 /* GitHubClient+RepositoryFragmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+RepositoryFragmentType.swift"; sourceTree = "<group>"; };
+		BD6445512120BB2100C8C7E2 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		BD6445532120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRepositoriesViewController.swift; sourceTree = "<group>"; };
+		BD6445552120CBC800C8C7E2 /* UserProfileOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileOverviewViewController.swift; sourceTree = "<group>"; };
+		BD6445572120D8FD00C8C7E2 /* UserProfileClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileClient.swift; sourceTree = "<group>"; };
+		BD64455D2120FA3200C8C7E2 /* UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileModel.swift; sourceTree = "<group>"; };
+		BD64455F2121064000C8C7E2 /* GitHubClient+UserProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+UserProfileModel.swift"; sourceTree = "<group>"; };
+		BD6C5C842120AC0700E93D31 /* GQL+RepositoryFragmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GQL+RepositoryFragmentType.swift"; sourceTree = "<group>"; };
+		BD6C5C862120AC9A00E93D31 /* RepositoryFragmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryFragmentType.swift; sourceTree = "<group>"; };
 		BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingURLPathTests.swift; sourceTree = "<group>"; };
+		BDC1053A21212CE400DB7976 /* ProfileHeaderKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderKey.swift; sourceTree = "<group>"; };
+		BDC1053C21212CF200DB7976 /* ProfileHeaderSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderSectionController.swift; sourceTree = "<group>"; };
+		BDC1053E21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		BDC105432121BFEA00DB7976 /* NavbarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavbarTitle.swift; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -1575,6 +1603,8 @@
 		297AE8571EC0D5C100B44A1F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BD6C5C832120ABE300E93D31 /* User Profile */,
+				BD6C5C822120ABCF00E93D31 /* New Group */,
 				DCA5ED0C1FAED8FE0072F074 /* Bookmark */,
 				98F9F3FB1F9CCFFE005A0266 /* Image Upload */,
 				292FCAC71EDFCC510026635E /* Issues */,
@@ -2082,6 +2112,66 @@
 				98F9F3FE1F9CCFFE005A0266 /* ImgurClient.swift */,
 			);
 			path = "Image Upload";
+			sourceTree = "<group>";
+		};
+		BD6C5C822120ABCF00E93D31 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		BD6C5C832120ABE300E93D31 /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BDC105422121BFD300DB7976 /* Views */,
+				BDC105402121363300DB7976 /* Profile Models */,
+				BDC105412121365000DB7976 /* Profile ViewControllers */,
+				BDC1053921212CCA00DB7976 /* Section Headers */,
+			);
+			path = "User Profile";
+			sourceTree = "<group>";
+		};
+		BDC1053921212CCA00DB7976 /* Section Headers */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1053A21212CE400DB7976 /* ProfileHeaderKey.swift */,
+				BDC1053C21212CF200DB7976 /* ProfileHeaderSectionController.swift */,
+				BDC1053E21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift */,
+			);
+			path = "Section Headers";
+			sourceTree = "<group>";
+		};
+		BDC105402121363300DB7976 /* Profile Models */ = {
+			isa = PBXGroup;
+			children = (
+				BD6C5C842120AC0700E93D31 /* GQL+RepositoryFragmentType.swift */,
+				BD64454F2120B78F00C8C7E2 /* GitHubClient+RepositoryFragmentType.swift */,
+				BD64455F2121064000C8C7E2 /* GitHubClient+UserProfileModel.swift */,
+				BD6C5C862120AC9A00E93D31 /* RepositoryFragmentType.swift */,
+				BD64454B2120B31700C8C7E2 /* UserProfileReposQuery.swift */,
+				BD64455D2120FA3200C8C7E2 /* UserProfileModel.swift */,
+				BD6445572120D8FD00C8C7E2 /* UserProfileClient.swift */,
+			);
+			path = "Profile Models";
+			sourceTree = "<group>";
+		};
+		BDC105412121365000DB7976 /* Profile ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BD6445512120BB2100C8C7E2 /* UserProfileViewController.swift */,
+				BD6445552120CBC800C8C7E2 /* UserProfileOverviewViewController.swift */,
+				BD6445532120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift */,
+			);
+			path = "Profile ViewControllers";
+			sourceTree = "<group>";
+		};
+		BDC105422121BFD300DB7976 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDC105432121BFEA00DB7976 /* NavbarTitle.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CF4CC0BFE456879DD6DBC714 /* Frameworks */ = {
@@ -2716,6 +2806,7 @@
 				291929551F3FAADF0012067B /* FeedRefresh.swift in Sources */,
 				2993046F1FBA9D31007B9737 /* IssueManagingActionCell.swift in Sources */,
 				54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */,
+				BD6C5C872120AC9A00E93D31 /* RepositoryFragmentType.swift in Sources */,
 				49FE18FD204B5D32001681E8 /* Sequence+Contains.swift in Sources */,
 				291929421F3EA8CD0012067B /* File.swift in Sources */,
 				299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */,
@@ -2738,6 +2829,7 @@
 				299997322031242500995FFD /* IssueMergeSummaryModel.swift in Sources */,
 				296B4E311F7C805600C16887 /* GraphQLIDDecode.swift in Sources */,
 				294B11241F7B37D300E04F2D /* ImageCellHeightCache.swift in Sources */,
+				BD64454C2120B31700C8C7E2 /* UserProfileReposQuery.swift in Sources */,
 				294563EC1EE5012100DBCD35 /* Issue+IssueType.swift in Sources */,
 				29AF1E821F8AAB2B0008A0EF /* EditCommentViewController.swift in Sources */,
 				297403D71F1851C000ABA95A /* IssueAssigneeAvatarCell.swift in Sources */,
@@ -2760,6 +2852,7 @@
 				DC3238931F9BA29D007DD924 /* SearchQuery.swift in Sources */,
 				2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
+				BDC1053B21212CE400DB7976 /* ProfileHeaderKey.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
@@ -2785,6 +2878,7 @@
 				292FCB091EDFCC510026635E /* IssueCommentSummaryModel.swift in Sources */,
 				292FA33F1FBCE4D000BBB0BB /* GithubClient+Milestones.swift in Sources */,
 				2974069D1F0EDEAD003A6BFB /* IssueCommentTableCell.swift in Sources */,
+				BD6445582120D8FD00C8C7E2 /* UserProfileClient.swift in Sources */,
 				29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */,
 				2974069F1F0EDED3003A6BFB /* IssueCommentTableCollectionCell.swift in Sources */,
 				2974069B1F0EDC7C003A6BFB /* IssueCommentTableModel.swift in Sources */,
@@ -2822,6 +2916,7 @@
 				299A049F1FAE1D0F003C2450 /* InitialEmptyView.swift in Sources */,
 				29FB942C1EE750DB0016E6D4 /* IssueLabeledModel.swift in Sources */,
 				29FB942E1EE751F70016E6D4 /* IssueLabeledSectionController.swift in Sources */,
+				BD6445502120B78F00C8C7E2 /* GitHubClient+RepositoryFragmentType.swift in Sources */,
 				292FCB141EDFCC510026635E /* IssueLabelsModel.swift in Sources */,
 				292FCB151EDFCC510026635E /* IssueLabelsSectionController.swift in Sources */,
 				29AF1E861F8AADD00008A0EF /* UIViewController+CancelAction.swift in Sources */,
@@ -2837,6 +2932,7 @@
 				29BBD82920CAC7D5004D62FE /* NotificationViewModel.swift in Sources */,
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
+				BD6445522120BB2100C8C7E2 /* UserProfileViewController.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
 				29F7F0631F2A875C00F6075D /* IssueNeckLoadModel.swift in Sources */,
@@ -2845,6 +2941,7 @@
 				29F7F05F1F2A839100F6075D /* IssueNeckLoadSectionController.swift in Sources */,
 				2919295F1F3FD1F40012067B /* IssuePatchContentViewController.swift in Sources */,
 				292FF8B91F303DB0009E63F7 /* IssuePreviewModel.swift in Sources */,
+				BDC1053F21212F2500DB7976 /* ProfileHeaderCollectionViewCell.swift in Sources */,
 				2973E81120FBF73D0050233F /* IssueManagingContextController.swift in Sources */,
 				292FF8B51F303BD0009E63F7 /* IssuePreviewSectionController.swift in Sources */,
 				29B75ADB210A9B3100C28131 /* IssueLabelStatusModel.swift in Sources */,
@@ -2864,6 +2961,7 @@
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
 				297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */,
+				BD6445562120CBC800C8C7E2 /* UserProfileOverviewViewController.swift in Sources */,
 				297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
 				292CD3C81F0DB32700D3D57B /* IssueReviewDetailsCell.swift in Sources */,
@@ -2900,6 +2998,7 @@
 				291929491F3EAD2E0012067B /* IssueViewFilesSectionController.swift in Sources */,
 				292FCB101EDFCC510026635E /* IssueViewModels.swift in Sources */,
 				2963A93B1EE25F6F0066509C /* LabelableFields+IssueLabelModel.swift in Sources */,
+				BD6445602121064000C8C7E2 /* GitHubClient+UserProfileModel.swift in Sources */,
 				98835BD21F1A158D005BA24F /* LabelCell.swift in Sources */,
 				29C8F9B5208C081D0075931C /* LabelSectionController.swift in Sources */,
 				29136BE3200AAA5A007317BE /* UIViewController+FilePathTitle.swift in Sources */,
@@ -2918,6 +3017,7 @@
 				D8C2AEF51F9AA94600A95945 /* DotListView.swift in Sources */,
 				7B4B31A61F92257400480CE9 /* SearchQueryTokenizer.swift in Sources */,
 				2986B3581FD30EC400E3CFC6 /* IssueManagingExpansionModel.swift in Sources */,
+				BD64455E2120FA3200C8C7E2 /* UserProfileModel.swift in Sources */,
 				2999972C20311DD700995FFD /* IssueMergeSummaryCell.swift in Sources */,
 				290EF5791F06BAF4006A2160 /* NoNewNotificationsSectionController.swift in Sources */,
 				290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */,
@@ -2948,6 +3048,7 @@
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
+				BDC1053D21212CF200DB7976 /* ProfileHeaderSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
 				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
@@ -3012,6 +3113,7 @@
 				29C33FDF1F128D4400EC8D40 /* SelectableCell.swift in Sources */,
 				29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */,
 				297FB7781F51128A00F2E618 /* SettingsAccountsViewController.swift in Sources */,
+				BD6C5C852120AC0700E93D31 /* GQL+RepositoryFragmentType.swift in Sources */,
 				292FF8AE1F2FD4A8009E63F7 /* SettingsViewController.swift in Sources */,
 				29CC29301FF421DC006B6DE7 /* GithubClient+PullRequestReviewComments.swift in Sources */,
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
@@ -3050,10 +3152,12 @@
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
 				291929631F3FF0DA0012067B /* StyledTableCell.swift in Sources */,
+				BD6445542120BED000C8C7E2 /* UserProfileRepositoriesViewController.swift in Sources */,
 				29B75ADD210AA14F00C28131 /* String+Size.swift in Sources */,
 				29C9FDE11EC667AE00EE3A52 /* Styles.swift in Sources */,
 				29622B45210520E6000C428D /* CardCollectionViewCell.swift in Sources */,
 				294B11201F7B07DD00E04F2D /* TabBarControllerDelegate.swift in Sources */,
+				BDC105442121BFEA00DB7976 /* NavbarTitle.swift in Sources */,
 				294B111E1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift in Sources */,
 				754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */,
 				2958406F1EE9F21E007723C6 /* UIButton+Label.swift in Sources */,

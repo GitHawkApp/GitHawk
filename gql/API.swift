@@ -1500,7 +1500,7 @@ public final class IssueAutocompleteQuery: GraphQLQuery {
 
 public final class IssueOrPullRequestQuery: GraphQLQuery {
   public static let operationString =
-    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    name\n    hasIssuesEnabled\n    viewerCanAdminister\n    mergeCommitAllowed\n    rebaseMergeAllowed\n    squashMergeAllowed\n    mentionableUsers(first: 20) {\n      __typename\n      nodes {\n        __typename\n        avatarUrl\n        login\n      }\n    }\n    defaultBranchRef {\n      __typename\n      name\n    }\n    issueOrPullRequest(number: $number) {\n      __typename\n      ... on Issue {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              refCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n      }\n      ... on PullRequest {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on MergedEvent {\n              ...nodeFields\n              mergedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on PullRequestReviewThread {\n              comments(first: $page_size) {\n                __typename\n                nodes {\n                  __typename\n                  ...reactionFields\n                  ...nodeFields\n                  ...commentFields\n                  path\n                  diffHunk\n                }\n              }\n            }\n            ... on PullRequestReview {\n              ...nodeFields\n              ...commentFields\n              state\n              submittedAt\n              author {\n                __typename\n                login\n              }\n              comments {\n                __typename\n                totalCount\n              }\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on ReviewRequestRemovedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        reviewRequests(first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            requestedReviewer {\n              __typename\n              ... on Actor {\n                login\n                avatarUrl\n              }\n            }\n          }\n        }\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              ...commitContext\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n        merged\n        baseRefName\n        changedFiles\n        additions\n        deletions\n        mergeable\n        mergeStateStatus\n      }\n    }\n  }\n}"
+    "query IssueOrPullRequest($owner: String!, $repo: String!, $number: Int!, $page_size: Int!, $before: String) {\n  repository(owner: $owner, name: $repo) {\n    __typename\n    name\n    hasIssuesEnabled\n    viewerCanAdminister\n    mergeCommitAllowed\n    rebaseMergeAllowed\n    squashMergeAllowed\n    mentionableUsers(first: 50) {\n      __typename\n      nodes {\n        __typename\n        avatarUrl\n        login\n      }\n    }\n    defaultBranchRef {\n      __typename\n      name\n    }\n    issueOrPullRequest(number: $number) {\n      __typename\n      ... on Issue {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              refCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n      }\n      ... on PullRequest {\n        timeline(last: $page_size, before: $before) {\n          __typename\n          pageInfo {\n            __typename\n            ...headPaging\n          }\n          nodes {\n            __typename\n            ... on Commit {\n              ...nodeFields\n              author {\n                __typename\n                user {\n                  __typename\n                  login\n                  avatarUrl\n                }\n              }\n              oid\n              messageHeadline\n            }\n            ... on IssueComment {\n              ...nodeFields\n              ...reactionFields\n              ...commentFields\n              ...updatableFields\n              ...deletableFields\n            }\n            ... on LabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on UnlabeledEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              label {\n                __typename\n                color\n                name\n              }\n              createdAt\n            }\n            ... on ClosedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              closer {\n                __typename\n                ... on Commit {\n                  oid\n                }\n                ... on PullRequest {\n                  mergeCommit {\n                    __typename\n                    oid\n                  }\n                }\n              }\n            }\n            ... on ReopenedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              currentTitle\n            }\n            ... on LockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on UnlockedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on MergedEvent {\n              ...nodeFields\n              mergedCommit: commit {\n                __typename\n                oid\n              }\n              actor {\n                __typename\n                login\n              }\n              createdAt\n            }\n            ... on PullRequestReviewThread {\n              comments(first: $page_size) {\n                __typename\n                nodes {\n                  __typename\n                  ...reactionFields\n                  ...nodeFields\n                  ...commentFields\n                  path\n                  diffHunk\n                }\n              }\n            }\n            ... on PullRequestReview {\n              ...nodeFields\n              ...commentFields\n              state\n              submittedAt\n              author {\n                __typename\n                login\n              }\n              comments {\n                __typename\n                totalCount\n              }\n            }\n            ... on CrossReferencedEvent {\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              createdAt\n              source {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                  repository {\n                    __typename\n                    name\n                    owner {\n                      __typename\n                      login\n                    }\n                  }\n                }\n              }\n            }\n            ... on ReferencedEvent {\n              createdAt\n              ...nodeFields\n              actor {\n                __typename\n                login\n              }\n              commitRepository {\n                __typename\n                ...referencedRepositoryFields\n              }\n              subject {\n                __typename\n                ... on Issue {\n                  title\n                  number\n                  closed\n                }\n                ... on PullRequest {\n                  title\n                  number\n                  closed\n                  merged\n                }\n              }\n            }\n            ... on RenamedTitleEvent {\n              ...nodeFields\n              createdAt\n              currentTitle\n              previousTitle\n              actor {\n                __typename\n                login\n              }\n            }\n            ... on AssignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on UnassignedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              user {\n                __typename\n                login\n              }\n            }\n            ... on ReviewRequestedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on ReviewRequestRemovedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              requestedReviewer {\n                __typename\n                ... on Actor {\n                  login\n                }\n              }\n            }\n            ... on MilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n            ... on DemilestonedEvent {\n              ...nodeFields\n              createdAt\n              actor {\n                __typename\n                login\n              }\n              milestoneTitle\n            }\n          }\n        }\n        reviewRequests(first: $page_size) {\n          __typename\n          nodes {\n            __typename\n            requestedReviewer {\n              __typename\n              ... on Actor {\n                login\n                avatarUrl\n              }\n            }\n          }\n        }\n        commits(last: 1) {\n          __typename\n          nodes {\n            __typename\n            commit {\n              __typename\n              ...commitContext\n            }\n          }\n        }\n        milestone {\n          __typename\n          ...milestoneFields\n        }\n        ...reactionFields\n        ...commentFields\n        ...lockableFields\n        ...closableFields\n        ...labelableFields\n        ...updatableFields\n        ...nodeFields\n        ...assigneeFields\n        number\n        title\n        merged\n        baseRefName\n        changedFiles\n        additions\n        deletions\n        mergeable\n        mergeStateStatus\n      }\n    }\n  }\n}"
 
   public static var requestString: String { return operationString.appending(HeadPaging.fragmentString).appending(NodeFields.fragmentString).appending(ReactionFields.fragmentString).appending(CommentFields.fragmentString).appending(UpdatableFields.fragmentString).appending(DeletableFields.fragmentString).appending(ReferencedRepositoryFields.fragmentString).appending(MilestoneFields.fragmentString).appending(LockableFields.fragmentString).appending(ClosableFields.fragmentString).appending(LabelableFields.fragmentString).appending(AssigneeFields.fragmentString).appending(CommitContext.fragmentString) }
 
@@ -1560,7 +1560,7 @@ public final class IssueOrPullRequestQuery: GraphQLQuery {
         GraphQLField("mergeCommitAllowed", type: .nonNull(.scalar(Bool.self))),
         GraphQLField("rebaseMergeAllowed", type: .nonNull(.scalar(Bool.self))),
         GraphQLField("squashMergeAllowed", type: .nonNull(.scalar(Bool.self))),
-        GraphQLField("mentionableUsers", arguments: ["first": 20], type: .nonNull(.object(MentionableUser.selections))),
+        GraphQLField("mentionableUsers", arguments: ["first": 50], type: .nonNull(.object(MentionableUser.selections))),
         GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
         GraphQLField("issueOrPullRequest", arguments: ["number": GraphQLVariable("number")], type: .object(IssueOrPullRequest.selections)),
       ]
@@ -16842,6 +16842,2695 @@ public final class SearchReposQuery: GraphQLQuery {
   }
 }
 
+public final class UserQuery: GraphQLQuery {
+  public static let operationString =
+    "query User($login: String!) {\n  user(login: $login) {\n    __typename\n    avatarUrl\n    bio\n    bioHTML\n    company\n    companyHTML\n    email\n    location\n    login\n    name\n    url\n    viewerCanFollow\n    viewerIsFollowing\n    pinnedRepositories(first: 6) {\n      __typename\n      nodes {\n        __typename\n        ...RepoSearchFields\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n    following(first: 50) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on User {\n          avatarUrl\n          login\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n    followers(first: 50) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on User {\n          avatarUrl\n          login\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n    repositories(first: 0) {\n      __typename\n      totalCount\n    }\n    starredRepositories(first: 0) {\n      __typename\n      totalCount\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(RepoSearchFields.fragmentString) }
+
+  public var login: String
+
+  public init(login: String) {
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+        GraphQLField("bio", type: .scalar(String.self)),
+        GraphQLField("bioHTML", type: .nonNull(.scalar(String.self))),
+        GraphQLField("company", type: .scalar(String.self)),
+        GraphQLField("companyHTML", type: .nonNull(.scalar(String.self))),
+        GraphQLField("email", type: .nonNull(.scalar(String.self))),
+        GraphQLField("location", type: .scalar(String.self)),
+        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("url", type: .nonNull(.scalar(String.self))),
+        GraphQLField("viewerCanFollow", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("viewerIsFollowing", type: .nonNull(.scalar(Bool.self))),
+        GraphQLField("pinnedRepositories", arguments: ["first": 6], type: .nonNull(.object(PinnedRepository.selections))),
+        GraphQLField("following", arguments: ["first": 50], type: .nonNull(.object(Following.selections))),
+        GraphQLField("followers", arguments: ["first": 50], type: .nonNull(.object(Follower.selections))),
+        GraphQLField("repositories", arguments: ["first": 0], type: .nonNull(.object(Repository.selections))),
+        GraphQLField("starredRepositories", arguments: ["first": 0], type: .nonNull(.object(StarredRepository.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(avatarUrl: String, bio: String? = nil, bioHtml: String, company: String? = nil, companyHtml: String, email: String, location: String? = nil, login: String, name: String? = nil, url: String, viewerCanFollow: Bool, viewerIsFollowing: Bool, pinnedRepositories: PinnedRepository, following: Following, followers: Follower, repositories: Repository, starredRepositories: StarredRepository) {
+        self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "bio": bio, "bioHTML": bioHtml, "company": company, "companyHTML": companyHtml, "email": email, "location": location, "login": login, "name": name, "url": url, "viewerCanFollow": viewerCanFollow, "viewerIsFollowing": viewerIsFollowing, "pinnedRepositories": pinnedRepositories.snapshot, "following": following.snapshot, "followers": followers.snapshot, "repositories": repositories.snapshot, "starredRepositories": starredRepositories.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A URL pointing to the user's public avatar.
+      public var avatarUrl: String {
+        get {
+          return snapshot["avatarUrl"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "avatarUrl")
+        }
+      }
+
+      /// The user's public profile bio.
+      public var bio: String? {
+        get {
+          return snapshot["bio"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "bio")
+        }
+      }
+
+      /// The user's public profile bio as HTML.
+      public var bioHtml: String {
+        get {
+          return snapshot["bioHTML"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "bioHTML")
+        }
+      }
+
+      /// The user's public profile company.
+      public var company: String? {
+        get {
+          return snapshot["company"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "company")
+        }
+      }
+
+      /// The user's public profile company as HTML.
+      public var companyHtml: String {
+        get {
+          return snapshot["companyHTML"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "companyHTML")
+        }
+      }
+
+      /// The user's publicly visible profile email.
+      public var email: String {
+        get {
+          return snapshot["email"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "email")
+        }
+      }
+
+      /// The user's public profile location.
+      public var location: String? {
+        get {
+          return snapshot["location"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "location")
+        }
+      }
+
+      /// The username used to login.
+      public var login: String {
+        get {
+          return snapshot["login"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "login")
+        }
+      }
+
+      /// The user's public profile name.
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      /// The HTTP URL for this user
+      public var url: String {
+        get {
+          return snapshot["url"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "url")
+        }
+      }
+
+      /// Whether or not the viewer is able to follow the user.
+      public var viewerCanFollow: Bool {
+        get {
+          return snapshot["viewerCanFollow"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "viewerCanFollow")
+        }
+      }
+
+      /// Whether or not this user is followed by the viewer.
+      public var viewerIsFollowing: Bool {
+        get {
+          return snapshot["viewerIsFollowing"]! as! Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "viewerIsFollowing")
+        }
+      }
+
+      /// A list of repositories this user has pinned to their profile
+      public var pinnedRepositories: PinnedRepository {
+        get {
+          return PinnedRepository(snapshot: snapshot["pinnedRepositories"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "pinnedRepositories")
+        }
+      }
+
+      /// A list of users the given user is following.
+      public var following: Following {
+        get {
+          return Following(snapshot: snapshot["following"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "following")
+        }
+      }
+
+      /// A list of users the given user is followed by.
+      public var followers: Follower {
+        get {
+          return Follower(snapshot: snapshot["followers"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "followers")
+        }
+      }
+
+      /// A list of repositories that the user owns.
+      public var repositories: Repository {
+        get {
+          return Repository(snapshot: snapshot["repositories"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "repositories")
+        }
+      }
+
+      /// Repositories the user has starred.
+      public var starredRepositories: StarredRepository {
+        get {
+          return StarredRepository(snapshot: snapshot["starredRepositories"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "starredRepositories")
+        }
+      }
+
+      public struct PinnedRepository: GraphQLSelectionSet {
+        public static let possibleTypes = ["RepositoryConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "RepositoryConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["Repository"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
+            GraphQLField("description", type: .scalar(String.self)),
+            GraphQLField("pushedAt", type: .scalar(String.self)),
+            GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.selections)),
+            GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
+            GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer, defaultBranchRef: DefaultBranchRef? = nil) {
+            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// The name of the repository.
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          /// Indicates if the repository has issues feature enabled.
+          public var hasIssuesEnabled: Bool {
+            get {
+              return snapshot["hasIssuesEnabled"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
+            }
+          }
+
+          /// The User owner of the repository.
+          public var owner: Owner {
+            get {
+              return Owner(snapshot: snapshot["owner"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "owner")
+            }
+          }
+
+          /// The description of the repository.
+          public var description: String? {
+            get {
+              return snapshot["description"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "description")
+            }
+          }
+
+          /// Identifies when the repository was last pushed to.
+          public var pushedAt: String? {
+            get {
+              return snapshot["pushedAt"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "pushedAt")
+            }
+          }
+
+          /// The primary language of the repository's code.
+          public var primaryLanguage: PrimaryLanguage? {
+            get {
+              return (snapshot["primaryLanguage"] as? Snapshot).flatMap { PrimaryLanguage(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "primaryLanguage")
+            }
+          }
+
+          /// A list of users who have starred this starrable.
+          public var stargazers: Stargazer {
+            get {
+              return Stargazer(snapshot: snapshot["stargazers"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "stargazers")
+            }
+          }
+
+          /// The Ref associated with the repository's default branch.
+          public var defaultBranchRef: DefaultBranchRef? {
+            get {
+              return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
+            }
+          }
+
+          public var fragments: Fragments {
+            get {
+              return Fragments(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+
+          public struct Fragments {
+            public var snapshot: Snapshot
+
+            public var repoSearchFields: RepoSearchFields {
+              get {
+                return RepoSearchFields(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+          }
+
+          public struct Owner: GraphQLSelectionSet {
+            public static let possibleTypes = ["Organization", "User"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("login", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public static func makeOrganization(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "Organization", "login": login])
+            }
+
+            public static func makeUser(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "User", "login": login])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The username used to login.
+            public var login: String {
+              get {
+                return snapshot["login"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "login")
+              }
+            }
+          }
+
+          public struct PrimaryLanguage: GraphQLSelectionSet {
+            public static let possibleTypes = ["Language"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+              GraphQLField("color", type: .scalar(String.self)),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String, color: String? = nil) {
+              self.init(snapshot: ["__typename": "Language", "name": name, "color": color])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The name of the current language.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+
+            /// The color defined for the current language.
+            public var color: String? {
+              get {
+                return snapshot["color"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "color")
+              }
+            }
+          }
+
+          public struct Stargazer: GraphQLSelectionSet {
+            public static let possibleTypes = ["StargazerConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(totalCount: Int) {
+              self.init(snapshot: ["__typename": "StargazerConnection", "totalCount": totalCount])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// Identifies the total count of items in the connection.
+            public var totalCount: Int {
+              get {
+                return snapshot["totalCount"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "totalCount")
+              }
+            }
+          }
+
+          public struct DefaultBranchRef: GraphQLSelectionSet {
+            public static let possibleTypes = ["Ref"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String) {
+              self.init(snapshot: ["__typename": "Ref", "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The ref name.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+
+      public struct Following: GraphQLSelectionSet {
+        public static let possibleTypes = ["FollowingConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "FollowingConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+            GraphQLField("login", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(avatarUrl: String, login: String) {
+            self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "login": login])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// A URL pointing to the user's public avatar.
+          public var avatarUrl: String {
+            get {
+              return snapshot["avatarUrl"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "avatarUrl")
+            }
+          }
+
+          /// The username used to login.
+          public var login: String {
+            get {
+              return snapshot["login"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "login")
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+
+      public struct Follower: GraphQLSelectionSet {
+        public static let possibleTypes = ["FollowerConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "FollowerConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+            GraphQLField("login", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(avatarUrl: String, login: String) {
+            self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "login": login])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// A URL pointing to the user's public avatar.
+          public var avatarUrl: String {
+            get {
+              return snapshot["avatarUrl"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "avatarUrl")
+            }
+          }
+
+          /// The username used to login.
+          public var login: String {
+            get {
+              return snapshot["login"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "login")
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+
+      public struct Repository: GraphQLSelectionSet {
+        public static let possibleTypes = ["RepositoryConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int) {
+          self.init(snapshot: ["__typename": "RepositoryConnection", "totalCount": totalCount])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+      }
+
+      public struct StarredRepository: GraphQLSelectionSet {
+        public static let possibleTypes = ["StarredRepositoryConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int) {
+          self.init(snapshot: ["__typename": "StarredRepositoryConnection", "totalCount": totalCount])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class LoadMoreFollowersQuery: GraphQLQuery {
+  public static let operationString =
+    "query LoadMoreFollowers($after: String!, $login: String!) {\n  user(login: $login) {\n    __typename\n    followers(first: 100, after: $after) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on User {\n          avatarUrl\n          login\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+
+  public var after: String
+  public var login: String
+
+  public init(after: String, login: String) {
+    self.after = after
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["after": after, "login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("followers", arguments: ["first": 100, "after": GraphQLVariable("after")], type: .nonNull(.object(Follower.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(followers: Follower) {
+        self.init(snapshot: ["__typename": "User", "followers": followers.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A list of users the given user is followed by.
+      public var followers: Follower {
+        get {
+          return Follower(snapshot: snapshot["followers"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "followers")
+        }
+      }
+
+      public struct Follower: GraphQLSelectionSet {
+        public static let possibleTypes = ["FollowerConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "FollowerConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+            GraphQLField("login", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(avatarUrl: String, login: String) {
+            self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "login": login])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// A URL pointing to the user's public avatar.
+          public var avatarUrl: String {
+            get {
+              return snapshot["avatarUrl"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "avatarUrl")
+            }
+          }
+
+          /// The username used to login.
+          public var login: String {
+            get {
+              return snapshot["login"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "login")
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class LoadMoreFollowingQuery: GraphQLQuery {
+  public static let operationString =
+    "query LoadMoreFollowing($after: String!, $login: String!) {\n  user(login: $login) {\n    __typename\n    following(first: 100, after: $after) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on User {\n          avatarUrl\n          login\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+
+  public var after: String
+  public var login: String
+
+  public init(after: String, login: String) {
+    self.after = after
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["after": after, "login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("following", arguments: ["first": 100, "after": GraphQLVariable("after")], type: .nonNull(.object(Following.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(following: Following) {
+        self.init(snapshot: ["__typename": "User", "following": following.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A list of users the given user is following.
+      public var following: Following {
+        get {
+          return Following(snapshot: snapshot["following"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "following")
+        }
+      }
+
+      public struct Following: GraphQLSelectionSet {
+        public static let possibleTypes = ["FollowingConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "FollowingConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["User"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+            GraphQLField("login", type: .nonNull(.scalar(String.self))),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(avatarUrl: String, login: String) {
+            self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "login": login])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// A URL pointing to the user's public avatar.
+          public var avatarUrl: String {
+            get {
+              return snapshot["avatarUrl"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "avatarUrl")
+            }
+          }
+
+          /// The username used to login.
+          public var login: String {
+            get {
+              return snapshot["login"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "login")
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class UserInfoSummaryQuery: GraphQLQuery {
+  public static let operationString =
+    "query UserInfoSummary($login: String!) {\n  user(login: $login) {\n    __typename\n    name\n    bio\n    company\n    companyHTML\n    location\n  }\n}"
+
+  public var login: String
+
+  public init(login: String) {
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("bio", type: .scalar(String.self)),
+        GraphQLField("company", type: .scalar(String.self)),
+        GraphQLField("companyHTML", type: .nonNull(.scalar(String.self))),
+        GraphQLField("location", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(name: String? = nil, bio: String? = nil, company: String? = nil, companyHtml: String, location: String? = nil) {
+        self.init(snapshot: ["__typename": "User", "name": name, "bio": bio, "company": company, "companyHTML": companyHtml, "location": location])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The user's public profile name.
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      /// The user's public profile bio.
+      public var bio: String? {
+        get {
+          return snapshot["bio"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "bio")
+        }
+      }
+
+      /// The user's public profile company.
+      public var company: String? {
+        get {
+          return snapshot["company"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "company")
+        }
+      }
+
+      /// The user's public profile company as HTML.
+      public var companyHtml: String {
+        get {
+          return snapshot["companyHTML"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "companyHTML")
+        }
+      }
+
+      /// The user's public profile location.
+      public var location: String? {
+        get {
+          return snapshot["location"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "location")
+        }
+      }
+    }
+  }
+}
+
+public final class UserStarredReposQuery: GraphQLQuery {
+  public static let operationString =
+    "query UserStarredRepos($login: String!, $after: String) {\n  user(login: $login) {\n    __typename\n    starredRepositories(first: 100, after: $after) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on Repository {\n          ...RepoSearchFields\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(RepoSearchFields.fragmentString) }
+
+  public var login: String
+  public var after: String?
+
+  public init(login: String, after: String? = nil) {
+    self.login = login
+    self.after = after
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login, "after": after]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("starredRepositories", arguments: ["first": 100, "after": GraphQLVariable("after")], type: .nonNull(.object(StarredRepository.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(starredRepositories: StarredRepository) {
+        self.init(snapshot: ["__typename": "User", "starredRepositories": starredRepositories.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// Repositories the user has starred.
+      public var starredRepositories: StarredRepository {
+        get {
+          return StarredRepository(snapshot: snapshot["starredRepositories"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "starredRepositories")
+        }
+      }
+
+      public struct StarredRepository: GraphQLSelectionSet {
+        public static let possibleTypes = ["StarredRepositoryConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "StarredRepositoryConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["Repository"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
+            GraphQLField("description", type: .scalar(String.self)),
+            GraphQLField("pushedAt", type: .scalar(String.self)),
+            GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.selections)),
+            GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
+            GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer, defaultBranchRef: DefaultBranchRef? = nil) {
+            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// The name of the repository.
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          /// Indicates if the repository has issues feature enabled.
+          public var hasIssuesEnabled: Bool {
+            get {
+              return snapshot["hasIssuesEnabled"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
+            }
+          }
+
+          /// The User owner of the repository.
+          public var owner: Owner {
+            get {
+              return Owner(snapshot: snapshot["owner"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "owner")
+            }
+          }
+
+          /// The description of the repository.
+          public var description: String? {
+            get {
+              return snapshot["description"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "description")
+            }
+          }
+
+          /// Identifies when the repository was last pushed to.
+          public var pushedAt: String? {
+            get {
+              return snapshot["pushedAt"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "pushedAt")
+            }
+          }
+
+          /// The primary language of the repository's code.
+          public var primaryLanguage: PrimaryLanguage? {
+            get {
+              return (snapshot["primaryLanguage"] as? Snapshot).flatMap { PrimaryLanguage(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "primaryLanguage")
+            }
+          }
+
+          /// A list of users who have starred this starrable.
+          public var stargazers: Stargazer {
+            get {
+              return Stargazer(snapshot: snapshot["stargazers"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "stargazers")
+            }
+          }
+
+          /// The Ref associated with the repository's default branch.
+          public var defaultBranchRef: DefaultBranchRef? {
+            get {
+              return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
+            }
+          }
+
+          public var fragments: Fragments {
+            get {
+              return Fragments(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+
+          public struct Fragments {
+            public var snapshot: Snapshot
+
+            public var repoSearchFields: RepoSearchFields {
+              get {
+                return RepoSearchFields(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+          }
+
+          public struct Owner: GraphQLSelectionSet {
+            public static let possibleTypes = ["Organization", "User"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("login", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public static func makeOrganization(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "Organization", "login": login])
+            }
+
+            public static func makeUser(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "User", "login": login])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The username used to login.
+            public var login: String {
+              get {
+                return snapshot["login"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "login")
+              }
+            }
+          }
+
+          public struct PrimaryLanguage: GraphQLSelectionSet {
+            public static let possibleTypes = ["Language"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+              GraphQLField("color", type: .scalar(String.self)),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String, color: String? = nil) {
+              self.init(snapshot: ["__typename": "Language", "name": name, "color": color])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The name of the current language.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+
+            /// The color defined for the current language.
+            public var color: String? {
+              get {
+                return snapshot["color"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "color")
+              }
+            }
+          }
+
+          public struct Stargazer: GraphQLSelectionSet {
+            public static let possibleTypes = ["StargazerConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(totalCount: Int) {
+              self.init(snapshot: ["__typename": "StargazerConnection", "totalCount": totalCount])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// Identifies the total count of items in the connection.
+            public var totalCount: Int {
+              get {
+                return snapshot["totalCount"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "totalCount")
+              }
+            }
+          }
+
+          public struct DefaultBranchRef: GraphQLSelectionSet {
+            public static let possibleTypes = ["Ref"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String) {
+              self.init(snapshot: ["__typename": "Ref", "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The ref name.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class UserReposQuery: GraphQLQuery {
+  public static let operationString =
+    "query UserRepos($login: String!, $after: String) {\n  user(login: $login) {\n    __typename\n    repositories(first: 100, after: $after) {\n      __typename\n      totalCount\n      nodes {\n        __typename\n        ... on Repository {\n          ...RepoSearchFields\n        }\n      }\n      pageInfo {\n        __typename\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(RepoSearchFields.fragmentString) }
+
+  public var login: String
+  public var after: String?
+
+  public init(login: String, after: String? = nil) {
+    self.login = login
+    self.after = after
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login, "after": after]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("repositories", arguments: ["first": 100, "after": GraphQLVariable("after")], type: .nonNull(.object(Repository.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(repositories: Repository) {
+        self.init(snapshot: ["__typename": "User", "repositories": repositories.snapshot])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A list of repositories that the user owns.
+      public var repositories: Repository {
+        get {
+          return Repository(snapshot: snapshot["repositories"]! as! Snapshot)
+        }
+        set {
+          snapshot.updateValue(newValue.snapshot, forKey: "repositories")
+        }
+      }
+
+      public struct Repository: GraphQLSelectionSet {
+        public static let possibleTypes = ["RepositoryConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+          GraphQLField("pageInfo", type: .nonNull(.object(PageInfo.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(totalCount: Int, nodes: [Node?]? = nil, pageInfo: PageInfo) {
+          self.init(snapshot: ["__typename": "RepositoryConnection", "totalCount": totalCount, "nodes": nodes.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, "pageInfo": pageInfo.snapshot])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// Identifies the total count of items in the connection.
+        public var totalCount: Int {
+          get {
+            return snapshot["totalCount"]! as! Int
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "totalCount")
+          }
+        }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? {
+          get {
+            return (snapshot["nodes"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Node?] in value.map { (value: Snapshot?) -> Node? in value.flatMap { (value: Snapshot) -> Node in Node(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Node?]) -> [Snapshot?] in value.map { (value: Node?) -> Snapshot? in value.flatMap { (value: Node) -> Snapshot in value.snapshot } } }, forKey: "nodes")
+          }
+        }
+
+        /// Information to aid in pagination.
+        public var pageInfo: PageInfo {
+          get {
+            return PageInfo(snapshot: snapshot["pageInfo"]! as! Snapshot)
+          }
+          set {
+            snapshot.updateValue(newValue.snapshot, forKey: "pageInfo")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["Repository"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
+            GraphQLField("description", type: .scalar(String.self)),
+            GraphQLField("pushedAt", type: .scalar(String.self)),
+            GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.selections)),
+            GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
+            GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer, defaultBranchRef: DefaultBranchRef? = nil) {
+            self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID {
+            get {
+              return snapshot["id"]! as! GraphQLID
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// The name of the repository.
+          public var name: String {
+            get {
+              return snapshot["name"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "name")
+            }
+          }
+
+          /// Indicates if the repository has issues feature enabled.
+          public var hasIssuesEnabled: Bool {
+            get {
+              return snapshot["hasIssuesEnabled"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
+            }
+          }
+
+          /// The User owner of the repository.
+          public var owner: Owner {
+            get {
+              return Owner(snapshot: snapshot["owner"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "owner")
+            }
+          }
+
+          /// The description of the repository.
+          public var description: String? {
+            get {
+              return snapshot["description"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "description")
+            }
+          }
+
+          /// Identifies when the repository was last pushed to.
+          public var pushedAt: String? {
+            get {
+              return snapshot["pushedAt"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "pushedAt")
+            }
+          }
+
+          /// The primary language of the repository's code.
+          public var primaryLanguage: PrimaryLanguage? {
+            get {
+              return (snapshot["primaryLanguage"] as? Snapshot).flatMap { PrimaryLanguage(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "primaryLanguage")
+            }
+          }
+
+          /// A list of users who have starred this starrable.
+          public var stargazers: Stargazer {
+            get {
+              return Stargazer(snapshot: snapshot["stargazers"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "stargazers")
+            }
+          }
+
+          /// The Ref associated with the repository's default branch.
+          public var defaultBranchRef: DefaultBranchRef? {
+            get {
+              return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
+            }
+          }
+
+          public var fragments: Fragments {
+            get {
+              return Fragments(snapshot: snapshot)
+            }
+            set {
+              snapshot += newValue.snapshot
+            }
+          }
+
+          public struct Fragments {
+            public var snapshot: Snapshot
+
+            public var repoSearchFields: RepoSearchFields {
+              get {
+                return RepoSearchFields(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+          }
+
+          public struct Owner: GraphQLSelectionSet {
+            public static let possibleTypes = ["Organization", "User"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("login", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public static func makeOrganization(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "Organization", "login": login])
+            }
+
+            public static func makeUser(login: String) -> Owner {
+              return Owner(snapshot: ["__typename": "User", "login": login])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The username used to login.
+            public var login: String {
+              get {
+                return snapshot["login"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "login")
+              }
+            }
+          }
+
+          public struct PrimaryLanguage: GraphQLSelectionSet {
+            public static let possibleTypes = ["Language"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+              GraphQLField("color", type: .scalar(String.self)),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String, color: String? = nil) {
+              self.init(snapshot: ["__typename": "Language", "name": name, "color": color])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The name of the current language.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+
+            /// The color defined for the current language.
+            public var color: String? {
+              get {
+                return snapshot["color"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "color")
+              }
+            }
+          }
+
+          public struct Stargazer: GraphQLSelectionSet {
+            public static let possibleTypes = ["StargazerConnection"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(totalCount: Int) {
+              self.init(snapshot: ["__typename": "StargazerConnection", "totalCount": totalCount])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// Identifies the total count of items in the connection.
+            public var totalCount: Int {
+              get {
+                return snapshot["totalCount"]! as! Int
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "totalCount")
+              }
+            }
+          }
+
+          public struct DefaultBranchRef: GraphQLSelectionSet {
+            public static let possibleTypes = ["Ref"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String) {
+              self.init(snapshot: ["__typename": "Ref", "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The ref name.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+          }
+        }
+
+        public struct PageInfo: GraphQLSelectionSet {
+          public static let possibleTypes = ["PageInfo"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("hasNextPage", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("endCursor", type: .scalar(String.self)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(hasNextPage: Bool, endCursor: String? = nil) {
+            self.init(snapshot: ["__typename": "PageInfo", "hasNextPage": hasNextPage, "endCursor": endCursor])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// When paginating forwards, are there more items?
+          public var hasNextPage: Bool {
+            get {
+              return snapshot["hasNextPage"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "hasNextPage")
+            }
+          }
+
+          /// When paginating forwards, the cursor to continue.
+          public var endCursor: String? {
+            get {
+              return snapshot["endCursor"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "endCursor")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 public struct ReactionFields: GraphQLFragment {
   public static let fragmentString =
     "fragment reactionFields on Reactable {\n  __typename\n  viewerCanReact\n  reactionGroups {\n    __typename\n    viewerHasReacted\n    users(first: 3) {\n      __typename\n      nodes {\n        __typename\n        login\n      }\n      totalCount\n    }\n    content\n  }\n}"
@@ -18813,6 +21502,301 @@ public struct CommitContext: GraphQLFragment {
             snapshot.updateValue(newValue, forKey: "avatarUrl")
           }
         }
+      }
+    }
+  }
+}
+
+public struct RepoSearchFields: GraphQLFragment {
+  public static let fragmentString =
+    "fragment RepoSearchFields on Repository {\n  __typename\n  id\n  name\n  hasIssuesEnabled\n  owner {\n    __typename\n    login\n  }\n  description\n  pushedAt\n  primaryLanguage {\n    __typename\n    name\n    color\n  }\n  stargazers {\n    __typename\n    totalCount\n  }\n  defaultBranchRef {\n    __typename\n    name\n  }\n}"
+
+  public static let possibleTypes = ["Repository"]
+
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+    GraphQLField("name", type: .nonNull(.scalar(String.self))),
+    GraphQLField("hasIssuesEnabled", type: .nonNull(.scalar(Bool.self))),
+    GraphQLField("owner", type: .nonNull(.object(Owner.selections))),
+    GraphQLField("description", type: .scalar(String.self)),
+    GraphQLField("pushedAt", type: .scalar(String.self)),
+    GraphQLField("primaryLanguage", type: .object(PrimaryLanguage.selections)),
+    GraphQLField("stargazers", type: .nonNull(.object(Stargazer.selections))),
+    GraphQLField("defaultBranchRef", type: .object(DefaultBranchRef.selections)),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
+  }
+
+  public init(id: GraphQLID, name: String, hasIssuesEnabled: Bool, owner: Owner, description: String? = nil, pushedAt: String? = nil, primaryLanguage: PrimaryLanguage? = nil, stargazers: Stargazer, defaultBranchRef: DefaultBranchRef? = nil) {
+    self.init(snapshot: ["__typename": "Repository", "id": id, "name": name, "hasIssuesEnabled": hasIssuesEnabled, "owner": owner.snapshot, "description": description, "pushedAt": pushedAt, "primaryLanguage": primaryLanguage.flatMap { (value: PrimaryLanguage) -> Snapshot in value.snapshot }, "stargazers": stargazers.snapshot, "defaultBranchRef": defaultBranchRef.flatMap { (value: DefaultBranchRef) -> Snapshot in value.snapshot }])
+  }
+
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  public var id: GraphQLID {
+    get {
+      return snapshot["id"]! as! GraphQLID
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "id")
+    }
+  }
+
+  /// The name of the repository.
+  public var name: String {
+    get {
+      return snapshot["name"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "name")
+    }
+  }
+
+  /// Indicates if the repository has issues feature enabled.
+  public var hasIssuesEnabled: Bool {
+    get {
+      return snapshot["hasIssuesEnabled"]! as! Bool
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "hasIssuesEnabled")
+    }
+  }
+
+  /// The User owner of the repository.
+  public var owner: Owner {
+    get {
+      return Owner(snapshot: snapshot["owner"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "owner")
+    }
+  }
+
+  /// The description of the repository.
+  public var description: String? {
+    get {
+      return snapshot["description"] as? String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "description")
+    }
+  }
+
+  /// Identifies when the repository was last pushed to.
+  public var pushedAt: String? {
+    get {
+      return snapshot["pushedAt"] as? String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "pushedAt")
+    }
+  }
+
+  /// The primary language of the repository's code.
+  public var primaryLanguage: PrimaryLanguage? {
+    get {
+      return (snapshot["primaryLanguage"] as? Snapshot).flatMap { PrimaryLanguage(snapshot: $0) }
+    }
+    set {
+      snapshot.updateValue(newValue?.snapshot, forKey: "primaryLanguage")
+    }
+  }
+
+  /// A list of users who have starred this starrable.
+  public var stargazers: Stargazer {
+    get {
+      return Stargazer(snapshot: snapshot["stargazers"]! as! Snapshot)
+    }
+    set {
+      snapshot.updateValue(newValue.snapshot, forKey: "stargazers")
+    }
+  }
+
+  /// The Ref associated with the repository's default branch.
+  public var defaultBranchRef: DefaultBranchRef? {
+    get {
+      return (snapshot["defaultBranchRef"] as? Snapshot).flatMap { DefaultBranchRef(snapshot: $0) }
+    }
+    set {
+      snapshot.updateValue(newValue?.snapshot, forKey: "defaultBranchRef")
+    }
+  }
+
+  public struct Owner: GraphQLSelectionSet {
+    public static let possibleTypes = ["Organization", "User"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("login", type: .nonNull(.scalar(String.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public static func makeOrganization(login: String) -> Owner {
+      return Owner(snapshot: ["__typename": "Organization", "login": login])
+    }
+
+    public static func makeUser(login: String) -> Owner {
+      return Owner(snapshot: ["__typename": "User", "login": login])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// The username used to login.
+    public var login: String {
+      get {
+        return snapshot["login"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "login")
+      }
+    }
+  }
+
+  public struct PrimaryLanguage: GraphQLSelectionSet {
+    public static let possibleTypes = ["Language"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("name", type: .nonNull(.scalar(String.self))),
+      GraphQLField("color", type: .scalar(String.self)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(name: String, color: String? = nil) {
+      self.init(snapshot: ["__typename": "Language", "name": name, "color": color])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// The name of the current language.
+    public var name: String {
+      get {
+        return snapshot["name"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "name")
+      }
+    }
+
+    /// The color defined for the current language.
+    public var color: String? {
+      get {
+        return snapshot["color"] as? String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "color")
+      }
+    }
+  }
+
+  public struct Stargazer: GraphQLSelectionSet {
+    public static let possibleTypes = ["StargazerConnection"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("totalCount", type: .nonNull(.scalar(Int.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(totalCount: Int) {
+      self.init(snapshot: ["__typename": "StargazerConnection", "totalCount": totalCount])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// Identifies the total count of items in the connection.
+    public var totalCount: Int {
+      get {
+        return snapshot["totalCount"]! as! Int
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "totalCount")
+      }
+    }
+  }
+
+  public struct DefaultBranchRef: GraphQLSelectionSet {
+    public static let possibleTypes = ["Ref"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+      GraphQLField("name", type: .nonNull(.scalar(String.self))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(name: String) {
+      self.init(snapshot: ["__typename": "Ref", "name": name])
+    }
+
+    public var __typename: String {
+      get {
+        return snapshot["__typename"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "__typename")
+      }
+    }
+
+    /// The ref name.
+    public var name: String {
+      get {
+        return snapshot["name"]! as! String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "name")
       }
     }
   }

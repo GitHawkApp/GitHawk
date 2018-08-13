@@ -64,3 +64,20 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     nav.tabBarItem.title = title
     return nav
 }
+
+func newUserProfileRootViewController(client: GithubClient) -> UIViewController {
+    let title = NSLocalizedString("Profile", comment: "")
+    let controller = UserProfileViewController(gitHubClient: client, userLogin: "basthomas")
+    controller.makeBackBarItemEmpty()
+    controller.title = title
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem.image = UIImage(named: "hubot")?.withRenderingMode(.alwaysOriginal)
+    nav.tabBarItem.selectedImage = UIImage(named: "hubot")?.withRenderingMode(.alwaysOriginal)
+    nav.tabBarItem.title = title
+    return nav
+}
+
+
+
+
+
