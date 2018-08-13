@@ -32,7 +32,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/AutoInsetter</string>
 			<key>Title</key>
-			<string>AutoInsetter (1.2.5)</string>
+			<string>AutoInsetter (1.2.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -208,7 +208,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Pageboy</string>
 			<key>Title</key>
-			<string>Pageboy (2.5.4)</string>
+			<string>Pageboy (2.5.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -264,7 +264,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/Tabman</string>
 			<key>Title</key>
-			<string>Tabman (1.9.2)</string>
+			<string>Tabman (1.8.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
