@@ -54,6 +54,8 @@ final class RootNavigationManager: GitHubSessionListener {
         } else {
             block()
         }
+
+        self.tabBarController?.selectedIndex = 0
     }
 
     public func resetRootViewController(userSession: GitHubUserSession?) {
@@ -77,8 +79,6 @@ final class RootNavigationManager: GitHubSessionListener {
             newBookmarksRootViewController(client: client),
             settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
-
-        tabBarController?.selectedIndex = 0
     }
 
     public func pushLoginViewController(nav: UINavigationController) {
