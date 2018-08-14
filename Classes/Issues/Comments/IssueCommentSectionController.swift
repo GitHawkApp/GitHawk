@@ -517,6 +517,7 @@ final class IssueCommentSectionController:
             sourceViewController: viewController,
             viewController: ReactionsMenuViewController(),
             options: ContextMenu.Options(
+                durations: ContextMenu.AnimationDurations(present: 0.2),
                 containerStyle: ContextMenu.ContainerStyle(
                     xPadding: -4,
                     yPadding: 8,
