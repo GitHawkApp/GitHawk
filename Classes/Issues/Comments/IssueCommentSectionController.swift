@@ -522,7 +522,8 @@ final class IssueCommentSectionController:
                     yPadding: 8,
                     backgroundColor: Styles.Colors.menuBackgroundColor.color
                 ),
-                menuStyle: .minimal
+                menuStyle: .minimal,
+                hapticsStyle: .medium
             ),
             sourceView: sender,
             delegate: self
