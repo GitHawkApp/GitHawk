@@ -11,8 +11,6 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate: class {
-    func willShowMenu(cell: IssueCommentReactionCell)
-    func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didTapMore(cell: IssueCommentReactionCell, sender: UIView)
@@ -85,20 +83,6 @@ UICollectionViewDelegateFlowLayout {
             make.top.bottom.right.equalToSuperview()
             make.right.equalTo(moreButton.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
-
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(onMenuControllerWillShow(notification:)),
-            name: .UIMenuControllerWillShowMenu,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(onMenuControllerDidHide(notification:)),
-            name: .UIMenuControllerDidHideMenu,
-            object: nil
-        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -125,21 +109,6 @@ UICollectionViewDelegateFlowLayout {
     }
 
     @objc private func onAddButton(sender: UIView) {
-//        addButton.becomeFirstResponder()
-//
-//        let actions = [
-//            (ReactionContent.thumbsUp.emoji, #selector(IssueCommentReactionCell.onThumbsUp)),
-//            (ReactionContent.thumbsDown.emoji, #selector(IssueCommentReactionCell.onThumbsDown)),
-//            (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
-//            (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
-//            (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
-//            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart))
-//        ]
-//
-//        let menu = UIMenuController.shared
-//        menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
-//        menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
-//        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
         delegate?.didTapAddReaction(cell: self, sender: sender)
     }
 
@@ -208,16 +177,6 @@ UICollectionViewDelegateFlowLayout {
 
     @objc func onMore(sender: UIView) {
         delegate?.didTapMore(cell: self, sender: sender)
-    }
-
-    // MARK: Notifications
-
-    @objc func onMenuControllerWillShow(notification: Notification) {
-        delegate?.willShowMenu(cell: self)
-    }
-
-    @objc func onMenuControllerDidHide(notification: Notification) {
-        delegate?.didHideMenu(cell: self)
     }
 
     // MARK: ListBindable
