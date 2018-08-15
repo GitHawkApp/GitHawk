@@ -17,7 +17,7 @@ protocol IssueCommentReactionCellDelegate: class {
     func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView)
 }
 
-final class IssueCommentReactionCell: IssueCommentBaseCell,
+final class IssueCommentReactionCell: UICollectionViewCell,
 ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
@@ -87,6 +87,11 @@ UICollectionViewDelegateFlowLayout {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API
