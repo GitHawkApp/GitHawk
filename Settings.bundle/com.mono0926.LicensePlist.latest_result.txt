@@ -64,6 +64,11 @@ body: BSD License
 
 For `IG…
 
+name: ImageAlertAction, nameSpecified: 
+body: MIT License
+
+Copyrig…
+
 name: MessageViewController, nameSpecified: 
 body: The MIT License
 
@@ -182,6 +187,11 @@ name: IGListKit, nameSpecified:
 body: BSD License
 
 For `IG…
+
+name: ImageAlertAction, nameSpecified: 
+body: MIT License
+
+Copyrig…
 
 name: MessageViewController, nameSpecified: 
 body: The MIT License

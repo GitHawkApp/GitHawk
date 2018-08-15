@@ -63,10 +63,11 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         guard let value = self.value else { return }
             let alert = UIAlertController.configured(preferredStyle: .actionSheet)
             alert.addActions([
-                viewController?.action(owner: value.owner),
+                viewController?.action(owner: value.owner, icon: #imageLiteral(resourceName: "organization")),
                 viewController?.action(
                     owner: value.owner,
                     repo: value.repo,
+                    icon: #imageLiteral(resourceName: "repo"),
                     branch: value.branch,
                     issuesEnabled: value.issuesEnabled,
                     client: modelController.githubClient
