@@ -64,3 +64,19 @@ func newBookmarksRootViewController(client: GithubClient) -> UIViewController {
     nav.tabBarItem.title = title
     return nav
 }
+
+func newProfileViewController(client: GithubClient) -> UIViewController {
+    let title = NSLocalizedString("Profile", comment: "")
+    let controller = ProfileViewController(client: client, userLogin: client.userSession?.username ?? "")
+    let nav = UINavigationController(rootViewController: controller)
+    nav.tabBarItem.title = title
+    return nav
+}
+
+
+
+
+
+
+
+
