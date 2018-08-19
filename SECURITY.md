@@ -26,7 +26,7 @@ never uploaded to any servers.
 GitHawk stores some repository information on the device, including source
 code, pull request contents, and issue contents. This information is stored
 for the purpose of speeding up the app's user experience and reducing the
-nuber of redundant calls it needs to make to the GitHub API. Source code and
+number of redundant calls it needs to make to the GitHub API. Source code and
 other information downloaded using the `repo` OAuth scope is never uploaded to
 any servers.
 
