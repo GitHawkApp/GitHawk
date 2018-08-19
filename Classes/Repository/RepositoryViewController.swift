@@ -91,7 +91,7 @@ NewIssueTableViewControllerDelegate {
         weak var weakSelf = self
         alert.addActions([
             AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf })
-                .view(owner: repo.owner),
+                .view(owner: repo.owner, icon: #imageLiteral(resourceName: "organization")),
             AlertAction.cancel()
             ])
         alert.popoverPresentationController?.setSourceView(sender)

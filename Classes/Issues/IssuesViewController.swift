@@ -16,6 +16,7 @@ import MessageViewController
 import Squawk
 import ContextMenu
 import GitHubAPI
+import ImageAlertAction
 
 extension ListDiffable {
     var needsSpacer: Bool {
@@ -267,6 +268,7 @@ final class IssuesViewController:
         return action(
             owner: model.owner,
             repo: model.repo,
+            icon: #imageLiteral(resourceName: "repo"),
             branch: result.defaultBranch,
             issuesEnabled: result.hasIssuesEnabled,
             client: client
@@ -368,7 +370,7 @@ final class IssuesViewController:
     @objc func onNavigationTitle(sender: UIView) {
         let alert = UIAlertController.configured(preferredStyle: .actionSheet)
         alert.addActions([
-            action(owner: model.owner),
+            action(owner: model.owner, icon: #imageLiteral(resourceName: "organization")),
             viewRepoAction(),
             AlertAction.cancel()
             ])

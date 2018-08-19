@@ -45,15 +45,15 @@ struct AlertAction {
         }
     }
 
-    func view(client: GithubClient, repo: RepositoryDetails) -> UIAlertAction {
-        return UIAlertAction(title: repo.name, style: .default) { _ in
+    func view(client: GithubClient, repo: RepositoryDetails, icon: UIImage) -> UIAlertAction {
+        return UIAlertAction(title: repo.name, image: icon, style: .default) { _ in
             let repoViewController = RepositoryViewController(client: client, repo: repo)
             self.rootViewController?.show(repoViewController, sender: nil)
         }
     }
 
-    func view(owner: String) -> UIAlertAction {
-        return UIAlertAction(title: "@\(owner)", style: .default) { _ in
+    func view(owner: String, icon: UIImage) -> UIAlertAction {
+        return UIAlertAction(title: "@\(owner)", image: icon, style: .default) { _ in
             guard let url = URL(string: "https://github.com/\(owner)") else { return }
             self.rootViewController?.presentSafari(url: url)
         }
