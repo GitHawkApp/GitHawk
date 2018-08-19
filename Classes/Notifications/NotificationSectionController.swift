@@ -67,6 +67,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                 viewController?.action(
                     owner: value.owner,
                     repo: value.repo,
+                    icon: #imageLiteral(resourceName: "repo"),
                     branch: value.branch,
                     issuesEnabled: value.issuesEnabled,
                     client: modelController.githubClient
