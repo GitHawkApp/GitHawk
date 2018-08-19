@@ -10,13 +10,22 @@ import UIKit
 
 extension UIViewController {
 
-    func addMenuDoneButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(onMenuDone)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+    func addMenuDoneButton(left: Bool = false) {
+        if left {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .done,
+                target: self,
+                action: #selector(onMenuDone)
+            )
+            navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .done,
+                target: self,
+                action: #selector(onMenuDone)
+            )
+            navigationItem.rightBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        }
     }
 
     @objc func onMenuDone() {

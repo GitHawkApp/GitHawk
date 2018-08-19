@@ -398,6 +398,10 @@
 		49FE18FD204B5D32001681E8 /* Sequence+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */; };
 		49FE18FF204B6508001681E8 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE18FE204B6508001681E8 /* SequenceTests.swift */; };
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
+		4A0D4A88212A1A690078D3EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297AE86E1EC0D5C200B44A1F /* Assets.xcassets */; };
+		4AAA21522129E25E001CF2EE /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAA21512129E25E001CF2EE /* ActionRequestHandler.swift */; };
+		4AAA21542129E25E001CF2EE /* Action.js in Resources */ = {isa = PBXBuildFile; fileRef = 4AAA21532129E25E001CF2EE /* Action.js */; };
+		4AAA21582129E25E001CF2EE /* FreetimeAction Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4AAA214F2129E25E001CF2EE /* FreetimeAction Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
 		65A315292044369D0074E3B6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A315282044369D0074E3B6 /* TabBarController.swift */; };
@@ -493,6 +497,13 @@
 			remoteGlobalIDString = 297AE8331EC0D58A00B44A1F;
 			remoteInfo = Freetime;
 		};
+		4AAA21562129E25E001CF2EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 297AE82C1EC0D58A00B44A1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AAA214E2129E25E001CF2EE;
+			remoteInfo = "FreetimeAction Extension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -516,6 +527,17 @@
 				294EE4D5209006C3002C9CB1 /* FreetimeWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AAA215D2129E25E001CF2EE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4AAA21582129E25E001CF2EE /* FreetimeAction Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -926,6 +948,10 @@
 		49FE18FC204B5D32001681E8 /* Sequence+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Contains.swift"; sourceTree = "<group>"; };
 		49FE18FE204B6508001681E8 /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		49FFF4331F9FC83200335568 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		4AAA214F2129E25E001CF2EE /* FreetimeAction Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "FreetimeAction Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AAA21512129E25E001CF2EE /* ActionRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequestHandler.swift; sourceTree = "<group>"; };
+		4AAA21532129E25E001CF2EE /* Action.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Action.js; sourceTree = "<group>"; };
+		4AAA21552129E25E001CF2EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		516CF27F9258BBD3E034F09D /* Pods_FreetimeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
@@ -1038,6 +1064,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB9E0B1189A32219A0710FA2 /* Pods_FreetimeWatch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AAA214C2129E25E001CF2EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1518,6 +1551,7 @@
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				294EE4BA209006C0002C9CB1 /* FreetimeWatch */,
 				294EE4C9209006C2002C9CB1 /* FreetimeWatch Extension */,
+				4AAA21502129E25E001CF2EE /* FreetimeAction Extension */,
 				292FCB2A1EE0546E0026635E /* gql */,
 				6444C838F34B9586CC4FA89B /* Pods */,
 				297AE8351EC0D58A00B44A1F /* Products */,
@@ -1533,6 +1567,7 @@
 				297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */,
 				294EE4B9209006BF002C9CB1 /* FreetimeWatch.app */,
 				294EE4C5209006C2002C9CB1 /* FreetimeWatch Extension.appex */,
+				4AAA214F2129E25E001CF2EE /* FreetimeAction Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1963,6 +1998,16 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		4AAA21502129E25E001CF2EE /* FreetimeAction Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4AAA21512129E25E001CF2EE /* ActionRequestHandler.swift */,
+				4AAA21532129E25E001CF2EE /* Action.js */,
+				4AAA21552129E25E001CF2EE /* Info.plist */,
+			);
+			path = "FreetimeAction Extension";
+			sourceTree = "<group>";
+		};
 		6444C838F34B9586CC4FA89B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2154,6 +2199,7 @@
 				294EE4B7209006BF002C9CB1 /* Resources */,
 				294EE4DD209006C3002C9CB1 /* Embed App Extensions */,
 				3AEFFF6C72A37C3F4C5C9423 /* Frameworks */,
+				E1F5B9A1DC95CAD2D402FA81 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2174,6 +2220,7 @@
 				294EE4C2209006C2002C9CB1 /* Frameworks */,
 				294EE4C3209006C2002C9CB1 /* Resources */,
 				D97459BBC895C9C6632BE028 /* [CP] Embed Pods Frameworks */,
+				4467F22A0E30034D3EEE472E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2198,11 +2245,14 @@
 				295B51391FC2342200C3993B /* Run Fabric */,
 				ABA015066A84600AF351C942 /* [CP] Embed Pods Frameworks */,
 				294EE4DF209006C3002C9CB1 /* Embed Watch Content */,
+				7C5F8FBF66FDA216D147F310 /* [CP] Copy Pods Resources */,
+				4AAA215D2129E25E001CF2EE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				294EE4D4209006C3002C9CB1 /* PBXTargetDependency */,
+				4AAA21572129E25E001CF2EE /* PBXTargetDependency */,
 			);
 			name = Freetime;
 			productName = Freetime;
@@ -2218,6 +2268,7 @@
 				297AE8451EC0D58A00B44A1F /* Frameworks */,
 				297AE8461EC0D58A00B44A1F /* Resources */,
 				F46376DA96978B72BF162CA2 /* [CP] Embed Pods Frameworks */,
+				BA3011418AF63F0C2B974FEB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2229,19 +2280,36 @@
 			productReference = 297AE8481EC0D58A00B44A1F /* FreetimeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4AAA214E2129E25E001CF2EE /* FreetimeAction Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AAA215C2129E25E001CF2EE /* Build configuration list for PBXNativeTarget "FreetimeAction Extension" */;
+			buildPhases = (
+				4AAA214B2129E25E001CF2EE /* Sources */,
+				4AAA214C2129E25E001CF2EE /* Frameworks */,
+				4AAA214D2129E25E001CF2EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FreetimeAction Extension";
+			productName = "FreetimeAction Extension";
+			productReference = 4AAA214F2129E25E001CF2EE /* FreetimeAction Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		297AE82C1EC0D58A00B44A1F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Ryan Nystrom";
 				TargetAttributes = {
 					294EE4B8209006BF002C9CB1 = {
 						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = 563GTK3Y47;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2251,7 +2319,7 @@
 					};
 					294EE4C4209006C2002C9CB1 = {
 						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = 563GTK3Y47;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2261,7 +2329,7 @@
 					};
 					297AE8331EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = 563GTK3Y47;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2275,10 +2343,15 @@
 					};
 					297AE8471EC0D58A00B44A1F = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 523C4DWBTH;
+						DevelopmentTeam = 563GTK3Y47;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 297AE8331EC0D58A00B44A1F;
+					};
+					4AAA214E2129E25E001CF2EE = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 563GTK3Y47;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2299,6 +2372,7 @@
 				297AE8471EC0D58A00B44A1F /* FreetimeTests */,
 				294EE4B8209006BF002C9CB1 /* FreetimeWatch */,
 				294EE4C4209006C2002C9CB1 /* FreetimeWatch Extension */,
+				4AAA214E2129E25E001CF2EE /* FreetimeAction Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -2345,6 +2419,15 @@
 			files = (
 				295F52AA1EF1BB86000B53CF /* Test.md in Resources */,
 				29A195081EC7602500C3E289 /* Localizable.stringsdict in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4AAA214D2129E25E001CF2EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A0D4A88212A1A690078D3EB /* Assets.xcassets in Resources */,
+				4AAA21542129E25E001CF2EE /* Action.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2395,6 +2478,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4467F22A0E30034D3EEE472E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch Extension/Pods-FreetimeWatch Extension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C5F8FBF66FDA216D147F310 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8244BB367A339B5CDC740C40 /* [CP] Check Pods Manifest.lock */ = {
@@ -2521,6 +2634,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Freetime/Pods-Freetime-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BA3011418AF63F0C2B974FEB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeTests/Pods-FreetimeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CB9D7CC581BBD847FBB3FBDA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2580,6 +2708,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
+		E1F5B9A1DC95CAD2D402FA81 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreetimeWatch/Pods-FreetimeWatch-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		F46376DA96978B72BF162CA2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3121,6 +3264,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4AAA214B2129E25E001CF2EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AAA21522129E25E001CF2EE /* ActionRequestHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3138,6 +3289,11 @@
 			isa = PBXTargetDependency;
 			target = 297AE8331EC0D58A00B44A1F /* Freetime */;
 			targetProxy = 297AE8491EC0D58A00B44A1F /* PBXContainerItemProxy */;
+		};
+		4AAA21572129E25E001CF2EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AAA214E2129E25E001CF2EE /* FreetimeAction Extension */;
+			targetProxy = 4AAA21562129E25E001CF2EE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3182,7 +3338,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
@@ -3209,7 +3365,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
@@ -3236,7 +3392,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = FreetimeWatch_Extension;
 				INFOPLIST_FILE = FreetimeWatch/Info.plist;
@@ -3260,7 +3416,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3284,7 +3440,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3308,7 +3464,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "FreetimeWatch Extension/FreetimeWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "FreetimeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3442,13 +3598,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 36115D494E8C3B4F39AC8CD9 /* Pods-Freetime.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Freetime.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				DISABLE_APOLLO = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3485,13 +3643,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 63A98647141C04CBCFCA7923 /* Pods-Freetime.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Freetime.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				DISABLE_APOLLO = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3530,7 +3690,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
@@ -3546,7 +3706,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
@@ -3555,6 +3715,75 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Freetime.app/Freetime";
 			};
 			name = Release;
+		};
+		4AAA21592129E25E001CF2EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "FreetimeAction Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.whoisryannystrom.freetime.FreetimeAction-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4AAA215A2129E25E001CF2EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "FreetimeAction Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.whoisryannystrom.freetime.FreetimeAction-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4AAA215B2129E25E001CF2EE /* TestFlight */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "FreetimeAction Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.whoisryannystrom.freetime.FreetimeAction-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = TestFlight;
 		};
 		98A8CA991F7451A2009BE6AC /* TestFlight */ = {
 			isa = XCBuildConfiguration;
@@ -3614,13 +3843,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3C439BE890EECD7C0C692C5 /* Pods-Freetime.testflight.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Freetime.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
+				DISABLE_APOLLO = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3666,7 +3897,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 523C4DWBTH;
+				DEVELOPMENT_TEAM = 563GTK3Y47;
 				INFOPLIST_FILE = FreetimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.whoisryannystrom.FreetimeTests;
@@ -3725,6 +3956,16 @@
 				297AE8551EC0D58A00B44A1F /* Debug */,
 				297AE8561EC0D58A00B44A1F /* Release */,
 				98A8CA9B1F7451A2009BE6AC /* TestFlight */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4AAA215C2129E25E001CF2EE /* Build configuration list for PBXNativeTarget "FreetimeAction Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AAA21592129E25E001CF2EE /* Debug */,
+				4AAA215A2129E25E001CF2EE /* Release */,
+				4AAA215B2129E25E001CF2EE /* TestFlight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

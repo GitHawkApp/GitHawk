@@ -93,6 +93,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+
+        if let issue = IssueDetailsModel(url: url) {
+            rootNavigationManager.show(issue: issue)
+            return true
+        }
         if let sourceApp = options[.sourceApplication],
             String(describing: sourceApp) == "com.apple.SafariViewService" {
             sessionManager.receivedCodeRedirect(url: url)

@@ -86,6 +86,18 @@ final class RootNavigationManager: GitHubSessionListener {
         nav.pushViewController(login, animated: trueUnlessReduceMotionEnabled)
     }
 
+    public func show(issue: IssueDetailsModel) {
+        guard let client = lastClient else { return }
+
+        if tabBarController?.presentedViewController != nil {
+            tabBarController?.dismiss(animated: false, completion: nil)
+        }
+        let issues = IssuesViewController(client: client, model: issue, scrollToBottom: true)
+        issues.addMenuDoneButton(left: true)
+        let nav = UINavigationController(rootViewController: issues)
+        tabBarController?.present(nav, animated: true, completion: nil)
+    }
+
     @discardableResult
     public func selectViewController(atIndex index: Int) -> UIViewController? {
         tabBarController?.selectedIndex = index
