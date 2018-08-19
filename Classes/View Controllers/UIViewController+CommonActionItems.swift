@@ -19,7 +19,7 @@ extension UIViewController {
     func action(
         owner: String,
         repo: String,
-        icon: UIImage, // = UIImage(),
+        icon: UIImage,
         branch: String,
         issuesEnabled: Bool,
         client: GithubClient
