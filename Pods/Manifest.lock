@@ -53,6 +53,7 @@ PODS:
   - IGListKit/Diffing (3.3.0)
   - IGListKit/Swift (3.3.0):
     - IGListKit/Default
+  - ImageAlertAction (1.0.0)
   - leveldb-library (1.20)
   - MessageViewController (0.2.1)
   - nanopb (0.3.8):
@@ -100,6 +101,7 @@ DEPENDENCIES:
   - Highlightr (from `https://github.com/GitHawkApp/Highlightr.git`, branch `master`)
   - HTMLString (~> 4.0.1)
   - IGListKit/Swift (from `https://github.com/Instagram/IGListKit.git`, branch `swift`)
+  - ImageAlertAction
   - MessageViewController (from `https://github.com/GitHawkApp/MessageViewController.git`, branch `master`)
   - NYTPhotoViewer (~> 1.1.0)
   - SDWebImage/GIF (~> 4.0.0)
@@ -113,7 +115,7 @@ DEPENDENCIES:
   - TUSafariActivity (~> 1.0.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireNetworkActivityIndicator
     - Apollo
@@ -130,6 +132,7 @@ SPEC REPOS:
     - FLEX
     - GoogleToolboxForMac
     - HTMLString
+    - ImageAlertAction
     - leveldb-library
     - nanopb
     - NYTPhotoViewer
@@ -227,6 +230,7 @@ SPEC CHECKSUMS:
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
+  ImageAlertAction: a32a5053978ef2cffbc96f192d4ca2a24c774dd5
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -242,6 +246,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: abbecf20cfdc6b5d77e2ea4902ef4861ffd9a762
+PODFILE CHECKSUM: b666ad416e565c048754a79c1062fd87e3f132bb
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0
