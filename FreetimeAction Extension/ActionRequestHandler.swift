@@ -9,13 +9,15 @@
 import UIKit
 import MobileCoreServices
 
-class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
+private let stringUTTypePropertyList = String(kUTTypePropertyList)
+
+final class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
 
     var extensionContext: NSExtensionContext?
     
     func beginRequest(with context: NSExtensionContext) {
         // Do not call super in an Action extension with no user interface
-        self.extensionContext = context
+        extensionContext = context
         
         var found = false
         // Find the item containing the results from the JavaScript preprocessing.
@@ -23,8 +25,8 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         for item in context.inputItems as! [NSExtensionItem] {
             if let attachments = item.attachments {
                 for itemProvider in attachments as! [NSItemProvider] {
-                    if itemProvider.hasItemConformingToTypeIdentifier(String(kUTTypePropertyList)) {
-                        itemProvider.loadItem(forTypeIdentifier: String(kUTTypePropertyList), options: nil, completionHandler: { (item, error) in
+                    if itemProvider.hasItemConformingToTypeIdentifier(stringUTTypePropertyList) {
+                        itemProvider.loadItem(forTypeIdentifier: stringUTTypePropertyList, options: nil, completionHandler: { (item, error) in
                             let dictionary = item as! [String: Any]
                             OperationQueue.main.addOperation {
                                 self.itemLoadCompletedWithPreprocessingResults(dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as! [String: Any]? ?? [:])
@@ -54,7 +56,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
             let host = url.host,
             host.contains("github.com") else {
 
-            self.doneWithResults(["error": "Unable to open on GitHawk"])
+            self.doneWithResults(["error": NSLocalizedString("Unable to open in GitHawk", comment: "")])
             return
         }
 

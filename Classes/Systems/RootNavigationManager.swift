@@ -95,7 +95,7 @@ final class RootNavigationManager: GitHubSessionListener {
         let issues = IssuesViewController(client: client, model: issue, scrollToBottom: true)
         issues.addMenuDoneButton(left: true)
         let nav = UINavigationController(rootViewController: issues)
-        tabBarController?.present(nav, animated: true, completion: nil)
+        tabBarController?.present(nav, animated: trueUnlessReduceMotionEnabled, completion: nil)
     }
 
     @discardableResult
