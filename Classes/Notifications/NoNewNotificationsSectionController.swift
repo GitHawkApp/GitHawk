@@ -14,6 +14,7 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
 
     private let layoutInsets: UIEdgeInsets
     private let client = NotificationEmptyMessageClient()
+    weak var reviewGithubAccessDelegate: ReviewGithubAccessDelegate?
 
     enum State {
         case loading
@@ -22,9 +23,10 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
     }
     private var state: State = .loading
 
-    init(layoutInsets: UIEdgeInsets) {
+    init(layoutInsets: UIEdgeInsets, reviewGithubAccessDelegate: ReviewGithubAccessDelegate) {
         self.layoutInsets = layoutInsets
         super.init()
+        self.reviewGithubAccessDelegate = reviewGithubAccessDelegate
         client.fetch { [weak self] (result) in
             self?.handleFinished(result)
         }
@@ -54,8 +56,12 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
     private func configure(_ cell: NoNewNotificationsCell) {
         switch state {
         case .loading: break
-        case .success(let message): cell.configure(emoji: message.emoji, message: message.text)
-        case .error: cell.configure(emoji: "🎉", message: NSLocalizedString("Inbox zero!", comment: ""))
+        case .success(let message): cell.configure(emoji: message.emoji,
+                                                   message: message.text,
+                                                   delegate: reviewGithubAccessDelegate)
+        case .error: cell.configure(emoji: "🎉",
+                                    message: NSLocalizedString("Inbox zero!", comment: ""),
+                                    delegate: reviewGithubAccessDelegate)
         }
     }
 

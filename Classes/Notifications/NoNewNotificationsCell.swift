@@ -9,11 +9,17 @@
 import UIKit
 import SnapKit
 
+protocol ReviewGithubAccessDelegate: class {
+    func reviewGithubAccessButtonTapped()
+}
+
 final class NoNewNotificationsCell: UICollectionViewCell {
 
     let emojiLabel = UILabel()
     let messageLabel = UILabel()
+    let reviewGithubAccessButton = UIButton()
     let shadow = CAShapeLayer()
+    weak var reviewGithubAccessDelegate: ReviewGithubAccessDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +48,23 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.top.equalTo(emojiLabel.snp.bottom).offset(Styles.Sizes.tableSectionSpacing)
         }
 
+        reviewGithubAccessButton.setTitle(NSLocalizedString("Review GitHub Access", comment: ""), for: .normal)
+        reviewGithubAccessButton.isAccessibilityElement = false
+        reviewGithubAccessButton.titleLabel?.textAlignment = .center
+        reviewGithubAccessButton.backgroundColor = .clear
+        reviewGithubAccessButton.titleLabel?.font = Styles.Text.finePrint.preferredFont
+        reviewGithubAccessButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
+        reviewGithubAccessButton.addTarget(self, action: #selector(reviewGithubAccessButtonTapped), for: .touchUpInside)
+        contentView.addSubview(reviewGithubAccessButton)
+        let buttonWidth = (reviewGithubAccessButton.titleLabel?.intrinsicContentSize.width ?? 0) + Styles.Sizes.gutter
+        let buttonHeight = (reviewGithubAccessButton.titleLabel?.intrinsicContentSize.height ?? 0) + Styles.Sizes.gutter
+        reviewGithubAccessButton.snp.makeConstraints { make in
+            make.centerX.equalTo(messageLabel)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonHeight)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-Styles.Sizes.tableSectionSpacing)
+        }
+        
         resetAnimations()
 
         // CAAnimations will be removed from layers on background. restore when foregrounding.
@@ -89,9 +112,10 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(emoji: String, message: String) {
+    func configure(emoji: String, message: String, delegate: ReviewGithubAccessDelegate?) {
         emojiLabel.text = emoji
         messageLabel.text = message
+        reviewGithubAccessDelegate = delegate 
     }
 
     // MARK: Private API
@@ -118,6 +142,10 @@ final class NoNewNotificationsCell: UICollectionViewCell {
         shadowScale.timingFunction = timingFunction
 
         shadow.add(shadowScale, forKey: "nonewnotificationscell.shadow")
+    }
+    
+    @objc func reviewGithubAccessButtonTapped() {
+        reviewGithubAccessDelegate?.reviewGithubAccessButtonTapped()
     }
 
 }
