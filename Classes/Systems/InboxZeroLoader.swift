@@ -19,10 +19,16 @@ final class InboxZeroLoader {
     private lazy var json: SerializedType = {
         return NSKeyedUnarchiver.unarchiveObject(withFile: path) as? SerializedType ?? [:]
     }()
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        return URLSession.init(configuration: config)
+    }()
 
     func load(completion: @escaping (Bool) -> Void) {
         let path = self.path
-        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        session.dataTask(with: url) { [weak self] (data, response, error) in
             if let data = data,
                 let tmp = try? JSONSerialization.jsonObject(with: data, options: []) as? SerializedType,
                 let json = tmp {

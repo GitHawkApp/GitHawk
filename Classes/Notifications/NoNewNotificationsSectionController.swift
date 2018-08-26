@@ -8,7 +8,6 @@
 
 import UIKit
 import IGListKit
-import Crashlytics
 
 final class NoNewNotificationSectionController: ListSwiftSectionController<String> {
 
@@ -19,11 +18,8 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
         self.layoutInsets = layoutInsets
         super.init()
         loader.load { [weak self] success in
-            guard let `self` = self else { return }
             if success {
-                self.collectionContext?.performBatch(animated: true, updates: { context in
-                    context.reload(self)
-                })
+                self?.update()
             }
         }
     }
