@@ -17,25 +17,6 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - Firebase/Core (4.13.0):
-    - FirebaseAnalytics (= 4.2.0)
-    - FirebaseCore (= 4.0.20)
-  - Firebase/Database (4.13.0):
-    - Firebase/Core
-    - FirebaseDatabase (= 4.1.5)
-  - FirebaseAnalytics (4.2.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - nanopb (~> 0.3)
-  - FirebaseCore (4.0.20):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (4.1.5):
-    - FirebaseAnalytics (~> 4.1)
-    - FirebaseCore (~> 4.0)
-    - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
   - FLAnimatedImage (1.0.12)
   - FlatCache (0.1.0)
   - FLEX (2.4.0)
@@ -43,9 +24,6 @@ PODS:
     - Alamofire (~> 4.4.0)
     - Apollo (~> 0.8.0)
   - GitHubSession (0.1.0)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
   - Highlightr (1.1.0)
   - HTMLString (4.0.1)
   - IGListKit/Default (3.3.0):
@@ -53,13 +31,7 @@ PODS:
   - IGListKit/Diffing (3.3.0)
   - IGListKit/Swift (3.3.0):
     - IGListKit/Default
-  - leveldb-library (1.20)
   - MessageViewController (0.2.1)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
   - NYTPhotoViewer (1.1.0):
     - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
     - NYTPhotoViewer/Core (= 1.1.0)
@@ -91,8 +63,6 @@ DEPENDENCIES:
   - DateAgo (from `Local Pods/DateAgo`)
   - Fabric
   - FBSnapshotTestCase
-  - Firebase/Core
-  - Firebase/Database
   - FlatCache (from `https://github.com/GitHawkApp/FlatCache.git`, branch `master`)
   - FLEX (~> 2.0)
   - GitHubAPI (from `Local Pods/GitHubAPI`)
@@ -121,17 +91,9 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - FBSnapshotTestCase
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseDatabase
-    - FirebaseInstanceID
     - FLAnimatedImage
     - FLEX
-    - GoogleToolboxForMac
     - HTMLString
-    - leveldb-library
-    - nanopb
     - NYTPhotoViewer
     - Pageboy
     - SDWebImage
@@ -213,23 +175,15 @@ SPEC CHECKSUMS:
   DateAgo: c678b6435627f2b267980bc6f0a9969389686691
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
-  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
-  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
-  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FlatCache: e67d3d45a0f76b93e66883b802051dcbf9d50649
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
   GitHubAPI: 44a907f9699210536d65179d3d0dc0dc70dde7a1
   GitHubSession: 60c7bbd84fb915a0bd911a367c9661418ccfd7ae
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   Highlightr: 70c4df19e4aa55aa1b4387fb98182abce1dec9da
   HTMLString: 8d9a8a8aaf63dd52c5b8cd9a38e14da52f753210
   IGListKit: 7edb98afdb8401245d8bea0b733ebd4ac5e67caf
-  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MessageViewController: 63ef2719d82c91d949ad52e101f049028a5a0611
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
   Pageboy: f0295ea949f0b0123a1b486fd347ea892d0078e0
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
@@ -242,6 +196,6 @@ SPEC CHECKSUMS:
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: abbecf20cfdc6b5d77e2ea4902ef4861ffd9a762
+PODFILE CHECKSUM: b44d9940defb6584c7f8f9ed17d83116da1cd609
 
 COCOAPODS: 1.5.3

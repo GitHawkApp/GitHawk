@@ -353,7 +353,6 @@
 		29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */; };
 		29CEA5CD1F84DB1B009827DB /* BaseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */; };
 		29CEA5CF1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */; };
-		29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */; };
 		29D548CB1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */; };
 		29D8DF031FBBD72A00C486C2 /* IssueManagingActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8DF021FBBD72A00C486C2 /* IssueManagingActionModel.swift */; };
 		29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */; };
@@ -369,6 +368,7 @@
 		29DAA7AD20202A320029277A /* PullRequestReviewReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */; };
 		29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */; };
 		29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */; };
+		29DB5D152132227F00E408D9 /* InboxZeroLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
 		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
@@ -878,7 +878,6 @@
 		29CCB28A1FDDFFA200E23FA0 /* String+GithubDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+GithubDate.swift"; sourceTree = "<group>"; };
 		29CEA5CC1F84DB1B009827DB /* BaseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListViewController.swift; sourceTree = "<group>"; };
 		29CEA5CE1F84DCB3009827DB /* UIViewController+EmptyBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EmptyBackBar.swift"; sourceTree = "<group>"; };
-		29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEmptyMessageClient.swift; sourceTree = "<group>"; };
 		29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+TitleSubtitle.swift"; sourceTree = "<group>"; };
 		29D8DF021FBBD72A00C486C2 /* IssueManagingActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingActionModel.swift; sourceTree = "<group>"; };
 		29DA1E781F5DEE8F0050C64B /* SearchLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLoadingView.swift; sourceTree = "<group>"; };
@@ -894,6 +893,7 @@
 		29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyCell.swift; sourceTree = "<group>"; };
 		29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyModel.swift; sourceTree = "<group>"; };
 		29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubHighlighting.swift; sourceTree = "<group>"; };
+		29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxZeroLoader.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
 		29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeModel.swift; sourceTree = "<group>"; };
@@ -1644,6 +1644,7 @@
 				29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */,
 				296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */,
 				294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */,
+				29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */,
 				2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */,
 				297A6CE3202774830027E03B /* ListAdapter+Scrolling.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
@@ -1884,7 +1885,6 @@
 				290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */,
 				29B5D08A20D578DB003DFBE2 /* InboxType.swift */,
 				29BBD82A20CACB2F004D62FE /* NotificationCell.swift */,
-				29CF01D21FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift */,
 				29F3A18520CBF99E00645CB7 /* NotificationModelController.swift */,
 				29BBD82C20CACDFF004D62FE /* NotificationSectionController.swift */,
 				29F3A18320CADA3A00645CB7 /* NotificationsViewController.swift */,
@@ -2465,7 +2465,6 @@
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubAPI-iOS/GitHubAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubSession-iOS/GitHubSession.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
@@ -2481,8 +2480,6 @@
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -2497,7 +2494,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubSession.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
@@ -2513,8 +2509,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cmark_gfm_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2599,7 +2593,6 @@
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubAPI-iOS/GitHubAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubSession-iOS/GitHubSession.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
 				"${BUILT_PRODUCTS_DIR}/Highlightr/Highlightr.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
@@ -2615,8 +2608,6 @@
 				"${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/cmark-gfm-swift/cmark_gfm_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2632,7 +2623,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubSession.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highlightr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
@@ -2648,8 +2638,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TUSafariActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cmark_gfm_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2953,6 +2941,7 @@
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
+				29DB5D152132227F00E408D9 /* InboxZeroLoader.swift in Sources */,
 				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
 				D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */,
 				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
@@ -3020,7 +3009,6 @@
 				29EE444A1F19D85800B05ED3 /* ShowErrorStatusBar.swift in Sources */,
 				299F63E8205F09900015D901 /* StyledTextRenderer+ListDiffable.swift in Sources */,
 				295840711EE9F4D3007723C6 /* ShowMoreDetailsLabel+Date.swift in Sources */,
-				29CF01D31FDDA1EE0084B66F /* NotificationEmptyMessageClient.swift in Sources */,
 				29CCB28B1FDDFFA200E23FA0 /* String+GithubDate.swift in Sources */,
 				29BBD82B20CACB2F004D62FE /* NotificationCell.swift in Sources */,
 				29C295111EC7B83200D46CD2 /* ShowMoreDetailsLabel.swift in Sources */,
