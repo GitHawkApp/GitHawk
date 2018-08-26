@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showingLogin = false
     private let flexController = FlexController()
     private let sessionManager = GitHubSessionManager()
-    private var badgeNotifications: BadgeNotifications?
     private var watchAppSync: WatchAppUserSessionSync?
 
     private lazy var rootNavigationManager: RootNavigationManager = {
@@ -96,9 +95,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
+    private var backgroundFetchClient: GithubClient? = nil
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        badgeNotifications = BadgeNotifications()
-        badgeNotifications?.fetch(application: application, handler: completionHandler)
+        guard let userSession = sessionManager.focusedUserSession else {
+            return
+        }
+        backgroundFetchClient = newGithubClient(userSession: userSession)
+        backgroundFetchClient?.badge.fetch(application: application, handler: completionHandler)
     }
 
 }

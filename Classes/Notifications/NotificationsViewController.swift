@@ -129,7 +129,7 @@ BaseListViewController2EmptyDataSource {
         let hasUnread = unread > 0
         navigationItem.rightBarButtonItem?.isEnabled = hasUnread
         navigationController?.tabBarItem.badgeValue = hasUnread ? "\(unread)" : nil
-        BadgeNotifications.update(count: unread)
+        BadgeNotifications.updateBadge(count: unread)
     }
 
     @objc func onMore(sender: UIBarButtonItem) {
@@ -227,7 +227,7 @@ BaseListViewController2EmptyDataSource {
                 generator.notificationOccurred(.success)
 
                 // clear all badges
-                BadgeNotifications.update(count: 0)
+                BadgeNotifications.updateBadge(count: 0)
 
                 // change the spinner to the mark all item
                 // don't update state here; it is managed by `fetch`

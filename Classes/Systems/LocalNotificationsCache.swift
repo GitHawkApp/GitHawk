@@ -21,9 +21,6 @@ final class LocalNotificationsCache {
     }()
     private let defaults = UserDefaults.standard
     private let setupKey = "com.whoisryannystrom.freetime.local-notifications.setup"
-    private let table = "read-notifications"
-    private let apiCol = "apiID"
-    private let idCol = "id"
 
     private var isFirstSetup: Bool {
         return defaults.bool(forKey: setupKey)
@@ -31,46 +28,45 @@ final class LocalNotificationsCache {
 
     func update(
         notifications: [V3Notification],
-        completion: (([V3Notification]) -> Void)?
+        completion: @escaping ([V3Notification]) -> Void
         ) {
         guard notifications.count > 0 else {
-            completion?([])
+            completion([])
             return
         }
 
         queue.inDatabase { db in
-            let table = "read-notifications"
+            let table = "seen"
             let apiCol = "apiID"
             let idCol = "id"
 
             var map = [String: V3Notification]()
             notifications.forEach { map[$0.id] = $0 }
             let apiIDs = map.keys.map { $0 }
-            let sanitized = map.keys.map { _ in "?" }.joined(separator: ", ")
 
             do {
                 // attempt to create the table
                 try db.executeUpdate(
-                    "create table \(table) if not exists (\(idCol) integer primary key autoincrement, \(apiCol) text",
+                    "create table if not exists \(table) (\(idCol) integer primary key autoincrement, \(apiCol) text)",
                     values: nil
                 )
 
-                // if handling unseen, remove notifications that already exist
-                if completion != nil {
-                    let rs = try db.executeQuery(
-                        "select \(apiCol) from \(table) where \(apiCol) in (\(sanitized))",
-                        values: apiIDs
-                    )
-                    while rs.next() {
-                        if let key = rs.string(forColumn: apiCol) {
-                            map.removeValue(forKey: key)
-                        }
+                // remove notifications that already exist
+                let selectSanitized = map.keys.map { _ in "?" }.joined(separator: ", ")
+                let rs = try db.executeQuery(
+                    "select \(apiCol) from \(table) where \(apiCol) in (\(selectSanitized))",
+                    values: apiIDs
+                )
+                while rs.next() {
+                    if let key = rs.string(forColumn: apiCol) {
+                        map.removeValue(forKey: key)
                     }
                 }
 
                 // add latest notification ids in the db
+                let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
                 try db.executeUpdate(
-                    "insert into \(table) (\(apiCol)) values (\(sanitized))",
+                    "insert into \(table) (\(apiCol)) values \(insertSanitized)",
                     values: apiIDs
                 )
 
@@ -83,7 +79,7 @@ final class LocalNotificationsCache {
                 print("failed: \(error.localizedDescription)")
             }
 
-            completion?(map.values.map { $0 })
+            completion(map.values.map { $0 })
         }
     }
 

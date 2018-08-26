@@ -237,7 +237,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     @IBAction func onBackgroundFetchChanged() {
-        BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
+        BadgeNotifications.isBadgeEnabled = backgroundFetchSwitch.isOn
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
