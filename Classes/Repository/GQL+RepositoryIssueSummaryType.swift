@@ -89,7 +89,7 @@ extension RepoSearchPagesQuery.Data.Search.Node.AsPullRequest: RepositoryIssueSu
     }
 
     var pullRequest: Bool {
-        return false
+        return true
     }
 
     var status: IssueStatus {

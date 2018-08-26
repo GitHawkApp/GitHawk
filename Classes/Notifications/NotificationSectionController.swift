@@ -42,7 +42,14 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
     }
 
     func didTapRead(cell: NotificationCell) {
-        guard let id = value?.id else { return }
+        guard
+            let id = value?.id,
+            let model = modelController.githubClient.cache.get(id: id) as NotificationViewModel?,
+            !model.read
+        else {
+            return
+        }
+        cell.animateRead()
         generator.impactOccurred()
         modelController.markNotificationRead(id: id)
     }

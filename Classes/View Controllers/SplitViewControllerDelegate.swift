@@ -12,6 +12,12 @@ import UIKit
 // detail VCs from primary on split VC expansion
 protocol PrimaryViewController {}
 
+private func fixBackground(for splitViewController: UISplitViewController, collapsing: Bool) {
+    splitViewController.view.backgroundColor = collapsing
+    ? .white
+    : Styles.Colors.splitViewBackground
+}
+
 final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
 
     func splitViewController(
@@ -19,6 +25,8 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         collapseSecondary secondaryViewController: UIViewController,
         onto primaryViewController: UIViewController
         ) -> Bool {
+        fixBackground(for: splitViewController, collapsing: true)
+
         if let tab = primaryViewController as? UITabBarController,
             let primaryNav = tab.selectedViewController as? UINavigationController,
             let secondaryNav = secondaryViewController as? UINavigationController {
@@ -37,6 +45,8 @@ final class SplitViewControllerDelegate: UISplitViewControllerDelegate {
         _ splitViewController: UISplitViewController,
         separateSecondaryFrom primaryViewController: UIViewController
         ) -> UIViewController? {
+        fixBackground(for: splitViewController, collapsing: false)
+
         guard let tab = primaryViewController as? UITabBarController,
             let primaryNav = tab.selectedViewController as? UINavigationController
             else { return nil }

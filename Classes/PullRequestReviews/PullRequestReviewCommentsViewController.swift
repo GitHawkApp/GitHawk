@@ -15,7 +15,8 @@ import Squawk
 final class PullRequestReviewCommentsViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
-    PullRequestReviewReplySectionControllerDelegate {
+    PullRequestReviewReplySectionControllerDelegate,
+    IssueTextActionsViewSendDelegate {
 
     private let model: IssueDetailsModel
     private let client: GithubClient
@@ -24,10 +25,17 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
     private let textActionsController = TextActionsController()
     private var autocompleteController: AutocompleteController!
     private var focusedReplyModel: PullRequestReviewReplyModel?
+    private let threadInset = UIEdgeInsets(
+        top: Styles.Sizes.rowSpacing,
+        left: Styles.Sizes.gutter,
+        bottom: Styles.Sizes.rowSpacing,
+        right: Styles.Sizes.gutter
+    )
 
     lazy private var feed: Feed = {
         let f = Feed(viewController: self, delegate: self, managesLayout: false)
-        f.collectionView.contentInset = Styles.Sizes.threadInset
+        f.collectionView.contentInset = threadInset
+        f.collectionView.backgroundColor = .white
         return f
     }()
 
@@ -59,7 +67,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         view.backgroundColor = Styles.Colors.background
 
         // setup message view properties
-        configure(target: self, action: #selector(didPressButton(_:)))
+        configure()
 
         let getMarkdownBlock = { [weak self] () -> (String) in
             return self?.messageView.text ?? ""
@@ -70,10 +78,12 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
             repo: model.repo,
             owner: model.owner,
             addBorder: false,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: true
         )
         // text input bar uses UIVisualEffectView, don't try to match it
         actions.backgroundColor = .clear
+        actions.sendDelegate = self
 
         textActionsController.configure(client: client, textView: messageView.textView, actions: actions)
         textActionsController.viewController = self
@@ -89,8 +99,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        feed.collectionView.updateSafeInset(container: view, base: Styles.Sizes.threadInset)
-        
+        feed.collectionView.updateSafeInset(container: view, base: threadInset)
     }
 
     // MARK: FeedDelegate
@@ -124,30 +133,6 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
             }
         }
-    }
-
-    @objc func didPressButton(_ sender: Any) {
-        guard let reply = focusedReplyModel else { return }
-
-        let text = messageView.text
-        messageView.text = ""
-        messageView.textView.resignFirstResponder()
-        setMessageView(hidden: true, animated: true)
-
-        client.sendComment(
-            body: text,
-            inReplyTo: reply.replyID,
-            owner: model.owner,
-            repo: model.repo,
-            number: model.number,
-            width: insetWidth
-        ) { [weak self] result in
-            switch result {
-            case .error: break
-            case .success(let comment): self?.insertComment(model: comment, reply: reply)
-            }
-        }
-
     }
 
     func insertComment(model: IssueCommentModel, reply: PullRequestReviewReplyModel) {
@@ -200,6 +185,31 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         feed.adapter.scroll(to: reply, padding: Styles.Sizes.rowSpacing)
 
         focusedReplyModel = reply
+    }
+
+    // MARK: IssueTextActionsViewSendDelegate
+
+    func didSend(for actionsView: IssueTextActionsView) {
+        guard let reply = focusedReplyModel else { return }
+
+        let text = messageView.text
+        messageView.text = ""
+        messageView.textView.resignFirstResponder()
+        setMessageView(hidden: true, animated: true)
+
+        client.sendComment(
+            body: text,
+            inReplyTo: reply.replyID,
+            owner: model.owner,
+            repo: model.repo,
+            number: model.number,
+            width: insetWidth
+        ) { [weak self] result in
+            switch result {
+            case .error: break
+            case .success(let comment): self?.insertComment(model: comment, reply: reply)
+            }
+        }
     }
 
 }

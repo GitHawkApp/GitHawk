@@ -30,7 +30,7 @@ final class IssuePatchContentViewController: UIViewController {
         view.addSubview(codeView)
         codeView.set(
             attributedCode: CreateDiffString(code: patch)
-                .render(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+                .render(contentSizeCategory: UIContentSizeCategory.preferred)
         )
     }
 

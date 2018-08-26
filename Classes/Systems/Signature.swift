@@ -22,11 +22,15 @@ enum Signature {
         }
     }
 
-    static func signed(text: String) -> String {
-        guard enabled else { return text }
+    static var signature: String {
         let format = NSLocalizedString("Sent with %@", comment: "")
         let signature = String(format: format, "<a href=\"http://githawk.com\">GitHawk</a>")
-        return text + "\n\n<sub>\(signature)</sub>"
+        return "\n\n<sub>\(signature)</sub>"
+    }
+
+    static func signed(text: String) -> String {
+        guard enabled else { return text }
+        return text + signature
     }
 
 }

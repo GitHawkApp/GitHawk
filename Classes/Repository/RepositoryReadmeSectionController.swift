@@ -25,6 +25,7 @@ ListBindingSectionControllerDataSource {
     override init() {
         super.init()
         dataSource = self
+        inset = UIEdgeInsets(top: 0, left: Styles.Sizes.gutter, bottom: 0, right: Styles.Sizes.gutter)
     }
 
     // MARK: ListBindingSectionControllerDataSource
@@ -41,14 +42,16 @@ ListBindingSectionControllerDataSource {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let width = collectionContext?.containerSize.width else { fatalError("Missing context") }
+        guard let width = collectionContext?.containerSize.width
+            else { fatalError("Missing context") }
+        let insetWidth = width - inset.left - inset.right
         let height = BodyHeightForComment(
             viewModel: viewModel,
-            width: width,
+            width: insetWidth,
             webviewCache: webviewCache,
             imageCache: imageCache
         )
-        return CGSize(width: width, height: height)
+        return CGSize(width: insetWidth, height: height)
     }
 
     func sectionController(

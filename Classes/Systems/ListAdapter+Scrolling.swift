@@ -27,7 +27,7 @@ extension ListAdapter {
         // make sure not already at the top
         guard paddedMaxY > viewportHeight else { return }
 
-        let offset = paddedMaxY - viewportHeight
+        let offset = paddedMaxY - viewportHeight + collectionView.contentInset.bottom
         collectionView.setContentOffset(
             CGPoint(x: collectionView.contentOffset.x, y: offset),
             animated: trueUnlessReduceMotionEnabled

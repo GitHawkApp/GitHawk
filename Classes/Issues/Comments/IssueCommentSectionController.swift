@@ -11,6 +11,7 @@ import IGListKit
 import TUSafariActivity
 import Squawk
 import GitHubAPI
+import ContextMenu
 
 protocol IssueCommentSectionControllerDelegate: class {
     func didSelectReply(
@@ -27,7 +28,8 @@ final class IssueCommentSectionController:
     IssueCommentReactionCellDelegate,
     EditCommentViewControllerDelegate,
     MarkdownStyledTextViewDelegate,
-    IssueCommentDoubleTapDelegate {
+    IssueCommentDoubleTapDelegate,
+    ContextMenuDelegate {
 
     private weak var issueCommentDelegate: IssueCommentSectionControllerDelegate?
 
@@ -37,7 +39,6 @@ final class IssueCommentSectionController:
     private let model: IssueDetailsModel
     private var hasBeenDeleted = false
     private let autocomplete: IssueCommentAutocomplete
-    private var menuVisible = false
 
     private lazy var webviewCache: WebviewCellHeightCache = {
         return WebviewCellHeightCache(sectionController: self)
@@ -183,7 +184,7 @@ final class IssueCommentSectionController:
 
     @discardableResult
     private func uncollapse() -> Bool {
-        guard collapsed, !menuVisible else { return false }
+        guard collapsed else { return false }
         collapsed = false
         clearCollapseCells()
         collectionContext?.invalidateLayout(for: self, completion: nil)
@@ -218,12 +219,14 @@ final class IssueCommentSectionController:
     func edit(markdown: String) {
         guard let width = collectionContext?.insetContainerSize.width else { return }
         let bodyModels = MarkdownModels(
-            markdown,
+            // strip githawk signatures on edit
+            CheckIfSentWithGitHawk(markdown: markdown).markdown,
             owner: model.owner,
             repo: model.repo,
             width: width,
             viewerCanUpdate: true,
-            contentSizeCategory: UIApplication.shared.preferredContentSizeCategory
+            contentSizeCategory: UIContentSizeCategory.preferred,
+            isRoot: self.object?.isRoot == true
         )
         bodyEdits = (markdown, bodyModels)
         collapsed = false
@@ -275,8 +278,13 @@ final class IssueCommentSectionController:
             let originalMarkdown = currentMarkdown
             else { return }
 
+        let range = checkbox.originalMarkdownRange
+        let originalMarkdownNSString = originalMarkdown as NSString
+        guard range.location + range.length < originalMarkdownNSString.length
+            else { return }
+
         let invertedToken = checkbox.checked ? "[ ]" : "[x]"
-        let edited = (originalMarkdown as NSString).replacingCharacters(in: checkbox.originalMarkdownRange, with: invertedToken)
+        let edited = originalMarkdownNSString.replacingCharacters(in: range, with: invertedToken)
         edit(markdown: edited)
 
         client.client.send(V3EditCommentRequest(
@@ -320,7 +328,8 @@ final class IssueCommentSectionController:
             ? (object.threadState == .tail ? [tailModel] : [])
             : [ reactionMutation ?? object.reactions ]
 
-        return [ object.details, headModel ]
+//        return [ object.details, headModel ]
+        return [ object.details ]
             + bodies
             + tail
     }
@@ -393,11 +402,8 @@ final class IssueCommentSectionController:
 
         // connect specific cell delegates
         if let cell = cell as? IssueCommentDetailCell {
-            cell.setBorderVisible(object?.threadState == .single)
             cell.delegate = self
         } else if let cell = cell as? IssueCommentReactionCell {
-            let threadState = object?.threadState
-            cell.configure(borderVisible: threadState == .single || threadState == .tail)
             cell.delegate = self
         }
         
@@ -438,7 +444,7 @@ final class IssueCommentSectionController:
     // MARK: IssueCommentDoubleTapDelegate
     
     func didDoubleTap(cell: IssueCommentBaseCell) {
-        let reaction = ReactionContent.thumbsUp
+        guard let reaction = ReactionContent.defaultReaction else { return }
         guard let reactions = reactionMutation ?? self.object?.reactions,
             !reactions.viewerDidReact(reaction: reaction)
             else { return }
@@ -452,30 +458,6 @@ final class IssueCommentSectionController:
 
     // MARK: IssueCommentDetailCellDelegate
 
-    func didTapMore(cell: IssueCommentDetailCell, sender: UIView) {
-        guard let login = object?.details.login else {
-            Squawk.showGenericError()
-            return
-        }
-
-        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
-
-        let alert = UIAlertController.configured(
-            title: String(format: alertTitle, login),
-            preferredStyle: .actionSheet
-        )
-        alert.popoverPresentationController?.sourceView = sender
-        alert.addActions([
-            shareAction(sender: sender),
-            viewMarkdownAction,
-            editAction,
-            replyAction,
-            deleteAction,
-            AlertAction.cancel()
-        ])
-        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
-    }
-
     func didTapProfile(cell: IssueCommentDetailCell) {
         guard let login = object?.details.login else {
             Squawk.showGenericError()
@@ -486,14 +468,6 @@ final class IssueCommentSectionController:
     }
 
     // MARK: IssueCommentReactionCellDelegate
-
-    func willShowMenu(cell: IssueCommentReactionCell) {
-        menuVisible = true
-    }
-
-    func didHideMenu(cell: IssueCommentReactionCell) {
-        menuVisible = false
-    }
 
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent) {
         // don't add a reaction if already reacted
@@ -513,6 +487,50 @@ final class IssueCommentSectionController:
         react(cell: cell, content: reaction, isAdd: false)
     }
 
+    func didTapMore(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let login = object?.details.login else {
+            Squawk.showGenericError()
+            return
+        }
+
+        let alertTitle = NSLocalizedString("%@'s comment", comment: "Used in an action sheet title, eg. \"Basthomas's comment\".")
+
+        let alert = UIAlertController.configured(
+            title: String(format: alertTitle, login),
+            preferredStyle: .actionSheet
+        )
+        alert.popoverPresentationController?.sourceView = sender
+        alert.addActions([
+            shareAction(sender: sender),
+            viewMarkdownAction,
+            editAction,
+            replyAction,
+            deleteAction,
+            AlertAction.cancel()
+            ])
+        viewController?.present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
+
+    func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView) {
+        guard let viewController = self.viewController else { return }
+        ContextMenu.shared.show(
+            sourceViewController: viewController,
+            viewController: ReactionsMenuViewController(),
+            options: ContextMenu.Options(
+                durations: ContextMenu.AnimationDurations(present: 0.2),
+                containerStyle: ContextMenu.ContainerStyle(
+                    xPadding: -4,
+                    yPadding: 8,
+                    backgroundColor: Styles.Colors.menuBackgroundColor.color
+                ),
+                menuStyle: .minimal,
+                hapticsStyle: .medium
+            ),
+            sourceView: sender,
+            delegate: self
+        )
+    }
+
     // MARK: MarkdownStyledTextViewDelegate
 
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
@@ -528,6 +546,32 @@ final class IssueCommentSectionController:
 
     func didCancel(viewController: EditCommentViewController) {
         viewController.dismiss(animated: trueUnlessReduceMotionEnabled)
+    }
+
+    // MARK: ContextMenuDelegate
+
+    func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {}
+
+    func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {
+        guard let reactionViewController = viewController as? ReactionsMenuViewController,
+            let reaction = reactionViewController.selectedReaction,
+            let reactions = reactionMutation ?? self.object?.reactions
+            else { return }
+
+        var index = -1
+        for (i, model) in viewModels.reversed().enumerated() {
+            if model is IssueCommentReactionViewModel {
+                index = viewModels.count - 1 - i
+                break
+            }
+        }
+
+        guard index >= 0 else { return }
+        react(
+            cell: collectionContext?.cellForItem(at: index, sectionController: self) as? IssueCommentReactionCell,
+            content: reaction,
+            isAdd: !reactions.viewerDidReact(reaction: reaction)
+        )
     }
 
 }

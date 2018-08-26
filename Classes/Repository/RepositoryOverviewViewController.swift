@@ -10,12 +10,33 @@ import UIKit
 import IGListKit
 import GitHubAPI
 
+class HackScrollIndicatorInsetsCollectionView: UICollectionView {
+    override var scrollIndicatorInsets: UIEdgeInsets {
+        set {
+            super.scrollIndicatorInsets = UIEdgeInsets(top: newValue.top, left: 0, bottom: newValue.bottom, right: 0)
+        }
+        get { return super.scrollIndicatorInsets }
+    }
+}
+
 class RepositoryOverviewViewController: BaseListViewController<NSString>,
 BaseListViewControllerDataSource {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
     private var readme: RepositoryReadmeModel?
+
+//    lazy var _feed: Feed = { Feed(
+//        viewController: self,
+//        delegate: self,
+//        collectionView: HackScrollIndicatorInsetsCollectionView(
+//            frame: .zero,
+//            collectionViewLayout: ListCollectionViewLayout.basic()
+//        ))
+//    }()
+//    override var feed: Feed {
+//        return _feed
+//    }
 
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
@@ -25,6 +46,12 @@ BaseListViewControllerDataSource {
         )
         self.dataSource = self
         title = NSLocalizedString("Overview", comment: "")
+//        self.feed.collectionView.contentInset = UIEdgeInsets(
+//            top: Styles.Sizes.rowSpacing,
+//            left: Styles.Sizes.gutter,
+//            bottom: Styles.Sizes.rowSpacing,
+//            right: Styles.Sizes.gutter
+//        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,6 +60,7 @@ BaseListViewControllerDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        feed.collectionView.backgroundColor = .white
         makeBackBarItemEmpty()
     }
 
@@ -40,8 +68,9 @@ BaseListViewControllerDataSource {
 
     override func fetch(page: NSString?) {
         let repo = self.repo
-        let width = view.bounds.width
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+//        let contentInset = feed.collectionView.contentInset
+        let width = view.bounds.width - Styles.Sizes.gutter * 2
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.githubClient.client
             .send(V3RepositoryReadmeRequest(owner: repo.owner, repo: repo.name)) { [weak self] result in
@@ -64,6 +93,7 @@ BaseListViewControllerDataSource {
                         width: width,
                         viewerCanUpdate: false,
                         contentSizeCategory: contentSizeCategory,
+                        isRoot: false,
                         branch: branch
                     )
                     let model = RepositoryReadmeModel(models: models)

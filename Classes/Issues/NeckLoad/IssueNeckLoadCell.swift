@@ -22,13 +22,13 @@ final class IssueNeckLoadCell: SelectableCell {
         label.font = Styles.Text.secondaryBold.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.center.equalToSuperview()
         }
 
         activity.hidesWhenStopped = true
         contentView.addSubview(activity)
         activity.snp.makeConstraints { make in
-            make.center.equalTo(contentView)
+            make.center.equalToSuperview()
         }
     }
 

@@ -17,6 +17,7 @@ final class IssueCommentDetailsViewModel: ListDiffable {
     let didAuthor: Bool
     let editedBy: String?
     let editedAt: Date?
+    let sentWithGitHawk: Bool
 
     init(
         date: Date,
@@ -24,7 +25,8 @@ final class IssueCommentDetailsViewModel: ListDiffable {
         avatarURL: URL,
         didAuthor: Bool,
         editedBy: String?,
-        editedAt: Date?
+        editedAt: Date?,
+        sentWithGitHawk: Bool
         ) {
         self.date = date
         self.login = login
@@ -32,6 +34,7 @@ final class IssueCommentDetailsViewModel: ListDiffable {
         self.didAuthor = didAuthor
         self.editedBy = editedBy
         self.editedAt = editedAt
+        self.sentWithGitHawk = sentWithGitHawk
     }
 
     func diffIdentifier() -> NSObjectProtocol {

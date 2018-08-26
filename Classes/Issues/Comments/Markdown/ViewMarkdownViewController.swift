@@ -38,9 +38,9 @@ final class ViewMarkdownViewController: UIViewController {
         textView.textColor = Styles.Colors.Gray.dark.color
         textView.textContainerInset = UIEdgeInsets(
             top: Styles.Sizes.rowSpacing,
-            left: Styles.Sizes.rowSpacing,
+            left: Styles.Sizes.columnSpacing,
             bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.rowSpacing
+            right: Styles.Sizes.columnSpacing
         )
         view.addSubview(textView)
     }

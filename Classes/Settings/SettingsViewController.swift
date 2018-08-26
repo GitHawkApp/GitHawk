@@ -24,8 +24,10 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var reviewAccessCell: StyledTableCell!
     @IBOutlet weak var githubStatusCell: StyledTableCell!
+    @IBOutlet weak var reviewOnAppStoreCell: StyledTableCell!
     @IBOutlet weak var reportBugCell: StyledTableCell!
     @IBOutlet weak var viewSourceCell: StyledTableCell!
+    @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
     @IBOutlet weak var backgroundFetchSwitch: UISwitch!
     @IBOutlet weak var openSettingsButton: UIButton!
@@ -35,8 +37,9 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var apiStatusLabel: UILabel!
     @IBOutlet weak var apiStatusView: UIView!
     @IBOutlet weak var signatureSwitch: UISwitch!
-
-    override func viewDidLoad() {
+    @IBOutlet weak var defaultReactionLabel: UILabel!
+  
+  override func viewDidLoad() {
         super.viewDidLoad()
 
         versionLabel.text = Bundle.main.prettyVersionString
@@ -45,7 +48,6 @@ NewIssueTableViewControllerDelegate {
         signatureSwitch.isOn = Signature.enabled
 
         updateBadge()
-		style()
 
         NotificationCenter.default.addObserver(
             self,
@@ -57,6 +59,10 @@ NewIssueTableViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
+        defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
+            ?? NSLocalizedString("Off", comment: "")
+
         rz_smoothlyDeselectRows(tableView: tableView)
         accountsCell.detailTextLabel?.text = sessionManager.focusedUserSession?.username ?? Constants.Strings.unknown
 
@@ -101,10 +107,14 @@ NewIssueTableViewControllerDelegate {
             onAccounts()
         } else if cell === githubStatusCell {
             onGitHubStatus()
+        } else if cell === reviewOnAppStoreCell {
+            onReviewOnAppStore()
         } else if cell === reportBugCell {
             onReportBug()
         } else if cell === viewSourceCell {
             onViewSource()
+        } else if cell === setDefaultReaction {
+            onSetDefaultReaction()
         } else if cell === signOutCell {
             onSignOut()
         }
@@ -134,11 +144,18 @@ NewIssueTableViewControllerDelegate {
             else { fatalError("Should always create GitHub Status URL") }
         presentSafari(url: url)
     }
+  
+    func onReviewOnAppStore() {
+        guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
+            else { fatalError("Should always be valid app store URL") }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
 
     func onReportBug() {
-        guard let client = client,
-            let viewController = NewIssueTableViewController.create(
-                client: client,
+        guard let viewController = NewIssueTableViewController.create(
+                client: newGithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
@@ -166,6 +183,10 @@ NewIssueTableViewControllerDelegate {
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
         navigationController?.showDetailViewController(repoViewController, sender: self)
+    }
+  
+    func onSetDefaultReaction() {
+        //showDefaultReactionMenu()
     }
 
     func onSignOut() {
@@ -230,11 +251,6 @@ NewIssueTableViewControllerDelegate {
     @IBAction func onMarkRead(_ sender: Any) {
         NotificationModelController.setReadOnOpen(open: markReadSwitch.isOn)
     }
-
-	private func style() {
-		[backgroundFetchSwitch, markReadSwitch, signatureSwitch]
-			.forEach({ $0.onTintColor = Styles.Colors.Green.medium.color })
-	}
 
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn

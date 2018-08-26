@@ -21,8 +21,8 @@ final class IssueStatusCell: UICollectionViewCell, ListBindable {
         button.setupAsLabel()
         contentView.addSubview(button)
         button.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(contentView)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
         }
 
         lockedButton.setTitle(Constants.Strings.locked, for: .normal)

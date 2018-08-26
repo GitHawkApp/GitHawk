@@ -50,6 +50,7 @@ final class BookmarkNavigationController {
         item.target = self
         item.action = selector
         item.isEnabled = true
+        item.width = 0
     }
     
     //for timeframe between viewDidLoad() and bookmark info is loaded 

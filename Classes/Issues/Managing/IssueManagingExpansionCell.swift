@@ -37,8 +37,8 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         chevron.tintColor = tint
         contentView.addSubview(chevron)
         chevron.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView).offset(1)
-            make.right.equalTo(contentView)
+            make.centerY.equalToSuperview().offset(1)
+            make.right.equalToSuperview()
         }
 
         label.text = NSLocalizedString("Manage", comment: "")
@@ -46,7 +46,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
         label.textColor = tint
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
             make.right.equalTo(chevron.snp.left).offset(-Styles.Sizes.rowSpacing+3)
         }
 
@@ -54,7 +54,7 @@ final class IssueManagingExpansionCell: UICollectionViewCell, ListBindable {
             make.left.equalTo(label).offset(-Styles.Sizes.rowSpacing)
             make.right.equalTo(chevron).offset(Styles.Sizes.rowSpacing)
             make.height.equalTo(label).offset(4)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
         }
     }
 

@@ -13,8 +13,7 @@ enum Styles {
 
     enum Sizes {
         static let gutter: CGFloat = 15
-        static let eventGutter: CGFloat = 8 // comment gutter 2x
-        static let commentGutter: CGFloat = 8
+        static let cardGutter: CGFloat = 8
         static let icon = CGSize(width: 20, height: 20)
         static let buttonMin = CGSize(width: 44, height: 44)
         static let buttonIcon = CGSize(width: 25, height: 25)
@@ -35,22 +34,15 @@ enum Styles {
         static let listInsetLargeTail = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         static let listInsetTight = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         static let textViewInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing,
-            left: Styles.Sizes.gutter,
-            bottom: Styles.Sizes.rowSpacing,
-            right: Styles.Sizes.gutter
+            top: rowSpacing,
+            left: gutter,
+            bottom: rowSpacing,
+            right: gutter
         )
         static let labelEventHeight: CGFloat = 30
-        static let labelRowHeight: CGFloat = 18
-        static let labelSpacing: CGFloat = 4
+        static let labelSpacing: CGFloat = 8
         static let labelTextPadding: CGFloat = 4
         static let cardCornerRadius: CGFloat = 6
-        static let threadInset = UIEdgeInsets(
-            top: Styles.Sizes.rowSpacing / 2,
-            left: Styles.Sizes.commentGutter,
-            bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
-            right: Styles.Sizes.commentGutter
-        )
         static let maxImageHeight: CGFloat = 300
         static let contextMenuSize: CGSize = CGSize(width: 280, height: 240)
 
@@ -64,11 +56,13 @@ enum Styles {
 
         static let body = TextStyle(size: 16)
         static let bodyBold = TextStyle(font: .system(.bold), size: 16)
+        static let rootBody = TextStyle(size: 18)
+        static let commentBody = TextStyle(size: 15)
         static let secondary = TextStyle(size: 13)
         static let secondaryBold = TextStyle(font: .system(.bold), size: 13)
         static let title = TextStyle(font: .system(.bold), size: 14)
         static let button = TextStyle(size: 16)
-        static let headline = TextStyle(font: .system(.bold), size: 18)
+        static let headline = TextStyle(font: .system(.bold), size: 24)
         static let smallTitle = TextStyle(font: .system(.bold), size: 12)
         static let code = TextStyle(font: .name("Courier"), size: 16)
         static let codeBold = TextStyle(font: .name("Courier-Bold"), size: 16)
@@ -89,6 +83,7 @@ enum Styles {
         static let purple = "6f42c1"
         static let blueGray = "8697af"
         static let menuBackgroundColor = "292D35"
+        static let splitViewBackground = UIColor(red: 0.556863, green: 0.556863, blue: 0.576471, alpha: 1)
 
         enum Red {
             static let medium = "cb2431"
@@ -133,7 +128,7 @@ enum Styles {
 extension TextStyle {
 
     var preferredFont: UIFont {
-        return self.font(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        return self.font(contentSizeCategory: UIContentSizeCategory.preferred)
     }
 
     func with(attributes: [NSAttributedStringKey: Any]) -> TextStyle {

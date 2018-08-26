@@ -30,7 +30,7 @@ extension GithubClient {
         completion: @escaping (Result<[ListDiffable]>) -> ()
         ) {
         let viewerUsername = userSession?.username
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
@@ -118,7 +118,7 @@ extension GithubClient {
         completion: @escaping (Result<IssueCommentModel>) -> ()
         ) {
         let viewer = userSession?.username
-        let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        let contentSizeCategory = UIContentSizeCategory.preferred
 
         client.send(V3SendPullRequestCommentRequest(
             owner: owner,
@@ -177,23 +177,27 @@ private func createReviewComment(
     contentSizeCategory: UIContentSizeCategory,
     width: CGFloat
     ) -> IssueCommentModel {
+    let checkedMarkdown = CheckIfSentWithGitHawk(markdown: model.body)
+
     let details = IssueCommentDetailsViewModel(
         date: model.created,
         login: model.author,
         avatarURL: model.authorAvatarURL,
         didAuthor: model.author == viewer,
         editedBy: nil,
-        editedAt: nil
+        editedAt: nil,
+        sentWithGitHawk: checkedMarkdown.sentWithGitHawk
     )
 
     let reactions = IssueCommentReactionViewModel(models: [])
     let bodies = MarkdownModels(
-        model.body,
+        checkedMarkdown.markdown,
         owner: owner,
         repo: repo,
         width: width,
         viewerCanUpdate: false,
-        contentSizeCategory: contentSizeCategory
+        contentSizeCategory: contentSizeCategory,
+        isRoot: false
     )
 
     return IssueCommentModel(

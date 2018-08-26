@@ -120,7 +120,8 @@ MessageTextViewListener {
             repo: issueModel.repo,
             owner: issueModel.repo,
             addBorder: true,
-            supportsImageUpload: true
+            supportsImageUpload: true,
+            showSendButton: false
         )
         
         textActionsController.configure(client: client, textView: textView, actions: actions)

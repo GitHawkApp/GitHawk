@@ -54,6 +54,8 @@ final class RootNavigationManager: GitHubSessionListener {
         } else {
             block()
         }
+
+        self.tabBarController?.selectedIndex = 0
     }
 
     public func resetRootViewController(userSession: GitHubUserSession?) {

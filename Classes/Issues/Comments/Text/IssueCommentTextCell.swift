@@ -12,12 +12,14 @@ import StyledTextKit
 
 final class IssueCommentTextCell: IssueCommentBaseCell, ListBindable {
 
-    static let inset = UIEdgeInsets(
-        top: 2,
-        left: Styles.Sizes.commentGutter,
-        bottom: Styles.Sizes.rowSpacing,
-        right: Styles.Sizes.commentGutter
-    )
+    static func inset(isLast: Bool) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: 2,
+            left: 0,
+            bottom: isLast ? 0 : Styles.Sizes.rowSpacing,
+            right: 0
+        )
+    }
 
     let textView = MarkdownStyledTextView()
 

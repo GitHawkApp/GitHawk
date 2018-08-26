@@ -15,7 +15,6 @@ struct IssueResult: Cachable {
 
     let id: String
     let pullRequest: Bool
-    let status: IssueStatusModel
     let title: StyledTextRenderer
     let labels: IssueLabelsModel
     let assignee: IssueAssigneesModel
@@ -70,7 +69,6 @@ struct IssueResult: Cachable {
     func updated(
         id: String? = nil,
         pullRequest: Bool? = nil,
-        status: IssueStatusModel? = nil,
         title: StyledTextRenderer? = nil,
         labels: IssueLabelsModel? = nil,
         assignee: IssueAssigneesModel? = nil,
@@ -84,7 +82,6 @@ struct IssueResult: Cachable {
         return IssueResult(
             id: id ?? self.id,
             pullRequest: pullRequest ?? self.pullRequest,
-            status: status ?? self.status,
             title: title ?? self.title,
             labels: labels ?? self.labels,
             assignee: assignee ?? self.assignee,
@@ -109,7 +106,6 @@ struct IssueResult: Cachable {
         return IssueResult(
             id: self.id,
             pullRequest: self.pullRequest,
-            status: self.status,
             title: self.title,
             labels: self.labels,
             assignee: self.assignee,
@@ -134,7 +130,6 @@ struct IssueResult: Cachable {
         return IssueResult(
             id: self.id,
             pullRequest: self.pullRequest,
-            status: self.status,
             title: self.title,
             labels: self.labels,
             assignee: self.assignee,

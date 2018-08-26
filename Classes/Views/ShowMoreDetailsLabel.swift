@@ -34,7 +34,7 @@ final class ShowMoreDetailsLabel: UILabel {
 
     // MARK: Private API
 
-    @objc func showMenu(recognizer: UITapGestureRecognizer) {
+    @objc func showMenu(recognizer: UILongPressGestureRecognizer) {
         guard recognizer.state == .began,
             !detailText.isEmpty else { return }
 

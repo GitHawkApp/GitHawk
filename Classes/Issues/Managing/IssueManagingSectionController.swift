@@ -206,13 +206,13 @@ ContextMenuDelegate {
             if object.pullRequest {
                 models.append(Action.reviewers)
             }
-            if result.status.locked {
+            if result.labels.locked {
                 models.append(Action.unlock)
             } else {
                 models.append(Action.lock)
             }
         }
-        switch result.status.status {
+        switch result.labels.status.status {
         case .closed: models.append(Action.reopen)
         case .open: models.append(Action.close)
         case .merged: break // can't do anything

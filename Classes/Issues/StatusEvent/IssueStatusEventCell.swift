@@ -32,15 +32,15 @@ final class IssueStatusEventCell: UICollectionViewCell {
         actorButton.addTarget(self, action: #selector(IssueStatusEventCell.onActor), for: .touchUpInside)
         contentView.addSubview(actorButton)
         actorButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.eventGutter)
-            make.centerY.equalTo(contentView)
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
 
         statusButton.setupAsLabel()
         contentView.addSubview(statusButton)
         statusButton.snp.makeConstraints { make in
             make.left.equalTo(actorButton.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
         }
 
         // courier has a little bit of a different kerning, manually adjust
@@ -50,7 +50,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         contentView.addSubview(hashButton)
         hashButton.snp.makeConstraints { make in
             make.left.equalTo(statusButton.snp.right).offset(Styles.Sizes.inlineSpacing)
-            make.centerY.equalTo(contentView).offset(1)
+            make.centerY.equalToSuperview().offset(1)
         }
 
         dateLabel.font = Styles.Text.secondary.preferredFont
@@ -59,7 +59,7 @@ final class IssueStatusEventCell: UICollectionViewCell {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             self.dateConstraint = make.left.equalTo(hashButton.snp.right).offset(Styles.Sizes.inlineSpacing).constraint
-            make.centerY.equalTo(contentView)
+            make.centerY.equalToSuperview()
         }
     }
 

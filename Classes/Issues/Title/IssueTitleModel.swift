@@ -13,11 +13,9 @@ import StyledTextKit
 final class IssueTitleModel: ListDiffable {
 
     let string: StyledTextRenderer
-    let trailingMetadata: Bool
 
-    init(string: StyledTextRenderer, trailingMetadata: Bool) {
+    init(string: StyledTextRenderer) {
         self.string = string
-        self.trailingMetadata = trailingMetadata
     }
 
     // MARK: ListDiffable
@@ -28,8 +26,8 @@ final class IssueTitleModel: ListDiffable {
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
-        guard let object = object as? IssueTitleModel else { return false }
-        return trailingMetadata == object.trailingMetadata
+        guard object is IssueTitleModel else { return false }
+        return true
     }
 
 }

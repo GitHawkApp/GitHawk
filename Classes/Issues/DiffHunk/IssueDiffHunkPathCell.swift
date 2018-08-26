@@ -23,9 +23,9 @@ final class IssueDiffHunkPathCell: UICollectionViewCell, ListBindable {
         label.font = Styles.Text.code.preferredFont
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.centerY.equalTo(contentView)
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.width.lessThanOrEqualTo(contentView).offset(-Styles.Sizes.commentGutter * 2)
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.lessThanOrEqualToSuperview().offset(-Styles.Sizes.rowSpacing)
         }
     }
 

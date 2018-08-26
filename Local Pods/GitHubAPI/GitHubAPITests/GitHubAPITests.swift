@@ -155,5 +155,22 @@ class GitHubAPITests: XCTestCase {
             XCTAssertEqual(first.subject.title, "Potential security vulnerability found in the hoek dependency")
         }
     }
+
+    func test_milestoneWithoutDescriptionsJSON() {
+        let data = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "no_milestone_description", withExtension: "json")!)
+        let result = processResponse(request: V3MilestoneRequest(owner: "nurpax", repo: "petmate"), input: data)
+        switch result {
+        case .failure(let error): XCTFail(error?.localizedDescription ?? "Failed without error")
+        case .success(let response):
+            XCTAssertEqual(response.data.count, 2)
+
+            let first = response.data.first!
+            XCTAssertEqual(first.id, 3514116)
+            XCTAssertEqual(first.closedIssues, 6)
+            XCTAssertEqual(first.openIssues, 6)
+            XCTAssertNil(first.description)
+            XCTAssertNil(first.closedAt)
+        }
+    }
     
 }

@@ -15,6 +15,7 @@ final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
 ForegroundHandlerDelegate,
 FlatCacheListener,
+TabNavRootViewControllerType,
 BaseListViewController2EmptyDataSource {
 
     private let modelController: NotificationModelController
@@ -294,4 +295,13 @@ BaseListViewController2EmptyDataSource {
         updateUnreadState()
     }
     
+    // MARK: TabNavRootViewControllerType
+    
+    func didSingleTapTab() {
+        feed.collectionView.scrollToTop(animated: true)
+    }
+    
+    func didDoubleTapTab() {
+        didSingleTapTab()
+    }
 }

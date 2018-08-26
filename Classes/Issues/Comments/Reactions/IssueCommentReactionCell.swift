@@ -11,13 +11,13 @@ import SnapKit
 import IGListKit
 
 protocol IssueCommentReactionCellDelegate: class {
-    func willShowMenu(cell: IssueCommentReactionCell)
-    func didHideMenu(cell: IssueCommentReactionCell)
     func didAdd(cell: IssueCommentReactionCell, reaction: ReactionContent)
     func didRemove(cell: IssueCommentReactionCell, reaction: ReactionContent)
+    func didTapMore(cell: IssueCommentReactionCell, sender: UIView)
+    func didTapAddReaction(cell: IssueCommentReactionCell, sender: UIView)
 }
 
-final class IssueCommentReactionCell: IssueCommentBaseCell,
+final class IssueCommentReactionCell: UICollectionViewCell,
 ListBindable,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
@@ -27,6 +27,7 @@ UICollectionViewDelegateFlowLayout {
     public weak var delegate: IssueCommentReactionCellDelegate?
 
     private let addButton = ResponderButton()
+    private let moreButton = HittableButton()
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -44,44 +45,53 @@ UICollectionViewDelegateFlowLayout {
 
         addButton.tintColor = Styles.Colors.Gray.light.color
         addButton.setTitle("+", for: .normal)
-        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         addButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
-        addButton.semanticContentAttribute = .forceRightToLeft
         addButton.setImage(UIImage(named: "smiley-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(IssueCommentReactionCell.onAddButton(sender:)), for: .touchUpInside)
         addButton.accessibilityLabel = NSLocalizedString("Add reaction", comment: "")
+        addButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.left.equalTo(Styles.Sizes.commentGutter)
-            make.bottom.equalTo(contentView).offset(-Styles.Sizes.rowSpacing)
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-Styles.Sizes.rowSpacing)
+        }
+
+        moreButton.setImage(UIImage(named: "bullets-small")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        moreButton.contentVerticalAlignment = .center
+        moreButton.contentHorizontalAlignment = .right
+        moreButton.imageView?.contentMode = .center
+        moreButton.tintColor = Styles.Colors.Gray.light.color
+        moreButton.addTarget(self, action: #selector(IssueCommentReactionCell.onMore(sender:)), for: .touchUpInside)
+        moreButton.accessibilityLabel = Constants.Strings.moreOptions
+        contentView.addSubview(moreButton)
+        moreButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        moreButton.snp.makeConstraints { make in
+            make.size.equalTo(Styles.Sizes.buttonMin)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
         }
 
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.clipsToBounds = true
+        collectionView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.equalTo(addButton.snp.right).offset(Styles.Sizes.columnSpacing)
-            make.top.bottom.right.equalTo(contentView)
+            make.top.bottom.right.equalToSuperview()
+            make.right.equalTo(moreButton.snp.left).offset(-Styles.Sizes.columnSpacing)
         }
-
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self,
-            selector: #selector(onMenuControllerWillShow(notification:)),
-            name: .UIMenuControllerWillShowMenu,
-            object: nil
-        )
-        nc.addObserver(
-            self,
-            selector: #selector(onMenuControllerDidHide(notification:)),
-            name: .UIMenuControllerDidHideMenu,
-            object: nil
-        )
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutContentViewForSafeAreaInsets()
     }
 
     // MARK: Public API
@@ -91,10 +101,6 @@ UICollectionViewDelegateFlowLayout {
         // implies that IGListBindingSectionController will do its thing, and this method is called
         // in sectionController(_, cellForViewModel:,at index:)
         queuedOperation = (content, operation)
-    }
-
-    func configure(borderVisible: Bool) {
-        border = borderVisible ? .tail : .neck
     }
 
     // MARK: Private API
@@ -107,22 +113,8 @@ UICollectionViewDelegateFlowLayout {
         return collectionView.cellForItem(at: path) as? IssueReactionCell
     }
 
-    @objc private func onAddButton() {
-        addButton.becomeFirstResponder()
-
-        let actions = [
-            (ReactionContent.thumbsUp.emoji, #selector(IssueCommentReactionCell.onThumbsUp)),
-            (ReactionContent.thumbsDown.emoji, #selector(IssueCommentReactionCell.onThumbsDown)),
-            (ReactionContent.laugh.emoji, #selector(IssueCommentReactionCell.onLaugh)),
-            (ReactionContent.hooray.emoji, #selector(IssueCommentReactionCell.onHooray)),
-            (ReactionContent.confused.emoji, #selector(IssueCommentReactionCell.onConfused)),
-            (ReactionContent.heart.emoji, #selector(IssueCommentReactionCell.onHeart))
-        ]
-
-        let menu = UIMenuController.shared
-        menu.menuItems = actions.map { UIMenuItem(title: $0.0, action: $0.1) }
-        menu.setTargetRect(addButton.imageView?.frame ?? .zero, in: addButton)
-        menu.setMenuVisible(true, animated: trueUnlessReduceMotionEnabled)
+    @objc private func onAddButton(sender: UIView) {
+        delegate?.didTapAddReaction(cell: self, sender: sender)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -188,14 +180,8 @@ UICollectionViewDelegateFlowLayout {
         data.cell.iterate(add: add)
     }
 
-    // MARK: Notifications
-
-    @objc func onMenuControllerWillShow(notification: Notification) {
-        delegate?.willShowMenu(cell: self)
-    }
-
-    @objc func onMenuControllerDidHide(notification: Notification) {
-        delegate?.didHideMenu(cell: self)
+    @objc func onMore(sender: UIView) {
+        delegate?.didTapMore(cell: self, sender: sender)
     }
 
     // MARK: ListBindable

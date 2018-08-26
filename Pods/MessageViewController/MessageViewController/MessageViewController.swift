@@ -182,15 +182,15 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
 
             let scrollViewHeight = scrollView.bounds.height
             let contentHeight = scrollView.contentSize.height
-            let topInset = scrollView.util_adjustedContentInset.top
+            let inset = scrollView.util_adjustedContentInset
             let bottomSafeInset = self.view.util_safeAreaInsets.bottom
 
             let newOffset = max(
                 min(
-                    contentHeight - scrollViewHeight,
+                    contentHeight - scrollViewHeight + inset.bottom,
                     contentOffset.y + self.keyboardHeight - previousKeyboardHeight - bottomSafeInset
                 ),
-                -topInset
+                -inset.top
             )
             scrollView.contentOffset = CGPoint(x: contentOffset.x, y: newOffset)
         }

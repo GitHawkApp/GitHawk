@@ -15,14 +15,15 @@ ListBindingSectionControllerSelectionDelegate {
 
     private let issue: IssueDetailsModel
     private var sizeCache = [String: CGSize]()
+    private let lockedModel = Constants.Strings.locked
 
     init(issue: IssueDetailsModel) {
         self.issue = issue
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
-        let spacing = Styles.Sizes.rowSpacing / 2
-        inset = UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
+        let row = Styles.Sizes.rowSpacing
+        inset = UIEdgeInsets(top: row, left: 0, bottom: row/2, right: 0)
         dataSource = self
         selectionDelegate = self
     }
@@ -33,7 +34,13 @@ ListBindingSectionControllerSelectionDelegate {
         _ sectionController: ListBindingSectionController<ListDiffable>,
         viewModelsFor object: Any
         ) -> [ListDiffable] {
-        return self.object?.labels ?? []
+        guard let object = self.object else { return [] }
+        var viewModels: [ListDiffable] = [object.status]
+        if object.locked {
+            viewModels.append(lockedModel as ListDiffable)
+        }
+        viewModels += object.labels as [ListDiffable]
+        return viewModels
     }
 
     func sectionController(
@@ -41,16 +48,32 @@ ListBindingSectionControllerSelectionDelegate {
         sizeForViewModel viewModel: Any,
         at index: Int
         ) -> CGSize {
-        guard let viewModel = viewModel as? RepositoryLabel
-            else { fatalError("Collection context must be set") }
 
-        let key = viewModel.name
+        let key: String
+        if let viewModel = viewModel as? RepositoryLabel {
+            key = viewModel.name
+        } else {
+            if let viewModel = viewModel as? IssueLabelStatusModel {
+                key = "status-\(viewModel.status.title)"
+            } else {
+                key = "locked-key"
+            }
+        }
 
         if let size = sizeCache[key] {
             return size
         }
 
-        let size = LabelListCell.size(key)
+        let size: CGSize
+        if let viewModel = viewModel as? RepositoryLabel {
+            size = LabelListCell.size(viewModel.name)
+        } else {
+            if let viewModel = viewModel as? IssueLabelStatusModel {
+                size = IssueLabelStatusCell.size(viewModel.status.title)
+            } else {
+                size = IssueLabelStatusCell.size(lockedModel)
+            }
+        }
         sizeCache[key] = size
         return size
     }
@@ -60,7 +83,12 @@ ListBindingSectionControllerSelectionDelegate {
         cellForViewModel viewModel: Any,
         at index: Int
         ) -> UICollectionViewCell & ListBindable {
-        guard let cell = collectionContext?.dequeueReusableCell(of: LabelListCell.self, for: self, at: index) as? LabelListCell
+        let cellType: AnyClass
+        switch viewModel {
+        case is RepositoryLabel: cellType = LabelListCell.self
+        default: cellType = IssueLabelStatusCell.self
+        }
+        guard let cell = collectionContext?.dequeueReusableCell(of: cellType, for: self, at: index) as? UICollectionViewCell & ListBindable
             else { fatalError("Missing context or wrong cell") }
         return cell
     }
