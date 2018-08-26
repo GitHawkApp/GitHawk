@@ -369,6 +369,7 @@
 		29DAA7AD20202A320029277A /* PullRequestReviewReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */; };
 		29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */; };
 		29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */; };
+		29DB5D152132227F00E408D9 /* InboxZeroLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */; };
 		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
 		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
@@ -894,6 +895,7 @@
 		29DAA7AC20202A320029277A /* PullRequestReviewReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyCell.swift; sourceTree = "<group>"; };
 		29DAA7AE20202BEA0029277A /* PullRequestReviewReplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestReviewReplyModel.swift; sourceTree = "<group>"; };
 		29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubHighlighting.swift; sourceTree = "<group>"; };
+		29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxZeroLoader.swift; sourceTree = "<group>"; };
 		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
 		29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeModel.swift; sourceTree = "<group>"; };
@@ -1644,6 +1646,7 @@
 				29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */,
 				296B4E301F7C805600C16887 /* GraphQLIDDecode.swift */,
 				294B11231F7B37D200E04F2D /* ImageCellHeightCache.swift */,
+				29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */,
 				2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */,
 				297A6CE3202774830027E03B /* ListAdapter+Scrolling.swift */,
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
@@ -2953,6 +2956,7 @@
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
 				292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */,
 				29AF1E881F8AB0AA0008A0EF /* IssueTextActionsView+Markdown.swift in Sources */,
+				29DB5D152132227F00E408D9 /* InboxZeroLoader.swift in Sources */,
 				5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */,
 				D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */,
 				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
