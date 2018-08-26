@@ -202,7 +202,7 @@
                                                     <color key="textColor" red="0.14117647058823529" green="0.16078431372549018" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FvK-93-raA" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FvK-93-raA">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onBackgroundFetchChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="gPu-bQ-K9r"/>
@@ -243,7 +243,7 @@
                                                     <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dQ-YU-Yuw" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dQ-YU-Yuw">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onMarkRead:" destination="NnB-TU-bkW" eventType="valueChanged" id="QPk-DK-Ufx"/>
@@ -272,7 +272,7 @@
                                                     <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWv-km-fU1" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWv-km-fU1">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onSignature:" destination="NnB-TU-bkW" eventType="valueChanged" id="XNf-Bz-K8B"/>
@@ -389,7 +389,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Q0-qBc" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Q0-qBc">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="toggleDefaultReaction:" destination="D6n-Kh-ydE" eventType="valueChanged" id="WZ3-CL-0ma"/>
