@@ -39,23 +39,16 @@ final class BadgeNotifications {
         set { return defaults.set(newValue, forKey: notificationKey)}
     }
 
-    enum State {
-        case initial
-        case denied
-        case disabled
-        case enabled
-    }
-
-    static func check(callback: @escaping (State) -> Void) {
+    static func check(callback: @escaping (Result<(Bool, Bool)>) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
                 case .notDetermined:
-                    callback(.initial)
+                    callback(.error(nil))
                 case .denied:
-                    callback(.denied)
+                    callback(.error(nil))
                 case .authorized:
-                    callback(isBadgeEnabled || isLocalNotificationEnabled ? .enabled : .disabled)
+                    callback(.success((isBadgeEnabled, isLocalNotificationEnabled)))
                 }
             }
         }
@@ -133,7 +126,19 @@ final class BadgeNotifications {
     }
 
     private func sendLocalPush(for notifications: [V3Notification]) {
-        print("sending local push for \(notifications.count)")
+        let center = UNUserNotificationCenter.current()
+
+        notifications.forEach {
+            let content = UNMutableNotificationContent()
+            content.body = $0.repository.fullName
+            content.title = $0.subject.title
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+
+            let identifier = $0.id
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            center.add(request)
+        }
     }
 
     static func updateBadge(application: UIApplication = UIApplication.shared, count: Int) {

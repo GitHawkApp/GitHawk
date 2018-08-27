@@ -20,7 +20,7 @@
                         <color key="separatorColor" red="0.73725490196078436" green="0.73333333333333328" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="jkq-3p-p02">
-                            <rect key="frame" x="0.0" y="649.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="693.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.4.0 (1207)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bb-Lj-p2k" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
@@ -205,7 +205,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FvK-93-raA" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
                                                     <rect key="frame" x="311" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="onBackgroundFetchChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="gPu-bQ-K9r"/>
+                                                        <action selector="onBadgeChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="l51-6Q-vcD"/>
                                                     </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36B-Ge-m5V">
@@ -230,8 +230,49 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="U6l-Zw-17s" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pbF-qp-TdT" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="419.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pbF-qp-TdT" id="nUN-Hd-0xp">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Push Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNL-qr-bAj" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="12" width="132" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T30-uT-48L" customClass="StyledSwitch" customModule="Freetime" customModuleProvider="target">
+                                                    <rect key="frame" x="311" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onPushChanged" destination="NnB-TU-bkW" eventType="valueChanged" id="3Sx-fq-g7U"/>
+                                                    </connections>
+                                                </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFk-Cc-92g">
+                                                    <rect key="frame" x="315" y="5" width="60" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <state key="normal" title="Settings">
+                                                        <color key="titleColor" red="0.63921568630000003" green="0.66666666669999997" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onSettings:" destination="NnB-TU-bkW" eventType="touchUpInside" id="eCr-BP-8PS"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="T30-uT-48L" secondAttribute="trailing" constant="15" id="6RB-2m-fYA"/>
+                                                <constraint firstItem="HFk-Cc-92g" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="Ind-0b-it6"/>
+                                                <constraint firstItem="vNL-qr-bAj" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="TTt-u4-ANE"/>
+                                                <constraint firstAttribute="trailing" secondItem="HFk-Cc-92g" secondAttribute="trailing" id="ZLK-Ic-qgC"/>
+                                                <constraint firstItem="vNL-qr-bAj" firstAttribute="leading" secondItem="nUN-Hd-0xp" secondAttribute="leading" constant="16" id="o6O-Rl-PO6"/>
+                                                <constraint firstItem="T30-uT-48L" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="wgd-mx-RqK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="U6l-Zw-17s" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="463.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U6l-Zw-17s" id="cMZ-jh-esi">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -260,7 +301,7 @@
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="0eH-mW-WpD" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="463.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="507.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0eH-mW-WpD" id="dAx-L4-nLX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -289,7 +330,7 @@
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Z8j-JQ-qiy" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="507.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="551.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z8j-JQ-qiy" id="uAb-lB-GZA">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -320,7 +361,7 @@
                             <tableViewSection id="GTg-1u-cvV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ku5-ZI-OG9" style="IBUITableViewCellStyleDefault" id="Y2k-Zq-AUW" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="587.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="631.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y2k-Zq-AUW" id="XiT-sq-B22">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -350,12 +391,15 @@
                         <outlet property="accountsCell" destination="64O-sw-wTx" id="UPX-Wa-mYM"/>
                         <outlet property="apiStatusLabel" destination="rIC-a2-0GF" id="ceC-Ij-CrY"/>
                         <outlet property="apiStatusView" destination="1mP-Dr-7rt" id="f66-HG-AkG"/>
-                        <outlet property="backgroundFetchSwitch" destination="FvK-93-raA" id="Huy-vc-MoM"/>
                         <outlet property="badgeCell" destination="pnm-5p-yC5" id="hdC-aO-QSy"/>
+                        <outlet property="badgeSettingsButton" destination="36B-Ge-m5V" id="7Sw-oi-5Ra"/>
+                        <outlet property="badgeSwitch" destination="FvK-93-raA" id="twy-bl-O1q"/>
                         <outlet property="defaultReactionLabel" destination="UHH-lU-DUe" id="ew2-Hr-5UH"/>
                         <outlet property="githubStatusCell" destination="x9n-2O-buf" id="xc3-W3-bZW"/>
                         <outlet property="markReadSwitch" destination="8dQ-YU-Yuw" id="5jz-5d-osk"/>
-                        <outlet property="openSettingsButton" destination="36B-Ge-m5V" id="tsc-wS-3vb"/>
+                        <outlet property="pushCell" destination="pbF-qp-TdT" id="zVp-UJ-bIl"/>
+                        <outlet property="pushSettingsButton" destination="HFk-Cc-92g" id="1fa-Sc-SQ1"/>
+                        <outlet property="pushSwitch" destination="T30-uT-48L" id="mNm-JM-Q97"/>
                         <outlet property="reportBugCell" destination="WwO-m1-s3q" id="nCb-BL-DRJ"/>
                         <outlet property="reviewAccessCell" destination="TXs-sw-hO1" id="10W-u8-ofC"/>
                         <outlet property="reviewOnAppStoreCell" destination="Z8j-JQ-qiy" id="QRZ-5e-WQi"/>
