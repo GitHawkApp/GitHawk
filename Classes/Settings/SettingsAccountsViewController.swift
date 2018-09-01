@@ -53,7 +53,15 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
                     case .failure:
                         self?.handleError()
                     case .success(let user):
-                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                        let userPreviouslyAuthenticated = self!.sessionManager.userSessions.contains {
+                            $0.username == user.data.login
+                        }
+                        
+                        if userPreviouslyAuthenticated {
+                            self?.handleError("Account with username '\(user.data.login)' is already authenticated.")
+                        } else {
+                            self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                        }
                     }
                 }
             })
@@ -62,10 +70,13 @@ final class SettingsAccountsViewController: UITableViewController, GitHubSession
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func handleError() {
+    private func handleError(_ errorString: String = "") {
+        
+        let alertString = errorString.count > 0 ? errorString : "There was an error adding another account. Please try again."
+        
         let alert = UIAlertController.configured(
             title: NSLocalizedString("Error", comment: ""),
-            message: NSLocalizedString("There was an error adding another account. Please try again.", comment: ""),
+            message: NSLocalizedString(alertString, comment: ""),
             preferredStyle: .alert
         )
         alert.addAction(AlertAction.ok())
