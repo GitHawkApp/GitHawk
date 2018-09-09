@@ -440,6 +440,7 @@
 		98F9F4031F9CD006005A0266 /* Image+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9F4021F9CD006005A0266 /* Image+Base64.swift */; };
 		BD3761B0209E032500401DFB /* BookmarkNavigationItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */; };
 		BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */; };
+		C0179F662145DA7300E120E1 /* GitHawkRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0179F652145DA7300E120E1 /* GitHawkRefreshControl.swift */; };
 		D8BAD0601FDA0A1A00C41071 /* LabelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */; };
 		D8BAD0641FDF221900C41071 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0631FDF221900C41071 /* LabelListView.swift */; };
 		D8BAD0661FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BAD0651FDF224600C41071 /* WrappingStaticSpacingFlowLayout.swift */; };
@@ -973,6 +974,7 @@
 		B3C439BE890EECD7C0C692C5 /* Pods-Freetime.testflight.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.testflight.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.testflight.xcconfig"; sourceTree = "<group>"; };
 		BD3761AF209E032500401DFB /* BookmarkNavigationItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkNavigationItemTests.swift; sourceTree = "<group>"; };
 		BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingURLPathTests.swift; sourceTree = "<group>"; };
+		C0179F652145DA7300E120E1 /* GitHawkRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHawkRefreshControl.swift; sourceTree = "<group>"; };
 		D396E0DA66FED629384A84BC /* Pods_FreetimeWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreetimeWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BAD05F1FDA0A1A00C41071 /* LabelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListCell.swift; sourceTree = "<group>"; };
 		D8BAD0631FDF221900C41071 /* LabelListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -1754,6 +1756,7 @@
 				292FF8B11F302FE7009E63F7 /* UITextView+SelectedRange.swift */,
 				298BA08E1EC90FEE00B01946 /* UIView+BottomBorder.swift */,
 				299F63E1205DE1470015D901 /* UIView+DateDetails.swift */,
+				C0179F652145DA7300E120E1 /* GitHawkRefreshControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2826,6 +2829,7 @@
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
 				29BBD82920CAC7D5004D62FE /* NotificationViewModel.swift in Sources */,
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
+				C0179F662145DA7300E120E1 /* GitHawkRefreshControl.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
 				29F7F0611F2A83AA00F6075D /* IssueNeckLoadCell.swift in Sources */,
 				29A5AF451F9298360065D529 /* GitHubClient+Repository.swift in Sources */,
