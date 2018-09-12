@@ -10,7 +10,7 @@ import UIKit
 
 final class FeedRefresh {
 
-    let refreshControl = FixedRefreshControl()
+    let refreshControl = GitHawkRefreshControl()
 
     private var refreshBegin: TimeInterval = -1
 
