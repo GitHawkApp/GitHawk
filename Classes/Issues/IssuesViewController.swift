@@ -597,6 +597,7 @@ final class IssuesViewController:
         // get text before calling super b/c it will clear it
         let text = messageView.text
         messageView.text = ""
+        actions?.sendButtonEnabled = false
 
         if let id = resultID {
             addCommentClient.addComment(
