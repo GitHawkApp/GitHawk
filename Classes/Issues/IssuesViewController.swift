@@ -521,6 +521,7 @@ final class IssuesViewController:
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool
         ) {
+        self.actions?.isProcessing = false
         guard let previous = result,
             let comment = createCommentModel(
                 id: id,
@@ -546,6 +547,7 @@ final class IssuesViewController:
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
+        self.actions?.isProcessing = false
         messageView.text = body
     }
 
