@@ -11,13 +11,13 @@ import SnapKit
 import IGListKit
 
 final class LoadMoreCell: SelectableCell {
-
+    
     private let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private let label = UILabel()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         label.font = Styles.Text.button.preferredFont
@@ -34,29 +34,26 @@ final class LoadMoreCell: SelectableCell {
         }
         label.text = NSLocalizedString("Load More", comment: "")
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutContentViewForSafeAreaInsets()
     }
-
+    
     override var accessibilityLabel: String? {
         get { return NSLocalizedString("Load More", comment: "") }
         set { }
     }
-
+    
     
     func configure(loading: Bool) {
         label.isHidden = loading
-        if loading {
-            activity.startAnimating()
-        } else {
-            activity.stopAnimating()
-        }
+        loading
+            ? activity.startAnimating()
+            : activity.stopAnimating()
     }
-
 }
