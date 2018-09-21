@@ -43,11 +43,9 @@ final class BadgeNotifications {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
-                case .notDetermined:
+                case .notDetermined, .denied:
                     callback(.error(nil))
-                case .denied:
-                    callback(.error(nil))
-                case .authorized:
+                case .authorized, .provisional:
                     callback(.success((isBadgeEnabled, isLocalNotificationEnabled)))
                 }
             }
@@ -129,14 +127,20 @@ final class BadgeNotifications {
         let center = UNUserNotificationCenter.current()
 
         notifications.forEach {
+            guard let type = NotificationType(rawValue: $0.subject.type.rawValue),
+                let identifier = $0.subject.identifier
+                else { return }
+
             let content = UNMutableNotificationContent()
-            content.body = $0.repository.fullName
-            content.title = $0.subject.title
+            content.title = $0.repository.fullName
+            content.body = $0.subject.title
+            content.subtitle = "\(type.localizedString) \(identifier.string)"
 
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-
-            let identifier = $0.id
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            let request = UNNotificationRequest(
+                identifier: $0.id,
+                content: content,
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            )
             center.add(request)
         }
     }

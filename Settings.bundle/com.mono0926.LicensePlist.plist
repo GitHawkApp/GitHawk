@@ -104,7 +104,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/FMDB</string>
 			<key>Title</key>
-			<string>FMDB</string>
+			<string>FMDB (2.7.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
