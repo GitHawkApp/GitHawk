@@ -82,7 +82,6 @@ SearchResultSectionControllerDelegate {
 
         searchBar.delegate = self
         searchBar.placeholder = Constants.Strings.searchGitHub
-        searchBar.tintColor = Styles.Colors.Blue.medium.color
         searchBar.backgroundColor = .clear
         searchBar.searchBarStyle = .minimal
         navigationItem.titleView = searchBar
