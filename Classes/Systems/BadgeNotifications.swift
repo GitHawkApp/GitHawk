@@ -13,16 +13,15 @@ import GitHubSession
 
 final class BadgeNotifications {
 
-    private static let userKey = "com.freetime.BadgeNotifications.user-enabled"
     private static let countWhenDisabledKey = "com.freetime.BadgeNotifications.count-when-disabled"
+    private static let defaults = UserDefaults.standard
 
-    static var isEnabled: Bool {
+    private static let userKey = "com.freetime.BadgeNotifications.user-enabled"
+    static var isBadgeEnabled: Bool {
         get {
-            let defaults = UserDefaults.standard
             return defaults.bool(forKey: userKey)
         }
         set {
-            let defaults = UserDefaults.standard
             let application = UIApplication.shared
             if newValue == false {
                 defaults.set(application.applicationIconBadgeNumber, forKey: countWhenDisabledKey)
@@ -30,35 +29,43 @@ final class BadgeNotifications {
             } else {
                 application.applicationIconBadgeNumber = defaults.integer(forKey: countWhenDisabledKey)
             }
-            defaults.set(newValue, forKey: BadgeNotifications.userKey)
+            defaults.set(newValue, forKey: userKey)
         }
     }
 
-    enum State {
-        case initial
-        case denied
-        case disabled
-        case enabled
+    private static let notificationKey = "com.freetime.BadgeNotifications.notifications-enabled"
+    static var isLocalNotificationEnabled: Bool {
+        get { return defaults.bool(forKey: notificationKey) }
+        set { return defaults.set(newValue, forKey: notificationKey)}
     }
 
-    static func check(callback: @escaping (State) -> Void) {
+    static func check(callback: @escaping (Result<(Bool, Bool)>) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
-                case .notDetermined:
-                    callback(.initial)
-                case .denied:
-                    callback(.denied)
-                case .authorized:
-                    callback(isEnabled ? .enabled : .disabled)
+                case .notDetermined, .denied:
+                    callback(.error(nil))
+                case .authorized, .provisional:
+                    callback(.success((isBadgeEnabled, isLocalNotificationEnabled)))
                 }
             }
         }
     }
 
-    static func configure(application: UIApplication = UIApplication.shared, permissionHandler: ((Bool) -> Void)? = nil) {
-        if isEnabled {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.badge], completionHandler: { (granted, _) in
+    static func configure(
+        application: UIApplication = UIApplication.shared,
+        permissionHandler: ((Bool) -> Void)? = nil
+        ) {
+        var options = UNAuthorizationOptions()
+        if isBadgeEnabled {
+            options.insert(.badge)
+        }
+        if isLocalNotificationEnabled {
+            options.insert(.alert)
+        }
+
+        if !options.isEmpty {
+            UNUserNotificationCenter.current().requestAuthorization(options: options, completionHandler: { (granted, _) in
                 permissionHandler?(granted)
             })
             application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
@@ -67,31 +74,79 @@ final class BadgeNotifications {
         }
     }
 
-    private var backgroundClient: GithubClient? = nil
-    func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let manager = GitHubSessionManager()
-        guard let session = manager.focusedUserSession,
-            BadgeNotifications.isEnabled
-            else { return }
+    private let client: Client
 
-        backgroundClient = newGithubClient(userSession: session)
-        backgroundClient?.client.send(V3NotificationRequest(all: false)) { result in
+    init(client: Client) {
+        self.client = client
+    }
+
+    func fetch(application: UIApplication, handler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let isBadgeEnabled = BadgeNotifications.isBadgeEnabled
+        let isLocalNotificationEnabled = BadgeNotifications.isLocalNotificationEnabled
+        guard isBadgeEnabled || isLocalNotificationEnabled else {
+            handler(.noData)
+            return
+        }
+
+        client.send(V3NotificationRequest(all: false)) { [weak self] result in
             switch result {
             case .success(let response):
-                let changes = BadgeNotifications.update(application: application, count: response.data.count)
-                handler(changes ? .newData : .noData)
+                BadgeNotifications.updateBadge(
+                    application: application,
+                    count: response.data.count
+                )
+                self?.updateLocalNotificationCache(
+                    notifications: response.data,
+                    showAlert: isLocalNotificationEnabled,
+                    completion: { changed in
+                        handler(changed ? .newData : .noData)
+                })
             case .failure:
                 handler(.failed)
             }
         }
     }
 
-    @discardableResult
-    static func update(application: UIApplication = UIApplication.shared, count: Int) -> Bool {
-        let enabledCount = isEnabled ? count : 0
-        let changed = application.applicationIconBadgeNumber != enabledCount
-        application.applicationIconBadgeNumber = enabledCount
-        return changed
+    private lazy var localNotificationsCache = LocalNotificationsCache()
+
+    func updateLocalNotificationCache(
+        notifications: [V3Notification],
+        showAlert: Bool,
+        completion: ((Bool) -> Void)? = nil
+        ) {
+        localNotificationsCache.update(notifications: notifications) { [weak self] filtered in
+            let changed = notifications.count != filtered.count
+            if showAlert && changed {
+                self?.sendLocalPush(for: filtered)
+            }
+            completion?(changed)
+        }
+    }
+
+    private func sendLocalPush(for notifications: [V3Notification]) {
+        let center = UNUserNotificationCenter.current()
+
+        notifications.forEach {
+            guard let type = NotificationType(rawValue: $0.subject.type.rawValue),
+                let identifier = $0.subject.identifier
+                else { return }
+
+            let content = UNMutableNotificationContent()
+            content.title = $0.repository.fullName
+            content.body = $0.subject.title
+            content.subtitle = "\(type.localizedString) \(identifier.string)"
+
+            let request = UNNotificationRequest(
+                identifier: $0.id,
+                content: content,
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            )
+            center.add(request)
+        }
+    }
+
+    static func updateBadge(application: UIApplication = UIApplication.shared, count: Int) {
+        application.applicationIconBadgeNumber = isBadgeEnabled ? count : 0
     }
 
 }

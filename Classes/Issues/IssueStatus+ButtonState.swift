@@ -9,7 +9,7 @@
 import Foundation
 
 extension IssueStatus {
-    var buttonState: UIButton.State {
+    var buttonState: UIButton.IssueState {
         switch self {
         case .closed: return .closed
         case .open: return .open
