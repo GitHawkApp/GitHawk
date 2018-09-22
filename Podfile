@@ -75,3 +75,13 @@ end
 post_install do |installer|
   system("sh tools/generateAcknowledgements.sh")
 end
+
+post_install do |installer|  
+  installer.pods_project.targets.each do |target|  
+      target.build_configurations.each do |config|  
+          if config.build_settings['SDKROOT'] == 'watchos'  
+            config.build_settings['WATCHOS_DEPLOYMENT_TARGET'] = '4.2'  
+          end  
+      end  
+  end  
+end
