@@ -35,8 +35,8 @@ final class IssuesViewController:
     IssueTextActionsViewSendDelegate,
     MessageTextViewListener {
 
-    private let client: GithubClient
     let model: IssueDetailsModel
+    private let client: GithubClient
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
     private var bookmarkNavController: BookmarkNavigationController? = nil
