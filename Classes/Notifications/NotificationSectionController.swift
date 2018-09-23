@@ -103,7 +103,9 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
     }
     
     private var currentDetailController: IssuesViewController? {
-        return (UIApplication.shared.delegate as? AppDelegate)?.rootNavigationManager.detailNavigationController?.topViewController as? IssuesViewController
+        let appDelegate = (UIApplication.shared.delegate as? AppDelegate)
+        let navigationController = appDelegate?.rootNavigationManager.detailNavigationController
+        return navigationController?.topViewController as? IssuesViewController
     }
 
     private func showRelease(_ release: String, model: NotificationViewModel) {
