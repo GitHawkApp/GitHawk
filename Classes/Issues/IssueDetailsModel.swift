@@ -8,12 +8,10 @@
 
 import Foundation
 
-struct IssueDetailsModel {
+struct IssueDetailsModel: Equatable {
 
     let owner: String
     let repo: String
     let number: Int
 
 }
-
-extension IssueDetailsModel: Equatable {}
