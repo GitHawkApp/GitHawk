@@ -136,7 +136,7 @@
 			<key>File</key>
 			<string>com.mono0926.LicensePlist/ImageAlertAction</string>
 			<key>Title</key>
-			<string>ImageAlertAction</string>
+			<string>ImageAlertAction (1.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
