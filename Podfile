@@ -22,6 +22,7 @@ def testing_pods
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Tabman', '~> 1.8'
+  pod 'ImageAlertAction'
   pod 'FMDB'
 
   # prerelease pods
