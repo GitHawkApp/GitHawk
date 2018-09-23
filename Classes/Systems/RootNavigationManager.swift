@@ -146,7 +146,7 @@ final class RootNavigationManager: GitHubSessionListener {
         }
     }
 
-    private var detailNavigationController: UINavigationController? {
+    var detailNavigationController: UINavigationController? {
         return rootViewController?.viewControllers.last as? UINavigationController
     }
 

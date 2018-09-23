@@ -86,9 +86,13 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         case .hash(let hash):
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):
+            let model = IssueDetailsModel(owner: model.owner, repo: model.repo, number: number)
+            if let controller = currentDetailController, controller.model == model {
+                return
+            }
             let controller = IssuesViewController(
                 client: modelController.githubClient,
-                model: IssueDetailsModel(owner: model.owner, repo: model.repo, number: number),
+                model: model,
                 scrollToBottom: true
             )
             let navigation = UINavigationController(rootViewController: controller)
@@ -96,6 +100,10 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
         case .release(let release):
             showRelease(release, model: model)
         }
+    }
+    
+    private var currentDetailController: IssuesViewController? {
+        return (UIApplication.shared.delegate as? AppDelegate)?.rootNavigationManager.detailNavigationController?.topViewController as? IssuesViewController
     }
 
     private func showRelease(_ release: String, model: NotificationViewModel) {

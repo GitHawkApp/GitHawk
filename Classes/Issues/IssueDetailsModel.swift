@@ -15,3 +15,5 @@ struct IssueDetailsModel {
     let number: Int
 
 }
+
+extension IssueDetailsModel: Equatable {}
