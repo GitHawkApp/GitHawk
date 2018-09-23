@@ -9,11 +9,17 @@
 import UIKit
 import SnapKit
 
+protocol ReviewGitHubAccessDelegate: class {
+    func reviewGitHubAccessButtonTapped()
+}
+
 final class NoNewNotificationsCell: UICollectionViewCell {
 
     let emojiLabel = UILabel()
     let messageLabel = UILabel()
     let shadow = CAShapeLayer()
+    let reviewGitHubAccessButton = UIButton()
+    weak var reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,6 +60,27 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         contentView.isAccessibilityElement = true
         contentView.accessibilityLabel = NSLocalizedString("You have no new notifications!", comment: "Inbox Zero Accessibility Label")
+        
+        
+        //configure reviewGitHubAcess button
+        reviewGitHubAccessButton.setTitle(Constants.Strings.reviewGitHubAccess, for: .normal)
+        reviewGitHubAccessButton.isAccessibilityElement = false
+        reviewGitHubAccessButton.titleLabel?.textAlignment = .center
+        reviewGitHubAccessButton.backgroundColor = .clear
+        reviewGitHubAccessButton.titleLabel?.font = Styles.Text.finePrint.preferredFont
+        reviewGitHubAccessButton.setTitleColor(Styles.Colors.Gray.light.color, for: .normal)
+        reviewGitHubAccessButton.addTarget(self, action: #selector(reviewGitHubAccessButtonTapped),
+                                           for: .touchUpInside)
+        contentView.addSubview(reviewGitHubAccessButton)
+        let buttonWidth = (reviewGitHubAccessButton.titleLabel?.intrinsicContentSize.width ?? 0) + Styles.Sizes.gutter
+        let buttonHeight = (reviewGitHubAccessButton.titleLabel?.intrinsicContentSize.height ?? 0) + Styles.Sizes.gutter
+        reviewGitHubAccessButton.snp.makeConstraints { make in
+            make.centerX.equalTo(messageLabel)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonHeight)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-Styles.Sizes.tableSectionSpacing)
+        }
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -89,9 +116,13 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(emoji: String, message: String) {
+    func configure(emoji: String,
+                   message: String,
+                   reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate?)
+    {
         emojiLabel.text = emoji
         messageLabel.text = message
+        self.reviewGitHubAccessDelegate = reviewGitHubAccessDelegate
     }
 
     // MARK: Private API
@@ -119,5 +150,9 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         shadow.add(shadowScale, forKey: "nonewnotificationscell.shadow")
     }
-
+    
+    @objc func reviewGitHubAccessButtonTapped() {
+        reviewGitHubAccessDelegate?.reviewGitHubAccessButtonTapped()
+    }
+    
 }
