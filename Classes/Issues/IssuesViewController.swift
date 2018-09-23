@@ -523,6 +523,7 @@ final class IssuesViewController:
         viewerCanUpdate: Bool,
         viewerCanDelete: Bool
         ) {
+        self.actions?.isProcessing = false
         guard let previous = result,
             let comment = createCommentModel(
                 id: id,
@@ -548,6 +549,7 @@ final class IssuesViewController:
     }
 
     func didFailSendingComment(client: AddCommentClient, subjectId: String, body: String) {
+        self.actions?.isProcessing = false
         messageView.text = body
     }
 
@@ -580,7 +582,7 @@ final class IssuesViewController:
         setMessageView(hidden: false, animated: true)
         messageView.textView.becomeFirstResponder()
         let quote = getCommentUntilNewLine(from: commentModel.rawMarkdown)
-        messageView.text = ">\(quote)\n\n@\(commentModel.details.login) "
+        messageView.text = "\(messageView.text)\n>\(quote)\n\n@\(commentModel.details.login) "
 
         feed.adapter.scroll(to: commentModel, padding: Styles.Sizes.rowSpacing)
     }
@@ -599,6 +601,7 @@ final class IssuesViewController:
         // get text before calling super b/c it will clear it
         let text = messageView.text
         messageView.text = ""
+        actions?.sendButtonEnabled = false
 
         if let id = resultID {
             addCommentClient.addComment(

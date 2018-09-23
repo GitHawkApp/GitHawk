@@ -51,12 +51,15 @@ final class NotificationModelController {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
+        let badge = githubClient.badge
         let contentSizeCategory = UIContentSizeCategory.preferred
         // TODO move handling + parsing to a single method?
         if let repo = repo {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
+                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
+
                     CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
@@ -72,6 +75,8 @@ final class NotificationModelController {
             githubClient.client.send(V3NotificationRequest(all: all, page: page)) { result in
                 switch result {
                 case .success(let response):
+                    badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
+                    
                     CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,

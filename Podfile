@@ -22,9 +22,7 @@ def testing_pods
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Tabman', '~> 1.8'
-  pod 'Firebase/Core'
-  pod 'Firebase/Database' 
-  pod 'ImageAlertAction'
+  pod 'FMDB'
 
   # prerelease pods
   pod 'IGListKit/Swift', :git => 'https://github.com/Instagram/IGListKit.git', :branch => 'swift'

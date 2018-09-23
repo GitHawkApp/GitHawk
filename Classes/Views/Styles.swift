@@ -121,6 +121,8 @@ enum Styles {
         UINavigationBar.appearance().tintColor =  Styles.Colors.Blue.medium.color
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: Styles.Colors.Gray.dark.color]
+        UISwitch.appearance().onTintColor = Styles.Colors.Green.medium.color
+        UISearchBar.appearance().tintColor = Styles.Colors.Blue.medium.color
     }
 
 }

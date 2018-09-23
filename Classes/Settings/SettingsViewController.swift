@@ -29,8 +29,8 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var viewSourceCell: StyledTableCell!
     @IBOutlet weak var setDefaultReaction: StyledTableCell!
     @IBOutlet weak var signOutCell: StyledTableCell!
-    @IBOutlet weak var backgroundFetchSwitch: UISwitch!
-    @IBOutlet weak var openSettingsButton: UIButton!
+    @IBOutlet weak var badgeSwitch: UISwitch!
+    @IBOutlet weak var badgeSettingsButton: UIButton!
     @IBOutlet weak var badgeCell: UITableViewCell!
     @IBOutlet weak var markReadSwitch: UISwitch!
     @IBOutlet weak var accountsCell: StyledTableCell!
@@ -38,6 +38,9 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var apiStatusView: UIView!
     @IBOutlet weak var signatureSwitch: UISwitch!
     @IBOutlet weak var defaultReactionLabel: UILabel!
+    @IBOutlet weak var pushSwitch: UISwitch!
+    @IBOutlet weak var pushCell: UITableViewCell!
+    @IBOutlet weak var pushSettingsButton: UIButton!
   
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,33 +214,43 @@ NewIssueTableViewControllerDelegate {
     }
 
     @objc func updateBadge() {
-        BadgeNotifications.check { state in
-            let authorized: Bool
-            let enabled: Bool
-            switch state {
-            case .initial:
-                // throwing switch will prompt
-                authorized = true
-                enabled = false
-            case .denied:
-                authorized = false
-                enabled = false
-            case .disabled:
-                authorized = true
-                enabled = false
-            case .enabled:
-                authorized = true
-                enabled = true
+        BadgeNotifications.check { result in
+            let showSwitches: Bool
+            let pushEnabled: Bool
+            let badgeEnabled: Bool
+
+            switch result {
+            case .error:
+                showSwitches = false
+                pushEnabled = false
+                badgeEnabled = false
+            case .success(let badge, let push):
+                showSwitches = true
+                pushEnabled = push
+                badgeEnabled = badge
             }
-            self.badgeCell.accessoryType = authorized ? .none : .disclosureIndicator
-            self.openSettingsButton.isHidden = authorized
-            self.backgroundFetchSwitch.isHidden = !authorized
-            self.backgroundFetchSwitch.isOn = enabled
+
+            self.badgeCell.accessoryType = showSwitches ? .none : .disclosureIndicator
+            self.badgeSettingsButton.isHidden = showSwitches
+            self.badgeSwitch.isHidden = !showSwitches
+            self.badgeSwitch.isOn = badgeEnabled
+
+            self.pushCell.accessoryType = showSwitches ? .none : .disclosureIndicator
+            self.pushSettingsButton.isHidden = showSwitches
+            self.pushSwitch.isHidden = !showSwitches
+            self.pushSwitch.isOn = pushEnabled
         }
     }
 
-    @IBAction func onBackgroundFetchChanged() {
-        BadgeNotifications.isEnabled = backgroundFetchSwitch.isOn
+    @IBAction func onBadgeChanged() {
+        BadgeNotifications.isBadgeEnabled = badgeSwitch.isOn
+        BadgeNotifications.configure { _ in
+            self.updateBadge()
+        }
+    }
+
+    @IBAction func onPushChanged() {
+        BadgeNotifications.isLocalNotificationEnabled = pushSwitch.isOn
         BadgeNotifications.configure { _ in
             self.updateBadge()
         }
