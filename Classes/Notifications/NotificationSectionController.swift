@@ -87,7 +87,7 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
             viewController?.presentCommit(owner: model.owner, repo: model.repo, hash: hash)
         case .number(let number):
             let model = IssueDetailsModel(owner: model.owner, repo: model.repo, number: number)
-            if let controller = currentDetailController, controller.model == model {
+            if let issuesViewController = currentDetailController, issuesViewController.model == model {
                 return
             }
             let controller = IssuesViewController(
