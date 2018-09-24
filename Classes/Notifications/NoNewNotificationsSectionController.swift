@@ -13,10 +13,12 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
 
     private let layoutInsets: UIEdgeInsets
     private let loader = InboxZeroLoader()
+    weak var reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate?
 
-    init(layoutInsets: UIEdgeInsets) {
+    init(layoutInsets: UIEdgeInsets, reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate) {
         self.layoutInsets = layoutInsets
         super.init()
+        self.reviewGitHubAccessDelegate = reviewGitHubAccessDelegate
         loader.load { [weak self] success in
             if success {
                 self?.update()
@@ -36,10 +38,14 @@ final class NoNewNotificationSectionController: ListSwiftSectionController<Strin
                         height: $0.collection.containerSize.height - layoutInsets.top - layoutInsets.bottom
                     )
             },
-                configure: {
+                configure: { [weak self] in
+                    guard let strongSelf = self else { return }
                     // TODO accessing the value seems to be required for this to compile
                     print($1.value)
-                    $0.configure(emoji: latest.emoji, message: latest.message)
+                    $0.configure(emoji: latest.emoji,
+                                 message: latest.message,
+                                 reviewGitHubAccessDelegate: strongSelf.reviewGitHubAccessDelegate
+                    )
                 })
         ]
     }
