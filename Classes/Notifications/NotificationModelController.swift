@@ -58,12 +58,14 @@ final class NotificationModelController {
             githubClient.client.send(V3RepositoryNotificationRequest(all: all, owner: repo.owner, repo: repo.name)) { result in
                 switch result {
                 case .success(let response):
+
                     badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
 
-                    CreateNotificationViewModels(
+                    createNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
-                        v3notifications: response.data
+                        v3notifications: response.data,
+                        cache: self.githubClient.cache
                     ) { [weak self] in
                         self?.fetchStates(for: $0, page: response.next, completion: completion)
                     }
@@ -77,10 +79,11 @@ final class NotificationModelController {
                 case .success(let response):
                     badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
                     
-                    CreateNotificationViewModels(
+                    createNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,
-                        v3notifications: response.data
+                        v3notifications: response.data,
+                        cache: self.githubClient.cache
                     ) { [weak self] in
                         self?.fetchStates(for: $0, page: response.next, completion: completion)
                     }
