@@ -12,18 +12,28 @@ import GitHubAPI
 
 final class LocalNotificationsCache {
 
-    private let path: String = {
+    private static let sqlitePath: String = {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         return "\(path)/read-notifications.sqlite"
     }()
+
+    private let path: String
+    private let defaults: UserDefaults
     private lazy var queue: FMDatabaseQueue = {
         return FMDatabaseQueue(path: self.path)
     }()
-    private let defaults = UserDefaults.standard
     private let setupKey = "com.whoisryannystrom.freetime.local-notifications.setup"
 
     private var isFirstSetup: Bool {
         return defaults.bool(forKey: setupKey)
+    }
+
+    init(
+        path: String = LocalNotificationsCache.sqlitePath,
+        defaults: UserDefaults = UserDefaults.standard
+        ) {
+        self.path = path
+        self.defaults = defaults
     }
 
     func update(
