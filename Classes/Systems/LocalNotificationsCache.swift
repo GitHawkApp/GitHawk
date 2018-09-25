@@ -18,22 +18,14 @@ final class LocalNotificationsCache {
     }()
 
     private let path: String
-    private let defaults: UserDefaults
     private lazy var queue: FMDatabaseQueue = {
         return FMDatabaseQueue(path: self.path)
     }()
-    private let setupKey = "com.whoisryannystrom.freetime.local-notifications.setup"
-
-    private var isFirstSetup: Bool {
-        return defaults.bool(forKey: setupKey)
-    }
 
     init(
-        path: String = LocalNotificationsCache.sqlitePath,
-        defaults: UserDefaults = UserDefaults.standard
+        path: String = LocalNotificationsCache.sqlitePath
         ) {
         self.path = path
-        self.defaults = defaults
     }
 
     func update(
