@@ -439,8 +439,7 @@ final class IssuesViewController:
         // side effect so to jump to the last element when auto scrolling
         lastTimelineElement = objects.last
 
-        if viewerIsCollaborator,
-            current.labels.status.status == .open,
+        if current.labels.status.status == .open,
             let merge = current.mergeModel {
             objects.append(merge)
         }
@@ -478,7 +477,12 @@ final class IssuesViewController:
 
         // controls
         case is IssueNeckLoadModel: return IssueNeckLoadSectionController(delegate: self)
-        case is IssueMergeModel: return IssueMergeSectionController(model: model, client: client, resultID: resultID)
+        case is IssueMergeModel: return IssueMergeSectionController(
+            model: model,
+            client: client,
+            mergeCapable: viewerIsCollaborator,
+            resultID: resultID
+        )
 
         // deprecated
         case is IssueDiffHunkModel: return IssueDiffHunkSectionController()
