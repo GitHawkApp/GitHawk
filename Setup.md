@@ -56,7 +56,7 @@ On the left there under Targets should be:
 	* FreetimeWatch
 	* FreetimeWatch Extension
 
-3. Under each of these targets make sure your in the _General_ tab. **Change the team** to the team associated with your Apple Developer Account and switch the bundle ID’s like so:
+3. Under each of these targets make sure you're in the _General_ tab. **Change the team** to the team associated with your Apple Developer Account and switch the bundle ID’s like so:
 
 	**Freetime**: *com.xxxx.freetime* ➡️
 	*com.`<yourRegularBundleName>`.freetime*
