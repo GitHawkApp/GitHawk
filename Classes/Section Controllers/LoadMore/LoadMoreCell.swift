@@ -21,12 +21,11 @@ final class LoadMoreCell: SelectableCell {
         accessibilityTraits |= UIAccessibilityTraitButton
         isAccessibilityElement = true
         label.font = Styles.Text.button.preferredFont
-        label.textColor = Styles.Colors.Blue.light.color
+        label.textColor = Styles.Colors.Blue.medium.color
         contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalTo(contentView)
         }
-        
         activity.hidesWhenStopped = true
         contentView.addSubview(activity)
         activity.snp.makeConstraints { make in
