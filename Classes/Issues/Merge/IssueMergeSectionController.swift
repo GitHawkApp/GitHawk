@@ -17,7 +17,7 @@ ListBindingSectionControllerSelectionDelegate {
     private let model: IssueDetailsModel
     private let client: GithubClient
     private let resultID: String?
-    private var mergeCapable = false
+    private var isMergeCapable = false
     private var loading = false
 
     init(
@@ -28,7 +28,7 @@ ListBindingSectionControllerSelectionDelegate {
         ) {
         self.model = model
         self.client = client
-        self.mergeCapable = mergeCapable
+        self.isMergeCapable = mergeCapable
         self.resultID = resultID
         super.init()
         dataSource = self
@@ -129,7 +129,7 @@ ListBindingSectionControllerSelectionDelegate {
             state: state
         ))
 
-        if mergeCapable {
+        if isMergeCapable {
             viewModels.append(IssueMergeButtonModel(
                 enabled: buttonEnabled,
                 type: preferredMergeType,
