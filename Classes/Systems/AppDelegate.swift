@@ -95,13 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
-    private var backgroundFetchClient: GithubClient? = nil
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        guard let userSession = sessionManager.focusedUserSession else {
-            return
-        }
-        backgroundFetchClient = newGithubClient(userSession: userSession)
-        backgroundFetchClient?.badge.fetch(application: application, handler: completionHandler)
+        rootNavigationManager.client?.badge.fetch(application: application, handler: completionHandler)
     }
 
 }

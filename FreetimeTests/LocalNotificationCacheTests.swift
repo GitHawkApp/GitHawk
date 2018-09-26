@@ -8,26 +8,96 @@
 
 import XCTest
 
+@testable import Freetime
+@testable import GitHubAPI
+
 class LocalNotificationCacheTests: XCTestCase {
+
+    var path: String = {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        return "\(path)/read-notifications.sqlite"
+    }()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        try? FileManager.default.removeItem(atPath: path)
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_whenNoNotifications_thatNothingReturned() {
+        let cache = LocalNotificationsCache(path: path)
+        var executed = false
+        cache.update(notifications: []) { results in
+            executed = true
+            XCTAssertEqual(results.count, 0)
         }
+        XCTAssertTrue(executed)
+    }
+
+    func makeRepo() -> V3Repository {
+        return V3Repository(
+            description: nil,
+            fork: false,
+            fullName: "org/name",
+            id: 42,
+            name: "name",
+            owner: V3User(
+                avatarUrl: URL(string: "github.com")!,
+                id: 1,
+                login: "github",
+                siteAdmin: false,
+                type: .user
+            ),
+            isPrivate: false
+        )
+    }
+
+    func makeNotificaction(id: String, title: String) -> V3Notification {
+        return V3Notification(
+            id: id,
+            lastReadAt: nil,
+            reason: .assign,
+            repository: makeRepo(),
+            subject: V3NotificationSubject(title: title, type: .issue, url: nil),
+            unread: true,
+            updatedAt: Date()
+        )
+    }
+
+    func test_whenUpdating_thatReadFirstTime_thenSecondCallEmpty() {
+        let cache = LocalNotificationsCache(path: path)
+        let n1 = [
+            makeNotificaction(id: "123", title: "foo")
+        ]
+        var executions = 0
+
+        cache.update(notifications: n1) { results in
+            executions += 1
+            XCTAssertEqual(results.count, 1)
+        }
+
+        let n2 = [
+            makeNotificaction(id: "123", title: "foo"),
+            makeNotificaction(id: "456", title: "bar")
+        ]
+        cache.update(notifications: n2) { results in
+            executions += 1
+            XCTAssertEqual(results.count, 1)
+        }
+
+        let n3 = [
+            makeNotificaction(id: "123", title: "foo"),
+            makeNotificaction(id: "456", title: "bar")
+        ]
+
+        cache.update(notifications: n3) { results in
+            executions += 1
+            XCTAssertEqual(results.count, 0)
+        }
+
+        XCTAssertEqual(executions, 3)
     }
 
 }

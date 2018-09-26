@@ -22,7 +22,7 @@ final class RootNavigationManager: GitHubSessionListener {
     // keep alive between switching accounts
     private var settingsRootViewController: UIViewController?
 
-    private var lastClient: GithubClient?
+    private(set) var client: GithubClient?
 
     init(
         sessionManager: GitHubSessionManager,
@@ -62,7 +62,7 @@ final class RootNavigationManager: GitHubSessionListener {
         guard let userSession = userSession else { return }
 
         let client = newGithubClient(userSession: userSession)
-        lastClient = client
+        self.client = client
 
         fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 

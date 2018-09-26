@@ -65,18 +65,21 @@ final class LocalNotificationsCache {
                     }
                 }
 
-                // add latest notification ids in the db
-                let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
-                try db.executeUpdate(
-                    "insert into \(table) (\(apiCol)) values \(insertSanitized)",
-                    values: apiIDs
-                )
+                // only perform updates if there are new notifications
+                if map.count > 0 {
+                    // add latest notification ids in the db
+                    let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
+                    try db.executeUpdate(
+                        "insert into \(table) (\(apiCol)) values \(insertSanitized)",
+                        values: apiIDs
+                    )
 
-                // cap the local database to latest 1000 notifications
-                try db.executeUpdate(
-                    "delete from \(table) where \(idCol) not in (select \(idCol) from \(table) order by \(idCol) desc limit 1000)",
-                    values: nil
-                )
+                    // cap the local database to latest 1000 notifications
+                    try db.executeUpdate(
+                        "delete from \(table) where \(idCol) not in (select \(idCol) from \(table) order by \(idCol) desc limit 1000)",
+                        values: nil
+                    )
+                }
             } catch {
                 print("failed: \(error.localizedDescription)")
             }
