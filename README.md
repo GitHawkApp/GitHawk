@@ -1,7 +1,16 @@
 <a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/githawk-pulse.gif" /></a>
 <p align="center"><a href="https://itunes.apple.com/app/githawk-for-github/id1252320249"><img src="Design/app-store-badge.png" width="250" /></a></p>
 
-[![Build Status](https://www.bitrise.io/app/a912ff037bca7072/status.svg?token=PMpBs9u-C7CBIKPwNLSJrg&branch=master)](https://www.bitrise.io/app/a912ff037bca7072)
+<p align="center">
+    <a href="https://www.bitrise.io/app/a912ff037bca7072">
+        <img src="https://app.bitrise.io/app/a912ff037bca7072/status.svg?token=PMpBs9u-C7CBIKPwNLSJrg&branch=master"
+             alt="Build Status">
+    </a>
+    <a href="https://testflight.apple.com/join/QIVXLkkn">
+      <img src="https://img.shields.io/badge/Join-TestFlight-blue.svg"
+           alt="Join TestFlight" />
+    </a>
+</p>
 
 GitHawk is the highest rated iOS app for GitHub.
 
