@@ -44,6 +44,7 @@ MilestoneSectionControllerDelegate {
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
         dataSource = self
+        feed.setLoadingSpinnerColor(to: .white)
     }
 
     required init?(coder aDecoder: NSCoder) {

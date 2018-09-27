@@ -17,6 +17,10 @@ final class EmptyLoadingView: UIView {
         activity.startAnimating()
         addSubview(activity)
     }
+    
+    func setSpinnerColor(to color: UIColor) {
+        activity.color = color 
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
