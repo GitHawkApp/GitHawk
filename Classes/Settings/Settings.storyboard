@@ -426,43 +426,43 @@
                         <sections>
                             <tableViewSection id="um3-Ah-wWf">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="UJb-ob-yCk" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="UJb-ob-yCk" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UJb-ob-yCk" id="xcP-b2-e1A">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Q0-qBc">
-                                                    <rect key="frame" x="311" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="toggleDefaultReaction:" destination="D6n-Kh-ydE" eventType="valueChanged" id="WZ3-CL-0ma"/>
-                                                    </connections>
-                                                </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDm-2V-Cpa">
-                                                    <rect key="frame" x="16" y="11" width="184" height="21"/>
+                                                    <rect key="frame" x="16" y="12" width="184" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Q0-qBc">
+                                                    <rect key="frame" x="310" y="7" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="toggleDefaultReaction:" destination="D6n-Kh-ydE" eventType="valueChanged" id="WZ3-CL-0ma"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Dj7-Q0-qBc" secondAttribute="trailing" constant="15" id="3VX-9T-e8F"/>
-                                                <constraint firstItem="Dj7-Q0-qBc" firstAttribute="top" secondItem="xcP-b2-e1A" secondAttribute="top" constant="6" id="Awt-Ph-eh5"/>
-                                                <constraint firstAttribute="bottom" secondItem="GDm-2V-Cpa" secondAttribute="bottom" constant="11.5" id="Jls-ZB-Fzs"/>
-                                                <constraint firstItem="Dj7-Q0-qBc" firstAttribute="leading" secondItem="GDm-2V-Cpa" secondAttribute="trailing" constant="111" id="QX1-31-arh"/>
-                                                <constraint firstItem="GDm-2V-Cpa" firstAttribute="top" secondItem="xcP-b2-e1A" secondAttribute="top" constant="11" id="WWF-rW-rNm"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dj7-Q0-qBc" secondAttribute="trailing" constant="16" id="3VX-9T-e8F"/>
+                                                <constraint firstItem="Dj7-Q0-qBc" firstAttribute="top" secondItem="xcP-b2-e1A" secondAttribute="top" constant="7" id="Awt-Ph-eh5"/>
+                                                <constraint firstAttribute="bottom" secondItem="GDm-2V-Cpa" secondAttribute="bottom" constant="10.5" id="Jls-ZB-Fzs"/>
+                                                <constraint firstItem="Dj7-Q0-qBc" firstAttribute="leading" secondItem="GDm-2V-Cpa" secondAttribute="trailing" constant="110" id="QX1-31-arh"/>
+                                                <constraint firstItem="GDm-2V-Cpa" firstAttribute="top" secondItem="xcP-b2-e1A" secondAttribute="top" constant="12" id="WWF-rW-rNm"/>
                                                 <constraint firstItem="GDm-2V-Cpa" firstAttribute="leading" secondItem="xcP-b2-e1A" secondAttribute="leading" constant="16" id="ZAF-0a-1CO"/>
-                                                <constraint firstAttribute="bottom" secondItem="Dj7-Q0-qBc" secondAttribute="bottom" constant="6.5" id="nBa-qM-kEa"/>
+                                                <constraint firstAttribute="bottom" secondItem="Dj7-Q0-qBc" secondAttribute="bottom" constant="5.5" id="nBa-qM-kEa"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Reactions" id="kLr-tw-ovq">
+                            <tableViewSection headerTitle="Reactions" footerTitle="" id="kLr-tw-ovq">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="upo-Hg-6yy" style="IBUITableViewCellStyleDefault" id="qc4-aU-1zn" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="135" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="142.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qc4-aU-1zn" id="aLV-iI-cJa">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -472,14 +472,14 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9GJ-Bs-G8n" style="IBUITableViewCellStyleDefault" id="ISD-qw-50W" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="179" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="186.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ISD-qw-50W" id="ohK-7Z-xlK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -489,14 +489,14 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="msM-LM-9Ff" style="IBUITableViewCellStyleDefault" id="jkZ-Ag-Uss" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="223" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="230.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jkZ-Ag-Uss" id="fWt-px-f3j">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -506,14 +506,14 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="bP0-mi-UfX" style="IBUITableViewCellStyleDefault" id="NBn-uY-24s" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="267" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="274.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NBn-uY-24s" id="VkR-jV-ZfS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -523,14 +523,14 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WYa-tH-X3b" style="IBUITableViewCellStyleDefault" id="X0F-M1-kZ7" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="311" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="318.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X0F-M1-kZ7" id="iPc-xz-C7d">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -540,14 +540,14 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Qnn-4C-dZV" style="IBUITableViewCellStyleDefault" id="lKi-qn-1Lw" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="355" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="362.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lKi-qn-1Lw" id="9kY-Kq-xV0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -557,7 +557,7 @@
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.14117647059999999" green="0.16078431369999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
