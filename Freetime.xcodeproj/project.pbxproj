@@ -228,6 +228,7 @@
 		29764C141FDC4DB60095FF95 /* SettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29764C131FDC4DB60095FF95 /* SettingsLabel.swift */; };
 		2977788820B0DAD500F2AFC2 /* ViewMarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */; };
 		2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */; };
+		2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */; };
 		29792B191FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */; };
 		29792B1B1FFB21AD007A0C57 /* AutocompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1A1FFB21AD007A0C57 /* AutocompleteController.swift */; };
 		29792B1D1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29792B1C1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift */; };
@@ -744,6 +745,7 @@
 		29764C131FDC4DB60095FF95 /* SettingsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabel.swift; sourceTree = "<group>"; };
 		2977788720B0DAD500F2AFC2 /* ViewMarkdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMarkdownViewController.swift; sourceTree = "<group>"; };
 		2977788920B306F200F2AFC2 /* LabelLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelLayoutManager.swift; sourceTree = "<group>"; };
+		2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationCacheTests.swift; sourceTree = "<group>"; };
 		29792B181FFB10A3007A0C57 /* UIViewController+MessageAutocompleteControllerLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+MessageAutocompleteControllerLayoutDelegate.swift"; sourceTree = "<group>"; };
 		29792B1A1FFB21AD007A0C57 /* AutocompleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteController.swift; sourceTree = "<group>"; };
 		29792B1C1FFB2FC6007A0C57 /* IssueManagingNavSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueManagingNavSectionController.swift; sourceTree = "<group>"; };
@@ -1547,9 +1549,10 @@
 				29A476B11ED24D99005D0953 /* IssueTests.swift */,
 				29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */,
 				29C295091EC7AFA500D46CD2 /* ListTestKit.swift */,
-				BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */,
+				2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */,
 				49AF91B0204B416500DFF325 /* MergeTests.swift */,
 				DC60C6CC1F98344B00241271 /* Mocks */,
+				BD89007D20B8844B0026013F /* NetworkingURLPathTests.swift */,
 				49D028FF1F91D90C00E39094 /* ReactionTests.swift */,
 				DC60C6CF1F9836C500241271 /* Search Tests */,
 				9870B9071FC74E300009719C /* SecretsTests.swift */,
@@ -3094,6 +3097,7 @@
 				293A45771F296B7E00DD1006 /* ListKitTestCase.swift in Sources */,
 				BD89007E20B8844B0026013F /* NetworkingURLPathTests.swift in Sources */,
 				BD3761B0209E032500401DFB /* BookmarkNavigationItemTests.swift in Sources */,
+				2977D8BF215AE12D0073F737 /* LocalNotificationCacheTests.swift in Sources */,
 				DC5C02C51F9C6E3500E80B9F /* SearchQueryTests.swift in Sources */,
 				293A457E1F296BD500DD1006 /* API.swift in Sources */,
 				49AF91B1204B416500DFF325 /* MergeTests.swift in Sources */,

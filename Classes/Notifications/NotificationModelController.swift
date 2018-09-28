@@ -51,6 +51,9 @@ final class NotificationModelController {
         width: CGFloat,
         completion: @escaping (Result<([NotificationViewModel], Int?)>) -> Void
         ) {
+        // hack to prevent double-fetching notifications when awaking from bg fetch
+        guard UIApplication.shared.applicationState != .background else { return }
+
         let badge = githubClient.badge
         let contentSizeCategory = UIContentSizeCategory.preferred
         // TODO move handling + parsing to a single method?

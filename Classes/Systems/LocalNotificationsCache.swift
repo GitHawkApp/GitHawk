@@ -12,18 +12,20 @@ import GitHubAPI
 
 final class LocalNotificationsCache {
 
-    private let path: String = {
+    private static let sqlitePath: String = {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         return "\(path)/read-notifications.sqlite"
     }()
+
+    private let path: String
     private lazy var queue: FMDatabaseQueue = {
         return FMDatabaseQueue(path: self.path)
     }()
-    private let defaults = UserDefaults.standard
-    private let setupKey = "com.whoisryannystrom.freetime.local-notifications.setup"
 
-    private var isFirstSetup: Bool {
-        return defaults.bool(forKey: setupKey)
+    init(
+        path: String = LocalNotificationsCache.sqlitePath
+        ) {
+        self.path = path
     }
 
     func update(
@@ -63,18 +65,21 @@ final class LocalNotificationsCache {
                     }
                 }
 
-                // add latest notification ids in the db
-                let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
-                try db.executeUpdate(
-                    "insert into \(table) (\(apiCol)) values \(insertSanitized)",
-                    values: apiIDs
-                )
+                // only perform updates if there are new notifications
+                if map.count > 0 {
+                    // add latest notification ids in the db
+                    let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
+                    try db.executeUpdate(
+                        "insert into \(table) (\(apiCol)) values \(insertSanitized)",
+                        values: map.keys.map { $0 }
+                    )
 
-                // cap the local database to latest 1000 notifications
-                try db.executeUpdate(
-                    "delete from \(table) where \(idCol) not in (select \(idCol) from \(table) order by \(idCol) desc limit 1000)",
-                    values: nil
-                )
+                    // cap the local database to latest 1000 notifications
+                    try db.executeUpdate(
+                        "delete from \(table) where \(idCol) not in (select \(idCol) from \(table) order by \(idCol) desc limit 1000)",
+                        values: nil
+                    )
+                }
             } catch {
                 print("failed: \(error.localizedDescription)")
             }

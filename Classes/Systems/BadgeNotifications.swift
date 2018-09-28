@@ -43,9 +43,9 @@ final class BadgeNotifications {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
-                case .notDetermined, .denied:
+                case .denied:
                     callback(.error(nil))
-                case .authorized, .provisional:
+                case .authorized, .provisional, .notDetermined:
                     callback(.success((isBadgeEnabled, isLocalNotificationEnabled)))
                 }
             }
@@ -115,17 +115,15 @@ final class BadgeNotifications {
         completion: ((Bool) -> Void)? = nil
         ) {
         localNotificationsCache.update(notifications: notifications) { [weak self] filtered in
-            let changed = notifications.count != filtered.count
-            if showAlert && changed {
+            if showAlert {
                 self?.sendLocalPush(for: filtered)
             }
-            completion?(changed)
+            completion?(filtered.count > 0)
         }
     }
 
     private func sendLocalPush(for notifications: [V3Notification]) {
         let center = UNUserNotificationCenter.current()
-
         notifications.forEach {
             guard let type = NotificationType(rawValue: $0.subject.type.rawValue),
                 let identifier = $0.subject.identifier
