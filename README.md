@@ -35,8 +35,6 @@ We are always looking for contributions from **all skill levels**! A great way t
 - 👩‍💻 **iOS Project Management**
   - There is a _lot_ of low-hanging fruit with our project setup, test and deployment automation, build optimizations, and more! I (@rnystrom) have no idea what I'm doing here. Come point us in the right direction!
 
-If you would like to test the latest changes, join the **TestFlight** beta by DMing your e-mail address to [@_ryannystrom](https://twitter.com/_ryannystrom).
-
 ## Installation
 
 If you want to build GitHawk locally, run `npm install`.
