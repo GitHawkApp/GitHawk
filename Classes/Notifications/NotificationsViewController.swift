@@ -55,11 +55,11 @@ ReviewGitHubAccessDelegate
 
         makeBackBarItemEmpty()
         resetRightBarItem()
-
+        
         switch inboxType {
         case .unread:
             let item = UIBarButtonItem(
-                image: UIImage(named: "bullets-hollow"),
+                image: UIImage(named: "filter"),
                 style: .plain,
                 target: self,
                 action: #selector(NotificationsViewController.onMore(sender:))
