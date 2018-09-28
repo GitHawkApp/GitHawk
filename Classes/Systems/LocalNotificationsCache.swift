@@ -71,7 +71,7 @@ final class LocalNotificationsCache {
                     let insertSanitized = map.keys.map { _ in "(?)" }.joined(separator: ", ")
                     try db.executeUpdate(
                         "insert into \(table) (\(apiCol)) values \(insertSanitized)",
-                        values: apiIDs
+                        values: map.keys.map { $0 }
                     )
 
                     // cap the local database to latest 1000 notifications

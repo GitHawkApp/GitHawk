@@ -13,21 +13,25 @@ import XCTest
 
 class LocalNotificationCacheTests: XCTestCase {
 
-    var path: String = {
+    func path(for test: String) -> String {
+        let clean = test.replacingOccurrences(of: "()", with: "")
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        return "\(path)/read-notifications.sqlite"
-    }()
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        return "\(path)/\(clean).sqlite"
     }
 
-    override func tearDown() {
-        try? FileManager.default.removeItem(atPath: path)
+    func clear(for test: String) {
+        let path = self.path(for: test)
+        do {
+            try FileManager.default.removeItem(atPath: path)
+        } catch  {
+            print("\(error.localizedDescription)\npath: \(path)")
+        }
     }
 
     func test_whenNoNotifications_thatNothingReturned() {
-        let cache = LocalNotificationsCache(path: path)
+        clear(for: #function)
+        
+        let cache = LocalNotificationsCache(path: path(for: #function))
         var executed = false
         cache.update(notifications: []) { results in
             executed = true
@@ -67,7 +71,9 @@ class LocalNotificationCacheTests: XCTestCase {
     }
 
     func test_whenUpdating_thatReadFirstTime_thenSecondCallEmpty() {
-        let cache = LocalNotificationsCache(path: path)
+        clear(for: #function)
+        
+        let cache = LocalNotificationsCache(path: path(for: #function))
         let n1 = [
             makeNotificaction(id: "123", title: "foo")
         ]
