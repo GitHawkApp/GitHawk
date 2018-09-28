@@ -30,6 +30,7 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
         preferredContentSize = Styles.Sizes.contextMenuSize
         title = Constants.Strings.labels
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
 
