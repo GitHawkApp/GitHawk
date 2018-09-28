@@ -66,6 +66,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
     func showEmptyLoadingView() {
         loadingView.isHidden = false
     }
+    
+    func setLoadingSpinnerColor(to color: UIColor) {
+        loadingView.setSpinnerColor(to: color)
+    }
 
     func viewDidLoad() {
         guard let view = adapter.viewController?.view else { return }

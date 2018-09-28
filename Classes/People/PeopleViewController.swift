@@ -55,6 +55,7 @@ PeopleSectionControllerDelegate {
         }
 
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
         preferredContentSize = Styles.Sizes.contextMenuSize
         updateSelectionCount()
     }
