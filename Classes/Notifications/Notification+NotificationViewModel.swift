@@ -10,7 +10,7 @@ import UIKit
 import GitHubAPI
 import FlatCache
 
-func createNotificationViewModels(
+func CreateNotificationViewModels(
     width: CGFloat,
     contentSizeCategory: UIContentSizeCategory,
     v3notifications: [V3Notification],
@@ -41,7 +41,7 @@ func createNotificationViewModels(
             v3id: $0.id,
             repo: $0.repository.name,
             owner: $0.repository.owner.login,
-            title: createNotification(title: $0.subject.title, width: width, contentSizeCategory: contentSizeCategory),
+            title: CreateNotification(title: $0.subject.title, width: width, contentSizeCategory: contentSizeCategory),
             number: number,
             state: .pending, // fetched later
             date: $0.updatedAt,
