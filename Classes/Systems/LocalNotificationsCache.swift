@@ -43,7 +43,10 @@ final class LocalNotificationsCache {
             let idCol = "id"
 
             var map = [String: V3Notification]()
-            notifications.forEach { map[$0.id] = $0 }
+            notifications.forEach {
+                let key = "\($0.id)-\($0.updatedAt.timeIntervalSinceNow)"
+                map[key] = $0
+            }
             let apiIDs = map.keys.map { $0 }
 
             do {

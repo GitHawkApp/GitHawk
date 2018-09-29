@@ -58,7 +58,7 @@ class LocalNotificationCacheTests: XCTestCase {
         )
     }
 
-    func makeNotificaction(id: String, title: String) -> V3Notification {
+    func makeNotificaction(id: String, title: String, updatedAt: Date = Date()) -> V3Notification {
         return V3Notification(
             id: id,
             lastReadAt: nil,
@@ -66,7 +66,7 @@ class LocalNotificationCacheTests: XCTestCase {
             repository: makeRepo(),
             subject: V3NotificationSubject(title: title, type: .issue, url: nil),
             unread: true,
-            updatedAt: Date()
+            updatedAt: updatedAt
         )
     }
 
@@ -104,6 +104,31 @@ class LocalNotificationCacheTests: XCTestCase {
         }
 
         XCTAssertEqual(executions, 3)
+    }
+    
+    func test_whenUpdatingWithSameNotificationWithUpdatedTime_thatNotificationReceived() {
+        clear(for: #function)
+        
+        let cache = LocalNotificationsCache(path: path(for: #function))
+        let n1 = [
+            makeNotificaction(id: "123", title: "foo", updatedAt: Date())
+        ]
+        
+        cache.update(notifications: n1) { results in
+            XCTAssertEqual(results.count, 1)
+        }
+        
+        cache.update(notifications: n1) { results in
+            XCTAssertEqual(results.count, 0)
+        }
+        
+        let n2 = [
+            makeNotificaction(id: "123", title: "foo", updatedAt: Date(timeIntervalSinceNow: 10))
+        ]
+        
+        cache.update(notifications: n2) { results in
+            XCTAssertEqual(results.count, 1)
+        }
     }
 
 }
