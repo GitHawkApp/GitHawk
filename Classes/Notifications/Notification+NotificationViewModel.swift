@@ -18,44 +18,63 @@ func CreateNotificationViewModels(
     completion: @escaping ([NotificationViewModel]) -> Void
     ) {
     
-    let models: [NotificationViewModel] = v3notifications.compactMap {
-        
-        guard
-            let type = NotificationType(rawValue: $0.subject.type.rawValue),
-            let identifier = $0.subject.identifier else {
-                return nil
+    var models = [NotificationViewModel]()
+    
+    var cachedModels = [NotificationViewModel]()
+    
+    let uncachedV3Notifications: [V3Notification] = v3notifications.compactMap {
+        if let model: NotificationViewModel = cache.get(id: $0.id) {
+            cachedModels.append(model)
+            return nil
         }
-        
-        if let viewModel: NotificationViewModel = cache.get(id: $0.id) {
-            return viewModel
-        }
-        
-        let number: NotificationViewModel.Number
-        switch identifier {
-        case .hash(let h): number = .hash(h)
-        case .number(let n): number = .number(n)
-        case .release(let r): number = .release(r)
-        }
-        
-        return NotificationViewModel(
-            v3id: $0.id,
-            repo: $0.repository.name,
-            owner: $0.repository.owner.login,
-            title: CreateNotification(title: $0.subject.title, width: width, contentSizeCategory: contentSizeCategory),
-            number: number,
-            state: .pending, // fetched later
-            date: $0.updatedAt,
-            ago: $0.updatedAt.agoString(.short),
-            read: !$0.unread,
-            comments: 0, // fetched later
-            watching: true, // assumed based on receiving
-            type: type,
-            // TODO get from GQL notification request
-            branch: "master",
-            issuesEnabled: true
-        )
+        return $0
     }
     
-    completion(models)
+    var newModels = [NotificationViewModel]()
     
+    DispatchQueue.global().async {
+        
+        for v3notification in uncachedV3Notifications {
+            
+            guard
+                let type = NotificationType(rawValue: v3notification.subject.type.rawValue),
+                let identifier = v3notification.subject.identifier else {
+                    return
+            }
+            
+            let number: NotificationViewModel.Number
+            switch identifier {
+            case .hash(let h): number = .hash(h)
+            case .number(let n): number = .number(n)
+            case .release(let r): number = .release(r)
+            }
+            
+            let model = NotificationViewModel(
+                v3id: v3notification.id,
+                repo: v3notification.repository.name,
+                owner: v3notification.repository.owner.login,
+                title: CreateNotification(title: v3notification.subject.title, width: width, contentSizeCategory: contentSizeCategory),
+                number: number,
+                state: .pending, // fetched later
+                date: v3notification.updatedAt,
+                ago: v3notification.updatedAt.agoString(.short),
+                read: !v3notification.unread,
+                comments: 0, // fetched later
+                watching: true, // assumed based on receiving
+                type: type,
+                // TODO get from GQL notification request
+                branch: "master",
+                issuesEnabled: true
+            )
+            
+            newModels.append(model)
+        }
+        
+        DispatchQueue.main.async {
+            models.append(contentsOf: cachedModels)
+            models.append(contentsOf: newModels)
+            completion(models)
+        }
+    }
+
 }
