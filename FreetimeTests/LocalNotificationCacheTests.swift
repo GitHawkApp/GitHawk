@@ -58,7 +58,7 @@ class LocalNotificationCacheTests: XCTestCase {
         )
     }
 
-    func makeNotificaction(id: String, title: String, updatedAt: Date = Date()) -> V3Notification {
+    func makeNotificaction(id: String, title: String, updatedAt: Date) -> V3Notification {
         return V3Notification(
             id: id,
             lastReadAt: nil,
@@ -74,8 +74,9 @@ class LocalNotificationCacheTests: XCTestCase {
         clear(for: #function)
         
         let cache = LocalNotificationsCache(path: path(for: #function))
+        let date = Date()
         let n1 = [
-            makeNotificaction(id: "123", title: "foo")
+            makeNotificaction(id: "123", title: "foo", updatedAt: date)
         ]
         var executions = 0
 
@@ -85,8 +86,8 @@ class LocalNotificationCacheTests: XCTestCase {
         }
 
         let n2 = [
-            makeNotificaction(id: "123", title: "foo"),
-            makeNotificaction(id: "456", title: "bar")
+            makeNotificaction(id: "123", title: "foo", updatedAt: date),
+            makeNotificaction(id: "456", title: "bar", updatedAt: date)
         ]
         cache.update(notifications: n2) { results in
             executions += 1
@@ -94,8 +95,8 @@ class LocalNotificationCacheTests: XCTestCase {
         }
 
         let n3 = [
-            makeNotificaction(id: "123", title: "foo"),
-            makeNotificaction(id: "456", title: "bar")
+            makeNotificaction(id: "123", title: "foo", updatedAt: date),
+            makeNotificaction(id: "456", title: "bar", updatedAt: date)
         ]
 
         cache.update(notifications: n3) { results in
