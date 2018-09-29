@@ -16842,6 +16842,120 @@ public final class SearchReposQuery: GraphQLQuery {
   }
 }
 
+public final class UserQuery: GraphQLQuery {
+  public static let operationString =
+    "query User($login: String!) {\n  user(login: $login) {\n    __typename\n    avatarUrl\n    login\n    name\n    location\n  }\n}"
+
+  public var login: String
+
+  public init(login: String) {
+    self.login = login
+  }
+
+  public var variables: GraphQLMap? {
+    return ["login": login]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("user", arguments: ["login": GraphQLVariable("login")], type: .object(User.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(user: User? = nil) {
+      self.init(snapshot: ["__typename": "Query", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a user by login.
+    public var user: User? {
+      get {
+        return (snapshot["user"] as? Snapshot).flatMap { User(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "user")
+      }
+    }
+
+    public struct User: GraphQLSelectionSet {
+      public static let possibleTypes = ["User"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("avatarUrl", type: .nonNull(.scalar(String.self))),
+        GraphQLField("login", type: .nonNull(.scalar(String.self))),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("location", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(avatarUrl: String, login: String, name: String? = nil, location: String? = nil) {
+        self.init(snapshot: ["__typename": "User", "avatarUrl": avatarUrl, "login": login, "name": name, "location": location])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// A URL pointing to the user's public avatar.
+      public var avatarUrl: String {
+        get {
+          return snapshot["avatarUrl"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "avatarUrl")
+        }
+      }
+
+      /// The username used to login.
+      public var login: String {
+        get {
+          return snapshot["login"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "login")
+        }
+      }
+
+      /// The user's public profile name.
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      /// The user's public profile location.
+      public var location: String? {
+        get {
+          return snapshot["location"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "location")
+        }
+      }
+    }
+  }
+}
+
 public struct ReactionFields: GraphQLFragment {
   public static let fragmentString =
     "fragment reactionFields on Reactable {\n  __typename\n  viewerCanReact\n  reactionGroups {\n    __typename\n    viewerHasReacted\n    users(first: 3) {\n      __typename\n      nodes {\n        __typename\n        login\n      }\n      totalCount\n    }\n    content\n  }\n}"
