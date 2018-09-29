@@ -14043,6 +14043,203 @@ public final class RemoveReactionMutation: GraphQLMutation {
   }
 }
 
+public final class FetchRepositoryBranchesQuery: GraphQLQuery {
+  public static let operationString =
+    "query fetchRepositoryBranches($owner: String!, $name: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    refs(first: 50, refPrefix: \"refs/heads/\") {\n      __typename\n      edges {\n        __typename\n        node {\n          __typename\n          name\n        }\n      }\n    }\n  }\n}"
+
+  public var owner: String
+  public var name: String
+
+  public init(owner: String, name: String) {
+    self.owner = owner
+    self.name = name
+  }
+
+  public var variables: GraphQLMap? {
+    return ["owner": owner, "name": name]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("repository", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name")], type: .object(Repository.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(repository: Repository? = nil) {
+      self.init(snapshot: ["__typename": "Query", "repository": repository.flatMap { (value: Repository) -> Snapshot in value.snapshot }])
+    }
+
+    /// Lookup a given repository by the owner and repository name.
+    public var repository: Repository? {
+      get {
+        return (snapshot["repository"] as? Snapshot).flatMap { Repository(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "repository")
+      }
+    }
+
+    public struct Repository: GraphQLSelectionSet {
+      public static let possibleTypes = ["Repository"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("refs", arguments: ["first": 50, "refPrefix": "refs/heads/"], type: .object(Ref.selections)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(refs: Ref? = nil) {
+        self.init(snapshot: ["__typename": "Repository", "refs": refs.flatMap { (value: Ref) -> Snapshot in value.snapshot }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// Fetch a list of refs from the repository
+      public var refs: Ref? {
+        get {
+          return (snapshot["refs"] as? Snapshot).flatMap { Ref(snapshot: $0) }
+        }
+        set {
+          snapshot.updateValue(newValue?.snapshot, forKey: "refs")
+        }
+      }
+
+      public struct Ref: GraphQLSelectionSet {
+        public static let possibleTypes = ["RefConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("edges", type: .list(.object(Edge.selections))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(edges: [Edge?]? = nil) {
+          self.init(snapshot: ["__typename": "RefConnection", "edges": edges.flatMap { (value: [Edge?]) -> [Snapshot?] in value.map { (value: Edge?) -> Snapshot? in value.flatMap { (value: Edge) -> Snapshot in value.snapshot } } }])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        /// A list of edges.
+        public var edges: [Edge?]? {
+          get {
+            return (snapshot["edges"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Edge?] in value.map { (value: Snapshot?) -> Edge? in value.flatMap { (value: Snapshot) -> Edge in Edge(snapshot: value) } } }
+          }
+          set {
+            snapshot.updateValue(newValue.flatMap { (value: [Edge?]) -> [Snapshot?] in value.map { (value: Edge?) -> Snapshot? in value.flatMap { (value: Edge) -> Snapshot in value.snapshot } } }, forKey: "edges")
+          }
+        }
+
+        public struct Edge: GraphQLSelectionSet {
+          public static let possibleTypes = ["RefEdge"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("node", type: .object(Node.selections)),
+          ]
+
+          public var snapshot: Snapshot
+
+          public init(snapshot: Snapshot) {
+            self.snapshot = snapshot
+          }
+
+          public init(node: Node? = nil) {
+            self.init(snapshot: ["__typename": "RefEdge", "node": node.flatMap { (value: Node) -> Snapshot in value.snapshot }])
+          }
+
+          public var __typename: String {
+            get {
+              return snapshot["__typename"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// The item at the end of the edge.
+          public var node: Node? {
+            get {
+              return (snapshot["node"] as? Snapshot).flatMap { Node(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue?.snapshot, forKey: "node")
+            }
+          }
+
+          public struct Node: GraphQLSelectionSet {
+            public static let possibleTypes = ["Ref"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(name: String) {
+              self.init(snapshot: ["__typename": "Ref", "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// The ref name.
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class RepoFileQuery: GraphQLQuery {
   public static let operationString =
     "query RepoFile($owner: String!, $name: String!, $branchAndPath: String!) {\n  repository(owner: $owner, name: $name) {\n    __typename\n    object(expression: $branchAndPath) {\n      __typename\n      ... on Blob {\n        text\n      }\n    }\n  }\n}"

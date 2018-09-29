@@ -12,15 +12,19 @@ import Pageboy
 import TUSafariActivity
 import SafariServices
 import Squawk
+import ContextMenu
 
 class RepositoryViewController: TabmanViewController,
 PageboyViewControllerDataSource,
-NewIssueTableViewControllerDelegate {
+NewIssueTableViewControllerDelegate,
+ContextMenuDelegate
+{
 
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
     private var bookmarkNavController: BookmarkNavigationController? = nil
+    public var branch: String
 
     var moreOptionsItem: UIBarButtonItem {
         let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
@@ -31,6 +35,7 @@ NewIssueTableViewControllerDelegate {
     init(client: GithubClient, repo: RepositoryDetails) {
         self.repo = repo
         self.client = client
+        self.branch = repo.defaultBranch
 
         let bookmark = Bookmark(
             type: .repo,
@@ -109,6 +114,31 @@ NewIssueTableViewControllerDelegate {
         }
         navigationItem.rightBarButtonItems = items
     }
+    
+    func switchBranchAction() -> UIAlertAction {
+        return UIAlertAction(title: NSLocalizedString("Switch Branch", comment: ""),
+                             style: .default)
+        {
+            [weak self] action in
+            guard let strongSelf = self else { return }
+            let viewController =
+                RepositoryBranchesViewController(branch: strongSelf.branch,
+                                                 owner: strongSelf.repo.owner,
+                                                 repo: strongSelf.repo.name,
+                                                 client: strongSelf.client
+            )
+            
+            strongSelf.showContextualMenu(
+                viewController,
+                options: ContextMenu.Options(
+                    containerStyle: ContextMenu.ContainerStyle(
+                        backgroundColor: Styles.Colors.menuBackgroundColor.color
+                    )
+                ),
+                delegate: self
+            )
+        }
+    }
 
     func newIssueAction() -> UIAlertAction? {
         guard let newIssueViewController = NewIssueTableViewController.create(
@@ -129,7 +159,7 @@ NewIssueTableViewControllerDelegate {
     }
 
     @objc func onMore(sender: UIButton) {
-        let alertTitle = "\(repo.owner)/\(repo.name)"
+        let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
         weak var weakSelf = self
@@ -140,6 +170,7 @@ NewIssueTableViewControllerDelegate {
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
+            switchBranchAction(),
             AlertAction.cancel()
         ])
         alert.popoverPresentationController?.setSourceView(sender)
@@ -167,5 +198,19 @@ NewIssueTableViewControllerDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         show(issuesViewController, sender: self)
     }
+    
+    //MARK: ContextMenuDelegate
+    
+    func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
+        guard let viewController = viewController as? RepositoryBranchesViewController else { return }
+        self.branch = viewController.branch
+        controllers.forEach {
+            if let branchUpdatable = $0 as? RepositoryBranchUpdatable {
+                branchUpdatable.updateBranch(to: viewController.branch)
+            }
+        }
+    }
+    
+    func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }
