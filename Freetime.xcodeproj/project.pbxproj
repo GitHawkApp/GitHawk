@@ -1514,7 +1514,6 @@
 			children = (
 				297AE8571EC0D5C100B44A1F /* Classes */,
 				CF4CC0BFE456879DD6DBC714 /* Frameworks */,
-				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				297AE84B1EC0D58A00B44A1F /* FreetimeTests */,
 				294EE4BA209006C0002C9CB1 /* FreetimeWatch */,
 				294EE4C9209006C2002C9CB1 /* FreetimeWatch Extension */,
@@ -1762,6 +1761,7 @@
 		297AE86D1EC0D5C200B44A1F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2971CED22055C8F600342296 /* Freetime.entitlements */,
 				297AE86E1EC0D5C200B44A1F /* Assets.xcassets */,
 				98F0A0421F27BC4B0062A2CA /* emoji.json */,
 				29FB94391EE767420016E6D4 /* Freetime-Bridging-Header.h */,
