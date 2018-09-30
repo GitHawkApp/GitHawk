@@ -17,8 +17,7 @@ import ContextMenu
 class RepositoryViewController: TabmanViewController,
 PageboyViewControllerDataSource,
 NewIssueTableViewControllerDelegate,
-ContextMenuDelegate
-{
+ContextMenuDelegate {
 
     private let repo: RepositoryDetails
     private let client: GithubClient
