@@ -140,6 +140,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             iconName = "x"
         }
 
+        // Lock always has the divider above it assuming you're a collaborator.
+        // If you aren't a collaborator (Lock does not show), close has the divider above it.
         let separator: Bool
         switch action {
         case .lock, .unlock: separator = true
