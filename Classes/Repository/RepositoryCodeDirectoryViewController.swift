@@ -11,10 +11,12 @@ import IGListKit
 
 final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
-ListSingleSectionControllerDelegate {
+ListSingleSectionControllerDelegate,
+RepositoryBranchUpdatable
+{
 
     private let client: GithubClient
-    private let branch: String
+    private var branch: String
     private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
@@ -176,6 +178,14 @@ extension RepositoryCodeDirectoryViewController {
         }
 
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
+    }
+    
+    //Mark: RepositoryBranchUpdatable
+    
+    func updateBranch(to newBranch: String) {
+        guard self.branch != newBranch else { return }
+        self.branch = newBranch
+        fetch(page: nil)
     }
 
 }
