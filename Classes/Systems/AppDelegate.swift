@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let sessionManager = GitHubSessionManager()
     private var watchAppSync: WatchAppUserSessionSync?
 
-    private lazy var rootNavigationManager: RootNavigationManager = {
+    private(set) lazy var rootNavigationManager: RootNavigationManager = {
         return RootNavigationManager(
             sessionManager: self.sessionManager,
             rootViewController: self.window?.rootViewController as! UISplitViewController
