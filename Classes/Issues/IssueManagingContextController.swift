@@ -127,10 +127,10 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
             title = Constants.Strings.reviewers
             iconName = "reviewer"
         case .unlock:
-            title = NSLocalizedString("Unlock", comment: "")
+            title =  Constants.Strings.unlock
             iconName = "key"
         case .lock:
-            title = NSLocalizedString("Lock", comment: "")
+            title = Constants.Strings.lock
             iconName = "lock"
         case .reopen:
             title = Constants.Strings.reopen
