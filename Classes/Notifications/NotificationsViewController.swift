@@ -59,7 +59,7 @@ ReviewGitHubAccessDelegate
         switch inboxType {
         case .unread:
             let item = UIBarButtonItem(
-                image: UIImage(named: "filter"),
+                image: UIImage(named: "bullets-hollow"),
                 style: .plain,
                 target: self,
                 action: #selector(NotificationsViewController.onMore(sender:))
