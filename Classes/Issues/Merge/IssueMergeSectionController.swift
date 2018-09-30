@@ -171,7 +171,9 @@ ListBindingSectionControllerSelectionDelegate {
             else { fatalError() }
 
         if let cell = cell as? CardCollectionViewCell {
-            cell.border = index == 0 ? .head : index == self.viewModels.count - 1 ? .tail : .neck
+            cell.border = index == 0
+                ? index == self.viewModels.count - 1 ? .full : .head
+                : index == self.viewModels.count - 1 ? .tail : .neck
         }
         if let cell = cell as? IssueMergeButtonCell {
             cell.delegate = self

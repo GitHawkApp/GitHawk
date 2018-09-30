@@ -14,6 +14,7 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
         case head
         case neck
         case tail
+        case full
     }
 
     var border: BorderType = .neck {
@@ -97,6 +98,36 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
 
             fillPath = borderPath.copy() as! UIBezierPath
             fillPath.close()
+        case .full:
+
+            borderPath.move(to: CGPoint(x: pixelSnapBounds.minX, y: bounds.maxY - cornerRadius))
+            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY + cornerRadius))
+
+            borderPath.addQuadCurve(
+                to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: pixelSnapBounds.minY),
+                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.minY)
+            )
+            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.minY))
+
+            borderPath.addQuadCurve(
+                to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY + cornerRadius),
+                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.minY)
+            )
+            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY - cornerRadius))
+
+            borderPath.addQuadCurve(
+                to: CGPoint(x: pixelSnapBounds.maxX - cornerRadius, y: pixelSnapBounds.maxY),
+                controlPoint: CGPoint(x: pixelSnapBounds.maxX, y: pixelSnapBounds.maxY)
+            )
+            borderPath.addLine(to: CGPoint(x: pixelSnapBounds.minX + cornerRadius, y: bounds.maxY))
+
+            borderPath.addQuadCurve(
+                to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY - cornerRadius),
+                controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY)
+            )
+            
+            fillPath = borderPath.copy() as! UIBezierPath
+            fillPath.close()
         }
         borderLayer.path = borderPath.cgPath
         backgroundLayer.path = fillPath.cgPath
@@ -114,3 +145,5 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
     }
 
 }
+
+
