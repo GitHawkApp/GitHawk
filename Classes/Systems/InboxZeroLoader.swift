@@ -10,15 +10,17 @@ import Foundation
 
 final class InboxZeroLoader {
 
-    private let url = URL(string: "http://githawk.com/holidays.json")!
+    // [year/"fixed": [month: [day: [key:value]]]
+    private typealias SerializedType = [String: [String: [String: [String: String]]]]
     private let path: String = {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         return "\(path)/holidays.json"
     }()
-    private typealias SerializedType = [String: [String: [String: String]]]
+
     private lazy var json: SerializedType = {
         return NSKeyedUnarchiver.unarchiveObject(withFile: path) as? SerializedType ?? [:]
     }()
+
     private let session: URLSession = {
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -26,7 +28,18 @@ final class InboxZeroLoader {
         return URLSession.init(configuration: config)
     }()
 
+    private var url: URL? {
+        return URL(
+            string: "https://raw.githubusercontent.com/GitHawkApp/Holidays/master/locales/holidays-\(Locale.current.identifier).json"
+        )
+    }
+
     func load(completion: @escaping (Bool) -> Void) {
+        guard let url = self.url else {
+            completion(false)
+            return
+        }
+
         let path = self.path
         session.dataTask(with: url) { [weak self] (data, response, error) in
             if let data = data,
@@ -50,11 +63,16 @@ final class InboxZeroLoader {
     }
 
     func message(date: Date = Date()) -> (emoji: String, message: String) {
-        let components = Calendar.current.dateComponents([.day, .month], from: date)
-        guard let day = components.day, let month = components.month else {
-            return fallback
+        let components = Calendar.current.dateComponents([.day, .month, .year], from: date)
+        guard let day = components.day,
+            let month = components.month,
+            let year = components.year else {
+                return fallback
         }
-        if let monthData = json["\(month)"],
+
+        // either key on the current year or "fixed" (for permanent dates)
+        if let yearData = json["\(year)"] ?? json["fixed"],
+            let monthData = yearData["\(month)"],
             let data = monthData["\(day)"],
             let emoji = data["emoji"],
             let message = data["message"] {
