@@ -157,8 +157,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
         return ContrastContextMenuItem(
             title: title,
             iconName: iconName,
-            iconColor:
-            iconColor,
+            iconColor: iconColor,
             separator: separator,
             action: actionBlock(action)
         )
