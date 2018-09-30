@@ -96,7 +96,6 @@ RepositoryBranchUpdatable
                     let model = RepositoryReadmeModel(models: models)
                     DispatchQueue.main.async { [weak self] in
                         self?.readme = model
-                        self?.feed.adapter.reloadData()
                         self?.update(animated: trueUnlessReduceMotionEnabled)
                     }
                 }

@@ -24,7 +24,7 @@ ContextMenuDelegate
     private let client: GithubClient
     private let controllers: [UIViewController]
     private var bookmarkNavController: BookmarkNavigationController? = nil
-    public var branch: String
+    public private(set) var branch: String
 
     var moreOptionsItem: UIBarButtonItem {
         let rightItem = UIBarButtonItem(image: UIImage(named: "bullets-hollow"), target: self, action: #selector(RepositoryViewController.onMore(sender:)))
@@ -116,16 +116,18 @@ ContextMenuDelegate
     }
     
     func switchBranchAction() -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Switch Branch", comment: ""),
-                             style: .default)
-        {
+        return UIAlertAction(
+            title: NSLocalizedString("Switch Branch", comment: ""),
+            style: .default
+        ) {
             [weak self] action in
             guard let strongSelf = self else { return }
             let viewController =
-                RepositoryBranchesViewController(branch: strongSelf.branch,
-                                                 owner: strongSelf.repo.owner,
-                                                 repo: strongSelf.repo.name,
-                                                 client: strongSelf.client
+                RepositoryBranchesViewController(
+                    branch: strongSelf.branch,
+                    owner: strongSelf.repo.owner,
+                    repo: strongSelf.repo.name,
+                    client: strongSelf.client
             )
             
             strongSelf.showContextualMenu(
