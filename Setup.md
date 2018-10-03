@@ -29,7 +29,7 @@ To get these, [register](https://github.com/settings/applications/new) a new OAu
 Here, you will need to fill in an Application name, Homepage URL and Authorization callback URL.
 Make sure the Authorization callback URL is set to `freetime://`. The others can be filled in as you wish.
 
-You'll be redirected to the application page where you can access your Client ID and Client Secret.
+You will be redirected to the application page where you can access your Client ID and Client Secret.
 
 To add the Client ID and Client Secret to the App, follow these steps:
 
