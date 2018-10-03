@@ -14,7 +14,7 @@ final class EmptyLoadingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        activity.startAnimating()
+        activity.startAnimatingWith(style: .basedOnBackground)
         addSubview(activity)
     }
     
