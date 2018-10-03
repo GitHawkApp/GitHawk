@@ -14,12 +14,12 @@ final class EmptyLoadingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        activity.startAnimatingWith(style: .basedOnBackground)
         addSubview(activity)
+
     }
-    
+
     func setSpinnerColor(to color: UIColor) {
-        activity.color = color 
+        // activity.color = color
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -29,6 +29,13 @@ final class EmptyLoadingView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         activity.center = CGPoint(x: bounds.width/2, y: bounds.height/2)
+
+        guard let superview = self.superview,
+            let bgColor = superview.backgroundColor else {
+                activity.startAnimating()
+                return
+        }
+        activity.startAnimatingOn(color: bgColor)
     }
 
 }
