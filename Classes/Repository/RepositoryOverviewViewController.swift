@@ -72,7 +72,6 @@ RepositoryBranchUpdatable
 
     override func fetch(page: NSString?) {
         let repo = self.repo
-//        let contentInset = feed.collectionView.contentInset
         let width = view.bounds.width - Styles.Sizes.gutter * 2
         let contentSizeCategory = UIContentSizeCategory.preferred
         let branch = self.branch
