@@ -243,13 +243,10 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
     var models = [ListDiffable]()
     var runningBuilder: StyledTextBuilder?
 
-    let makeBuilder: (Bool) -> StyledTextBuilder = { newline in
+    let makeBuilder: () -> StyledTextBuilder = {
         let builder: StyledTextBuilder
         if let current = runningBuilder {
-            builder = current
-            if newline {
-                builder.add(text: "\n")
-            }
+            builder = current.add(text: "\n")
         } else {
             builder = StyledTextBuilder.markdownBase(isRoot: options.isRoot)
         }
@@ -274,7 +271,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
 
         switch el {
         case .text(let items):
-            items.build(makeBuilder(true), options: options)
+            items.build(makeBuilder(), options: options)
         case .heading(let text, let level):
             let style: TextStyle
             switch level {
@@ -286,7 +283,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
             default: style = Styles.Text.h6.with(foreground: Styles.Colors.Gray.medium.color)
             }
 
-            let builder = makeBuilder(false)
+            let builder = makeBuilder()
                 .save()
                 .add(style: style)
 
@@ -305,7 +302,7 @@ private func makeModels(elements: [Element], options: CMarkOptions) -> [ListDiff
 //                backgroundColor: .white
 //                ).warm(width: options.width)
         case .list(let items, let type):
-            items.build(makeBuilder(true), options: options, type: type)
+            items.build(makeBuilder(), options: options, type: type)
 //            return StyledTextRenderer(
 //                string: builder.build(renderMode: .preserve),
 //                contentSizeCategory: options.contentSizeCategory,
