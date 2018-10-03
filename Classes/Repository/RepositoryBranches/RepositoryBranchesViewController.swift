@@ -36,6 +36,7 @@ RepositoryBranchSectionControllerDelegate
         title = NSLocalizedString("Branches", comment: "")
         preferredContentSize = Styles.Sizes.contextMenuSize
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
+        feed.setLoadingSpinnerColor(to: .white)
         dataSource = self
     }
     
