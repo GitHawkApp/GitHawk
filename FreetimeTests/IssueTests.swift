@@ -282,7 +282,7 @@ class IssueTests: XCTestCase {
             isRoot: false
         )
         
-        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "See: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "...adoption.\nSee: [Pitch] Introducing the \"Unwrap or Die\" operator to the standard library")
     }
     
     func test_URLThatContainsIssueReferenceLinkInDescription() {
@@ -303,9 +303,7 @@ class IssueTests: XCTestCase {
             isRoot: false
         )
         
-        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "This is the implementation for apple/swift-evolution#793")
-        XCTAssertEqual((models[1] as! StyledTextRenderer).string.allText, "Note: One of the new tests fails...")
-        
+        XCTAssertEqual((models[0] as! StyledTextRenderer).string.allText, "This is the implementation for apple/swift-evolution#793\nNote: One of the new tests fails...")        
     }
 
 }
