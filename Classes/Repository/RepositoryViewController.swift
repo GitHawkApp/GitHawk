@@ -123,7 +123,8 @@ ContextMenuDelegate {
             guard let strongSelf = self else { return }
             let viewController =
                 RepositoryBranchesViewController(
-                    branch: strongSelf.branch,
+                    defaultBranch: strongSelf.repo.defaultBranch,
+                    selectedBranch: strongSelf.branch,
                     owner: strongSelf.repo.owner,
                     repo: strongSelf.repo.name,
                     client: strongSelf.client
@@ -204,10 +205,10 @@ ContextMenuDelegate {
     
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
         guard let viewController = viewController as? RepositoryBranchesViewController else { return }
-        self.branch = viewController.branch
+        self.branch = viewController.selectedBranch
         controllers.forEach {
             if let branchUpdatable = $0 as? RepositoryBranchUpdatable {
-                branchUpdatable.updateBranch(to: viewController.branch)
+                branchUpdatable.updateBranch(to: viewController.selectedBranch)
             }
         }
     }
