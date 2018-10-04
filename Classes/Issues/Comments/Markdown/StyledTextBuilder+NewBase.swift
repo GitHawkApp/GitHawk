@@ -12,7 +12,7 @@ import StyledTextKit
 extension StyledTextBuilder {
     static func markdownBase(isRoot: Bool) -> StyledTextBuilder {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacingBefore = 12
+        paragraphStyle.paragraphSpacing = 12
         paragraphStyle.lineSpacing = 2
         let attributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.dark.color,
