@@ -107,6 +107,6 @@ RepositoryBranchSectionControllerDelegate
     
     func didSelect(value: RepositoryBranchViewModel) {
         self.selectedBranch = value.branch
-        update(animated: true)
+        update(animated: trueUnlessReduceMotionEnabled)
     }
 }
