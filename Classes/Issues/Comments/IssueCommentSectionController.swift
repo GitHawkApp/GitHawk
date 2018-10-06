@@ -93,7 +93,7 @@ final class IssueCommentSectionController:
         weak var weakSelf = self
 
         return AlertAction(AlertActionBuilder { $0.rootViewController = weakSelf?.viewController })
-            .share([url], activities: [TUSafariActivity()]) { $0.popoverPresentationController?.sourceView = sender }
+            .share([url], activities: [TUSafariActivity()], type: .shareUrl) { $0.popoverPresentationController?.sourceView = sender }
     }
 
     var deleteAction: UIAlertAction? {

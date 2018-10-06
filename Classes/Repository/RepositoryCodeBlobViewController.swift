@@ -8,6 +8,7 @@
 
 import UIKit
 import Squawk
+import TUSafariActivity
 
 final class RepositoryCodeBlobViewController: UIViewController {
 
@@ -19,9 +20,16 @@ final class RepositoryCodeBlobViewController: UIViewController {
     private let feedRefresh = FeedRefresh()
     private let emptyView = EmptyView()
     private var sharingPayload: Any?
-    private lazy var sharingButton: UIBarButtonItem = {
+    private var filePath: String {
+        return "\(repo.name)/\(path.path)"
+    }
+    private var repoUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)/\(filePath)")!
+    }
+
+    private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .action,
+            image: UIImage(named: "bullets-hollow"),
             target: self,
             action: #selector(RepositoryCodeBlobViewController.onShare(sender:)))
         barButtonItem.isEnabled = false
@@ -61,7 +69,7 @@ final class RepositoryCodeBlobViewController: UIViewController {
         codeView.refreshControl = feedRefresh.refreshControl
         feedRefresh.refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
 
-        navigationItem.rightBarButtonItem = sharingButton
+        navigationItem.rightBarButtonItem = moreOptionsItem
 
         fetch()
         feedRefresh.beginRefreshing()
@@ -88,19 +96,43 @@ final class RepositoryCodeBlobViewController: UIViewController {
 
     func didFetchPayload(_ payload: Any) {
         sharingPayload = payload
-        sharingButton.isEnabled = true
+        moreOptionsItem.isEnabled = true
     }
 
     @objc func onRefresh() {
         fetch()
     }
 
-    @objc func onShare(sender: UIBarButtonItem) {
-        guard let payload = sharingPayload else { return }
-        let activityController = UIActivityViewController(activityItems: [payload], applicationActivities: nil)
-        activityController.popoverPresentationController?.barButtonItem = sender
+    @objc func onShare(sender: UIButton) {
+        let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
 
-        present(activityController, animated: trueUnlessReduceMotionEnabled)
+        weak var weakSelf = self
+        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
+        var actions = [
+            AlertAction(alertBuilder).share([self.filePath], activities: nil, type: .shareFilePath) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
+            AlertAction.cancel()
+        ]
+
+        if let name = self.path.components.last {
+            actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            }, at: 1)
+        }
+        if let payload = self.sharingPayload {
+            actions.insert(AlertAction(alertBuilder).share([payload], activities: nil, type: .shareContent) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            }, at: actions.endIndex - 1)
+        }
+
+        alert.addActions(actions)
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
     func fetch() {
