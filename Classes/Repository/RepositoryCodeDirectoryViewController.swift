@@ -21,11 +21,8 @@ RepositoryBranchUpdatable
     private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
-    private var filePath: String {
-        return "\(repo.name)/\(path.path)"
-    }
     private var repoUrl: URL {
-        return URL(string: "https://github.com/\(repo.owner)/\(filePath)")!
+        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/tree/\(branch)/\(path.path)")!
     }
     private lazy var moreOptionsItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
@@ -97,7 +94,7 @@ RepositoryBranchUpdatable
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         var actions = [
-            AlertAction(alertBuilder).share([self.filePath], activities: nil, type: .shareFilePath) {
+            AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
             AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
