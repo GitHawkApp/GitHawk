@@ -44,6 +44,17 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
         showLogin(animated: false)
     }
 
+    func performFetch(
+        application: UIApplication,
+        with completion: @escaping (UIBackgroundFetchResult) -> Void
+        ) {
+        appClient?.badge.fetch(application: application, handler: completion)
+    }
+
+    func select(tabAt index: Int) {
+        splitViewController.select(tabAt: index)
+    }
+
     private func resetWatchSync(userSession: GitHubUserSession) {
         watchAppSync = WatchAppUserSessionSync(userSession: userSession)
         watchAppSync?.start()
@@ -63,7 +74,7 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
             newNotificationsRootViewController(client: appClient),
             newSearchRootViewController(client: appClient),
             newBookmarksRootViewController(client: appClient),
-            settingsNavigationController ?? UINavigationController()
+            settingsNavigationController ?? UINavigationController() // satisfy compiler
             ])
     }
 
@@ -74,6 +85,7 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
             )
             else { return }
         loginViewController = controller
+
         let present: () -> Void = {
             self.splitViewController.present(controller, animated: animated)
         }
@@ -82,6 +94,8 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
         } else {
             present()
         }
+
+        // wipe underlying VCs clean. important for ipad (modal)
         splitViewController.resetEmpty()
     }
 
@@ -98,10 +112,12 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
 
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {
         resetViewControllers(userSession: userSession)
+
         if dismiss {
             splitViewController.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
+        ShortcutHandler.configure(sessionUsernames: manager.userSessions.compactMap { $0.username })
         if let watch = watchAppSync {
             watch.sync(userSession: userSession)
         } else {
@@ -110,7 +126,6 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
     }
 
     func didLogout(manager: GitHubSessionManager) {
-        settingsNavigationController = nil
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 

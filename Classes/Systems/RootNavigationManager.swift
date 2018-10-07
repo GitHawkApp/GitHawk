@@ -117,8 +117,6 @@ final class RootNavigationManager: GitHubSessionListener, LoginSplashViewControl
         showLogin(animated: trueUnlessReduceMotionEnabled)
     }
 
-    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {}
-
     // MARK: Private API
 
     private var detailNavigationController: UINavigationController? {

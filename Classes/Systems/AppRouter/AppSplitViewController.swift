@@ -28,6 +28,10 @@ final class AppSplitViewController: UISplitViewController {
         return viewControllers.first as? UITabBarController
     }
 
+    func select(tabAt index: Int) {
+        masterTabBarController?.selectedIndex = index
+    }
+
     func resetEmpty() {
         let controller = UIViewController()
         controller.view.backgroundColor = Styles.Colors.background
