@@ -23,7 +23,7 @@ class UrlPathComponents: XCTestCase {
                                                      add: true,
                                                      people: [])
         
-        let githubclient = newGithubClient()
+        let githubclient = GithubClient()
         let promise = expectation(description: "completion handler invoked")
         var requestResponse: GitHubAPI.Result<V3StatusCodeResponse<V3StatusCode200or201>>?
         
@@ -56,7 +56,7 @@ class UrlPathComponents: XCTestCase {
                                                      add: true,
                                                      people: [])
         
-        let githubclient = newGithubClient()
+        let githubclient = GithubClient()
         let promise = expectation(description: "completion handler invoked")
         var requestResponse: GitHubAPI.Result<V3StatusCodeResponse<V3StatusCode200or201>>?
         

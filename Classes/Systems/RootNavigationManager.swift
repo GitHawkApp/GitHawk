@@ -10,7 +10,7 @@ import UIKit
 import GitHubAPI
 import GitHubSession
 
-final class RootNavigationManager: GitHubSessionListener {
+final class RootNavigationManager: GitHubSessionListener, LoginSplashViewControllerDelegate {
 
     private let sessionManager: GitHubSessionManager
     private let splitDelegate = SplitViewControllerDelegate()
@@ -20,7 +20,7 @@ final class RootNavigationManager: GitHubSessionListener {
     weak private var rootViewController: UISplitViewController?
 
     // keep alive between switching accounts
-    private var settingsRootViewController: UIViewController?
+    private var settingsRootViewController: UINavigationController?
 
     private(set) var client: GithubClient?
 
@@ -42,10 +42,12 @@ final class RootNavigationManager: GitHubSessionListener {
     // MARK: Public API
 
     public func showLogin(animated: Bool = false) {
-        guard let root = rootViewController else { return }
-
-        let login = newLoginViewController()
-        login.modalPresentationStyle = .formSheet
+        guard let root = rootViewController,
+            let login = LoginSplashViewController.make(
+                client: Client.make(),
+                delegate: self
+            )
+            else { return }
 
         let block: () -> Void = { root.present(login, animated: animated) }
 
@@ -61,17 +63,16 @@ final class RootNavigationManager: GitHubSessionListener {
     public func resetRootViewController(userSession: GitHubUserSession?) {
         guard let userSession = userSession else { return }
 
-        let client = newGithubClient(userSession: userSession)
+        let client = GithubClient(userSession: userSession)
         self.client = client
-
-        fetchUsernameForMigrationIfNecessary(client: client, userSession: userSession, sessionManager: sessionManager)
 
         // rebuild the settings VC if it doesn't exist
         settingsRootViewController = settingsRootViewController ?? newSettingsRootViewController(
-            sessionManager: sessionManager,
-            client: client,
-            rootNavigationManager: self
+            sessionManager: sessionManager
         )
+        if let settings = settingsRootViewController?.viewControllers.first as? SettingsViewController {
+            settings.client = client
+        }
 
         tabBarController?.viewControllers = [
             newNotificationsRootViewController(client: client),
@@ -79,11 +80,6 @@ final class RootNavigationManager: GitHubSessionListener {
             newBookmarksRootViewController(client: client),
             settingsRootViewController ?? UIViewController() // simply satisfying compiler
         ]
-    }
-
-    public func pushLoginViewController(nav: UINavigationController) {
-        let login = newLoginViewController()
-        nav.pushViewController(login, animated: trueUnlessReduceMotionEnabled)
     }
 
     @discardableResult
@@ -125,27 +121,6 @@ final class RootNavigationManager: GitHubSessionListener {
 
     // MARK: Private API
 
-    private func fetchUsernameForMigrationIfNecessary(
-        client: GithubClient,
-        userSession: GitHubUserSession,
-        sessionManager: GitHubSessionManager
-        ) {
-        // only required when there is no username
-        guard userSession.username == nil else { return }
-
-        client.client.send(V3VerifyPersonalAccessTokenRequest(token: userSession.token)) { result in
-            switch result {
-            case .success(let user):
-                userSession.username = user.data.login
-
-                // user session ref is same session that manager should be using
-                // update w/ mutated session
-                sessionManager.save()
-            case .failure: break
-            }
-        }
-    }
-
     private var detailNavigationController: UINavigationController? {
         return rootViewController?.viewControllers.last as? UINavigationController
     }
@@ -154,16 +129,13 @@ final class RootNavigationManager: GitHubSessionListener {
         return rootViewController?.viewControllers.first as? TabBarController
     }
 
-    private func newLoginViewController() -> UIViewController {
-        let controller = UIStoryboard(
-            name: "OauthLogin",
-            bundle: Bundle(for: AppDelegate.self))
-            .instantiateInitialViewController() as! LoginSplashViewController
-        controller.config(
-            client: newGithubClient().client,
-            sessionManager: sessionManager
+    // MARK: LoginSplashViewControllerDelegate
+
+    func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
+        sessionManager.focus(
+            GitHubUserSession(token: token, authMethod: authMethod, username: username),
+            dismiss: true
         )
-        return controller
     }
 
 }

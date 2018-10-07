@@ -9,7 +9,6 @@
 import Foundation
 
 public protocol GitHubSessionListener: class {
-    func didReceiveRedirect(manager: GitHubSessionManager, code: String)
     func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool)
     func didLogout(manager: GitHubSessionManager)
 }
@@ -108,16 +107,6 @@ public class GitHubSessionManager: NSObject {
             defaults.set(NSKeyedArchiver.archivedData(withRootObject: _userSessions), forKey: Keys.latest)
         } else {
             defaults.removeObject(forKey: Keys.latest)
-        }
-    }
-
-    public func receivedCodeRedirect(url: URL) {
-        guard let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
-            let index = items.index(where: { $0.name == "code" }),
-            let code = items[index].value
-            else { return }
-        for wrapper in listeners {
-            wrapper.listener?.didReceiveRedirect(manager: self, code: code)
         }
     }
 
