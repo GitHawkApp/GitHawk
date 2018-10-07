@@ -51,8 +51,18 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
         appClient?.badge.fetch(application: application, handler: completion)
     }
 
-    func select(tabAt index: Int) {
-        splitViewController.select(tabAt: index)
+    func handle(route: Route) -> Bool {
+        switch route {
+        case .tab(let tab):
+            splitViewController.select(tabAt: tab.rawValue)
+            return true
+        case .switchAccount(let sessionIndex):
+            if let index = sessionIndex {
+                let session = sessionManager.userSessions[index]
+                sessionManager.focus(session, dismiss: false)
+            }
+            return true
+        }
     }
 
     private func resetWatchSync(userSession: GitHubUserSession) {

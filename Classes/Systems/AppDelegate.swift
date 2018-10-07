@@ -53,11 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completionHandler(false)
             return
         }
-        completionHandler(ShortcutHandler.handle(
-            route: route,
-            sessionManager: sessionManager,
-            appController: appController
-        ))
+        completionHandler(appController.handle(route: route))
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

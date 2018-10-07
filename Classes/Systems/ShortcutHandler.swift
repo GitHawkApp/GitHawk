@@ -21,24 +21,6 @@ struct ShortcutHandler {
         UIApplication.shared.shortcutItems = generateItems(sessionUsernames: sessionUsernames)
     }
 
-    static func handle(
-        route: Route,
-        sessionManager: GitHubSessionManager,
-        appController: AppController
-        ) -> Bool {
-        switch route {
-        case .tab(let tab):
-            appController.select(tabAt: tab.rawValue)
-            return true
-        case .switchAccount(let sessionIndex):
-            if let index = sessionIndex {
-                let session = sessionManager.userSessions[index]
-                sessionManager.focus(session, dismiss: false)
-            }
-            return true
-        }
-    }
-
     private static func generateItems(sessionUsernames: [String]) -> [UIApplicationShortcutItem] {
         var items: [UIApplicationShortcutItem] = []
 
