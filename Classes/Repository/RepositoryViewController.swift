@@ -169,7 +169,7 @@ ContextMenuDelegate {
 
         alert.addActions([
             repo.hasIssuesEnabled ? newIssueAction() : nil,
-            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()]) {
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
                 $0.popoverPresentationController?.setSourceView(sender)
             },
             switchBranchAction(),
