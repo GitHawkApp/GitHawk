@@ -21,14 +21,10 @@ struct GithubClient {
     let client: Client
     let badge: BadgeNotifications
 
-    init(
-        apollo: ApolloClient,
-        networker: Alamofire.SessionManager,
-        userSession: GitHubUserSession? = nil
-        ) {
+    init(userSession: GitHubUserSession? = nil) {
         self.userSession = userSession
 
-        self.client = Client(httpPerformer: networker, apollo: apollo, token: userSession?.token)
+        self.client = Client.make(userSession: userSession)
         self.badge = BadgeNotifications(client: self.client)
 
         if let token = userSession?.token {

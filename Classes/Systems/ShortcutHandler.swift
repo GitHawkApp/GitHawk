@@ -17,29 +17,11 @@ struct ShortcutHandler {
         case switchAccount
     }
 
-    static func configure(application: UIApplication, sessionManager: GitHubSessionManager) {
-        application.shortcutItems = generateItems(sessionManager: sessionManager)
+    static func configure(sessionUsernames: [String]) {
+        UIApplication.shared.shortcutItems = generateItems(sessionUsernames: sessionUsernames)
     }
 
-    static func handle(
-        route: Route,
-        sessionManager: GitHubSessionManager,
-        navigationManager: RootNavigationManager
-        ) -> Bool {
-        switch route {
-        case .tab(let tab):
-            navigationManager.selectViewController(atTab: tab)
-            return true
-        case .switchAccount(let sessionIndex):
-            if let index = sessionIndex {
-                let session = sessionManager.userSessions[index]
-                sessionManager.focus(session, dismiss: false)
-            }
-            return true
-        }
-    }
-
-    private static func generateItems(sessionManager: GitHubSessionManager) -> [UIApplicationShortcutItem] {
+    private static func generateItems(sessionUsernames: [String]) -> [UIApplicationShortcutItem] {
         var items: [UIApplicationShortcutItem] = []
 
         // Search
@@ -59,19 +41,17 @@ struct ShortcutHandler {
         items.append(bookmarkItem)
 
         // Switchuser
-        if sessionManager.userSessions.count > 1 {
-            let userSession = sessionManager.userSessions[1]
-            if let username = userSession.username {
-                let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-                let userItem = UIApplicationShortcutItem(
-                    type: Items.switchAccount.rawValue,
-                    localizedTitle: NSLocalizedString("Switch Account", comment: ""),
-                    localizedSubtitle: username,
-                    icon: userIcon,
-                    userInfo: ["sessionIndex": 1]
-                )
-                items.append(userItem)
-            }
+        if sessionUsernames.count > 1 {
+            let username = sessionUsernames[1]
+            let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
+            let userItem = UIApplicationShortcutItem(
+                type: Items.switchAccount.rawValue,
+                localizedTitle: NSLocalizedString("Switch Account", comment: ""),
+                localizedSubtitle: username,
+                icon: userIcon,
+                userInfo: ["sessionIndex": 1]
+            )
+            items.append(userItem)
         }
 
         return items

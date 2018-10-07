@@ -17,8 +17,6 @@ NewIssueTableViewControllerDelegate {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
-    weak var rootNavigationManager: RootNavigationManager?
-
     var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
@@ -158,7 +156,7 @@ NewIssueTableViewControllerDelegate {
 
     func onReportBug() {
         guard let viewController = NewIssueTableViewController.create(
-                client: newGithubClient(userSession: sessionManager.focusedUserSession),
+                client: GithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
