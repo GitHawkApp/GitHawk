@@ -9,52 +9,67 @@
 import Foundation
 import GitHubSession
 
-struct ShortcutHandler {
+extension UIApplicationShortcutItem {
 
-    enum Items: String {
-        case search
-        case bookmarks
-        case switchAccount
+    var params: [String: String] {
+        var params = [String: String]()
+        userInfo?.forEach {
+            if let value = $1 as? String {
+                params[$0] = value
+            }
+        }
+        return params
     }
+
+    static func from<T: Routable>(
+        route: T,
+        localizedTitle: String,
+        localizedSubtitle: String? = nil,
+        icon: UIApplicationShortcutIcon? = nil
+        ) -> UIApplicationShortcutItem {
+        return UIApplicationShortcutItem(
+            type: T.path,
+            localizedTitle: localizedTitle,
+            localizedSubtitle: localizedSubtitle,
+            icon: icon,
+            userInfo: route.encoded
+        )
+    }
+
+}
+
+struct ShortcutHandler {
 
     static func configure(sessionUsernames: [String]) {
         UIApplication.shared.shortcutItems = generateItems(sessionUsernames: sessionUsernames)
     }
 
     private static func generateItems(sessionUsernames: [String]) -> [UIApplicationShortcutItem] {
-        var items: [UIApplicationShortcutItem] = []
+        var items = [
+            UIApplicationShortcutItem.from(
+                route: SearchShortcutRoute(),
+                localizedTitle: Constants.Strings.search,
+                icon: UIApplicationShortcutIcon(templateImageName: "search")
+            ),
+            UIApplicationShortcutItem.from(
+                route: BookmarkShortcutRoute(),
+                localizedTitle: Constants.Strings.bookmarks,
+                icon: UIApplicationShortcutIcon(templateImageName: "bookmark")
+            )
+        ]
 
-        // Search
-        let searchIcon = UIApplicationShortcutIcon(templateImageName: Items.search.rawValue)
-        let searchItem = UIApplicationShortcutItem(type: Items.search.rawValue,
-                                                   localizedTitle: Constants.Strings.search,
-                                                   localizedSubtitle: nil,
-                                                   icon: searchIcon)
-        items.append(searchItem)
-
-        // Bookmarks
-        let bookmarkIcon = UIApplicationShortcutIcon(templateImageName: "bookmark")
-        let bookmarkItem = UIApplicationShortcutItem(type: Items.bookmarks.rawValue,
-                                                     localizedTitle: Constants.Strings.bookmarks,
-                                                     localizedSubtitle: nil,
-                                                     icon: bookmarkIcon)
-        items.append(bookmarkItem)
-
-        // Switchuser
         if sessionUsernames.count > 1 {
             let username = sessionUsernames[1]
-            let userIcon = UIApplicationShortcutIcon(templateImageName: "organization")
-            let userItem = UIApplicationShortcutItem(
-                type: Items.switchAccount.rawValue,
+            items.append(UIApplicationShortcutItem.from(
+                route: SwitchAccountShortcutRoute(username: username),
                 localizedTitle: NSLocalizedString("Switch Account", comment: ""),
                 localizedSubtitle: username,
-                icon: userIcon,
-                userInfo: ["sessionIndex": 1]
-            )
-            items.append(userItem)
+                icon: UIApplicationShortcutIcon(templateImageName: "organization")
+            ))
         }
 
         return items
     }
 
 }
+

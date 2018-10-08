@@ -25,6 +25,13 @@
 		290CA7642169799600DE04F8 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA7632169799600DE04F8 /* AppController.swift */; };
 		290CA76621697A7900DE04F8 /* AppSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76521697A7900DE04F8 /* AppSplitViewController.swift */; };
 		290CA768216984F000DE04F8 /* Client+GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */; };
+		290CA76A216AC82700DE04F8 /* SearchShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */; };
+		290CA76E216AE8FA00DE04F8 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76D216AE8FA00DE04F8 /* Routable.swift */; };
+		290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */; };
+		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */; };
+		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */; };
+		290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA777216AFAE600DE04F8 /* RoutePerformable.swift */; };
+		290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */; };
 		290D2A3D1F044CB20082E6CC /* UIViewController+SmartDeselection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */; };
 		290D2A421F04D3470082E6CC /* IssueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D2A411F04D3470082E6CC /* IssueStatus.swift */; };
 		290EF56A1F06A821006A2160 /* Notification+NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */; };
@@ -401,8 +408,6 @@
 		49FFF4341F9FC83200335568 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FFF4331F9FC83200335568 /* HapticFeedback.swift */; };
 		54AD5E8E1F24D953004A4BD6 /* FeedSelectionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */; };
 		5DB4DD471FC5C10000DF7ABF /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */; };
-		65A315292044369D0074E3B6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A315282044369D0074E3B6 /* TabBarController.swift */; };
-		65A3152B2044376D0074E3B6 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3152A2044376D0074E3B6 /* Route.swift */; };
 		7509865A2048959D00D1E37A /* RepositoryWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750986592048959D00D1E37A /* RepositoryWebViewController.swift */; };
 		754488B11F7ADF8D0032D08C /* UIAlertController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */; };
 		75468F7A1F7AFBC800F2BC19 /* AlertActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */; };
@@ -548,6 +553,13 @@
 		290CA7632169799600DE04F8 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		290CA76521697A7900DE04F8 /* AppSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSplitViewController.swift; sourceTree = "<group>"; };
 		290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+GithubUserSession.swift"; sourceTree = "<group>"; };
+		290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShortcutRoute.swift; sourceTree = "<group>"; };
+		290CA76D216AE8FA00DE04F8 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
+		290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+SelectType.swift"; sourceTree = "<group>"; };
+		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountShortcutRoute.swift; sourceTree = "<group>"; };
+		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkShortcutRoute.swift; sourceTree = "<group>"; };
+		290CA777216AFAE600DE04F8 /* RoutePerformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePerformable.swift; sourceTree = "<group>"; };
+		290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppController+SetupRoutes.swift"; sourceTree = "<group>"; };
 		290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SmartDeselection.swift"; sourceTree = "<group>"; };
 		290D2A411F04D3470082E6CC /* IssueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatus.swift; sourceTree = "<group>"; };
 		290EF5691F06A7E1006A2160 /* Notification+NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+NotificationViewModel.swift"; sourceTree = "<group>"; };
@@ -939,8 +951,6 @@
 		54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedSelectionProviding.swift; sourceTree = "<group>"; };
 		5DB4DD461FC5C10000DF7ABF /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		63A98647141C04CBCFCA7923 /* Pods-Freetime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Freetime.release.xcconfig"; path = "Pods/Target Support Files/Pods-Freetime/Pods-Freetime.release.xcconfig"; sourceTree = "<group>"; };
-		65A315282044369D0074E3B6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		65A3152A2044376D0074E3B6 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		750986592048959D00D1E37A /* RepositoryWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryWebViewController.swift; sourceTree = "<group>"; };
 		754488B01F7ADF8D0032D08C /* UIAlertController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Action.swift"; sourceTree = "<group>"; };
 		75468F791F7AFBC800F2BC19 /* AlertActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionBuilder.swift; sourceTree = "<group>"; };
@@ -1087,6 +1097,12 @@
 			children = (
 				290CA7632169799600DE04F8 /* AppController.swift */,
 				290CA76521697A7900DE04F8 /* AppSplitViewController.swift */,
+				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */,
+				290CA76D216AE8FA00DE04F8 /* Routable.swift */,
+				290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */,
+				290CA777216AFAE600DE04F8 /* RoutePerformable.swift */,
+				290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */,
+				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */,
 			);
 			path = AppRouter;
 			sourceTree = "<group>";
@@ -1678,7 +1694,6 @@
 				292CD3D31F0DC12100D3D57B /* PhotoViewHandler.swift */,
 				2980033A1F51E82400BE90F4 /* Rating */,
 				293189271F5391F700EF0911 /* Result.swift */,
-				65A3152A2044376D0074E3B6 /* Route.swift */,
 				294A3D751FB29843000E81A4 /* ScrollViewKeyboardAdjuster.swift */,
 				9870B9021FC73EE70009719C /* Secrets.swift */,
 				3E79A2FE1F8A7DA700E1126B /* ShortcutHandler.swift */,
@@ -1703,7 +1718,6 @@
 				29316DBE1ECC95DB007CAE3F /* RootViewControllers.swift */,
 				29C33FDA1F127DBB00EC8D40 /* SplitPlaceholderViewController.swift */,
 				29AC90E41F00A7C8000B80E4 /* SplitViewControllerDelegate.swift */,
-				65A315282044369D0074E3B6 /* TabBarController.swift */,
 				294B111F1F7B07DD00E04F2D /* TabBarControllerDelegate.swift */,
 				294B111D1F7B07BB00E04F2D /* TabNavRootViewControllerType.swift */,
 				29D548CA1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift */,
@@ -1721,6 +1735,7 @@
 				290D2A3C1F044CB20082E6CC /* UIViewController+SmartDeselection.swift */,
 				299F63E3205E1CAB0015D901 /* UIViewController+StyledTextViewCellDelegate.swift */,
 				4920F1A71F72E27200131E9D /* UIViewController+UserActivity.swift */,
+				290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2759,6 +2774,7 @@
 				29F3A18620CBF99E00645CB7 /* NotificationModelController.swift in Sources */,
 				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
+				290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */,
 				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,
 				29BCA7FE212137E100753A3C /* IssueTargetBranchModel.swift in Sources */,
 				29EE44461F19D5C100B05ED3 /* GithubClient+Issues.swift in Sources */,
@@ -2875,6 +2891,7 @@
 				DCA5ED141FAEE8030072F074 /* Bookmark.swift in Sources */,
 				299F4A89204CEDDC004BA4F0 /* Client+AccessToken.swift in Sources */,
 				2931892F1F539C0E00EF0911 /* IssueMilestoneSectionController.swift in Sources */,
+				290CA77A216AFC1300DE04F8 /* AppController+SetupRoutes.swift in Sources */,
 				29BBD82920CAC7D5004D62FE /* NotificationViewModel.swift in Sources */,
 				299F63E2205DE1470015D901 /* UIView+DateDetails.swift in Sources */,
 				9870B9031FC73EE70009719C /* Secrets.swift in Sources */,
@@ -2903,6 +2920,7 @@
 				2928C78C1F15D80E0000D06D /* IssueRenamedSectionController.swift in Sources */,
 				2928C78E1F15DF1B0000D06D /* IssueRenamedString.swift in Sources */,
 				297A372E1F17018F0081C04E /* IssueRequestCell.swift in Sources */,
+				290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute.swift in Sources */,
 				297A372C1F1700BC0081C04E /* IssueRequestModel.swift in Sources */,
 				297A37301F1704C10081C04E /* IssueRequestSectionController.swift in Sources */,
 				29F7F05C1F2A751B00F6075D /* IssueResult.swift in Sources */,
@@ -2923,7 +2941,6 @@
 				DCA5ED101FAEDF290072F074 /* BookmarkStore.swift in Sources */,
 				295C31CD1F0AA55400521CED /* IssueStatusEvent.swift in Sources */,
 				295840671EE89FE4007723C6 /* IssueStatusEventCell.swift in Sources */,
-				65A315292044369D0074E3B6 /* TabBarController.swift in Sources */,
 				295840651EE89F28007723C6 /* IssueStatusEventModel.swift in Sources */,
 				295840691EE8A328007723C6 /* IssueStatusEventSectionController.swift in Sources */,
 				29F3A18C20CD790F00645CB7 /* UIViewController+CommonActionItems.swift in Sources */,
@@ -2967,6 +2984,7 @@
 				29D548CB1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift in Sources */,
 				299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */,
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
+				290CA76E216AE8FA00DE04F8 /* Routable.swift in Sources */,
 				2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,
@@ -3018,10 +3036,13 @@
 				2905AFAF1F7357FA0015AE32 /* RepositoryViewController.swift in Sources */,
 				2963A9341EE2118E0066509C /* ResponderButton.swift in Sources */,
 				BDB6AA69215FBC35009BB73C /* RepositoryBranchesViewController.swift in Sources */,
+				290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift in Sources */,
 				293189281F5391F700EF0911 /* Result.swift in Sources */,
+				290CA778216AFAE600DE04F8 /* RoutePerformable.swift in Sources */,
 				295B51421FC26B8100C3993B /* PeopleCell.swift in Sources */,
 				29316DBF1ECC95DB007CAE3F /* RootViewControllers.swift in Sources */,
 				29DA1E791F5DEE8F0050C64B /* SearchLoadingView.swift in Sources */,
+				290CA76A216AC82700DE04F8 /* SearchShortcutRoute.swift in Sources */,
 				986B872D1F2C846700AAB55C /* SearchNoResultsCell.swift in Sources */,
 				DC60C6DC1F99414E00241271 /* IsCancellationError.swift in Sources */,
 				29CC29311FF421DC006B6DE7 /* PullRequestReviewCommentsViewController.swift in Sources */,
@@ -3087,7 +3108,6 @@
 				2924C18320D5B2BF00FCFCFF /* MilestoneCell.swift in Sources */,
 				29C8F9AB208BF64D0075931C /* BaseListViewController2.swift in Sources */,
 				29AC90E51F00A7C8000B80E4 /* SplitViewControllerDelegate.swift in Sources */,
-				65A3152B2044376D0074E3B6 /* Route.swift in Sources */,
 				2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,

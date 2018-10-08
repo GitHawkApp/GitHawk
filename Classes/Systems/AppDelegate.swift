@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         appController.appDidFinishLaunching(with: window)
+        appController.setupRoutes()
 
         // setup fabric
         Fabric.with([Crashlytics.self])
@@ -49,11 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        guard let route = Route(shortcutItem: shortcutItem) else {
-            completionHandler(false)
-            return
-        }
-        completionHandler(appController.handle(route: route))
+        appController.handle(path: shortcutItem.type, params: shortcutItem.params)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
