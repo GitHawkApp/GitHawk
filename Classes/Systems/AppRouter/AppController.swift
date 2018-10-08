@@ -18,6 +18,7 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
     private var appClient: GithubClient?
     private var settingsNavigationController: UINavigationController?
     private var watchAppSync: WatchAppUserSessionSync?
+    private var routes = [String: (Routable & RoutePerformable).Type]()
 
     init() {
         sessionManager.addListener(listener: self)
@@ -51,18 +52,30 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
         appClient?.badge.fetch(application: application, handler: completion)
     }
 
-    func handle(route: Route) -> Bool {
-        switch route {
-        case .tab(let tab):
-            splitViewController.select(tabAt: tab.rawValue)
-            return true
-        case .switchAccount(let sessionIndex):
-            if let index = sessionIndex {
-                let session = sessionManager.userSessions[index]
-                sessionManager.focus(session, dismiss: false)
-            }
-            return true
+    @discardableResult
+    func handle(url: URL) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            else { return false }
+        var params = [String: String]()
+        for item in components.queryItems ?? [] {
+            params[item.name] = item.value
         }
+        return handle(path: url.path, params: params)
+    }
+
+    @discardableResult
+    func handle(path: String, params: [String: String]) -> Bool {
+        guard let routeType = routes[path],
+            let route = routeType.from(params: params)
+            else { return false }
+        return route.perform(
+            sessionManager: sessionManager,
+            splitViewController: splitViewController
+        )
+    }
+
+    func register<T: Routable & RoutePerformable>(route: T.Type) {
+        routes[T.path] = T.self
     }
 
     private func resetWatchSync(userSession: GitHubUserSession) {

@@ -20,16 +20,12 @@ final class AppSplitViewController: UISplitViewController {
         preferredDisplayMode = .allVisible
     }
 
-    private var detailNavigationController: UINavigationController? {
+    var detailNavigationController: UINavigationController? {
         return viewControllers.last as? UINavigationController
     }
 
-    private var masterTabBarController: UITabBarController? {
+    var masterTabBarController: UITabBarController? {
         return viewControllers.first as? UITabBarController
-    }
-
-    func select(tabAt index: Int) {
-        masterTabBarController?.selectedIndex = index
     }
 
     func resetEmpty() {

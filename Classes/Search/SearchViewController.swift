@@ -104,6 +104,10 @@ SearchResultSectionControllerDelegate {
         }
     }
 
+    func searchBarBecomeFirstResponder() {
+        searchBar.becomeFirstResponder()
+    }
+
     // MARK: Data Loading/Paging
 
     private func update(animated: Bool) {

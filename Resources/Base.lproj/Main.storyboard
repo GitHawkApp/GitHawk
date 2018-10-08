@@ -12,7 +12,6 @@
         <!--Notifications-->
         <scene sceneID="5Pm-pl-ZQT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V24-0g-MmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="AKn-8S-pzd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Notifications" image="inbox" id="KQ4-AC-rKh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="crz-Uj-ajM">
@@ -27,6 +26,7 @@
                         <segue destination="icu-Mt-euN" kind="relationship" relationship="rootViewController" id="DU7-Bf-pgd"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V24-0g-MmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="268" y="536.58170914542734"/>
         </scene>
@@ -109,7 +109,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="gc3-YD-4oz">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="f5k-7G-hod" customClass="TabBarController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="f5k-7G-hod" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="FXG-86-zX1">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
