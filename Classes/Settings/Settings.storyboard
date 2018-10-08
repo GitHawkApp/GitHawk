@@ -348,10 +348,10 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="guA-My-iRb" firstAttribute="leading" secondItem="uAb-lB-GZA" secondAttribute="leadingMargin" id="F9S-kd-38Z"/>
                                                 <constraint firstItem="guA-My-iRb" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="Lmv-Cf-s8i"/>
                                                 <constraint firstItem="l9s-bQ-bad" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="WGF-E7-3TC"/>
                                                 <constraint firstAttribute="trailing" secondItem="l9s-bQ-bad" secondAttribute="trailing" constant="15" id="hbT-TO-kjD"/>
+                                                <constraint firstItem="guA-My-iRb" firstAttribute="leading" secondItem="uAb-lB-GZA" secondAttribute="leading" constant="16" id="vk2-fv-yD3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
