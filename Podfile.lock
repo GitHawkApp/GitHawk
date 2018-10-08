@@ -88,28 +88,6 @@ DEPENDENCIES:
   - Tabman (~> 1.8)
   - TUSafariActivity (~> 1.0.0)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - Alamofire
-    - AlamofireNetworkActivityIndicator
-    - Apollo
-    - AutoInsetter
-    - Crashlytics
-    - Fabric
-    - FBSnapshotTestCase
-    - FLAnimatedImage
-    - FLEX
-    - FMDB
-    - HTMLString
-    - ImageAlertAction
-    - NYTPhotoViewer
-    - Pageboy
-    - SDWebImage
-    - SnapKit
-    - SwiftLint
-    - Tabman
-    - TUSafariActivity
-
 EXTERNAL SOURCES:
   cmark-gfm-swift:
     :branch: master
@@ -208,4 +186,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cd04a784668fade26d053b1f1a225f3c76449423
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0
