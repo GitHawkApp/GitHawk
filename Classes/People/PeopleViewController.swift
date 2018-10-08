@@ -80,7 +80,17 @@ PeopleSectionControllerDelegate {
             return false
         }
     }
-
+    
+    static func sortUsers(users: [V3User], currentUser: String?) -> [V3User] {
+        return users.sorted {
+            if $0.login == currentUser {
+                return true
+            } else {
+                return $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
+            }
+        }
+    }
+    
     // MARK: Private API
 
     func updateSelectionCount() {
@@ -106,9 +116,10 @@ PeopleSectionControllerDelegate {
         ) { [weak self] result in
             switch result {
             case .success(let response):
-                let sortedUsers = response.data.sorted {
-                    $0.login.caseInsensitiveCompare($1.login) == .orderedAscending
-                }
+                let sortedUsers = PeopleViewController.sortUsers(
+                    users: response.data,
+                    currentUser: self?.client.userSession?.username
+                )
                 let users = sortedUsers.map { IssueAssigneeViewModel(login: $0.login, avatarURL: $0.avatarUrl) }
                 if page != nil {
                     self?.users += users
