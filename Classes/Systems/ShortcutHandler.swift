@@ -45,6 +45,8 @@ struct ShortcutHandler {
     }
 
     private static func generateItems(sessionUsernames: [String]) -> [UIApplicationShortcutItem] {
+        guard sessionUsernames.count > 0 else { return [] }
+
         var items = [
             UIApplicationShortcutItem.from(
                 route: SearchShortcutRoute(),
