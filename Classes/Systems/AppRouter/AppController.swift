@@ -30,6 +30,7 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
         }
         splitViewController = controller
 
+        resetShortcuts()
         if let focused = sessionManager.focusedUserSession {
             resetViewControllers(userSession: focused)
             resetWatchSync(userSession: focused)
@@ -81,6 +82,10 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
     private func resetWatchSync(userSession: GitHubUserSession) {
         watchAppSync = WatchAppUserSessionSync(userSession: userSession)
         watchAppSync?.start()
+    }
+
+    private func resetShortcuts() {
+        ShortcutHandler.configure(sessionUsernames: sessionManager.userSessions.compactMap { $0.username })
     }
 
     private func resetViewControllers(userSession: GitHubUserSession) {
@@ -140,7 +145,7 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
             splitViewController.presentedViewController?.dismiss(animated: trueUnlessReduceMotionEnabled)
         }
 
-        ShortcutHandler.configure(sessionUsernames: manager.userSessions.compactMap { $0.username })
+        resetShortcuts()
         if let watch = watchAppSync {
             watch.sync(userSession: userSession)
         } else {
