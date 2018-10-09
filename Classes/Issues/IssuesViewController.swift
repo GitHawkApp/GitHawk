@@ -49,7 +49,6 @@ final class IssuesViewController:
         bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
         right: Styles.Sizes.gutter
     )
-    private let bookmarkIconInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
 
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
@@ -199,9 +198,7 @@ final class IssuesViewController:
         messageView.add(contentView: actions)
         
         //show disabled bookmark button until issue has finished loading
-        let disabledNavItem = BookmarkNavigationController.disabledNavigationItem
-        disabledNavItem.imageInsets = bookmarkIconInset
-        navigationItem.rightBarButtonItems = [ moreOptionsItem, disabledNavItem ]
+        navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
 
         // insert below so button doesn't appear above autocomplete
         view.insertSubview(manageController.manageButton, belowSubview: messageView)
@@ -264,7 +261,6 @@ final class IssuesViewController:
         guard let rightbarButtonItems = navigationItem.rightBarButtonItems else { return }
         guard let bookmarkItem = rightbarButtonItems.last else { return }
         bookmarkNavController?.configureNavigationItem(bookmarkItem)
-        bookmarkItem.imageInsets = bookmarkIconInset
     }
 
     func viewRepoAction() -> UIAlertAction? {

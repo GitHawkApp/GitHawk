@@ -34,7 +34,7 @@ struct AlertAction {
             case .shareContent: return NSLocalizedString("Share Content", comment: "")
             case .shareFilePath: return NSLocalizedString("Copy Path", comment: "")
             case .shareFileName: return NSLocalizedString("Copy Name", comment: "")
-            default: return NSLocalizedString("Share", comment: "")
+            case .default: return NSLocalizedString("Share", comment: "")
             }
         }
     }
