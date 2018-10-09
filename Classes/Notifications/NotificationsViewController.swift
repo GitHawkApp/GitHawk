@@ -16,8 +16,7 @@ BaseListViewController2DataSource,
 ForegroundHandlerDelegate,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource,
-ReviewGitHubAccessDelegate
+BaseListViewController2EmptyDataSource
 {
 
     private let modelController: NotificationModelController
@@ -280,10 +279,7 @@ ReviewGitHubAccessDelegate
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets
         return ListSwiftPair.pair("empty-notification-value", {
-            return NoNewNotificationSectionController(
-                layoutInsets: layoutInsets,
-                reviewGitHubAccessDelegate: self
-		)
+            return NoNewNotificationSectionController(layoutInsets: layoutInsets)
         })
     }
 
@@ -308,15 +304,6 @@ ReviewGitHubAccessDelegate
     
     func didDoubleTapTab() {
         didSingleTapTab()
-    }
-    
-    // MARK: ReviewGitHubAccessDelegate
-    func reviewGitHubAccessButtonTapped() {
-        //copied/pasted from SettingsViewController... could consolidate
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
-        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
-        UIApplication.shared.open(url)
     }
     
 }
