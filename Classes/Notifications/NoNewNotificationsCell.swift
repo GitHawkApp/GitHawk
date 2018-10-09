@@ -9,17 +9,17 @@
 import UIKit
 import SnapKit
 
-protocol ReviewGitHubAccessDelegate: class {
-    func reviewGitHubAccessButtonTapped()
+protocol NoNewNotificationsCellReviewAccessDelegate: class {
+    func didTapReviewAccess(cell: NoNewNotificationsCell)
 }
 
 final class NoNewNotificationsCell: UICollectionViewCell {
 
-    let emojiLabel = UILabel()
-    let messageLabel = UILabel()
-    let shadow = CAShapeLayer()
-    let reviewGitHubAccessButton = UIButton()
-    weak var reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate?
+    private let emojiLabel = UILabel()
+    private let messageLabel = UILabel()
+    private let shadow = CAShapeLayer()
+    private let reviewGitHubAccessButton = UIButton()
+    private weak var reviewGitHubAccessDelegate: NoNewNotificationsCellReviewAccessDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -116,10 +116,11 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
     // MARK: Public API
 
-    func configure(emoji: String,
-                   message: String,
-                   reviewGitHubAccessDelegate: ReviewGitHubAccessDelegate?)
-    {
+    func configure(
+        emoji: String,
+        message: String,
+        reviewGitHubAccessDelegate: NoNewNotificationsCellReviewAccessDelegate?
+        ) {
         emojiLabel.text = emoji
         messageLabel.text = message
         self.reviewGitHubAccessDelegate = reviewGitHubAccessDelegate
@@ -152,7 +153,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
     }
     
     @objc func reviewGitHubAccessButtonTapped() {
-        reviewGitHubAccessDelegate?.reviewGitHubAccessButtonTapped()
+        reviewGitHubAccessDelegate?.didTapReviewAccess(cell: self)
     }
     
 }
