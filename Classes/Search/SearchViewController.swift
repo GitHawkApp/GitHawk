@@ -26,6 +26,7 @@ SearchResultSectionControllerDelegate {
     private var recentStore = SearchRecentStore()
     private let debouncer = Debouncer()
     private var keyboardAdjuster: ScrollViewKeyboardAdjuster?
+    private var lastSearchTerm: String?
 
     enum State {
         case idle
@@ -114,25 +115,29 @@ SearchResultSectionControllerDelegate {
         adapter.performUpdates(animated: animated)
     }
 
-    private func handle(resultType: GithubClient.SearchResultType, animated: Bool) {
+    private func handle(term: String, resultType: GithubClient.SearchResultType, animated: Bool) {
         switch resultType {
         case let .error(error) where isCancellationError(error):
             return
         case .error:
             self.state = .error
         case .success(_, let results):
+            self.lastSearchTerm = term
             self.state = .results(results)
         }
         self.update(animated: animated)
     }
 
     func search(term: String) {
+        if term == self.lastSearchTerm { return }
+        self.lastSearchTerm = nil
+
         let query: SearchQuery = .search(term)
         guard canSearch(query: query) else { return }
 
         let request = client.search(query: term, containerWidth: view.bounds.width) { [weak self] resultType in
             guard let state = self?.state, case .loading = state else { return }
-            self?.handle(resultType: resultType, animated: trueUnlessReduceMotionEnabled)
+            self?.handle(term: term, resultType: resultType, animated: trueUnlessReduceMotionEnabled)
         }
         state = .loading(request, query)
 
