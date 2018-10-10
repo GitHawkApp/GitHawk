@@ -26,7 +26,8 @@ struct SwitchAccountShortcutRoute: Routable {
 extension SwitchAccountShortcutRoute: RoutePerformable {
     func perform(
         sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController
+        splitViewController: AppSplitViewController,
+        client: GithubClient
         ) -> Bool {
         let userSessions = sessionManager.userSessions
         guard let needle = userSessions.first(where: { username == $0.username })

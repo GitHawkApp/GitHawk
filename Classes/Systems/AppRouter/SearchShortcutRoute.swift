@@ -21,7 +21,8 @@ struct SearchShortcutRoute: Routable {
 extension SearchShortcutRoute: RoutePerformable {
     func perform(
         sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController
+        splitViewController: AppSplitViewController,
+        client: GithubClient
         ) -> Bool {
         guard let controller = splitViewController.masterTabBarController?.selectTab(of: SearchViewController.self)
             else { return false }

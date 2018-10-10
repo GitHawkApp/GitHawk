@@ -134,6 +134,16 @@ final class BadgeNotifications {
             content.body = $0.subject.title
             content.subtitle = "\(type.localizedString) \(identifier.string)"
 
+            // currently only handling issues
+            if let identifier = $0.subject.identifier,
+                case .number(let n) = identifier {
+                content.set(route: IssueNotificationRoute(
+                    owner: $0.repository.owner.login,
+                    repo: $0.repository.name,
+                    number: n
+                ))
+            }
+
             let request = UNNotificationRequest(
                 identifier: $0.id,
                 content: content,

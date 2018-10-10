@@ -301,6 +301,10 @@
 		29A08FBD1F12EF7C00C5368E /* IssueReferencedCommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */; };
 		29A08FBE1F12EF7C00C5368E /* IssueReferencedCommitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */; };
 		29A08FBF1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */; };
+		29A1053F216D9062004734A0 /* UNNotificationContent+Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */; };
+		29A10541216D912F004734A0 /* IssueNotificationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10540216D912F004734A0 /* IssueNotificationRoute.swift */; };
+		29A10543216D9381004734A0 /* UNMutableNotificationContent+Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */; };
+		29A10545216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */; };
 		29A195021EC66B8B00C3E289 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */; };
 		29A195071EC7601000C3E289 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 29A195061EC7601000C3E289 /* Localizable.stringsdict */; };
 		29A195081EC7602500C3E289 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 29A195061EC7601000C3E289 /* Localizable.stringsdict */; };
@@ -837,6 +841,10 @@
 		29A08FBA1F12EF7C00C5368E /* IssueReferencedCommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitCell.swift; sourceTree = "<group>"; };
 		29A08FBB1F12EF7C00C5368E /* IssueReferencedCommitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitModel.swift; sourceTree = "<group>"; };
 		29A08FBC1F12EF7C00C5368E /* IssueReferencedCommitSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueReferencedCommitSectionController.swift; sourceTree = "<group>"; };
+		29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+Routable.swift"; sourceTree = "<group>"; };
+		29A10540216D912F004734A0 /* IssueNotificationRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueNotificationRoute.swift; sourceTree = "<group>"; };
+		29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNMutableNotificationContent+Routable.swift"; sourceTree = "<group>"; };
+		29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppController+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		29A195011EC66B8B00C3E289 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		29A195061EC7601000C3E289 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		29A195091EC78B4800C3E289 /* NotificationType+Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationType+Icon.swift"; sourceTree = "<group>"; };
@@ -1096,13 +1104,17 @@
 			isa = PBXGroup;
 			children = (
 				290CA7632169799600DE04F8 /* AppController.swift */,
+				290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */,
+				29A10544216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift */,
 				290CA76521697A7900DE04F8 /* AppSplitViewController.swift */,
 				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */,
+				29A10540216D912F004734A0 /* IssueNotificationRoute.swift */,
 				290CA76D216AE8FA00DE04F8 /* Routable.swift */,
-				290CA779216AFC1300DE04F8 /* AppController+SetupRoutes.swift */,
 				290CA777216AFAE600DE04F8 /* RoutePerformable.swift */,
 				290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */,
 				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */,
+				29A10542216D9381004734A0 /* UNMutableNotificationContent+Routable.swift */,
+				29A1053E216D9062004734A0 /* UNNotificationContent+Routable.swift */,
 			);
 			path = AppRouter;
 			sourceTree = "<group>";
@@ -2816,6 +2828,7 @@
 				2967DC56211751CB00FD3683 /* UIContentSizeCategory+Preferred.swift in Sources */,
 				7BBFEE5B1F8A8A0400C68E47 /* SearchBarSectionController.swift in Sources */,
 				292FCAFA1EDFCC510026635E /* IssueCommentDetailsViewModel.swift in Sources */,
+				29A10541216D912F004734A0 /* IssueNotificationRoute.swift in Sources */,
 				2949674E1EF9719300B1CF1A /* IssueCommentHrCell.swift in Sources */,
 				2949674C1EF9716400B1CF1A /* IssueCommentHrModel.swift in Sources */,
 				294967531EFC1EDB00B1CF1A /* IssueCommentHtmlCell.swift in Sources */,
@@ -2970,6 +2983,7 @@
 				29DA1E801F5DF2960050C64B /* LoadMoreSectionController.swift in Sources */,
 				29416BFB1F113D0A00D03E1A /* LoginSplashViewController.swift in Sources */,
 				29DA1E8C1F5F8CC40050C64B /* MarkdownAttribute.swift in Sources */,
+				29A10545216D9515004734A0 /* AppController+UNUserNotificationCenterDelegate.swift in Sources */,
 				29351E9C2079106300FF8C17 /* String+GitHubEmoji.swift in Sources */,
 				98647DF31F758CCF00A4DE7A /* NewIssueTableViewController.swift in Sources */,
 				290EF5761F06BA06006A2160 /* NoNewNotificationsCell.swift in Sources */,
@@ -3020,6 +3034,7 @@
 				2924C18820D5B2F200FCFCFF /* PeopleSectionController.swift in Sources */,
 				292ACE181F5C945B00C9A02C /* RepositoryIssueSummaryModel.swift in Sources */,
 				DCA5ED1B1FAEF78B0072F074 /* BookmarkSectionController.swift in Sources */,
+				29A1053F216D9062004734A0 /* UNNotificationContent+Routable.swift in Sources */,
 				29693EE520FAA05F00336200 /* IssueAutocomplete.swift in Sources */,
 				986B87341F2CAE9800AAB55C /* RepositoryIssueSummaryType.swift in Sources */,
 				2905AFAD1F7357C50015AE32 /* RepositoryIssuesViewController.swift in Sources */,
@@ -3111,6 +3126,7 @@
 				2977788A20B306F200F2AFC2 /* LabelLayoutManager.swift in Sources */,
 				29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */,
 				2950AB1D2083B1E400C6F19A /* EmptyLoadingView.swift in Sources */,
+				29A10543216D9381004734A0 /* UNMutableNotificationContent+Routable.swift in Sources */,
 				29B0EF871F93DF6C00870291 /* RepositoryCodeBlobViewController.swift in Sources */,
 				98F9F4001F9CCFFE005A0266 /* ImageUploadTableViewController.swift in Sources */,
 				29C167671ECA005500439D62 /* Constants.swift in Sources */,
