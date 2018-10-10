@@ -13,6 +13,7 @@ protocol RoutePerformable {
     @discardableResult
     func perform(
         sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController
+        splitViewController: AppSplitViewController,
+        client: GithubClient
     ) -> Bool
 }

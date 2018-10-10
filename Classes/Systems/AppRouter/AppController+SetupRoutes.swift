@@ -14,6 +14,7 @@ extension AppController {
         register(route: BookmarkShortcutRoute.self)
         register(route: SwitchAccountShortcutRoute.self)
         register(route: SearchShortcutRoute.self)
+        register(route: IssueNotificationRoute.self)
     }
 
 }

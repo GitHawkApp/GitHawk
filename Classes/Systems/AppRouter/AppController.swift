@@ -10,7 +10,7 @@ import UIKit
 import GitHubSession
 import GitHubAPI
 
-final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListener {
+final class AppController: NSObject, LoginSplashViewControllerDelegate, GitHubSessionListener {
 
     private var splitViewController: AppSplitViewController!
     private let sessionManager = GitHubSessionManager()
@@ -20,7 +20,9 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
     private var watchAppSync: WatchAppUserSessionSync?
     private var routes = [String: (Routable & RoutePerformable).Type]()
 
-    init() {
+    override init() {
+        super.init()
+        attachNotificationDelegate()
         sessionManager.addListener(listener: self)
     }
 
@@ -67,11 +69,13 @@ final class AppController: LoginSplashViewControllerDelegate, GitHubSessionListe
     @discardableResult
     func handle(path: String, params: [String: String]) -> Bool {
         guard let routeType = routes[path],
-            let route = routeType.from(params: params)
+            let route = routeType.from(params: params),
+            let client = appClient
             else { return false }
         return route.perform(
             sessionManager: sessionManager,
-            splitViewController: splitViewController
+            splitViewController: splitViewController,
+            client: client
         )
     }
 

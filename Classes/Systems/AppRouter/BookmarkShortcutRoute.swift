@@ -21,7 +21,8 @@ struct BookmarkShortcutRoute: Routable {
 extension BookmarkShortcutRoute: RoutePerformable {
     func perform(
         sessionManager: GitHubSessionManager,
-        splitViewController: AppSplitViewController
+        splitViewController: AppSplitViewController,
+        client: GithubClient
         ) -> Bool {
         return splitViewController.masterTabBarController?.selectTab(of: BookmarkViewController.self) != nil
     }
