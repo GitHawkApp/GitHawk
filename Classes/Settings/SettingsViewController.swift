@@ -267,6 +267,10 @@ NewIssueTableViewControllerDelegate {
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
     }
+    
+    @IBAction func onPushNotificationsInfo(_ sender: Any) {
+        showContextualMenu(PushNotificationsDisclaimerViewController())
+    }
 
     // MARK: NewIssueTableViewControllerDelegate
 

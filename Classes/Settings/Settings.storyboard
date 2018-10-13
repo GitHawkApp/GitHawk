@@ -259,12 +259,21 @@
                                                         <action selector="onSettings:" destination="NnB-TU-bkW" eventType="touchUpInside" id="eCr-BP-8PS"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viN-2G-VUO">
+                                                    <rect key="frame" x="156" y="11" width="22" height="22"/>
+                                                    <color key="tintColor" red="0.63921568627450975" green="0.66666666666666663" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="onPushNotificationsInfo:" destination="NnB-TU-bkW" eventType="touchUpInside" id="PrO-Nb-3b4"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="T30-uT-48L" secondAttribute="trailing" constant="15" id="6RB-2m-fYA"/>
                                                 <constraint firstItem="HFk-Cc-92g" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="Ind-0b-it6"/>
+                                                <constraint firstItem="viN-2G-VUO" firstAttribute="leading" secondItem="vNL-qr-bAj" secondAttribute="trailing" constant="8" id="JaP-4a-w1r"/>
                                                 <constraint firstItem="vNL-qr-bAj" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="TTt-u4-ANE"/>
                                                 <constraint firstAttribute="trailing" secondItem="HFk-Cc-92g" secondAttribute="trailing" id="ZLK-Ic-qgC"/>
+                                                <constraint firstItem="viN-2G-VUO" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="dAd-9o-KqZ"/>
                                                 <constraint firstItem="vNL-qr-bAj" firstAttribute="leading" secondItem="nUN-Hd-0xp" secondAttribute="leading" constant="16" id="o6O-Rl-PO6"/>
                                                 <constraint firstItem="T30-uT-48L" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="wgd-mx-RqK"/>
                                             </constraints>

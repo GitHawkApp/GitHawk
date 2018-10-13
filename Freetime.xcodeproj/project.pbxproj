@@ -70,6 +70,7 @@
 		292ACE1B1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292ACE1A1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift */; };
 		292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292ACE1C1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift */; };
 		292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292ACE1D1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift */; };
+		292AD6B2217236C200273D80 /* PushNotificationsDisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292AD6B1217236C200273D80 /* PushNotificationsDisclaimerViewController.swift */; };
 		292CD3BB1F0AF28F00D3D57B /* IssueDiffHunkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */; };
 		292CD3BD1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */; };
 		292CD3BF1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */; };
@@ -603,6 +604,7 @@
 		292ACE1A1F5CAFAD00C9A02C /* RepositoryEmptyResultsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryEmptyResultsType.swift; sourceTree = "<group>"; };
 		292ACE1C1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryEmptyResultsCell.swift; sourceTree = "<group>"; };
 		292ACE1D1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryEmptyResultsSectionController.swift; sourceTree = "<group>"; };
+		292AD6B1217236C200273D80 /* PushNotificationsDisclaimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsDisclaimerViewController.swift; sourceTree = "<group>"; };
 		292CD3BA1F0AF28F00D3D57B /* IssueDiffHunkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkModel.swift; sourceTree = "<group>"; };
 		292CD3BC1F0AF3B800D3D57B /* IssueDiffHunkSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkSectionController.swift; sourceTree = "<group>"; };
 		292CD3BE1F0AF3C000D3D57B /* IssueDiffHunkPathCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiffHunkPathCell.swift; sourceTree = "<group>"; };
@@ -1902,6 +1904,7 @@
 			isa = PBXGroup;
 			children = (
 				2930988E211F32D100E1178B /* DefaultReactionDetailController.swift */,
+				292AD6B1217236C200273D80 /* PushNotificationsDisclaimerViewController.swift */,
 				292FF8AB1F2FD3EC009E63F7 /* Settings.storyboard */,
 				297FB7771F51128A00F2E618 /* SettingsAccountsViewController.swift */,
 				29764C131FDC4DB60095FF95 /* SettingsLabel.swift */,
@@ -3023,6 +3026,7 @@
 				29DAA7AF20202BEA0029277A /* PullRequestReviewReplyModel.swift in Sources */,
 				29B94E691FCB36A000715D7E /* File+ListDiffable.swift in Sources */,
 				986B873E1F2E1CE400AAB55C /* RepositoryClient.swift in Sources */,
+				292AD6B2217236C200273D80 /* PushNotificationsDisclaimerViewController.swift in Sources */,
 				295A77BE1F75C1CC007BC403 /* RepositoryDetails.swift in Sources */,
 				292ACE1E1F5CB02400C9A02C /* RepositoryEmptyResultsCell.swift in Sources */,
 				292ACE1F1F5CB02400C9A02C /* RepositoryEmptyResultsSectionController.swift in Sources */,
