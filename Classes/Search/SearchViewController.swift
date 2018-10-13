@@ -14,11 +14,12 @@ class SearchViewController: UIViewController,
     ListAdapterDataSource,
     PrimaryViewController,
     UISearchBarDelegate,
-InitialEmptyViewDelegate,
-SearchRecentSectionControllerDelegate,
-SearchRecentHeaderSectionControllerDelegate,
-TabNavRootViewControllerType,
-SearchResultSectionControllerDelegate {
+    EmptyViewDelegate,
+    InitialEmptyViewDelegate,
+    SearchRecentSectionControllerDelegate,
+    SearchRecentHeaderSectionControllerDelegate,
+    TabNavRootViewControllerType,
+    SearchResultSectionControllerDelegate {
 
     private let client: GithubClient
     private let noResultsKey = "com.freetime.SearchViewController.no-results-key" as ListDiffable
@@ -192,6 +193,8 @@ SearchResultSectionControllerDelegate {
         case .error:
             let view = EmptyView()
             view.label.text = NSLocalizedString("Error finding results", comment: "")
+            view.delegate = self
+            view.button.isHidden = false
             return view
          case .results:
             return nil
@@ -228,6 +231,15 @@ SearchResultSectionControllerDelegate {
 
         state = .idle
         update(animated: false)
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry() {
+        searchBar.resignFirstResponder()
+
+        guard let term = searchTerm(for: searchBar.text) else { return }
+        search(term: term)
     }
 
     // MARK: InitialEmptyViewDelegate

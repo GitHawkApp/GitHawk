@@ -10,7 +10,7 @@ import UIKit
 import Squawk
 import TUSafariActivity
 
-final class RepositoryCodeBlobViewController: UIViewController {
+final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegate {
 
     private let client: GithubClient
     private let branch: String
@@ -60,6 +60,8 @@ final class RepositoryCodeBlobViewController: UIViewController {
         view.backgroundColor = .white
 
         emptyView.isHidden = true
+        emptyView.delegate = self
+        emptyView.button.isHidden = false
         view.addSubview(emptyView)
         view.addSubview(codeView)
 
@@ -163,6 +165,12 @@ final class RepositoryCodeBlobViewController: UIViewController {
         emptyView.isHidden = true
         didFetchPayload(text)
         codeView.set(code: text)
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry() {
+        self.onRefresh()
     }
 
 }
