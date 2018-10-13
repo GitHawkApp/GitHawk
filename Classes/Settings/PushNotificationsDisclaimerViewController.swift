@@ -36,7 +36,7 @@ final class PushNotificationsDisclaimerViewController: UIViewController {
         view.addSubview(textView)
 
         preferredContentSize = textView.sizeThatFits(CGSize(
-            width: Styles.Sizes.contextMenuSize.width,
+            width: min(320, UIScreen.main.bounds.width - Styles.Sizes.rowSpacing * 2),
             height: CGFloat.greatestFiniteMagnitude
         ))
     }
