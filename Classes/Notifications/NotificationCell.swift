@@ -149,6 +149,8 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
         readLayer.bounds = readButton.bounds
         readLayer.position = convert(readButton.center, from: readButton.superview)
         readLayer.transform = CATransform3DMakeScale(20, 20, 20)
+        // keep the read layer in front
+        readLayer.superlayer?.addSublayer(readLayer)
         CATransaction.commit()
     }
 
@@ -241,6 +243,8 @@ final class NotificationCell: SelectableCell, CAAnimationDelegate {
             self.dimViews(dim: true)
         }
 
+        // keep the read layer in front
+        readLayer.superlayer?.addSublayer(readLayer)
         hideReadLayer(hide: false)
 
         let scale = CABasicAnimation(keyPath: "transform.scale")
