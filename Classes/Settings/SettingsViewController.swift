@@ -183,7 +183,8 @@ NewIssueTableViewControllerDelegate {
             hasIssuesEnabled: true
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
-        navigationController?.showDetailViewController(repoViewController, sender: self)
+        let navController = UINavigationController(rootViewController: repoViewController)
+        showDetailViewController(navController, sender: self)
     }
   
     func onSetDefaultReaction() {
