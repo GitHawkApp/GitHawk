@@ -76,7 +76,10 @@ final class Feed: NSObject, UIScrollViewDelegate {
 
         view.backgroundColor = .white
 
-        refresh()
+        // avoid app launch in the background triggering viewDidLoad-based network calls
+        if UIApplication.shared.applicationState != .background {
+            refresh()
+        }
 
         adapter.collectionView = collectionView
 
