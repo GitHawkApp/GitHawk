@@ -1,21 +1,17 @@
 disabled_rules:
   - function_parameter_count
-  - line_length
-  - identifier_name
-  - type_name
   - function_body_length
   - type_body_length
   - force_try
   - force_cast
-  - trailing_whitespace
+  - cyclomatic_complexity
 
 included: 
   - Classes
   - FreetimeTests
+  - Local Pods
 excluded:
   - Pods
-  - Local Pods
   - Playgrounds
-  - Sample
 
 reporter: "xcode"
