@@ -35,7 +35,7 @@ extension GithubClient {
         client.send(V3PullRequestCommentsRequest(owner: owner, repo: repo, number: number)) { result in
             switch result {
             case .failure(let error):
-                Squawk.showGenericError()
+                Squawk.show(error: error)
                 completion(.error(error))
             case .success(let response):
                 struct Thread {
@@ -144,7 +144,7 @@ extension GithubClient {
                     completion(.error(nil))
                 }
             case .failure(let error):
-                Squawk.showGenericError()
+                Squawk.show(error: error)
                 completion(.error(error))
             }
         }

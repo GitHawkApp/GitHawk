@@ -30,7 +30,7 @@ extension GithubClient {
             case .failure(let error):
                 completion(.error(error))
                 if !isCancellationError(error) {
-                    Squawk.showGenericError()
+                    Squawk.show(error: error)
                 }
             case .success(let data):
                 DispatchQueue.global().async {

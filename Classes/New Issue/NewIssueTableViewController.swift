@@ -167,8 +167,8 @@ final class NewIssueTableViewController: UITableViewController, UITextFieldDeleg
                 strongSelf.dismiss(animated: trueUnlessReduceMotionEnabled, completion: {
                     delegate?.didDismissAfterCreatingIssue(model: model)
                 })
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
             }
         }
     }

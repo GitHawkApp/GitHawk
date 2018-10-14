@@ -147,9 +147,9 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
                 self?.handle(text: text)
             case .nonUTF8:
                 self?.error(cannotLoad: true)
-            case .error:
+            case .error(let error):
                 self?.error(cannotLoad: false)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }

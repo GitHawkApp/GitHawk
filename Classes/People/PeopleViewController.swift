@@ -135,8 +135,8 @@ PeopleSectionControllerDelegate {
                     nextPage = nil
                 }
                 self?.update(page: nextPage, animated: true)
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
             }
         }
     }

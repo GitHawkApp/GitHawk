@@ -189,8 +189,8 @@ class ImageUploadTableViewController: UITableViewController {
                 description: "") { [weak self] result in
 
                 switch result {
-                case .error:
-                    Squawk.showGenericError()
+                case .error(let error):
+                    Squawk.show(error: error)
                     self?.setRightBarItemIdle()
 
                 case .success(let link):

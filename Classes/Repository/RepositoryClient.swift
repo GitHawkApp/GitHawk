@@ -130,9 +130,9 @@ final class RepositoryClient {
         let contentSizeCategory = UIContentSizeCategory.preferred
         githubClient.client.query(query, result: { $0 }) { result in
             switch result {
-            case .failure:
-                Squawk.showGenericError()
-                completion(.error(nil))
+            case .failure(let error):
+                Squawk.show(error: error)
+                completion(.error(error))
             case .success(let data):
                 DispatchQueue.global().async {
                     // jump to a bg queue to parse models and presize text

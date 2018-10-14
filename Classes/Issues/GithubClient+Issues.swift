@@ -59,9 +59,9 @@ extension GithubClient {
 
         client.query(query, result: { $0.repository }) { result in
             switch result {
-            case .failure:
-                completion(.error(nil))
-                Squawk.showGenericError()
+            case .failure(let error):
+                completion(.error(error))
+                Squawk.show(error: error)
             case .success(let repository):
                 let issueOrPullRequest = repository.issueOrPullRequest
                 guard let issueType: IssueType = issueOrPullRequest?.asIssue ?? issueOrPullRequest?.asPullRequest else {
@@ -193,13 +193,9 @@ extension GithubClient {
             switch result {
             case .success(let data):
                 completion(createIssueReactions(reactions: data))
-            case .failure(let err):
+            case .failure(let error):
                 completion(nil)
-                if let message = err?.localizedDescription {
-                    Squawk.showError(message: message)
-                } else {
-                    Squawk.showGenericError()
-                }
+                Squawk.show(error: error)
             }
         }
 
@@ -252,9 +248,9 @@ extension GithubClient {
         client.send(V3SetIssueStatusRequest(owner: owner, repo: repo, number: number, state: stateString)) { result in
             switch result {
             case .success: break
-            case .failure:
+            case .failure(let error):
                 cache.set(value: previous)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }
@@ -294,10 +290,10 @@ extension GithubClient {
             switch result {
             case .success:
                 completion?(.success(true))
-            case .failure:
+            case .failure(let error):
                 cache.set(value: previous)
-                Squawk.showGenericError()
-                completion?(.error(nil))
+                Squawk.show(error: error)
+                completion?(.error(error))
             }
         }
     }
@@ -405,9 +401,9 @@ extension GithubClient {
         ) { result in
             switch result {
             case .success: break
-            case .failure:
+            case .failure(let error):
                 cache.set(value: previous)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }
@@ -503,9 +499,9 @@ extension GithubClient {
             ) { result in
                 switch result {
                 case .success: break
-                case .failure:
+                case .failure(let error):
                     cache.set(value: previous)
-                    Squawk.showGenericError()
+                    Squawk.show(error: error)
                 }
             }
         }
@@ -523,9 +519,9 @@ extension GithubClient {
             ) { result in
                 switch result {
                 case .success: break
-                case .failure:
+                case .failure(let error):
                     cache.set(value: previous)
-                    Squawk.showGenericError()
+                    Squawk.show(error: error)
                 }
             }
         }
