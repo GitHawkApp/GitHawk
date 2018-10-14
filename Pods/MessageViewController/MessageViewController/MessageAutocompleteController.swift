@@ -176,6 +176,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     }
 
     public func registerAutocomplete(prefix: String, attributes: [NSAttributedStringKey: Any]) {
+        registeredPrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributes
         autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }

@@ -126,11 +126,12 @@ open class MessageViewController: UIViewController, MessageAutocompleteControlle
         // required for the nested UITextView to layout its internals correctly
         messageView.layoutIfNeeded()
 
+        let frame = scrollView.frame
         scrollView.frame = CGRect(
-            x: bounds.minX,
-            y: bounds.minY,
-            width: bounds.width,
-            height: messageViewFrame.minY
+            x: frame.minX,
+            y: frame.minY,
+            width: frame.width,
+            height: messageViewFrame.minY - frame.minY
         )
 
         messageAutocompleteController.layout(in: view, bottomY: messageViewFrame.minY)
