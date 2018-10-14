@@ -14,6 +14,7 @@ final class BookmarkNavigationController {
 
     private let store: BookmarkStore
     private let model: Bookmark
+    private static let iconImageInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
 
     init?(store: BookmarkStore?, model: Bookmark?) {
         guard let store = store, let model = model else { return nil }
@@ -51,6 +52,7 @@ final class BookmarkNavigationController {
         item.action = selector
         item.isEnabled = true
         item.width = 0
+        item.imageInsets = BookmarkNavigationController.iconImageInset
     }
     
     //for timeframe between viewDidLoad() and bookmark info is loaded 
@@ -58,6 +60,7 @@ final class BookmarkNavigationController {
         let item = UIBarButtonItem()
         item.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
         item.isEnabled = false
+        item.imageInsets = BookmarkNavigationController.iconImageInset
         return item
     }
     

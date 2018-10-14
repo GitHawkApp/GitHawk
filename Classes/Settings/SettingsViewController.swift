@@ -17,8 +17,6 @@ NewIssueTableViewControllerDelegate {
 
     // must be injected
     var sessionManager: GitHubSessionManager!
-    weak var rootNavigationManager: RootNavigationManager?
-
     var client: GithubClient!
 
     @IBOutlet weak var versionLabel: UILabel!
@@ -158,7 +156,7 @@ NewIssueTableViewControllerDelegate {
 
     func onReportBug() {
         guard let viewController = NewIssueTableViewController.create(
-                client: newGithubClient(userSession: sessionManager.focusedUserSession),
+                client: GithubClient(userSession: sessionManager.focusedUserSession),
                 owner: "GitHawkApp",
                 repo: "GitHawk",
                 signature: .bugReport
@@ -185,7 +183,8 @@ NewIssueTableViewControllerDelegate {
             hasIssuesEnabled: true
         )
         let repoViewController = RepositoryViewController(client: client, repo: repo)
-        navigationController?.showDetailViewController(repoViewController, sender: self)
+        let navController = UINavigationController(rootViewController: repoViewController)
+        showDetailViewController(navController, sender: self)
     }
   
     func onSetDefaultReaction() {
@@ -267,6 +266,10 @@ NewIssueTableViewControllerDelegate {
 
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
+    }
+    
+    @IBAction func onPushNotificationsInfo(_ sender: Any) {
+        showContextualMenu(PushNotificationsDisclaimerViewController())
     }
 
     // MARK: NewIssueTableViewControllerDelegate

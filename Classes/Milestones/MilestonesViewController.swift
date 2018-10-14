@@ -89,8 +89,8 @@ MilestoneSectionControllerDelegate {
             switch result {
             case .success(let milestones):
                 self?.milestones = milestones
-            case .error:
-                Squawk.showGenericError()
+            case .error(let error):
+                Squawk.show(error: error)
             }
             self?.update(animated: true)
         }

@@ -14,7 +14,11 @@ import GitHubSession
 private let loginURL = URL(string: "http://github.com/login/oauth/authorize?client_id=\(Secrets.GitHub.clientId)&scope=user+repo+notifications")!
 private let callbackURLScheme = "freetime://"
 
-final class LoginSplashViewController: UIViewController, GitHubSessionListener {
+protocol LoginSplashViewControllerDelegate: class {
+    func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String)
+}
+
+final class LoginSplashViewController: UIViewController {
 
     enum State {
         case idle
@@ -22,12 +26,11 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
     }
 
     private var client: Client!
-    private var sessionManager: GitHubSessionManager!
 
     @IBOutlet weak var splashView: SplashView!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    private weak var safariController: SFSafariViewController?
+    private weak var delegate: LoginSplashViewControllerDelegate?
 
     @available(iOS 11.0, *)
     private var authSession: SFAuthenticationSession? {
@@ -60,7 +63,6 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
     override func viewDidLoad() {
         super.viewDidLoad()
         state = .idle
-        sessionManager.addListener(listener: self)
         signInButton.layer.cornerRadius = Styles.Sizes.cardCornerRadius
     }
     
@@ -72,9 +74,15 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
 
     // MARK: Public API
 
-    func config(client: Client, sessionManager: GitHubSessionManager) {
-        self.client = client
-        self.sessionManager = sessionManager
+    static func make(client: Client, delegate: LoginSplashViewControllerDelegate) -> LoginSplashViewController? {
+        let controller = UIStoryboard(
+            name: "OauthLogin",
+            bundle: Bundle(for: AppDelegate.self))
+            .instantiateInitialViewController() as? LoginSplashViewController
+        controller?.client = client
+        controller?.delegate = delegate
+        controller?.modalPresentationStyle = .formSheet
+        return controller
     }
 
     // MARK: Private API
@@ -88,7 +96,22 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
                 }
                 return
             }
-            self?.sessionManager.receivedCodeRedirect(url: callbackUrl)
+
+            guard let items = URLComponents(url: callbackUrl, resolvingAgainstBaseURL: false)?.queryItems,
+                let index = items.index(where: { $0.name == "code" }),
+                let code = items[index].value
+                else { return }
+
+            self?.state = .fetchingToken
+
+            self?.client.requestAccessToken(code: code) { [weak self] result in
+                switch result {
+                case .error:
+                    self?.handleError()
+                case .success(let user):
+                    self?.delegate?.finishLogin(token: user.token, authMethod: .oauth, username: user.username)
+                }
+            }
         })
         self.authSession?.start()
     }
@@ -117,7 +140,7 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
                     case .failure:
                         self?.handleError()
                     case .success(let user):
-                        self?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
+                        self?.delegate?.finishLogin(token: token, authMethod: .pat, username: user.data.login)
                     }
                 }
             })
@@ -138,34 +161,8 @@ final class LoginSplashViewController: UIViewController, GitHubSessionListener {
         present(alert, animated: trueUnlessReduceMotionEnabled)
     }
 
-    private func finishLogin(token: String, authMethod: GitHubUserSession.AuthMethod, username: String) {
-        sessionManager.focus(
-            GitHubUserSession(token: token, authMethod: authMethod, username: username),
-            dismiss: true
-        )
-    }
-    
     private func setupSplashView() {
         splashView.configureView()
     }
-
-    // MARK: GitHubSessionListener
-
-    func didReceiveRedirect(manager: GitHubSessionManager, code: String) {
-        safariController?.dismiss(animated: trueUnlessReduceMotionEnabled)
-        state = .fetchingToken
-
-        client.requestAccessToken(code: code) { [weak self] result in
-            switch result {
-            case .error:
-                self?.handleError()
-            case .success(let user):
-                self?.finishLogin(token: user.token, authMethod: .oauth, username: user.username)
-            }
-        }
-    }
-
-    func didFocus(manager: GitHubSessionManager, userSession: GitHubUserSession, dismiss: Bool) {}
-    func didLogout(manager: GitHubSessionManager) {}
 
 }

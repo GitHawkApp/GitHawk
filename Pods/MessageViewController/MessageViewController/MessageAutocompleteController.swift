@@ -80,6 +80,8 @@ public final class MessageAutocompleteController: MessageTextViewListener {
             name: .UIKeyboardWillChangeFrame,
             object: nil
         )
+
+        preserveTypingAttributes(for: textView)
     }
 
     // MARK: Public API
@@ -176,6 +178,7 @@ public final class MessageAutocompleteController: MessageTextViewListener {
     }
 
     public func registerAutocomplete(prefix: String, attributes: [NSAttributedStringKey: Any]) {
+        registeredPrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributes
         autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }

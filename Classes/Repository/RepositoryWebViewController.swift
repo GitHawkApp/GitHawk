@@ -129,6 +129,16 @@ extension RepositoryWebViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - RepositoryWebViewController (EmptyViewDelegate) -
+
+extension RepositoryWebViewController: EmptyViewDelegate {
+
+    func didTapRetry() {
+        self.fetch()
+    }
+
+}
+
 // MARK: - RepositoryWebViewController (Fetch Data) -
 
 extension RepositoryWebViewController {
@@ -179,6 +189,8 @@ extension RepositoryWebViewController {
 
         state = .idle
         emptyView.isHidden = true
+        emptyView.delegate = self
+        emptyView.button.isHidden = false
 
         view.backgroundColor = .white
         view.addSubview(emptyView)

@@ -34,6 +34,7 @@ final class IssuesViewController:
     FlatCacheListener,
     IssueCommentSectionControllerDelegate,
     IssueTextActionsViewSendDelegate,
+    EmptyViewDelegate,
     MessageTextViewListener {
 
     private let client: GithubClient
@@ -303,8 +304,8 @@ final class IssuesViewController:
                     }
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
-                case .error:
-                    Squawk.showGenericError()
+                case .error(let error):
+                    Squawk.show(error: error)
                 }
             }
         }
@@ -501,8 +502,10 @@ final class IssuesViewController:
         case .idle:
             let emptyView = EmptyView()
             emptyView.label.text = NSLocalizedString("Issue cannot be found", comment: "")
+            emptyView.delegate = self
+            emptyView.button.isHidden = false
             return emptyView
-        case .loading, .loadingNext:
+        case .loading, .loadingNext, .initial:
             return nil
         }
     }
@@ -613,6 +616,12 @@ final class IssuesViewController:
                 body: text
             )
         }
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry() {
+        self.feed.refreshHead()
     }
 
     // MARK: MessageTextViewListener

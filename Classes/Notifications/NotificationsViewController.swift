@@ -13,15 +13,11 @@ import Squawk
 
 final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
-ForegroundHandlerDelegate,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource,
-ReviewGitHubAccessDelegate
-{
+BaseListViewController2EmptyDataSource {
 
     private let modelController: NotificationModelController
-    private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
@@ -33,11 +29,13 @@ ReviewGitHubAccessDelegate
         self.modelController = modelController
         self.inboxType = inboxType
 
-        super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
+            backgroundThreshold: 5 * 60
+        )
         
         self.dataSource = self
         self.emptyDataSource = self
-        self.foreground.delegate = self
 
         switch inboxType {
         case .all: title = NSLocalizedString("All", comment: "")
@@ -103,9 +101,9 @@ ReviewGitHubAccessDelegate
                 ids.append($0.id)
             }
             rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
-        case .error:
+        case .error(let err):
             error(animated: trueUnlessReduceMotionEnabled)
-            Squawk.showNetworkError()
+            Squawk.show(error: err)
         }
 
         // set after updating so self.models has already been changed
@@ -280,17 +278,8 @@ ReviewGitHubAccessDelegate
     func emptyModel(for adapter: ListSwiftAdapter) -> ListSwiftPair {
         let layoutInsets = view.safeAreaInsets
         return ListSwiftPair.pair("empty-notification-value", {
-            return NoNewNotificationSectionController(
-                layoutInsets: layoutInsets,
-                reviewGitHubAccessDelegate: self
-		)
+            return NoNewNotificationSectionController(layoutInsets: layoutInsets)
         })
-    }
-
-    // MARK: ForegroundHandlerDelegate
-
-    func didForeground(handler: ForegroundHandler) {
-        feed.refreshHead()
     }
 
     // MARK: FlatCacheListener
@@ -308,15 +297,6 @@ ReviewGitHubAccessDelegate
     
     func didDoubleTapTab() {
         didSingleTapTab()
-    }
-    
-    // MARK: ReviewGitHubAccessDelegate
-    func reviewGitHubAccessButtonTapped() {
-        //copied/pasted from SettingsViewController... could consolidate
-        guard let url = URL(string: "https://github.com/settings/connections/applications/\(Secrets.GitHub.clientId)")
-            else { fatalError("Should always create GitHub issue URL") }
-        // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
-        UIApplication.shared.open(url)
     }
     
 }

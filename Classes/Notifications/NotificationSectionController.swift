@@ -109,8 +109,8 @@ final class NotificationSectionController: ListSwiftSectionController<Notificati
                         repo: model.repo,
                         release: response.data.tagName
                     )
-                case .failure:
-                    Squawk.showGenericError()
+                case .failure(let error):
+                    Squawk.show(error: error)
                 }
         }
     }

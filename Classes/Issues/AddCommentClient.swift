@@ -61,11 +61,11 @@ final class AddCommentClient {
                         viewerCanDelete: fragments.deletableFields.viewerCanDelete
                     )
                 }
-            case .failure:
+            case .failure(let error):
                 for listener in self.listeners {
                     listener.listener?.didFailSendingComment(client: self, subjectId: subjectId, body: body)
                 }
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }

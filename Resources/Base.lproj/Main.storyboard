@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EPN-4V-9Hj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -92,10 +93,10 @@
             </objects>
             <point key="canvasLocation" x="167" y="1321"/>
         </scene>
-        <!--Split View Controller-->
+        <!--App Split View Controller-->
         <scene sceneID="0c8-No-DSu">
             <objects>
-                <splitViewController id="EPN-4V-9Hj" sceneMemberID="viewController">
+                <splitViewController id="EPN-4V-9Hj" customClass="AppSplitViewController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="f5k-7G-hod" kind="relationship" relationship="masterViewController" id="aFN-Se-rpt"/>
                         <segue destination="D4E-Yy-PTN" kind="relationship" relationship="detailViewController" id="gsk-8r-3gM"/>
@@ -108,7 +109,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="gc3-YD-4oz">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="f5k-7G-hod" customClass="TabBarController" customModule="Freetime" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="f5k-7G-hod" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="FXG-86-zX1">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

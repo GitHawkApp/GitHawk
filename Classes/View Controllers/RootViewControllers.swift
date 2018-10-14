@@ -10,24 +10,19 @@ import UIKit
 import GitHubSession
 
 func newSettingsRootViewController(
-    sessionManager: GitHubSessionManager,
-    client: GithubClient,
-    rootNavigationManager: RootNavigationManager
-    ) -> UIViewController {
-    guard let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()
+    sessionManager: GitHubSessionManager
+    ) -> UINavigationController {
+    guard let nav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as? UINavigationController
         else { fatalError("Could not unpack settings storyboard") }
 
-    if let nav = controller as? UINavigationController,
-        let first = nav.viewControllers.first as? SettingsViewController {
-        first.client = client
+    if let first = nav.viewControllers.first as? SettingsViewController {
         first.sessionManager = sessionManager
-        first.rootNavigationManager = rootNavigationManager
         nav.tabBarItem.title = NSLocalizedString("Settings", comment: "")
         nav.tabBarItem.image = UIImage(named: "tab-gear")?.withRenderingMode(.alwaysOriginal)
         nav.tabBarItem.selectedImage = UIImage(named: "tab-gear-selected")?.withRenderingMode(.alwaysOriginal)
     }
 
-    return controller
+    return nav
 }
 
 func newNotificationsRootViewController(client: GithubClient) -> UIViewController {

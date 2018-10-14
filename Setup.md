@@ -34,10 +34,14 @@ You will be redirected to the application page where you can access your Client 
 To add the Client ID and Client Secret to the App, follow these steps:
 
 1. In Xcode, go to `Product` (in the Menu bar) > `Scheme` > `Manage Schemes...`
-2. Select `Freetime-AppCenter` and click `Edit...`
-3. Go to `Run` > `Arguments`
-4. Add your Client ID (`GITHUB_CLIENT_ID` as key) and Client Secret (`GITHUB_CLIENT_SECRET`) to the Environment Variables.
+2. Select `Freetime-AppCenter` and click the cog.
+3. Click on `Duplicate`.
+4. Uncheck the `Shared` checkbox.
+5. Select `Copy of Freetime-AppCenter` and click on `Edit...`
+6. Go to `Run` > `Arguments`
+7. Add your Client ID (`GITHUB_CLIENT_ID` as key) and Client Secret (`GITHUB_CLIENT_SECRET`) to the Environment Variables.
 
+The copy of the scheme is to avoid commiting your private environement variable to the repository.
 
 ## 4. Setting up code-signing (With automatic code-signing)
 

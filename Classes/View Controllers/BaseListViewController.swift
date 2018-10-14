@@ -31,6 +31,7 @@ protocol BaseListViewControllerDataSource: class {
 class BaseListViewController<PagingType: ListDiffable>: UIViewController,
 ListAdapterDataSource,
 FeedDelegate,
+EmptyViewDelegate,
 LoadMoreSectionControllerDelegate {
 
     // required on init
@@ -160,6 +161,8 @@ LoadMoreSectionControllerDelegate {
         guard hasError else { return nil }
         let empty = EmptyView()
         empty.label.text = emptyErrorMessage
+        empty.delegate = self
+        empty.button.isHidden = false
         return empty
     }
 
@@ -172,6 +175,12 @@ LoadMoreSectionControllerDelegate {
 
     final func loadNextPage(feed: Feed) -> Bool {
         return false
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry() {
+        self.feed.refreshHead()
     }
 
     // MARK: LoadMoreSectionControllerDelegate

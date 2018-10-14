@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import TUSafariActivity
 
 final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
@@ -20,6 +21,18 @@ RepositoryBranchUpdatable
     private let path: FilePath
     private let repo: RepositoryDetails
     private var files = [RepositoryFile]()
+    private var repoUrl: URL {
+        return URL(string: "https://github.com/\(repo.owner)/\(repo.name)/tree/\(branch)/\(path.path)")!
+    }
+    private lazy var moreOptionsItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(
+            image: UIImage(named: "bullets-hollow"),
+            target: self,
+            action: #selector(RepositoryCodeDirectoryViewController.onShare(sender:)))
+        barButtonItem.isEnabled = false
+
+        return barButtonItem
+    }()
 
     init(
         client: GithubClient,
@@ -50,6 +63,7 @@ RepositoryBranchUpdatable
         super.viewDidLoad()
         configureTitle(filePath: path, target: self, action: #selector(onFileNavigationTitle(sender:)))
         makeBackBarItemEmpty()
+        navigationItem.rightBarButtonItem = moreOptionsItem
     }
 
     // MARK: Public API
@@ -73,6 +87,33 @@ RepositoryBranchUpdatable
         showAlert(filePath: path, sender: sender)
     }
 
+    @objc func onShare(sender: UIButton) {
+        let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
+        let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
+        
+        weak var weakSelf = self
+        let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
+        var actions = [
+            AlertAction(alertBuilder).share([path.path], activities: nil, type: .shareFilePath) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
+            AlertAction(alertBuilder).share([repoUrl], activities: [TUSafariActivity()], type: .shareUrl) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            },
+            AlertAction.cancel()
+        ]
+        
+        if let name = self.path.components.last {
+            actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
+                $0.popoverPresentationController?.setSourceView(sender)
+            }, at: 1)
+        }
+
+        alert.addActions(actions)
+        alert.popoverPresentationController?.setSourceView(sender)
+        present(alert, animated: trueUnlessReduceMotionEnabled)
+    }
+
     // MARK: Overrides
 
     override func fetch(page: NSNumber?) {
@@ -88,6 +129,7 @@ RepositoryBranchUpdatable
             case .success(let files):
                 self?.files = files
                 self?.update(animated: trueUnlessReduceMotionEnabled)
+                self?.moreOptionsItem.isEnabled = true
             }
         }
     }

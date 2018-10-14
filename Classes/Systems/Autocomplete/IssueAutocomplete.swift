@@ -59,8 +59,8 @@ final class IssueAutocomplete: AutocompleteType {
             result: { $0 }
         ) { [weak self] result in
             switch result {
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
                 completion(false)
             case .success(let data):
                 guard let strongSelf = self else { return }

@@ -99,8 +99,8 @@ LabelSectionControllerDelegate {
                     return RepositoryLabel(color: node.color, name: node.name)
                 }.sorted { $0.name < $1.name }
                 self?.update(animated: true)
-            case .failure:
-                Squawk.showGenericError()
+            case .failure(let error):
+                Squawk.show(error: error)
             }
         }
     }

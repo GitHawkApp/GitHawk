@@ -42,6 +42,13 @@ extension Squawk {
         triggerHaptic()
     }
 
+    static func show(error: Error?, view: UIView? = window) {
+        let text = error?.localizedDescription
+            ?? NSLocalizedString("Something went wrong.", comment: "")
+        Squawk.shared.show(in: view, config: errorConfig(text: text))
+        triggerHaptic()
+    }
+
     static func showPermissionsError(view: UIView? = window) {
         Squawk.shared.show(in: view, config: errorConfig(text: NSLocalizedString("You must request access.", comment: "")))
         triggerHaptic()

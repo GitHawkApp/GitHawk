@@ -186,7 +186,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="D6n-Kh-ydE" kind="show" id="t7M-y6-pfg"/>
+                                            <segue destination="zTX-UL-vjU" kind="showDetail" id="t7M-y6-pfg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pnm-5p-yC5" customClass="StyledTableCell" customModule="Freetime" customModuleProvider="target">
@@ -259,12 +259,21 @@
                                                         <action selector="onSettings:" destination="NnB-TU-bkW" eventType="touchUpInside" id="eCr-BP-8PS"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viN-2G-VUO">
+                                                    <rect key="frame" x="156" y="11" width="22" height="22"/>
+                                                    <color key="tintColor" red="0.63921568627450975" green="0.66666666666666663" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="onPushNotificationsInfo:" destination="NnB-TU-bkW" eventType="touchUpInside" id="PrO-Nb-3b4"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="T30-uT-48L" secondAttribute="trailing" constant="15" id="6RB-2m-fYA"/>
                                                 <constraint firstItem="HFk-Cc-92g" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="Ind-0b-it6"/>
+                                                <constraint firstItem="viN-2G-VUO" firstAttribute="leading" secondItem="vNL-qr-bAj" secondAttribute="trailing" constant="8" id="JaP-4a-w1r"/>
                                                 <constraint firstItem="vNL-qr-bAj" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="TTt-u4-ANE"/>
                                                 <constraint firstAttribute="trailing" secondItem="HFk-Cc-92g" secondAttribute="trailing" id="ZLK-Ic-qgC"/>
+                                                <constraint firstItem="viN-2G-VUO" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="dAd-9o-KqZ"/>
                                                 <constraint firstItem="vNL-qr-bAj" firstAttribute="leading" secondItem="nUN-Hd-0xp" secondAttribute="leading" constant="16" id="o6O-Rl-PO6"/>
                                                 <constraint firstItem="T30-uT-48L" firstAttribute="centerY" secondItem="nUN-Hd-0xp" secondAttribute="centerY" id="wgd-mx-RqK"/>
                                             </constraints>
@@ -348,10 +357,10 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="guA-My-iRb" firstAttribute="leading" secondItem="uAb-lB-GZA" secondAttribute="leadingMargin" id="F9S-kd-38Z"/>
                                                 <constraint firstItem="guA-My-iRb" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="Lmv-Cf-s8i"/>
                                                 <constraint firstItem="l9s-bQ-bad" firstAttribute="centerY" secondItem="uAb-lB-GZA" secondAttribute="centerY" id="WGF-E7-3TC"/>
                                                 <constraint firstAttribute="trailing" secondItem="l9s-bQ-bad" secondAttribute="trailing" constant="15" id="hbT-TO-kjD"/>
+                                                <constraint firstItem="guA-My-iRb" firstAttribute="leading" secondItem="uAb-lB-GZA" secondAttribute="leading" constant="16" id="vk2-fv-yD3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -368,7 +377,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sign Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ku5-ZI-OG9" customClass="SettingsLabel" customModule="Freetime" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                                    <rect key="frame" x="24" y="0.0" width="336" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.79607843137254897" green="0.14117647058823529" blue="0.19215686274509802" alpha="1" colorSpace="calibratedRGB"/>
@@ -584,7 +593,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Iq-39-nex" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-215" y="-131"/>
+            <point key="canvasLocation" x="665" y="-131"/>
         </scene>
         <!--Accounts-->
         <scene sceneID="Xjx-IC-OZR">
@@ -630,7 +639,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHM-PS-ThT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1420" y="-133"/>
+            <point key="canvasLocation" x="2359.1999999999998" y="-133.5832083958021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="D9x-gg-9aE">
@@ -664,7 +673,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVs-04-lfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="615" y="-132"/>
+            <point key="canvasLocation" x="1552.8" y="-132.68365817091455"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gqm-gt-Lcu">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zTX-UL-vjU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Z7d-Gy-h3x">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="D6n-Kh-ydE" kind="relationship" relationship="rootViewController" id="WFW-pz-Za9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kTW-nS-mww" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-108" y="-132.68365817091455"/>
         </scene>
     </scenes>
     <resources>

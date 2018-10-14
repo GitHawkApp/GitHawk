@@ -21,6 +21,24 @@ struct AlertAction {
     let title: String?
     let style: UIAlertActionStyle
 
+    enum AlertShareType {
+        case shareUrl
+        case shareContent
+        case shareFilePath
+        case shareFileName
+        case `default`
+
+        var localizedString: String {
+            switch self {
+            case .shareUrl: return NSLocalizedString("Share URL", comment: "")
+            case .shareContent: return NSLocalizedString("Share Content", comment: "")
+            case .shareFilePath: return NSLocalizedString("Copy Path", comment: "")
+            case .shareFileName: return NSLocalizedString("Copy Name", comment: "")
+            case .default: return NSLocalizedString("Share", comment: "")
+            }
+        }
+    }
+
     // MARK: Init
 
     init(_ builder: AlertActionBuilder) {
@@ -37,8 +55,9 @@ struct AlertAction {
 
     func share(_ items: [Any],
                activities: [UIActivity]?,
+               type: AlertShareType = .default,
                buildActivityBlock: ((UIActivityViewController) -> Void)?) -> UIAlertAction {
-        return UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default) { _ in
+        return UIAlertAction(title: type.localizedString, style: .default) { _ in
             let activityController = UIActivityViewController(activityItems: items, applicationActivities: activities)
             buildActivityBlock?(activityController)
             self.rootViewController?.present(activityController, animated: trueUnlessReduceMotionEnabled)
