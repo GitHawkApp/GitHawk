@@ -81,6 +81,7 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     var actions: [Action] {
+        return [.labels, .milestone, .assignees, .reviewers]
         if case .none = permissions { return [] }
         guard let result = self.result else { return [] }
 

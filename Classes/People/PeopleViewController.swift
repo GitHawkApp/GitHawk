@@ -83,7 +83,7 @@ PeopleSectionControllerDelegate {
 
     func addMenuClearButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Clear", comment: ""),
+            title: Constants.Strings.clear,
             style: .plain,
             target: self,
             action: #selector(onMenuClear)
@@ -115,8 +115,8 @@ PeopleSectionControllerDelegate {
     private func updateTitle() {
         let selectedCount = "\(selected.count)/\(selectionLimit)"
         switch type {
-        case .assignee: title = "\(NSLocalizedString("Assignees", comment: "")) \(selectedCount)"
-        case .reviewer: title = "\(NSLocalizedString("Reviewers", comment: "")) \(selectedCount)"
+        case .assignee: title = "\(Constants.Strings.assignees) \(selectedCount)"
+        case .reviewer: title = "\(Constants.Strings.reviewers) \(selectedCount)"
         }
         updateClearButtonEnabled()
     }
