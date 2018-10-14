@@ -49,15 +49,10 @@ PeopleSectionControllerDelegate {
 
         self.dataSource = self
 
-        switch type {
-        case .assignee: title = NSLocalizedString("Assignees", comment: "")
-        case .reviewer: title = NSLocalizedString("Reviewers", comment: "")
-        }
-
         feed.collectionView.backgroundColor = Styles.Colors.menuBackgroundColor.color
         feed.setLoadingSpinnerColor(to: .white)
         preferredContentSize = Styles.Sizes.contextMenuSize
-        updateSelectionCount()
+        updateTitle()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,7 +63,7 @@ PeopleSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
-//        addClearButton()
+        addMenuClearButton()
     }
 
     // MARK: Public API
@@ -82,16 +77,38 @@ PeopleSectionControllerDelegate {
         }
     }
 
+    func updateClearButtonEnabled() {
+        navigationItem.leftBarButtonItem?.isEnabled = selected.count > 0
+    }
+
+    func addMenuClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Clear", comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(onMenuClear)
+        )
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        updateClearButtonEnabled()
+    }
+
+    @objc func onMenuClear() {
+        self.selected.forEach {
+            if let sectionController: PeopleSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                sectionController.didSelectItem(at: 0)
+            }
+        }
+    }
+
     // MARK: Private API
 
-    func updateSelectionCount() {
-        let label = UILabel()
-        label.font = Styles.Text.body.preferredFont
-        label.backgroundColor = .clear
-        label.textColor = Styles.Colors.Gray.light.color
-        label.text = "\(selected.count)/\(selectionLimit)"
-        label.sizeToFit()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: label)
+    private func updateTitle() {
+        let selectedCount = "\(selected.count)/\(selectionLimit)"
+        switch type {
+        case .assignee: title = "\(NSLocalizedString("Assignees", comment: "")) \(selectedCount)"
+        case .reviewer: title = "\(NSLocalizedString("Reviewers", comment: "")) \(selectedCount)"
+        }
+        updateClearButtonEnabled()
     }
 
     // MARK: Overrides
@@ -148,19 +165,6 @@ PeopleSectionControllerDelegate {
     // MARK: PeopleSectionControllerDelegate
 
     func didSelect(controller: PeopleSectionController) {
-        updateSelectionCount()
-    }
-
-    func addClearButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(onMenuClear))
-        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
-    }
-
-    @objc func onMenuClear() {
-        self.selected.forEach {
-            if let sectionController: LabelSectionController = feed.swiftAdapter.sectionController(for: $0) {
-                sectionController.didSelectItem(at: 0)
-            }
-        }
+        updateTitle()
     }
 }

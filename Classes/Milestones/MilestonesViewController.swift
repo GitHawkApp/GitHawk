@@ -63,7 +63,12 @@ MilestoneSectionControllerDelegate {
     }
 
     func addMenuClearButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(onMenuClear))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: NSLocalizedString("Clear", comment: ""),
+            style: .plain,
+            target: self,
+            action: #selector(onMenuClear)
+        )
         navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
         updateClearButtonEnabled()
     }
