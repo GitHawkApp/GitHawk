@@ -383,7 +383,6 @@
 		29DB264A1FCA10A800C3D0C9 /* GithubHighlighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */; };
 		29DB5D152132227F00E408D9 /* InboxZeroLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */; };
 		29DB5D192133418300E408D9 /* LocalNotificationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB5D182133418200E408D9 /* LocalNotificationsCache.swift */; };
-		29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */; };
 		29EDFE7C1F65C580005BCCEB /* SplitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */; };
 		29EDFE821F661562005BCCEB /* RepositoryReadmeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */; };
 		29EDFE841F661776005BCCEB /* RepositoryReadmeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */; };
@@ -926,7 +925,6 @@
 		29DB26491FCA10A800C3D0C9 /* GithubHighlighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubHighlighting.swift; sourceTree = "<group>"; };
 		29DB5D142132227F00E408D9 /* InboxZeroLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxZeroLoader.swift; sourceTree = "<group>"; };
 		29DB5D182133418200E408D9 /* LocalNotificationsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsCache.swift; sourceTree = "<group>"; };
-		29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForegroundHandler.swift; sourceTree = "<group>"; };
 		29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewTests.swift; sourceTree = "<group>"; };
 		29EDFE811F661562005BCCEB /* RepositoryReadmeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeModel.swift; sourceTree = "<group>"; };
 		29EDFE831F661776005BCCEB /* RepositoryReadmeSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryReadmeSectionController.swift; sourceTree = "<group>"; };
@@ -1601,7 +1599,6 @@
 				297AE84E1EC0D58A00B44A1F /* Info.plist */,
 				DC60C6D41F983DF800241271 /* IssueLabelCellTests.swift */,
 				29A476B11ED24D99005D0953 /* IssueTests.swift */,
-				BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */,
 				29C2950D1EC7B43B00D46CD2 /* ListKitTestCase.swift */,
 				29C295091EC7AFA500D46CD2 /* ListTestKit.swift */,
 				2977D8BE215AE12D0073F737 /* LocalNotificationCacheTests.swift */,
@@ -1615,6 +1612,7 @@
 				DC60C6D21F983BB900241271 /* SignatureTests.swift */,
 				45A9D0381F9D3D6A00FD5AEF /* Snapshot Tests */,
 				29EDFE7B1F65C580005BCCEB /* SplitViewTests.swift */,
+				BDB6AA752165B8EA009BB73C /* SwitchBranches.swift */,
 				295F52A61EF1B9D2000B53CF /* Test.md */,
 			);
 			path = FreetimeTests;
@@ -1694,7 +1692,6 @@
 				DC78570F1F97F546009BADDA /* Debouncer.swift */,
 				29C167791ECA14F700439D62 /* Feed.swift */,
 				54AD5E8D1F24D953004A4BD6 /* FeedSelectionProviding.swift */,
-				29EB1EEE1F425E5100A200B4 /* ForegroundHandler.swift */,
 				29C167731ECA0DBB00439D62 /* GithubAPIDateFormatter.swift */,
 				29C0E7061ECBC6C50051D756 /* GithubClient.swift */,
 				2981A8A31EFE9FC700E25EF1 /* GithubEmoji.swift */,
@@ -2787,7 +2784,6 @@
 				291929421F3EA8CD0012067B /* File.swift in Sources */,
 				299E86491EFD9DBB00E5FE70 /* FlexController.m in Sources */,
 				29F3A18620CBF99E00645CB7 /* NotificationModelController.swift in Sources */,
-				29EB1EEF1F425E5100A200B4 /* ForegroundHandler.swift in Sources */,
 				29C167741ECA0DBB00439D62 /* GithubAPIDateFormatter.swift in Sources */,
 				290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */,
 				294434E11FB1F2DA00050C06 /* BookmarkNavigationController.swift in Sources */,

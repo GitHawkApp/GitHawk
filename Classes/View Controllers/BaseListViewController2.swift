@@ -25,16 +25,22 @@ ListSwiftAdapterEmptyViewSource,
 EmptyViewDelegate {
 
     private let emptyErrorMessage: String
+    private let backgroundThreshold: CFTimeInterval?
 
     public weak var dataSource: BaseListViewController2DataSource?
     public weak var emptyDataSource: BaseListViewController2EmptyDataSource?
 
-    public private(set) lazy var feed: Feed = { Feed(viewController: self, delegate: self) }()
+    public private(set) lazy var feed: Feed = { Feed(
+        viewController: self,
+        delegate: self,
+        backgroundThreshold: backgroundThreshold
+        ) }()
     private var page: PageType?
     private var hasError = false
 
-    init(emptyErrorMessage: String) {
+    init(emptyErrorMessage: String, backgroundThreshold: CFTimeInterval? = nil) {
         self.emptyErrorMessage = emptyErrorMessage
+        self.backgroundThreshold = backgroundThreshold
         super.init(nibName: nil, bundle: nil)
     }
 

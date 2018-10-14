@@ -173,7 +173,7 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
             emptyView.delegate = self
             emptyView.button.isHidden = false
             return emptyView
-        case .loadingNext:
+        case .loadingNext, .initial:
             return nil
         case .loading:
             return EmptyLoadingView()

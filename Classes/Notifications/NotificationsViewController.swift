@@ -13,14 +13,11 @@ import Squawk
 
 final class NotificationsViewController: BaseListViewController2<Int>,
 BaseListViewController2DataSource,
-ForegroundHandlerDelegate,
 FlatCacheListener,
 TabNavRootViewControllerType,
-BaseListViewController2EmptyDataSource
-{
+BaseListViewController2EmptyDataSource {
 
     private let modelController: NotificationModelController
-    private let foreground = ForegroundHandler(threshold: 5 * 60)
     private let inboxType: InboxType
     private var notificationIDs = [String]()
 
@@ -32,11 +29,13 @@ BaseListViewController2EmptyDataSource
         self.modelController = modelController
         self.inboxType = inboxType
 
-        super.init(emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""))
+        super.init(
+            emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
+            backgroundThreshold: 5 * 60
+        )
         
         self.dataSource = self
         self.emptyDataSource = self
-        self.foreground.delegate = self
 
         switch inboxType {
         case .all: title = NSLocalizedString("All", comment: "")
@@ -281,12 +280,6 @@ BaseListViewController2EmptyDataSource
         return ListSwiftPair.pair("empty-notification-value", {
             return NoNewNotificationSectionController(layoutInsets: layoutInsets)
         })
-    }
-
-    // MARK: ForegroundHandlerDelegate
-
-    func didForeground(handler: ForegroundHandler) {
-        feed.refreshHead()
     }
 
     // MARK: FlatCacheListener
