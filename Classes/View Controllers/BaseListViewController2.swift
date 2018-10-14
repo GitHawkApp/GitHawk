@@ -20,7 +20,9 @@ protocol BaseListViewController2EmptyDataSource: class {
 class BaseListViewController2<PageType: CustomStringConvertible>: UIViewController,
 ListSwiftAdapterDataSource,
 FeedDelegate,
-LoadMoreSectionController2Delegate {
+LoadMoreSectionController2Delegate,
+ListSwiftAdapterEmptyViewSource,
+EmptyViewDelegate {
 
     private let emptyErrorMessage: String
 
@@ -44,6 +46,7 @@ LoadMoreSectionController2Delegate {
         super.viewDidLoad()
         feed.viewDidLoad()
         feed.swiftAdapter.dataSource = self
+        feed.swiftAdapter.emptyViewSource = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +148,23 @@ LoadMoreSectionController2Delegate {
 
     func didSelect(controller: LoadMoreSectionController2) {
         fetch(page: page)
+    }
+
+    // MARK: ListSwiftAdapterEmptyViewSource
+
+    func emptyView(adapter: ListSwiftAdapter) -> UIView? {
+        guard hasError else { return nil }
+        let empty = EmptyView()
+        empty.label.text = emptyErrorMessage
+        empty.delegate = self
+        empty.button.isHidden = false
+        return empty
+    }
+
+    // MARK: EmptyViewDelegate
+
+    func didTapRetry() {
+        self.feed.refreshHead()
     }
     
 }
