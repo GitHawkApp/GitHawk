@@ -10,7 +10,9 @@ import UIKit
 import IGListKit
 import Squawk
 
-final class LabelsViewController: BaseListViewController2<String>, BaseListViewController2DataSource {
+final class LabelsViewController: BaseListViewController2<String>,
+BaseListViewController2DataSource,
+LabelSectionControllerDelegate {
 
     private let selectedLabels: Set<RepositoryLabel>
     private var labels = [RepositoryLabel]()
@@ -42,6 +44,7 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
+        addMenuClearButton()
     }
 
     // MARK: Public API
@@ -53,6 +56,31 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
             }
             return false
         }
+    }
+
+    func addMenuClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Constants.Strings.clear,
+            style: .plain,
+            target: self,
+            action: #selector(onMenuClear)
+        )
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        navigationItem.leftBarButtonItem?.isEnabled = selectedLabels.count > 0
+    }
+
+    func updateClearButtonEnabled() {
+        navigationItem.leftBarButtonItem?.isEnabled = selected.count > 0
+    }
+
+    @objc func onMenuClear() {
+        self.selected.forEach {
+            if let sectionController: LabelSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                sectionController.didSelectItem(at: 0)
+            }
+        }
+
+        updateClearButtonEnabled()
     }
 
     // MARK: Overrides
@@ -78,8 +106,17 @@ final class LabelsViewController: BaseListViewController2<String>, BaseListViewC
 
     func models(adapter: ListSwiftAdapter) -> [ListSwiftPair] {
         return labels.map { [selectedLabels] label in
-            ListSwiftPair.pair(label) { LabelSectionController(selected: selectedLabels.contains(label)) }
+            ListSwiftPair.pair(label) {
+                let controller = LabelSectionController(selected: selectedLabels.contains(label))
+                controller.delegate = self
+                return controller
+            }
         }
     }
 
+    // MARK: LabelSectionControllerDelegate
+
+    func didSelect(controller: LabelSectionController) {
+        updateClearButtonEnabled()
+    }
 }

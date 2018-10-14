@@ -8,7 +8,13 @@
 
 import IGListKit
 
+protocol LabelSectionControllerDelegate: class {
+    func didSelect(controller: LabelSectionController)
+}
+
 final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> {
+
+    public weak var delegate: LabelSectionControllerDelegate?
 
     public private(set) var selected: Bool
 
@@ -41,6 +47,7 @@ final class LabelSectionController: ListSwiftSectionController<RepositoryLabel> 
                     strongSelf.selected = !strongSelf.selected
                     context.deselect()
                     context.cell?.setSelected(strongSelf.selected)
+                    strongSelf.delegate?.didSelect(controller: strongSelf)
             })
         ]
     }
