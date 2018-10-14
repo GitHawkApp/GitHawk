@@ -505,7 +505,7 @@ final class IssuesViewController:
             emptyView.delegate = self
             emptyView.button.isHidden = false
             return emptyView
-        case .loading, .loadingNext:
+        case .loading, .loadingNext, .initial:
             return nil
         }
     }

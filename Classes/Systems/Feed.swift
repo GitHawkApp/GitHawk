@@ -17,6 +17,7 @@ protocol FeedDelegate: class {
 final class Feed: NSObject, UIScrollViewDelegate {
 
     enum Status {
+        case initial
         case idle
         case loading
         case loadingNext
@@ -25,24 +26,31 @@ final class Feed: NSObject, UIScrollViewDelegate {
     let swiftAdapter: ListSwiftAdapter
     let collectionView: UICollectionView
 
-    public private(set) var status: Status = .idle
+    public private(set) var status: Status = .initial
     private weak var delegate: FeedDelegate?
     private let feedRefresh = FeedRefresh()
     private let managesLayout: Bool
     private let loadingView = EmptyLoadingView()
 
+    private let backgroundThreshold: CFTimeInterval?
+    private var backgroundTime: CFTimeInterval?
+
     init(
         viewController: UIViewController,
         delegate: FeedDelegate,
         collectionView: UICollectionView? = nil,
-        managesLayout: Bool = true
+        managesLayout: Bool = true,
+        backgroundThreshold: CFTimeInterval? = nil
         ) {
         self.swiftAdapter = ListSwiftAdapter(viewController: viewController)
         self.delegate = delegate
         self.managesLayout = managesLayout
         self.collectionView = collectionView
             ?? UICollectionView(frame: .zero, collectionViewLayout: ListCollectionViewLayout.basic())
+        self.backgroundThreshold = backgroundThreshold
+
         super.init()
+
         self.adapter.scrollViewDelegate = self
 
         self.collectionView.alwaysBounceVertical = true
@@ -50,6 +58,22 @@ final class Feed: NSObject, UIScrollViewDelegate {
         self.collectionView.refreshControl = feedRefresh.refreshControl
         self.collectionView.keyboardDismissMode = .onDrag
         feedRefresh.refreshControl.addTarget(self, action: #selector(Feed.onRefresh(sender:)), for: .valueChanged)
+
+        if backgroundThreshold != nil {
+            let center = NotificationCenter.default
+            center.addObserver(
+                self,
+                selector: #selector(didBecomeActive),
+                name: .UIApplicationDidBecomeActive,
+                object: nil
+            )
+            center.addObserver(
+                self,
+                selector: #selector(willResignActive),
+                name: .UIApplicationWillResignActive,
+                object: nil
+            )
+        }
     }
 
     // MARK: Public API
@@ -122,7 +146,7 @@ final class Feed: NSObject, UIScrollViewDelegate {
     // MARK: Private API
 
     private func refresh() {
-        guard status == .idle else { return }
+        guard status == .idle || status == .initial else { return }
         status = .loading
         delegate?.loadFromNetwork(feed: self)
     }
@@ -147,6 +171,39 @@ final class Feed: NSObject, UIScrollViewDelegate {
             if delegate?.loadNextPage(feed: self) == true {
                 status = .loadingNext
             }
+        }
+    }
+
+    // MARK: Notifications
+
+    @objc func willResignActive() {
+        backgroundTime = CACurrentMediaTime()
+    }
+
+    @objc func didBecomeActive() {
+        defer { backgroundTime = nil }
+
+        let refresh: (Bool) -> Void = { head in
+            // there seems to be a bug where refreshing while still becoming active messes up the iOS 11 header and
+            // refresh control. put an artificial delay to let the system cool down?
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                if head {
+                    self.refreshHead()
+                } else {
+                    self.refresh()
+                }
+            })
+        }
+
+        // if foreground and haven't done an initial load, refresh
+        // can occur when process is still alive after a background fetch
+        if status == .initial {
+            // dont refresh head since spinner will still be shown
+            refresh(false)
+        } else if let backgroundTime = self.backgroundTime,
+            let backgroundThreshold = self.backgroundThreshold,
+            CACurrentMediaTime() - backgroundTime > backgroundThreshold {
+            refresh(true)
         }
     }
 
