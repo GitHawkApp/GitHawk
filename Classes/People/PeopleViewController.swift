@@ -89,7 +89,7 @@ PeopleSectionControllerDelegate {
             action: #selector(onMenuClear)
         )
         navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
-        updateClearButtonEnabled()
+        navigationItem.leftBarButtonItem?.isEnabled = self.selections.count > 0
     }
 
     @objc func onMenuClear() {
@@ -113,10 +113,11 @@ PeopleSectionControllerDelegate {
     // MARK: Private API
 
     private func updateTitle() {
-        let selectedCount = "\(selected.count)/\(selectionLimit)"
+        let selectedCount = users.count > 0 ? selected.count : selections.count
+        let counter = "\(selectedCount)/\(selectionLimit)"
         switch type {
-        case .assignee: title = "\(Constants.Strings.assignees) \(selectedCount)"
-        case .reviewer: title = "\(Constants.Strings.reviewers) \(selectedCount)"
+        case .assignee: title = "\(Constants.Strings.assignees) \(counter)"
+        case .reviewer: title = "\(Constants.Strings.reviewers) \(counter)"
         }
         updateClearButtonEnabled()
     }

@@ -66,6 +66,7 @@ LabelSectionControllerDelegate {
             action: #selector(onMenuClear)
         )
         navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        navigationItem.leftBarButtonItem?.isEnabled = selectedLabels.count > 0
     }
 
     func updateClearButtonEnabled() {
