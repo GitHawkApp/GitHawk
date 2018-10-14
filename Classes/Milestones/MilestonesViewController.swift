@@ -14,7 +14,11 @@ final class MilestonesViewController: BaseListViewController2<String>,
 BaseListViewController2DataSource,
 MilestoneSectionControllerDelegate {
 
-    public private(set) var selected: Milestone?
+    public private(set) var selected: Milestone? = nil {
+        didSet {
+            self.updateClearButtonEnabled()
+        }
+    }
 
     private var owner: String!
     private var repo: String!
@@ -55,6 +59,22 @@ MilestoneSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
+        addMenuClearButton()
+    }
+
+    func addMenuClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(onMenuClear))
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+        updateClearButtonEnabled()
+    }
+
+    func updateClearButtonEnabled() {
+        navigationItem.leftBarButtonItem?.isEnabled = selected != nil
+    }
+
+    @objc func onMenuClear() {
+        selected = nil
+        update(animated: true)
     }
 
     // MARK: Overrides

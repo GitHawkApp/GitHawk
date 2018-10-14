@@ -68,6 +68,7 @@ PeopleSectionControllerDelegate {
         super.viewDidLoad()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         addMenuDoneButton()
+//        addClearButton()
     }
 
     // MARK: Public API
@@ -150,4 +151,16 @@ PeopleSectionControllerDelegate {
         updateSelectionCount()
     }
 
+    func addClearButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(onMenuClear))
+        navigationItem.leftBarButtonItem?.tintColor = Styles.Colors.Gray.light.color
+    }
+
+    @objc func onMenuClear() {
+        self.selected.forEach {
+            if let sectionController: LabelSectionController = feed.swiftAdapter.sectionController(for: $0) {
+                sectionController.didSelectItem(at: 0)
+            }
+        }
+    }
 }

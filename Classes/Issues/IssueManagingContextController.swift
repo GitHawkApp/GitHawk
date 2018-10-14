@@ -81,6 +81,8 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     }
 
     var actions: [Action] {
+        // TODO: Remove me! <mongeaumax@gmail.com>
+        return [ .labels, .milestone, .assignees ]
         if case .none = permissions { return [] }
         guard let result = self.result else { return [] }
 
