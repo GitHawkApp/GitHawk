@@ -304,8 +304,8 @@ final class IssuesViewController:
                     }
                     // avoid finishLoading() so empty view doesn't appear
                     self?.feed.adapter.performUpdates(animated: trueUnlessReduceMotionEnabled)
-                case .error:
-                    Squawk.showGenericError()
+                case .error(let error):
+                    Squawk.show(error: error)
                 }
             }
         }

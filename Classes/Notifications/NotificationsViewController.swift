@@ -101,9 +101,9 @@ BaseListViewController2EmptyDataSource {
                 ids.append($0.id)
             }
             rebuildAndUpdate(ids: ids, append: append, page: next, animated: animated)
-        case .error:
+        case .error(let err):
             error(animated: trueUnlessReduceMotionEnabled)
-            Squawk.showNetworkError()
+            Squawk.show(error: err)
         }
 
         // set after updating so self.models has already been changed

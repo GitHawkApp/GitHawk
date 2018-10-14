@@ -84,8 +84,8 @@ RepositoryBranchSectionControllerDelegate
                     branches: branches
                 )
                 
-            case .error:
-                Squawk.showError(message: "Couldn't fetch repository branches")
+            case .error(let error):
+                Squawk.show(error: error)
             }
             self?.update(animated: true)
         }

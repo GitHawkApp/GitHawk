@@ -261,11 +261,10 @@ final class IssueCommentSectionController:
             commentID: "\(number)")
         ) { [weak self] result in
             switch result {
-            case .failure:
+            case .failure(let error):
                 self?.hasBeenDeleted = false
                 self?.update(animated: trueUnlessReduceMotionEnabled)
-
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             case .success: break // Don't need to handle success since updated optimistically
             }
         }
@@ -297,9 +296,9 @@ final class IssueCommentSectionController:
         ) { [weak self] result in
             switch result {
             case .success: break
-            case .failure:
+            case .failure(let error):
                 self?.edit(markdown: originalMarkdown)
-                Squawk.showGenericError()
+                Squawk.show(error: error)
             }
         }
     }

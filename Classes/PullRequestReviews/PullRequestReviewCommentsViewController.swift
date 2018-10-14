@@ -128,7 +128,8 @@ final class PullRequestReviewCommentsViewController: MessageViewController,
         width: insetWidth
         ) { [weak self] (result) in
             switch result {
-            case .error: Squawk.showGenericError()
+            case .error(let error):
+                Squawk.show(error: error)
             case .success(let models):
                 self?.results = models
                 self?.feed.finishLoading(dismissRefresh: true, animated: true)
