@@ -80,6 +80,8 @@ public final class MessageAutocompleteController: MessageTextViewListener {
             name: .UIKeyboardWillChangeFrame,
             object: nil
         )
+
+        preserveTypingAttributes(for: textView)
     }
 
     // MARK: Public API
