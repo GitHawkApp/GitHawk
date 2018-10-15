@@ -44,13 +44,16 @@ final class IssuesViewController:
     private var bookmarkNavController: BookmarkNavigationController? = nil
     private var autocompleteController: AutocompleteController!
     private let manageController: IssueManagingContextController
-    private let threadInset = UIEdgeInsets(
-        top: Styles.Sizes.rowSpacing / 2,
-        left: Styles.Sizes.gutter,
-        bottom: 2 * Styles.Sizes.rowSpacing + Styles.Sizes.tableCellHeight,
-        right: Styles.Sizes.gutter
-    )
-
+    private var threadInset: UIEdgeInsets {
+        let insetForManageButton = manageController.manageButton.isHidden ? 0 : Styles.Sizes.tableCellHeight
+        return UIEdgeInsets(
+            top: Styles.Sizes.rowSpacing / 2,
+            left: Styles.Sizes.gutter,
+            bottom: 2 * Styles.Sizes.rowSpacing + insetForManageButton,
+            right: Styles.Sizes.gutter
+        )
+    }
+    
     private var needsScrollToBottom = false
     private var lastTimelineElement: ListDiffable?
     private var actions: IssueTextActionsView?
@@ -238,6 +241,9 @@ final class IssuesViewController:
                 y: messageView.frame.minY - manageButtonSize.height - Styles.Sizes.gutter),
             size: manageButtonSize
         )
+
+        // Recalculate the bottom content inset since the manageButton‘s visibility may have changed.
+        feed.collectionView.contentInset.bottom = threadInset.bottom
     }
 
     // MARK: Private API
