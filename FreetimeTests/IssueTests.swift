@@ -270,7 +270,7 @@ class IssueTests: XCTestCase {
         
         // Issue #120
         // the [\\[Pitch\\] slashes at one point rendered incorrectly as \[Pitch\] instead of [Pitch]
-        
+        // swiftlint:disable:next line_length
         let body = "...adoption.\r\n\r\nSee: [\\[Pitch\\] Introducing the \"Unwrap or Die\" operator to the standard library](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20170626/037730.html)"
         let models = MarkdownModels(
             body,

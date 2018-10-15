@@ -5,13 +5,15 @@ disabled_rules:
   - force_try
   - force_cast
   - cyclomatic_complexity
+  - identifier_name
 
 included: 
   - Classes
   - FreetimeTests
-  - Local Pods
+  - Local\ Pods
 excluded:
   - Pods
   - Playgrounds
+  - Local\ Pods/SwipeCellKit
 
 reporter: "xcode"
