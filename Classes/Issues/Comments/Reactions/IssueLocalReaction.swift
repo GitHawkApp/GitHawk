@@ -36,7 +36,7 @@ func IssueLocalReaction(
     // decrementing a reaction (count > 1)
     let operation: IssueReactionOperation
 
-    var prev: (index: Int, model: ReactionViewModel)? = nil
+    var prev: (index: Int, model: ReactionViewModel)?
     for (i, model) in base.models.enumerated() where model.content == content {
         prev = (i, model)
         break

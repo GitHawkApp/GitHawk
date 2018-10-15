@@ -88,7 +88,7 @@ LabelSectionControllerDelegate {
     override func fetch(page: String?) {
         client.client.query(request, result: { data in
             data.repository?.labels?.nodes
-        }) { [weak self] result in
+        }, completion: { [weak self] result in
             switch result {
             case .success(let nodes):
                 self?.labels = nodes.compactMap {
@@ -99,7 +99,7 @@ LabelSectionControllerDelegate {
             case .failure(let error):
                 Squawk.show(error: error)
             }
-        }
+        })
     }
 
     // MARK: BaseListViewController2DataSource

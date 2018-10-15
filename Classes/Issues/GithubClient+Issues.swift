@@ -57,7 +57,7 @@ extension GithubClient {
         let cache = self.cache
         let contentSizeCategory = UIContentSizeCategory.preferred
 
-        client.query(query, result: { $0.repository }) { result in
+        client.query(query, result: { $0.repository }, completion: { result in
             switch result {
             case .failure(let error):
                 completion(.error(error))
@@ -124,7 +124,7 @@ extension GithubClient {
                     } else {
                         milestoneModel = nil
                     }
-                    
+
                     let targetBranchModel: IssueTargetBranchModel?
                     if let baseBranchRef = issueType.targetBranch {
                         targetBranchModel = IssueTargetBranchModel(
@@ -147,7 +147,6 @@ extension GithubClient {
                     if repository.rebaseMergeAllowed {
                         availableMergeTypes.append(.rebase)
                     }
-
 
                     let issueResult = IssueResult(
                         id: issueType.id,
@@ -179,7 +178,7 @@ extension GithubClient {
                     }
                 }
             }
-        }
+        })
     }
 
     func react(

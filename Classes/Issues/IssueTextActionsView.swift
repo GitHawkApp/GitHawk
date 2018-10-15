@@ -97,7 +97,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
     private let activityIndicator = UIActivityIndicatorView(
         activityIndicatorStyle: UIActivityIndicatorViewStyle.gray
     )
-    
+
     public var sendButtonEnabled: Bool {
         get { return sendButton.isEnabled }
         set {
@@ -105,7 +105,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
             sendButton.alpha = newValue ? 1 : 0.25
         }
     }
-    
+
     public var isProcessing: Bool = false {
         didSet {
             sendButton.isEnabled = !isProcessing
@@ -146,7 +146,7 @@ final class IssueTextActionsView: UIView, UICollectionViewDataSource, UICollecti
             sendButton.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysTemplate), for: .normal)
             sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
             addSubview(sendButton)
-            
+
             activityIndicator.hidesWhenStopped = true
             addSubview(activityIndicator)
         }

@@ -344,4 +344,3 @@ final class IssueManagingContextController: NSObject, ContextMenuDelegate {
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }
-

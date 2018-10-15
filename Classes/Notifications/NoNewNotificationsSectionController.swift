@@ -39,7 +39,7 @@ NoNewNotificationsCellReviewAccessDelegate {
             },
                 configure: { [weak self] in
                     guard let strongSelf = self else { return }
-                    // TODO accessing the value seems to be required for this to compile
+                    // accessing the value seems to be required for this to compile
                     print($1.value)
                     $0.configure(
                         emoji: latest.emoji,

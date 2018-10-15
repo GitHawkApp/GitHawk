@@ -23,14 +23,14 @@ class LocalNotificationCacheTests: XCTestCase {
         let path = self.path(for: test)
         do {
             try FileManager.default.removeItem(atPath: path)
-        } catch  {
+        } catch {
             print("\(error.localizedDescription)\npath: \(path)")
         }
     }
 
     func test_whenNoNotifications_thatNothingReturned() {
         clear(for: #function)
-        
+
         let cache = LocalNotificationsCache(path: path(for: #function))
         var executed = false
         cache.update(notifications: []) { results in
@@ -72,7 +72,7 @@ class LocalNotificationCacheTests: XCTestCase {
 
     func test_whenUpdating_thatReadFirstTime_thenSecondCallEmpty() {
         clear(for: #function)
-        
+
         let cache = LocalNotificationsCache(path: path(for: #function))
         let date = Date()
         let n1 = [
@@ -106,27 +106,27 @@ class LocalNotificationCacheTests: XCTestCase {
 
         XCTAssertEqual(executions, 3)
     }
-    
+
     func test_whenUpdatingWithSameNotificationWithUpdatedTime_thatNotificationReceived() {
         clear(for: #function)
-        
+
         let cache = LocalNotificationsCache(path: path(for: #function))
         let n1 = [
             makeNotificaction(id: "123", title: "foo", updatedAt: Date())
         ]
-        
+
         cache.update(notifications: n1) { results in
             XCTAssertEqual(results.count, 1)
         }
-        
+
         cache.update(notifications: n1) { results in
             XCTAssertEqual(results.count, 0)
         }
-        
+
         let n2 = [
             makeNotificaction(id: "123", title: "foo", updatedAt: Date(timeIntervalSinceNow: 10))
         ]
-        
+
         cache.update(notifications: n2) { results in
             XCTAssertEqual(results.count, 1)
         }

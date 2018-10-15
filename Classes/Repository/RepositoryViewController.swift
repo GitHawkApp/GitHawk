@@ -22,7 +22,7 @@ ContextMenuDelegate {
     private let repo: RepositoryDetails
     private let client: GithubClient
     private let controllers: [UIViewController]
-    private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var bookmarkNavController: BookmarkNavigationController?
     public private(set) var branch: String
 
     var moreOptionsItem: UIBarButtonItem {
@@ -113,13 +113,12 @@ ContextMenuDelegate {
         }
         navigationItem.rightBarButtonItems = items
     }
-    
+
     func switchBranchAction() -> UIAlertAction {
         return UIAlertAction(
             title: NSLocalizedString("Switch Branch", comment: ""),
             style: .default
-        ) {
-            [weak self] action in
+        ) { [weak self] _ in
             guard let strongSelf = self else { return }
             let viewController =
                 RepositoryBranchesViewController(
@@ -129,7 +128,7 @@ ContextMenuDelegate {
                     repo: strongSelf.repo.name,
                     client: strongSelf.client
             )
-            
+
             strongSelf.showContextualMenu(
                 viewController,
                 options: ContextMenu.Options(
@@ -200,9 +199,9 @@ ContextMenuDelegate {
         let issuesViewController = IssuesViewController(client: client, model: model)
         show(issuesViewController, sender: self)
     }
-    
-    //MARK: ContextMenuDelegate
-    
+
+    // MARK: ContextMenuDelegate
+
     func contextMenuWillDismiss(viewController: UIViewController, animated: Bool) {
         guard let viewController = viewController as? RepositoryBranchesViewController else { return }
         self.branch = viewController.selectedBranch
@@ -212,7 +211,7 @@ ContextMenuDelegate {
             }
         }
     }
-    
+
     func contextMenuDidDismiss(viewController: UIViewController, animated: Bool) {}
 
 }

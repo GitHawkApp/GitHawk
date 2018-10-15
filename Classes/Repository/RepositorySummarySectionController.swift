@@ -24,7 +24,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
             let object = object else {
                 fatalError("Missing context or object")
         }
-        
+
         let labelListViewHeightAndSpacing: CGFloat = {
             guard object.labels.count > 0 else { return 0 }
             let labelListViewWidth = width - (Styles.Sizes.columnSpacing * 2)
@@ -33,7 +33,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
                                                            cacheKey: object.labelSummary)
             return labelListViewHeight + Styles.Sizes.rowSpacing
         }()
-        
+
         let height = object.title.viewSize(in: width).height
             + Styles.Text.secondary.preferredFont.lineHeight
             + Styles.Sizes.gutter

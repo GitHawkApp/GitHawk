@@ -98,11 +98,10 @@ TabNavRootViewControllerType {
             collectionView.collectionViewLayout.invalidateForOrientationChange()
         }
     }
-  
+
     override func viewWillDisappear(_ animated: Bool) {
       searchBar.resignFirstResponder()
     }
-
 
     private func update(animated: Bool) {
         adapter.performUpdates(animated: animated)

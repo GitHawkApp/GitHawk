@@ -25,7 +25,7 @@ extension GithubClient {
         completion: @escaping (SearchResultType) -> Void
         ) -> Cancellable {
         let query = SearchReposQuery(search: query, before: before)
-        return client.query(query, result: { $0 }) { result in
+        return client.query(query, result: { $0 }, completion: { result in
             switch result {
             case .failure(let error):
                 completion(.error(error))
@@ -70,7 +70,7 @@ extension GithubClient {
                     }
                 }
             }
-        }
+        })
     }
 
 }

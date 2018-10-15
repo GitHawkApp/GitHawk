@@ -123,10 +123,10 @@ MessageTextViewListener {
             supportsImageUpload: true,
             showSendButton: false
         )
-        
+
         textActionsController.configure(client: client, textView: textView, actions: actions)
         textActionsController.viewController = self
-        
+
         textView.inputAccessoryView = actions
     }
 

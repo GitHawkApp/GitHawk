@@ -30,6 +30,6 @@ enum MarkdownAttribute {
         details,
         label,
         commit,
-        checkbox,
+        checkbox
         ])
 }

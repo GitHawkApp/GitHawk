@@ -41,7 +41,7 @@ final class InboxZeroLoader {
         }
 
         let path = self.path
-        session.dataTask(with: url) { [weak self] (data, response, error) in
+        session.dataTask(with: url) { [weak self] (data, _, _) in
             if let data = data,
                 let tmp = try? JSONSerialization.jsonObject(with: data, options: []) as? SerializedType,
                 let json = tmp {

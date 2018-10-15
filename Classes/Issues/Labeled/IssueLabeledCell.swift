@@ -17,7 +17,7 @@ final class IssueLabeledCell: StyledTextViewCell {
         bottom: Styles.Sizes.inlineSpacing,
         right: 0
     )
-    
+
     // MARK: Public API
 
     func configure(_ model: IssueLabeledModel) {

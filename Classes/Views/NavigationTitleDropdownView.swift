@@ -121,4 +121,3 @@ final class NavigationTitleDropdownView: UIControl {
     }
 
 }
-

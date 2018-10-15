@@ -47,7 +47,7 @@ final class AddCommentClient {
         let mutation = AddCommentMutation(subject_id: subjectId, body: bodyWithSignature)
         client.client.mutate(mutation, result: { data in
             data.addComment?.commentEdge.node
-        }) { result in
+        }, completion: { result in
             switch result {
             case .success(let commentNode):
                 let fragments = commentNode.fragments
@@ -67,7 +67,7 @@ final class AddCommentClient {
                 }
                 Squawk.show(error: error)
             }
-        }
+        })
     }
 
 }

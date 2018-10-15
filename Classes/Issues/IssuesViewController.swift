@@ -24,8 +24,7 @@ extension ListDiffable {
     }
 }
 
-final class IssuesViewController:
-    MessageViewController,
+final class IssuesViewController: MessageViewController,
     ListAdapterDataSource,
     FeedDelegate,
     AddCommentListener,
@@ -41,7 +40,7 @@ final class IssuesViewController:
     private let model: IssueDetailsModel
     private let addCommentClient: AddCommentClient
     private let textActionsController = TextActionsController()
-    private var bookmarkNavController: BookmarkNavigationController? = nil
+    private var bookmarkNavController: BookmarkNavigationController?
     private var autocompleteController: AutocompleteController!
     private let manageController: IssueManagingContextController
     private let threadInset = UIEdgeInsets(
@@ -197,7 +196,7 @@ final class IssuesViewController:
 
         actions.frame = CGRect(x: 0, y: 0, width: 0, height: 32)
         messageView.add(contentView: actions)
-        
+
         //show disabled bookmark button until issue has finished loading
         navigationItem.rightBarButtonItems = [ moreOptionsItem, BookmarkNavigationController.disabledNavigationItem ]
 
@@ -230,7 +229,7 @@ final class IssuesViewController:
         feed.collectionView.updateSafeInset(container: view, base: threadInset)
     }
 
-    override func didLayout() {    
+    override func didLayout() {
         let manageButtonSize = manageController.manageButton.bounds.size
         manageController.manageButton.frame = CGRect(
             origin: CGPoint(
@@ -402,10 +401,10 @@ final class IssuesViewController:
             metadata.append(IssueFileChangesModel(changes: changes))
         }
         // END metadata collection
-        
+
         objects.append(IssueTitleModel(string: current.title))
         objects += metadata
-        
+
         if let targetBranch = current.targetBranch {
             objects.append(targetBranch)
         }

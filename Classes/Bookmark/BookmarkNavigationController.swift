@@ -23,19 +23,19 @@ final class BookmarkNavigationController {
     }
 
     // MARK: Public API
-    
+
     var navigationItem: UIBarButtonItem {
         let item = UIBarButtonItem()
         configureNavigationItem(item)
         return item
     }
-    
+
     func configureNavigationItem(_ item: UIBarButtonItem) {
-        
+
         let accessibilityLabel: String
         let imageName: String
         let selector: Selector
-        
+
         if store.contains(model) {
             imageName = "nav-bookmark-selected"
             accessibilityLabel = Constants.Strings.removeBookmark
@@ -45,7 +45,7 @@ final class BookmarkNavigationController {
             accessibilityLabel = Constants.Strings.bookmark
             selector = #selector(BookmarkNavigationController.add(sender:))
         }
-        
+
         item.accessibilityLabel = accessibilityLabel
         item.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         item.target = self
@@ -54,7 +54,7 @@ final class BookmarkNavigationController {
         item.width = 0
         item.imageInsets = BookmarkNavigationController.iconImageInset
     }
-    
+
     //for timeframe between viewDidLoad() and bookmark info is loaded 
     static var disabledNavigationItem: UIBarButtonItem {
         let item = UIBarButtonItem()
@@ -63,20 +63,20 @@ final class BookmarkNavigationController {
         item.imageInsets = BookmarkNavigationController.iconImageInset
         return item
     }
-    
+
     // MARK: Private API
-    
+
     @objc func add(sender: UIBarButtonItem) {
         Haptic.triggerSelection()
         sender.action = #selector(BookmarkNavigationController.remove(sender:))
         sender.image = UIImage(named: "nav-bookmark-selected")?.withRenderingMode(.alwaysTemplate)
         store.add(model)
     }
-    
+
     @objc func remove(sender: UIBarButtonItem) {
         sender.action = #selector(BookmarkNavigationController.add(sender:))
         sender.image = UIImage(named: "nav-bookmark")?.withRenderingMode(.alwaysTemplate)
         store.remove(model)
     }
-    
+
 }

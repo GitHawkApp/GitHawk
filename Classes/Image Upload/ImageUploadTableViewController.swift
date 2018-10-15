@@ -50,13 +50,12 @@ class ImageUploadTableViewController: UITableViewController {
 
         return viewController
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Set the preview image
         previewImageView.image = image
-
 
         // Set the right button item to spinning until we have compression info
         setRightBarItemSpinning()
@@ -76,7 +75,7 @@ class ImageUploadTableViewController: UITableViewController {
             ]
         )
         titleTextField.delegate = self
-        
+
         // Compress and encode the image in the background to speed up the upload process
         image.compressAndEncode { [weak self] result in
             switch result {
@@ -159,18 +158,18 @@ class ImageUploadTableViewController: UITableViewController {
         client.canUploadImage { [weak self] error in
             // Ensure that we do have enough tokens, otherwise remove the upload button
             if let error = error as? ImgurClient.ImgurError {
-                
+
                 switch error {
                 case .endpointError(let response):
                     Squawk.showError(message: response)
-                    
+
                 case .rateLimitExceeded:
                     Squawk.showError(message: NSLocalizedString("Rate Limit reached, cannot upload!", comment: ""))
-                    
+
                 default:
                     Squawk.showGenericError()
                 }
-                
+
                 self?.navigationItem.rightBarButtonItem = nil
                 return
             }
@@ -201,7 +200,7 @@ class ImageUploadTableViewController: UITableViewController {
             }
         }
     }
-    
+
     @IBAction func didPressPreviewImage() {
         let previewViewController = NYTPhotosViewController(photos: [IssueCommentPhoto(image: image, data: nil)])
         present(previewViewController, animated: trueUnlessReduceMotionEnabled)

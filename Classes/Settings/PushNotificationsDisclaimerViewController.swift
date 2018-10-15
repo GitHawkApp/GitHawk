@@ -32,7 +32,6 @@ final class PushNotificationsDisclaimerViewController: UIViewController {
 
         textView.font = Styles.Text.body.preferredFont
         textView.textColor = Styles.Colors.Gray.dark.color
-        // swiftlint:disable:next line_length
         textView.text = NSLocalizedString("GitHawk uses iOS background fetch to periodically check for new GitHub notifications. When there is new content available, GitHawk sends alerts with local notifications.\n\nThis setup requires Background App Refresh be enabled to work. Enable this feature in Settings > General > Background App Refresh.\n\nAt GitHawk, we value your privacy and data. Real-time push notifications require sending your authentication data to servers, which is a security risk we want to avoid.", comment: "")
         view.addSubview(textView)
 

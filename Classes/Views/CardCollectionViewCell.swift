@@ -125,7 +125,7 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
                 to: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY - cornerRadius),
                 controlPoint: CGPoint(x: pixelSnapBounds.minX, y: pixelSnapBounds.maxY)
             )
-            
+
             fillPath = borderPath.copy() as! UIBezierPath
             fillPath.close()
         }
@@ -145,5 +145,3 @@ class CardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate 
     }
 
 }
-
-

@@ -10,13 +10,13 @@ import UIKit
 
 final class AppSplitViewController: UISplitViewController {
 
-    private let tabDelegate = TabBarControllerDelegate()
-    private let appSplitViewDelegate = SplitViewControllerDelegate()
+    private let tabDelegateController = TabBarControllerDelegate()
+    private let appSplitViewDelegateController = SplitViewControllerDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        masterTabBarController?.delegate = tabDelegate
-        delegate = appSplitViewDelegate
+        masterTabBarController?.delegate = tabDelegateController
+        delegate = appSplitViewDelegateController
         preferredDisplayMode = .allVisible
     }
 

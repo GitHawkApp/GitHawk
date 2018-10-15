@@ -45,7 +45,7 @@ final class Milestone: Equatable, ListDiffable {
 
     // MARK: Equatable
 
-    static func ==(lhs: Milestone, rhs: Milestone) -> Bool {
+    static func == (lhs: Milestone, rhs: Milestone) -> Bool {
         if lhs === rhs { return true }
         return lhs.number == rhs.number
         && lhs.dueOn == rhs.dueOn

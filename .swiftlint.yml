@@ -6,6 +6,11 @@ disabled_rules:
   - force_cast
   - cyclomatic_complexity
   - identifier_name
+  - type_name
+  - line_length
+  - file_length
+  - large_tuple
+  - nesting
 
 included: 
   - Classes

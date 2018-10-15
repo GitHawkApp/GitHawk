@@ -172,5 +172,5 @@ EmptyViewDelegate {
     func didTapRetry() {
         self.feed.refreshHead()
     }
-    
+
 }
