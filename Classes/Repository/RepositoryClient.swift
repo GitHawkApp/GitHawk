@@ -100,7 +100,9 @@ func createSummaryModel(
     let nextPage = query.nextPageToken(from: data)
     let models: [RepositoryIssueSummaryModel] = query.summaryTypes(from: data).compactMap { (node: RepositoryIssueSummaryType) in
         return createSummaryModel(node, contentSizeCategory: contentSizeCategory, containerWidth: containerWidth)
-    }
+    }.sorted(by: {
+        $0.created > $1.created 
+    })
     return (models, nextPage)
 }
 
