@@ -13,7 +13,7 @@ struct IssueNotificationRoute: Routable {
     let owner: String
     let repo: String
     let number: Int
-    static func from(params: [String : String]) -> IssueNotificationRoute? {
+    static func from(params: [String: String]) -> IssueNotificationRoute? {
         guard let owner = params["owner"],
             let repo = params["repo"],
             let number = (params["number"] as NSString?)?.integerValue
@@ -23,7 +23,7 @@ struct IssueNotificationRoute: Routable {
     static var path: String {
         return "com.githawk.issue-notifications"
     }
-    var encoded: [String : String] {
+    var encoded: [String: String] {
         return [
             "owner": owner,
             "repo": repo,

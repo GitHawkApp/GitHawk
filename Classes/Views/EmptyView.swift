@@ -17,7 +17,7 @@ final class EmptyView: UIView {
 
     let label = UILabel()
     let button = UIButton(type: .system)
-    var delegate: EmptyViewDelegate?
+    weak var delegate: EmptyViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

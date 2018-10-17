@@ -17,7 +17,7 @@ extension StyledTextBuilder {
         let attributes: [NSAttributedStringKey: Any] = [
             .foregroundColor: Styles.Colors.Gray.dark.color,
             .paragraphStyle: paragraphStyle,
-            .backgroundColor: UIColor.white,
+            .backgroundColor: UIColor.white
         ]
         let style = isRoot
             ? Styles.Text.rootBody

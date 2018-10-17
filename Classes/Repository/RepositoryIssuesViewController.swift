@@ -34,7 +34,7 @@ SearchBarSectionControllerDelegate {
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: "")
         )
-        
+
         self.dataSource = self
 
         switch type {

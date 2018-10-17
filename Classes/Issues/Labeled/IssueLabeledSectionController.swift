@@ -12,7 +12,7 @@ import IGListKit
 final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
 
     private let issueModel: IssueDetailsModel
-    
+
     init(issueModel: IssueDetailsModel) {
         self.issueModel = issueModel
         super.init()

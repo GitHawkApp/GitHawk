@@ -9,18 +9,18 @@
 import GitHubAPI
 
 extension GithubClient {
-    
+
     func fetchRepositoryBranches(owner: String,
                                  repo: String,
-                                 completion: @escaping (Result<([String])>)->Void
+                                 completion: @escaping (Result<([String])>) -> Void
     ) {
         let query = FetchRepositoryBranchesQuery(owner: owner, name: repo)
-        client.query(query, result: { $0.repository }) { result in
-        
+        client.query(query, result: { $0.repository }, completion: { result in
+
         switch result {
         case .failure(let error):
                 completion(.error(error))
-    
+
         case .success(let repository):
             var branches: [String] = []
             repository.refs.map { edges in
@@ -33,6 +33,6 @@ extension GithubClient {
 
             completion(.success(branches))
             }
-        }
+        })
     }
 }

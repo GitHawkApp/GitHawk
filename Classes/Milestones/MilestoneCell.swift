@@ -71,4 +71,3 @@ final class MilestoneCell2: SelectableCell {
     }
 
 }
-

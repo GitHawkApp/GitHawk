@@ -126,4 +126,3 @@ class IssueCommentBaseCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     }
 
 }
-

@@ -20,8 +20,6 @@
 	<string>${GLOBAL_APP_VERSION}</string>
 	<key>CFBundleVersion</key>
 	<string>SEE BUILD PHASE</string>
-	<key>CLKComplicationSupportedFamilies</key>
-	<array/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>

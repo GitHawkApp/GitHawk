@@ -34,7 +34,7 @@ final class IssueCommentImageCell: IssueCommentBaseCell, ListBindable {
 
         imageView.contentMode = .scaleAspectFit
         imageView.accessibilityIgnoresInvertColors = true
-        
+
         contentView.addSubview(imageView)
 
         spinner.hidesWhenStopped = true

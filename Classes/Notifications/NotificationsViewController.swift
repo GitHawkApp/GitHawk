@@ -33,7 +33,7 @@ BaseListViewController2EmptyDataSource {
             emptyErrorMessage: NSLocalizedString("Cannot load your inbox.", comment: ""),
             backgroundThreshold: 5 * 60
         )
-        
+
         self.dataSource = self
         self.emptyDataSource = self
 
@@ -53,7 +53,7 @@ BaseListViewController2EmptyDataSource {
 
         makeBackBarItemEmpty()
         resetRightBarItem()
-        
+
         switch inboxType {
         case .unread:
             let item = UIBarButtonItem(
@@ -288,15 +288,15 @@ BaseListViewController2EmptyDataSource {
         self.update(animated: trueUnlessReduceMotionEnabled)
         updateUnreadState()
     }
-    
+
     // MARK: TabNavRootViewControllerType
-    
+
     func didSingleTapTab() {
         feed.collectionView.scrollToTop(animated: true)
     }
-    
+
     func didDoubleTapTab() {
         didSingleTapTab()
     }
-    
+
 }

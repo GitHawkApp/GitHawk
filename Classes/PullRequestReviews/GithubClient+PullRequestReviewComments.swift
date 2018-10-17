@@ -27,7 +27,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<[ListDiffable]>) -> ()
+        completion: @escaping (Result<[ListDiffable]>) -> Void
         ) {
         let viewerUsername = userSession?.username
         let contentSizeCategory = UIContentSizeCategory.preferred
@@ -115,7 +115,7 @@ extension GithubClient {
         repo: String,
         number: Int,
         width: CGFloat,
-        completion: @escaping (Result<IssueCommentModel>) -> ()
+        completion: @escaping (Result<IssueCommentModel>) -> Void
         ) {
         let viewer = userSession?.username
         let contentSizeCategory = UIContentSizeCategory.preferred

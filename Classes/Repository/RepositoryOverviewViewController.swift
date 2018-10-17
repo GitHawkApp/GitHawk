@@ -21,8 +21,7 @@ class HackScrollIndicatorInsetsCollectionView: UICollectionView {
 
 class RepositoryOverviewViewController: BaseListViewController<NSString>,
 BaseListViewControllerDataSource,
-RepositoryBranchUpdatable
-{
+RepositoryBranchUpdatable {
 
     private let repo: RepositoryDetails
     private let client: RepositoryClient
@@ -122,13 +121,13 @@ RepositoryBranchUpdatable
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
         return RepositoryEmptyResultsSectionController(
             topInset: 0,
-            layoutInsets: view.safeAreaInsets, 
+            layoutInsets: view.safeAreaInsets,
             type: .readme
         )
     }
-    
-    //Mark: RepositoryBranchUpdatable
-    
+
+    // MARK: RepositoryBranchUpdatable
+
     func updateBranch(to newBranch: String) {
         guard self.branch != newBranch else { return }
         self.branch = newBranch

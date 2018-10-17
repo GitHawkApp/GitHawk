@@ -162,7 +162,7 @@ class SearchViewController: UIViewController,
 
         let controlHeight = Styles.Sizes.tableCellHeight
         if object === noResultsKey {
-            
+
             return SearchNoResultsSectionController(
                 topInset: controlHeight,
                 layoutInsets: view.safeAreaInsets
@@ -196,7 +196,7 @@ class SearchViewController: UIViewController,
             view.delegate = self
             view.button.isHidden = false
             return view
-         case .results:
+        case .results:
             return nil
         }
     }

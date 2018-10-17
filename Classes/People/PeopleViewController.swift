@@ -99,7 +99,7 @@ PeopleSectionControllerDelegate {
             }
         }
     }
-    
+
     static func sortUsers(users: [V3User], currentUser: String?) -> [V3User] {
         return users.sorted {
             if $0.login == currentUser {

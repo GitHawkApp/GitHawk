@@ -24,7 +24,7 @@ final class LoadMoreSectionController2: ListSwiftSectionController<String> {
                     width: $0.collection.containerSize.width,
                     height: Styles.Sizes.tableCellHeight
                 )
-            }, didSelect: { [weak self] context in
+            }, didSelect: { [weak self] _ in
                 guard let strongSelf = self else { return }
                 strongSelf.delegate?.didSelect(controller: strongSelf)
             })

@@ -82,7 +82,7 @@ final class RepositoryCodeBlobViewController: UIViewController, EmptyViewDelegat
         } else {
             frame = view.bounds
         }
-        
+
         emptyView.frame = frame
         codeView.frame = frame
     }

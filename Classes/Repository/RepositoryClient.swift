@@ -130,7 +130,7 @@ final class RepositoryClient {
         completion: @escaping (Result<RepositoryPayload>) -> Void
     ) where T: RepositoryQuery {
         let contentSizeCategory = UIContentSizeCategory.preferred
-        githubClient.client.query(query, result: { $0 }) { result in
+        githubClient.client.query(query, result: { $0 }, completion: { result in
             switch result {
             case .failure(let error):
                 Squawk.show(error: error)
@@ -152,7 +152,7 @@ final class RepositoryClient {
                     }
                 }
             }
-        }
+        })
     }
 
     func loadIssues(

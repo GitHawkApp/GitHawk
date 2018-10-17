@@ -52,7 +52,7 @@ PODS:
   - Squawk (0.1.0)
   - StringHelpers (0.1.0)
   - StyledTextKit (0.1.1)
-  - SwiftLint (0.24.0)
+  - SwiftLint (0.27.0)
   - SwipeCellKit (1.9.0)
   - Tabman (1.8.2):
     - AutoInsetter (~> 1.2.0)
@@ -201,7 +201,7 @@ SPEC CHECKSUMS:
   Squawk: 7dbe029a1de47153a1722a98b787f755f2df2b3e
   StringHelpers: 45c48929f335fa10b9e39ef48ba32ca2a72c89a7
   StyledTextKit: ea9a28a86955c16ea27f1a1a9278b004966f2bf6
-  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwipeCellKit: 67c91d4641d05b7e8ff1a38f57697d8c0fbcc6cc
   Tabman: 69ce69b44cec1ad693b82c24cdbdf0c45915668c
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546

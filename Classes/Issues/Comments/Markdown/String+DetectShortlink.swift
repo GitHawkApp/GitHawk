@@ -59,7 +59,7 @@ extension String {
                     )
                     ])
                 .restore()
-            
+
             //if match's trailing character is not a number, include that
             if let right = substring(with: NSRange(location: match.range.right - 1, length: 1)) {
                 if Int(right) == nil {
@@ -76,4 +76,3 @@ extension String {
         }
     }
 }
-

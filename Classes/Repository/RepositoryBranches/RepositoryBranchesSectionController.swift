@@ -14,9 +14,9 @@ protocol RepositoryBranchSectionControllerDelegate: class {
 }
 
 final class RepositoryBranchSectionController: ListSwiftSectionController<RepositoryBranchViewModel> {
-    
+
     public weak var delegate: RepositoryBranchSectionControllerDelegate?
-    
+
     override func createBinders(from value: RepositoryBranchViewModel) -> [ListBinder] {
         return [
             binder(
@@ -40,4 +40,3 @@ final class RepositoryBranchSectionController: ListSwiftSectionController<Reposi
         ]
     }
 }
-

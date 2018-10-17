@@ -201,7 +201,7 @@ ContextMenuDelegate {
             models += [
                 Action.labels,
                 Action.milestone,
-                Action.assignees,
+                Action.assignees
             ]
             if object.pullRequest {
                 models.append(Action.reviewers)
@@ -255,7 +255,7 @@ ContextMenuDelegate {
         viewModel: Any
         ) {
         collectionContext?.deselectItem(at: index, sectionController: self, animated: trueUnlessReduceMotionEnabled)
-        
+
         guard updating == false,
             let viewModel = viewModel as? ListDiffable,
             let cell = collectionContext?.cellForItem(at: index, sectionController: self)

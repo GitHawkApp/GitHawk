@@ -76,7 +76,7 @@ final class NotificationModelController {
                 switch result {
                 case .success(let response):
                     badge.updateLocalNotificationCache(notifications: response.data, showAlert: false)
-                    
+
                     CreateNotificationViewModels(
                         width: width,
                         contentSizeCategory: contentSizeCategory,

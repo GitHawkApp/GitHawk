@@ -39,7 +39,7 @@ NewIssueTableViewControllerDelegate {
     @IBOutlet weak var pushSwitch: UISwitch!
     @IBOutlet weak var pushCell: UITableViewCell!
     @IBOutlet weak var pushSettingsButton: UIButton!
-  
+
   override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,7 +60,7 @@ NewIssueTableViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+
         defaultReactionLabel.text = ReactionContent.defaultReaction?.emoji
             ?? NSLocalizedString("Off", comment: "")
 
@@ -128,7 +128,7 @@ NewIssueTableViewControllerDelegate {
             else { fatalError("Should always create GitHub issue URL") }
         // iOS 11 login uses SFAuthenticationSession which shares credentials with Safari.app
         UIApplication.shared.open(url, options: [:])
-        
+
     }
 
     func onAccounts() {
@@ -139,13 +139,13 @@ NewIssueTableViewControllerDelegate {
             self.navigationController?.showDetailViewController(navigationController, sender: self)
         }
     }
-    
+
     func onGitHubStatus() {
         guard let url = URL(string: "https://status.github.com/messages")
             else { fatalError("Should always create GitHub Status URL") }
         presentSafari(url: url)
     }
-  
+
     func onReviewOnAppStore() {
         guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1252320249?action=write-review")
             else { fatalError("Should always be valid app store URL") }
@@ -186,7 +186,7 @@ NewIssueTableViewControllerDelegate {
         let navController = UINavigationController(rootViewController: repoViewController)
         showDetailViewController(navController, sender: self)
     }
-  
+
     func onSetDefaultReaction() {
         //showDefaultReactionMenu()
     }
@@ -267,7 +267,7 @@ NewIssueTableViewControllerDelegate {
     @IBAction func onSignature(_ sender: Any) {
         Signature.enabled = signatureSwitch.isOn
     }
-    
+
     @IBAction func onPushNotificationsInfo(_ sender: Any) {
         showContextualMenu(PushNotificationsDisclaimerViewController())
     }

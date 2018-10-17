@@ -60,8 +60,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         contentView.isAccessibilityElement = true
         contentView.accessibilityLabel = NSLocalizedString("You have no new notifications!", comment: "Inbox Zero Accessibility Label")
-        
-        
+
         //configure reviewGitHubAcess button
         reviewGitHubAccessButton.setTitle(Constants.Strings.reviewGitHubAccess, for: .normal)
         reviewGitHubAccessButton.isAccessibilityElement = false
@@ -80,7 +79,7 @@ final class NoNewNotificationsCell: UICollectionViewCell {
             make.height.equalTo(buttonHeight)
             make.bottom.equalTo(contentView.snp.bottom).offset(-Styles.Sizes.tableSectionSpacing)
         }
-        
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -151,9 +150,9 @@ final class NoNewNotificationsCell: UICollectionViewCell {
 
         shadow.add(shadowScale, forKey: "nonewnotificationscell.shadow")
     }
-    
+
     @objc func reviewGitHubAccessButtonTapped() {
         reviewGitHubAccessDelegate?.didTapReviewAccess(cell: self)
     }
-    
+
 }

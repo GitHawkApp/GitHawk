@@ -13,8 +13,7 @@ import TUSafariActivity
 final class RepositoryCodeDirectoryViewController: BaseListViewController<NSNumber>,
 BaseListViewControllerDataSource,
 ListSingleSectionControllerDelegate,
-RepositoryBranchUpdatable
-{
+RepositoryBranchUpdatable {
 
     private let client: GithubClient
     private var branch: String
@@ -90,7 +89,7 @@ RepositoryBranchUpdatable
     @objc func onShare(sender: UIButton) {
         let alertTitle = "\(repo.owner)/\(repo.name):\(branch)"
         let alert = UIAlertController.configured(title: alertTitle, preferredStyle: .actionSheet)
-        
+
         weak var weakSelf = self
         let alertBuilder = AlertActionBuilder { $0.rootViewController = weakSelf }
         var actions = [
@@ -102,7 +101,7 @@ RepositoryBranchUpdatable
             },
             AlertAction.cancel()
         ]
-        
+
         if let name = self.path.components.last {
             actions.insert(AlertAction(alertBuilder).share([name], activities: nil, type: .shareFileName) {
                 $0.popoverPresentationController?.setSourceView(sender)
@@ -221,9 +220,9 @@ extension RepositoryCodeDirectoryViewController {
 
         navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
     }
-    
-    //Mark: RepositoryBranchUpdatable
-    
+
+    // MARK: RepositoryBranchUpdatable
+
     func updateBranch(to newBranch: String) {
         guard self.branch != newBranch else { return }
         self.branch = newBranch

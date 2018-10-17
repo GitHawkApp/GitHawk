@@ -74,4 +74,3 @@ struct ShortcutHandler {
     }
 
 }
-

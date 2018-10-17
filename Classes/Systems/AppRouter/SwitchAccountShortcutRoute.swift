@@ -11,11 +11,11 @@ import GitHubSession
 
 struct SwitchAccountShortcutRoute: Routable {
     let username: String
-    static func from(params: [String : String]) -> SwitchAccountShortcutRoute? {
+    static func from(params: [String: String]) -> SwitchAccountShortcutRoute? {
         guard let username = params["username"] else { return nil }
         return SwitchAccountShortcutRoute(username: username)
     }
-    var encoded: [String : String] {
+    var encoded: [String: String] {
         return ["username": username]
     }
     static var path: String {

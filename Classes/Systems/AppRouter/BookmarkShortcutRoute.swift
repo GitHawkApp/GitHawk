@@ -10,7 +10,7 @@ import Foundation
 import GitHubSession
 
 struct BookmarkShortcutRoute: Routable {
-    static func from(params: [String : String]) -> BookmarkShortcutRoute? {
+    static func from(params: [String: String]) -> BookmarkShortcutRoute? {
         return BookmarkShortcutRoute()
     }
     static var path: String {

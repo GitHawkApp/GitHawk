@@ -49,7 +49,7 @@ IssueCommentHtmlCellImageDelegate {
             with: url,
             options: [.highPriority],
             progress: nil
-        ) { [weak self] (image, data, error, finished) in
+        ) { [weak self] (image, data, _, _) in
             if let image = image {
                 let photo = IssueCommentPhoto(image: image, data: nil)
                 let photosViewController = NYTPhotosViewController(photos: [photo])
