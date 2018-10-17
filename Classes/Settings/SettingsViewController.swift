@@ -193,7 +193,7 @@ NewIssueTableViewControllerDelegate {
 
     func onSignOut() {
         let title = NSLocalizedString("Are you sure?", comment: "")
-        let message = NSLocalizedString("All of your accounts will be signed out. Do you want to continue?", comment: "")
+        let message = NSLocalizedString("All of your accounts will be signed out, and their bookmarks will be removed. Do you want to continue?", comment: "")
         let alert = UIAlertController.configured(title: title, message: message, preferredStyle: .alert)
         alert.addActions([
             AlertAction.cancel(),
