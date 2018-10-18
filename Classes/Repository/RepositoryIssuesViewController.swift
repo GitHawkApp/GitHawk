@@ -26,12 +26,17 @@ SearchBarSectionControllerDelegate {
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
+    private let label: String?
 
-    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType) {
+    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType, label: String? = nil) {
         self.owner = owner
         self.repo = repo
         self.client = RepositoryClient(githubClient: client, owner: owner, name: repo)
         self.type = type
+        self.label = label
+        if let label = label {
+            previousSearchString += "label:\(label) "
+        }
 
         super.init(
             emptyErrorMessage: NSLocalizedString("Cannot load issues.", comment: "")
@@ -53,10 +58,12 @@ SearchBarSectionControllerDelegate {
         super.viewDidLoad()
 
         makeBackBarItemEmpty()
-
+        
+        if label == nil {
         // set the frame in -viewDidLoad is required when working with TabMan
-        feed.collectionView.frame = view.bounds
-        feed.collectionView.contentInsetAdjustmentBehavior = .never
+            feed.collectionView.frame = view.bounds
+            feed.collectionView.contentInsetAdjustmentBehavior = .never
+        }
     }
 
     // MARK: Overrides

@@ -15,8 +15,9 @@ extension UIViewController {
                 client: label.client,
                 owner: label.owner,
                 repo: label.repo,
-                type: .issues
-        )
+                type: .issues,
+                label: label.label
+            )
         
         navigationController?.pushViewController(
             repositoryIssuesViewController,
