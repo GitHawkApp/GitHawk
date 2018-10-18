@@ -451,7 +451,7 @@ final class IssuesViewController: MessageViewController,
         switch object {
         // header and metadata
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
+        case is IssueLabelsModel: return IssueLabelsSectionController(client: client, issue: model)
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)

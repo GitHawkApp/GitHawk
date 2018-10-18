@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import GitHubAPI
 import IGListKit
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
 ListBindingSectionControllerDataSource,
 ListBindingSectionControllerSelectionDelegate {
-
+    
+    private let client: GithubClient
     private let issue: IssueDetailsModel
     private var sizeCache = [String: CGSize]()
     private let lockedModel = Constants.Strings.locked
 
-    init(issue: IssueDetailsModel) {
+    init(client: GitHubClient, issue: IssueDetailsModel) {
+        self.client = client
         self.issue = issue
         super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing

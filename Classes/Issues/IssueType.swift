@@ -39,6 +39,7 @@ protocol IssueType {
     func mergeModel(availableTypes: [IssueMergeType]) -> IssueMergeModel?
 
     func timelineViewModels(
+        client: GithubClient,
         owner: String,
         repo: String,
         contentSizeCategory: UIContentSizeCategory,

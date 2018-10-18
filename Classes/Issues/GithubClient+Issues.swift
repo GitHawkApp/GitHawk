@@ -86,6 +86,7 @@ extension GithubClient {
                     )
 
                     let timeline = issueType.timelineViewModels(
+                        client: self,
                         owner: owner,
                         repo: repo,
                         contentSizeCategory: contentSizeCategory,
@@ -354,6 +355,7 @@ extension GithubClient {
         for newLabel in labels {
             if !oldLabelNames.contains(newLabel.name) {
                 newEvents.append(IssueLabeledModel(
+                    client: self,
                     id: UUID().uuidString,
                     actor: actor,
                     title: newLabel.name,
@@ -370,6 +372,7 @@ extension GithubClient {
         for oldLabel in previous.labels.labels {
             if !newLabelNames.contains(oldLabel.name) {
                 newEvents.append(IssueLabeledModel(
+                    client: self, 
                     id: UUID().uuidString,
                     actor: actor,
                     title: oldLabel.name,

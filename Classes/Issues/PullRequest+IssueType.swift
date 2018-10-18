@@ -95,6 +95,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
     }
 
     func timelineViewModels(
+        client: GithubClient,
         owner: String,
         repo: String,
         contentSizeCategory: UIContentSizeCategory,
@@ -131,6 +132,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let unlabeled = node.asUnlabeledEvent,
                 let date = unlabeled.createdAt.githubDate {
                 let model = IssueLabeledModel(
+                    client: client,
                     id: unlabeled.fragments.nodeFields.id,
                     actor: unlabeled.actor?.login ?? Constants.Strings.unknown,
                     title: unlabeled.label.name,
@@ -146,6 +148,7 @@ extension IssueOrPullRequestQuery.Data.Repository.IssueOrPullRequest.AsPullReque
             } else if let labeled = node.asLabeledEvent,
                 let date = labeled.createdAt.githubDate {
                 let model = IssueLabeledModel(
+                    client: client, 
                     id: labeled.fragments.nodeFields.id,
                     actor: labeled.actor?.login ?? Constants.Strings.unknown,
                     title: labeled.label.name,
