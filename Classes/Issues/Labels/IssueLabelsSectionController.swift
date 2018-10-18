@@ -19,7 +19,7 @@ ListBindingSectionControllerSelectionDelegate {
     private var sizeCache = [String: CGSize]()
     private let lockedModel = Constants.Strings.locked
 
-    init(client: GitHubClient, issue: IssueDetailsModel) {
+    init(client: GithubClient, issue: IssueDetailsModel) {
         self.client = client
         self.issue = issue
         super.init()
@@ -100,7 +100,14 @@ ListBindingSectionControllerSelectionDelegate {
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let viewModel = viewModel as? RepositoryLabel else { return }
-        viewController?.presentLabels(owner: issue.owner, repo: issue.repo, label: viewModel.name)
+        viewController?.presentLabels(
+            label: LabelDetails(
+                client: client,
+                owner: issue.owner,
+                repo: issue.repo,
+                label: viewModel.name
+            )
+        )
     }
 
 }
