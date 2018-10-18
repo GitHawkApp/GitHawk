@@ -19,16 +19,18 @@ BaseListViewControllerDataSource,
 SearchBarSectionControllerDelegate {
 
     private var models = [ListDiffable]()
-    private let repo: RepositoryDetails
+    private let owner: String
+    private let repo: String
     private let client: RepositoryClient
     private let type: RepositoryIssuesType
     private let searchKey: ListDiffable = "searchKey" as ListDiffable
     private let debouncer = Debouncer()
     private var previousSearchString = "is:open "
 
-    init(client: GithubClient, repo: RepositoryDetails, type: RepositoryIssuesType) {
+    init(client: GithubClient, owner: String, repo: String, type: RepositoryIssuesType) {
+        self.owner = owner
         self.repo = repo
-        self.client = RepositoryClient(githubClient: client, owner: repo.owner, name: repo.name)
+        self.client = RepositoryClient(githubClient: client, owner: owner, name: repo)
         self.type = type
 
         super.init(
@@ -105,7 +107,7 @@ SearchBarSectionControllerDelegate {
                 query: previousSearchString
             )
         }
-        return RepositorySummarySectionController(client: client.githubClient, repo: repo)
+        return RepositorySummarySectionController(client: client.githubClient, owner: owner, repo: repo)
     }
 
     func emptySectionController(listAdapter: ListAdapter) -> ListSectionController {
@@ -129,7 +131,7 @@ SearchBarSectionControllerDelegate {
         case .issues: typeQuery = "is:issue"
         case .pullRequests: typeQuery = "is:pr"
         }
-        return "repo:\(repo.owner)/\(repo.name) \(typeQuery) \(previousSearchString)"
+        return "repo:\(owner)/\(repo) \(typeQuery) \(previousSearchString)"
     }
 
 }

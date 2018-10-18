@@ -11,9 +11,11 @@ import IGListKit
 final class RepositorySummarySectionController: ListGenericSectionController<RepositoryIssueSummaryModel> {
 
     private let client: GithubClient
-    private let repo: RepositoryDetails
+    private let owner: String
+    private let repo: String
 
-    init(client: GithubClient, repo: RepositoryDetails) {
+    init(client: GithubClient, owner: String, repo: String) {
+        self.owner = owner
         self.client = client
         self.repo = repo
         super.init()
@@ -53,7 +55,7 @@ final class RepositorySummarySectionController: ListGenericSectionController<Rep
 
     override func didSelectItem(at index: Int) {
         guard let number = self.object?.number else { return }
-        let issueModel = IssueDetailsModel(owner: repo.owner, repo: repo.name, number: number)
+        let issueModel = IssueDetailsModel(owner: owner, repo: repo, number: number)
         let controller = IssuesViewController(client: client, model: issueModel)
         viewController?.view.endEditing(false) // resign keyboard if it was triggered to become active by SearchBar 
         viewController?.navigationController?.pushViewController(controller, animated: trueUnlessReduceMotionEnabled)
