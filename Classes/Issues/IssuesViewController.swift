@@ -636,8 +636,8 @@ final class IssuesViewController: MessageViewController,
     
     // MARK: IssueLabelsSectionControllerDelegate
     
-    func didTapLabel(owner: String, repo: String, label: String) {
-        print("Label tapped! \(owner) \(repo) \(label)" )
+    func didTapIssueLabel(owner: String, repo: String, label: String) {
+        presentLabels(client: client, owner: owner, repo: repo, label: label)
     }
 
 }

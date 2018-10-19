@@ -11,7 +11,7 @@ import IGListKit
 
 
 protocol IssueLabelTapSectionControllerDelegate: class {
-    func didTapLabel(owner: String, repo: String, label: String)
+    func didTapIssueLabel(owner: String, repo: String, label: String)
 }
 
 final class IssueLabelsSectionController: ListBindingSectionController<IssueLabelsModel>,
@@ -104,7 +104,7 @@ ListBindingSectionControllerSelectionDelegate {
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didSelectItemAt index: Int, viewModel: Any) {
         guard let viewModel = viewModel as? RepositoryLabel else { return }
-        tapDelegate?.didTapLabel(owner: issue.owner, repo: issue.repo, label: viewModel.name)
+        tapDelegate?.didTapIssueLabel(owner: issue.owner, repo: issue.repo, label: viewModel.name)
     }
 
 }

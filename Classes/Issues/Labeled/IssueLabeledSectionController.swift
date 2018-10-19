@@ -38,7 +38,7 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
     
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
         guard case .label(let label) = attribute else { return }
-        tapDelegate?.didTapLabel(owner: label.owner, repo: label.repo, label: label.label)
+        tapDelegate?.didTapIssueLabel(owner: label.owner, repo: label.repo, label: label.label)
     }
     
 }
