@@ -47,10 +47,10 @@ ContextMenuDelegate {
 
         var controllers: [UIViewController] = [RepositoryOverviewViewController(client: client, repo: repo)]
         if repo.hasIssuesEnabled {
-            controllers.append(RepositoryIssuesViewController(client: client, repo: repo, type: .issues))
+            controllers.append(RepositoryIssuesViewController(client: client, owner: repo.owner, repo: repo.name, type: .issues))
         }
         controllers += [
-            RepositoryIssuesViewController(client: client, repo: repo, type: .pullRequests),
+            RepositoryIssuesViewController(client: client, owner: repo.owner, repo: repo.name, type: .pullRequests),
             RepositoryCodeDirectoryViewController.createRoot(client: client, repo: repo, branch: repo.defaultBranch)
         ]
         self.controllers = controllers
