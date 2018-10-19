@@ -7,7 +7,7 @@ PODS:
   - Apollo/Core (0.8.0)
   - AutoInsetter (1.2.3)
   - cmark-gfm-swift (0.1.0)
-  - ContextMenu (0.2.0)
+  - ContextMenu (0.3.1)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - DateAgo (0.1.0)
@@ -151,7 +151,7 @@ CHECKOUT OPTIONS:
     :commit: 74cc625beed7cbcec5c1c50f2aba807e9246a73a
     :git: https://github.com/GitHawkApp/cmark-gfm-swift.git
   ContextMenu:
-    :commit: e7cf153f3c6b0d6145d0035ad2f78451c5d557d7
+    :commit: a6956a50277f2382b920058ea90f78a82caeaaa9
     :git: https://github.com/GitHawkApp/ContextMenu.git
   FlatCache:
     :commit: beb697643eea11f40bb66683d1576a2772080d9d
@@ -178,7 +178,7 @@ SPEC CHECKSUMS:
   Apollo: 66e0f52289551545adb7ecdd994e713fdbae26eb
   AutoInsetter: 1a8f8ad5e7da8e993970b3809cfb8e8e330f4db1
   cmark-gfm-swift: 9915dfe0cd7feda740ab01fc2a1882989b6d5128
-  ContextMenu: cdc8c03a3a682bee74f493dfa9dfb55fdc2b19a2
+  ContextMenu: 7c2853a894e09325dba222dbc87ba594ab775321
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DateAgo: c678b6435627f2b267980bc6f0a9969389686691
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15

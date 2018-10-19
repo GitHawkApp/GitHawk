@@ -9980,41 +9980,6 @@
 			};
 			name = TestFlight;
 		};
-		2223965908CB95C78D9F2034D7F91DF6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
-				PRODUCT_MODULE_NAME = ContextMenu;
-				PRODUCT_NAME = ContextMenu;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		222772B71D5EEAC2CB8C7BF6A098490A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9498F16C6F9F7B47910456ACC08624BB /* Squawk.xcconfig */;
@@ -10216,6 +10181,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		2F5805D5BF5A03CED4112CA641C97D4D /* TestFlight */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
+				PRODUCT_MODULE_NAME = ContextMenu;
+				PRODUCT_NAME = ContextMenu;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = TestFlight;
 		};
 		2FD1B2CEB11DA3C1C308E9660F5A1C9A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -11523,39 +11523,6 @@
 			};
 			name = Debug;
 		};
-		8137C8576A85FF3D236BE16EF27E1285 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
-				PRODUCT_MODULE_NAME = ContextMenu;
-				PRODUCT_NAME = ContextMenu;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		8180E92E1F527E1442DC9E03713203DD /* TestFlight */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3561EA0242DE16D07BBC34442BEAC238 /* NYTPhotoViewer.xcconfig */;
@@ -11842,6 +11809,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		925733CE926CAE7C67669FC67913C456 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
+				PRODUCT_MODULE_NAME = ContextMenu;
+				PRODUCT_NAME = ContextMenu;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		92DBCC21D394D9F88081B7884DAE92CE /* TestFlight */ = {
 			isa = XCBuildConfiguration;
@@ -12163,6 +12165,39 @@
 				WATCHOS_DEPLOYMENT_TARGET = 4.2;
 			};
 			name = TestFlight;
+		};
+		A39BF22325337EFC270A04152DE40A2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
+				PRODUCT_MODULE_NAME = ContextMenu;
+				PRODUCT_NAME = ContextMenu;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		AAF1F1146D935F3880B399E6020076E2 /* TestFlight */ = {
 			isa = XCBuildConfiguration;
@@ -13370,41 +13405,6 @@
 			};
 			name = Release;
 		};
-		E5F7709FC5DCA7DFE68A4657ABF335C8 /* TestFlight */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97B8CBD21BD69CBA5744939C0CDA1651 /* ContextMenu.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ContextMenu/ContextMenu-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ContextMenu/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ContextMenu/ContextMenu.modulemap";
-				PRODUCT_MODULE_NAME = ContextMenu;
-				PRODUCT_NAME = ContextMenu;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = TestFlight;
-		};
 		E9F508A619F4BFB7CE665C44D32F714C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BB808075BCEA111648F532CA02A7793 /* TUSafariActivity.xcconfig */;
@@ -13790,9 +13790,9 @@
 		000D114B63969F559854AAC4D22BFA1A /* Build configuration list for PBXNativeTarget "ContextMenu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8137C8576A85FF3D236BE16EF27E1285 /* Debug */,
-				2223965908CB95C78D9F2034D7F91DF6 /* Release */,
-				E5F7709FC5DCA7DFE68A4657ABF335C8 /* TestFlight */,
+				A39BF22325337EFC270A04152DE40A2C /* Debug */,
+				925733CE926CAE7C67669FC67913C456 /* Release */,
+				2F5805D5BF5A03CED4112CA641C97D4D /* TestFlight */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

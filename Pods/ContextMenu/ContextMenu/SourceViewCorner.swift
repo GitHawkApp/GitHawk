@@ -10,7 +10,7 @@ import UIKit
 
 struct SourceViewCorner {
 
-    enum Position {
+    enum Position: Int {
         case topLeft
         case topRight
         case bottomLeft

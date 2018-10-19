@@ -23,13 +23,13 @@ extension ContextMenu {
         let menuStyle: MenuStyle
 
         /// Trigger haptic feedback when the menu is shown.
-        let hapticsStyle: UIImpactFeedbackStyle?
+        let hapticsStyle: UIImpactFeedbackGenerator.FeedbackStyle?
 
         public init(
             durations: AnimationDurations = AnimationDurations(),
             containerStyle: ContainerStyle = ContainerStyle(),
             menuStyle: MenuStyle = .default,
-            hapticsStyle: UIImpactFeedbackStyle? = nil
+            hapticsStyle: UIImpactFeedbackGenerator.FeedbackStyle? = nil
             ) {
             self.durations = durations
             self.containerStyle = containerStyle
