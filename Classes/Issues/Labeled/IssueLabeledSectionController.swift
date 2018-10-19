@@ -9,13 +9,17 @@
 import Foundation
 import IGListKit
 
-final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel> {
+
+
+final class IssueLabeledSectionController: ListGenericSectionController<IssueLabeledModel>, MarkdownStyledTextViewDelegate {
 
     private let issueModel: IssueDetailsModel
+    private weak var tapDelegate: IssueLabelTapSectionControllerDelegate?
 
-    init(issueModel: IssueDetailsModel) {
+    init(issueModel: IssueDetailsModel, tapDelegate: IssueLabelTapSectionControllerDelegate) {
         self.issueModel = issueModel
         super.init()
+        self.tapDelegate = tapDelegate
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
@@ -28,8 +32,13 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
             let object = self.object
             else { fatalError("Missing collection context, cell incorrect type, or object missing") }
         cell.configure(object)
-        cell.delegate = viewController
+        cell.delegate = self
         return cell
     }
-
+    
+    func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
+        guard case .label(let label) = attribute else { return }
+        tapDelegate?.didTapLabel(owner: label.owner, repo: label.repo, label: label.label)
+    }
+    
 }

@@ -34,7 +34,9 @@ final class IssuesViewController: MessageViewController,
     IssueCommentSectionControllerDelegate,
     IssueTextActionsViewSendDelegate,
     EmptyViewDelegate,
-    MessageTextViewListener {
+    MessageTextViewListener,
+    IssueLabelTapSectionControllerDelegate
+{
 
     private let client: GithubClient
     private let model: IssueDetailsModel
@@ -451,7 +453,7 @@ final class IssuesViewController: MessageViewController,
         switch object {
         // header and metadata
         case is IssueTitleModel: return IssueTitleSectionController()
-        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model)
+        case is IssueLabelsModel: return IssueLabelsSectionController(issue: model, tapDelegate: self)
         case is IssueAssigneesModel: return IssueAssigneesSectionController()
         case is Milestone: return IssueMilestoneSectionController(issueModel: model)
         case is IssueFileChangesModel: return IssueViewFilesSectionController(issueModel: model, client: client)
@@ -465,7 +467,7 @@ final class IssuesViewController: MessageViewController,
                 autocomplete: autocompleteController.autocomplete.copy,
                 issueCommentDelegate: self
             )
-        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model)
+        case is IssueLabeledModel: return IssueLabeledSectionController(issueModel: model, tapDelegate: self)
         case is IssueStatusEventModel: return IssueStatusEventSectionController(issueModel: model)
         case is IssueReferencedModel: return IssueReferencedSectionController(client: client)
         case is IssueReferencedCommitModel: return IssueReferencedCommitSectionController()
@@ -631,5 +633,11 @@ final class IssuesViewController: MessageViewController,
 
     func didChangeSelection(textView: MessageTextView) {}
     func willChangeRange(textView: MessageTextView, to range: NSRange) {}
+    
+    // MARK: IssueLabelsSectionControllerDelegate
+    
+    func didTapLabel(owner: String, repo: String, label: String) {
+        print("Label tapped! \(owner) \(repo) \(label)" )
+    }
 
 }
