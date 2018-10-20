@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol EmptyViewDelegate: class {
-    func didTapRetry()
+    func didTapRetry(view: EmptyView)
 }
 
 final class EmptyView: UIView {
@@ -30,8 +30,8 @@ final class EmptyView: UIView {
         addSubview(label)
 
         button.isHidden = true
-        button.titleLabel?.font = Styles.Text.button.preferredFont
-        button.setTitle(Constants.Strings.tryAgain, for: .normal)
+        button.titleLabel?.font = Styles.Text.secondaryBold.preferredFont
+        button.setTitle(NSLocalizedString("Try Again", comment: ""), for: .normal)
         button.setTitleColor(Styles.Colors.Blue.medium.color, for: .normal)
         button.addTarget(self, action: #selector(tapRetry), for: .touchUpInside)
         addSubview(button)
@@ -43,7 +43,7 @@ final class EmptyView: UIView {
 
         button.snp.makeConstraints { make in
             make.centerX.equalTo(self)
-            make.top.equalTo(label).offset(Styles.Sizes.gutter)
+            make.top.equalTo(label).offset(2*Styles.Sizes.gutter)
         }
     }
 
@@ -52,6 +52,6 @@ final class EmptyView: UIView {
     }
 
     @objc private func tapRetry(sender: UIButton) {
-        delegate?.didTapRetry()
+        delegate?.didTapRetry(view: self)
     }
 }
