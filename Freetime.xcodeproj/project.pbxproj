@@ -26,7 +26,6 @@
 		290CA76621697A7900DE04F8 /* AppSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76521697A7900DE04F8 /* AppSplitViewController.swift */; };
 		290CA768216984F000DE04F8 /* Client+GithubUserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */; };
 		290CA76A216AC82700DE04F8 /* SearchShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */; };
-		290CA76E216AE8FA00DE04F8 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76D216AE8FA00DE04F8 /* Routable.swift */; };
 		290CA770216AE91300DE04F8 /* UITabBarController+SelectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */; };
 		290CA772216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */; };
 		290CA774216AE94D00DE04F8 /* BookmarkShortcutRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */; };
@@ -558,7 +557,6 @@
 		290CA76521697A7900DE04F8 /* AppSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSplitViewController.swift; sourceTree = "<group>"; };
 		290CA767216984F000DE04F8 /* Client+GithubUserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+GithubUserSession.swift"; sourceTree = "<group>"; };
 		290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchShortcutRoute.swift; sourceTree = "<group>"; };
-		290CA76D216AE8FA00DE04F8 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		290CA76F216AE91300DE04F8 /* UITabBarController+SelectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+SelectType.swift"; sourceTree = "<group>"; };
 		290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountShortcutRoute.swift; sourceTree = "<group>"; };
 		290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkShortcutRoute.swift; sourceTree = "<group>"; };
@@ -1109,7 +1107,6 @@
 				290CA76521697A7900DE04F8 /* AppSplitViewController.swift */,
 				290CA773216AE94D00DE04F8 /* BookmarkShortcutRoute.swift */,
 				29A10540216D912F004734A0 /* IssueNotificationRoute.swift */,
-				290CA76D216AE8FA00DE04F8 /* Routable.swift */,
 				290CA777216AFAE600DE04F8 /* RoutePerformable.swift */,
 				290CA769216AC82700DE04F8 /* SearchShortcutRoute.swift */,
 				290CA771216AE93E00DE04F8 /* SwitchAccountShortcutRoute.swift */,
@@ -2531,6 +2528,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/GitHawkRoutes/GitHawkRoutes.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubAPI-iOS/GitHubAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubSession-iOS/GitHubSession.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
@@ -2562,6 +2560,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHawkRoutes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubSession.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
@@ -2663,6 +2662,7 @@
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FlatCache/FlatCache.framework",
+				"${BUILT_PRODUCTS_DIR}/GitHawkRoutes/GitHawkRoutes.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubAPI-iOS/GitHubAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/GitHubSession-iOS/GitHubSession.framework",
 				"${BUILT_PRODUCTS_DIR}/HTMLString/HTMLString.framework",
@@ -2695,6 +2695,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHawkRoutes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GitHubSession.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTMLString.framework",
@@ -2997,7 +2998,6 @@
 				29D548CB1FA27FE900F8E46F /* UINavigationItem+TitleSubtitle.swift in Sources */,
 				299A04A11FAE86B0003C2450 /* IssueReviewViewCommentsCell.swift in Sources */,
 				7BF2239D1F91056C006CC9A2 /* File+Filename.swift in Sources */,
-				290CA76E216AE8FA00DE04F8 /* Routable.swift in Sources */,
 				2924C18120D5B29800FCFCFF /* MilestonesViewController.swift in Sources */,
 				29A1950A1EC78B4800C3E289 /* NotificationType+Icon.swift in Sources */,
 				29A1950C1EC7901400C3E289 /* NotificationType.swift in Sources */,

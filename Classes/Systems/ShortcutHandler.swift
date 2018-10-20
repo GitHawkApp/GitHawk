@@ -8,6 +8,7 @@
 
 import Foundation
 import GitHubSession
+import GitHawkRoutes
 
 extension UIApplicationShortcutItem {
 

@@ -8,15 +8,7 @@
 
 import Foundation
 import GitHubSession
-
-struct BookmarkShortcutRoute: Routable {
-    static func from(params: [String: String]) -> BookmarkShortcutRoute? {
-        return BookmarkShortcutRoute()
-    }
-    static var path: String {
-        return "com.githawk.shortcut.bookmark"
-    }
-}
+import GitHawkRoutes
 
 extension BookmarkShortcutRoute: RoutePerformable {
     func perform(

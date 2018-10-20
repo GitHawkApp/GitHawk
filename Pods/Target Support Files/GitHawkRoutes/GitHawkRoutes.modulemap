@@ -1,0 +1,6 @@
+framework module GitHawkRoutes {
+  umbrella header "GitHawkRoutes-umbrella.h"
+
+  export *
+  module * { export * }
+}

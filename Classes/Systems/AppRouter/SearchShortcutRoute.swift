@@ -8,15 +8,7 @@
 
 import UIKit
 import GitHubSession
-
-struct SearchShortcutRoute: Routable {
-    static func from(params: [String: String]) -> SearchShortcutRoute? {
-        return SearchShortcutRoute()
-    }
-    static var path: String {
-        return "com.githawk.shortcut.search"
-    }
-}
+import GitHawkRoutes
 
 extension SearchShortcutRoute: RoutePerformable {
     func perform(

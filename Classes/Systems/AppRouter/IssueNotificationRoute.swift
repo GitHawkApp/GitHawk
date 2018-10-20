@@ -8,29 +8,7 @@
 
 import Foundation
 import GitHubSession
-
-struct IssueNotificationRoute: Routable {
-    let owner: String
-    let repo: String
-    let number: Int
-    static func from(params: [String: String]) -> IssueNotificationRoute? {
-        guard let owner = params["owner"],
-            let repo = params["repo"],
-            let number = (params["number"] as NSString?)?.integerValue
-            else { return nil }
-        return IssueNotificationRoute(owner: owner, repo: repo, number: number)
-    }
-    static var path: String {
-        return "com.githawk.issue-notifications"
-    }
-    var encoded: [String: String] {
-        return [
-            "owner": owner,
-            "repo": repo,
-            "number": "\(number)"
-        ]
-    }
-}
+import GitHawkRoutes
 
 extension IssueNotificationRoute: RoutePerformable {
     func perform(

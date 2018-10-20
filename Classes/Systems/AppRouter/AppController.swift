@@ -9,6 +9,7 @@
 import UIKit
 import GitHubSession
 import GitHubAPI
+import GitHawkRoutes
 
 final class AppController: NSObject, LoginSplashViewControllerDelegate, GitHubSessionListener {
 
