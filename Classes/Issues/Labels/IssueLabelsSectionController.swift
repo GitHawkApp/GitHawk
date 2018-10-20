@@ -25,8 +25,8 @@ ListBindingSectionControllerSelectionDelegate {
 
     init(issue: IssueDetailsModel, tapDelegate: IssueLabelTapSectionControllerDelegate) {
         self.issue = issue
-        super.init()
         self.tapDelegate = tapDelegate
+        super.init()
         minimumInteritemSpacing = Styles.Sizes.labelSpacing
         minimumLineSpacing = Styles.Sizes.labelSpacing
         let row = Styles.Sizes.rowSpacing

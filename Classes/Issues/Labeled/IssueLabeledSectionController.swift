@@ -18,8 +18,8 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
 
     init(issueModel: IssueDetailsModel, tapDelegate: IssueLabelTapSectionControllerDelegate) {
         self.issueModel = issueModel
-        super.init()
         self.tapDelegate = tapDelegate
+        super.init()
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
@@ -37,8 +37,11 @@ final class IssueLabeledSectionController: ListGenericSectionController<IssueLab
     }
     
     func didTap(cell: MarkdownStyledTextView, attribute: DetectedMarkdownAttribute) {
-        guard case .label(let label) = attribute else { return }
-        tapDelegate?.didTapIssueLabel(owner: label.owner, repo: label.repo, label: label.label)
+        if case .label(let label) = attribute {
+            tapDelegate?.didTapIssueLabel(owner: label.owner, repo: label.repo, label: label.label)
+        } else {
+            viewController?.handle(attribute: attribute)
+        }
     }
     
 }
