@@ -11,6 +11,4 @@ import Foundation
 public enum ClientError: Error {
     case unauthorized
     case mismatchedInput
-    case outputNil(Error?)
-    case network(Error?)
 }
